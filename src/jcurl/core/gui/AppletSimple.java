@@ -37,10 +37,12 @@ import jcurl.sim.model.SlideStraight;
 public class AppletSimple extends JApplet {
 
     public void init() {
-        Container contentPane = getContentPane();
+        setFocusable(true);
+        //resize(200, 100);
+        final Container contentPane = getContentPane();
         final JCurlPanel mp = new JCurlPanel(null, null, null, null);
         getContentPane().add(mp);
-        TargetDiscrete dst = mp;
+        final TargetDiscrete dst = mp;
 
         // initial state
         final PositionSet pos = PositionSet.allOut();
@@ -53,6 +55,6 @@ public class AppletSimple extends JApplet {
         final Source src = new SlideStraight(new CollissionSimple());
         src.reset(0, pos, speed, RockSetProps.DEFAULT);
         // set up the keyboard handler
-        mp.addKeyListener(new SimpleKeys(src, dst));
+        this.addKeyListener(new SimpleKeys(src, dst));
     }
 }
