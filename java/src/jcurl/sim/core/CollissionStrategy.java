@@ -42,13 +42,13 @@ public abstract class CollissionStrategy {
     /**
      * 
      * @param xa
-     *            location of granite a
+     *            location of rock a
      * @param xb
-     *            location of granite b
+     *            location of rock b
      * @param va
-     *            speed of granite a
+     *            speed of rock a
      * @param vb
-     *            speed of granite b
+     *            speed of rock b
      * @return true: hit, false: no hit
      */
     public abstract boolean compute(final Rock xa, final Rock xb,
