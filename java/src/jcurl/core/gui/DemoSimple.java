@@ -20,7 +20,6 @@ package jcurl.core.gui;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -76,9 +75,16 @@ public class DemoSimple extends JFrame {
             ParserConfigurationException, SAXException, IOException {
         final Source src;
         if (true) {
-            final SetupBuilder setup = SetupSax
-                    .parse(new URL("file", "localhost",
-                            "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup/hammy.jcz"));
+            final URL url;
+            {
+                URL tmp = DemoSimple.class.getResource("/setup/hammy.jcx");
+                if (tmp == null)
+                    tmp = new URL("file", "localhost",
+                            "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup/hammy.jcx");
+                url = tmp;
+            }
+            log.info("Loading setup [" + url + "]");
+            final SetupBuilder setup = SetupSax.parse(url);
             src = setup.getSlide();
             src
                     .reset(0, setup.getPos(), setup.getSpeed(),

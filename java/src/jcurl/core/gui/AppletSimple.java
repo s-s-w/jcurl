@@ -19,22 +19,34 @@
 package jcurl.core.gui;
 
 import java.awt.Container;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.swing.JApplet;
+import javax.xml.parsers.ParserConfigurationException;
 
 import jcurl.core.PositionSet;
 import jcurl.core.Source;
 import jcurl.core.SpeedSet;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.dto.RockSetProps;
+import jcurl.core.io.SetupBuilder;
+import jcurl.core.io.SetupSax;
 import jcurl.sim.model.CollissionSimple;
 import jcurl.sim.model.SlideStraight;
+
+import org.apache.ugli.LoggerFactory;
+import org.apache.ugli.ULogger;
+import org.xml.sax.SAXException;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public class AppletSimple extends JApplet {
+    private static final ULogger log = LoggerFactory
+            .getLogger(AppletSimple.class);
 
     public void init() {
         setFocusable(true);
@@ -44,16 +56,43 @@ public class AppletSimple extends JApplet {
         getContentPane().add(mp);
         final TargetDiscrete dst = mp;
 
-        // initial state
-        final PositionSet pos = PositionSet.allOut();
-        pos.getDark(0).setLocation(0, 5, 0);
-        pos.getLight(0).setLocation(0.2, 2.5);
-        pos.getLight(1).setLocation(1.0, 1.5);
-        final SpeedSet speed = new SpeedSet();
-        speed.getDark(0).setLocation(0, -1.325, 0.75);
-        // dynamics engines
-        final Source src = new SlideStraight(new CollissionSimple());
-        src.reset(0, pos, speed, RockSetProps.DEFAULT);
+        final Source src;
+        try {
+            if (true) {
+                final URL url;
+                {
+                    URL tmp = DemoSimple.class.getResource("/setup/hammy.jcx");
+                    if (tmp == null)
+                        tmp = new URL("file", "localhost",
+                                "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup/hammy.jcx");
+                    url = tmp;
+                }
+                log.info("Loading setup [" + url + "]");
+                final SetupBuilder setup = SetupSax.parse(url);
+                src = setup.getSlide();
+                src.reset(0, setup.getPos(), setup.getSpeed(),
+                        RockSetProps.DEFAULT);
+            } else {
+                // initial state
+                final PositionSet pos = PositionSet.allOut();
+                pos.getDark(0).setLocation(0, 5, 0);
+                pos.getLight(0).setLocation(0.2, 2.5);
+                pos.getLight(1).setLocation(1.0, 1.5);
+                final SpeedSet speed = new SpeedSet();
+                speed.getDark(0).setLocation(0, -1.325, 0.75);
+                // dynamics engines
+                src = new SlideStraight(new CollissionSimple());
+                src.reset(0, pos, speed, RockSetProps.DEFAULT);
+            }
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        } catch (SAXException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         // set up the keyboard handler
         this.addKeyListener(new SimpleKeys(src, dst));
     }
