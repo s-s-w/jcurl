@@ -21,7 +21,8 @@ package jcurl.sim.model;
 import java.awt.geom.Point2D;
 
 import jcurl.core.Rock;
-import jcurl.core.RockSet;
+import jcurl.core.PositionSet;
+import jcurl.core.SpeedSet;
 import jcurl.core.dto.RockProps;
 import jcurl.math.MathVec;
 import junit.framework.TestCase;
@@ -33,9 +34,9 @@ import junit.framework.TestCase;
  */
 public class CollissionSimpleTest extends TestCase {
 
-    final RockSet pos;
+    final PositionSet pos;
 
-    final RockSet speed;
+    final SpeedSet speed;
 
     final Rock ax;
 
@@ -46,8 +47,8 @@ public class CollissionSimpleTest extends TestCase {
     final Rock bv;
 
     public CollissionSimpleTest() {
-        pos = RockSet.allHome();
-        speed = new RockSet();
+        pos = PositionSet.allHome();
+        speed = new SpeedSet();
         ax = pos.getDark(0);
         bx = pos.getLight(0);
         av = speed.getDark(0);
@@ -55,8 +56,8 @@ public class CollissionSimpleTest extends TestCase {
     }
 
     public void setUp() {
-        RockSet.allHome(pos);
-        RockSet.allZero(speed);
+        PositionSet.allHome(pos);
+        PositionSet.allZero(speed);
     }
 
     private static final CollissionSimple hit = new CollissionSimple();

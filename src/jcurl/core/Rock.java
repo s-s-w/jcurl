@@ -24,7 +24,7 @@ import jcurl.math.Point3D;
  * Base class for rock information (either location or speed). The "Z" component
  * is the handle angle in radians.
  * 
- * @see jcurl.core.RockSet
+ * @see jcurl.core.PositionSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

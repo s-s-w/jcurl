@@ -26,7 +26,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
-import jcurl.core.RockSet;
+import jcurl.core.PositionSet;
 import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockSetProps;
 import jcurl.sim.core.CollissionStrategy;
@@ -69,7 +69,7 @@ public class Config {
         return null;
     }
 
-    public RockSet getPosition() {
+    public PositionSet getPosition() {
         return null;
     }
 
@@ -85,7 +85,7 @@ public class Config {
         return -1;
     }
 
-    public RockSet getSpeed() {
+    public PositionSet getSpeed() {
         return null;
     }
 }

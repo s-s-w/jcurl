@@ -18,8 +18,9 @@
  */
 package jcurl.core.gui;
 
-import jcurl.core.RockSet;
+import jcurl.core.PositionSet;
 import jcurl.core.Source;
+import jcurl.core.SpeedSet;
 import jcurl.core.TargetDiscrete;
 
 /**
@@ -68,8 +69,8 @@ public class RealTimePlayer implements Runnable {
      */
     public void run() {
         try {
-            RockSet pos = RockSet.allHome(null);
-            RockSet speed = RockSet.allZero(null);
+            PositionSet pos = PositionSet.allHome(null);
+            SpeedSet speed = new SpeedSet();
             final long start = System.currentTimeMillis();
             for (;;) {
                 final long dt = System.currentTimeMillis() - start;
@@ -80,7 +81,7 @@ public class RealTimePlayer implements Runnable {
                 if (dst != null)
                     dst.setPos(tNow, pos);
                 speed = src.getSpeed(tNow, speed);
-                if (0 == RockSet.nonZero(speed)) {
+                if (0 == PositionSet.nonZero(speed)) {
                     t0Last = t0Start;
                     break;
                 }

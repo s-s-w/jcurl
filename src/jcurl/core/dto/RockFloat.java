@@ -27,7 +27,7 @@ import jcurl.core.Rock;
  * storage means. The value array is accessible for direct use with e.g.
  * {@link jcurl.math.CurveBase#getC(int, double, float[])}.
  * 
- * @see jcurl.core.RockSet
+ * @see jcurl.core.PositionSet
  * @see jcurl.core.dto.RockDouble
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$

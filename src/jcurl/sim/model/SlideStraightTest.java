@@ -21,8 +21,9 @@ package jcurl.sim.model;
 import org.apache.log4j.Logger;
 
 import jcurl.core.Rock;
-import jcurl.core.RockSet;
+import jcurl.core.PositionSet;
 import jcurl.core.Source;
+import jcurl.core.SpeedSet;
 import jcurl.core.dto.RockDouble;
 import jcurl.core.dto.RockSetProps;
 import jcurl.math.CurveBase;
@@ -45,17 +46,17 @@ public class SlideStraightTest extends TestCase {
 
     private final SlideStraight s = new SlideStraight(new CollissionSimple());
 
-    private final RockSet pos = RockSet.allOut();
+    private final PositionSet pos = PositionSet.allOut();
 
-    private final RockSet speed = new RockSet();
+    private final SpeedSet speed = new SpeedSet();
 
     public void setUp() {
         // initial state
-        RockSet.allOut(pos);
+        PositionSet.allOut(pos);
         pos.getDark(0).setLocation(0, 5, 0);
         pos.getLight(0).setLocation(0.2, 2.5);
         pos.getLight(1).setLocation(1.0, 1.5);
-        RockSet.allZero(speed);
+        PositionSet.allZero(speed);
         speed.getDark(0).setLocation(0, -1.0, 0.75);
         s.reset(0, pos, speed, RockSetProps.DEFAULT);
     }
@@ -186,11 +187,11 @@ public class SlideStraightTest extends TestCase {
     }
 
     public void test110() {
-        final RockSet pos = RockSet.allOut();
+        final PositionSet pos = PositionSet.allOut();
         pos.getDark(0).setLocation(0, 5, 0);
         pos.getLight(0).setLocation(0.2, 2.5);
         pos.getLight(1).setLocation(1.0, 1.5);
-        final RockSet speed = new RockSet();
+        final SpeedSet speed = new SpeedSet();
         speed.getDark(0).setLocation(0, -1.5, 0.75);
         // dynamics engines
         final Source src = new SlideStraight(new CollissionSimple());

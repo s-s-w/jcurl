@@ -23,8 +23,9 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import jcurl.core.RockSet;
+import jcurl.core.PositionSet;
 import jcurl.core.Source;
+import jcurl.core.SpeedSet;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.dto.RockSetProps;
 import jcurl.sim.model.CollissionSimple;
@@ -63,11 +64,11 @@ public class SimpleMain extends JFrame {
 
     public static void main(String[] args) {
         // initial state
-        final RockSet pos = RockSet.allOut();
+        final PositionSet pos = PositionSet.allOut();
         pos.getDark(0).setLocation(0, 5, 0);
         pos.getLight(0).setLocation(0.2, 2.5);
         pos.getLight(1).setLocation(1.0, 1.5);
-        final RockSet speed = new RockSet();
+        final SpeedSet speed = new SpeedSet();
         speed.getDark(0).setLocation(0, -1.325, 0.75);
         // dynamics engines
         final Source src = new SlideStraight(new CollissionSimple());
