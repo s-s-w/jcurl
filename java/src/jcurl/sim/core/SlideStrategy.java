@@ -21,8 +21,10 @@ package jcurl.sim.core;
 import java.awt.geom.Point2D;
 
 import jcurl.core.Rock;
+import jcurl.core.PositionSet;
 import jcurl.core.RockSet;
 import jcurl.core.Source;
+import jcurl.core.SpeedSet;
 import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
 import jcurl.core.dto.RockSetProps;
@@ -106,9 +108,9 @@ public abstract class SlideStrategy implements Source {
 
     protected double dt = 0.050;
 
-    protected RockSet maxPos = RockSet.allZero(null);
+    protected PositionSet maxPos = new PositionSet();
 
-    protected RockSet maxSpeed = RockSet.allZero(null);
+    protected SpeedSet maxSpeed = new SpeedSet();
 
     protected int rocksInMotion = 0;
 
@@ -186,12 +188,12 @@ public abstract class SlideStrategy implements Source {
      * @param speed
      * @return seconds until the next hit
      */
-    public double estimateNextHit(final RockSet pos, final RockSet speed) {
+    public double estimateNextHit(final PositionSet pos, final SpeedSet speed) {
         if (log.isDebugEnabled())
             log.debug("estimateNextHit");
         double t = Long.MAX_VALUE / 1000;
         // test combination of all rocks:
-        for (int a = 0; a < RockSet.ROCKS_PER_SET; a++) {
+        for (int a = 0; a < PositionSet.ROCKS_PER_SET; a++) {
             final Rock ap = pos.getRock(a);
             final Rock av = speed.getRock(a);
             for (int b = 0; b < a; b++) {
@@ -238,18 +240,18 @@ public abstract class SlideStrategy implements Source {
      */
     public abstract double getMu();
 
-    public final RockSet getPos(final double time, RockSet rocks) {
+    public final PositionSet getPos(final double time, PositionSet rocks) {
         if (log.isDebugEnabled())
             log.debug("t=" + time);
         computeUntil(time, dt);
-        return getC(0, time, rocks);
+        return (PositionSet) getC(0, time, rocks);
     }
 
-    public final RockSet getSpeed(final double time, RockSet rocks) {
+    public final SpeedSet getSpeed(final double time, SpeedSet rocks) {
         if (log.isDebugEnabled())
             log.debug("t=" + time);
         computeUntil(time, dt);
-        return getC(1, time, rocks);
+        return (SpeedSet) getC(1, time, rocks);
     }
 
     /**
@@ -298,12 +300,12 @@ public abstract class SlideStrategy implements Source {
      *            velocities
      * @return bitmask of the rocks in motion at t1
      */
-    protected int move(final double t0, final double t1, final RockSet pos,
-            final RockSet speed) {
+    protected int move(final double t0, final double t1, final PositionSet pos,
+            final SpeedSet speed) {
         if (log.isDebugEnabled())
             log.debug("t0=" + t0 + " t1=" + t1);
         int ret = 0;
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+        for (int i = PositionSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             final Rock x = pos.getRock(i);
             final Rock v = speed.getRock(i);
             if (move(t0, t1, i, x, v)) {
@@ -318,12 +320,12 @@ public abstract class SlideStrategy implements Source {
         return ret;
     }
 
-    public void reset(double startTime, RockSet startPos, RockSet startSpeed,
-            RockSetProps props) {
+    public void reset(double startTime, PositionSet startPos,
+            SpeedSet startSpeed, RockSetProps props) {
         tmin = tmax = T0;
-        set(startTime, startPos, startSpeed, RockSet.ALL_MASK);
+        set(startTime, startPos, startSpeed, PositionSet.ALL_MASK);
         rocksInMotion = 0;
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+        for (int i = PositionSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             final Rock v = startSpeed.getRock(i);
             if (v.getX() != 0 || v.getY() != 0)
                 rocksInMotion |= 1 << i;
@@ -340,8 +342,8 @@ public abstract class SlideStrategy implements Source {
      * @param discontinuous
      *            bitmask of the discontinuous rocks
      */
-    protected abstract void set(final double t0, final RockSet pos,
-            final RockSet speed, final int discontinuous);
+    protected abstract void set(final double t0, final PositionSet pos,
+            final SpeedSet speed, final int discontinuous);
 
     /**
      * Set the draw-to-T-time and curl.

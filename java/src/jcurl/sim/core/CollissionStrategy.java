@@ -19,7 +19,9 @@
 package jcurl.sim.core;
 
 import jcurl.core.Rock;
+import jcurl.core.PositionSet;
 import jcurl.core.RockSet;
+import jcurl.core.SpeedSet;
 
 import org.apache.log4j.Logger;
 
@@ -63,7 +65,7 @@ public abstract class CollissionStrategy {
      * @param speed
      * @return bitmask of the changed rocks
      */
-    public int compute(RockSet pos, RockSet speed) {
+    public int compute(PositionSet pos, SpeedSet speed) {
         if (log.isDebugEnabled())
             log.debug("compute()");
         int hits = 0;

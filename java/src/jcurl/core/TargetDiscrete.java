@@ -29,7 +29,7 @@ package jcurl.core;
  */
 public interface TargetDiscrete extends Target {
 
-    public void setPos(final double t, final RockSet rocks);
+    public void setPos(final double t, final PositionSet rocks);
 
     /**
      * 
@@ -37,8 +37,8 @@ public interface TargetDiscrete extends Target {
      * @param rocks
      * @param discontinuous
      *            bitmask of discontinuous rocks as returned by
-     *            {@link jcurl.sim.core.CollissionStrategy#compute(RockSet, RockSet)}.
+     *            {@link jcurl.sim.core.CollissionStrategy#compute(PositionSet, SpeedSet)}.
      */
-    public void setPos(final double t, final RockSet rocks,
+    public void setPos(final double t, final PositionSet rocks,
             final int discontinuous);
 }

@@ -21,7 +21,7 @@ package jcurl.core;
 import jcurl.core.dto.RockSetProps;
 
 /**
- * Interpolator for whole {@link jcurl.core.RockSet}s.
+ * Interpolator for whole {@link jcurl.core.PositionSet}s.
  * 
  * @see jcurl.core.IRockInterpolator
  * @see jcurl.core.CSplineRockInterpolator
@@ -75,19 +75,19 @@ public class RockSetInterpolator implements Source, TargetDiscrete {
         return ip[0].getMinT();
     }
 
-    public RockSet getPos(final double t, final RockSet rocks) {
+    public PositionSet getPos(final double t, final PositionSet rocks) {
         if (t < ip[0].getMinT() || t > ip[0].getMaxT())
             return null;
-        final RockSet dat = rocks != null ? rocks : new RockSet();
+        final PositionSet dat = rocks != null ? rocks : new PositionSet();
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             ip[i].getPos(t, dat.getRock(i));
         return dat;
     }
 
-    public RockSet getSpeed(final double t, final RockSet rocks) {
+    public SpeedSet getSpeed(final double t, final SpeedSet rocks) {
         if (t < ip[0].getMinT() || t > ip[0].getMaxT())
             return null;
-        final RockSet dat = rocks != null ? rocks : new RockSet();
+        final SpeedSet dat = rocks != null ? rocks : new SpeedSet();
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             ip[i].getSpeed(t, dat.getRock(i));
         return dat;
@@ -110,18 +110,18 @@ public class RockSetInterpolator implements Source, TargetDiscrete {
         return true;
     }
 
-    public void reset(double startTime, RockSet startPos, RockSet startSpeed,
+    public void reset(double startTime, PositionSet startPos, SpeedSet startSpeed,
             RockSetProps props) {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             this.ip[i].reset();
         setPos(startTime, startPos);
     }
 
-    public void setPos(final double t, final RockSet rocks) {
+    public void setPos(final double t, final PositionSet rocks) {
         setPos(t, rocks, 0);
     }
 
-    public void setPos(final double t, final RockSet rocks,
+    public void setPos(final double t, final PositionSet rocks,
             final int discontinuous) {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             ip[i].add(t, rocks.getRock(i), 0 != ((1 << i) | discontinuous));

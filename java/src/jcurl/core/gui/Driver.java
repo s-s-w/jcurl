@@ -24,7 +24,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import jcurl.core.RockSet;
+import jcurl.core.PositionSet;
 
 import org.apache.log4j.Logger;
 
@@ -45,7 +45,7 @@ public class Driver extends JFrame {
         setTitle("CurlDemo");
         setSize(600, 400);
         Container contentPane = getContentPane();
-        final RockSet rs = RockSet.allOut();
+        final PositionSet rs = PositionSet.allOut();
         final JCurlPanel mp = new JCurlPanel(rs, Zoomer.HOUSE2HACK, null, null);
         contentPane.add(mp);
     }

@@ -21,7 +21,7 @@ package jcurl.core.gui;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import jcurl.core.RockSet;
+import jcurl.core.PositionSet;
 import jcurl.core.Source;
 import jcurl.core.TargetDiscrete;
 
@@ -49,7 +49,7 @@ public class SimpleKeys implements KeyListener {
         final double t0 = src.getMinT();
         player = new RealTimePlayer(t0, 1.0, src, dst);
         // push the initial state from src to dst
-        dst.setPos(t0, src.getPos(t0, new RockSet()));
+        dst.setPos(t0, src.getPos(t0, new PositionSet()));
     }
 
     public void keyPressed(KeyEvent e) {

@@ -50,7 +50,7 @@ public interface Source {
      * @param rocks
      * @return the rocks' positions
      */
-    public abstract RockSet getPos(final double time, RockSet rocks);
+    public abstract PositionSet getPos(final double time, PositionSet rocks);
 
     /**
      * Get the rocks' speeds - optional.
@@ -60,7 +60,7 @@ public interface Source {
      * @param rocks
      * @return the rocks' speeds
      */
-    public abstract RockSet getSpeed(final double time, RockSet rocks);
+    public abstract SpeedSet getSpeed(final double time, SpeedSet rocks);
 
     public abstract boolean isDiscrete();
 
@@ -77,6 +77,6 @@ public interface Source {
      * @param startSpeed
      * @param props
      */
-    public abstract void reset(double startTime, RockSet startPos,
-            RockSet startSpeed, RockSetProps props);
+    public abstract void reset(double startTime, PositionSet startPos,
+            SpeedSet startSpeed, RockSetProps props);
 }

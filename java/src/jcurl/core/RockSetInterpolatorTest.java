@@ -38,9 +38,9 @@ public class RockSetInterpolatorTest extends TestCase {
 
     public void test010_feed() {
         final long t0 = 0;
-        RockSet rPos = RockSet.allHome();
+        PositionSet rPos = PositionSet.allHome();
         rPos.getLight(0).setLocation(0, 0);
-        RockSet rSpeed = new RockSet();
+        SpeedSet rSpeed = new SpeedSet();
         rSpeed.getLight(0).setX(0);
         rSpeed.getLight(0).setY(1);
         SlideStraight slid = new SlideStraight(new CollissionSimple());
@@ -54,7 +54,7 @@ public class RockSetInterpolatorTest extends TestCase {
         final int loop = 5000;
         for (int i = 0; i < loop; i++) {
             long t1 = t0 + i * 2;
-            RockSet p1 = slid.getPos(t1, null);
+            PositionSet p1 = slid.getPos(t1, null);
             ip.setPos(t1, p1);
         }
         for (int i = loop - 2; i >= 0; i--) {

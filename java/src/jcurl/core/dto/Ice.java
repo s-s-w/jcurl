@@ -19,6 +19,7 @@
 package jcurl.core.dto;
 
 import jcurl.core.Rock;
+import jcurl.core.PositionSet;
 import jcurl.core.RockSet;
 import jcurl.core.io.Dim;
 
@@ -73,7 +74,7 @@ public class Ice {
      * @param speed
      * @return bitmask of modified (removed) rocks
      */
-    public static final int checkOut(final RockSet pos, final RockSet speed) {
+    public static final int checkOut(final PositionSet pos, final PositionSet speed) {
         int ret = 0;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             if (speed.getRock(i).nonzero()) {

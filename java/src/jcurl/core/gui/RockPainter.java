@@ -27,6 +27,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 
 import jcurl.core.Rock;
+import jcurl.core.PositionSet;
 import jcurl.core.RockSet;
 import jcurl.core.dto.RockProps;
 
@@ -93,8 +94,8 @@ public class RockPainter {
             fm = g.getFontMetrics(fo);
         if (txtXoff == null) {
             txtYoff = (int) (0.6F * 0.5F * fm.getHeight());
-            txtXoff = new int[RockSet.ROCKS_PER_COLOR];
-            for (int i = RockSet.ROCKS_PER_COLOR - 1; i >= 0; i--)
+            txtXoff = new int[PositionSet.ROCKS_PER_COLOR];
+            for (int i = PositionSet.ROCKS_PER_COLOR - 1; i >= 0; i--)
                 txtXoff[i] = -fm.charWidth(labels[i]) / 2;
         }
         g.setFont(fo);
@@ -140,9 +141,9 @@ public class RockPainter {
      * @param rocks
      *            locations
      * @param mask
-     *            bit field which rocks to paint. {@link RockSet#ALL_MASK}
+     *            bit field which rocks to paint. {@link PositionSet#ALL_MASK}
      */
-    public void paintRocks(final Graphics2D g, final RockSet rocks, int mask) {
+    public void paintRocks(final Graphics2D g, final PositionSet rocks, int mask) {
         if ((mask & RockSet.ALL_MASK) == 0)
             return;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {

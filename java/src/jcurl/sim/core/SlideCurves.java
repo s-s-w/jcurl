@@ -21,7 +21,9 @@ package jcurl.sim.core;
 import java.awt.geom.Point2D;
 
 import jcurl.core.Rock;
+import jcurl.core.PositionSet;
 import jcurl.core.RockSet;
+import jcurl.core.SpeedSet;
 import jcurl.core.dto.RockSetProps;
 import jcurl.math.CurveBase;
 import jcurl.math.CurveInterval;
@@ -96,8 +98,8 @@ public abstract class SlideCurves extends SlideStrategy {
 
     /**
      * Get the n-th derivative. Used e.g. by
-     * {@link SlideStrategy#getPos(double, RockSet)},
-     * {@link SlideStrategy#getSpeed(double, RockSet)}.
+     * {@link SlideStrategy#getPos(double, PositionSet)},
+     * {@link SlideStrategy#getSpeed(double, SpeedSet)}.
      * 
      * @param c
      *            0: value, 1: speed
@@ -107,7 +109,7 @@ public abstract class SlideCurves extends SlideStrategy {
      * @return the c'th derivative of x,y,alpha
      */
     protected RockSet getC(final int c, final double time, RockSet rocks) {
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+        for (int i = PositionSet.ROCKS_PER_SET - 1; i >= 0; i--)
             getC(c, time, i, rocks.getRock(i));
         return rocks;
     }
@@ -130,9 +132,9 @@ public abstract class SlideCurves extends SlideStrategy {
         return speed.getX() != 0 || speed.getY() != 0;
     }
 
-    public final void reset(final double startTime, final RockSet startPos,
-            final RockSet startSpeed, final RockSetProps props) {
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+    public final void reset(final double startTime, final PositionSet startPos,
+            final SpeedSet startSpeed, final RockSetProps props) {
+        for (int i = PositionSet.ROCKS_PER_SET - 1; i >= 0; i--)
             c[i] = new CurveParts(3);
         super.reset(startTime, startPos, startSpeed, props);
     }
@@ -147,7 +149,7 @@ public abstract class SlideCurves extends SlideStrategy {
      * @param discontinuous
      *            bitmask of the discontuous rocks
      */
-    public void set(final double t0, final RockSet pos, final RockSet speed,
+    public void set(final double t0, final PositionSet pos, final SpeedSet speed,
             final int discontinuous) {
         if (log.isDebugEnabled())
             log.debug("t0=" + t0 + " rockmask="
@@ -158,7 +160,7 @@ public abstract class SlideCurves extends SlideStrategy {
             tmin = t0;
         tmax = t0;
 
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+        for (int i = PositionSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             if (0 != (discontinuous & (1 << i))) {
                 log.info("compute rock #" + i);
                 // add a new curve to the list

@@ -16,31 +16,30 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.sim.core;
+package jcurl.core;
 
-import jcurl.core.PositionSet;
-import junit.framework.TestCase;
 
 /**
+ * A {@link jcurl.core.RockSet}%nbsp;with speed semantics.
+ * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SlideStrategyTest extends TestCase {
+public class SpeedSet extends RockSet {
 
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(SlideStrategyTest.class);
+    public SpeedSet() {
+        super();
     }
 
-    public void test005_nextHit() {
-        PositionSet pos = PositionSet.allHome();
-        pos.getDark(0).setLocation(0, 5);
-        pos.getLight(0).setLocation(0.2, 4.0);
-        PositionSet speed = new PositionSet();
-        speed.getDark(0).setLocation(0, -1);
+    protected SpeedSet(boolean fill) {
+        super(fill);
+    }
 
-        
-        double dt = SlideStrategy.tst_timetilhit(0, pos.getDark(0), speed
-                .getDark(0), 8, pos.getLight(0), speed.getLight(0));
-        assertEquals("", 0.7699933889987538, dt, 1e-9);
+    public SpeedSet(final RockSet b) {
+        super(b);
+    }
+
+    public Object clone() {
+        return new SpeedSet(this);
     }
 }

@@ -31,7 +31,7 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import jcurl.core.RockSet;
+import jcurl.core.PositionSet;
 import jcurl.core.TargetDiscrete;
 
 /**
@@ -93,15 +93,15 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
 
     private final RockPainter rockP;
 
-    private RockSet rocks;
+    private PositionSet rocks;
 
     private double time = 0;
 
     private Zoomer zom;
 
-    public JCurlPanel(final RockSet rocks, final Zoomer zoom,
+    public JCurlPanel(final PositionSet rocks, final Zoomer zoom,
             final IcePainter iceP, final RockPainter rockP) {
-        this.rocks = rocks == null ? RockSet.allHome() : rocks;
+        this.rocks = rocks == null ? PositionSet.allHome() : rocks;
         this.zom = zoom == null ? Zoomer.HOUSE2HACK : zoom;
         this.iceP = iceP == null ? new IcePainter() : iceP;
         this.rockP = rockP == null ? new RockPainter() : rockP;
@@ -152,7 +152,7 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
             iceP.paintIce(g2);
         }
         { // all rocks
-            rockP.paintRocks(g2, rocks, RockSet.ALL_MASK);
+            rockP.paintRocks(g2, rocks, PositionSet.ALL_MASK);
         }
         g2.setTransform(saved);
         { // paint additional stuff
@@ -173,7 +173,7 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
      * @param rocks
      *            rocks' locations.
      */
-    public void setPos(final double time, final RockSet rocks) {
+    public void setPos(final double time, final PositionSet rocks) {
         setPos(time, rocks, 0);
     }
 
@@ -187,7 +187,7 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
      * @param discontinuous
      *            bitmask of discontinouos locations
      */
-    public void setPos(final double time, final RockSet rocks,
+    public void setPos(final double time, final PositionSet rocks,
             final int discontinuous) {
         this.time = time;
         this.rocks = rocks;
