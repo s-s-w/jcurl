@@ -1,0 +1,135 @@
+<project name="include" default="clean">
+	<!-- $Id$ 
+		
+		manual: http://ant.apache.org/manual/index.html
+	-->
+	
+	<!-- Requires the paths
+		- build.jars
+		- src.path
+	patternset 
+		- test.classes
+	to be set.
+	-->
+	
+	<!--************************************************************
+	**** Provide standard properties and generic targets ***********
+	*************************************************************-->
+
+	<tstamp>
+	    <format property="NOW_ISO" pattern="yyyy-MM-dd HH:mm:ss" locale="de"/>
+	</tstamp>
+	<property file="build.number" />
+	<!-- set to 0 if unset yet: -->
+	<property name="build.number" value="0" />
+	<property name="version.file" value="${major.number}.${minor.number}" />
+	<property name="version.jndi" value="${major.number}_${minor.number}" />
+	<property name="version.number" value="${major.number}.${minor.number}.${revision.number}.${build.number}" />
+
+	<!-- basic settings -->
+	<property name="build.dir" value="build" />
+	<property name="classes.dir" value="classes" />
+	<property name="src.dir" value="src" />
+	<property name="doc.dir" value="docs/api" />
+	<property name="lib.dir" value="lib" />
+	<property name="config.dir" value="config" />
+	<property name="reports.dir" value="reports" />
+	<property name="html.viewer" value="firefox" />
+	<property name="src.encoding" value="utf-8" />
+	<property name="src.debug" value="true" />
+
+	<property name="copyright.txt" value="Copyright &#169; 1998-2005 M. Rohrmoser. All Rights Reserved." />
+	<property name="doc.title" value="No Title" />
+
+	<!--************************************************************
+	**** Generic targets *******************************************
+	*************************************************************-->
+	
+	<target name="init">
+		<echo>${ant.file}</echo>
+	</target>
+	
+	<target name="clean" depends="init" description="Remove compiled classes and documentation.">
+		<delete dir="${doc.dir}" />
+		<delete dir="${classes.dir}" />
+		<delete dir="${build.dir}" />
+		<delete dir="${reports.dir}" />
+	</target>
+
+	<target name="compile" depends="init" description="compile all classes.">
+		<mkdir dir="${classes.dir}" />		
+		<javac classpathref="build.path" destdir="${classes.dir}" srcdir="${src.dir}" 
+		encoding="${src.encoding}" debug="${src.debug}" debuglevel="lines,vars,source"
+		compiler="javac1.4" source="1.4">
+			<src>
+				<path refid="src.path" />
+			</src>
+		</javac>
+	</target>
+	
+	<target name="doc.view" depends="doc" description="View Documentation">
+		<exec executable="${html.viewer}" spawn="true">
+			<arg value="${doc.dir}/index.html" />
+		</exec>
+	</target>
+
+	<target name="test" depends="test.junit" description="Run JUnit tests">
+		<antcall target="test.reports" />
+		<!-- antcall target="test.view" / -->
+		<fail if="junit.failure" message="JUnit tests failed." />
+	</target>
+
+	<target name="test.junit" depends="build">
+		<!-- pathconvert targetos="unix" property="test.path.txt" refid="test.path" />
+		<echo>${test.path.txt}</echo -->
+		<mkdir dir="${reports.dir}/junit.xml" />
+		<junit fork="yes" printsummary="yes" haltonfailure="no" failureproperty="junit.failure">
+			<classpath refid="test.path" />
+			<batchtest fork="yes" todir="${reports.dir}/junit.xml">
+				<fileset dir="classes">
+					<patternset refid="test.classes" />
+				</fileset>
+			</batchtest>
+			<formatter type="xml" />
+		</junit>
+	</target>
+
+	<target name="test.reports" description="Make JUnit reports">
+		<mkdir dir="${reports.dir}/junit.html" />
+		<junitreport todir="${reports.dir}/junit.html">
+			<fileset dir="${reports.dir}/junit.xml">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report todir="${reports.dir}/junit.html" />
+		</junitreport>
+	</target>
+
+	<target name="test.view" depends="test.reports" description="View JUnit reports">
+		<exec executable="${html.viewer}" spawn="true">
+			<arg value="${reports.dir}/junit.html/index.html" />
+		</exec>
+	</target>
+
+	<!--************************************************************
+	**** Parametrised targets **************************************
+	*************************************************************-->
+
+	<target name="manifest.patch">
+		<!-- Implant the version number into the given manifest: -->
+		<manifest file="${config.dir}/${jar.file}/META-INF/MANIFEST.MF" mode="update">
+			<attribute name="Built-By" value="${user.name}" />
+			<attribute name="Built-Time" value="${NOW_ISO}" />
+			<attribute name="Bundle-Version" value="${version.number}" />
+			<attribute name="Bundle-Vendor" value="${vendor.name}" />
+		</manifest>
+	</target>		
+
+	<target name="jar.finish">
+		<!-- create the versioned jar -->
+		<move file="${build.dir}/${jar.src.file}" tofile="${build.dir}/${jar.dst.file}" />
+		<!-- ensure the manifest is in the jar. The packaging-build should set the jar-attribute 
+			filesetmanifest - but I don't see a way! -->
+		<jar destfile="${build.dir}/${jar.dst.file}" manifest="${config.dir}/${jar.src.file}/META-INF/MANIFEST.MF" index="true" update="true" />
+	</target>		
+	
+</project>
