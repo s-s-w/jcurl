@@ -99,7 +99,7 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
     public JCurlPanel(final RockSet rocks, final Zoomer zoom,
             final IcePainter iceP, final RockPainter rockP) {
         this.rocks = rocks == null ? RockSet.allHome() : rocks;
-        this.zom = zoom == null ? Zoomer.HOUSE : zoom;
+        this.zom = zoom == null ? Zoomer.HOUSE2HACK : zoom;
         this.iceP = iceP == null ? new IcePainter() : iceP;
         this.rockP = rockP == null ? new RockPainter() : rockP;
     }
