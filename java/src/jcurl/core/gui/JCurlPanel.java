@@ -116,7 +116,7 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
      * 
      * @param dc
      * @param wc
-     * @return
+     * @return world coordinates
      */
     public Point2D dc2wc(final Point2D dc, Point2D wc) {
         try {
@@ -155,7 +155,10 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
     /**
      * Triggers a repaint.
      * 
+     * @param time
+     *            [sec]
      * @param rocks
+     *            rocks' locations.
      */
     public void setPos(final double time, final RockSet rocks) {
         setPos(time, rocks, 0);
@@ -164,7 +167,12 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
     /**
      * Triggers a repaint.
      * 
+     * @param time
+     *            [sec]
      * @param rocks
+     *            the rocks' locations
+     * @param discontinuous
+     *            bitmask of discontinouos locations
      */
     public void setPos(final double time, final RockSet rocks,
             final int discontinuous) {
@@ -178,7 +186,7 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
      * 
      * @param wc
      * @param dc
-     * @return
+     * @return display coordinates
      */
     public Point2D wc2dc(final Point2D wc, Point2D dc) {
         if (dc == null)

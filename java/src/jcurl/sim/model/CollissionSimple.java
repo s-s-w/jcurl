@@ -20,12 +20,12 @@ package jcurl.sim.model;
 
 import java.awt.geom.Point2D;
 
-import org.apache.log4j.Logger;
-
 import jcurl.core.Rock;
 import jcurl.core.dto.RockProps;
 import jcurl.math.MathVec;
 import jcurl.sim.core.CollissionStrategy;
+
+import org.apache.log4j.Logger;
 
 /**
  * A very simple hit-model using conservation of energy and momentum.
@@ -35,8 +35,8 @@ import jcurl.sim.core.CollissionStrategy;
  * involved rocks. Only conservation of momentum is obeyed, e.g. spin is
  * neglected.
  * 
- * @see jcurl.sim.core.model.SlideSimple
- * @see jcurl.sim.core.model.CollissionSimpleTest
+ * @see jcurl.sim.model.SlideSimple
+ * @see jcurl.sim.model.CollissionSimpleTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -67,7 +67,6 @@ public class CollissionSimple extends CollissionStrategy {
         final Point2D vr = MathVec.sub(vb, va, new Point2D.Double());
         // get the (speed) component along xr
         double scal = MathVec.scal(xr, vr);
-        double vrabs = MathVec.abs(vr);
         MathVec.mult(scal / xrxr, xr, xr); //r *= r * dv;
 
         // exchange speed

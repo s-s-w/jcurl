@@ -154,7 +154,7 @@ public abstract class EnumBase extends Number implements Comparable,
     }
 
     /**
-     * @return
+     * @return int
      */
     public int getValue() {
         return intValue();

@@ -35,7 +35,7 @@ public class RockSet implements Cloneable, Serializable {
      * Check which rocks are non-zero.
      * 
      * @param rocks
-     * @return
+     * @return bitset of the rocks beeing non-zero
      */
     public static int nonZero(final RockSet rocks) {
         final double zero = 1e-6;
@@ -142,7 +142,6 @@ public class RockSet implements Cloneable, Serializable {
     public Rock getRock(int i) {
         if (i % 2 == 0)
             return dark[i / 2];
-        else
-            return light[i / 2];
+        return light[i / 2];
     }
 }

@@ -28,9 +28,8 @@ import jcurl.sim.core.SlideStrategy;
 /**
  * Move rocks straight and without acceleration (friction)
  * 
- * @see jcurl.sim.core.model.SlideSimpleTest
- * @see jcurl.sim.core.RunComputer
- * @see jcurl.sim.core.model.CollissionSimple
+ * @see jcurl.sim.model.SlideSimpleTest
+ * @see jcurl.sim.model.CollissionSimple
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -43,7 +42,7 @@ public class SlideSimple extends SlideStrategy {
     /**
      * Move rocks and don't care about hits.
      * 
-     * @param dt
+     * @param t1
      */
     protected void computeDt(final double t1) {
         final double dt = t1 - tmax;
@@ -57,10 +56,15 @@ public class SlideSimple extends SlideStrategy {
      * Move a single rock according to the given time.
      * 
      * @param pos
+     *            position
      * @param speed
+     *            velocity
+     * @param tEnd
+     *            [sec]
      * @param dt
+     *            [sec]
      * @param idx
-     *            Rock index
+     *            index [0-15] Rock index
      * @return '1' if the rock 'r' is still in motion <b>after </b> the given
      *         period 'dt', '0' otherwise.
      */
@@ -73,7 +77,9 @@ public class SlideSimple extends SlideStrategy {
     }
 
     /**
-     * @return seconds
+     * @param t
+     *            [sec] start time
+     * @return [sec]
      */
     public double estimateNextHit(double t) {
         return estimateNextHit(maxPos, maxSpeed);
@@ -90,6 +96,7 @@ public class SlideSimple extends SlideStrategy {
      *            unused
      * @param Trun
      *            from Hog to Hog. see ./doc/eiszeit.tex for details.
+     * @return [meter/sec]
      */
     public double getInitialSpeed(final double y0, final double Trun) {
         return Ice.HOG_2_HOG / Trun;
@@ -111,7 +118,6 @@ public class SlideSimple extends SlideStrategy {
         return tmin;
     }
 
-    /** Query the friction. */
     public double getMu() {
         return 0;
     }

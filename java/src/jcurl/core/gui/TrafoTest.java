@@ -71,7 +71,6 @@ public class TrafoTest extends TestCase {
 
     public void _test020() {
         final int width = 200;
-        final int height = 0;
         final Point2D.Float zero = new Point2D.Float(0, 0);
         final Point2D.Float ch = new Point2D.Float(0, Ice.HOG_2_TEE);
         final Point2D.Float cb = new Point2D.Float(0, -Ice.BACK_2_TEE);

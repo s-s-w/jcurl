@@ -42,7 +42,6 @@ public class CurveTest extends TestCase {
         assertEquals("", 11.0, po.getC(0, 2.0), 1e-9);
     }
 
-
     public void test020_CurveParts() {
         final CurveParts c = new CurveParts(1);
         //c.getC(0, 0, 0.1);
@@ -51,5 +50,5 @@ public class CurveTest extends TestCase {
         c.add(1, Polynome.getPoly(1.0, 2.0, 3.0, 4.0));
         c.getC(0, 0, 0.1);
         c.getC(0, 0, 1.1);
-    }    
+    }
 }

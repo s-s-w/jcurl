@@ -37,15 +37,14 @@ import org.apache.log4j.Logger;
  * Model without curl and with constant acceleration.
  * <p>
  * Public access to rock locations and speed via
- * {@link SlideStraight#getC(int, double, RockSet)}. The internal computation
- * (including hit-, out- and stillstand check) is via
- * {@link SlideStraight#computeUntil(long)}.
+ * {@link jcurl.sim.core.SlideAnalytic#getC(int, double, RockSet)}. The
+ * internal computation (including hit-, out- and stillstand check) is via
+ * {@link jcurl.sim.core.SlideStrategy#computeUntil(double, double)}.
  * 
  * </p>
  * 
  * @see jcurl.sim.model.SlideStraightTest
  * @see jcurl.sim.model.SlideDenny
- * @see jcurl.sim.core.RunComputer
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -84,14 +83,6 @@ public class SlideStraight extends SlideAnalytic {
         return new CurveFkt(p);
     }
 
-    /**
-     * Guess the initial speed.
-     * 
-     * @param y0
-     *            [meter] Start
-     * @param Trun
-     *            [second] from Hog to Hog. see ./doc/eiszeit.tex for details.
-     */
     public double getInitialSpeed(final double y0, final double Trun) {
         final double HF = Ice.FAR_HOG_2_TEE;
         final double HN = Ice.HOG_2_TEE;
@@ -99,7 +90,6 @@ public class SlideStraight extends SlideAnalytic {
                 + sqr(Trun * accel / 2 - (HN - HF) / Trun));
     }
 
-    /** Query the friction. */
     public double getMu() {
         return 2.0 * accel / RockProps.DEFAULT.getMass();
     }

@@ -25,7 +25,7 @@ import junit.framework.TestCase;
 /**
  * JUnit test.
  * 
- * @see jcurl.sim.core.model.SlideSimple
+ * @see jcurl.sim.model.SlideSimple
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

@@ -111,11 +111,12 @@ public class MathDomTest extends TestCase {
         int loop = 100000;
         long start = System.currentTimeMillis();
         for (int i = loop - 1; i >= 0; i--) {
-            MathDom.Node n = ParserInfix.parse(" 2 * 4 +3 ");
+            ParserInfix.parse(" 2 * 4 +3 ");
         }
         long dt = System.currentTimeMillis() - start;
         long cps = loop * 1000 / dt;
-        assertTrue(cps > 50000);
+        assertTrue("MatDom creation was too slow, only " + cps
+                + " calls per second", cps > 50000);
 
         // evaluation
         final MathDom.Node n = ParserInfix.parse(" 2 * 4 +3 ");
@@ -126,17 +127,18 @@ public class MathDomTest extends TestCase {
         }
         dt = System.currentTimeMillis() - start;
         cps = loop * 1000 / dt;
-        assertTrue(cps > 2000000);
+        assertTrue("MatDom evaluation was too slow, only " + cps
+                + " calls per second", cps > 2000000);
 
         // hard coded arithmetics
         loop *= 100;
         start = System.currentTimeMillis();
-        double d;
         for (int i = loop - 1; i >= 0; i--) {
-            d = 2.0 * 4.0 + 3.0;
+            double d = 2.0 * 4.0 + 3.0;
         }
         dt = System.currentTimeMillis() - start;
         cps = loop * 1000 / dt;
-        assertTrue(cps > 18000000);
+        assertTrue("Built-in math evaluation was too slow, only " + cps
+                + " calls per second", cps > 18000000);
     }
 }

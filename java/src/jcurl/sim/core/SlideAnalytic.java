@@ -100,9 +100,9 @@ public abstract class SlideAnalytic extends SlideStrategy {
      * @param c
      *            0: value, 1: speed
      * @param time
-     *            [msec]
+     *            [sec]
      * @param rocks
-     * @return
+     * @return the c'th derivative of x,y,alpha
      */
     protected RockSet getC(final int c, final double time, RockSet rocks) {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)

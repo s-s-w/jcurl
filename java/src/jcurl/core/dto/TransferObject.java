@@ -37,6 +37,8 @@ public abstract class TransferObject implements Serializable {
 
     /**
      * Generic toString method.
+     * 
+     * @return all properties' values
      */
     public String toString() { // inspired by Hardcore Java (O'reilly, page 228)
         try {

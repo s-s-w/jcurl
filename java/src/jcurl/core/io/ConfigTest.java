@@ -31,7 +31,6 @@ public class ConfigTest extends TestCase {
     }
 
     public void test010_ToDim() {
-        Dim di = Dim.INCH;
         DimVal dim = Config.getDim("-1.4e-3m/s");
         assertEquals(Dim.METER_PER_SEC, dim.dim);
         //assertEquals(-1.4e-3, dim.value);

@@ -43,7 +43,7 @@ public class CurveParts extends CurveBase {
      * @param key
      * @param min
      * @param max
-     * @return
+     * @return found index
      */
     static int binarySearch(double[] a, final double key, int min, int max) {
         for (;;) {
@@ -57,8 +57,7 @@ public class CurveParts extends CurveBase {
             if (min + 1 >= max) {
                 if (a[min] < key && key < a[max])
                     return -1 - max;
-                else
-                    return -1;
+                return -1;
             }
             if (key < a[m]) {
                 max = m;
@@ -109,7 +108,7 @@ public class CurveParts extends CurveBase {
      * Binary search.
      * 
      * @param t
-     * @return
+     * @return the curve index
      */
     private int findFktIdx_BS(double t) {
         if (t < t0[0])
@@ -120,15 +119,14 @@ public class CurveParts extends CurveBase {
             return idx;
         if (idx == -1)
             return parts - 1;
-        else
-            return -2 - idx;
+        return -2 - idx;
     }
 
     /**
      * Linear search.
      * 
      * @param t
-     * @return
+     * @return the curve index
      */
     private int findFktIdx_LS(double t) {
         for (int i = 0; i <= parts; i++) {
@@ -148,7 +146,7 @@ public class CurveParts extends CurveBase {
      * @param c
      *            derivative
      * @param t
-     * @return
+     * @return the value
      */
     public double getC(int dim, int c, double t) {
         final int idx = findFktIdx_BS(t);

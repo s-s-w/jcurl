@@ -66,7 +66,7 @@ public class SlideStraightTest extends TestCase {
         assertEquals("", 0, c.getC(0, 1, 0), 1e-9);
         assertEquals("", 0, c.getC(1, 1, 0), 1e-9);
         assertEquals("", 0, c.getC(2, 1, 0), 1e-9);
-        
+
         assertEquals("", 0, c.getC(0, 0, 1), 1e-9);
         assertEquals("", 0, c.getC(1, 0, 1), 1e-9);
         assertEquals("", 0, c.getC(2, 0, 1), 1e-9);
@@ -85,7 +85,7 @@ public class SlideStraightTest extends TestCase {
         assertEquals("", 0, c.getC(0, 1, 0), 1e-9);
         assertEquals("", 0, c.getC(1, 1, 0), 1e-9);
         assertEquals("", 0, c.getC(2, 1, 0), 1e-9);
-        
+
         assertEquals("", 1, c.getC(0, 0, 1), 1e-9);
         assertEquals("", 2, c.getC(1, 0, 1), 1e-9);
         assertEquals("", 0, c.getC(2, 0, 1), 1e-9);
@@ -104,13 +104,13 @@ public class SlideStraightTest extends TestCase {
         assertEquals("", 0.1, c.getC(0, 1, 0), 1e-9);
         assertEquals("", 0.2, c.getC(1, 1, 0), 1e-9);
         assertEquals("", 0, c.getC(2, 1, 0), 1e-9);
-        
-        assertEquals("", 1.12396388497, c.getC(0, 0, 1), 1e-9);
-        assertEquals("", 2.24792776995, c.getC(1, 0, 1), 1e-9);
+
+        assertEquals("", 1.07603611502, c.getC(0, 0, 1), 1e-9);
+        assertEquals("", 2.15207223004, c.getC(1, 0, 1), 1e-9);
         assertEquals("", 0, c.getC(2, 0, 1), 1e-9);
 
-        assertEquals("", 0.1479277699, c.getC(0, 1, 1), 1e-9);
-        assertEquals("", 0.2958555399, c.getC(1, 1, 1), 1e-9);
+        assertEquals("", 0.052072230042, c.getC(0, 1, 1), 1e-9);
+        assertEquals("", 0.104144460085, c.getC(1, 1, 1), 1e-9);
         assertEquals("", 0, c.getC(2, 1, 1), 1e-9);
     }
 
@@ -119,15 +119,16 @@ public class SlideStraightTest extends TestCase {
         assertEquals("", 2.26999338899, t = s.estimateNextHit(pos, speed), 1e-6);
         s.getPos(t, pos);
         assertEquals("", 0, pos.getDark(0).getX(), 1e-6);
-        assertEquals("", 1, pos.getDark(0).getY(), 1e-6);
+        assertEquals("", 3.006122589111328, pos.getDark(0).getY(), 1e-6);
         assertEquals("", 0, speed.getDark(0).getX(), 1e-6);
-        assertEquals("", 1, speed.getDark(0).getY(), 1e-6);
+        assertEquals("", -1, speed.getDark(0).getY(), 1e-6);
         assertEquals("", 0.2, pos.getLight(0).getX(), 1e-6);
         assertEquals("", 2.5, pos.getLight(0).getY(), 1e-6);
         assertEquals("", 1.0, pos.getLight(1).getX(), 1e-6);
         assertEquals("", 1.5, pos.getLight(1).getY(), 1e-6);
 
         s.getSpeed(t, speed);
-        assertEquals("", 2.26999338899, t = s.estimateNextHit(pos, speed), 1e-6);
+        assertEquals("", 00.36488267571, t = s.estimateNextHit(pos, speed),
+                1e-6);
     }
 }

@@ -36,8 +36,8 @@ import org.apache.log4j.Logger;
 /**
  * A simple viewer that brings all together.
  * 
- * @see jcurl.sim.core.model.SlideSimple
- * @see jcurl.sim.core.model.CollissionSimple
+ * @see jcurl.sim.model.SlideSimple
+ * @see jcurl.sim.model.CollissionSimple
  * @see jcurl.core.gui.SimpleKeys
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
@@ -71,9 +71,6 @@ public class SimpleMain extends JFrame {
         final RockSet speed = new RockSet();
         speed.getDark(0).setLocation(0, -1.5, 0.75);
         // dynamics engines
-        //        final Source src = new RunComputer(new SlideStraight(),
-        //                new CollissionSimple(), new RockSetInterpolator(),
-        //                RockSetProps.DEFAULT, 0, pos, speed);
         final Source src = new SlideStraight(new CollissionSimple());
         src.reset(0, pos, speed, RockSetProps.DEFAULT);
         final SimpleMain frame = new SimpleMain();

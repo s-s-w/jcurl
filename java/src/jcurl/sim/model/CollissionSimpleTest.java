@@ -27,8 +27,7 @@ import jcurl.math.MathVec;
 import junit.framework.TestCase;
 
 /**
- * @see jcurl.sim.core.model.CollissionSimple
- * @see jcurl.sim.core.RunComputerTest
+ * @see jcurl.sim.model.CollissionSimple
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

@@ -77,6 +77,16 @@ public class SlideDenny extends SlideSimple {
     /**
      * Move a single rock according to the given time.
      * 
+     * @param pos
+     *            position
+     * @param speed
+     *            velocity
+     * @param tNow
+     *            [sec] current time
+     * @param Dt
+     *            [sec] dt
+     * @param i
+     *            rock index [0-15]
      * @return '1' if the rock 'r' is still in motion <b>after </b> the given
      *         period 'dt', '0' otherwise.
      */
@@ -110,6 +120,7 @@ public class SlideDenny extends SlideSimple {
      *            Start (distance to tee-line)
      * @param t
      *            from Hog to Hog. see ./doc/eiszeit.tex for details.
+     * @return [meter/sec]
      */
     public double getInitialSpeed(final double y, final double t) {
         double tmp;
@@ -135,6 +146,15 @@ public class SlideDenny extends SlideSimple {
      * This version recomputes ALL rocks' parameters, no matter if the rock
      * stands still, moves untouched or had a hit recently. Later versions could
      * be smarter here. Changes should only be necessary local to this routine!
+     * 
+     * @param startTime
+     *            [sec]
+     * @param pos
+     *            positions
+     * @param speed
+     *            velocities
+     * @param props
+     *            properties
      */
     public void reset(double startTime, RockSet pos, RockSet speed,
             RockSetProps props) {

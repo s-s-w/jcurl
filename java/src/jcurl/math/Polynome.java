@@ -64,7 +64,7 @@ public class Polynome extends Function1D {
      *            initial speed
      * @param a0
      *            constant acceleration
-     * @return
+     * @return the resulting polynome
      */
     public static final Polynome getPoly(double t0, double x0, double v0,
             double a0) {
@@ -83,7 +83,7 @@ public class Polynome extends Function1D {
      *            initial speed
      * @param a0
      *            constant acceleration
-     * @return
+     * @return the resulting polynome's parameters
      */
     public static final double[] getPolyParams(double t0, double x0, double v0,
             double a0) {
