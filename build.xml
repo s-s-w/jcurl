@@ -80,7 +80,7 @@
 	<target name="build" depends="compile" description="Bundle the jars">
 		<manifest file="${config.dir}/jcurl.jar/META-INF/MANIFEST.MF" mode="replace">
 		    <attribute name="Main-Class" value="jcurl.core.gui.SimpleMain"/>
-		    <attribute name="Class-Path" value="log4j-1.2.8.jar"/>
+		    <attribute name="Class-Path" value="ugli-simple.jar"/>
 		    <attribute name="License" value="Gnu Public License"/>
 		    <attribute name="Copyright" value="1998-2005 M. Rohrmoser"/>
  		</manifest>
