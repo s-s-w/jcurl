@@ -31,7 +31,8 @@ import jcurl.core.dto.RockSetProps;
 import jcurl.math.MathVec;
 import jcurl.math.Polynome;
 
-import org.apache.log4j.Logger;
+import org.apache.ugli.LoggerFactory;
+import org.apache.ugli.ULogger;
 
 /**
  * Abstract base class for propagation/friction models.
@@ -43,7 +44,8 @@ import org.apache.log4j.Logger;
  */
 public abstract class SlideStrategy implements Source {
 
-    private static final Logger log = Logger.getLogger(SlideStrategy.class);
+    private static final ULogger log = LoggerFactory
+            .getLogger(SlideStrategy.class);
 
     protected static double hypot(final double a, final double b) {
         return Math.sqrt(a * a + b * b);

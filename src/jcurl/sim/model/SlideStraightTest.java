@@ -28,7 +28,8 @@ import jcurl.math.CurveBase;
 import jcurl.math.Polynome;
 import junit.framework.TestCase;
 
-import org.apache.log4j.Logger;
+import org.apache.ugli.LoggerFactory;
+import org.apache.ugli.ULogger;
 
 /**
  * JUnit test.
@@ -38,7 +39,8 @@ import org.apache.log4j.Logger;
  * @version $Id$
  */
 public class SlideStraightTest extends TestCase {
-    private static final Logger log = Logger.getLogger(SlideStraightTest.class);
+    private static final ULogger log = LoggerFactory
+            .getLogger(SlideStraightTest.class);
 
     public static void main(String[] args) {
         junit.textui.TestRunner.run(SlideStraightTest.class);

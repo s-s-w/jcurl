@@ -26,7 +26,8 @@ import javax.swing.JFrame;
 
 import jcurl.core.PositionSet;
 
-import org.apache.log4j.Logger;
+import org.apache.ugli.LoggerFactory;
+import org.apache.ugli.ULogger;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -34,7 +35,7 @@ import org.apache.log4j.Logger;
  */
 public class Driver extends JFrame {
 
-    private static final Logger log = Logger.getLogger(Driver.class);
+    private static final ULogger log = LoggerFactory.getLogger(Driver.class);
 
     public Driver() {
         addWindowListener(new WindowAdapter() {

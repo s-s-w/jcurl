@@ -31,7 +31,8 @@ import jcurl.core.dto.RockSetProps;
 import jcurl.sim.model.CollissionSimple;
 import jcurl.sim.model.SlideStraight;
 
-import org.apache.log4j.Logger;
+import org.apache.ugli.LoggerFactory;
+import org.apache.ugli.ULogger;
 
 /**
  * A simple viewer that brings all together.
@@ -44,7 +45,8 @@ import org.apache.log4j.Logger;
  */
 public class DemoSimple extends JFrame {
 
-    private static final Logger log = Logger.getLogger(DemoSimple.class);
+    private static final ULogger log = LoggerFactory
+            .getLogger(DemoSimple.class);
 
     private final TargetDiscrete dst;
 

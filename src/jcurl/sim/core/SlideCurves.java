@@ -31,7 +31,8 @@ import jcurl.math.CurveParts;
 import jcurl.math.MathVec;
 import jcurl.math.Polynome;
 
-import org.apache.log4j.Logger;
+import org.apache.ugli.LoggerFactory;
+import org.apache.ugli.ULogger;
 
 /**
  * Abstract base class for analytic (non-discrete) curl models. Based on rock
@@ -43,7 +44,8 @@ import org.apache.log4j.Logger;
  */
 public abstract class SlideCurves extends SlideStrategy {
 
-    private static final Logger log = Logger.getLogger(SlideCurves.class);
+    private static final ULogger log = LoggerFactory
+            .getLogger(SlideCurves.class);
 
     /**
      * Transform the trajectory from speed-coordinates (the y-axis points along

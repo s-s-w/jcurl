@@ -28,7 +28,8 @@ import jcurl.core.RockSet;
 import jcurl.core.SpeedSet;
 import jcurl.core.dto.RockProps;
 
-import org.apache.log4j.Logger;
+import org.apache.ugli.LoggerFactory;
+import org.apache.ugli.ULogger;
 
 /**
  * Abstract base class for collission models.
@@ -41,7 +42,7 @@ public abstract class CollissionStrategy {
 
     private static final float HIT_MAX_DIST = 1e-6F;
 
-    private static final Logger log = Logger
+    private static final ULogger log = LoggerFactory
             .getLogger(CollissionStrategy.class);
 
     private static final float Rad = RockProps.DEFAULT.getRadius();

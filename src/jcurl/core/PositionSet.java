@@ -19,6 +19,8 @@
 package jcurl.core;
 
 import jcurl.core.dto.Ice;
+import jcurl.core.dto.RockProps;
+import jcurl.core.io.Dim;
 
 /**
  * A {@link jcurl.core.RockSet}%nbsp;with location semantics.
@@ -28,6 +30,11 @@ import jcurl.core.dto.Ice;
  * @version $Id$
  */
 public class PositionSet extends RockSet {
+
+    private static final double MaxScoreDistSq = sqr(RockProps.DEFAULT
+            .getRadius()
+            + Dim.f2m(6));
+
     public static PositionSet allHome() {
         return allHome(null);
     }
@@ -50,6 +57,31 @@ public class PositionSet extends RockSet {
         for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
             Ice.setOut(ret.dark[i], true, i);
             Ice.setOut(ret.light[i], false, i);
+        }
+        return ret;
+    }
+
+    /**
+     * Get the "shot" rocks (as bitmask).
+     * 
+     * @param a
+     * @return bitmask of the shot rocks.
+     */
+    public static int getShotRocks(final PositionSet a) {
+        int ret = 0;
+        int scoring = 0;
+        double scoreDistSq = MaxScoreDistSq;
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+            final double distSq = a.getRock(i).distanceSq(0, 0);
+            if (distSq < scoreDistSq) {
+                if (i % 2 != scoring) {
+                    // if the scoring color changes start anew
+                    ret = 0;
+                    scoring = i % 2;
+                }
+                ret |= 1 << i;
+                scoreDistSq = distSq;
+            }
         }
         return ret;
     }

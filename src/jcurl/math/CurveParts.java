@@ -18,7 +18,8 @@
  */
 package jcurl.math;
 
-import org.apache.log4j.Logger;
+import org.apache.ugli.LoggerFactory;
+import org.apache.ugli.ULogger;
 
 /**
  * Combined curve.
@@ -33,7 +34,8 @@ public class CurveParts extends CurveBase {
 
     private static final int initialSize = 5;
 
-    private static final Logger log = Logger.getLogger(CurveParts.class);
+    private static final ULogger log = LoggerFactory
+            .getLogger(CurveParts.class);
 
     /**
      * Search only part of an array.

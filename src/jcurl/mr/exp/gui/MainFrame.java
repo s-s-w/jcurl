@@ -26,7 +26,8 @@ import javax.swing.JFrame;
 
 import jcurl.mr.exp.math.PointList;
 
-import org.apache.log4j.Logger;
+import org.apache.ugli.LoggerFactory;
+import org.apache.ugli.ULogger;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -34,7 +35,7 @@ import org.apache.log4j.Logger;
  */
 public class MainFrame extends JFrame {
 
-    private static final Logger log = Logger.getLogger(MainFrame.class);
+    private static final ULogger log = LoggerFactory.getLogger(MainFrame.class);
 
     private final PointList curve;
 

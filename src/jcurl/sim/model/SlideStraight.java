@@ -31,7 +31,8 @@ import jcurl.math.Polynome;
 import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.SlideCurves;
 
-import org.apache.log4j.Logger;
+import org.apache.ugli.LoggerFactory;
+import org.apache.ugli.ULogger;
 
 /**
  * Model without curl and with constant acceleration.
@@ -50,7 +51,8 @@ import org.apache.log4j.Logger;
  */
 public class SlideStraight extends SlideCurves {
 
-    private static final Logger log = Logger.getLogger(SlideStraight.class);
+    private static final ULogger log = LoggerFactory
+            .getLogger(SlideStraight.class);
 
     private double accel;
 
