@@ -48,7 +48,7 @@ public class SimpleKeys implements KeyListener {
         this.dst = dst;
         player = new RealTimePlayer(src.getMinT(), 1.0, src, dst);
         // push the initial state from src to dst
-        final long t0 = src.getMinT();
+        final double t0 = src.getMinT();
         dst.setPos(t0, src.getPos(t0, new RockSet()));
     }
 

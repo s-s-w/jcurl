@@ -24,6 +24,7 @@ import jcurl.core.Rock;
 import jcurl.core.RockSet;
 import jcurl.core.dto.RockSetProps;
 import jcurl.math.CurveBase;
+import jcurl.math.CurveInterval;
 import jcurl.math.CurveParts;
 import jcurl.math.MathVec;
 import jcurl.math.Polynome;
@@ -93,8 +94,8 @@ public abstract class SlideAnalytic extends SlideStrategy {
 
     /**
      * Get the n-th derivative. Used e.g. by
-     * {@link SlideStrategy#getPos(long, RockSet)},
-     * {@link SlideStrategy#getSpeed(long, RockSet)}.
+     * {@link SlideStrategy#getPos(double, RockSet)},
+     * {@link SlideStrategy#getSpeed(double, RockSet)}.
      * 
      * @param c
      *            0: value, 1: speed
@@ -103,8 +104,8 @@ public abstract class SlideAnalytic extends SlideStrategy {
      * @param rocks
      * @return
      */
-    protected RockSet getC(final int c, final long time, RockSet rocks) {
-        final double t = 1e-3 * time;
+    protected RockSet getC(final int c, final double time, RockSet rocks) {
+        final double t = time / DT;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             getC(c, t, i, rocks.getRock(i));
         return rocks;
@@ -122,13 +123,13 @@ public abstract class SlideAnalytic extends SlideStrategy {
         return true;
     }
 
-    protected boolean move(long t0, long t1, int idx, Rock pos, Rock speed) {
-        getC(0, 1e-3 * t1, idx, pos);
-        getC(1, 1e-3 * t1, idx, speed);
+    protected boolean move(double t0, double t1, int idx, Rock pos, Rock speed) {
+        getC(0, t1, idx, pos);
+        getC(1, t1, idx, speed);
         return speed.getX() != 0 || speed.getY() != 0;
     }
 
-    public final void reset(final long startTime, final RockSet startPos,
+    public final void reset(final double startTime, final RockSet startPos,
             final RockSet startSpeed, final RockSetProps props) {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             c[i] = new CurveParts(3);
@@ -145,7 +146,7 @@ public abstract class SlideAnalytic extends SlideStrategy {
      * @param discontinuous
      *            bitmask of the discontuous rocks
      */
-    public void set(final long t0, final RockSet pos, final RockSet speed,
+    public void set(final double t0, final RockSet pos, final RockSet speed,
             final int discontinuous) {
         if (log.isDebugEnabled())
             log.debug("t0=" + t0 + " rocks=b"
@@ -156,13 +157,24 @@ public abstract class SlideAnalytic extends SlideStrategy {
             tmin = t0;
         tmax = t0;
 
-        final double t = 1e-3 * t0;
+        final double t =  t0 / DT;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             int a = (1 << i);
             if (a == (discontinuous & a)) {
                 // add a new curve to the list
-                c[i].add(t, createCurve(t, pos.getRock(i), speed.getRock(i)));
+                final CurveBase cu = createCurve(t, pos.getRock(i), speed
+                        .getRock(i));
+                c[i].add(t, new CurveInterval(t, findThalt(t, cu), cu));
             }
         }
+    }
+
+    private static double findThalt(final double t0, final CurveBase cu) {
+        final double thx = cu.computeNewtonZero(0, 1, t0);
+        final double thy = cu.computeNewtonZero(1, 1, t0);
+        final double thalt = thx > thy ? thx : thy;
+        if (log.isDebugEnabled())
+            log.debug("thalt=" + thalt);
+        return thalt;
     }
 }

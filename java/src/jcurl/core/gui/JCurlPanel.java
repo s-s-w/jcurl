@@ -98,7 +98,7 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
 
     private RockSet rocks;
 
-    private long time = 0;
+    private double time = 0;
 
     private ZoomArea zom;
 
@@ -149,7 +149,7 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
         //g2.fillRect(0, 0, w, 20);
         g2.setFont(timeF);
         g2.setColor(timeC);
-        g2.drawString(Long.toString(time), w - 70 + 10, 3 * 20 / 4);
+        g2.drawString(Double.toString(time), w - 70 + 10, 3 * 20 / 4);
     }
 
     /**
@@ -157,7 +157,7 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
      * 
      * @param rocks
      */
-    public void setPos(final long time, final RockSet rocks) {
+    public void setPos(final double time, final RockSet rocks) {
         setPos(time, rocks, 0);
     }
 
@@ -166,7 +166,7 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
      * 
      * @param rocks
      */
-    public void setPos(final long time, final RockSet rocks,
+    public void setPos(final double time, final RockSet rocks,
             final int discontinuous) {
         this.time = time;
         this.rocks = rocks;

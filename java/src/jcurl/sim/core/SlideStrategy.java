@@ -25,6 +25,7 @@ import org.apache.log4j.Logger;
 import jcurl.core.Rock;
 import jcurl.core.RockSet;
 import jcurl.core.Source;
+import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
 import jcurl.core.dto.RockSetProps;
 import jcurl.math.MathVec;
@@ -41,6 +42,7 @@ import jcurl.sim.model.SlideStraight;
  * @version $Id$
  */
 public abstract class SlideStrategy implements Source {
+    protected double DT = 1e3;
     private static final Logger log = Logger.getLogger(SlideStrategy.class);
 
     protected static double hypot(final double a, final double b) {
@@ -98,11 +100,11 @@ public abstract class SlideStrategy implements Source {
 
     protected int rocksInMotion = 0;
 
-    protected final long T0 = -1;
+    protected final double T0 = -1;
 
-    protected long tmax = -1;
+    protected double tmax = -1;
 
-    protected long tmin = -1;
+    protected double tmin = -1;
 
     protected SlideStrategy(final CollissionStrategy coll) {
         this.coll = coll;
@@ -116,34 +118,37 @@ public abstract class SlideStrategy implements Source {
      * @param dt
      *            intervals
      */
-    protected void computeUntil(final long time, final long dt) {
+    protected void computeUntil(final double time, final double dt) {
         if (log.isDebugEnabled())
             log.debug("t=" + time + " dt=" + dt);
         // convert seconds to milliseconds and slowly approach hits
-        final double fact = 0.95 * 1e3;
+        final double fact = 0.95;
         // check: is the time known already?
         while (time > tmax) {
             checkHit: for (;;) {
+                final double tnow = tmax / DT;
                 // slowly approach the hit
                 approach: for (;;) {
                     // check the next hit
-                    final long dtHit = (long) (fact * this.estimateNextHit(
-                            maxPos, maxSpeed));
+                    final double dtHit = fact
+                            * this.estimateNextHit(maxPos, maxSpeed);
                     if (log.isDebugEnabled())
-                        log.debug("tmax=" + tmax + " dtHit=" + dtHit);
+                        log.debug("tmax=" + tmax + " tnow=" + tnow + " dtHit="
+                                + dtHit);
                     if (dt < dtHit)
                         break checkHit;
-                    if (dtHit == 0)
-                        break approach;
                     if (dtHit <= 0)
                         throw new IllegalStateException("dtHit=" + dtHit
                                 + " is in the past!");
+                    if (dtHit < 1e-3)
+                        break approach;
                     // move til hit
-                    int mov = move(tmax, tmax + dtHit, maxPos, maxSpeed);
+                    int mov = move(tnow, tnow + dtHit, maxPos, maxSpeed);
                     if (mov != rocksInMotion)
-                        set(tmax + dtHit, maxPos, maxSpeed, mov ^ rocksInMotion);
+                        set((long) (DT * (tnow + dtHit)), maxPos, maxSpeed,
+                                mov ^ rocksInMotion);
                     else
-                        tmax += dtHit;
+                        tmax = (long) (DT * (tnow + dtHit));
                     rocksInMotion = mov;
                 }
                 // compute the hit
@@ -189,7 +194,7 @@ public abstract class SlideStrategy implements Source {
         return t;
     }
 
-    protected abstract RockSet getC(int c, long time, RockSet rocks);
+    protected abstract RockSet getC(int c, double time, RockSet rocks);
 
     /**
      * Guess the initial speed.
@@ -204,25 +209,25 @@ public abstract class SlideStrategy implements Source {
     /**
      * Not supported.
      */
-    public long getMaxT() {
+    public double getMaxT() {
         throw new UnsupportedOperationException("Not supported");
     }
 
-    public long getMinT() {
+    public double getMinT() {
         return tmin;
     }
 
     /** Query the friction. */
     public abstract double getMu();
 
-    public final RockSet getPos(final long time, RockSet rocks) {
+    public final RockSet getPos(final double time, RockSet rocks) {
         if (log.isDebugEnabled())
             log.debug("t=" + time);
         computeUntil(time, dt);
         return getC(0, time, rocks);
     }
 
-    public final RockSet getSpeed(final long time, RockSet rocks) {
+    public final RockSet getSpeed(final double time, RockSet rocks) {
         if (log.isDebugEnabled())
             log.debug("t=" + time);
         computeUntil(time, dt);
@@ -237,6 +242,10 @@ public abstract class SlideStrategy implements Source {
      * @return
      */
     protected boolean isOut(final Rock x, final Rock v) {
+        if (x.getX() > Ice.SIDE_2_CENTER || x.getX() < -Ice.SIDE_2_CENTER)
+            return true;
+        if (x.getY() < -Ice.BACK_2_TEE)
+            return true;
         return false;
     }
 
@@ -251,7 +260,7 @@ public abstract class SlideStrategy implements Source {
      * @param speed
      * @return <code>true</code> the rock moves at t1
      */
-    protected abstract boolean move(final long t0, final long t1, int idx,
+    protected abstract boolean move(final double t0, final double t1, int idx,
             final Rock pos, final Rock speed);
 
     /**
@@ -264,7 +273,7 @@ public abstract class SlideStrategy implements Source {
      * @param speed
      * @return bitmask of the rocks in motion at t1
      */
-    protected int move(final long t0, final long t1, final RockSet pos,
+    protected int move(final double t0, final double t1, final RockSet pos,
             final RockSet speed) {
         if (log.isDebugEnabled())
             log.debug("t0=" + t0 + " t1=" + t1);
@@ -272,15 +281,19 @@ public abstract class SlideStrategy implements Source {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             final Rock x = pos.getRock(i);
             final Rock v = speed.getRock(i);
-            if (isOut(x, v))
-                ;
-            if (move(t0, t1, i, x, v))
-                ret |= 1 << i;
+            if (move(t0, t1, i, x, v)) {
+                // only check moving rocks.
+                if (isOut(x, v)) {
+                    Ice.setOut(x, (i % 2) == 0, i / 2);
+                    v.setLocation(0, 0, 0);
+                } else
+                    ret |= 1 << i;
+            }
         }
         return ret;
     }
 
-    public void reset(long startTime, RockSet startPos, RockSet startSpeed,
+    public void reset(double startTime, RockSet startPos, RockSet startSpeed,
             RockSetProps props) {
         tmin = tmax = T0;
         set(startTime, startPos, startSpeed, RockSet.ALL_MASK);
@@ -302,7 +315,7 @@ public abstract class SlideStrategy implements Source {
      * @param discontinuous
      *            bitmask of the discontinuous rocks
      */
-    protected abstract void set(final long t0, final RockSet pos,
+    protected abstract void set(final double t0, final RockSet pos,
             final RockSet speed, final int discontinuous);
 
     /**

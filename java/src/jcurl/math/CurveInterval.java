@@ -16,29 +16,44 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core;
+package jcurl.math;
 
 /**
- * Interface for interpolators of single {@link jcurl.core.Rock}s.
- * 
- * @see jcurl.core.RockSetInterpolator
- * @see jcurl.core.CSplineRockInterpolator
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface IRockInterpolator {
-    public abstract void add(final double t, final Rock rock);
+public class CurveInterval extends CurveBase {
 
-    public abstract void add(final double t, final Rock rock,
-            final boolean discontinuous);
+    private final CurveBase curve;
 
-    public abstract double getMaxT();
+    private final double tmax;
 
-    public abstract double getMinT();
+    private final double tmin;
 
-    public abstract Rock getPos(final double t, final Rock rock);
+    public CurveInterval(final double tmin, final double tmax,
+            final CurveBase curve) {
+        super(curve.dim);
+        this.curve = curve;
+        this.tmin = tmin;
+        this.tmax = tmax;
+    }
 
-    public abstract Rock getSpeed(final double t, final Rock rock);
-
-    public abstract void reset();
+    /**
+     * @param dim
+     * @param c
+     * @param t
+     * @return
+     */
+    public double getC(final int dim, int c, double t) {
+        if (t < tmin) {
+            if (c > 0)
+                return 0;
+            t = tmin;
+        } else if (t > tmax) {
+            if (c > 0)
+                return 0;
+            t = tmax;
+        }
+        return curve.getC(dim, c, t);
+    }
 }

@@ -37,7 +37,7 @@ import org.apache.log4j.Logger;
  * Model without curl and with constant acceleration.
  * <p>
  * Public access to rock locations and speed via
- * {@link SlideStraight#getC(int, long, RockSet)}. The internal computation
+ * {@link SlideStraight#getC(int, double, RockSet)}. The internal computation
  * (including hit-, out- and stillstand check) is via
  * {@link SlideStraight#computeUntil(long)}.
  * 

@@ -55,8 +55,12 @@ public class CollissionSimple extends CollissionStrategy {
         // vector from A's center to B's:
         final Point2D xr = MathVec.sub(xb, xa, new Point2D.Double());
         final double xrxr = MathVec.scal(xr, xr);
-        if (xrxr > RR || !(va.nonzero() || vb.nonzero()))
+        if (xrxr > RR || !(va.nonzero() || vb.nonzero())) {
+            if (log.isDebugEnabled())
+                log.debug("Too far away distance="
+                        + (Math.sqrt(xrxr) - (Rad + Rad)));
             return false;
+        }
         if (log.isDebugEnabled())
             log.debug("hit!");
         // get the speed of approach (A -> B):

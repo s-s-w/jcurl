@@ -45,8 +45,8 @@ public class SlideSimple extends SlideStrategy {
      * 
      * @param dt
      */
-    protected void computeDt(final long t1) {
-        final long dt = t1 - tmax;
+    protected void computeDt(final double t1) {
+        final double dt = t1 - tmax;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             computeDt(maxPos.getRock(i), maxSpeed.getRock(i), t1, dt, i);
         }
@@ -64,11 +64,11 @@ public class SlideSimple extends SlideStrategy {
      * @return '1' if the rock 'r' is still in motion <b>after </b> the given
      *         period 'dt', '0' otherwise.
      */
-    protected int computeDt(final Rock pos, final Rock speed, long tEnd,
-            final long dt, int idx) {
-        pos.setX(pos.getX() + speed.getX() * dt * 1e-3);
-        pos.setY(pos.getY() + speed.getY() * dt * 1e-3);
-        pos.setZ(pos.getZ() + speed.getZ() * dt * 1e-3);
+    protected int computeDt(final Rock pos, final Rock speed, double tEnd,
+            final double dt, int idx) {
+        pos.setX(pos.getX() + speed.getX() * dt / DT);
+        pos.setY(pos.getY() + speed.getY() * dt / DT);
+        pos.setZ(pos.getZ() + speed.getZ() * dt / DT);
         return 1;
     }
 
@@ -79,7 +79,7 @@ public class SlideSimple extends SlideStrategy {
         return estimateNextHit(maxPos, maxSpeed);
     }
 
-    protected RockSet getC(int c, long time, RockSet rocks) {
+    protected RockSet getC(int c, double time, RockSet rocks) {
         throw new NotImplementedYetException();
     }
 
@@ -103,11 +103,11 @@ public class SlideSimple extends SlideStrategy {
         return RockSet.nonZero(maxSpeed);
     }
 
-    public long getMaxT() {
+    public double getMaxT() {
         throw new UnsupportedOperationException("Not supported");
     }
 
-    public long getMinT() {
+    public double getMinT() {
         return tmin;
     }
 
@@ -137,11 +137,11 @@ public class SlideSimple extends SlideStrategy {
         return true;
     }
 
-    protected boolean move(long t0, long t1, int idx, Rock pos, Rock speed) {
+    protected boolean move(double t0, double t1, int idx, Rock pos, Rock speed) {
         throw new NotImplementedYetException();
     }
 
-    protected void set(long t0, RockSet pos, RockSet speed, int discontinuous) {
+    protected void set(double t0, RockSet pos, RockSet speed, int discontinuous) {
         maxPos = pos;
         maxSpeed = speed;
     }

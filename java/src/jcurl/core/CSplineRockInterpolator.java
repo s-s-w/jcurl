@@ -47,25 +47,25 @@ public class CSplineRockInterpolator implements IRockInterpolator {
         alpha = new CSplineInterpolator();
     }
 
-    public void add(final long t, final Rock rock) {
+    public void add(final double t, final Rock rock) {
         add(t, rock, false);
     }
 
-    public void add(final long t, final Rock rock, final boolean discontinuous) {
+    public void add(final double t, final Rock rock, final boolean discontinuous) {
         x.add(t, rock.getX());
         y.add(t, rock.getY());
         alpha.add(t, rock.getZ());
     }
 
-    public long getMaxT() {
+    public double getMaxT() {
         return (long) x.getMaxX();
     }
 
-    public long getMinT() {
+    public double getMinT() {
         return (long) x.getMinX();
     }
 
-    public Rock getPos(final long t, final Rock rock) {
+    public Rock getPos(final double t, final Rock rock) {
         final Rock ret = rock == null ? new RockFloat() : rock;
         ret.setX(x.getC0(t));
         ret.setY(y.getC0(t));
@@ -73,7 +73,7 @@ public class CSplineRockInterpolator implements IRockInterpolator {
         return ret;
     }
 
-    public Rock getSpeed(final long t, final Rock rock) {
+    public Rock getSpeed(final double t, final Rock rock) {
         final Rock ret = rock == null ? new RockFloat() : rock;
         ret.setX(x.getC1(t));
         ret.setY(y.getC1(t));

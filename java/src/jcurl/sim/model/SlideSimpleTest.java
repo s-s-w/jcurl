@@ -20,7 +20,6 @@ package jcurl.sim.model;
 
 import jcurl.core.RockSet;
 import jcurl.core.dto.RockSetProps;
-import jcurl.sim.core.SlideStrategy;
 import junit.framework.TestCase;
 
 /**
@@ -47,7 +46,7 @@ public class SlideSimpleTest extends TestCase {
         assertTrue(slid.isDiscrete());
 
         slid.reset(t0, rPos, rSpeed, RockSetProps.DEFAULT);
-        assertEquals(t0, slid.getMinT());
+        assertEquals("", t0, slid.getMinT(), 1e-6);
 
         final double nextH = slid.estimateNextHit(t0);
         assertEquals("", 9.223372e15, nextH, 1e9);
@@ -64,7 +63,7 @@ public class SlideSimpleTest extends TestCase {
         assertTrue(slid.isDiscrete());
 
         slid.reset(t0, rPos, rSpeed, RockSetProps.DEFAULT);
-        assertEquals(t0, slid.getMinT());
+        assertEquals("", t0, slid.getMinT(), 1e-6);
 
         for (int i = 0; i < 30000; i++) {
             long t1 = t0 + i;
@@ -73,7 +72,7 @@ public class SlideSimpleTest extends TestCase {
             RockSet v1 = slid.getSpeed(t1, null);
             //assertEquals(t1, p1.getTime());
             assertEquals("", 0, p1.getLight(0).getX(), 1e-6);
-            assertEquals("", (t1 - t0) / 1e3, p1.getLight(0).getY(), 1e-2);
+            assertEquals("", (t1 - t0) / 1e-3, p1.getLight(0).getY(), 1e-2);
             //assertEquals(t1, v1.getTime());
         }
     }

@@ -69,25 +69,8 @@ public abstract class Function1D extends CurveBase {
      * @param x0
      * @return
      */
-    public double computeZeroNewton(double x) {
-        final int c = 0;
-        final double eps = 1e-9;
-        for (;;) {
-            double dx = eps;
-            if (Math.abs(x) > eps)
-                dx = x * eps;
-            final double f1 = getC(c, x);
-            x += dx;
-            final double f = getC(c, x);
-            dx = -f * dx / (f - f1);
-            x += dx;
-            double xa = Math.abs(x);
-            if (xa < 1)
-                xa = 1;
-            if (Math.abs(dx) < eps * xa || Math.abs(f) < eps)
-                ;
-            else
-                return x;
-        }
+    public double computeNewtonZero(final int c, double x) {
+        return computeNewtonZero(0, c, x);
     }
+
 }
