@@ -2,6 +2,7 @@
 <html>
 <head>
    <!-- 
+   $Id$
    Projektseite: http://developer.berlios.de/projects/jcurl/
    Wiki: http://openfacts.berlios.de/index-en.phtml?title=JCurl
    -->
