@@ -18,9 +18,11 @@
  */
 package jcurl.core.gui;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Paint;
+import java.awt.Stroke;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -36,7 +38,7 @@ import jcurl.core.io.Dim;
  */
 public class IcePainter {
     public static class ColorSet {
-        
+
         public Paint backGround = new Color(0xF0F0FF);
 
         public Paint c1 = new Color(0xFFFFFF);
@@ -53,8 +55,10 @@ public class IcePainter {
 
         public Paint hog2tee = new Color(0xFFFFFF);
 
-        public Paint tee2back = new Color(0xFFFFFF);
+        /** (wc) millimiters */
+        public Stroke stroke = new BasicStroke(0.005F * JCurlPanel.SCALE);
 
+        public Paint tee2back = new Color(0xFFFFFF);
     }
 
     protected static final Line2D.Float back;
@@ -129,6 +133,7 @@ public class IcePainter {
      * @param g
      */
     public void paintIce(final Graphics2D g) {
+        g.setStroke(color.stroke);
         // filled stuff
         g.setPaint(color.hog2hog);
         g.fill(hog2hog);
