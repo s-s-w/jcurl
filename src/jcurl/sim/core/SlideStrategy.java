@@ -52,6 +52,7 @@ public abstract class SlideStrategy implements Source {
     protected static double hypot(final double a, final double b) {
         return Math.sqrt(a * a + b * b);
     }
+
     public static SlideStrategy newInstance(final Class clz,
             final CollissionStrategy coll) {
         final Class parent = SlideStrategy.class;
@@ -175,7 +176,7 @@ public abstract class SlideStrategy implements Source {
         // convert seconds to milliseconds and slowly approach hits
         final double fact = 0.95;
         final double dtHit = 1e-3; // time of the hit itself
-        final double dtNextHitThres = 1e-6;
+        final double dtNextHitThres = 5e-7;
         // check: is the time known already?
         while (time > tmax) {
             checkHit: for (;;) {
