@@ -35,7 +35,7 @@ import org.apache.log4j.Logger;
  * involved rocks. Only conservation of momentum is obeyed, e.g. spin is
  * neglected.
  * 
- * @see jcurl.sim.model.SlideSimple
+ * @see jcurl.sim.model.SlideStraight
  * @see jcurl.sim.model.CollissionSimpleTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
