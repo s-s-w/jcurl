@@ -32,7 +32,7 @@ import jcurl.math.Polynome;
 import org.apache.log4j.Logger;
 
 /**
- * Abstract base class for analytic (non-discrete) curl models. Based on rock
+ * Abstract base class for analytic (non-discrete) curl models. Based on granite
  * trajectories in {@link jcurl.math.CurveBase}-form.
  * 
  * @see jcurl.math.CurveBase
@@ -160,7 +160,7 @@ public abstract class SlideCurves extends SlideStrategy {
 
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             if (0 != (discontinuous & (1 << i))) {
-                log.info("compute rock #" + i);
+                log.info("compute granite #" + i);
                 // add a new curve to the list
                 final CurveBase cu = createCurve(t0, pos.getRock(i), speed
                         .getRock(i));

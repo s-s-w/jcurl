@@ -20,6 +20,7 @@ package jcurl.core.gui;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Paint;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -35,21 +36,21 @@ import jcurl.core.io.Dim;
 public class IcePainter {
     public static class ColorSet {
 
-        public Color c1 = Color.RED;
+        public Paint c1 = Color.RED;
 
-        public Color c12 = Color.CYAN;
+        public Paint c12 = Color.CYAN;
 
-        public Color c4 = Color.MAGENTA;
+        public Paint c4 = Color.MAGENTA;
 
-        public Color c8 = Color.ORANGE;
+        public Paint c8 = Color.ORANGE;
 
-        public Color contours = Color.BLACK;
+        public Paint contours = Color.BLACK;
 
-        public Color hog2hog = Color.BLUE;
+        public Paint hog2hog = Color.BLUE;
 
-        public Color hog2tee = Color.PINK;
+        public Paint hog2tee = Color.PINK;
 
-        public Color tee2back = new Color(0xC9C9C9);
+        public Paint tee2back = new Color(0xC9C9C9);
     }
 
     protected static final Line2D.Float back;
@@ -118,22 +119,22 @@ public class IcePainter {
      */
     public void paintIce(final Graphics2D g) {
         // filled stuff
-        g.setColor(color.hog2hog);
+        g.setPaint(color.hog2hog);
         g.fill(hog2hog);
-        g.setColor(color.hog2tee);
+        g.setPaint(color.hog2tee);
         g.fill(hog2tee);
-        g.setColor(color.tee2back);
+        g.setPaint(color.tee2back);
         g.fill(tee2back);
-        g.setColor(color.c12);
+        g.setPaint(color.c12);
         g.fill(C12);
-        g.setColor(color.c8);
+        g.setPaint(color.c8);
         g.fill(C8);
-        g.setColor(color.c4);
+        g.setPaint(color.c4);
         g.fill(C4);
-        g.setColor(color.c1);
+        g.setPaint(color.c1);
         g.fill(C1);
         // contours
-        g.setColor(color.contours);
+        g.setPaint(color.contours);
         g.draw(C12);
         g.draw(C8);
         g.draw(C4);

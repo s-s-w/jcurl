@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.Paint;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 
@@ -34,33 +35,31 @@ import jcurl.core.dto.RockProps;
  * @version $Id$
  */
 public class RockPainter {
+    public static class ColorSet {
+        public Paint contour = Color.BLACK;
 
-    private static final Color contourC;
+        public Paint dark = Color.RED;
 
-    private static final Color darkC;
+        public Paint granite = Color.LIGHT_GRAY;
+
+        public Paint label = Color.BLACK;
+
+        public Paint light = Color.YELLOW;
+    }
+
+    private final ColorSet colors = new ColorSet();
 
     private static final Font fo;
 
-    private static final Color labelC;
+    protected static final Arc2D.Float inner;
 
     private static final char[] labels = { '1', '2', '3', '4', '5', '6', '7',
             '8' };
 
-    private static final Color lightC;
-
-    private static final Color rockC;
-
     protected static final Arc2D.Float outer;
-
-    protected static final Arc2D.Float inner;
 
     static {
         fo = new Font("SansSerif", Font.BOLD, JCurlPanel.SCALE / 5);
-        rockC = Color.LIGHT_GRAY;
-        darkC = Color.RED;
-        lightC = Color.YELLOW;
-        labelC = Color.BLACK;
-        contourC = Color.BLACK;
 
         final int f = JCurlPanel.SCALE;
         final int ro = (int) (f * RockProps.DEFAULT.getRadius());
@@ -76,7 +75,7 @@ public class RockPainter {
     private int txtYoff = 0;
 
     /**
-     * Draw one single rock at (0,0,0)
+     * Draw one single granite at (0,0,0)
      * 
      * @param g
      * @param isDark
@@ -85,24 +84,24 @@ public class RockPainter {
     protected void paintRock(final Graphics2D g, final boolean isDark,
             final int idx) {
         // body
-        g.setColor(rockC);
+        g.setPaint(colors.granite);
         g.fill(outer);
-        g.setColor(isDark ? darkC : lightC);
+        g.setPaint(isDark ? colors.dark : colors.light);
         g.fill(inner);
         // label
         if (fm == null)
             fm = g.getFontMetrics(fo);
         if (txtXoff == null) {
             txtYoff = (int) (0.6 * 0.5 * fm.getHeight());
-            txtXoff = new int[RockSet.ROCKS_PER_SET];
-            for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
-                txtXoff[i] = -fm.charWidth(labels[idx]) / 2;
+            txtXoff = new int[RockSet.ROCKS_PER_COLOR];
+            for (int i = RockSet.ROCKS_PER_COLOR - 1; i >= 0; i--)
+                txtXoff[i] = -fm.charWidth(labels[i]) / 2;
         }
         g.setFont(fo);
-        g.setColor(labelC);
+        g.setPaint(colors.label);
         g.drawChars(labels, idx, 1, txtXoff[idx], txtYoff);
         // contours
-        g.setColor(contourC);
+        g.setPaint(colors.contour);
         // handle
         //g.fillOval(-p, -p, 2 * p, ri + p);
         g.draw(inner);
@@ -110,7 +109,7 @@ public class RockPainter {
     }
 
     /**
-     * Draw one rock. Builds the coordinate transform and calls
+     * Draw one granite. Builds the coordinate transform and calls
      * {@link RockPainter#paintRock(Graphics2D, boolean, int)}.
      * 
      * @param g

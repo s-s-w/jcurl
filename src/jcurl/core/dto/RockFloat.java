@@ -23,7 +23,7 @@ import java.io.Serializable;
 import jcurl.core.Rock;
 
 /**
- * Either location or speed of a rock. This class is mostly for display and
+ * Either location or speed of a granite. This class is mostly for display and
  * storage means. The value array is accessible for direct use with e.g.
  * {@link jcurl.math.CurveBase#getC(int, double, float[])}.
  * 

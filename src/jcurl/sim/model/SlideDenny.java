@@ -26,7 +26,7 @@ import jcurl.core.dto.RockSetProps;
 import jcurl.sim.core.CollissionStrategy;
 
 /**
- * Mark Denny's curl-model. Motion of a curling rock acc. to "Curling rock
+ * Mark Denny's curl-model. Motion of a curling granite acc. to "Curling granite
  * dynamics", Mark Denny, Canadian Journal of Physics, 1988, P. 295-304.
  * <p>
  * Requires heavy debugging.
@@ -75,7 +75,7 @@ public class SlideDenny extends SlideSimple {
     }
 
     /**
-     * Move a single rock according to the given time.
+     * Move a single granite according to the given time.
      * 
      * @param pos
      *            position
@@ -86,8 +86,8 @@ public class SlideDenny extends SlideSimple {
      * @param Dt
      *            [sec] dt
      * @param i
-     *            rock index [0-15]
-     * @return '1' if the rock 'r' is still in motion <b>after </b> the given
+     *            granite index [0-15]
+     * @return '1' if the granite 'r' is still in motion <b>after </b> the given
      *         period 'dt', '0' otherwise.
      */
     protected int computeDt(final Rock pos, final Rock speed, double tNow,
@@ -143,7 +143,7 @@ public class SlideDenny extends SlideSimple {
     }
 
     /**
-     * This version recomputes ALL rocks' parameters, no matter if the rock
+     * This version recomputes ALL rocks' parameters, no matter if the granite
      * stands still, moves untouched or had a hit recently. Later versions could
      * be smarter here. Changes should only be necessary local to this routine!
      * 
@@ -167,7 +167,7 @@ public class SlideDenny extends SlideSimple {
          */
         // mark dt_nexthit beeing 'not computed yet'.
         // ??? reset(S);
-        // Now we need to compute the p4-polygones for each rock and axis.
+        // Now we need to compute the p4-polygones for each granite and axis.
         // x-axis: a[ 0-15 ][ 0 ][ 0-4 ]
         // y-axis: a[ 0-15 ][ 1 ][ 0-4 ]
         final double[][] tmp = new double[2][5];
