@@ -18,6 +18,7 @@
  */
 package jcurl.sim.model;
 
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import jcurl.core.PositionSet;
@@ -25,6 +26,7 @@ import jcurl.core.Rock;
 import jcurl.core.SpeedSet;
 import jcurl.core.dto.RockProps;
 import jcurl.math.MathVec;
+import jcurl.sim.core.CollissionStrategy;
 import junit.framework.TestCase;
 
 /**
@@ -112,5 +114,37 @@ public class CollissionSimpleTest extends TestCase {
         assertEquals("a.x.y", -0.3048, ax.getY(), 1e-6);
         assertEquals("buf.x.x", 0.0, bx.getX(), 1e-6);
         assertEquals("buf.x.y", 0.0, bx.getY(), 1e-6);
+    }
+
+    public void test030_getTrafo() {
+        final AffineTransform mat = new AffineTransform();
+        final double[] flat = new double[6];
+        Point2D a = new Point2D.Double(0, 0);
+        Point2D b = new Point2D.Double(0, 1);
+        CollissionSimple.getInverseTrafo(a, a, b, mat);
+        assertTrue(mat.isIdentity());
+
+        a = new Point2D.Double(0, -1);
+        b = new Point2D.Double(0, 1);
+        CollissionSimple.getInverseTrafo(a, a, b, mat);
+        mat.getMatrix(flat);
+        assertEquals("", 1, flat[0], 1e-9);
+        assertEquals("", 0, flat[1], 1e-9);
+        assertEquals("", 0, flat[2], 1e-9);
+        assertEquals("", 1, flat[3], 1e-9);
+        assertEquals("", 0, flat[4], 1e-9);
+        assertEquals("", 1, flat[5], 1e-9);
+
+        a = new Point2D.Double(1, 1);
+        b = new Point2D.Double(1.1, 1.1);
+        CollissionStrategy.getInverseTrafo(a, a, b, mat);
+        mat.getMatrix(flat);
+        double sq2 = Math.sqrt(2);
+        assertEquals("", sq2 / 2, flat[0], 1e-9);
+        assertEquals("", -sq2 / 2, flat[1], 1e-9);
+        assertEquals("", sq2 / 2, flat[2], 1e-9);
+        assertEquals("", sq2 / 2, flat[3], 1e-9);
+        assertEquals("", -1, flat[4], 1e-9);
+        assertEquals("", -1, flat[5], 1e-9);
     }
 }

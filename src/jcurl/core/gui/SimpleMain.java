@@ -29,6 +29,7 @@ import jcurl.core.SpeedSet;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.dto.RockSetProps;
 import jcurl.sim.model.CollissionSimple;
+import jcurl.sim.model.CollissionSpinLoss;
 import jcurl.sim.model.SlideStraight;
 
 import org.apache.log4j.Logger;

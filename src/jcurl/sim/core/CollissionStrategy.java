@@ -18,10 +18,15 @@
  */
 package jcurl.sim.core;
 
+import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Point2D;
+
 import jcurl.core.PositionSet;
 import jcurl.core.Rock;
 import jcurl.core.RockSet;
 import jcurl.core.SpeedSet;
+import jcurl.core.dto.RockProps;
 
 import org.apache.log4j.Logger;
 
@@ -34,33 +39,47 @@ import org.apache.log4j.Logger;
  */
 public abstract class CollissionStrategy {
 
+    private static final float HIT_MAX_DIST = 1e-3F;
+
     private static final Logger log = Logger
             .getLogger(CollissionStrategy.class);
+
+    private static final float Rad = RockProps.DEFAULT.getRadius();
+
+    private static final double RR = sqr(Rad + Rad + HIT_MAX_DIST);
+
+    /**
+     * Compute the trafo to the right handed coordinate-system with origin a and
+     * positive y-axis pointing along b-a.
+     * 
+     * @param orig
+     * @param a
+     * @param b
+     * @param mat
+     * @return the given matrix
+     */
+    public static AffineTransform getInverseTrafo(final Point2D orig,
+            final Point2D a, final Point2D b, final AffineTransform mat) {
+        double dx = b.getX() - a.getX();
+        double dy = b.getY() - a.getY();
+        final double d = Math.sqrt(dx * dx + dy * dy);
+        dx /= d;
+        dy /= d;
+        mat.setTransform(dy, -dx, dx, dy, 0, 0);
+        mat.translate(-orig.getX(), -orig.getY());
+        return mat;
+    }
 
     protected static final double sqr(final double a) {
         return a * a;
     }
 
     /**
-     * 
-     * @param xa
-     *            location of rock a
-     * @param xb
-     *            location of rock b
-     * @param va
-     *            speed of rock a
-     * @param vb
-     *            speed of rock b
-     * @return true: hit, false: no hit
-     */
-    public abstract boolean compute(final Rock xa, final Rock xb,
-            final Rock va, final Rock vb);
-
-    /**
      * Iterate over all rocks and call
-     * {@link CollissionStrategy#compute(Rock, Rock, Rock, Rock)}for each pair.
+     * {@link CollissionStrategy#compute(Rock, Rock, Rock, Rock, AffineTransform)}
+     * for each pair.
      * 
-     * @see CollissionStrategy#compute(Rock, Rock, Rock, Rock)
+     * @see CollissionStrategy#compute(Rock, Rock, Rock, Rock, AffineTransform)
      * @param pos
      * @param speed
      * @return bitmask of the changed rocks
@@ -69,13 +88,11 @@ public abstract class CollissionStrategy {
         if (log.isDebugEnabled())
             log.debug("compute()");
         int hits = 0;
+        final AffineTransform mat = new AffineTransform();
         for (int B = 0; B < RockSet.ROCKS_PER_SET; B++) {
             for (int A = 0; A < B; A++) {
-                final Rock xa = pos.getRock(A);
-                final Rock xb = pos.getRock(B);
-                final Rock va = speed.getRock(A);
-                final Rock vb = speed.getRock(B);
-                if (compute(xa, xb, va, vb)) {
+                if (compute(pos.getRock(A), pos.getRock(B), speed.getRock(A),
+                        speed.getRock(B), mat)) {
                     // mark the rocks' bits hit
                     hits |= (1 << A);
                     hits |= (1 << B);
@@ -85,5 +102,63 @@ public abstract class CollissionStrategy {
         if (log.isDebugEnabled())
             log.debug("hit rocks: " + Integer.toBinaryString(hits));
         return hits;
+    }
+
+    /**
+     * Compute a collision in rock-coordinates.
+     * 
+     * @param va
+     *            speed of rock a
+     * @param vb
+     *            speed of rock b (zero before the hit)
+     */
+    public abstract void compute(final Rock va, final Rock vb);
+
+    /**
+     * Check distance, speed of approach, transform speeds to rock-coordinates
+     * and call {@link #compute(Rock, Rock)}.
+     * 
+     * @param xa
+     * @param xb
+     * @param va
+     * @param vb
+     * @param mat
+     *            may be null. If not avoids frequent instanciations
+     * @return <code>true</code> hit, <code>false</code> no hit.
+     */
+    protected boolean compute(Rock xa, Rock xb, Rock va, Rock vb,
+            AffineTransform mat) {
+        if (mat == null)
+            mat = new AffineTransform();
+        // check distance
+        if (xa.distanceSq(xb) > RR) {
+            if (log.isDebugEnabled())
+                log.debug("Too far away distance="
+                        + (xa.distance(xb) - (Rad + Rad)));
+            return false;
+        }
+        // change the coordinate system to rock-coordinates
+        final Rock _va = (Rock) va.clone();
+        final Rock _vb = (Rock) vb.clone();
+        getInverseTrafo(vb, xa, xb, mat);
+        try { // transform
+            mat.inverseTransform(va, _va);
+            mat.inverseTransform(vb, _vb);
+        } catch (NoninvertibleTransformException e) {
+            throw new RuntimeException("Matrix must be invertible", e);
+        }
+        // check speed of approach
+        if (!_va.nonzero())
+            return false;
+        if (log.isDebugEnabled())
+            log.debug("hit!");
+
+        // physical model
+        compute(_va, _vb);
+
+        // re-transform
+        mat.transform(_va, va);
+        mat.transform(_vb, vb);
+        return true;
     }
 }

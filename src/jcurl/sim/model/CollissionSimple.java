@@ -18,14 +18,8 @@
  */
 package jcurl.sim.model;
 
-import java.awt.geom.Point2D;
-
 import jcurl.core.Rock;
-import jcurl.core.dto.RockProps;
-import jcurl.math.MathVec;
 import jcurl.sim.core.CollissionStrategy;
-
-import org.apache.log4j.Logger;
 
 /**
  * A very simple hit-model using conservation of energy and momentum.
@@ -42,36 +36,9 @@ import org.apache.log4j.Logger;
  */
 public class CollissionSimple extends CollissionStrategy {
 
-    private static final float HIT_MAX_DIST = 1e-3F;
-
-    private static final Logger log = Logger.getLogger(CollissionSimple.class);
-
-    private static final float Rad = RockProps.DEFAULT.getRadius();
-
-    private static final double RR = sqr(Rad + Rad + HIT_MAX_DIST);
-
-    public boolean compute(final Rock xa, final Rock xb, final Rock va,
-            final Rock vb) {
-        // vector from A's center to B's:
-        final Point2D xr = MathVec.sub(xb, xa, new Point2D.Double());
-        final double xrxr = MathVec.scal(xr, xr);
-        if (xrxr > RR || !(va.nonzero() || vb.nonzero())) {
-            if (log.isDebugEnabled())
-                log.debug("Too far away distance="
-                        + (Math.sqrt(xrxr) - (Rad + Rad)));
-            return false;
-        }
-        if (log.isDebugEnabled())
-            log.debug("hit!");
-        // get the speed of approach (A -> B):
-        final Point2D vr = MathVec.sub(vb, va, new Point2D.Double());
-        // get the (speed) component along xr
-        double scal = MathVec.scal(xr, vr);
-        MathVec.mult(scal / xrxr, xr, xr); //r *= r * dv;
-
-        // exchange speed
-        MathVec.add(va, xr, va);
-        MathVec.sub(vb, xr, vb);
-        return true;
+    public void compute(final Rock va, final Rock vb) {
+        final double tmp = va.getY();
+        va.setLocation(va.getX(), vb.getY());
+        vb.setLocation(vb.getX(), tmp);
     }
 }
