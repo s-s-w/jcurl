@@ -23,7 +23,7 @@
 	
 	<!-- run jar dependencies  -->
 	<patternset id="run.jars">
-		<include name="${lib.dir}/log4j-1.2.8.jar" />
+		<include name="${lib.dir}/ugli-simple.jar" />
 	</patternset>
 
 	<!-- test jar dependencies  -->
