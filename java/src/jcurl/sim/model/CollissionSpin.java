@@ -23,12 +23,10 @@ import jcurl.core.dto.RockProps;
 import jcurl.sim.core.CollissionStrategy;
 
 /**
- * A hitter including spin and loss of energy.
+ * A hitter including spin.
  * <p>
- * This hitter gets the transfer of spin and momentum right. The 'loss of
- * energy'-mechanism bases upon a Hookisch elasticity-model for the rocks. Only
- * stillstanding rocks cause a loss of energy. For details see the paper <a
- * href="http://jcurl.berlios.de/curlsci.pdf">Curling Scientific </a>.
+ * This hitter gets the transfer of spin and momentum right. For details see the
+ * paper <a href="http://jcurl.berlios.de/curlsci.pdf">Curling Scientific </a>.
  * 
  * @see jcurl.sim.model.CollissionSpinLossTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
