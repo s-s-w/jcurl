@@ -62,5 +62,4 @@ public final class MathVec {
         ret.setLocation(a.getX() - b.getX(), a.getY() - b.getY());
         return ret;
     }
-
 }

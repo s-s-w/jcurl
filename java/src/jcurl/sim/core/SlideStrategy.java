@@ -65,21 +65,23 @@ public abstract class SlideStrategy implements Source {
 
     /**
      * Compute the time until two rocks hit. Return {@link Long#MAX_VALUE}/1000
-     * if never.
+     * if never. This implementation assumes straight movement with constant
+     * speed. As the real time is almost always bigger, this approach is ok only
+     * for iterative methods.
      * 
      * @param a
-     *            index of first rock
+     *            index of first rock [0-15]
      * @param ap
      *            location of first rock
      * @param av
      *            speed of first rock
      * @param b
-     *            index of second rock
+     *            index of second rock [0-15]
      * @param bp
      *            location of second rock
      * @param bv
      *            speed of second rock
-     * @return seconds
+     * @return [sec]
      */
     protected static double timetilhit(final int a, final Rock ap,
             final Rock av, final int b, final Rock bp, final Rock bv) {
@@ -133,7 +135,8 @@ public abstract class SlideStrategy implements Source {
             log.debug("t=" + time + " dt=" + dt);
         // convert seconds to milliseconds and slowly approach hits
         final double fact = 0.95;
-        final double dtHit = 1e-3;
+        final double dtHit = 1e-3; // time of the hit itself
+        final double dtNextHitThres = 1e-6;
         // check: is the time known already?
         while (time > tmax) {
             checkHit: for (;;) {
@@ -149,7 +152,7 @@ public abstract class SlideStrategy implements Source {
                     if (dtNextHit <= 0)
                         throw new IllegalStateException("dtNextHit="
                                 + dtNextHit + " is in the past!");
-                    if (dtNextHit < 1e-6)
+                    if (dtNextHit < dtNextHitThres)
                         break approach;
                     // move til hit
                     int mov = move(tmax, tmax + dtNextHit, maxPos, maxSpeed);
@@ -187,13 +190,12 @@ public abstract class SlideStrategy implements Source {
         if (log.isDebugEnabled())
             log.debug("estimateNextHit");
         double t = Long.MAX_VALUE / 1000;
-        final RockSet poss = pos;
         // test combination of all rocks:
         for (int a = 0; a < RockSet.ROCKS_PER_SET; a++) {
-            final Rock ap = poss.getRock(a);
+            final Rock ap = pos.getRock(a);
             final Rock av = speed.getRock(a);
             for (int b = 0; b < a; b++) {
-                final Rock bp = poss.getRock(b);
+                final Rock bp = pos.getRock(b);
                 final Rock bv = speed.getRock(b);
                 final double t1 = timetilhit(a, ap, av, b, bp, bv);
                 if (t1 >= 0 && t1 < t)

@@ -21,9 +21,9 @@ package jcurl.core.gui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Arc2D;
 
 import jcurl.core.Rock;
 import jcurl.core.RockSet;
@@ -49,6 +49,11 @@ public class RockPainter {
     private static final Color lightC;
 
     private static final Color rockC;
+
+    protected static final Arc2D.Float outer;
+
+    protected static final Arc2D.Float inner;
+
     static {
         fo = new Font("SansSerif", Font.BOLD, JCurlPanel.SCALE / 5);
         rockC = Color.LIGHT_GRAY;
@@ -56,6 +61,12 @@ public class RockPainter {
         lightC = Color.YELLOW;
         labelC = Color.BLACK;
         contourC = Color.BLACK;
+
+        final int f = JCurlPanel.SCALE;
+        final int ro = (int) (f * RockProps.DEFAULT.getRadius());
+        final int ri = (int) (f * 0.8 * RockProps.DEFAULT.getRadius());
+        outer = new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 0, 360, Arc2D.CHORD);
+        inner = new Arc2D.Float(-ri, -ri, 2 * ri, 2 * ri, 0, 360, Arc2D.CHORD);
     }
 
     private FontMetrics fm = null;
@@ -71,17 +82,13 @@ public class RockPainter {
      * @param isDark
      * @param idx
      */
-    protected void paintRock(final Graphics g, final boolean isDark,
+    protected void paintRock(final Graphics2D g, final boolean isDark,
             final int idx) {
-        final int f = JCurlPanel.SCALE;
-        final int ro = (int) (f * RockProps.DEFAULT.getRadius());
-        final int ri = (int) (f * 0.8 * RockProps.DEFAULT.getRadius());
-        //final int p = ro / 8;
         // body
         g.setColor(rockC);
-        g.fillArc(-ro, -ro, 2 * ro, 2 * ro, 0, 360);
+        g.fill(outer);
         g.setColor(isDark ? darkC : lightC);
-        g.fillArc(-ri, -ri, 2 * ri, 2 * ri, 0, 360);
+        g.fill(inner);
         // label
         if (fm == null)
             fm = g.getFontMetrics(fo);
@@ -94,24 +101,23 @@ public class RockPainter {
         g.setFont(fo);
         g.setColor(labelC);
         g.drawChars(labels, idx, 1, txtXoff[idx], txtYoff);
-
+        // contours
         g.setColor(contourC);
         // handle
         //g.fillOval(-p, -p, 2 * p, ri + p);
-        // contours
-        g.drawArc(-ri, -ri, 2 * ri, 2 * ri, 0, 360);
-        g.drawArc(-ro, -ro, 2 * ro, 2 * ro, 0, 360);
+        g.draw(inner);
+        g.draw(outer);
     }
 
     /**
      * Draw one rock. Builds the coordinate transform and calls
-     * {@link RockPainter#paintRock(Graphics, boolean, int)}.
+     * {@link RockPainter#paintRock(Graphics2D, boolean, int)}.
      * 
      * @param g
      * @param rock
      * @param isDark
      * @param idx
-     * @see RockPainter#paintRock(Graphics, boolean, int)
+     * @see RockPainter#paintRock(Graphics2D, boolean, int)
      */
     private void paintRock(final Graphics2D g, final Rock rock,
             final boolean isDark, final int idx) {
@@ -131,7 +137,9 @@ public class RockPainter {
      * 
      * @see RockPainter#paintRock(Graphics2D, Rock, boolean, int)
      * @param g
+     *            graphics context
      * @param rocks
+     *            locations
      * @param mask
      *            bit field which rocks to paint. {@link RockSet#ALL_MASK}
      */

@@ -32,14 +32,16 @@ import jcurl.math.Polynome;
 import org.apache.log4j.Logger;
 
 /**
- * Abstract base class for analytic (non-discrete) curl models.
- * 
+ * Abstract base class for analytic (non-discrete) curl models. Based on rock
+ * trajectories in {@link jcurl.math.CurveBase}-form.
+ *
+ * @see jcurl.math.CurveBase 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class SlideAnalytic extends SlideStrategy {
+public abstract class SlideCurves extends SlideStrategy {
 
-    private static final Logger log = Logger.getLogger(SlideAnalytic.class);
+    private static final Logger log = Logger.getLogger(SlideCurves.class);
 
     /**
      * Transform the trajectory from speed-coordinates (the y-axis points along
@@ -69,7 +71,7 @@ public abstract class SlideAnalytic extends SlideStrategy {
 
     private final CurveParts[] c = new CurveParts[RockSet.ROCKS_PER_SET];
 
-    protected SlideAnalytic(final CollissionStrategy coll) {
+    protected SlideCurves(final CollissionStrategy coll) {
         super(coll);
     }
 
@@ -77,7 +79,7 @@ public abstract class SlideAnalytic extends SlideStrategy {
      * Create a new trajectory curve for the given initial state.
      * 
      * @param t0
-     *            [second]
+     *            [sec]
      * @param pos
      * @param speed
      * @return a 3-dimensional curve

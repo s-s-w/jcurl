@@ -19,7 +19,10 @@
 package jcurl.core.gui;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Arc2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 
 import jcurl.core.dto.Ice;
 import jcurl.core.io.Dim;
@@ -46,12 +49,36 @@ public class IcePainter {
 
     private static final Color linesC = Color.BLACK;
 
-    /**
-     * 
-     * 
-     * @param g
-     */
-    public void paintIce(final Graphics g) {
+    protected static final Rectangle2D.Float hog2hog;
+
+    protected static final Rectangle2D.Float hog2tee;
+
+    protected static final Rectangle2D.Float tee2back;
+
+    protected static final Arc2D.Float C12;
+
+    protected static final Arc2D.Float C8;
+
+    protected static final Arc2D.Float C4;
+
+    protected static final Arc2D.Float C1;
+
+    protected static final Line2D.Float back;
+
+    protected static final Line2D.Float tee;
+
+    protected static final Line2D.Float nearHog;
+
+    protected static final Line2D.Float farHog;
+
+    protected static final Line2D.Float center;
+
+    protected static final Line2D.Float centerLeft;
+
+    protected static final Line2D.Float centerRight;
+
+    /** Define the shapes to be filled and drawn */
+    static {
         final int f = JCurlPanel.SCALE;
         final int fhy = (int) (f * Ice.FAR_HOG_2_TEE);
         final int nhy = (int) (f * Ice.HOG_2_TEE);
@@ -63,46 +90,56 @@ public class IcePainter {
         final int c8 = (int) (f * Dim.f2m(4.0));
         final int c12 = (int) (f * Dim.f2m(6.0));
 
-        // hog to hog
+        hog2hog = new Rectangle2D.Float(-dx, nhy, 2 * dx, fhy - nhy);
+        hog2tee = new Rectangle2D.Float(-dx, 0, 2 * dx, nhy);
+        tee2back = new Rectangle2D.Float(-dx, -by, 2 * dx, by);
+        C12 = new Arc2D.Float(-c12, -c12, 2 * c12, 2 * c12, 0, 360, Arc2D.CHORD);
+        C8 = new Arc2D.Float(-c8, -c8, 2 * c8, 2 * c8, 0, 360, Arc2D.CHORD);
+        C4 = new Arc2D.Float(-c4, -c4, 2 * c4, 2 * c4, 0, 360, Arc2D.CHORD);
+        C1 = new Arc2D.Float(-c1, -c1, 2 * c1, 2 * c1, 0, 360, Arc2D.CHORD);
+        back = new Line2D.Float(-dx, -by, dx, -by);
+        tee = new Line2D.Float(-dx, 0, dx, 0);
+        nearHog = new Line2D.Float(-dx, nhy, dx, nhy);
+        farHog = new Line2D.Float(-dx, fhy, dx, fhy);
+        center = new Line2D.Float(0, hy, 0, -by);
+        centerLeft = new Line2D.Float(-dx, fhy, -dx, -by);
+        centerRight = new Line2D.Float(dx, fhy, dx, -by);
+    }
+
+    /**
+     * 
+     * 
+     * @param g
+     */
+    public void paintIce(final Graphics2D g) {
+        // filled stuff
         g.setColor(outC);
-        g.fillRect(-dx, nhy, 2 * dx, fhy - nhy);
-        // hog to tee
+        g.fill(hog2hog);
         g.setColor(frontC);
-        g.fillRect(-dx, 0, 2 * dx, nhy);
-        // tee to back
+        g.fill(hog2tee);
         g.setColor(backC);
-        g.fillRect(-dx, -by, 2 * dx, by);
-        // 12-foot circle
+        g.fill(tee2back);
         g.setColor(c12C);
-        g.fillArc(-c12, -c12, 2 * c12, 2 * c12, 0, 360);
-        // 8-foot circle
+        g.fill(C12);
         g.setColor(c8C);
-        g.fillArc(-c8, -c8, 2 * c8, 2 * c8, 0, 360);
-        // 4-foot circle
+        g.fill(C8);
         g.setColor(c4C);
-        g.fillArc(-c4, -c4, 2 * c4, 2 * c4, 0, 360);
-        // button
+        g.fill(C4);
         g.setColor(c1C);
-        g.fillArc(-c1, -c1, 2 * c1, 2 * c1, 0, 360);
+        g.fill(C1);
 
         // contours
         g.setColor(linesC);
-        g.drawArc(-c12, -c12, 2 * c12, 2 * c12, 0, 360);
-        g.drawArc(-c8, -c8, 2 * c8, 2 * c8, 0, 360);
-        g.drawArc(-c4, -c4, 2 * c4, 2 * c4, 0, 360);
-        g.drawArc(-c1, -c1, 2 * c1, 2 * c1, 0, 360);
-
-        // Back line
-        g.drawLine(-dx, -by, dx, -by);
-        // Tee line
-        g.drawLine(-dx, 0, dx, 0);
-        // Near Hog line
-        g.drawLine(-dx, nhy, dx, nhy);
-        // Far Hog line
-        g.drawLine(-dx, fhy, dx, fhy);
-        // Center
-        g.drawLine(0, hy, 0, -by);
-        g.drawLine(-dx, fhy, -dx, -by);
-        g.drawLine(dx, fhy, dx, -by);
+        g.draw(C12);
+        g.draw(C8);
+        g.draw(C4);
+        g.draw(C1);
+        g.draw(back);
+        g.draw(tee);
+        g.draw(nearHog);
+        g.draw(farHog);
+        g.draw(center);
+        g.draw(centerLeft);
+        g.draw(centerRight);
     }
 }
