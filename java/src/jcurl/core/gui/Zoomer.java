@@ -33,17 +33,17 @@ import jcurl.core.dto.RockProps;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class ZoomArea {
+public class Zoomer {
 
     private static final float _dia = 2 * RockProps.DEFAULT.getRadius();
 
-    public static final ZoomArea HOUSE = new ZoomArea("House",
+    public static final Zoomer HOUSE = new Zoomer("House",
             -(Ice.SIDE_2_CENTER + _dia), -(Ice.BACK_2_TEE + Ice.HACK_2_BACK),
             2 * (Ice.SIDE_2_CENTER + _dia), Ice.HOG_2_TEE + _dia
                     + Ice.BACK_2_TEE + Ice.HACK_2_BACK, 0,
             -(Ice.BACK_2_TEE + Ice.HACK_2_BACK));
 
-    public static final ZoomArea C12 = new ZoomArea("Twelve foot circle",
+    public static final Zoomer C12 = new Zoomer("Twelve foot circle",
             -Ice.SIDE_2_CENTER, -Ice.SIDE_2_CENTER, 2 * Ice.SIDE_2_CENTER,
             2 * Ice.SIDE_2_CENTER, 0 * Ice.SIDE_2_CENTER, -0.5
                     * Ice.SIDE_2_CENTER);
@@ -70,23 +70,23 @@ public class ZoomArea {
 
     private final Rectangle2D viewport;
 
-    public ZoomArea(final String txt, double x0, double y0, double w, double h,
+    public Zoomer(final String txt, double x0, double y0, double w, double h,
             final double fixX, final double fixY) {
         this(txt, new Rectangle2D.Double(x0, y0, w, h), new Point2D.Double(
                 fixX, fixY));
     }
 
-    public ZoomArea(final String txt, double x0, double y0, double w, double h,
+    public Zoomer(final String txt, double x0, double y0, double w, double h,
             final Point2D fixPoint) {
         this(txt, new Rectangle2D.Double(x0, y0, w, h), fixPoint);
     }
 
-    public ZoomArea(final String txt, final Point2D tl, final Point2D br,
+    public Zoomer(final String txt, final Point2D tl, final Point2D br,
             final Point2D fixPoint) {
         this(txt, create(tl, br), fixPoint);
     }
 
-    public ZoomArea(final String txt, final Rectangle2D wc,
+    public Zoomer(final String txt, final Rectangle2D wc,
             final Point2D fixPoint) {
         this.viewport = wc;
         this.fixPoint = fixPoint;
