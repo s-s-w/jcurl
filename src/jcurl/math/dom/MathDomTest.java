@@ -25,8 +25,6 @@ import java.util.TreeMap;
 
 import jcurl.exp.mr.math.Calc0;
 import jcurl.exp.mr.math.Calc1;
-
-
 import junit.framework.TestCase;
 
 /**

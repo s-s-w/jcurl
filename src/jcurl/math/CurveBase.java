@@ -16,25 +16,37 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core;
-
-import jcurl.math.Point3D;
+package jcurl.math;
 
 /**
- * Base class for rock information (either location or speed). The "Z" component
- * is the handle angle in radians.
+ * Abstract base class for n-dimensional curves (R -&gt; R^n).
  * 
- * @see jcurl.core.RockSet
+ * @see jcurl.math.CurveTest 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class Rock extends Point3D implements Cloneable {
-    public abstract Object clone();
+public abstract class CurveBase {
+    protected final int dim;
 
-    /**
-     * Convenience method to check if zero or not.
-     * 
-     * @return
-     */
-    public abstract boolean nonzero();
+    protected CurveBase(final int dim) {
+        this.dim = dim;
+    }
+
+    public double[] getC(int c, double t, double[] ret) {
+        if (ret == null)
+            ret = new double[dim];
+        for (int i = dim - 1; i >= 0; i--)
+            ret[i] = getC(i, c, t);
+        return ret;
+    }
+
+    public float[] getC(int c, double t, float[] ret) {
+        if (ret == null)
+            ret = new float[dim];
+        for (int i = dim - 1; i >= 0; i--)
+            ret[i] = (float) getC(i, c, t);
+        return ret;
+    }
+
+    public abstract double getC(int dim, int c, double t);
 }

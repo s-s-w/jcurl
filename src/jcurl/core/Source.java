@@ -28,7 +28,6 @@ import jcurl.core.dto.RockSetProps;
  * @version $Id$
  */
 public interface Source {
-
     /**
      * 
      * @return the max yet known time.

@@ -24,6 +24,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.geom.Point2D;
 import java.util.Iterator;
 
 import javax.swing.JPanel;
@@ -32,7 +33,6 @@ import jcurl.exp.mr.math.PointList;
 
 import org.apache.log4j.Logger;
 
-
 /**
  * Draw lines if the "hot" key is pressed.
  * 
@@ -40,6 +40,31 @@ import org.apache.log4j.Logger;
  * @version $Id$
  */
 public class MouseSketchPanel extends JPanel implements KeyListener {
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see javax.swing.JComponent#printComponent(java.awt.Graphics)
+     */
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawLine(100, 110, 100, 90);
+        g.drawLine(110, 100, 90, 100);
+        circle(g, 100, 100, 10, 10);
+        g.drawArc(100, 100, 20, 20, 0, 360);
+        g.drawArc(100, 100, -20, -20, 0, 360);
+    }
+
+    private static void circle(Graphics g, int x, int y, int rx, int ry) {
+        g.drawArc(x - rx, y - ry, 2 * rx, 2 * ry, 0, 360);
+    }
+
+    private static void circle(Graphics g, Point2D c, int r) {
+        final int x = (int) c.getX();
+        final int y = (int) c.getY();
+        final int d = 2 * r;
+        g.drawArc(x - r, y - r, d, d, 0, 360);
+    }
 
     private static final Logger log = Logger.getLogger(MouseSketchPanel.class);
 

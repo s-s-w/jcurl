@@ -28,7 +28,6 @@ import jcurl.exp.mr.math.PointList;
 
 import org.apache.log4j.Logger;
 
-
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$

@@ -19,6 +19,7 @@
 package jcurl.core.dto;
 
 import jcurl.core.Rock;
+import jcurl.core.RockSet;
 import jcurl.core.io.Dim;
 
 /**
@@ -29,48 +30,63 @@ import jcurl.core.io.Dim;
  */
 public class Ice {
 
-    /**
-     * Distance from Tee to Back-line. 6 feet (converted to meter)
-     */
-    public static final float BACK_2_TEE = (int) Dim.f2m(6.0);
+    /** Distance from Tee to Back-line. 6 feet (converted to meter) */
+    public static final float BACK_2_TEE = Dim.f2m(6.0);
 
-    // +
-
-    //HOG_2_HOG;
-
-    /**
-     * Distance from Tee to Hack. 21+72+21+6 feet (converted to meter)
-     */
+    /** Distance from Tee to Hack. 21+72+21+6 feet (converted to meter) */
     public static final float FAR_HACK_2_TEE = Dim
-            .f2m(21.0 + 72.0 + 21.0 + 12.0);//FAR_HOG_2_TEE
+            .f2m(21.0 + 72.0 + 21.0 + 12.0);
 
     /**
      * Distance from Tee to Hog (on player's end). 21+72 feet (converted to
      * meter)
      */
-    public static final float FAR_HOG_2_TEE = Dim.f2m(21.0 + 72.0);//HOG_2_TEE
+    public static final float FAR_HOG_2_TEE = Dim.f2m(21.0 + 72.0);
 
-    /**
-     * Distance from Hack to Back-line. 6 feet (converted to meter)
-     */
-    public static final float HACK_2_BACK = (int) Dim.f2m(6.0);
+    /** Distance from Hack to Back-line. 6 feet (converted to meter) */
+    public static final float HACK_2_BACK = Dim.f2m(6.0);
 
-    /**
-     * Distance from far Hog-line to near Hog-line. 72 feet (converted to meter)
-     */
+    /** Distance from far Hog-line to near Hog-line. 72 feet (converted to meter) */
     public static final float HOG_2_HOG = Dim.f2m(72.0);
 
-    /**
-     * Distance from Tee to Hog (near the house). 21 feet (converted to meter)
-     */
-    public static final float HOG_2_TEE = (int) Dim.f2m(21.0);
+    /** Distance from Tee to Hog (near the house). 21 feet (converted to meter) */
+    public static final float HOG_2_TEE = Dim.f2m(21.0);
+
+    private static final double outX;
+
+    private static final double outY;
 
     private static final float rad = RockProps.DEFAULT.getRadius();
 
+    /** Distance from Center-line to edge. 6+1 feet (converted to meter) */
+    public static final float SIDE_2_CENTER = Dim.f2m(7.0);
+
+    static {
+        outX = SIDE_2_CENTER + rad;
+        outY = BACK_2_TEE + rad;
+    }
+
     /**
-     * Distance from Center-line to edge. 6+1 feet (converted to meter)
+     * Check all moving rocks if they're still in play
+     * 
+     * @param pos
+     * @param speed
+     * @return bitmask of modified (removed) rocks
      */
-    public static final float SIDE_2_CENTER = (int) Dim.f2m(7.0); // 4.75/2.0;
+    public static final int checkOut(final RockSet pos, final RockSet speed) {
+        int ret = 0;
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+            if (speed.getRock(i).nonzero()) {
+                final Rock r = pos.getRock(i);
+                if (r.getX() > outX || r.getX() < -outX || r.getY() < -outY) {
+                    setOut(r, (i % 2) == 0, i / 2);
+                    speed.getRock(i).setLocation(0, 0, 0);
+                    ret |= 1 << i;
+                }
+            }
+        }
+        return ret;
+    }
 
     /**
      * tests whether a rock is fully between far-hog and back and the arg and
@@ -101,13 +117,12 @@ public class Ice {
      * than a rock's diameter.
      */
     public static void setHome(final Rock R, final boolean isDark, final int idx) {
-        final float D = 1.2F * RockProps.DEFAULT.getRadius();
+        final float D = 1.2F * rad;
         final float homeX[] = { Ice.SIDE_2_CENTER - 1.0F * D,
                 Ice.SIDE_2_CENTER - 3.0F * D };
         final float homeY[] = { Ice.FAR_HACK_2_TEE - 1.0F * D,
                 Ice.FAR_HACK_2_TEE - 3.0F * D, Ice.FAR_HACK_2_TEE - 5.0F * D,
                 Ice.FAR_HACK_2_TEE - 7.0F * D };
-
         R.setX((isDark ? -1 : 1) * homeX[idx % 2]);
         R.setY(homeY[idx / 2]);
         R.setZ(0);
@@ -119,7 +134,7 @@ public class Ice {
      * between the rows (0.5 foot) is a little more than a rock's diameter.
      */
     public static void setOut(final Rock R, final boolean isDark, final int i) {
-        final float D = 1.2F * RockProps.DEFAULT.getRadius();
+        final float D = 1.2F * rad;
         final float outY[] = { -Ice.BACK_2_TEE - 5.0F * D,
                 -Ice.BACK_2_TEE - 7.0F * D };
         final float outX[] = { Ice.SIDE_2_CENTER - 7.0F * D,

@@ -35,8 +35,7 @@ public class ZoomArea extends EnumBase {
 
     public static final ZoomArea HOUSE = new ZoomArea("House",
             -(Ice.SIDE_2_CENTER + _dia), Ice.HOG_2_TEE + _dia,
-            Ice.SIDE_2_CENTER + _dia,
-            -(Ice.BACK_2_TEE + Ice.HACK_2_BACK + _dia));
+            Ice.SIDE_2_CENTER + _dia, -(Ice.BACK_2_TEE + Ice.HACK_2_BACK));
 
     public final Point2D.Float tl;
 

@@ -29,7 +29,6 @@ import jcurl.math.MathVec;
 /**
  * Abstract base class for propagation/friction models.
  * 
- * @see jcurl.core.SlideIce
  * @see jcurl.sim.core.RunComputer
  * @see jcurl.sim.core.CollissionStrategy
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -45,8 +44,8 @@ public abstract class SlideStrategy implements Source {
      * @param speed
      * @return seconds
      */
-    protected static double getnexthit(final RockSet pos, final RockSet speed) {
-        double t = 40;
+    public double estimateNextHit(final RockSet pos, final RockSet speed) {
+        double t = Long.MAX_VALUE / 1000;
         final RockSet poss = pos;
         // test combination of all rocks:
         for (int a = 0; a < RockSet.ROCKS_PER_SET; a++) {
@@ -63,8 +62,27 @@ public abstract class SlideStrategy implements Source {
         return t;
     }
 
-    private static double sqr(final double a) {
+    protected static double hypot(final double a, final double b) {
+        return Math.sqrt(a * a + b * b);
+    }
+
+    protected static double sqr(final double a) {
         return (a * a);
+    }
+
+    protected static double poly(final double x, final int dim, final double[] p) {
+        double ret = 0.0;
+        for (int i = 0; i <= dim; i++)
+            ret += Math.pow(x, i) * p[i];
+        return ret;
+    }
+
+    protected static byte sgn(final double a) {
+        if (a > 0)
+            return 1;
+        if (a < 0)
+            return -1;
+        return 0;
     }
 
     /**
@@ -89,11 +107,35 @@ public abstract class SlideStrategy implements Source {
 
     /**
      * Overload and typically feed
-     * {@link SlideStrategy#getnexthit(RockSet, RockSet)}with the current
+     * {@link SlideStrategy#estimateNextHit(RockSet, RockSet)}with the current
      * locations and velocities.
+     * @param t TODO
      * 
-     * @see SlideStrategy#getnexthit(RockSet, RockSet)
+     * @see SlideStrategy#estimateNextHit(RockSet, RockSet)
      * @return seconds
      */
-    public abstract double estimateNextHit();
+    public abstract double estimateNextHit(long t);
+
+    /**
+     * Guess the initial speed.
+     * 
+     * @param y0
+     *            start position (y) [meter]
+     * @param Trun
+     *            from Hog to Hog. [seconds] see ./doc/eiszeit.tex for details.
+     */
+    public abstract double getInitialSpeed(final double y0, final double Trun);
+
+    /** Query the friction. */
+    public abstract double getMu();
+
+    /**
+     * Set the draw-to-T-time and curl.
+     * 
+     * @param time
+     *            [seconds]
+     * @param curl
+     *            [meter]
+     */
+    public abstract void setDraw2Tee(final double time, final double curl);
 }

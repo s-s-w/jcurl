@@ -49,6 +49,24 @@ public class Painter {
                 360);
     }
 
+    static void circleDC(final Graphics g, final Point2D c, final double r) {
+        circleDC(g, c.getX(), c.getY(), r, r);
+    }
+
+    static void circleDC(final Graphics g, final Point2D c, final double rx,
+            final double ry) {
+        circleDC(g, c.getX(), c.getY(), rx, ry);
+    }
+
+    static void circleDC(final Graphics g, final double cx, final double cy,
+            final double rx, final double ry) {
+        final int x = (int) (cx - rx);
+        final int y = (int) (cy - ry);
+        final int dx = (int) (2 * rx);
+        final int dy = (int) (2 * ry);
+        g.drawArc(x, y, dx, dy, 0, 360);
+    }
+
     static void lineDC(final Graphics g, final Point2D.Float a,
             final Point2D.Float b) {
         g.drawLine((int) a.x, (int) a.y, (int) b.x, (int) b.y);

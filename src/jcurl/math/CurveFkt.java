@@ -16,29 +16,50 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core;
+package jcurl.math;
 
 /**
- * Interface for interpolators of single {@link jcurl.core.Rock}s.
+ * An n-dimensional, continuous curve (R -&gt; R^n) based on a {@link CurveFkt}.
  * 
- * @see jcurl.core.RockSetInterpolator
- * @see jcurl.core.CSplineRockInterpolator
+ * @see jcurl.math.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface IRockInterpolator {
-    public abstract void add(final long t, final Rock rock);
+public class CurveFkt extends CurveBase {
 
-    public abstract void add(final long t, final Rock rock,
-            final boolean discontinuous);
+    private static final class Num extends Number {
 
-    public abstract long getMaxT();
+        public double v;
 
-    public abstract long getMinT();
+        public double doubleValue() {
+            return v;
+        }
 
-    public abstract Rock getPos(final long t, final Rock rock);
+        public float floatValue() {
+            return (float) v;
+        }
 
-    public abstract Rock getSpeed(final long t, final Rock rock);
+        public int intValue() {
+            return (int) v;
+        }
 
-    public abstract void reset();
+        public long longValue() {
+            return (long) v;
+        }
+
+    }
+
+    private final Function1D[] fkt;
+
+    public CurveFkt(final Function1D[] fkt) {
+        super(fkt.length);
+        this.fkt = new Function1D[dim];
+        for (int i = dim - 1; i >= 0; i--) {
+            this.fkt[i] = fkt[i];
+        }
+    }
+
+    public double getC(int dim, int c, double t) {
+        return fkt[dim].getC(0, c, t);
+    }
 }
