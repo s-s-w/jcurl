@@ -82,4 +82,24 @@ public abstract class CurveBase {
      * @return the c'th derivative at <code>t</code>
      */
     public abstract double getC(int dim, int c, double t);
+
+    /**
+     * Compute <code>x where f(x) = 0</code> using Newton's algorithm.
+     * 
+     * @param x0
+     * @return
+     */
+    public double computeNewtonZero(final int dim, final int c, double x) {
+        final double eps = 1e-9;
+        for (;;) {
+            double dx = getC(dim, c + 1, x);
+            if (dx == 0)
+                return 0;
+            dx = getC(dim, c, x) / dx;
+            x -= dx;
+            if (Math.abs(dx) < eps)
+                return x;
+        }
+    }
+
 }

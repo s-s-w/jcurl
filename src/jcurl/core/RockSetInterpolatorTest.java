@@ -47,7 +47,7 @@ public class RockSetInterpolatorTest extends TestCase {
         assertTrue(slid.isDiscrete());
 
         slid.reset(t0, rPos, rSpeed, RockSetProps.DEFAULT);
-        assertEquals(t0, slid.getMinT());
+        assertEquals("", t0, slid.getMinT(), 1e-6);
 
         final RockSetInterpolator ip = new RockSetInterpolator();
 

@@ -33,34 +33,34 @@ public interface Source {
      * 
      * @return the max yet known time.
      */
-    public abstract long getMaxT();
+    public abstract double getMaxT();
 
     /**
      * Get the start time.
      * 
      * @return the start time
      */
-    public abstract long getMinT();
+    public abstract double getMinT();
 
     /**
      * Get the rocks' positions.
      * 
      * @param time
-     *            [msec]
+     *            [sec]
      * @param rocks
      * @return
      */
-    public abstract RockSet getPos(final long time, RockSet rocks);
+    public abstract RockSet getPos(final double time, RockSet rocks);
 
     /**
      * Get the rocks' speeds - optional.
      * 
      * @param time
-     *            [msec]
+     *            [sec]
      * @param rocks
      * @return
      */
-    public abstract RockSet getSpeed(final long time, RockSet rocks);
+    public abstract RockSet getSpeed(final double time, RockSet rocks);
 
     public abstract boolean isDiscrete();
 
@@ -76,6 +76,6 @@ public interface Source {
      * @param startSpeed
      * @param props
      */
-    public abstract void reset(long startTime, RockSet startPos,
+    public abstract void reset(double startTime, RockSet startPos,
             RockSet startSpeed, RockSetProps props);
 }

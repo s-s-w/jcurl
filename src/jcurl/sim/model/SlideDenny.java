@@ -80,13 +80,13 @@ public class SlideDenny extends SlideSimple {
      * @return '1' if the rock 'r' is still in motion <b>after </b> the given
      *         period 'dt', '0' otherwise.
      */
-    protected int computeDt(final Rock pos, final Rock speed, long tN,
-            final long _DT, int i) {
-        double tNow = 1e-3 * tN;
-        double DT = 1e-3 * _DT;
-        double dt = tNow + DT - dat[i].reset;
+    protected int computeDt(final Rock pos, final Rock speed, double tN,
+            final double _DT, int i) {
+        double tNow = tN / DT;
+        double Dt =  _DT / DT;
+        double dt = tNow + Dt - dat[i].reset;
 
-        pos.setZ(pos.getZ() + DT * speed.getZ());
+        pos.setZ(pos.getZ() + Dt * speed.getZ());
         final int ret;
         if (dt < dat[i].tau) {
             speed.setX(poly(dt, 3, dat[i].v[0]));
@@ -138,7 +138,7 @@ public class SlideDenny extends SlideSimple {
      * stands still, moves untouched or had a hit recently. Later versions could
      * be smarter here. Changes should only be necessary local to this routine!
      */
-    public void reset(long startTime, RockSet pos, RockSet speed,
+    public void reset(double startTime, RockSet pos, RockSet speed,
             RockSetProps props) {
         /*
          * Woran sind Steine mit 'unstetigem' Lauf zu erkennen? - entweder via
@@ -149,7 +149,7 @@ public class SlideDenny extends SlideSimple {
          */
         // mark dt_nexthit beeing 'not computed yet'.
         // ??? reset(S);
-        final double t0 = 1e-3 * startTime;
+        final double t0 = startTime / DT;
         // Now we need to compute the p4-polygones for each rock and axis.
         // x-axis: a[ 0-15 ][ 0 ][ 0-4 ]
         // y-axis: a[ 0-15 ][ 1 ][ 0-4 ]

@@ -97,13 +97,20 @@ public class PolynomeTest extends TestCase {
         {
             double[] a = { -1, 1 };
             Polynome po = new Polynome(a);
-            assertEquals("", 1, po.computeZeroNewton(0.5), 1e-6);
+            assertEquals("", 1, po.computeNewtonZero(0, 0.5), 1e-6);
         }
         {
             double[] a = { -1, 0, 1 };
             Polynome po = new Polynome(a);
             assertEquals("", 0, po.getC(0, 1), 1e-6);
-            assertEquals("", 1, po.computeZeroNewton(0.5), 1e-6);
+            assertEquals("", 1, po.computeNewtonZero(0, 0.5), 1e-6);
+        }
+        {
+            double[] a = { 0, 1, -0.0535848758171096 };
+            Polynome po = new Polynome(a);
+            assertEquals("", 0.0, po.getC(0, 0), 1e-6);
+            assertEquals("", 1.0, po.getC(1, 0), 1e-6);
+            assertEquals("", 9.330991112241236, po.computeNewtonZero(1, 0), 1e-6);
         }
     }
 

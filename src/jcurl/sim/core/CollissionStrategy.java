@@ -65,7 +65,7 @@ public abstract class CollissionStrategy {
      * @return bitmask of the changed rocks
      */
     public int compute(RockSet pos, RockSet speed) {
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("compute()");
         int hits = 0;
         for (int B = 0; B < RockSet.ROCKS_PER_SET; B++) {
@@ -81,6 +81,8 @@ public abstract class CollissionStrategy {
                 }
             }
         }
+        if (log.isDebugEnabled())
+            log.debug("hit rocks: " + Integer.toBinaryString(hits));
         return hits;
     }
 }
