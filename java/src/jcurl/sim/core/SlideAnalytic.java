@@ -105,9 +105,8 @@ public abstract class SlideAnalytic extends SlideStrategy {
      * @return
      */
     protected RockSet getC(final int c, final double time, RockSet rocks) {
-        final double t = time / DT;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
-            getC(c, t, i, rocks.getRock(i));
+            getC(c, time, i, rocks.getRock(i));
         return rocks;
     }
 
@@ -157,14 +156,13 @@ public abstract class SlideAnalytic extends SlideStrategy {
             tmin = t0;
         tmax = t0;
 
-        final double t =  t0 / DT;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             int a = (1 << i);
             if (a == (discontinuous & a)) {
                 // add a new curve to the list
-                final CurveBase cu = createCurve(t, pos.getRock(i), speed
+                final CurveBase cu = createCurve(t0, pos.getRock(i), speed
                         .getRock(i));
-                c[i].add(t, new CurveInterval(t, findThalt(t, cu), cu));
+                c[i].add(t0, new CurveInterval(t0, findThalt(t0, cu), cu));
             }
         }
     }

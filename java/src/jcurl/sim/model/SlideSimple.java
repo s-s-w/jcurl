@@ -66,16 +66,16 @@ public class SlideSimple extends SlideStrategy {
      */
     protected int computeDt(final Rock pos, final Rock speed, double tEnd,
             final double dt, int idx) {
-        pos.setX(pos.getX() + speed.getX() * dt / DT);
-        pos.setY(pos.getY() + speed.getY() * dt / DT);
-        pos.setZ(pos.getZ() + speed.getZ() * dt / DT);
+        pos.setX(pos.getX() + speed.getX() * dt);
+        pos.setY(pos.getY() + speed.getY() * dt);
+        pos.setZ(pos.getZ() + speed.getZ() * dt);
         return 1;
     }
 
     /**
      * @return seconds
      */
-    public double estimateNextHit(long t) {
+    public double estimateNextHit(double t) {
         return estimateNextHit(maxPos, maxSpeed);
     }
 

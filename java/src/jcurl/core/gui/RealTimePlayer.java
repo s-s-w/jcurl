@@ -73,7 +73,7 @@ public class RealTimePlayer implements Runnable {
             final long start = System.currentTimeMillis();
             for (;;) {
                 final long dt = System.currentTimeMillis() - start;
-                tNow = t0Last + (long) (dt * timeScale);
+                tNow = t0Last + dt * timeScale * 1e-3;
                 // get the position
                 pos = src.getPos(tNow, pos);
                 // push it to the target

@@ -58,11 +58,11 @@ public class CSplineRockInterpolator implements IRockInterpolator {
     }
 
     public double getMaxT() {
-        return (long) x.getMaxX();
+        return x.getMaxX();
     }
 
     public double getMinT() {
-        return (long) x.getMinX();
+        return x.getMinX();
     }
 
     public Rock getPos(final double t, final Rock rock) {

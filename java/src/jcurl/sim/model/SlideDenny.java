@@ -80,10 +80,8 @@ public class SlideDenny extends SlideSimple {
      * @return '1' if the rock 'r' is still in motion <b>after </b> the given
      *         period 'dt', '0' otherwise.
      */
-    protected int computeDt(final Rock pos, final Rock speed, double tN,
-            final double _DT, int i) {
-        double tNow = tN / DT;
-        double Dt =  _DT / DT;
+    protected int computeDt(final Rock pos, final Rock speed, double tNow,
+            final double Dt, int i) {
         double dt = tNow + Dt - dat[i].reset;
 
         pos.setZ(pos.getZ() + Dt * speed.getZ());
@@ -149,7 +147,6 @@ public class SlideDenny extends SlideSimple {
          */
         // mark dt_nexthit beeing 'not computed yet'.
         // ??? reset(S);
-        final double t0 = startTime / DT;
         // Now we need to compute the p4-polygones for each rock and axis.
         // x-axis: a[ 0-15 ][ 0 ][ 0-4 ]
         // y-axis: a[ 0-15 ][ 1 ][ 0-4 ]
@@ -165,7 +162,7 @@ public class SlideDenny extends SlideSimple {
             // Here we could be a little bit smarter and 'break'
             // e.g. if vabs is zero. But how to get the initial lineup then?
 
-            dat[i].reset = t0;
+            dat[i].reset = startTime;
             // Set the parameters in 'tmp' acc. to Denny's coordinates:
 
             if (0.0 != (dat[i].tau = vabs / (_mu * g))) {

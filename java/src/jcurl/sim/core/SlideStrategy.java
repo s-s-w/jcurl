@@ -42,7 +42,7 @@ import jcurl.sim.model.SlideStraight;
  * @version $Id$
  */
 public abstract class SlideStrategy implements Source {
-    protected double DT = 1e3;
+
     private static final Logger log = Logger.getLogger(SlideStrategy.class);
 
     protected static double hypot(final double a, final double b) {
@@ -92,7 +92,7 @@ public abstract class SlideStrategy implements Source {
 
     protected final CollissionStrategy coll;
 
-    protected int dt = 50;
+    protected double dt = 0.050;
 
     protected RockSet maxPos = RockSet.allZero(null);
 
@@ -123,37 +123,37 @@ public abstract class SlideStrategy implements Source {
             log.debug("t=" + time + " dt=" + dt);
         // convert seconds to milliseconds and slowly approach hits
         final double fact = 0.95;
+        final double dtHit = 1e-3;
         // check: is the time known already?
         while (time > tmax) {
             checkHit: for (;;) {
-                final double tnow = tmax / DT;
                 // slowly approach the hit
                 approach: for (;;) {
                     // check the next hit
-                    final double dtHit = fact
+                    final double dtNextHit = fact
                             * this.estimateNextHit(maxPos, maxSpeed);
                     if (log.isDebugEnabled())
-                        log.debug("tmax=" + tmax + " tnow=" + tnow + " dtHit="
-                                + dtHit);
-                    if (dt < dtHit)
+                        log.debug("tmax=" + tmax + " dtNextHit="
+                                + dtNextHit);
+                    if (dt < dtNextHit)
                         break checkHit;
-                    if (dtHit <= 0)
-                        throw new IllegalStateException("dtHit=" + dtHit
+                    if (dtNextHit <= 0)
+                        throw new IllegalStateException("dtNextHit=" + dtNextHit
                                 + " is in the past!");
-                    if (dtHit < 1e-3)
+                    if (dtNextHit < 1e-6)
                         break approach;
                     // move til hit
-                    int mov = move(tnow, tnow + dtHit, maxPos, maxSpeed);
+                    int mov = move(tmax, tmax + dtNextHit, maxPos, maxSpeed);
                     if (mov != rocksInMotion)
-                        set((long) (DT * (tnow + dtHit)), maxPos, maxSpeed,
+                        set(tmax + dtNextHit, maxPos, maxSpeed,
                                 mov ^ rocksInMotion);
                     else
-                        tmax = (long) (DT * (tnow + dtHit));
+                        tmax += dtNextHit;
                     rocksInMotion = mov;
                 }
                 // compute the hit
                 final int hit = coll.compute(maxPos, maxSpeed);
-                set(tmax + 1, maxPos, maxSpeed, hit);
+                set(tmax + dtHit, maxPos, maxSpeed, hit);
                 rocksInMotion |= hit;
             }
             // move on

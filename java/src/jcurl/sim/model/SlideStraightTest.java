@@ -117,7 +117,7 @@ public class SlideStraightTest extends TestCase {
     public void test100() {
         double t = 0;
         assertEquals("", 2.26999338899, t = s.estimateNextHit(pos, speed), 1e-6);
-        s.getPos((long) (t * 1e3), pos);
+        s.getPos(t, pos);
         assertEquals("", 0, pos.getDark(0).getX(), 1e-6);
         assertEquals("", 1, pos.getDark(0).getY(), 1e-6);
         assertEquals("", 0, speed.getDark(0).getX(), 1e-6);
@@ -127,7 +127,7 @@ public class SlideStraightTest extends TestCase {
         assertEquals("", 1.0, pos.getLight(1).getX(), 1e-6);
         assertEquals("", 1.5, pos.getLight(1).getY(), 1e-6);
 
-        s.getSpeed((long) (t * 1e3), speed);
+        s.getSpeed(t, speed);
         assertEquals("", 2.26999338899, t = s.estimateNextHit(pos, speed), 1e-6);
     }
 }
