@@ -144,7 +144,7 @@ public class CollissionSimpleTest extends TestCase {
         assertEquals("", -sq2 / 2, flat[1], 1e-9);
         assertEquals("", sq2 / 2, flat[2], 1e-9);
         assertEquals("", sq2 / 2, flat[3], 1e-9);
-        assertEquals("", -1, flat[4], 1e-9);
-        assertEquals("", -1, flat[5], 1e-9);
+        assertEquals("", -1.41421356237, flat[4], 1e-9);
+        assertEquals("", 0, flat[5], 1e-9);
     }
 }
