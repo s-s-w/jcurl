@@ -18,8 +18,8 @@
  */
 package jcurl.sim.core;
 
-import jcurl.core.Rock;
 import jcurl.core.PositionSet;
+import jcurl.core.Rock;
 import jcurl.core.RockSet;
 import jcurl.core.SpeedSet;
 

@@ -38,7 +38,6 @@ public class SlideStrategyTest extends TestCase {
         PositionSet speed = new PositionSet();
         speed.getDark(0).setLocation(0, -1);
 
-        
         double dt = SlideStrategy.tst_timetilhit(0, pos.getDark(0), speed
                 .getDark(0), 8, pos.getLight(0), speed.getLight(0));
         assertEquals("", 0.7699933889987538, dt, 1e-9);

@@ -20,8 +20,8 @@ package jcurl.sim.core;
 
 import java.awt.geom.Point2D;
 
-import jcurl.core.Rock;
 import jcurl.core.PositionSet;
+import jcurl.core.Rock;
 import jcurl.core.RockSet;
 import jcurl.core.SpeedSet;
 import jcurl.core.dto.RockSetProps;
@@ -149,8 +149,8 @@ public abstract class SlideCurves extends SlideStrategy {
      * @param discontinuous
      *            bitmask of the discontuous rocks
      */
-    public void set(final double t0, final PositionSet pos, final SpeedSet speed,
-            final int discontinuous) {
+    public void set(final double t0, final PositionSet pos,
+            final SpeedSet speed, final int discontinuous) {
         if (log.isDebugEnabled())
             log.debug("t0=" + t0 + " rockmask="
                     + Integer.toBinaryString(discontinuous));

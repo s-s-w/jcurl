@@ -150,7 +150,7 @@ public class Zoomer {
      * @param mat
      *            Matrix to add the transformation to, usually call yourself a
      *            {@link AffineTransform#setToIdentity()}&nbsp;before.
-     * @return
+     * @return the modified transformation
      */
     public AffineTransform applyTrafo(final Rectangle dc,
             final Orientation orient, final boolean isLeftHanded,
