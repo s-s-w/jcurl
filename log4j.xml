@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!-- $Id: log4j.xml,v 1.2 2004/08/10 12:23:16 mr Exp $ -->
+<!--
+   | For more configuration information and examples see the Jakarta Log4j
+   | website: http://jakarta.apache.org/log4j
+ -->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<!-- see http://logging.apache.org/log4j/docs/api/org/apache/log4j/ConsoleAppender.html -->
+		<param name="Target" value="System.out"/>
+		<param name="Threshold" value="DEBUG"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- see http://logging.apache.org/log4j/docs/api/org/apache/log4j/PatternLayout.html -->
+			<!-- param name="ConversionPattern" 
+				value="%d{ISO8601} [%t] %c::%M/%-5p %m%n"/ -->
+			<param name="ConversionPattern" 
+				value="%-5p %m%n"/>
+		</layout>
+	</appender>
+	<appender name="FILE" 
+		class="net.gmx.gmxlib.log.GMXDailyRollingFileAppender">
+		<!-- see http://logging.apache.org/log4j/docs/api/org/apache/log4j/DailyRollingFileAppender.html -->
+		<param name="ProgramName" value="gmxlib_test"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- see http://logging.apache.org/log4j/docs/api/org/apache/log4j/PatternLayout.html -->
+			<param name="ConversionPattern" 
+				value="%d{ISO8601} [%t] %c::%M %-5p %m%n"/>
+		</layout>
+	</appender>
+	<appender name="BB" class="net.gmx.gmxlib.log.BigBrotherEscalatingAppender">
+		<param name="ProgramName" value="gmxlib_test"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- see http://logging.apache.org/log4j/docs/api/org/apache/log4j/PatternLayout.html -->
+			<param name="ConversionPattern" 
+				value="%d{ISO8601} [%t] %c::%M %-5p %m%n"/>
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="WARN" />
+		</filter>
+	</appender>
+	<!-- ======================= -->
+	<!-- Setup the Root category -->
+	<!-- ======================= -->
+	<root>
+		<level value="debug"/>
+		<appender-ref ref="CONSOLE"/>
+		<!-- appender-ref ref="FILE"/ -->
+		<!-- appender-ref ref="BB"/ -->
+	</root>
+</log4j:configuration>
