@@ -137,4 +137,16 @@ public abstract class RockSet implements Cloneable, Serializable {
             return dark[i / 2];
         return light[i / 2];
     }
+
+    /**
+     * Convert rock color and index per colot to index per set.
+     * 
+     * @param isDark
+     * @param idx8
+     *            [0-7]
+     * @return [0-15]
+     */
+    public static int toIdx16(final boolean isDark, final int idx8) {
+        return 2 * idx8 + (isDark ? 1 : 0);
+    }
 }

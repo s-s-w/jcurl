@@ -20,19 +20,27 @@ package jcurl.core.gui;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.swing.JFrame;
+import javax.xml.parsers.ParserConfigurationException;
 
 import jcurl.core.PositionSet;
 import jcurl.core.Source;
 import jcurl.core.SpeedSet;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.dto.RockSetProps;
+import jcurl.core.io.SetupBuilder;
+import jcurl.core.io.SetupSax;
 import jcurl.sim.model.CollissionSimple;
 import jcurl.sim.model.SlideStraight;
 
 import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
+import org.xml.sax.SAXException;
 
 /**
  * A simple viewer that brings all together.
@@ -64,17 +72,29 @@ public class DemoSimple extends JFrame {
         dst = mp;
     }
 
-    public static void main(String[] args) {
-        // initial state
-        final PositionSet pos = PositionSet.allOut();
-        pos.getDark(0).setLocation(0, 5, 0);
-        pos.getLight(0).setLocation(0.2, 2.5);
-        pos.getLight(1).setLocation(1.0, 1.5);
-        final SpeedSet speed = new SpeedSet();
-        speed.getDark(0).setLocation(0, -1.325, 0.75);
-        // dynamics engines
-        final Source src = new SlideStraight(new CollissionSimple());
-        src.reset(0, pos, speed, RockSetProps.DEFAULT);
+    public static void main(String[] args) throws MalformedURLException,
+            ParserConfigurationException, SAXException, IOException {
+        final Source src;
+        if (true) {
+            final SetupBuilder setup = SetupSax
+                    .parse(new URL("file", "localhost",
+                            "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup/hammy.jcz"));
+            src = setup.getSlide();
+            src
+                    .reset(0, setup.getPos(), setup.getSpeed(),
+                            RockSetProps.DEFAULT);
+        } else {
+            // initial state
+            final PositionSet pos = PositionSet.allOut();
+            pos.getDark(0).setLocation(0, 5, 0);
+            pos.getLight(0).setLocation(0.2, 2.5);
+            pos.getLight(1).setLocation(1.0, 1.5);
+            final SpeedSet speed = new SpeedSet();
+            speed.getDark(0).setLocation(0, -1.325, 0.75);
+            // dynamics engines
+            src = new SlideStraight(new CollissionSimple());
+            src.reset(0, pos, speed, RockSetProps.DEFAULT);
+        }
         final DemoSimple frame = new DemoSimple();
         // set up the keyboard handler
         frame.addKeyListener(new SimpleKeys(src, frame.dst));

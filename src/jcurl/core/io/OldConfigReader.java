@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
+import jcurl.core.RockSet;
 import jcurl.core.dto.Ice;
 
 import org.apache.ugli.LoggerFactory;
@@ -226,7 +227,7 @@ public class OldConfigReader {
     private void setAngle(final boolean isDark, int no, final String a) {
         final DimVal angle = parseDim(a);
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + angle);
-        setup.setPosA(SetupBuilder.toIdx(isDark, no), angle);
+        setup.setAngle(RockSet.toIdx16(isDark, no), angle);
     }
 
     private void setDraw(final String speed, final String curl) {
@@ -256,8 +257,8 @@ public class OldConfigReader {
         log
                 .debug((isDark ? "dark" : "light") + " " + no + ":" + _x + ", "
                         + _y);
-        setup.setPosX(SetupBuilder.toIdx(isDark, no), _x);
-        setup.setPosY(SetupBuilder.toIdx(isDark, no), _y);
+        setup.setPosX(RockSet.toIdx16(isDark, no), _x);
+        setup.setPosY(RockSet.toIdx16(isDark, no), _y);
     }
 
     private void setIceComment(final String s) {
@@ -271,27 +272,27 @@ public class OldConfigReader {
 
     private void setOut(final OldConfigReader ret, final boolean isDark, int no) {
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + "");
-        setup.setPosOut(SetupBuilder.toIdx(isDark, no));
+        setup.setPosOut(RockSet.toIdx16(isDark, no));
     }
 
     private void setRelease(final OldConfigReader ret, final boolean isDark,
             int no) {
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + "");
-        setup.setPosRelease(SetupBuilder.toIdx(isDark, no));
+        setup.setPosRelease(RockSet.toIdx16(isDark, no));
     }
 
     private void setSpeed(final OldConfigReader ret, final boolean isDark,
             int no, final String v) {
         final DimVal _v = parseDim(v);
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + _v);
-        setup.setSpeed(SetupBuilder.toIdx(isDark, no), _v);
+        setup.setSpeed(RockSet.toIdx16(isDark, no), _v);
     }
 
     private void setSpin(final OldConfigReader ret, final boolean isDark,
             int no, final String v) {
         final DimVal _v = parseDim(v);
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + _v);
-        setup.setSpin(SetupBuilder.toIdx(isDark, no), _v);
+        setup.setSpin(RockSet.toIdx16(isDark, no), _v);
     }
 
     private void setTo(final OldConfigReader ret, final boolean isDark, int no,
@@ -301,7 +302,7 @@ public class OldConfigReader {
         log
                 .debug((isDark ? "dark" : "light") + " " + no + ":" + _x + ", "
                         + _y);
-        setup.setToX(SetupBuilder.toIdx(isDark, no), _x);
-        setup.setToY(SetupBuilder.toIdx(isDark, no), _y);
+        setup.setToX(RockSet.toIdx16(isDark, no), _x);
+        setup.setToY(RockSet.toIdx16(isDark, no), _y);
     }
 }

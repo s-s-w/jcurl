@@ -19,6 +19,8 @@
 package jcurl.sim.core;
 
 import java.awt.geom.Point2D;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 import jcurl.core.PositionSet;
 import jcurl.core.Rock;
@@ -49,6 +51,39 @@ public abstract class SlideStrategy implements Source {
 
     protected static double hypot(final double a, final double b) {
         return Math.sqrt(a * a + b * b);
+    }
+    public static SlideStrategy newInstance(final Class clz,
+            final CollissionStrategy coll) {
+        final Class parent = SlideStrategy.class;
+        if (!parent.isAssignableFrom(clz))
+            throw new IllegalArgumentException("Class [" + clz.getName()
+                    + "] is no descendant of [" + parent.getName() + "]");
+        try {
+            final Class[] parType = { CollissionStrategy.class };
+            final Constructor ctor = clz.getConstructor(parType);
+            final Object[] par = { coll };
+            return (SlideStrategy) ctor.newInstance(par);
+        } catch (InstantiationException e) {
+            final IllegalArgumentException ex = new IllegalArgumentException();
+            ex.initCause(e);
+            throw ex;
+        } catch (IllegalAccessException e) {
+            final IllegalArgumentException ex = new IllegalArgumentException();
+            ex.initCause(e);
+            throw ex;
+        } catch (SecurityException e) {
+            final IllegalArgumentException ex = new IllegalArgumentException();
+            ex.initCause(e);
+            throw ex;
+        } catch (NoSuchMethodException e) {
+            final IllegalArgumentException ex = new IllegalArgumentException();
+            ex.initCause(e);
+            throw ex;
+        } catch (InvocationTargetException e) {
+            final IllegalArgumentException ex = new IllegalArgumentException();
+            ex.initCause(e);
+            throw ex;
+        }
     }
 
     protected static double poly(final double x, final int dim, final double[] p) {

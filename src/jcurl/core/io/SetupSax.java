@@ -19,14 +19,19 @@
 package jcurl.core.io;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.net.URL;
 import java.util.Stack;
+import java.util.zip.GZIPInputStream;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
+import jcurl.core.RockSet;
 
 import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
@@ -38,6 +43,8 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
+ * Just do XML parsing and hand values to {@link jcurl.core.io.SetupBuilder}.
+ * 
  * @see jcurl.core.io.SetupSaxTest
  * @see jcurl.core.io.OldConfigReader
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -63,7 +70,7 @@ public class SetupSax extends DefaultHandler {
             idx8 = Byte.parseByte(no) - 1;
             if (idx8 < 0 || idx8 > 7)
                 throw new IllegalArgumentException("");
-            idx16 = 2 * idx8 + (isDark ? 1 : 0);
+            idx16 = RockSet.toIdx16(isDark, idx8);
         }
     }
 
@@ -73,9 +80,8 @@ public class SetupSax extends DefaultHandler {
 
     private static DimVal getDim(final Attributes atts) {
         final String val = atts.getValue("val");
-        final String dim = atts.getValue("dim");
-        final Dim d = dim == null ? null : Dim.find(dim);
-        return new DimVal(Double.parseDouble(val), d);
+        final Dim dim = Dim.find(atts.getValue("dim"));
+        return new DimVal(Double.parseDouble(val), dim);
     }
 
     private static synchronized SAXParser newParser()
@@ -89,9 +95,9 @@ public class SetupSax extends DefaultHandler {
 
     public static SetupBuilder parse(final File file)
             throws ParserConfigurationException, SAXException, IOException {
-        final SetupBuilder ret = new SetupBuilder();
-        newParser().parse(file, new SetupSax(ret));
-        return ret;
+        if (file.getName().endsWith("z"))
+            return parse(new GZIPInputStream(new FileInputStream(file)));
+        return parse(new FileInputStream(file));
     }
 
     public static SetupBuilder parse(final InputSource in)
@@ -109,6 +115,13 @@ public class SetupSax extends DefaultHandler {
     public static SetupBuilder parse(final Reader file)
             throws ParserConfigurationException, SAXException, IOException {
         return parse(new InputSource(file));
+    }
+
+    public static SetupBuilder parse(final URL file)
+            throws ParserConfigurationException, SAXException, IOException {
+        if (file.getFile().endsWith("z"))
+            return parse(new GZIPInputStream(file.openStream()));
+        return parse(file.openStream());
     }
 
     private final StringBuffer buf = new StringBuffer();
@@ -246,7 +259,7 @@ public class SetupSax extends DefaultHandler {
                 } else if ("drawtotee".equals(elem))
                     this.setup.setDrawTime(getDim(atts));
                 else if ("curl".equals(elem))
-                    this.setup.setDrawTime(getDim(atts));
+                    this.setup.setDrawCurl(getDim(atts));
                 else if ("rock".equals(elem))
                     currRock = new RockIdx(atts);
                 else
@@ -262,9 +275,9 @@ public class SetupSax extends DefaultHandler {
                         break;
                 else if ("a".equals(elem))
                     if ("positions".equals(grandParent))
-                        setup.setPosA(currRock.idx16, getDim(atts));
+                        setup.setAngle(currRock.idx16, getDim(atts));
                     else if ("speeds".equals(grandParent))
-                        setup.setSpeedA(currRock.idx16, getDim(atts));
+                        setup.setSpin(currRock.idx16, getDim(atts));
                     else
                         break;
                 else if ("x".equals(elem))
