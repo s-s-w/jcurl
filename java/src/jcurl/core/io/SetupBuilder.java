@@ -18,131 +18,375 @@
  */
 package jcurl.core.io;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 import jcurl.core.NotImplementedYetException;
 import jcurl.core.PositionSet;
+import jcurl.core.Rock;
+import jcurl.core.RockSet;
 import jcurl.core.SpeedSet;
+import jcurl.core.dto.Ice;
+import jcurl.math.MathVec;
+import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.SlideStrategy;
+import jcurl.sim.model.CollissionSimple;
+import jcurl.sim.model.SlideStraight;
 
 import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
 
 /**
+ * Accumulate setup data.
  * 
+ * @see jcurl.core.io.SetupSax
+ * @see jcurl.core.io.OldConfigReader
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public class SetupBuilder {
+    /** Internal class to accumulate rock data */
+    private static class RockData {
+
+        public int positionFlag = Coords;
+
+        public int speedFlag = Coords;
+
+        public DimVal to_x, to_y, speed;
+
+        public DimVal vx, vy, spin;
+
+        public DimVal x0, y0, a0;
+    }
+
+    private static final int Coords = 0;
+
+    private static final String DRAWCURL = "drawcurl";
+
+    private static final String DRAWTIME = "drawtime";
+
+    private static final String EVENT_NAME = "event_name";
+
+    private static final String GAME = "game";
 
     private static final ULogger log = LoggerFactory
             .getLogger(SetupBuilder.class);
 
-    public static int toIdx(final boolean isDark, final int no) {
-        return 2 * no + (isDark ? 1 : 0);
+    private static final String LOSS = "loss";
+
+    private static final String MODEL = "model";
+
+    private static final int Out = 1;
+
+    private static final int Release = 2;
+
+    private static final int SpeedTo = 4;
+
+    private Class collModel = CollissionSimple.class;
+
+    private final Map collParams = new TreeMap();
+
+    private CollissionStrategy collStrat = null;
+
+    private Class iceModel = SlideStraight.class;
+
+    private final Map iceParams = new TreeMap();
+
+    private boolean isFrozen = false;
+
+    private final Map metaParams = new TreeMap();
+
+    private final PositionSet pos = PositionSet.allHome();
+
+    private final RockData[] rocks;
+
+    private SlideStrategy slideStrat = null;
+
+    private final SpeedSet speed = new SpeedSet();
+
+    public SetupBuilder() {
+        rocks = new RockData[RockSet.ROCKS_PER_SET];
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+            rocks[i] = new RockData();
+    }
+
+    private void digest() {
+        try {
+            log.debug("-");
+            // set up the collission engine
+            collStrat = CollissionStrategy.newInstance(collModel);
+            // set up the slide engine
+            slideStrat = SlideStrategy.newInstance(iceModel, collStrat);
+            DimVal drawTime = (DimVal) iceParams.get(DRAWTIME);
+            if (Dim.SEC_HOG_TEE.equals(drawTime.dim))
+                drawTime = new DimVal(drawTime.val, Dim.SECOND);
+            final DimVal drawCurl = (DimVal) iceParams.get(DRAWCURL);
+            slideStrat.setDraw2Tee(drawTime.to(Dim.SECOND).val, drawCurl
+                    .to(Dim.METER).val);
+            // set up positions and speeds
+            for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+                final Rock x = pos.getRock(i);
+                final Rock v = speed.getRock(i);
+                // Position stuff
+                switch (rocks[i].positionFlag) {
+                case Out:
+                    Ice.setOut(x, i % 2 == 0, i / 2);
+                    break;
+                case Coords:
+                    if (rocks[i].x0 != null)
+                        x.setX(rocks[i].x0.to(Dim.METER).val);
+                    if (rocks[i].y0 != null)
+                        x.setY(rocks[i].y0.to(Dim.METER).val);
+                    if (rocks[i].a0 != null)
+                        x.setZ(rocks[i].a0.to(Dim.RADIANT).val);
+                    break;
+                case Release:
+                    log.info("TODO"); // TODO compute projection
+                    break;
+                default:
+                    throw new IllegalStateException("Illegal positionFlag "
+                            + rocks[i].positionFlag);
+                }
+                // Speed stuff
+                if (rocks[i].spin != null)
+                    v.setZ(rocks[i].spin.to(Dim.RAD_PER_SEC).val);
+                switch (rocks[i].speedFlag) {
+                case SpeedTo:
+                    // check dimension
+                    if (!Dim.SEC_HOG_HOG.equals(rocks[i].speed.dim))
+                        throw new IllegalArgumentException(
+                                "Expected something like " + Dim.SEC_HOG_HOG
+                                        + ", not " + rocks[i].speed.dim);
+                    // v = v0 * (to - x) / |to - x|
+                    v.setLocation(rocks[i].to_x.to(Dim.METER).val,
+                            rocks[i].to_y.to(Dim.METER).val);
+                    MathVec.sub(v, x, v);
+                    MathVec.mult(slideStrat.getInitialSpeed(x.getY(),
+                            rocks[i].speed.val)
+                            / MathVec.abs(v), v, v);
+                    break;
+                case Coords:
+                    if (rocks[i].vx != null)
+                        v.setX(rocks[i].vx.to(Dim.METER_PER_SEC).val);
+                    if (rocks[i].vy != null)
+                        v.setY(rocks[i].vy.to(Dim.METER_PER_SEC).val);
+                    break;
+                default:
+                    throw new IllegalStateException("Illegal speedFlag "
+                            + rocks[i].speedFlag);
+                }
+            }
+        } catch (RuntimeException e) {
+            log.error("", e);
+            throw e;
+        }
     }
 
     public void freeze() {
         log.debug("-");
+        if (!isFrozen) {
+            isFrozen = true;
+            digest();
+        }
+    }
+
+    private void freezeCheck() {
+        if (isFrozen)
+            throw new IllegalStateException("Frozen");
     }
 
     public PositionSet getPos() {
-        throw new NotImplementedYetException();
+        return this.pos;
     }
 
     public SlideStrategy getSlide() {
-        throw new NotImplementedYetException();
+        return this.slideStrat;
     }
 
     public SpeedSet getSpeed() {
-        throw new NotImplementedYetException();
+        return this.speed;
     }
 
-    public void setCollModel(final String v) throws ClassNotFoundException {
-        final Class clz = Class.forName(v);
-        log.debug(clz);
+    public void setAngle(final int idx, final DimVal val) {
+        log.debug(val);
+        freezeCheck();
+        if (!val.dim.isAngle())
+            throw new IllegalArgumentException("Expected something like "
+                    + Dim.RADIANT + ", not " + val.dim);
+        rocks[idx].a0 = val;
+    }
+
+    public void setCollModel(final Class val) {
+        log.debug(val);
+        // check is class is derived from
+        final Class parent = CollissionStrategy.class;
+        if (!parent.isAssignableFrom(val))
+            throw new IllegalArgumentException("Class [" + val.getName()
+                    + "] is no descendant of [" + parent.getName() + "]");
+        freezeCheck();
+        this.collModel = val;
+    }
+
+    public void setCollModel(final String val) throws ClassNotFoundException {
+        setCollModel(Class.forName(val));
     }
 
     public void setCollParam(final String name, final DimVal val) {
         log.debug(name + " " + val);
+        freezeCheck();
+        collParams.put(name, val);
     }
 
-    public void setDrawCurl(final DimVal v) {
-        log.debug(v);
+    public void setDrawCurl(final DimVal val) {
+        log.debug(val);
+        freezeCheck();
+        if (!val.dim.isLength())
+            throw new IllegalArgumentException("Expected something like "
+                    + Dim.METER + ", not " + val.dim);
+        iceParams.put(DRAWCURL, val);
     }
 
-    public void setDrawTime(final DimVal v) {
-        log.debug(v);
+    public void setDrawTime(final DimVal val) {
+        log.debug(val);
+        freezeCheck();
+        if (val.dim.isTime() || Dim.SEC_HOG_TEE.equals(val.dim))
+            ;
+        else
+            throw new IllegalArgumentException("Expected something like "
+                    + Dim.SECOND + ", not " + val.dim);
+        iceParams.put(DRAWTIME, val);
     }
 
-    public void setEvent(final String v) {
-        log.debug(v);
+    public void setEvent(final String val) {
+        log.debug(val);
+        freezeCheck();
+        metaParams.put(EVENT_NAME, val);
     }
 
-    public void setGame(final String v) {
-        log.debug(v);
+    public void setGame(final String val) {
+        log.debug(val);
+        freezeCheck();
+        metaParams.put(GAME, val);
     }
 
-    public void setIceModel(final String v) throws ClassNotFoundException {
-        final Class clz = Class.forName(v);
-        log.debug(clz);
+    public void setIceModel(final Class val) {
+        log.debug(val);
+        // check is class is derived from
+        final Class parent = SlideStrategy.class;
+        if (!parent.isAssignableFrom(val))
+            throw new IllegalArgumentException("Class [" + val.getName()
+                    + "] is no descendant of [" + parent.getName() + "]");
+        freezeCheck();
+        iceParams.put(MODEL, val);
+    }
+
+    public void setIceModel(final String val) throws ClassNotFoundException {
+        setIceModel(Class.forName(val));
     }
 
     public void setIceParam(final String name, final DimVal val) {
-        log.debug(name + " " + val);
+        log.debug(val);
+        freezeCheck();
+        iceParams.put(name, val);
     }
 
-    public void setLoss(final DimVal v) {
-        log.debug(v);
-    }
-
-    public void setPosA(final int idx, final DimVal v) {
-        log.debug(v);
+    public void setLoss(final DimVal val) {
+        log.debug(val);
+        freezeCheck();
+        collParams.put(LOSS, val);
     }
 
     public void setPosNHog(final int idx) {
         log.debug("-");
+        freezeCheck();
+        setPosY(idx, new DimVal(Ice.HOG_2_TEE, Dim.METER));
     }
 
     public void setPosOut(final int idx) {
         log.debug("-");
+        freezeCheck();
+        rocks[idx].positionFlag = Out;
     }
 
     public void setPosRelease(final int idx) {
         log.debug("-");
+        freezeCheck();
+        rocks[idx].positionFlag = Release;
     }
 
-    public void setPosX(final int idx, final DimVal v) {
-        log.debug(idx + " " + v);
+    public void setPosX(final int idx, final DimVal val) {
+        log.debug(idx + " " + val);
+        freezeCheck();
+        if (!val.dim.isLength())
+            throw new IllegalArgumentException("Expected something like "
+                    + Dim.METER + ", not " + val.dim);
+        rocks[idx].x0 = val;
+        rocks[idx].positionFlag = Coords;
     }
 
-    public void setPosY(final int idx, final DimVal v) {
-        log.debug(idx + " " + v);
+    public void setPosY(final int idx, final DimVal val) {
+        log.debug(idx + " " + val);
+        freezeCheck();
+        if (!val.dim.isLength())
+            throw new IllegalArgumentException("Expected something like "
+                    + Dim.METER + ", not " + val.dim);
+        rocks[idx].y0 = val;
+        rocks[idx].positionFlag = Coords;
     }
 
-    public void setSpeed(final int idx, final DimVal v) {
-        log.debug(idx + " " + v);
+    public void setSpeed(final int idx, final DimVal val) {
+        log.debug(idx + " " + val);
+        freezeCheck();
+        rocks[idx].speed = val;
+        rocks[idx].speedFlag = SpeedTo;
     }
 
-    public void setSpeedA(final int idx, final DimVal v) {
-        log.debug(idx + " " + v);
+    public void setSpeedX(final int idx, final DimVal val) {
+        log.debug(idx + " " + val);
+        freezeCheck();
+        if (!val.dim.isSpeed())
+            throw new IllegalArgumentException("Expected something like "
+                    + Dim.METER_PER_SEC + ", not " + val.dim);
+        rocks[idx].vx = val;
+        rocks[idx].speedFlag = Coords;
     }
 
-    public void setSpeedX(final int idx, final DimVal v) {
-        log.debug(idx + " " + v);
+    public void setSpeedY(final int idx, final DimVal val) {
+        log.debug(idx + " " + val);
+        freezeCheck();
+        if (!val.dim.isSpeed())
+            throw new IllegalArgumentException("Expected something like "
+                    + Dim.METER_PER_SEC + ", not " + val.dim);
+        rocks[idx].vx = val;
+        rocks[idx].speedFlag = Coords;
     }
 
-    public void setSpeedY(final int idx, final DimVal v) {
-        log.debug(idx + " " + v);
+    public void setSpin(final int idx, final DimVal val) {
+        log.debug(idx + " " + val);
+        freezeCheck();
+        if (!val.dim.isSpin())
+            throw new IllegalArgumentException("Expected something like "
+                    + Dim.RAD_PER_SEC + ", not " + val.dim);
+        rocks[idx].spin = val;
     }
 
-    public void setSpin(final int idx, final DimVal v) {
-        log.debug(idx + " " + v);
+    public void setToX(final int idx, final DimVal val) {
+        log.debug(idx + " " + val);
+        freezeCheck();
+        if (!val.dim.isLength())
+            throw new IllegalArgumentException("Expected something like "
+                    + Dim.METER + ", not " + val.dim);
+        rocks[idx].to_x = val;
+        rocks[idx].speedFlag = SpeedTo;
     }
 
-    public void setToX(final int idx, final DimVal v) {
-        log.debug(idx + " " + v);
-    }
-
-    public void setToY(final int idx, final DimVal v) {
-        log.debug(idx + " " + v);
+    public void setToY(final int idx, final DimVal val) {
+        log.debug(idx + " " + val);
+        freezeCheck();
+        if (!val.dim.isLength())
+            throw new IllegalArgumentException("Expected something like "
+                    + Dim.METER + ", not " + val.dim);
+        rocks[idx].to_y = val;
+        rocks[idx].speedFlag = SpeedTo;
     }
 }

@@ -113,7 +113,13 @@ public class Dim extends EnumBase {
     }
 
     public static final Dim find(final String txt) {
-        return (Dim) _names.get(txt);
+        if (txt == null)
+            return null;
+        final Dim ret = (Dim) _names.get(txt);
+        if (ret == null)
+            throw new IllegalArgumentException("Unknown dimension [" + txt
+                    + "]");
+        return ret;
     }
 
     static boolean isAngle(final Dim dim) {
@@ -142,6 +148,10 @@ public class Dim extends EnumBase {
 
     static boolean isSpin(final Dim dim) {
         return RAD_PER_SEC.equals(dim.BaseDim);
+    }
+
+    static boolean isTime(final Dim dim) {
+        return SECOND.equals(dim.BaseDim);
     }
 
     static double toMeter(final DimVal v) {
@@ -175,5 +185,25 @@ public class Dim extends EnumBase {
         _names.put(txt, this);
         this.BaseDim = base == null ? this : base;
         this.Factor = factor;
+    }
+
+    public boolean isAngle() {
+        return Dim.isAngle(this);
+    }
+
+    public boolean isLength() {
+        return Dim.isLength(this);
+    }
+
+    public boolean isSpeed() {
+        return Dim.isSpeed(this);
+    }
+
+    public boolean isSpin() {
+        return Dim.isSpin(this);
+    }
+
+    public boolean isTime() {
+        return Dim.isTime(this);
     }
 }

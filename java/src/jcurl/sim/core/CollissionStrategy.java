@@ -71,6 +71,24 @@ public abstract class CollissionStrategy {
         return mat;
     }
 
+    public static CollissionStrategy newInstance(final Class clz) {
+        final Class parent = CollissionStrategy.class;
+        if (!parent.isAssignableFrom(clz))
+            throw new IllegalArgumentException("Class [" + clz.getName()
+                    + "] is no descendant of [" + parent.getName() + "]");
+        try {
+            return (CollissionStrategy) clz.newInstance();
+        } catch (InstantiationException e) {
+            final IllegalArgumentException ex = new IllegalArgumentException();
+            ex.initCause(e);
+            throw ex;
+        } catch (IllegalAccessException e) {
+            final IllegalArgumentException ex = new IllegalArgumentException();
+            ex.initCause(e);
+            throw ex;
+        }
+    }
+
     protected static final double sqr(final double a) {
         return a * a;
     }

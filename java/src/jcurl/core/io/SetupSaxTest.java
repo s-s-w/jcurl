@@ -20,11 +20,15 @@ package jcurl.core.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import junit.framework.TestCase;
 
+import org.apache.ugli.LoggerFactory;
+import org.apache.ugli.ULogger;
 import org.xml.sax.SAXException;
 
 /**
@@ -39,13 +43,35 @@ public class SetupSaxTest extends TestCase {
     private static final File base = new File(
             "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup");
 
+    private static final URL baseUrl;
+
+    private static final ULogger log = LoggerFactory
+            .getLogger(SetupSaxTest.class);
+    static {
+        try {
+            baseUrl = base.toURL();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("This MUST be a valid url!", e);
+        }
+    }
+
     public static void main(String[] args) {
         junit.textui.TestRunner.run(SetupSaxTest.class);
     }
 
     public void test010_parse() throws ParserConfigurationException,
             SAXException, IOException {
-        final SetupBuilder so = SetupSax.parse(new File(base, "hammy.jcx"));
+        SetupBuilder so = SetupSax.parse(new File(base, "hammy.jcx"));
+        assertNotNull(so);
+        so = SetupSax.parse(new URL(baseUrl, "hammy.jcx"));
+        assertNotNull(so);
+    }
+
+    public void test020_parseZ() throws ParserConfigurationException,
+            SAXException, IOException {
+        SetupBuilder so = SetupSax.parse(new File(base, "hammy.jcz"));
+        assertNotNull(so);
+        so = SetupSax.parse(new URL(baseUrl, "hammy.jcz"));
         assertNotNull(so);
     }
 }
