@@ -28,6 +28,8 @@ import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
 
 /**
+ * Smart handler for creating wc to dc transformations.
+ * 
  * @see jcurl.core.gui.ZoomerTest
  * @see jcurl.core.gui.JCurlPanel
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -37,16 +39,26 @@ public class Zoomer {
 
     private static final float _dia = 2 * RockProps.DEFAULT.getRadius();
 
-    public static final Zoomer HOUSE = new Zoomer("House",
+    public static final Zoomer C12 = new Zoomer("Twelve foot circle",
+            -Ice.SIDE_2_CENTER, -Ice.SIDE_2_CENTER, 2 * Ice.SIDE_2_CENTER,
+            2 * Ice.SIDE_2_CENTER, 0, 0);
+
+    public static final Zoomer HOG2HACK = new Zoomer("Far hog back line",
             -(Ice.SIDE_2_CENTER + _dia), -(Ice.BACK_2_TEE + Ice.HACK_2_BACK),
-            2 * (Ice.SIDE_2_CENTER + _dia), Ice.HOG_2_TEE + _dia
+            2 * (Ice.SIDE_2_CENTER + _dia), _dia + Ice.FAR_HOG_2_TEE
                     + Ice.BACK_2_TEE + Ice.HACK_2_BACK, 0,
             -(Ice.BACK_2_TEE + Ice.HACK_2_BACK));
 
-    public static final Zoomer C12 = new Zoomer("Twelve foot circle",
-            -Ice.SIDE_2_CENTER, -Ice.SIDE_2_CENTER, 2 * Ice.SIDE_2_CENTER,
-            2 * Ice.SIDE_2_CENTER, 0 * Ice.SIDE_2_CENTER, -0.5
-                    * Ice.SIDE_2_CENTER);
+    public static final Zoomer HOUSE = new Zoomer("House",
+            -(Ice.SIDE_2_CENTER + _dia), -(Ice.BACK_2_TEE + _dia),
+            2 * (Ice.SIDE_2_CENTER + _dia), 2 * _dia + Ice.HOG_2_TEE
+                    + Ice.BACK_2_TEE, 0, -(_dia + Ice.BACK_2_TEE));
+
+    public static final Zoomer HOUSE2HACK = new Zoomer("House until back line",
+            -(Ice.SIDE_2_CENTER + _dia), -(Ice.BACK_2_TEE + Ice.HACK_2_BACK),
+            2 * (Ice.SIDE_2_CENTER + _dia), _dia + Ice.HOG_2_TEE
+                    + Ice.BACK_2_TEE + Ice.HACK_2_BACK, 0,
+            -(Ice.BACK_2_TEE + Ice.HACK_2_BACK));
 
     private static final boolean uniform = true;
 
@@ -70,28 +82,76 @@ public class Zoomer {
 
     private final Rectangle2D viewport;
 
+    /**
+     * @see #Zoomer(String, Rectangle2D, Point2D)
+     * @param txt
+     * @param x0
+     * @param y0
+     * @param w
+     * @param h
+     * @param fixX
+     * @param fixY
+     */
     public Zoomer(final String txt, double x0, double y0, double w, double h,
             final double fixX, final double fixY) {
         this(txt, new Rectangle2D.Double(x0, y0, w, h), new Point2D.Double(
                 fixX, fixY));
     }
 
+    /**
+     * @see #Zoomer(String, Rectangle2D, Point2D)
+     * @param txt
+     * @param x0
+     * @param y0
+     * @param w
+     * @param h
+     * @param fixPoint
+     */
     public Zoomer(final String txt, double x0, double y0, double w, double h,
             final Point2D fixPoint) {
         this(txt, new Rectangle2D.Double(x0, y0, w, h), fixPoint);
     }
 
+    /**
+     * @see #Zoomer(String, Rectangle2D, Point2D)
+     * @param txt
+     * @param tl
+     * @param br
+     * @param fixPoint
+     */
     public Zoomer(final String txt, final Point2D tl, final Point2D br,
             final Point2D fixPoint) {
         this(txt, create(tl, br), fixPoint);
     }
 
-    public Zoomer(final String txt, final Rectangle2D wc,
-            final Point2D fixPoint) {
+    /**
+     * @see #applyTrafo(Rectangle, Orientation, boolean, AffineTransform)
+     * @param txt
+     * @param wc
+     *            world-coordinate view-port (zoom-area)
+     * @param fixPoint
+     *            this point's relative position to the wc-viewport is mapped to
+     *            the same relative position in the dc-viewport.
+     */
+    public Zoomer(final String txt, final Rectangle2D wc, final Point2D fixPoint) {
         this.viewport = wc;
         this.fixPoint = fixPoint;
     }
 
+    /**
+     * Map the zoomer's wc viewport to the given dc viewport.
+     * 
+     * @param dc
+     * @param orient
+     *            direction of the NEGATIVE y-axis. In Other words: where is the
+     *            skip looking?
+     * @param isLeftHanded
+     *            <code>true</code> if the dc coordinate system is left-handed
+     * @param mat
+     *            Matrix to add the transformation to, usually call yourself a
+     *            {@link AffineTransform#setToIdentity()}&nbsp;before.
+     * @return
+     */
     public AffineTransform applyTrafo(final Rectangle dc,
             final Orientation orient, final boolean isLeftHanded,
             final AffineTransform mat) {
@@ -107,7 +167,7 @@ public class Zoomer {
             final double vy = viewport.getMinY();
             double fpy = dc.getMaxY() - (fixPoint.getY() - viewport.getMinY())
                     * sca_y;
-            
+
             mat.translate(fpx, fpy);
             if (uniform)
                 if (sca_x > sca_y)
@@ -132,7 +192,7 @@ public class Zoomer {
             final double vy = viewport.getMinY();
             double fpy = dc.getMinY() + (fixPoint.getX() - viewport.getMinX())
                     * sca_y;
-            
+
             mat.translate(fpx, fpy);
             if (uniform)
                 if (sca_x > sca_y)
@@ -149,6 +209,11 @@ public class Zoomer {
         throw new NotImplementedYetException();
     }
 
+    /**
+     * Indicator if the wc zoom has changed.
+     * 
+     * @return the wc viewport (or fixpoint) has changed
+     */
     public boolean hasChanged() {
         return false;
     }
