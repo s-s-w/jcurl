@@ -30,7 +30,7 @@ import java.util.Map;
  * Base class for all value Objects. Provides a generic toString.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: TransferObject.java,v 1.4 2005/02/14 15:04:17 mr Exp $
+ * @version $Id$
  *  
  */
 public abstract class TransferObject implements Serializable {
