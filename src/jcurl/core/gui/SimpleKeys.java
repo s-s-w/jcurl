@@ -29,7 +29,7 @@ import jcurl.core.TargetDiscrete;
  * A first, simple keyboard input class. Uses a
  * {@link jcurl.core.gui.RealTimePlayer}to play.
  * 
- * @see jcurl.core.gui.SimpleMain
+ * @see jcurl.core.gui.DemoSimple
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

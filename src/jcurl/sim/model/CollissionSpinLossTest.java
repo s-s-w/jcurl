@@ -18,26 +18,22 @@
  */
 package jcurl.sim.model;
 
-import jcurl.core.Rock;
-import jcurl.sim.core.CollissionStrategy;
+import junit.framework.TestCase;
 
 /**
- * A very simple hit-model using conservation of energy and momentum.
- * <p>
- * Compute collissions without bothering about inertia. Only exchanges the
- * speed-components along the hit-direction of the two involved rocks. Only
- * conservation of momentum is obeyed, e.g. spin is neglected.
+ * JUnit test
  * 
- * @see jcurl.sim.model.SlideStraight
- * @see jcurl.sim.model.CollissionSimpleTest
+ * @see jcurl.sim.model.CollissionSpinLoss
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CollissionSimple extends CollissionStrategy {
+public class CollissionSpinLossTest extends TestCase {
 
-    public void compute(final Rock va, final Rock vb) {
-        final double tmp = va.getY();
-        va.setLocation(va.getX(), vb.getY());
-        vb.setLocation(vb.getX(), tmp);
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(CollissionSpinLossTest.class);
+    }
+
+    public void test010() {
+
     }
 }
