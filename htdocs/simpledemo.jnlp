@@ -11,7 +11,7 @@
     <description>JCurl Demo Application</description>
     <description kind="short">A demo of the capabilities of the JCurl Curling Framework.</description>
     <icon href="images/jcurl-icon.png"/>
-    <icon kind="splash" href="images/icon.png"/>
+    <icon kind="splash" href="images/jcurl.png"/>
     <offline-allowed/>
   </information>
   <!-- security>
