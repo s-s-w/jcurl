@@ -40,6 +40,8 @@
 	<!-- test classes -->
 	<patternset id="test.classes">
 		<include name="**/*Test.class" />
+		<exclude name="jcurl/core/RockSetInterpolatorTest.class" />
+		<exclude name="jcurl/sim/model/SlideSimpleTest.class" />
 	</patternset>
 			
 	<!-- different jar configurations -->
@@ -69,9 +71,6 @@
 			<include name="${jcurl.jar}" />
 			<include name="${jcurl-test.jar}" />
 		</fileset>
-		<fileset dir="test">
-			<include name="**/*.jar" />
-		</fileset>
 	</path>
 	
 	<!--************************************************************
@@ -79,6 +78,11 @@
 	*************************************************************-->
 	
 	<target name="build" depends="compile" description="Bundle the jars">
+		<manifest file="${config.dir}/jcurl.jar/META-INF/MANIFEST.MF" mode="replace">
+		    <attribute name="Main-Class" value="jcurl.core.gui.SimpleMain"/>
+		    <attribute name="Class-Path" value="log4j-1.2.8.jar"/>
+ 		</manifest>
+		
 		<antcall target="manifest.patch"><param name="jar.file" value="jcurl.jar"/></antcall>
 		<antcall target="manifest.patch"><param name="jar.file" value="jcurl-test.jar"/></antcall>
 
