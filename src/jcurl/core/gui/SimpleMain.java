@@ -30,10 +30,8 @@ import jcurl.core.Source;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.dto.RockSetProps;
 import jcurl.sim.core.RunComputer;
-import jcurl.sim.core.SlideStrategy;
 import jcurl.sim.model.CollissionSimple;
 import jcurl.sim.model.SlideSimple;
-import jcurl.sim.model.SlideStraight;
 
 import org.apache.log4j.Logger;
 
