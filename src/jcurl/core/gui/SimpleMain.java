@@ -69,7 +69,7 @@ public class SimpleMain extends JFrame {
         pos.getLight(0).setLocation(0.2, 2.5);
         pos.getLight(1).setLocation(1.0, 1.5);
         final RockSet speed = new RockSet();
-        speed.getDark(0).setLocation(0, -2.0, 0.75);
+        speed.getDark(0).setLocation(0, -1.5, 0.75);
         // dynamics engines
         //        final Source src = new RunComputer(new SlideStraight(),
         //                new CollissionSimple(), new RockSetInterpolator(),
