@@ -26,8 +26,8 @@ import java.awt.Paint;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 
-import jcurl.core.Rock;
 import jcurl.core.PositionSet;
+import jcurl.core.Rock;
 import jcurl.core.RockSet;
 import jcurl.core.dto.RockProps;
 
