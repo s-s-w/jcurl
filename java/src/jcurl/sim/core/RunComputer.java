@@ -22,6 +22,7 @@ import jcurl.core.Rock;
 import jcurl.core.RockSet;
 import jcurl.core.RockSetInterpolator;
 import jcurl.core.Source;
+import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockSetProps;
 
 /**
@@ -94,7 +95,7 @@ public class RunComputer implements Source {
                 inner: for (;;) {
                     // check the next hit
                     final long nextH = currTime
-                            + (long) (fact * slider.estimateNextHit());
+                            + (long) (fact * slider.estimateNextHit(currPos, currSpeed));
                     if (time < nextH)
                         break noHit;
                     if (currTime == nextH)
@@ -103,7 +104,7 @@ public class RunComputer implements Source {
                     move(nextH);
                 }
                 // compute the hit
-                final int hit = hitter.computeHit(currPos, currSpeed);
+                final int hit = hitter.compute(currPos, currSpeed);
                 if (0 != hit)
                     ipol.setPos(++currTime, currPos, hit);
             }
@@ -127,21 +128,25 @@ public class RunComputer implements Source {
         return slider.isDiscrete();
     }
 
-    public boolean isWithSpeed() {
-        return true;
-    }
-
     public boolean isForwardOnly() {
         return false;
+    }
+
+    public boolean isWithSpeed() {
+        return true;
     }
 
     private final void move(final long t1) {
         for (long t = currTime; t < t1; t += maxDt) {
             slider.getPos(t, currPos);
-            ipol.setPos(currTime = t, currPos);
+            slider.getSpeed(t, currSpeed);
+            ipol
+                    .setPos(currTime = t, currPos, Ice.checkOut(currPos,
+                            currSpeed));
         }
+        slider.getSpeed(t1, currSpeed);
         slider.getPos(t1, currPos);
-        ipol.setPos(currTime = t1, currPos);
+        ipol.setPos(currTime = t1, currPos, Ice.checkOut(currPos, currSpeed));
     }
 
     public void reset(long startTime, final RockSet startPos,

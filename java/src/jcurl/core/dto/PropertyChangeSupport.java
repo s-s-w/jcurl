@@ -76,7 +76,7 @@ public class PropertyChangeSupport {
      * 
      * @see mirror.beans.SafePropertyChangeSupport#listenerMap
      */
-    private static final String ALL_PROPERTIES = "**GENERAL**"; 
+    private static final String ALL_PROPERTIES = "**GENERAL**";
 
     private static final Logger log = Logger
             .getLogger(PropertyChangeSupport.class);
@@ -343,12 +343,11 @@ public class PropertyChangeSupport {
     private void validateNamedProperty(final String property) {
         if (!listenerMap.containsKey(property)) {
             if (log.isDebugEnabled()) {
-                log.debug("Key Set: " + listenerMap.keySet()); 
+                log.debug("Key Set: " + listenerMap.keySet());
             }
-            throw new IllegalArgumentException("The property '" + property 
-                    + "' is not a valid property of " 
-                    + producer.getClass() + ". Valid values = " 
-                    + listenerMap.keySet().toString());
+            throw new IllegalArgumentException("The property '" + property
+                    + "' is not a valid property of " + producer.getClass()
+                    + ". Valid values = " + listenerMap.keySet().toString());
         }
     }
 }

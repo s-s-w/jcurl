@@ -18,7 +18,10 @@
  */
 package jcurl.core.gui;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
@@ -31,14 +34,34 @@ import jcurl.core.TargetDiscrete;
 /**
  * "Stupid" display.
  * 
- * @see jcurl.core.gui.Pt
+ * @see jcurl.core.gui.IcePainter
+ * @see jcurl.core.gui.RockPainter
+ * @see jcurl.core.gui.RealTimePlayer
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public class JCurlPanel extends JPanel implements TargetDiscrete {
+    /**
+     * Scale WC a bit to avoid int rounding errors. This is relevant for all
+     * painters only. WC objects (rocks etc.) remain unaffected by this.
+     */
+    public static final int SCALE = 1000;
+
+    private static final Color timeB = new Color(0.9F, 0.9F, 1.0F, 0.75F);
+
+    private static final Color timeC = Color.BLACK;
+
+    private static final Font timeF = new Font("SansSerif", Font.PLAIN, 10);
 
     /**
-     *  
+     * Re-compute the transformation from world-coordinates to display
+     * coordinates.
+     * 
+     * @param wid
+     * @param hei
+     * @param zoom
+     * @param uniform
+     * @param mat
      */
     private static void computeTrafo(final int wid, final int hei,
             final ZoomArea zoom, final boolean uniform,
@@ -53,16 +76,14 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
         }
         // then build the transformation wc -> dc matrix
         mat.setToIdentity();
+
         // add the transformations in reverse order!
         mat.translate(wid / 2, hei / 2);
-        mat.scale(x_sca, -y_sca);
+        mat.scale(x_sca / SCALE, -y_sca / SCALE);
         mat.rotate(Math.PI / 2);
-        //mat.translate(0, (Pt.nhl.wc.y + Pt.br.wc.y) / 2);
         mat
                 .translate((zoom.tl.x + zoom.br.x) / 2,
                         -(zoom.tl.y + zoom.br.y) / 2);
-        // finally transform the "default" points
-        Pt.transform(mat);
     }
 
     private final IcePainter iceP = new IcePainter();
@@ -77,6 +98,8 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
 
     private RockSet rocks;
 
+    private long time = 0;
+
     private ZoomArea zom;
 
     public JCurlPanel(final RockSet rocks, ZoomArea zoom) {
@@ -85,12 +108,21 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
     }
 
     public JCurlPanel(ZoomArea zoom) {
-        this(RockSet.allHome(), zoom);
+        this(null, zoom);
     }
 
-    public Point2D dc2wc(final Point2D dc, final Point2D wc) {
+    /**
+     * Convert display to world-coordinates.
+     * 
+     * @param dc
+     * @param wc
+     * @return
+     */
+    public Point2D dc2wc(final Point2D dc, Point2D wc) {
         try {
-            return mat.inverseTransform(dc, wc);
+            wc = mat.inverseTransform(dc, wc);
+            wc.setLocation(wc.getX() / SCALE, wc.getY() / SCALE);
+            return wc;
         } catch (NoninvertibleTransformException e) {
             throw new RuntimeException("Why uninvertible?", e);
         }
@@ -98,16 +130,25 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
 
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
+        final Graphics2D g2 = (Graphics2D) g;
+        final AffineTransform ot = g2.getTransform();
+
         final int w = this.getWidth();
         final int h = this.getHeight();
-        if (oldWid != w || oldHei != h) {
-            // first get the zoomfactor
-            computeTrafo(w, h, zom, true, mat);
-            oldWid = w;
-            oldHei = h;
-        }
-        iceP.paintIce(g);
-        rockP.paintRocks(g, mat, rocks);
+        if (oldWid != w || oldHei != h)
+            // re-compute the zoomfactor
+            computeTrafo(oldWid = w, oldHei = h, zom, true, mat);
+        // paint WC stuff
+        g2.transform(mat);
+        iceP.paintIce(g2);
+        rockP.paintRocks(g2, rocks, RockSet.ALL_MASK);
+        g2.setTransform(ot);
+        // paint additional stuff
+        g2.setColor(timeB);
+        g2.fillRect(w - 70, 0, 70, 20);
+        g2.setFont(timeF);
+        g2.setColor(timeC);
+        g2.drawString(Long.toString(time), w - 70 + 10, 3 * 20 / 4);
     }
 
     /**
@@ -126,11 +167,22 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
      */
     public void setPos(final long time, final RockSet rocks,
             final int discontinuous) {
+        this.time = time;
         this.rocks = rocks;
         this.repaint();
     }
 
-    public Point2D wc2dc(final Point2D wc, final Point2D dc) {
-        return mat.transform(wc, dc);
+    /**
+     * Convert world- to display coordinates.
+     * 
+     * @param wc
+     * @param dc
+     * @return
+     */
+    public Point2D wc2dc(final Point2D wc, Point2D dc) {
+        if (dc == null)
+            dc = new Point2D.Float();
+        dc.setLocation(wc.getX() * SCALE, wc.getY() * SCALE);
+        return mat.transform(dc, dc);
     }
 }

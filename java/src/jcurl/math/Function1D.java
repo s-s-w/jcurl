@@ -16,25 +16,23 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core;
-
-import jcurl.math.Point3D;
+package jcurl.math;
 
 /**
- * Base class for rock information (either location or speed). The "Z" component
- * is the handle angle in radians.
- * 
- * @see jcurl.core.RockSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class Rock extends Point3D implements Cloneable {
-    public abstract Object clone();
+public abstract class Function1D extends CurveBase {
 
-    /**
-     * Convenience method to check if zero or not.
-     * 
-     * @return
-     */
-    public abstract boolean nonzero();
+    protected Function1D() {
+        super(1);
+    }
+
+    public abstract double getC(int c, double t);
+
+    public double getC(int dim, int c, double t) {
+        if (dim != 0)
+            throw new IllegalArgumentException("Dimension must be 0");
+        return getC(c, t);
+    }
 }

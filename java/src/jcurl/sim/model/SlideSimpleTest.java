@@ -40,14 +40,14 @@ public class SlideSimpleTest extends TestCase {
         RockSet speed = new RockSet();
         speed.getDark(0).setLocation(0, -1);
 
-        double dt = SlideSimple.tst_timetilhit(pos.getDark(0),
+        SlideSimple slid = new SlideSimple();
+        double dt = slid.tst_timetilhit(pos.getDark(0),
                 speed.getDark(0), pos.getLight(0), speed.getLight(0));
         assertEquals("", 0.7699933889987538, dt, 1e-9);
 
-        SlideSimple slid = new SlideSimple();
         slid.reset(0, pos, speed, null);
 
-        dt = slid.estimateNextHit();
+        dt = slid.estimateNextHit(0);
         assertEquals("", 0.7699933889987538, dt, 1e-9);
     }
 
@@ -64,7 +64,7 @@ public class SlideSimpleTest extends TestCase {
         slid.reset(t0, rPos, rSpeed, RockSetProps.DEFAULT);
         assertEquals(t0, slid.getMinT());
 
-        final double nextH = slid.estimateNextHit();
+        final double nextH = slid.estimateNextHit(t0);
         assertEquals("", 40.0, nextH, 1e-6);
     }
 
@@ -82,8 +82,8 @@ public class SlideSimpleTest extends TestCase {
         assertEquals(t0, slid.getMinT());
 
         for (int i = 0; i < 30000; i++) {
-            assertEquals("", 40.0, slid.estimateNextHit(), 1e-6);
             long t1 = t0 + i;
+            assertEquals("", 40.0, slid.estimateNextHit(t1), 1e-6);
             RockSet p1 = slid.getPos(t1, null);
             RockSet v1 = slid.getSpeed(t1, null);
             //assertEquals(t1, p1.getTime());

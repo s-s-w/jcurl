@@ -24,7 +24,6 @@ import jcurl.core.Rock;
 import jcurl.core.RockSet;
 import jcurl.core.dto.RockProps;
 import jcurl.math.MathVec;
-import jcurl.sim.core.RunComputerTest;
 import junit.framework.TestCase;
 
 /**
@@ -84,7 +83,7 @@ public class CollissionSimpleTest extends TestCase {
         bx.setLocation(0, 0);
         av.setLocation(0, 1);
 
-        int ret = hit.computeHit(pos, speed);
+        int ret = hit.compute(pos, speed);
         assertEquals(3, ret);
         assertEquals("a.v.x", 0.0, av.getX(), 1e-6);
         assertEquals("a.v.y", 0.0, av.getY(), 1e-6);
@@ -102,7 +101,7 @@ public class CollissionSimpleTest extends TestCase {
         bx.setLocation(0, 0);
         av.setLocation(1, 1);
 
-        int ret = hit.computeHit(pos, speed);
+        int ret = hit.compute(pos, speed);
         assertEquals(3, ret);
         assertEquals("a.v.x", 1.0, av.getX(), 1e-6);
         assertEquals("a.v.y", 0.0, av.getY(), 1e-6);

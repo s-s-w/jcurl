@@ -18,42 +18,91 @@
  */
 package jcurl.core.gui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
+import jcurl.core.dto.Ice;
+import jcurl.core.io.Dim;
+
 /**
+ * @see jcurl.core.gui.RockPainter
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public class IcePainter {
+    private static final Color outC = Color.BLUE;
+
+    private static final Color frontC = Color.PINK;
+
+    private static final Color backC = Color.GREEN;
+
+    private static final Color c1C = Color.RED;
+
+    private static final Color c4C = Color.MAGENTA;
+
+    private static final Color c8C = Color.ORANGE;
+
+    private static final Color c12C = Color.CYAN;
+
+    private static final Color linesC = Color.BLACK;
 
     /**
-     * Doesn't need a matrix as it only uses (yet transformed) {@link Pt}
-     * objects.
+     * 
      * 
      * @param g
      */
     public void paintIce(final Graphics g) {
+        final int f = JCurlPanel.SCALE;
+        final int fhy = (int) (f * Ice.FAR_HOG_2_TEE);
+        final int nhy = (int) (f * Ice.HOG_2_TEE);
+        final int hy = (int) (f * Ice.FAR_HACK_2_TEE);
+        final int dx = (int) (f * Ice.SIDE_2_CENTER);
+        final int by = (int) (f * Ice.BACK_2_TEE);
+        final int c1 = (int) (f * Dim.f2m(0.5));
+        final int c4 = (int) (f * Dim.f2m(2.0));
+        final int c8 = (int) (f * Dim.f2m(4.0));
+        final int c12 = (int) (f * Dim.f2m(6.0));
+
         // hog to hog
-        Painter.rectDC(g, Pt.fhl.dc, Pt.nhr.dc);
+        g.setColor(outC);
+        g.fillRect(-dx, nhy, 2 * dx, fhy - nhy);
         // hog to tee
-        Painter.rectDC(g, Pt.nhl.dc, Pt.tr.dc);
+        g.setColor(frontC);
+        g.fillRect(-dx, 0, 2 * dx, nhy);
         // tee to back
-        Painter.rectDC(g, Pt.tl.dc, Pt.br.dc);
-        // button
-        Painter.circleDC(g, Pt.zero.dc, Pt.tr1.dc);
-        // 4-foot circle
-        Painter.circleDC(g, Pt.zero.dc, Pt.tr4.dc);
-        // 8-foot circle
-        Painter.circleDC(g, Pt.zero.dc, Pt.tr8.dc);
+        g.setColor(backC);
+        g.fillRect(-dx, -by, 2 * dx, by);
         // 12-foot circle
-        Painter.circleDC(g, Pt.zero.dc, Pt.tr12.dc);
+        g.setColor(c12C);
+        g.fillArc(-c12, -c12, 2 * c12, 2 * c12, 0, 360);
+        // 8-foot circle
+        g.setColor(c8C);
+        g.fillArc(-c8, -c8, 2 * c8, 2 * c8, 0, 360);
+        // 4-foot circle
+        g.setColor(c4C);
+        g.fillArc(-c4, -c4, 2 * c4, 2 * c4, 0, 360);
+        // button
+        g.setColor(c1C);
+        g.fillArc(-c1, -c1, 2 * c1, 2 * c1, 0, 360);
+
+        // contours
+        g.setColor(linesC);
+        g.drawArc(-c12, -c12, 2 * c12, 2 * c12, 0, 360);
+        g.drawArc(-c8, -c8, 2 * c8, 2 * c8, 0, 360);
+        g.drawArc(-c4, -c4, 2 * c4, 2 * c4, 0, 360);
+        g.drawArc(-c1, -c1, 2 * c1, 2 * c1, 0, 360);
+
+        // Back line
+        g.drawLine(-dx, -by, dx, -by);
         // Tee line
-        Painter.lineDC(g, Pt.tl.dc, Pt.tr.dc);
+        g.drawLine(-dx, 0, dx, 0);
         // Near Hog line
-        Painter.lineDC(g, Pt.nhl.dc, Pt.nhr.dc);
+        g.drawLine(-dx, nhy, dx, nhy);
         // Far Hog line
-        Painter.lineDC(g, Pt.fhl.dc, Pt.fhr.dc);
+        g.drawLine(-dx, fhy, dx, fhy);
         // Center
-        Painter.lineDC(g, Pt.fHackC.dc, Pt.nHackC.dc);
+        g.drawLine(0, hy, 0, -by);
+        g.drawLine(-dx, fhy, -dx, -by);
+        g.drawLine(dx, fhy, dx, -by);
     }
 }

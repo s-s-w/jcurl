@@ -18,6 +18,7 @@
  */
 package jcurl.sim.core;
 
+import jcurl.core.Rock;
 import jcurl.core.RockSet;
 
 /**
@@ -34,5 +35,45 @@ public abstract class CollissionStrategy {
         return a * a;
     }
 
-    public abstract int computeHit(RockSet pos, RockSet speed);
+    /**
+     * 
+     * @param xa
+     *            location of rock a
+     * @param xb
+     *            location of rock b
+     * @param va
+     *            speed of rock a
+     * @param vb
+     *            speed of rock b
+     * @return true: hit, false: no hit
+     */
+    public abstract boolean compute(final Rock xa, final Rock xb,
+            final Rock va, final Rock vb);
+
+    /**
+     * Iterate over all rocks and call
+     * {@link CollissionStrategy#compute(Rock, Rock, Rock, Rock)}for each pair.
+     * 
+     * @see CollissionStrategy#compute(Rock, Rock, Rock, Rock)
+     * @param pos
+     * @param speed
+     * @return bitmask of the changed rocks
+     */
+    public int compute(RockSet pos, RockSet speed) {
+        int hits = 0;
+        for (int B = 0; B < RockSet.ROCKS_PER_SET; B++) {
+            for (int A = 0; A < B; A++) {
+                final Rock xa = pos.getRock(A);
+                final Rock xb = pos.getRock(B);
+                final Rock va = speed.getRock(A);
+                final Rock vb = speed.getRock(B);
+                if (compute(xa, xb, va, vb)) {
+                    // mark the rocks' bits hit
+                    hits |= (1 << A);
+                    hits |= (1 << B);
+                }
+            }
+        }
+        return hits;
+    }
 }

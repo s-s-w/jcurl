@@ -22,7 +22,6 @@ import jcurl.core.RockSet;
 import jcurl.core.Source;
 import jcurl.core.TargetDiscrete;
 
-
 /**
  * Extract locations from a (non-discrete) {@link jcurl.core.Source}and push
  * them into a {@link TargetDiscrete}.
@@ -38,18 +37,29 @@ public class RealTimePlayer implements Runnable {
 
     private final Source src;
 
-    private final long t0;
+    private final long t0Start;
 
-    private final double timeScale;
+    private long tNow;
 
-    private final long timeSleep = 10;
+    private long t0Last;
+
+    private volatile double timeScale;
+
+    private final long timeSleep = 40;
 
     public RealTimePlayer(final long t0, final double scale, final Source src,
             final TargetDiscrete dst) {
-        this.t0 = t0;
+        this.t0Start = t0Last = tNow = t0;
         this.timeScale = scale;
         this.src = src;
         this.dst = dst;
+    }
+
+    /**
+     * @return Returns the timeScale.
+     */
+    public double getTimeScale() {
+        return timeScale;
     }
 
     /**
@@ -57,22 +67,42 @@ public class RealTimePlayer implements Runnable {
      * @see java.lang.Runnable#run()
      */
     public void run() {
-        final RockSet rs = RockSet.allHome();
-        final long start = System.currentTimeMillis();
-        // push them to the target
-        for (;;) {
-            final long dt = System.currentTimeMillis() - start;
-            if (dt > 10000)
-                break;
-            final long t = t0 + (long) (dt * timeScale);
-            src.getPos(t, rs);
-            if (dst != null)
-                dst.setPos(t, rs);
-            try {
-                Thread.sleep(timeSleep);
-            } catch (InterruptedException e) {
-                break;
+        try {
+            RockSet pos = null;
+            RockSet speed = null;
+            final long start = System.currentTimeMillis();
+            for (;;) {
+                final long dt = System.currentTimeMillis() - start;
+                tNow = t0Last + (long) (dt * timeScale);
+                // get the position
+                pos = src.getPos(tNow, pos);
+                // push it to the target
+                if (dst != null)
+                    dst.setPos(tNow, pos);
+                speed = src.getSpeed(tNow, speed);
+                if (0 == RockSet.nonZero(speed)) {
+                    t0Last = t0Start;
+                    break;
+                }
+                try {
+                    Thread.sleep(timeSleep);
+                } catch (InterruptedException e) {
+                    t0Last = tNow;
+                    break;
+                }
             }
+        } catch (Exception e) {
+            System.err.println(e.toString());
+            e.printStackTrace(System.err);
         }
+    }
+
+    /**
+     * @param timeScale
+     *            The timeScale to set.
+     */
+    public void setTimeScale(double timeScale) {
+        t0Last = tNow;
+        this.timeScale = timeScale;
     }
 }

@@ -21,12 +21,13 @@ package jcurl.sim.model;
 import java.awt.geom.Point2D;
 
 import jcurl.core.Rock;
-import jcurl.core.RockSet;
 import jcurl.core.dto.RockProps;
 import jcurl.math.MathVec;
 import jcurl.sim.core.CollissionStrategy;
 
 /**
+ * A very simple hit-model using conservation of energy and momentum.
+ * <p>
  * Compute collissions without bothering about inertia. A very simple hit-model
  * only exchanging the speed-components along the hit-direction of the first two
  * involved rocks. Only conservation of momentum is obeyed, e.g. spin is
@@ -38,40 +39,30 @@ import jcurl.sim.core.CollissionStrategy;
  * @version $Id$
  */
 public class CollissionSimple extends CollissionStrategy {
+    private static final float Rad = RockProps.DEFAULT.getRadius();
 
-    public int computeHit(RockSet pos, RockSet speed) {
-        final float Rad = RockProps.DEFAULT.getRadius();
-        final float HIT_MAX_DIST = 1e-3F;
-        final double RR = sqr(Rad + Rad + HIT_MAX_DIST);
-        int hits = 0;
-        for (int B = 0; B < RockSet.ROCKS_PER_SET; B++) {
-            for (int A = 0; A < B; A++) {
-                final Rock xa = pos.getRock(A);
-                final Rock xb = pos.getRock(B);
-                final Rock va = speed.getRock(A);
-                final Rock vb = speed.getRock(B);
-                // vector from A's center to B's:
-                final Point2D xr = MathVec.sub(xb, xa, new Point2D.Double());
-                final double xrxr = MathVec.scal(xr, xr);
-                if (xrxr > RR || !(va.nonzero() || vb.nonzero()))
-                    continue;
+    private static final float HIT_MAX_DIST = 1e-3F;
 
-                // get the speed of approach (A -> B):
-                final Point2D vr = MathVec.sub(vb, va, new Point2D.Double());
-                // get the (speed) component along xr
-                double scal = MathVec.scal(xr, vr);
-                double vrabs = MathVec.abs(vr);
-                MathVec.mult(scal / xrxr, xr); //r *= r * dv;
+    private static final double RR = sqr(Rad + Rad + HIT_MAX_DIST);
 
-                // exchange speed
-                MathVec.add(va, xr, va);
-                MathVec.sub(vb, xr, vb);
+    public boolean compute(final Rock xa, final Rock xb, final Rock va,
+            final Rock vb) {
+        // vector from A's center to B's:
+        final Point2D xr = MathVec.sub(xb, xa, new Point2D.Double());
+        final double xrxr = MathVec.scal(xr, xr);
+        if (xrxr > RR || !(va.nonzero() || vb.nonzero()))
+            return false;
 
-                // mark the rocks' bits hit
-                hits |= (1 << A);
-                hits |= (1 << B);
-            }
-        }
-        return hits;
+        // get the speed of approach (A -> B):
+        final Point2D vr = MathVec.sub(vb, va, new Point2D.Double());
+        // get the (speed) component along xr
+        double scal = MathVec.scal(xr, vr);
+        double vrabs = MathVec.abs(vr);
+        MathVec.mult(scal / xrxr, xr); //r *= r * dv;
+
+        // exchange speed
+        MathVec.add(va, xr, va);
+        MathVec.sub(vb, xr, vb);
+        return true;
     }
 }

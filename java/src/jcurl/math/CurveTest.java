@@ -16,25 +16,27 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core;
+package jcurl.math;
 
-import jcurl.math.Point3D;
+import junit.framework.TestCase;
 
 /**
- * Base class for rock information (either location or speed). The "Z" component
- * is the handle angle in radians.
- * 
- * @see jcurl.core.RockSet
+ * @see jcurl.math.CurveBase
+ * @see jcurl.math.CurveDom
+ * @see jcurl.math.CurveParts
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class Rock extends Point3D implements Cloneable {
-    public abstract Object clone();
+public class CurveTest extends TestCase {
 
-    /**
-     * Convenience method to check if zero or not.
-     * 
-     * @return
-     */
-    public abstract boolean nonzero();
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(CurveTest.class);
+    }
+
+    public void test010() {
+        Polynome po = Polynome.getPoly(1.0, 2.0, 3.0, 4.0);
+        assertEquals("", 2.0, po.getC(0, 1.0), 1e-9);
+        assertEquals("", 6.0, po.getC(0, 1.5), 1e-9);
+        assertEquals("", 11.0, po.getC(0, 2.0), 1e-9);
+    }
 }

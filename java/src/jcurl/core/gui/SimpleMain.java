@@ -30,14 +30,17 @@ import jcurl.core.Source;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.dto.RockSetProps;
 import jcurl.sim.core.RunComputer;
+import jcurl.sim.core.SlideStrategy;
 import jcurl.sim.model.CollissionSimple;
 import jcurl.sim.model.SlideSimple;
+import jcurl.sim.model.SlideStraight;
 
 import org.apache.log4j.Logger;
 
 /**
  * @see jcurl.sim.core.model.SlideSimple
  * @see jcurl.sim.core.model.CollissionSimple
+ * @see jcurl.core.gui.SimpleKeys
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -56,8 +59,6 @@ public class SimpleMain extends JFrame {
         setTitle("CurlDemo");
         setSize(600, 400);
         Container contentPane = getContentPane();
-        // add a keyboard handler!
-
         final JCurlPanel mp = new JCurlPanel(null, null);
         contentPane.add(mp);
         dst = mp;
@@ -70,22 +71,15 @@ public class SimpleMain extends JFrame {
         pos.getLight(0).setLocation(0.2, 2.5);
         pos.getLight(1).setLocation(1.0, 1.5);
         final RockSet speed = new RockSet();
-        speed.getDark(0).setLocation(0, -1.0);
-
+        speed.getDark(0).setLocation(0, -1.0, 0.75);
         // dynamics engines
         final Source src = new RunComputer(new SlideSimple(),
                 new CollissionSimple(), new RockSetInterpolator(),
                 RockSetProps.DEFAULT, 0, pos, speed);
-        // set up the keyboard handler
-
-        // display
         final SimpleMain frame = new SimpleMain();
+        // set up the keyboard handler
+        frame.addKeyListener(new SimpleKeys(src, frame.dst));
+        // display
         frame.show();
-
-        // trigger start!
-        final RealTimePlayer r = new RealTimePlayer(src.getMinT(), 1.0, src,
-                frame.dst);
-        //r.run();
-        new Thread(r).start();
     }
 }

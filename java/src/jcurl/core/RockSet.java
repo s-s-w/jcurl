@@ -31,6 +31,27 @@ import jcurl.core.dto.RockFloat;
  */
 public class RockSet implements Cloneable, Serializable {
 
+    /**
+     * Check which rocks are non-zero.
+     * 
+     * @param rocks
+     * @return
+     */
+    public static int nonZero(final RockSet rocks) {
+        final double zero = 1e-6;
+        int ret = 0;
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+            final Rock r = rocks.getRock(i);
+            if (r.getX() > zero || r.getX() < -zero)
+                ret |= 1 << i;
+            else if (r.getY() > zero || r.getY() < -zero)
+                ret |= 1 << i;
+        }
+        return ret;
+    }
+
+    public static final int ALL_MASK = 0xFFFF;
+
     public static final int ROCKS_PER_COLOR = 8;
 
     public static final int ROCKS_PER_SET = 16;

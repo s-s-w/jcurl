@@ -20,8 +20,8 @@ package jcurl.sim.model;
 
 import jcurl.core.Rock;
 import jcurl.core.RockSet;
+import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockSetProps;
-import jcurl.sim.core.RunComputer;
 import jcurl.sim.core.SlideStrategy;
 
 /**
@@ -36,20 +36,6 @@ import jcurl.sim.core.SlideStrategy;
 public class SlideSimple extends SlideStrategy {
 
     /**
-     * Move a single rock.
-     * 
-     * @param pos
-     * @param speed
-     * @param dt
-     */
-    private static void computeDt(final Rock pos, final Rock speed,
-            final long dt) {
-        pos.setX(pos.getX() + speed.getX() * dt * 1e-3);
-        pos.setY(pos.getY() + speed.getY() * dt * 1e-3);
-        pos.setZ(pos.getZ() + speed.getZ() * dt * 1e-3);
-    }
-
-    /**
      * Make the function reachable for testing.
      * 
      * @param ap
@@ -58,7 +44,7 @@ public class SlideSimple extends SlideStrategy {
      * @param bv
      * @return seconds
      */
-    static double tst_timetilhit(final Rock ap, final Rock av, final Rock bp,
+    double tst_timetilhit(final Rock ap, final Rock av, final Rock bp,
             final Rock bv) {
         return timetilhit(ap, av, bp, bv);
     }
@@ -78,19 +64,44 @@ public class SlideSimple extends SlideStrategy {
      * 
      * @param dt
      */
-    private void computeDt(final long t1) {
+    protected void computeDt(final long t1) {
         final long dt = t1 - currTime;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            computeDt(currPos.getRock(i), currSpeed.getRock(i), dt);
+            computeDt(currPos.getRock(i), currSpeed.getRock(i), t1, dt, i);
         }
         currTime = t1;
     }
 
     /**
+     * Move a single rock according to the given time.
+     * @param pos
+     * @param speed
+     * @param dt
+     * @param idx TODO
+     * @param t0 TODO
+     * @return '1' if the rock 'r' is still in motion <b>after </b> the given
+     *         period 'dt', '0' otherwise.
+     */
+    protected int computeDt(final Rock pos, final Rock speed, long tEnd, final long dt, int idx) {
+        pos.setX(pos.getX() + speed.getX() * dt * 1e-3);
+        pos.setY(pos.getY() + speed.getY() * dt * 1e-3);
+        pos.setZ(pos.getZ() + speed.getZ() * dt * 1e-3);
+        return 1;
+    }
+
+    /**
      * @return seconds
      */
-    public double estimateNextHit() {
-        return getnexthit(currPos, currSpeed);
+    public double estimateNextHit(long t) {
+        return estimateNextHit(currPos, currSpeed);
+    }
+
+    private int getInMotion(long t) {
+        if (t < currTime)
+            throw new IllegalArgumentException("You cannot walk back in time.");
+        if (t > currTime)
+            computeDt(t);
+        return RockSet.nonZero(currSpeed);
     }
 
     public long getMaxT() {
@@ -137,5 +148,34 @@ public class SlideSimple extends SlideStrategy {
         currPos = startPos;
         currSpeed = startSpeed;
         this.props = props == null ? RockSetProps.DEFAULT : props;
+    }
+
+    /** Query the friction. */
+    public double getMu() {
+        return 0;
+    }
+
+    /**
+     * Guess the initial speed.
+     * 
+     * @param y0
+     *            unused
+     * @param Trun
+     *            from Hog to Hog. see ./doc/eiszeit.tex for details.
+     */
+    public double getInitialSpeed(final double y0, final double Trun) {
+        return Ice.HOG_2_HOG / Trun;
+    }
+
+    /**
+     * Set the draw-to-T-time and curl.
+     * 
+     * @param time
+     *            unused
+     * @param curl
+     *            unused
+     */
+    public void setDraw2Tee(final double time, final double curl) {
+        ;
     }
 }
