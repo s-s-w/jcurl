@@ -10,8 +10,8 @@
     <homepage href="index.html"/>
     <description>JCurl Demo Application</description>
     <description kind="short">A demo of the capabilities of the JCurl Curling Framework.</description>
-    <icon href="images/jcurl-icon.png"/>
-    <icon kind="splash" href="images/jcurl.png"/>
+    <icon href="http://jcurl.berlios.de/images/jcurl-icon.png"/>
+    <icon kind="splash" href="http://jcurl.berlios.de/images/jcurl.png"/>
     <offline-allowed/>
   </information>
   <!-- security>
