@@ -39,7 +39,10 @@
 			<param name="LevelMin" value="WARN" />
 		</filter>
 	</appender>
-	<category name="jcurl.sim.core.SlideStrategy">
+	<!-- category name="jcurl.sim.core.SlideCurves">
+		<level value="debug"/>
+	</category -->
+	<category name="jcurl.sim.model.SlideStraight">
 		<level value="debug"/>
 	</category>
 	<!-- ======================= -->

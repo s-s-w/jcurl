@@ -61,7 +61,7 @@ public class SlideStraight extends SlideCurves {
     protected CurveBase createCurve(final double t0, final Rock x0,
             final Rock v0) {
         if (log.isDebugEnabled())
-            log.debug("t0=" + t0);
+            log.debug("t0=" + t0 + " " + x0 + " " + v0);
         // get direction of movement
         final Point2D.Double v0_1 = new Point2D.Double();
         final double vabs = MathVec.abs(v0);
@@ -74,13 +74,18 @@ public class SlideStraight extends SlideCurves {
             p1 = Polynome.getPolyParams(t0, 0, 0, 0);
         }
         if (log.isDebugEnabled())
-            log.debug("polynome " + p1[0] + " + " + p1[1] + "x + " + p1[2]
-                    + "x^2");
+            log.debug("untransformed : p(x) = " + p1[0] + " + " + p1[1]
+                    + "*x + " + p1[2] + "*x**2");
         // transform it
         final Polynome p[] = new Polynome[3];
         transform(x0, v0_1, p1, p);
         // rotation remains constant
         p[2] = Polynome.getPoly(t0, x0.getZ(), v0.getZ(), 0);
+        {
+            log.info("x : " + p[0]);
+            log.info("y : " + p[1]);
+            log.info("z : " + p[2]);
+        }
         return new CurveFkt(p);
     }
 
@@ -89,6 +94,10 @@ public class SlideStraight extends SlideCurves {
         final double HN = Ice.HOG_2_TEE;
         return Math.sqrt(2 * accel * (y0 - HF)
                 + sqr(Trun * accel / 2 - (HN - HF) / Trun));
+    }
+
+    double getAccel() {
+        return accel;
     }
 
     public double getMu() {

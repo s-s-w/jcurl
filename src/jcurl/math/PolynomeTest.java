@@ -18,6 +18,8 @@
  */
 package jcurl.math;
 
+import jcurl.core.Rock;
+import jcurl.core.dto.RockDouble;
 import junit.framework.TestCase;
 
 /**
@@ -115,15 +117,34 @@ public class PolynomeTest extends TestCase {
         }
     }
 
+    public void test029_getPolyParams() {
+        double t0 = 2.894295921183459;
+        double dt = 0;
+
+        double v = 0.11913533326608741;
+        double a = -0.1071697516342192;
+        double[] par = Polynome.getPolyParams(t0, 0, v, a);
+
+        assertEquals("", 0, Polynome.poly(0, t0 + dt, par), 1e-9);
+        assertEquals("", v, Polynome.poly(1, t0 + dt, par), 1e-9);
+        assertEquals("", a, Polynome.poly(2, t0 + dt, par), 1e-9);
+
+        dt = 0.1;
+        assertEquals("", 0.0113776845, Polynome.poly(0, t0 + dt, par), 1e-9);
+        assertEquals("", 0.1084183581, Polynome.poly(1, t0 + dt, par), 1e-9);
+        assertEquals("", a, Polynome.poly(2, t0 + dt, par), 1e-9);
+
+    }
+
     public void test030_getPoly() {
         Polynome po = Polynome.getPoly(1.0, 2.0, 3.0, 4.0);
         assertEquals("", 2.0, po.getC(0, 1.0), 1e-9);
-        assertEquals("", 6.0, po.getC(0, 1.5), 1e-9);
-        assertEquals("", 11.0, po.getC(0, 2.0), 1e-9);
+        assertEquals("", 4.0, po.getC(0, 1.5), 1e-9);
+        assertEquals("", 7.0, po.getC(0, 2.0), 1e-9);
 
-        assertEquals("", 7.0, po.getC(1, 1.0), 1e-9);
-        assertEquals("", 9.0, po.getC(1, 1.5), 1e-9);
-        assertEquals("", 11.0, po.getC(1, 2.0), 1e-9);
+        assertEquals("", 3.0, po.getC(1, 1.0), 1e-9);
+        assertEquals("", 5.0, po.getC(1, 1.5), 1e-9);
+        assertEquals("", 7.0, po.getC(1, 2.0), 1e-9);
 
         assertEquals("", 4.0, po.getC(2, 1.0), 1e-9);
         assertEquals("", 4.0, po.getC(2, 1.5), 1e-9);

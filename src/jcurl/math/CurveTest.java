@@ -38,8 +38,8 @@ public class CurveTest extends TestCase {
     public void test010() {
         Polynome po = Polynome.getPoly(1.0, 2.0, 3.0, 4.0);
         assertEquals("", 2.0, po.getC(0, 1.0), 1e-9);
-        assertEquals("", 6.0, po.getC(0, 1.5), 1e-9);
-        assertEquals("", 11.0, po.getC(0, 2.0), 1e-9);
+        assertEquals("", 4.0, po.getC(0, 1.5), 1e-9);
+        assertEquals("", 7.0, po.getC(0, 2.0), 1e-9);
     }
 
     public void test020_CurveParts() {
