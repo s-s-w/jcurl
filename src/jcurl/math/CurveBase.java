@@ -95,16 +95,33 @@ public abstract class CurveBase {
      * @return x for getC(dim, c, x) = 0
      */
     public double computeNewtonZero(final int dim, final int c, double x) {
+        return computeNewtonValue(dim, c, 0, x);
+    }
+
+    /**
+     * Compute <code>x where f^c(x) = y</code> using Newton's algorithm.
+     * 
+     * @param dim
+     *            dimension (0,1,2)
+     * @param c
+     *            c'th derivative
+     * @param y
+     *            value
+     * @param x
+     *            start value
+     * @return x for getC(dim, c, x) = y
+     */
+    public double computeNewtonValue(final int dim, final int c, double y,
+            double x) {
         final double eps = 1e-9;
         for (;;) {
             double dx = getC(dim, c + 1, x);
             if (dx == 0)
                 return 0;
-            dx = getC(dim, c, x) / dx;
+            dx = (getC(dim, c, x) - y) / dx;
             x -= dx;
             if (Math.abs(dx) < eps)
                 return x;
         }
     }
-
 }

@@ -29,7 +29,7 @@ import jcurl.math.CurveFkt;
 import jcurl.math.MathVec;
 import jcurl.math.Polynome;
 import jcurl.sim.core.CollissionStrategy;
-import jcurl.sim.core.SlideAnalytic;
+import jcurl.sim.core.SlideCurves;
 
 import org.apache.log4j.Logger;
 
@@ -37,8 +37,8 @@ import org.apache.log4j.Logger;
  * Model without curl and with constant acceleration.
  * <p>
  * Public access to rock locations and speed via
- * {@link jcurl.sim.core.SlideAnalytic#getC(int, double, RockSet)}. The
- * internal computation (including hit-, out- and stillstand check) is via
+ * {@link jcurl.sim.core.SlideCurves#getC(int, double, RockSet)}. The internal
+ * computation (including hit-, out- and stillstand check) is via
  * {@link jcurl.sim.core.SlideStrategy#computeUntil(double, double)}.
  * 
  * </p>
@@ -48,7 +48,7 @@ import org.apache.log4j.Logger;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SlideStraight extends SlideAnalytic {
+public class SlideStraight extends SlideCurves {
 
     private static final Logger log = Logger.getLogger(SlideStraight.class);
 
@@ -79,6 +79,7 @@ public class SlideStraight extends SlideAnalytic {
         // transform it
         final Polynome p[] = new Polynome[3];
         transform(x0, v0_1, p1, p);
+        // rotation remains constant
         p[2] = Polynome.getPoly(t0, x0.getZ(), v0.getZ(), 0);
         return new CurveFkt(p);
     }
