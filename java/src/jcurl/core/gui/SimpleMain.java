@@ -57,16 +57,7 @@ public class SimpleMain extends JFrame {
         setTitle("CurlDemo");
         setSize(900, 400);
 
-        final IcePainter iceP = new IcePainter();
-        iceP.color.tee2back = new Color(0xC9C9C9);
-        iceP.color.c12 = Color.BLUE;
-        iceP.color.c1 = Color.RED;
-        iceP.color.c4 = Color.MAGENTA;
-        iceP.color.c8 = Color.ORANGE;
-        iceP.color.hog2tee = Color.PINK;
-        iceP.color.contours = Color.BLACK;
-        iceP.color.hog2hog = Color.CYAN;
-        final JCurlPanel mp = new JCurlPanel(null, null, iceP, null);
+        final JCurlPanel mp = new JCurlPanel(null, null, null, null);
         getContentPane().add(mp);
         dst = mp;
     }

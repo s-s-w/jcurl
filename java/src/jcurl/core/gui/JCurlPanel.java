@@ -138,6 +138,9 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
 
         final int w = this.getWidth();
         final int h = this.getHeight();
+        g2.setPaint(iceP.color.backGround);
+        g2.fillRect(0, 0, w, h);
+
         if (oldWid != w || oldHei != h)
             // re-compute the zoomfactor
             computeTrafo(oldWid = w, oldHei = h, zom, true, mat);

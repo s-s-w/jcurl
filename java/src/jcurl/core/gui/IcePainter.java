@@ -26,6 +26,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
 import jcurl.core.dto.Ice;
+import jcurl.core.dto.RockProps;
 import jcurl.core.io.Dim;
 
 /**
@@ -35,22 +36,25 @@ import jcurl.core.io.Dim;
  */
 public class IcePainter {
     public static class ColorSet {
+        
+        public Paint backGround = new Color(0xF0F0FF);
 
-        public Paint c1 = Color.RED;
+        public Paint c1 = new Color(0xFFFFFF);
 
-        public Paint c12 = Color.CYAN;
+        public Paint c12 = new Color(0xFF3131);
 
-        public Paint c4 = Color.MAGENTA;
+        public Paint c4 = new Color(0x3131FF);
 
-        public Paint c8 = Color.ORANGE;
+        public Paint c8 = new Color(0xFFFFFF);
 
         public Paint contours = Color.BLACK;
 
-        public Paint hog2hog = Color.BLUE;
+        public Paint hog2hog = new Color(0xFFFFFF);
 
-        public Paint hog2tee = Color.PINK;
+        public Paint hog2tee = new Color(0xFFFFFF);
 
-        public Paint tee2back = new Color(0xC9C9C9);
+        public Paint tee2back = new Color(0xFFFFFF);
+
     }
 
     protected static final Line2D.Float back;
@@ -65,7 +69,11 @@ public class IcePainter {
 
     protected static final Line2D.Float center;
 
+    protected static final Line2D.Float centerLe;
+
     protected static final Line2D.Float centerLeft;
+
+    protected static final Line2D.Float centerRi;
 
     protected static final Line2D.Float centerRight;
 
@@ -106,6 +114,9 @@ public class IcePainter {
         nearHog = new Line2D.Float(-dx, nhy, dx, nhy);
         farHog = new Line2D.Float(-dx, fhy, dx, fhy);
         center = new Line2D.Float(0, hy, 0, -by);
+        final float RR = 4 * f * RockProps.DEFAULT.getRadius();
+        centerLe = new Line2D.Float(-RR, fhy, -RR, -by);
+        centerRi = new Line2D.Float(RR, fhy, RR, -by);
         centerLeft = new Line2D.Float(-dx, fhy, -dx, -by);
         centerRight = new Line2D.Float(dx, fhy, dx, -by);
     }
@@ -123,6 +134,9 @@ public class IcePainter {
         g.fill(hog2hog);
         g.setPaint(color.hog2tee);
         g.fill(hog2tee);
+        g.setPaint(color.contours);
+        g.draw(centerLe);
+        g.draw(centerRi);
         g.setPaint(color.tee2back);
         g.fill(tee2back);
         g.setPaint(color.c12);
@@ -135,10 +149,10 @@ public class IcePainter {
         g.fill(C1);
         // contours
         g.setPaint(color.contours);
-        g.draw(C12);
-        g.draw(C8);
-        g.draw(C4);
-        g.draw(C1);
+        //        g.draw(C12);
+        //        g.draw(C8);
+        //        g.draw(C4);
+        //        g.draw(C1);
         g.draw(back);
         g.draw(tee);
         g.draw(nearHog);
