@@ -18,17 +18,17 @@
 				value="%-5p %m%n"/ -->
 		</layout>
 	</appender>
-	<!-- category name="jcurl.sim.core.SlideCurves">
-		<level value="debug"/>
-	</category -->
-	<category name="jcurl.sim.model.SlideStraight">
-		<level value="debug"/>
+	<!-- category name="jcurl.core.io.DimVal">
+		<level value="INFO"/>
 	</category>
+	<category name="jcurl.core.io.OldConfigReader">
+		<level value="DEBUG"/>
+	</category -->
 	<!-- ======================= -->
 	<!-- Setup the Root category -->
 	<!-- ======================= -->
 	<root>
-		<level value="info"/>
+		<level value="debug"/>
 		<appender-ref ref="CONSOLE"/>
 	</root>
 </log4j:configuration>
