@@ -119,7 +119,8 @@ public abstract class SlideStrategy implements Source {
      *            location of second rock
      * @param bv
      *            speed of second rock
-     * @return [sec]
+     * @return [sec] 0 if the rocks "touch", see
+     *         {@link CollissionStrategy#MaxDistSq}
      */
     protected static double timetilhit(final int a, final Rock ap,
             final Rock av, final int b, final Rock bp, final Rock bv) {
@@ -129,7 +130,15 @@ public abstract class SlideStrategy implements Source {
         final Point2D v = MathVec.sub(bv, av, new Point2D.Double());
         final double vx = MathVec.scal(x, v);
         if (vx >= 0)
+            // the rocks don't move or separate:
             return Long.MAX_VALUE / 1000;
+        if (CollissionStrategy.MaxDistSq >= ap.distanceSq(bp)) {
+            // the rocks already touch
+            if (log.isDebugEnabled())
+                log.debug("Max=" + CollissionStrategy.MaxDistSq + " current="
+                        + ap.distanceSq(bp));
+            return 0;
+        }
         final double vv = MathVec.scal(v, v);
         final double xx = MathVec.scal(x, x);
         return -(vx + Math.sqrt(sqr(vx) - vv * (xx - RR))) / vv;
@@ -162,7 +171,10 @@ public abstract class SlideStrategy implements Source {
     }
 
     /**
-     * Walk on until the given time.
+     * Walk on until the given time. Requires
+     * {@link #timetilhit(int, Rock, Rock, int, Rock, Rock)}and
+     * {@link #estimateNextHit(PositionSet, SpeedSet)}&nbsp;to return 0 for
+     * touching rocks in motion towards each others.
      * 
      * @param time
      * @param dt
@@ -174,24 +186,23 @@ public abstract class SlideStrategy implements Source {
         // convert seconds to milliseconds and slowly approach hits
         final double fact = 0.95;
         final double dtHit = 1e-3; // time of the hit itself
-        final double dtNextHitThres = 5e-7;
         // check: is the time known already?
         while (time > tmax) {
             checkHit: for (;;) {
                 // slowly approach the hit
                 approach: for (;;) {
                     // check the next hit
-                    final double dtNextHit = fact
-                            * this.estimateNextHit(maxPos, maxSpeed);
+                    double dtNextHit = this.estimateNextHit(maxPos, maxSpeed);
                     if (log.isDebugEnabled())
                         log.debug("tmax=" + tmax + " dtNextHit=" + dtNextHit);
-                    if (dt < dtNextHit)
-                        break checkHit;
-                    if (dtNextHit <= 0)
+                    if (dtNextHit == 0)
+                        break approach;
+                    if (dtNextHit < 0)
                         throw new IllegalStateException("dtNextHit="
                                 + dtNextHit + " is in the past!");
-                    if (dtNextHit < dtNextHitThres)
-                        break approach;
+                    dtNextHit *= fact; // slowly approach
+                    if (dt < dtNextHit)
+                        break checkHit;
                     // move til hit
                     int mov = move(tmax, tmax + dtNextHit, maxPos, maxSpeed);
                     if (mov != rocksInMotion)
@@ -218,11 +229,31 @@ public abstract class SlideStrategy implements Source {
 
     /**
      * Test all combinations of the given rocks for upcoming collissions.
+     * <p>
+     * There is a little conceptual gap between the space-distance (used by
+     * {@link CollissionStrategy#compute(PositionSet, SpeedSet)}) and the time
+     * distance used here and in {@link #computeUntil(double, double)}. This is
+     * because the collission engine should not need to know about rock
+     * propagation and therefore cannot compute the exact time until the hit -
+     * the slider on the other hand needs to know the time to propagate the
+     * rocks until the hit.
+     * </p>
+     * <p>
+     * This is solved by additionally checking the distance in
+     * {@link #timetilhit(int, Rock, Rock, int, Rock, Rock)}&nsbp;and returning
+     * 0 if two rocks are touching in the sense of
+     * {@link CollissionStrategy#MaxDistSq}.
+     * </p>
+     * <p>
+     * So the propagation should continue until 0 is returned here.
+     * </p>
      * 
-     * @see SlideStrategy#timetilhit(int, Rock, Rock, int, Rock, Rock)
+     * @see #timetilhit(int, Rock, Rock, int, Rock, Rock)
      * @param pos
      * @param speed
-     * @return seconds until the next hit
+     * @return seconds until the next hit or 0 if two rocks "touch" (see above
+     *         and {@link #timetilhit(int, Rock, Rock, int, Rock, Rock)}).
+     * @see #timetilhit(int, Rock, Rock, int, Rock, Rock)
      */
     public double estimateNextHit(final PositionSet pos, final SpeedSet speed) {
         if (log.isDebugEnabled())
@@ -359,6 +390,8 @@ public abstract class SlideStrategy implements Source {
     public void reset(double startTime, PositionSet startPos,
             SpeedSet startSpeed, RockSetProps props) {
         tmin = tmax = T0;
+        RockSet.copy(startPos, maxPos);
+        RockSet.copy(startSpeed, maxSpeed);
         set(startTime, startPos, startSpeed, PositionSet.ALL_MASK);
         rocksInMotion = 0;
         for (int i = PositionSet.ROCKS_PER_SET - 1; i >= 0; i--) {

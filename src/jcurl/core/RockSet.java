@@ -46,6 +46,14 @@ public abstract class RockSet implements Cloneable, Serializable {
         return ret;
     }
 
+    public static RockSet copy(final RockSet a, final RockSet b) {
+        for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
+            b.dark[i] = (Rock) (a.dark[i].clone());
+            b.light[i] = (Rock) (a.light[i].clone());
+        }
+        return b;
+    }
+
     public static int countBits(int a) {
         int ret = 0;
         for (; a != 0; a >>= 1) {
@@ -78,6 +86,18 @@ public abstract class RockSet implements Cloneable, Serializable {
         return a * a;
     }
 
+    /**
+     * Convert rock color and index per colot to index per set.
+     * 
+     * @param isDark
+     * @param idx8
+     *            [0-7]
+     * @return [0-15]
+     */
+    public static int toIdx16(final boolean isDark, final int idx8) {
+        return 2 * idx8 + (isDark ? 1 : 0);
+    }
+
     protected final Rock[] dark = new Rock[ROCKS_PER_COLOR];
 
     protected final Rock[] light = new Rock[ROCKS_PER_COLOR];
@@ -103,10 +123,7 @@ public abstract class RockSet implements Cloneable, Serializable {
      */
     protected RockSet(final RockSet b) {
         this(false);
-        for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
-            this.dark[i] = (Rock) (b.dark[i].clone());
-            this.light[i] = (Rock) (b.light[i].clone());
-        }
+        copy(b, this);
     }
 
     public abstract Object clone();
@@ -136,17 +153,5 @@ public abstract class RockSet implements Cloneable, Serializable {
         if (i % 2 == 0)
             return dark[i / 2];
         return light[i / 2];
-    }
-
-    /**
-     * Convert rock color and index per colot to index per set.
-     * 
-     * @param isDark
-     * @param idx8
-     *            [0-7]
-     * @return [0-15]
-     */
-    public static int toIdx16(final boolean isDark, final int idx8) {
-        return 2 * idx8 + (isDark ? 1 : 0);
     }
 }

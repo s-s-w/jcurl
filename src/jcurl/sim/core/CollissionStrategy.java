@@ -40,14 +40,15 @@ import org.apache.ugli.ULogger;
  */
 public abstract class CollissionStrategy {
 
+    private static final float _Rad = RockProps.DEFAULT.getRadius();
+
     private static final float HIT_MAX_DIST = 1e-6F;
 
     private static final ULogger log = LoggerFactory
             .getLogger(CollissionStrategy.class);
 
-    private static final float Rad = RockProps.DEFAULT.getRadius();
-
-    private static final double RR = sqr(Rad + Rad + HIT_MAX_DIST);
+    /** Maximum distance of two rocks [m] to consider them touching */
+    public static final double MaxDistSq = sqr(_Rad + _Rad + HIT_MAX_DIST);
 
     /**
      * Compute the trafo to the right handed coordinate-system with origin orig
@@ -110,6 +111,8 @@ public abstract class CollissionStrategy {
         final AffineTransform mat = new AffineTransform();
         for (int B = 0; B < RockSet.ROCKS_PER_SET; B++) {
             for (int A = 0; A < B; A++) {
+                if(log.isDebugEnabled())
+                    log.debug("Compute hit " + A + "<->" + B);
                 if (compute(pos.getRock(A), pos.getRock(B), speed.getRock(A),
                         speed.getRock(B), mat)) {
                     // mark the rocks' bits hit
@@ -150,10 +153,10 @@ public abstract class CollissionStrategy {
         if (mat == null)
             mat = new AffineTransform();
         // check distance
-        if (xa.distanceSq(xb) > RR) {
+        if (xa.distanceSq(xb) > MaxDistSq) {
             if (log.isDebugEnabled())
                 log.debug("Too far away distance="
-                        + (xa.distance(xb) - (Rad + Rad)));
+                        + (xa.distance(xb) - (_Rad + _Rad)));
             return false;
         }
         // change the coordinate system to rock-coordinates
