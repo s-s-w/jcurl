@@ -20,7 +20,8 @@ package jcurl.core;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: NotImplementedYetException.java 13 2005-03-05 22:58:41Z
+ *          mrohrmoser $
  */
 public class NotImplementedYetException extends UnsupportedOperationException {
 

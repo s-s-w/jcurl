@@ -27,12 +27,12 @@ import jcurl.math.Polynome;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: SlideStraight.java 13 2005-03-05 22:58:41Z mrohrmoser $
  */
 public class SlideStraight extends SlideAnalytic {
 
     private long tknown = 0;
-    
+
     private double accel = 0;
 
     public SlideStraight() {
@@ -80,7 +80,6 @@ public class SlideStraight extends SlideAnalytic {
         return new CurveFkt(p);
     }
 
-
     /**
      * Guess the initial speed.
      * 
@@ -100,7 +99,6 @@ public class SlideStraight extends SlideAnalytic {
     public double getMu() {
         return 2.0 * accel / RockProps.DEFAULT.getMass();
     }
-
 
     /**
      * Set the draw-to-T-time and curl.

@@ -25,7 +25,7 @@ import junit.framework.TestCase;
 /**
  * @see jcurl.sim.core.model.SlideSimple
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: SlideSimpleTest.java 13 2005-03-05 22:58:41Z mrohrmoser $
  */
 public class SlideSimpleTest extends TestCase {
 
@@ -41,8 +41,8 @@ public class SlideSimpleTest extends TestCase {
         speed.getDark(0).setLocation(0, -1);
 
         SlideSimple slid = new SlideSimple();
-        double dt = slid.tst_timetilhit(pos.getDark(0),
-                speed.getDark(0), pos.getLight(0), speed.getLight(0));
+        double dt = slid.tst_timetilhit(pos.getDark(0), speed.getDark(0), pos
+                .getLight(0), speed.getLight(0));
         assertEquals("", 0.7699933889987538, dt, 1e-9);
 
         slid.reset(0, pos, speed, null);

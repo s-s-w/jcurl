@@ -31,7 +31,7 @@ import jcurl.sim.core.SlideStrategy;
  * @see jcurl.sim.core.RunComputer
  * @see jcurl.sim.core.model.CollissionSimple
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: SlideSimple.java 13 2005-03-05 22:58:41Z mrohrmoser $
  */
 public class SlideSimple extends SlideStrategy {
 
@@ -74,15 +74,19 @@ public class SlideSimple extends SlideStrategy {
 
     /**
      * Move a single rock according to the given time.
+     * 
      * @param pos
      * @param speed
      * @param dt
-     * @param idx TODO
-     * @param t0 TODO
+     * @param idx
+     *            TODO
+     * @param t0
+     *            TODO
      * @return '1' if the rock 'r' is still in motion <b>after </b> the given
      *         period 'dt', '0' otherwise.
      */
-    protected int computeDt(final Rock pos, final Rock speed, long tEnd, final long dt, int idx) {
+    protected int computeDt(final Rock pos, final Rock speed, long tEnd,
+            final long dt, int idx) {
         pos.setX(pos.getX() + speed.getX() * dt * 1e-3);
         pos.setY(pos.getY() + speed.getY() * dt * 1e-3);
         pos.setZ(pos.getZ() + speed.getZ() * dt * 1e-3);

@@ -40,7 +40,7 @@ import org.apache.log4j.Logger;
  * @see jcurl.sim.core.model.CollissionSimple
  * @see jcurl.core.gui.SimpleKeys
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: SimpleMain.java 13 2005-03-05 22:58:41Z mrohrmoser $
  */
 public class SimpleMain extends JFrame {
 
