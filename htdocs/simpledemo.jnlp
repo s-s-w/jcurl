@@ -10,8 +10,8 @@
     <homepage href="index.html"/>
     <description>JCurl Demo Application</description>
     <description kind="short">A demo of the capabilities of the JCurl Curling Framework.</description>
-    <!-- icon href="images/swingset2.jpg"/>
-    <icon kind="splash" href="images/splash.gif"/ -->
+    <icon href="images/jcurl-icon.png"/>
+    <icon kind="splash" href="images/icon.png"/>
     <offline-allowed/>
   </information>
   <!-- security>
