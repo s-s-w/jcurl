@@ -53,7 +53,7 @@ public class SlideSimple extends SlideStrategy {
     }
 
     /**
-     * Move a single granite according to the given time.
+     * Move a single rock according to the given time.
      * 
      * @param pos
      *            position
@@ -65,7 +65,7 @@ public class SlideSimple extends SlideStrategy {
      *            [sec]
      * @param idx
      *            index [0-15] Rock index
-     * @return '1' if the granite 'r' is still in motion <b>after </b> the given
+     * @return '1' if the rock 'r' is still in motion <b>after </b> the given
      *         period 'dt', '0' otherwise.
      */
     protected int computeDt(final Rock pos, final Rock speed, double tEnd,

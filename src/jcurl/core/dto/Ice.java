@@ -89,11 +89,11 @@ public class Ice {
     }
 
     /**
-     * tests whether a granite is fully between far-hog and back and the arg and
+     * tests whether a rock is fully between far-hog and back and the arg and
      * right edge.
      * 
      * @param x
-     *            the granite to check
+     *            the rock to check
      * @return true/false
      */
     public static boolean ingame(final Rock x) {
@@ -104,11 +104,11 @@ public class Ice {
     }
 
     /**
-     * tests whether a granite is fully between far-hog and back and the arg and
+     * tests whether a rock is fully between far-hog and back and the arg and
      * right edge.
      * 
      * @param x
-     *            granite's location
+     *            rock's location
      * @return <code>true/false</code>
      */
     public static boolean ingamePlus(final Rock x) {
@@ -122,10 +122,10 @@ public class Ice {
      * Start-lineup. Two rows at each edge of the rink (parallel to
      * center-line), lead rocks first (at the front), color 0 on the arg, 1
      * right. Note: the distance between the rows (0.5 foot) is a little more
-     * than a granite's diameter.
+     * than a rock's diameter.
      * 
      * @param R
-     *            granite
+     *            rock
      * @param isDark
      *            <code>true/false</code>
      * @param idx
@@ -146,10 +146,10 @@ public class Ice {
     /**
      * 'Stop'-lineup. Two rows at each edge of the rink (parallel to back-line),
      * lead rocks outmost, color 0 on the arg, 1 right. Note: the distance
-     * between the rows (0.5 foot) is a little more than a granite's diameter.
+     * between the rows (0.5 foot) is a little more than a rock's diameter.
      * 
      * @param R
-     *            granite reference
+     *            rock reference
      * @param isDark
      *            <code>true/false</code>
      * @param i

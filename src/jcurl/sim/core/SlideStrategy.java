@@ -70,17 +70,17 @@ public abstract class SlideStrategy implements Source {
      * for iterative methods.
      * 
      * @param a
-     *            index of first granite [0-15]
+     *            index of first rock [0-15]
      * @param ap
-     *            location of first granite
+     *            location of first rock
      * @param av
-     *            speed of first granite
+     *            speed of first rock
      * @param b
-     *            index of second granite [0-15]
+     *            index of second rock [0-15]
      * @param bp
-     *            location of second granite
+     *            location of second rock
      * @param bv
-     *            speed of second granite
+     *            speed of second rock
      * @return [sec]
      */
     protected static double timetilhit(final int a, final Rock ap,
@@ -253,13 +253,13 @@ public abstract class SlideStrategy implements Source {
     }
 
     /**
-     * Checks if the granite is out of play.
+     * Checks if the rock is out of play.
      * 
      * @param x
-     *            granite location
+     *            rock location
      * @param v
-     *            granite speed
-     * @return <code>true</code> the granite is out
+     *            rock speed
+     * @return <code>true</code> the rock is out
      */
     protected boolean isOut(final Rock x, final Rock v) {
         if (x.getX() > Ice.SIDE_2_CENTER || x.getX() < -Ice.SIDE_2_CENTER)
@@ -270,23 +270,23 @@ public abstract class SlideStrategy implements Source {
     }
 
     /**
-     * Move one single granite without any checks.
+     * Move one single rock without any checks.
      * 
      * @param t0
      * @param t1
      * @param idx
-     *            granite index
+     *            rock index
      * @param pos
      * @param speed
-     * @return <code>true</code> the granite moves at t1
+     * @return <code>true</code> the rock moves at t1
      */
     protected abstract boolean move(final double t0, final double t1, int idx,
             final Rock pos, final Rock speed);
 
     /**
      * Generic mover. calls
-     * {@link SlideStrategy#move(double, double, int, Rock, Rock)}for each granite
-     * and checks if the granite is still in play afterwards.
+     * {@link SlideStrategy#move(double, double, int, Rock, Rock)}for each rock
+     * and checks if the rock is still in play afterwards.
      * 
      * @param t0
      *            [sec] start time
