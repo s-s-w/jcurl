@@ -46,6 +46,7 @@ public class CollissionSpinLoss extends CollissionStrategy {
         // TODO Auto-generated method stub
 
     }
+
     private static final double HIT_MAX_DIST = 1e-6;
 
     private static final double INERTIA = RockProps.DEFAULT.getInertia();

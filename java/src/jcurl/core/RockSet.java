@@ -32,6 +32,10 @@ public abstract class RockSet implements Cloneable, Serializable {
 
     public static final int ALL_MASK = 0xFFFF;
 
+    public static final int DARK_MASK = 0xAAAA;
+
+    public static final int LIGHT_MASK = 0x5555;
+
     public static final int ROCKS_PER_COLOR = 8;
 
     public static final int ROCKS_PER_SET = 16;
@@ -42,11 +46,20 @@ public abstract class RockSet implements Cloneable, Serializable {
         return ret;
     }
 
+    public static int countBits(int a) {
+        int ret = 0;
+        for (; a != 0; a >>= 1) {
+            if ((a & 1) == 1)
+                ret++;
+        }
+        return ret;
+    }
+
     /**
      * Check which rocks are non-zero.
      * 
      * @param rocks
-     * @return bitset of the rocks beeing non-zero
+     * @return bitset of the rocks being non-zero
      */
     public static int nonZero(final RockSet rocks) {
         final double zero = 1e-6;
@@ -59,6 +72,10 @@ public abstract class RockSet implements Cloneable, Serializable {
                 ret |= 1 << i;
         }
         return ret;
+    }
+
+    protected static double sqr(final double a) {
+        return a * a;
     }
 
     protected final Rock[] dark = new Rock[ROCKS_PER_COLOR];

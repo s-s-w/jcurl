@@ -31,7 +31,8 @@ import javax.swing.JPanel;
 
 import jcurl.mr.exp.math.PointList;
 
-import org.apache.log4j.Logger;
+import org.apache.ugli.LoggerFactory;
+import org.apache.ugli.ULogger;
 
 /**
  * Draw lines if the "hot" key is pressed.
@@ -66,7 +67,8 @@ public class MouseSketchPanel extends JPanel implements KeyListener {
         g.drawArc(x - r, y - r, d, d, 0, 360);
     }
 
-    private static final Logger log = Logger.getLogger(MouseSketchPanel.class);
+    private static final ULogger log = LoggerFactory
+            .getLogger(MouseSketchPanel.class);
 
     /**
      * Paint the given curve.

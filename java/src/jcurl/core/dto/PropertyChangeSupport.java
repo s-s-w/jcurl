@@ -30,7 +30,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.ugli.LoggerFactory;
+import org.apache.ugli.ULogger;
 
 /**
  * Implements a beans like property change support utility that stores the
@@ -76,7 +77,7 @@ public class PropertyChangeSupport {
      */
     private static final String ALL_PROPERTIES = "**GENERAL**";
 
-    private static final Logger log = Logger
+    private static final ULogger log = LoggerFactory
             .getLogger(PropertyChangeSupport.class);
 
     /**

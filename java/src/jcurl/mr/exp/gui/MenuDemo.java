@@ -84,12 +84,12 @@ public class MenuDemo extends JFrame {
                 startAnimation.setAccelerator(KeyStroke.getKeyStroke(' '));
                 animation.add(startAnimation);
             }
-//            {
-//                final JMenuItem stopAnimation = new JMenuItem(toggleStartStop);
-//                stopAnimation.setMnemonic('o');
-//                stopAnimation.setAccelerator(KeyStroke.getKeyStroke(' '));
-//                animation.add(stopAnimation);
-//            }
+            //            {
+            //                final JMenuItem stopAnimation = new JMenuItem(toggleStartStop);
+            //                stopAnimation.setMnemonic('o');
+            //                stopAnimation.setAccelerator(KeyStroke.getKeyStroke(' '));
+            //                animation.add(stopAnimation);
+            //            }
             menu.add(animation);
         }
         {

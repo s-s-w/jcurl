@@ -20,14 +20,15 @@ package jcurl.mr.exp.gui;
 
 import javax.swing.JFrame;
 
-import org.apache.log4j.Logger;
+import org.apache.ugli.LoggerFactory;
+import org.apache.ugli.ULogger;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public class Driver {
-    private static final Logger log = Logger.getLogger(Driver.class);
+    private static final ULogger log = LoggerFactory.getLogger(Driver.class);
 
     public static void main(String[] args) {
         JFrame frame = new MainFrame();

@@ -81,6 +81,8 @@
 		<manifest file="${config.dir}/jcurl.jar/META-INF/MANIFEST.MF" mode="replace">
 		    <attribute name="Main-Class" value="jcurl.core.gui.SimpleMain"/>
 		    <attribute name="Class-Path" value="log4j-1.2.8.jar"/>
+		    <attribute name="License" value="Gnu Public License"/>
+		    <attribute name="Copyright" value="1998-2005 M. Rohrmoser"/>
  		</manifest>
 		
 		<antcall target="manifest.patch"><param name="jar.file" value="jcurl.jar"/></antcall>
