@@ -18,7 +18,6 @@
  */
 package jcurl.core;
 
-
 /**
  * A {@link jcurl.core.RockSet}%nbsp;with speed semantics.
  * 

@@ -110,8 +110,8 @@ public class RockSetInterpolator implements Source, TargetDiscrete {
         return true;
     }
 
-    public void reset(double startTime, PositionSet startPos, SpeedSet startSpeed,
-            RockSetProps props) {
+    public void reset(double startTime, PositionSet startPos,
+            SpeedSet startSpeed, RockSetProps props) {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             this.ip[i].reset();
         setPos(startTime, startPos);

@@ -32,11 +32,14 @@ import jcurl.core.dto.RockProps;
 import jcurl.core.io.Dim;
 
 /**
+ * Paint the ice (sheet).
+ * 
  * @see jcurl.core.gui.RockPainter
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public class IcePainter {
+    /** Ice colors */
     public static class ColorSet {
 
         public Paint backGround = new Color(0xF0F0FF);
@@ -98,7 +101,7 @@ public class IcePainter {
         final int f = JCurlPanel.SCALE;
         final float fhy = f * Ice.FAR_HOG_2_TEE;
         final float nhy = f * Ice.HOG_2_TEE;
-        final float hy =  f * Ice.FAR_HACK_2_TEE;
+        final float hy = f * Ice.FAR_HACK_2_TEE;
         final float dx = f * Ice.SIDE_2_CENTER;
         final float by = f * Ice.BACK_2_TEE;
         final float c1 = f * Dim.f2m(0.5);

@@ -32,10 +32,13 @@ import jcurl.core.RockSet;
 import jcurl.core.dto.RockProps;
 
 /**
+ * Paint a set of rocks.
+ * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public class RockPainter {
+    /** Rock colors */
     public static class ColorSet {
         public Paint contour = Color.BLACK;
 
@@ -76,7 +79,7 @@ public class RockPainter {
     private int txtYoff = 0;
 
     /**
-     * Draw one single granite at (0,0,0)
+     * Draw one single rock at (0,0,0)
      * 
      * @param g
      * @param isDark
@@ -110,8 +113,8 @@ public class RockPainter {
     }
 
     /**
-     * Draw one granite. Builds the coordinate transform and calls
-     * {@link RockPainter#paintRock(Graphics2D, boolean, int)}.
+     * Draw one rock at it's wc position. Builds the coordinate transform and
+     * calls {@link RockPainter#paintRock(Graphics2D, boolean, int)}.
      * 
      * @param g
      * @param rock

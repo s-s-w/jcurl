@@ -18,10 +18,8 @@
  */
 package jcurl.sim.model;
 
-import org.apache.log4j.Logger;
-
-import jcurl.core.Rock;
 import jcurl.core.PositionSet;
+import jcurl.core.Rock;
 import jcurl.core.Source;
 import jcurl.core.SpeedSet;
 import jcurl.core.dto.RockDouble;
@@ -29,6 +27,8 @@ import jcurl.core.dto.RockSetProps;
 import jcurl.math.CurveBase;
 import jcurl.math.Polynome;
 import junit.framework.TestCase;
+
+import org.apache.log4j.Logger;
 
 /**
  * JUnit test.
@@ -144,7 +144,7 @@ public class SlideStraightTest extends TestCase {
         assertEquals("", 0.0113776845, Polynome.poly(0, t0 + dt, par), 1e-9);
         assertEquals("", 0.1084183581, Polynome.poly(1, t0 + dt, par), 1e-9);
         assertEquals("", a, Polynome.poly(2, t0 + dt, par), 1e-9);
-        
+
         dt = 0;
         CurveBase c = s.createCurve(t0, x0, v0);
         //untransformed : p(x) = 0.10406485628694145 + 0.11913533326608741*x +

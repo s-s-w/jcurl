@@ -20,9 +20,9 @@ package jcurl.core.gui;
 
 import jcurl.core.dto.EnumBase;
 
-;
-
 /**
+ * North, East, South, West.
+ * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

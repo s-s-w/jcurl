@@ -20,8 +20,8 @@ package jcurl.sim.core;
 
 import java.awt.geom.Point2D;
 
-import jcurl.core.Rock;
 import jcurl.core.PositionSet;
+import jcurl.core.Rock;
 import jcurl.core.RockSet;
 import jcurl.core.Source;
 import jcurl.core.SpeedSet;
