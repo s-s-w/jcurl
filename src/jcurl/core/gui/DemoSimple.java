@@ -34,7 +34,6 @@ import jcurl.core.TargetDiscrete;
 import jcurl.core.dto.RockSetProps;
 import jcurl.core.io.SetupBuilder;
 import jcurl.core.io.SetupSax;
-import jcurl.sim.model.CollissionSimple;
 import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 

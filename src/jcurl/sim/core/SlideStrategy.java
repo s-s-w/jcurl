@@ -31,7 +31,6 @@ import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
 import jcurl.core.dto.RockSetProps;
 import jcurl.math.MathVec;
-import jcurl.math.Polynome;
 
 import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
