@@ -23,6 +23,7 @@ import jcurl.core.dto.Ice;
 /**
  * A {@link jcurl.core.RockSet}%nbsp;with location semantics.
  * 
+ * @see jcurl.core.PositionSetTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

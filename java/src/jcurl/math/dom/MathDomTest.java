@@ -23,15 +23,15 @@ import java.text.ParseException;
 import java.util.Map;
 import java.util.TreeMap;
 
-import jcurl.exp.mr.math.Calc0;
-import jcurl.exp.mr.math.Calc1;
+import jcurl.mr.exp.math.Calc0;
+import jcurl.mr.exp.math.Calc1;
 import junit.framework.TestCase;
 
 /**
  * JUnit Test.
  * 
- * @see jcurl.exp.mr.math.Calc0
- * @see jcurl.exp.mr.math.Calc1
+ * @see jcurl.mr.exp.math.Calc0
+ * @see jcurl.mr.exp.math.Calc1
  * @see jcurl.math.dom.MathDom
  * @see jcurl.math.dom.ParserInfix
  * @see jcurl.math.dom.DomWalkerInfix

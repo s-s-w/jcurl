@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.exp.mr.gui;
+package jcurl.mr.exp.gui;
 
 import java.awt.Graphics;
 import java.awt.Point;
@@ -29,7 +29,7 @@ import java.util.Iterator;
 
 import javax.swing.JPanel;
 
-import jcurl.exp.mr.math.PointList;
+import jcurl.mr.exp.math.PointList;
 
 import org.apache.log4j.Logger;
 

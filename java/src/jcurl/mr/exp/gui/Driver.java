@@ -16,15 +16,9 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.exp.mr.gui;
-
-import java.awt.Container;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+package jcurl.mr.exp.gui;
 
 import javax.swing.JFrame;
-
-import jcurl.exp.mr.math.PointList;
 
 import org.apache.log4j.Logger;
 
@@ -32,26 +26,11 @@ import org.apache.log4j.Logger;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class MainFrame extends JFrame {
+public class Driver {
+    private static final Logger log = Logger.getLogger(Driver.class);
 
-    private static final Logger log = Logger.getLogger(MainFrame.class);
-
-    private final PointList curve;
-
-    public MainFrame() {
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                log.info("Points collected: " + curve.size());
-                System.exit(0);
-            }
-        });
-        setTitle("FirstFrame");
-        setSize(600, 600);
-        Container contentPane = getContentPane();
-        //contentPane.add(new KeySketchPanel());
-        //contentPane.add(new MouseRectPanel());
-        final MouseSketchPanel mp = new MouseSketchPanel(' ');
-        this.curve = mp.getCurve();
-        contentPane.add(mp);
+    public static void main(String[] args) {
+        JFrame frame = new MainFrame();
+        frame.show();
     }
 }
