@@ -1,0 +1,176 @@
+
+\section{With spin and loss (Try I)\label{lossII}}
+
+The approach \ref{lossI} doesn't give proper results, so we try a new method.
+We assume the rock B not to experience acceleration until the initial friction
+$ F_H $ is overcome. This causes both, a loss of energy as well as as loss of
+momentum and spin. Besides we get a natural splitting of the loss of energy to
+the components $ \vY{}, \vX{} $ and $ \w{} $. 
+
+For this purpose we need to know the forces \emph{during} the time of contact $
+T $. To achieve this we need to make some assumptions about the rocks'
+elasticity mechanism. Here we assume the rocks to behave like springs and
+fulfilling Hook's law of elasticity. Also we assume the friction rock/rock to
+be constant $ |\FX{}| = \mu \cdot |\FY{} | $. This way we get to know the
+forces and everything's just fine.
+
+In this section all letters (if not stated differently) mean rock A before the
+hit. E.g. $ x $ really is $ \bef{x^\mathrm{a}} $.
+
+\subsection{Contact behaviour}
+
+Hook says:
+{%\samepage
+\begin{eqnarray}
+F &=& H \cdot x \\
+E_\mathrm{Pot} &=& \frac{1}{2} H \cdot x^2
+\end{eqnarray}}
+
+{%\samepage
+\begin{eqnarray}
+H \cdot x &=& m \cdot a = m \frac{ \diff{}^2 x }{ \dt } \\
+\Longrightarrow\quad
+x(t) &=& A \cdot \sin \bar\omega t \\
+\mbox{with}\quad
+    \bar\omega &=& \sqrt{ \frac{H}{m} } = \frac{ \pi }{ T }  = \const !\\
+\mbox{and}\quad
+    A &=& \sqrt{ \frac{m}{H} \vY{}{}^2 } = \frac{ -\vY{} }{ \bar\omega } =
+    \frac{ -\vY{} T }{ \pi } 
+\end{eqnarray}}
+%
+{%\samepage
+\begin{eqnarray}
+ x(t) &=& - \frac{ \vY{} }{ \bar\omega } \cdot \sin \bar\omega t \\
+\ddt x(t) &=& -\vY{} \cdot \cos \bar\omega t \\
+\frac{ \diff{}^2 }{ \dt^2 } x(t) &=& \vY{} \bar\omega \sin \bar\omega t 
+\end{eqnarray}}
+%
+{%\samepage
+\begin{eqnarray}
+\DelTa{1,2} \vY{} &=& -\vY{} \left[ \cos\bar\omega t' \right]_0^t = 
+   -\vY{} \left( \cos\bar\omega t - 1 \right) 
+\end{eqnarray}}
+
+
+O.k.\ so far. But what happens during such a hit? We split the whole contact
+$ 0 \le t \le T $ into three periods:
+\begin{enumerate}
+\item Overcome the initial friction $ t < t_1 $
+\item Level the surface speeds $ t < t_0 $
+\item Exchange the rest of the parallel momentum $ t \le T $
+\end{enumerate}
+
+\begin{figure}[htb]
+{\footnotesize \hfill\input{contacta.emt}\hfill\input{contactb.emt}\hfill }
+\caption[$ \FY{}(t) $ \emph{during} the hit]{$ \FY{}(t) $. The parallel forces
+    during the hit. As you see, B ain't accelerated until $ t \ge t_1
+    $.\figlab{forceABhit}} 
+\end{figure}
+
+\subsection{Find $ t_0 $}
+
+$ t_0 $ is the time, when A's effective surface speed becomes 0 (=B's).
+{%\samepage
+\begin{eqnarray}
+    \aft{\v{\eff}} & \stackrel{!}{=} & 0 \\
+    \aft{\vX{}} - \Rad{}\aft{\w{}} &=& 0 \\
+    \vX{} + \DelTa{1,2}\vX{} - \Rad{}( \w{} + \DelTa{1,2}\w{} ) &=& 0 \\
+\end{eqnarray}}
+with \eqref{AA} \& \eqref{CC}:
+{%\samepage
+\begin{eqnarray}
+    \DelTa{1,2}\w{} &=& \DelTa{1,2}\vX{} \frac{ - \m{}\Rad{} }{ \J{} } \\
+    \DelTa{1,2}\vX{} &=& \frac{ - \v{\eff} }{ \frac{ \J{} + \m{}\Rad{}^2 }{\J{}}} 
+\end{eqnarray}}
+%
+{%\samepage
+\begin{eqnarray}
+\FX{} &=& -\sgn(\v{\eff}) \cdot \mu \cdot | \FY{} | \\
+\Longrightarrow\quad
+\DelTa{1,2}\vX{} &=& -\sgn(\v{\eff}) \cdot \mu \cdot \left| -\vY{} \cdot(\cos\bar\omega t_0 - 1) \right| 
+\end{eqnarray}}
+%
+{%\samepage
+\begin{eqnarray}
+\Longrightarrow\quad
+\frac{ - \v{\eff} \frac{ 1 }{ \frac{ \J{} + \m{}\Rad{}^2 }{ \J{} } } }{
+- \sgn(\v{\eff}) \mu | \vY{} | } &=&
+| \underbrace{\cos\bar\omega t_0 - 1}_{ \le 0 \forall t_0 } | \\
+- \left| \frac{ \frac{ \v{\eff} }{ \frac{ \J{} + \m{}\Rad{}^2 }{ \J{} } } }{
+\vY{} \mu } \right| + 1 &=& \cos\bar\omega t_0
+\end{eqnarray}}
+
+\subsection{Find $ t_1 $}
+
+$ t_1 $ is the time, when the Hook-force equals the friction.
+{%\samepage
+\begin{eqnarray}
+\FY{}{}^2 + \FX{}{}^2 &=& F_H^2 \\
+\FY{}{}^2 + \mu^2\FY{}{}^2 &=& F_H^2 \\
+\FY{} &=& \frac{ F_H }{ \sqrt{ 1+\mu^2 } } \\
+\m{} \vY{} \bar\omega \sin\bar\omega t_1 &=& \frac{ F_H }{ \sqrt{1+\mu^2 } } \\
+\sin\bar\omega t_1 &=& \frac{ F_H }{ \m{} \vY{} \bar\omega \sqrt{1+\mu^2} }
+\end{eqnarray}}
+
+\subsection*{Result}
+
+The lost momentum is:
+{%\samepage
+\begin{eqnarray}
+\Delta\v{} &=& -\vY{} \left( \sqrt{1-\sin^2\bar\omega t_1} - 1 \right)
+{-\sgn(\v{\eff})\cdot\mu \choose -1}
+\end{eqnarray}}
+
+If $ \v{\eff} $ becomes zero \emph{before} the friction ends we need to find 
+the friction parallel to $ \eY{} $ only, but include the lost momentum
+in $ \eX{} $ direction as well.
+
+{%\samepage
+\begin{eqnarray}
+\mbox{if}\quad  t_0 < t_1 & \Longleftrightarrow & \sin\bar\omega t_0 < \sin\bar\omega t_1 \\
+\sin\bar\omega t_1 &=& \frac{ F_H }{ \m{} \vY{} \bar\omega \cdot 1 } 
+\end{eqnarray}}
+%
+Lost momentum:
+{%\samepage
+\begin{eqnarray}
+\perp &:& - \sgn(\v{\eff}) \mu \cdot \left| -\vY{} \cdot (\cos\bar\omega t_0 - 1) \right| \\
+\parallel &:& \vY{} \cdot (\sqrt{1-\sin^2\bar\omega t_1} - 1)
+\end{eqnarray}}
+
+After applying the above loss of momentum to the \emph{hitting} rock and a 
+loss of spin of
+{%\samepage
+\begin{eqnarray}
+\DelTa{1,2}\w{} &=& - \DelTa{1,2}\vX{} \frac{ \m{}\Rad{} }{ \J{} }
+\end{eqnarray}}
+we can continue with a normal hit, e.g.\ like described in \ref{spini}.
+
+\subsection{Loss of energy \& $ F_H $}
+
+The energy stored in a spring is
+{%\samepage
+\begin{eqnarray}
+E &=& \frac{1}{2} H x^2 \\
+&=& \frac{1}{2} \bar\omega^2 \cdot \m{} \cdot x^2 \\
+\mbox{with}\quad x &=& - \vY{}/\bar\omega \cdot \sin\bar\omega t_H \\
+\mbox{and}\quad F_H &=& \m{}\vY{}\bar\omega \cdot \sin\bar\omega t_H \\
+E &=& \frac{1}{2} \bar\omega^2 \cdot \m{} \cdot (- \vY{}/\bar\omega\cdot\sin\bar\omega t_H )^2 \\
+E &=& \frac{1}{2} \frac{F_H^2}{\m{}\bar\omega^2} \\
+\Longrightarrow\quad
+F_H &=& \bar\omega\sqrt{2\m{}E} = \const !
+\end{eqnarray}}
+
+
+That tells us for a given loss of energy we'll get a constant initial friction.
+(Which, indeed, is a very nice result.)
+
+\subsection{Resumee}
+
+This model depends on Coulomb-friction rock/rock and a constant friction
+rock/ice for non-moving rocks. This friction can be very big, about $ 10^4 $ N!
+
+The results presented by this model seem quite sensible. The only problem
+remaining is what happens if hitting a freeze? Do we have to overcome the
+friction two times? If yes this model works fine.
+

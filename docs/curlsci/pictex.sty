@@ -1,0 +1,24 @@
+\def\fileversion{1.1}
+\def\filedate{1997/10/26}
+\def\docdate{1997/10/26}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{pictex}[\filedate\space\fileversion\space standard LaTeX2e package]
+\newif\iffinalplot
+\newcommand{\fiverm}{\fontsize{5}{5pt}\usefont{OT1}{cmr}{m}{n}}
+\DeclareOption{draft}{\finalplotfalse}
+\DeclareOption{final}{\finalplottrue}
+\ExecuteOptions{final}
+\ProcessOptions
+% Now input the original PiCTeX files
+\input{prepictex}
+\input{pictex}
+\input{postpictex}
+% and customize for proper combination with german.sty
+\catcode`!=11     % make ! a letter
+\def\!!bardobaselabel |#1| {\put {#1}\barbaselabelorientation{}
+  at {\!basexarg} {\baseyarg} \!bardoendlabel}
+\def\!!bardoendlabel |#1| {\put {#1}\!barendlabelorientation{}
+  at {\!basexarg} {\baseyarg} \!barfinish}
+\catcode`!=12     % and reset ! to other
+\endinput
+

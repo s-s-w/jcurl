@@ -1,0 +1,162 @@
+
+\chapter{Take-out}
+
+Yet many brains boiled, there's poor secure knowledge still. Which directions
+take the involved rocks? How much momentum (or energy) is lost? How is the spin
+transferred? How much whiskey to swamp for throwing magic ones? And which one?
+
+Maybe this paper can show some ideas and suggest solutions. For the scientific
+stuff. About the whiskey you've got to try yourself. I also won't show you the
+way to the next whiskey bar\dots
+
+\vspace{1em}
+Some things are going to be pretty much same with most of the following models.
+They are defined here and will be just referred in the latter. The variables'
+and constants' naming also is defined here.
+
+\begin{table}[htb]
+\begin{center}
+\begin{tabular}{|ll|}
+\hline
+\Tk         & Time of contact                                              \\
+\m{}        & Mass                                                         \\
+\v{}        & Speed                                                        \\
+\p{}        & Momentum $ \p{} = \m{} \cdot \v{} $                          \\
+\F{}        & Force  $ \F{} = \m{} \cdot \ddt \v{} = \ddt \p{} $           \\
+\J{}        & Moment of inertia                                            \\
+\w{}        & Angular speed, spin                                          \\
+\vL{}       & Angular momentum $ \vL{} = \J{} \cdot \vw{} $                \\
+\vM{}       & Torque $ \vM{} = \J{} \cdot \ddt \vw{} = \ddt \vL{} = \vec{R} \times \F{} $ \\
+\eY{}       & unit vector in (parallel) direction of hit (see \figref{coordsys}) \\
+\eX{}       & unit vector perpendicular to direction of hit (see \figref{coordsys}) \\
+\FY{}       & $ \FY{} = \F{} \cdot \eY{} $ and $ \F{} = \FX{} + \FY{} $    \\
+\FX{}       & $ \FX{} = \F{} \cdot \eX{} $ and $ \F{} = \FX{} + \FY{} $    \\
+\v{a}       & $\v{}$ of rock A                                             \\
+\v{b}       & $\v{}$ of rock B                                             \\
+\bef{\v{}}  & $\v{}$ before hit                                            \\
+\aft{\v{}}  & $\v{}$ after hit                                             \\
+$\DelTa{1,2} x $ & $ \aft{x} - \bef{x} $ (difference in time)              \\
+$\DELTA{a,b}x$& $ x^\mathrm{b} - x^\mathrm{a} $ (difference in space)      \\
+\hline
+\end{tabular}
+\caption[Naming of Variables and Constants]{%
+         \tablab{names}%
+         Naming of variables (italic) and constants (roman)}
+\end{center}
+\end{table}
+
+\section*{The setup}
+
+Rock A hits rock B (\figref{setup}), which equals A in all phys.\ properties.
+Both can be in motion, but usually only A is.
+
+According to the geometric setup we change to a local coordinate-system with
+the $y$-axis pointing from A's center to B's. The $x$-axis is set perpendicular
+to get a right-handed system. See \figref{coordsys}.
+
+\begin{figure}[htb]
+\setlength{\unitlength}{15mm} % the rock's radius
+\begin{center}\large
+\setcoordinatesystem units <\unitlength,\unitlength>
+\mbox{\beginpicture
+    % \setplotarea x from -1.3 to 2, y from -3 to 3.3
+    %%% Stein A:
+    \iffinalplot%
+    \circulararc 360 degrees from 0.447 -0.894 center at  0    0
+    \fi%
+    \put{{\huge A}}                     [cc]  at 0.9 0.9
+    %%% Stein B:
+    \iffinalplot%
+    \circulararc 360 degrees from 0.447 -0.894 center at  0.894 -1.788
+    \fi%
+    \put{{\huge B}}                           at  2      -1
+    %% the speeds
+    \put {\vector(0,-1){3.3}}       [Bl]      at  0      3.3
+    \put {\bef{\v{a}}}              [l]       at  0.1    2.0
+    \put {\vector(-2,-1){1.3}}      [Bl]      at  0      0
+    \put {\aft{\v{a}}}              [r]       at -1.4   -0.6
+    \put {\vector(1,-2){1.3}}       [Bl]      at  0.894 -1.788
+    \put {\aft{\v{b}}}              [l]       at  2.0   -3.8
+
+    \iffinalplot
+    \circulararc -30 degrees from 0.5 -0.4 center at  0 0
+    \fi
+    \put {\vector(1,1){0.1}}        [Bl]      at 0.5 -0.4
+    \put {\w{a}}                    [B]       at 0.45 -0.3
+    \iffinalplot
+    \circulararc 30 degrees from 0.394 -1.388 center at  0.894 -1.788
+    \fi
+    \put {\vector(1,1){0.1}}        [Bl]      at 0.394 -1.388
+    \put {$-\w{b}$}                 [Bl]      at 0.394 -1.288
+\endpicture}
+\end{center}
+\caption[The Setup]{The setup: Rock A hits B.
+                        Both are \emph{identical}
+                        in mass, size etc. After the hit i.g.\
+                        both move.
+                        \figlab{setup}}
+\end{figure}
+
+\begin{figure}[htb]
+\setlength{\unitlength}{15mm} % the rock's radius
+\begin{center}\large
+\setcoordinatesystem units <\unitlength,\unitlength>
+\mbox{\beginpicture
+    \setplotarea x from -1.6 to 1.9, y from -2.8 to 1.5
+    \iffinalplot%
+    \circulararc 360 degrees from 0.447 -0.894 center at  0    0
+    \fi%
+    \iffinalplot%
+    \circulararc 360 degrees from 0.447 -0.894 center at  0.894 -1.788
+    \fi%
+    \put{{\huge A}}                 [cc]   at  0.9    0.9
+    \put{{\huge B}}                        at  2.0   -1.0
+%    \put {\vector(0,-1){1.5}}       [Bl]   at  0      1.5
+    \put {\vector(-2,-1){1.4}}      [Bl]   at  0.0    0.0
+    \put {$\eX{}$}                  [r]    at -1.5   -0.6
+    \put {\vector(1,-2){0.7}}       [Bl]   at  0.0    0.0
+    \put {$\eY{}$}                  [Tl]   at  0.8   -1.4
+\endpicture}
+\end{center}
+\caption[The Coordinate-System]{\figlab{coordsys}%
+    The coordinate-system. Positive turn is conterclockwise.}
+\end{figure}
+
+
+\section{Without spin, without loss of energy}
+
+This first model is the most primitive and simple one. But it's a proper
+approximation in most cases. Also it's a good basis for later refinement.
+
+
+\subsection{General thoughts}
+
+Energy must be conserved\index{energy!convervation}:
+%
+\begin{eqnarray}
+\bef{E} &=& \aft{E} \\
+E &:=& \sum_\mathrm{all~rocks} E^i_{\mathrm{Kin}} +
+                               E^i_{\mathrm{Rot}} +
+                               E^i_{\mathrm{Fric}} \\
+\mbox{here:} \quad 0 &=& E_{\mathrm{Rot}} = E_{\mathrm{Fric}}
+\end{eqnarray}
+
+\subsection{Parallel component $\pY{}$\label{para}}
+
+If neglecting friction rock/ice\index{friction!rock/ice} and rock/rock only two
+forces appear:
+%
+\begin{eqnarray}
+\FY{a}(t) &=& - \FY{b}(t) \\
+\Int_T\FY{a}(t)\dt &=& - \Int_T\FY{b}(t)\dt \\
+\DelTa{1,2}\pY{a}  &=& - \DelTa{1,2}\pY{b}
+\end{eqnarray}
+
+With conservation of energy and assumption of equal masses we get:
+\begin{eqnarray}
+\aft{\vY{a}} &=& \bef{\vY{b}} \\
+\aft{\vY{b}} &=& \bef{\vY{a}}
+\end{eqnarray}
+
+I.e.\ the speed-components along the hitting direction just exchange.
+
