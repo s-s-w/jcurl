@@ -58,7 +58,7 @@ public class CollissionSimple extends CollissionStrategy {
         // get the (speed) component along xr
         double scal = MathVec.scal(xr, vr);
         double vrabs = MathVec.abs(vr);
-        MathVec.mult(scal / xrxr, xr); //r *= r * dv;
+        MathVec.mult(scal / xrxr, xr, xr); //r *= r * dv;
 
         // exchange speed
         MathVec.add(va, xr, va);

@@ -73,7 +73,7 @@ public class CollissionSimpleTest extends TestCase {
         double scal = MathVec.scal(a, b);
         double bb = MathVec.scal(b, b);
 
-        MathVec.mult(scal / bb, b);
+        MathVec.mult(scal / bb, b, b);
         assertEquals("", 1, b.getX(), 1e-6);
         assertEquals("", 0, b.getY(), 1e-6);
     }

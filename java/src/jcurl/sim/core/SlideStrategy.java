@@ -18,7 +18,6 @@
  */
 package jcurl.sim.core;
 
-import java.awt.Polygon;
 import java.awt.geom.Point2D;
 
 import jcurl.core.Rock;
@@ -110,8 +109,7 @@ public abstract class SlideStrategy implements Source {
      * locations and velocities.
      * 
      * @param t
-     *            TODO
-     * 
+     *            current time
      * @see SlideStrategy#estimateNextHit(RockSet, RockSet)
      * @return seconds
      */

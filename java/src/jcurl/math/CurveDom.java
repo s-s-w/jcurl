@@ -81,7 +81,7 @@ public class CurveDom extends CurveBase {
     }
 
     public CurveDom(final MathDom.Node [] x, final String param) {
-        this(x, null, param); // TODO derive!!!
+        this(x, null, param); // TODO compute and store the derivatives
     }
 
     public double getC(int dim, int c, double t) {

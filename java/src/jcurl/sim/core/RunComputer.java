@@ -106,8 +106,10 @@ public class RunComputer implements Source {
                 }
                 // compute the hit
                 final int hit = hitter.compute(currPos, currSpeed);
-                if (0 != hit)
+                if (0 != hit) {
+                    // TODO inform the slider
                     ipol.setPos(++currTime, currPos, hit);
+                }
             }
             // move the rest of the time
             move(time);
