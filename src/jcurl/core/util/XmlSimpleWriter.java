@@ -11,7 +11,8 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.Stack;
 
-import org.apache.log4j.Logger;
+import org.apache.ugli.LoggerFactory;
+import org.apache.ugli.ULogger;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
@@ -305,7 +306,7 @@ public class XmlSimpleWriter {
      * @version $Id$
      */
     public static class ErrHandler implements ErrorHandler {
-        private static final Logger log = Logger.getLogger(ErrHandler.class);
+        private static final ULogger log = LoggerFactory.getLogger(ErrHandler.class);
 
         public void error(final SAXParseException e) throws SAXParseException {
             log.error("parse exception", e);
