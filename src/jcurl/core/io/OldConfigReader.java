@@ -26,7 +26,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import jcurl.core.NotImplementedYetException;
 import jcurl.core.PositionSet;
 import jcurl.core.RockSet;
 import jcurl.core.SpeedSet;
@@ -38,6 +37,7 @@ import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
 
 /**
+ * Read onld config files.
  * 
  * @see jcurl.core.io.OldConfigReaderTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -46,6 +46,7 @@ import org.apache.ugli.ULogger;
 public class OldConfigReader {
 
     private static class RockData {
+        public boolean ComputeRelease = false;
 
         public DimVal speed;
 
@@ -61,6 +62,7 @@ public class OldConfigReader {
 
     public static OldConfigReader load(final File file)
             throws FileNotFoundException, IOException {
+        log.debug("File [" + file + "]");
         return load(new FileReader(file));
     }
 
@@ -132,6 +134,8 @@ public class OldConfigReader {
                 tok = readToken(in);
                 if ("OUT".equals(tok))
                     ret.setOut(ret, isDark, no);
+                else if ("RELEASE".equals(tok))
+                    ret.setRelease(ret, isDark, no);
                 else
                     ret.setFrom(ret, isDark, no, tok, readToken(in));
             } else if ("to".equals(tok)) {
@@ -242,11 +246,17 @@ public class OldConfigReader {
 
     private PositionSet loc = PositionSet.allHome();
 
-    private RockData[] rock = new RockData[RockSet.ROCKS_PER_SET];
+    private final RockData[] rock;
 
     private SlideStrategy slide = null;
 
     private SpeedSet speed = null;
+
+    public OldConfigReader() {
+        rock = new RockData[RockSet.ROCKS_PER_SET];
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+            rock[i] = new RockData();
+    }
 
     public PositionSet getPos() {
         return loc;
@@ -279,7 +289,7 @@ public class OldConfigReader {
         log.debug(v + ", " + c);
         if (!v.dim.equals(Dim.SEC_HOG_TEE))
             throw new IllegalArgumentException("Must be seconds hog/tee.");
-        slide.setDraw2Tee(v.val, c.to(Dim.METER).val);
+        //slide.setDraw2Tee(v.val, c.to(Dim.METER).val);
     }
 
     private void setFrictionRockRock(final String type, final String amount) {
@@ -292,7 +302,9 @@ public class OldConfigReader {
         final DimVal _x = parseDim(x);
         final DimVal _y;
         if ("NHOG".equals(y))
-            _y = new DimVal(21, Dim.FOOT);
+            _y = new DimVal(Ice.HOG_2_TEE, Dim.METER);
+        else if ("HACK".equals(y))
+            _y = new DimVal(Ice.FAR_HACK_2_TEE, Dim.METER);
         else
             _y = parseDim(y);
         log
@@ -314,6 +326,12 @@ public class OldConfigReader {
     private void setOut(final OldConfigReader ret, final boolean isDark, int no) {
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + "");
         Ice.setOut(loc.getRock(toIdx(isDark, no)), isDark, no);
+    }
+
+    private void setRelease(final OldConfigReader ret, final boolean isDark,
+            int no) {
+        log.debug((isDark ? "dark" : "light") + " " + no + ":" + "");
+        rock[toIdx(isDark, no)].ComputeRelease = true;
     }
 
     private void setSpeed(final OldConfigReader ret, final boolean isDark,
