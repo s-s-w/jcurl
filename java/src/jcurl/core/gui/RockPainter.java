@@ -47,8 +47,6 @@ public class RockPainter {
         public Paint light = new Color(0xFFFF00);
     }
 
-    private final ColorSet colors = new ColorSet();
-
     private static final Font fo;
 
     protected static final Arc2D.Float inner;
@@ -67,6 +65,8 @@ public class RockPainter {
         outer = new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 0, 360, Arc2D.CHORD);
         inner = new Arc2D.Float(-ri, -ri, 2 * ri, 2 * ri, 0, 360, Arc2D.CHORD);
     }
+
+    private final ColorSet colors = new ColorSet();
 
     private FontMetrics fm = null;
 
@@ -101,11 +101,11 @@ public class RockPainter {
         g.setPaint(colors.label);
         g.drawChars(labels, idx, 1, txtXoff[idx], txtYoff);
         // contours
-        g.setPaint(colors.contour);
-//        // handle
-//        //g.fillOval(-p, -p, 2 * p, ri + p);
-//        g.draw(inner);
-        g.draw(outer);
+        //        g.setPaint(colors.contour);
+        //        // handle
+        //        //g.fillOval(-p, -p, 2 * p, ri + p);
+        //        g.draw(inner);
+        //        g.draw(outer);
     }
 
     /**
