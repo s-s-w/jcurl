@@ -57,12 +57,13 @@ public class Ice {
 
     private static final double outY;
 
-    private static final float rad = RockProps.DEFAULT.getRadius();
+    private static final float rad;
 
     /** Distance from Center-line to edge. 6+1 feet (converted to meter) */
     public static final float SIDE_2_CENTER = Dim.f2m(7.0);
 
     static {
+        rad = Dim.f2m(0.5);
         outX = SIDE_2_CENTER + rad;
         outY = BACK_2_TEE + rad;
     }
@@ -140,9 +141,7 @@ public class Ice {
         final float homeY[] = { Ice.FAR_HACK_2_TEE - 1.0F * D,
                 Ice.FAR_HACK_2_TEE - 3.0F * D, Ice.FAR_HACK_2_TEE - 5.0F * D,
                 Ice.FAR_HACK_2_TEE - 7.0F * D };
-        R.setX((isDark ? -1 : 1) * homeX[idx % 2]);
-        R.setY(homeY[idx / 2]);
-        R.setZ(0);
+        R.setLocation((isDark ? -1 : 1) * homeX[idx % 2], homeY[idx / 2], 0);
     }
 
     /**
@@ -164,8 +163,6 @@ public class Ice {
         final float outX[] = { Ice.SIDE_2_CENTER - 7.0F * D,
                 Ice.SIDE_2_CENTER - 5.0F * D, Ice.SIDE_2_CENTER - 3.0F * D,
                 Ice.SIDE_2_CENTER - 1.0F * D };
-        R.setX((isDark ? -1 : 1) * outX[i / 2]);
-        R.setY(outY[i % 2]);
-        R.setZ(0);
+        R.setLocation((isDark ? -1 : 1) * outX[i / 2], outY[i % 2], 0);
     }
 }
