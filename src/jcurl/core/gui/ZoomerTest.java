@@ -29,7 +29,7 @@ import junit.framework.TestCase;
 /**
  * JUnit test
  * 
- * @see jcurl.core.gui.ZoomArea
+ * @see jcurl.core.gui.Zoomer
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -126,7 +126,7 @@ public class ZoomerTest extends TestCase {
         final Rectangle2D wc = new Rectangle2D.Double(1, 2, 3, 4);
         Rectangle dc = new Rectangle(1, 2, 3, 4);
         final Point2D fix = new Point2D.Double(1, 2);
-        ZoomArea zom = new ZoomArea("1:1", wc, fix);
+        Zoomer zom = new Zoomer("1:1", wc, fix);
 
         mat.setToIdentity();
         zom.applyTrafo(dc, Orientation.N, false, mat);
@@ -154,7 +154,7 @@ public class ZoomerTest extends TestCase {
         final Rectangle2D wc = new Rectangle2D.Double(1, 2, 3, 4);
         Rectangle dc = new Rectangle(-1, -2, 3, 4);
         final Point2D fix = new Point2D.Double(1, 2);
-        ZoomArea zom = new ZoomArea("1:1", wc, fix);
+        Zoomer zom = new Zoomer("1:1", wc, fix);
 
         mat.setToIdentity();
         zom.applyTrafo(dc, Orientation.N, false, mat);
