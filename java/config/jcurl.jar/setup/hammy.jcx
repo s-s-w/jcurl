@@ -2,7 +2,10 @@
 <!-- $Id$ -->
 <jcurl xmlns="http://jcurl.berlios.de/schema/setup/2005/1.0">
   <setup>
-    <meta/>
+    <meta>
+    	<event>Curling World Championships 1992</event>
+    	<game>Semi Final</game>
+    </meta>
     <collission>
       <loss val="0.5" dim="m"/>
       <model name="jcurl.sim.model.CollissionSimple">

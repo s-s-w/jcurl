@@ -26,7 +26,7 @@ import jcurl.core.dto.RockFloat;
  * A set of 8 light and 8 dark {@link jcurl.core.Rock}s.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: PositionSet.java 25 2005-03-19 21:42:40Z mrohrmoser $
+ * @version $Id$
  */
 public abstract class RockSet implements Cloneable, Serializable {
 

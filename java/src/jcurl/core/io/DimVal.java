@@ -41,8 +41,8 @@ class DimVal {
         // split the string
         final Matcher mat = pat.matcher(txt);
         if (mat.matches()) {
-//            for (int i = 0; i < mat.groupCount(); i++)
-//                log.debug(i + "=" + mat.group(i));
+            //            for (int i = 0; i < mat.groupCount(); i++)
+            //                log.debug(i + "=" + mat.group(i));
             final String val = mat.group(1);
             final String dim = mat.group(4);
             try {
@@ -86,6 +86,8 @@ class DimVal {
     }
 
     public String toString() {
+        if (dim == null)
+            return Double.toString(val);
         return Double.toString(val) + dim.toString();
     }
 }

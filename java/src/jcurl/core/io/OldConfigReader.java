@@ -26,12 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import jcurl.core.PositionSet;
-import jcurl.core.RockSet;
-import jcurl.core.SpeedSet;
 import jcurl.core.dto.Ice;
-import jcurl.sim.core.CollissionStrategy;
-import jcurl.sim.core.SlideStrategy;
 
 import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
@@ -40,37 +35,27 @@ import org.apache.ugli.ULogger;
  * Read onld config files.
  * 
  * @see jcurl.core.io.OldConfigReaderTest
+ * @see jcurl.core.io.SetupBuilder
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public class OldConfigReader {
 
-    private static class RockData {
-        public boolean ComputeRelease = false;
-
-        public DimVal speed;
-
-        public DimVal spin;
-
-        public DimVal to_x;
-
-        public DimVal to_y;
-    }
-
     private static final ULogger log = LoggerFactory
             .getLogger(OldConfigReader.class);
 
-    public static OldConfigReader load(final File file)
+    public static OldConfigReader parse(final File file)
             throws FileNotFoundException, IOException {
         log.debug("File [" + file + "]");
-        return load(new FileReader(file));
+        return parse(new FileReader(file));
     }
 
-    public static OldConfigReader load(final InputStream in) throws IOException {
-        return load(new InputStreamReader(in));
+    public static OldConfigReader parse(final InputStream in)
+            throws IOException {
+        return parse(new InputStreamReader(in));
     }
 
-    public static OldConfigReader load(final Reader in) throws IOException {
+    public static OldConfigReader parse(final Reader in) throws IOException {
         final OldConfigReader ret = new OldConfigReader();
         final String tok = readToken(in);
         if (!"curliniV2".equals(tok))
@@ -236,51 +221,12 @@ public class OldConfigReader {
         }
     }
 
-    private static int toIdx(final boolean isDark, final int no) {
-        return 2 * no + (isDark ? 1 : 0);
-    }
-
-    private CollissionStrategy coll = null;
-
-    private String iceComment = null;
-
-    private PositionSet loc = PositionSet.allHome();
-
-    private final RockData[] rock;
-
-    private SlideStrategy slide = null;
-
-    private SpeedSet speed = null;
-
-    public OldConfigReader() {
-        rock = new RockData[RockSet.ROCKS_PER_SET];
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
-            rock[i] = new RockData();
-    }
-
-    public PositionSet getPos() {
-        return loc;
-    }
-
-    public SlideStrategy getSlide() {
-        if (slide == null) {
-            // compute
-        }
-        return slide;
-    }
-
-    public SpeedSet getSpeed() {
-        if (speed == null) {
-            // compute
-            final SlideStrategy ice = getSlide();
-        }
-        return speed;
-    }
+    private final SetupBuilder setup = new SetupBuilder();
 
     private void setAngle(final boolean isDark, int no, final String a) {
         final DimVal angle = parseDim(a);
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + angle);
-        loc.getRock(toIdx(isDark, no)).setZ(angle.to(Dim.RADIANT).val);
+        setup.setPosA(SetupBuilder.toIdx(isDark, no), angle);
     }
 
     private void setDraw(final String speed, final String curl) {
@@ -310,8 +256,8 @@ public class OldConfigReader {
         log
                 .debug((isDark ? "dark" : "light") + " " + no + ":" + _x + ", "
                         + _y);
-        loc.getRock(toIdx(isDark, no)).setLocation(_x.to(Dim.METER).val,
-                _x.to(Dim.METER).val);
+        setup.setPosX(SetupBuilder.toIdx(isDark, no), _x);
+        setup.setPosY(SetupBuilder.toIdx(isDark, no), _y);
     }
 
     private void setIceComment(final String s) {
@@ -325,27 +271,27 @@ public class OldConfigReader {
 
     private void setOut(final OldConfigReader ret, final boolean isDark, int no) {
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + "");
-        Ice.setOut(loc.getRock(toIdx(isDark, no)), isDark, no);
+        setup.setPosOut(SetupBuilder.toIdx(isDark, no));
     }
 
     private void setRelease(final OldConfigReader ret, final boolean isDark,
             int no) {
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + "");
-        rock[toIdx(isDark, no)].ComputeRelease = true;
+        setup.setPosRelease(SetupBuilder.toIdx(isDark, no));
     }
 
     private void setSpeed(final OldConfigReader ret, final boolean isDark,
             int no, final String v) {
         final DimVal _v = parseDim(v);
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + _v);
-        rock[toIdx(isDark, no)].speed = _v;
+        setup.setSpeed(SetupBuilder.toIdx(isDark, no), _v);
     }
 
     private void setSpin(final OldConfigReader ret, final boolean isDark,
             int no, final String v) {
         final DimVal _v = parseDim(v);
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + _v);
-        rock[toIdx(isDark, no)].spin = _v;
+        setup.setSpin(SetupBuilder.toIdx(isDark, no), _v);
     }
 
     private void setTo(final OldConfigReader ret, final boolean isDark, int no,
@@ -355,7 +301,7 @@ public class OldConfigReader {
         log
                 .debug((isDark ? "dark" : "light") + " " + no + ":" + _x + ", "
                         + _y);
-        rock[toIdx(isDark, no)].to_x = _x;
-        rock[toIdx(isDark, no)].to_y = _y;
+        setup.setToX(SetupBuilder.toIdx(isDark, no), _x);
+        setup.setToY(SetupBuilder.toIdx(isDark, no), _y);
     }
 }

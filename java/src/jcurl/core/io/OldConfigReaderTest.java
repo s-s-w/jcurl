@@ -77,13 +77,10 @@ public class OldConfigReaderTest extends TestCase {
     public void test020_loadAll() throws FileNotFoundException, IOException {
         final File[] files = base.listFiles(new RegexpFilter(".+[.]ini$"));
         for (int i = files.length - 1; i >= 0; i--)
-            OldConfigReader.load(files[i]);
+            OldConfigReader.parse(files[i]);
     }
 
     public void test040_load() throws FileNotFoundException, IOException {
-        OldConfigReader r = OldConfigReader.load(new File(base, "hammy.ini"));
-        r.getPos();
-        r.getSpeed();
-        r.getSlide();
+        OldConfigReader r = OldConfigReader.parse(new File(base, "hammy.ini"));
     }
 }
