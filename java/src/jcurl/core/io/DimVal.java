@@ -21,6 +21,9 @@ package jcurl.core.io;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.ugli.LoggerFactory;
+import org.apache.ugli.ULogger;
+
 /**
  * A value with attached unit of measurement {@link Dim}.
  * 
@@ -29,15 +32,17 @@ import java.util.regex.Pattern;
  * @version $Id$
  */
 class DimVal {
-    private static final Pattern pat = Pattern
-            .compile("^(-?[0-9]+([.][0-9]+)?(e-?[0-9]))(.*)$");
+    private static final ULogger log = LoggerFactory.getLogger(DimVal.class);
+
+    public static final Pattern pat = Pattern
+            .compile("^(-?[0-9]+([.][0-9]+)?(e-?[0-9]+)?)(.*)$");
 
     public static DimVal parse(final String txt) {
         // split the string
         final Matcher mat = pat.matcher(txt);
         if (mat.matches()) {
-            for (int i = 0; i < mat.groupCount(); i++)
-                System.out.println(i + "=" + mat.group(i));
+//            for (int i = 0; i < mat.groupCount(); i++)
+//                log.debug(i + "=" + mat.group(i));
             final String val = mat.group(1);
             final String dim = mat.group(4);
             try {
