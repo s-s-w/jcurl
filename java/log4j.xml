@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
-<!-- $Id: log4j.xml,v 1.2 2004/08/10 12:23:16 mr Exp $ -->
+<!-- $Id$ -->
 <!--
    | For more configuration information and examples see the Jakarta Log4j
    | website: http://jakarta.apache.org/log4j
@@ -12,10 +12,10 @@
 		<param name="Threshold" value="DEBUG"/>
 		<layout class="org.apache.log4j.PatternLayout">
 			<!-- see http://logging.apache.org/log4j/docs/api/org/apache/log4j/PatternLayout.html -->
-			<!-- param name="ConversionPattern" 
-				value="%d{ISO8601} [%t] %c::%M/%-5p %m%n"/ -->
 			<param name="ConversionPattern" 
-				value="%-5p %m%n"/>
+				value="%d{ISO8601} %-5p [%t] %c::%M %m%n"/>
+			<!-- param name="ConversionPattern" 
+				value="%-5p %m%n"/ -->
 		</layout>
 	</appender>
 	<appender name="FILE" 
