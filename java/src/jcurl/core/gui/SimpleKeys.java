@@ -53,10 +53,6 @@ public class SimpleKeys implements KeyListener {
     }
 
     public void keyPressed(KeyEvent e) {
-        ; // nop
-    }
-
-    public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
         case KeyEvent.VK_SPACE:
             if (worker == null || !worker.isAlive()) {
@@ -74,6 +70,10 @@ public class SimpleKeys implements KeyListener {
             player.setTimeScale(1);
             break;
         }
+    }
+
+    public void keyReleased(KeyEvent e) {
+        ; // nop
     }
 
     public void keyTyped(KeyEvent e) {
