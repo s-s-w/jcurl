@@ -41,21 +41,15 @@ public class PositionSetTest extends TestCase {
 
     public void test010_CountBits() {
         log.info("Dark : " + Integer.toBinaryString(RockSet.DARK_MASK));
-        System.out.println("Dark : "
-                + Integer.toBinaryString(RockSet.DARK_MASK));
-        System.out.println("Light: "
-                + Integer.toBinaryString(RockSet.LIGHT_MASK));
+        log.info("Light: " + Integer.toBinaryString(RockSet.LIGHT_MASK));
         assertEquals(8, PositionSet.countBits(RockSet.DARK_MASK));
         assertEquals(8, PositionSet.countBits(RockSet.LIGHT_MASK));
     }
 
     public void test010_getShotRocks() {
-        log.info("Dark : " + Integer.toBinaryString(RockSet.DARK_MASK));
         PositionSet a = new PositionSet();
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             a.getRock(i).setLocation(0, i * 0.5);
-        int shot = PositionSet.getShotRocks(a);
-        assertEquals(8, PositionSet.countBits(RockSet.DARK_MASK));
-        assertEquals(8, PositionSet.countBits(RockSet.LIGHT_MASK));
+        assertEquals(1, PositionSet.getShotRocks(a));
     }
 }

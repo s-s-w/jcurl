@@ -18,27 +18,6 @@
 				value="%-5p %m%n"/ -->
 		</layout>
 	</appender>
-	<appender name="FILE" 
-		class="net.gmx.gmxlib.log.GMXDailyRollingFileAppender">
-		<!-- see http://logging.apache.org/log4j/docs/api/org/apache/log4j/DailyRollingFileAppender.html -->
-		<param name="ProgramName" value="gmxlib_test"/>
-		<layout class="org.apache.log4j.PatternLayout">
-			<!-- see http://logging.apache.org/log4j/docs/api/org/apache/log4j/PatternLayout.html -->
-			<param name="ConversionPattern" 
-				value="%d{ISO8601} [%t] %c::%M %-5p %m%n"/>
-		</layout>
-	</appender>
-	<appender name="BB" class="net.gmx.gmxlib.log.BigBrotherEscalatingAppender">
-		<param name="ProgramName" value="gmxlib_test"/>
-		<layout class="org.apache.log4j.PatternLayout">
-			<!-- see http://logging.apache.org/log4j/docs/api/org/apache/log4j/PatternLayout.html -->
-			<param name="ConversionPattern" 
-				value="%d{ISO8601} [%t] %c::%M %-5p %m%n"/>
-		</layout>
-		<filter class="org.apache.log4j.varia.LevelRangeFilter">
-			<param name="LevelMin" value="WARN" />
-		</filter>
-	</appender>
 	<!-- category name="jcurl.sim.core.SlideCurves">
 		<level value="debug"/>
 	</category -->
@@ -51,7 +30,5 @@
 	<root>
 		<level value="info"/>
 		<appender-ref ref="CONSOLE"/>
-		<!-- appender-ref ref="FILE"/ -->
-		<!-- appender-ref ref="BB"/ -->
 	</root>
 </log4j:configuration>
