@@ -38,13 +38,13 @@ public class RockPainter {
     public static class ColorSet {
         public Paint contour = Color.BLACK;
 
-        public Paint dark = Color.RED;
+        public Paint dark = new Color(0xFF0000);
 
-        public Paint granite = Color.LIGHT_GRAY;
+        public Paint granite = new Color(0x565755);
 
         public Paint label = Color.BLACK;
 
-        public Paint light = Color.YELLOW;
+        public Paint light = new Color(0xFFFF00);
     }
 
     private final ColorSet colors = new ColorSet();
@@ -63,7 +63,7 @@ public class RockPainter {
 
         final int f = JCurlPanel.SCALE;
         final int ro = (int) (f * RockProps.DEFAULT.getRadius());
-        final int ri = (int) (f * 0.8 * RockProps.DEFAULT.getRadius());
+        final int ri = (int) (f * 0.7 * RockProps.DEFAULT.getRadius());
         outer = new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 0, 360, Arc2D.CHORD);
         inner = new Arc2D.Float(-ri, -ri, 2 * ri, 2 * ri, 0, 360, Arc2D.CHORD);
     }
@@ -102,9 +102,9 @@ public class RockPainter {
         g.drawChars(labels, idx, 1, txtXoff[idx], txtYoff);
         // contours
         g.setPaint(colors.contour);
-        // handle
-        //g.fillOval(-p, -p, 2 * p, ri + p);
-        g.draw(inner);
+//        // handle
+//        //g.fillOval(-p, -p, 2 * p, ri + p);
+//        g.draw(inner);
         g.draw(outer);
     }
 
