@@ -19,10 +19,13 @@
 package jcurl.core.io;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import junit.framework.TestCase;
 
@@ -50,7 +53,37 @@ public class OldConfigReaderTest extends TestCase {
         assertEquals("", OldConfigReader.readToken(read));
     }
 
+    private static class RegexpFilter implements FileFilter {
+        private final Pattern pat;
+
+        public RegexpFilter(final Pattern pat) {
+            this.pat = pat;
+        }
+
+        public RegexpFilter(final String pat) {
+            this(Pattern.compile(pat));
+        }
+
+        public boolean accept(final File pathname) {
+            try {
+                final Matcher m = pat.matcher(pathname.getCanonicalPath());
+                return m.matches();
+            } catch (IOException e) {
+                return false;
+            }
+        }
+    }
+
+    public void test020_loadAll() throws FileNotFoundException, IOException {
+        final File[] files = base.listFiles(new RegexpFilter(".+[.]ini$"));
+        for (int i = files.length - 1; i >= 0; i--)
+            OldConfigReader.load(files[i]);
+    }
+
     public void test040_load() throws FileNotFoundException, IOException {
         OldConfigReader r = OldConfigReader.load(new File(base, "hammy.ini"));
+        r.getPos();
+        r.getSpeed();
+        r.getSlide();
     }
 }
