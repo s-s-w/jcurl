@@ -86,7 +86,7 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
                         -(zoom.tl.y + zoom.br.y) / 2);
     }
 
-    private final IcePainter iceP = new IcePainter();
+    private final IcePainter iceP;
 
     private final AffineTransform mat = new AffineTransform();
 
@@ -94,7 +94,7 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
 
     private int oldWid = -1;
 
-    private final RockPainter rockP = new RockPainter();
+    private final RockPainter rockP;
 
     private RockSet rocks;
 
@@ -102,13 +102,16 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
 
     private ZoomArea zom;
 
-    public JCurlPanel(final RockSet rocks, ZoomArea zoom) {
+    public JCurlPanel(final RockSet rocks, final ZoomArea zoom,
+            final IcePainter iceP, final RockPainter rockP) {
         this.rocks = rocks == null ? RockSet.allHome() : rocks;
         this.zom = zoom == null ? ZoomArea.HOUSE : zoom;
+        this.iceP = iceP == null ? new IcePainter() : iceP;
+        this.rockP = rockP == null ? new RockPainter() : rockP;
     }
 
     public JCurlPanel(ZoomArea zoom) {
-        this(null, zoom);
+        this(null, zoom, null, null);
     }
 
     /**

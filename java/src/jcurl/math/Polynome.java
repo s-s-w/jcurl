@@ -124,6 +124,19 @@ public class Polynome extends Function1D {
         return ret;
     }
 
+    public static String toString(final double[] poly) {
+        final StringBuffer ret = new StringBuffer();
+        ret.append("p(x) = ");
+        for (int i = 0; i < poly.length; i++) {
+            ret.append(poly[i]);
+            ret.append("*x**");
+            ret.append(i);
+            ret.append(" + ");
+        }
+        ret.setLength(ret.length() - 3);
+        return ret.toString();
+    }
+
     private final double[] params;
 
     public Polynome(final double[] params) {
@@ -136,18 +149,5 @@ public class Polynome extends Function1D {
 
     public String toString() {
         return toString(this.params);
-    }
-
-    public static String toString(final double[] poly) {
-        final StringBuffer ret = new StringBuffer();
-        ret.append("p(x) = ");
-        for (int i = 0; i < poly.length; i++) {
-            ret.append(poly[i]);
-            ret.append("*x**");
-            ret.append(i);
-            ret.append(" + ");
-        }
-        ret.setLength(ret.length() - 3);
-        return ret.toString();
     }
 }

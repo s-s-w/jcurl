@@ -33,43 +33,34 @@ import jcurl.core.io.Dim;
  * @version $Id$
  */
 public class IcePainter {
-    private static final Color outC = Color.BLUE;
+    public static class ColorSet {
 
-    private static final Color frontC = Color.PINK;
+        public Color c1 = Color.RED;
 
-    private static final Color backC = new Color(0xC9C9C9);
+        public Color c12 = Color.CYAN;
 
-    private static final Color c1C = Color.RED;
+        public Color c4 = Color.MAGENTA;
 
-    private static final Color c4C = Color.MAGENTA;
+        public Color c8 = Color.ORANGE;
 
-    private static final Color c8C = Color.ORANGE;
+        public Color contours = Color.BLACK;
 
-    private static final Color c12C = Color.CYAN;
+        public Color hog2hog = Color.BLUE;
 
-    private static final Color linesC = Color.BLACK;
+        public Color hog2tee = Color.PINK;
 
-    protected static final Rectangle2D.Float hog2hog;
-
-    protected static final Rectangle2D.Float hog2tee;
-
-    protected static final Rectangle2D.Float tee2back;
-
-    protected static final Arc2D.Float C12;
-
-    protected static final Arc2D.Float C8;
-
-    protected static final Arc2D.Float C4;
-
-    protected static final Arc2D.Float C1;
+        public Color tee2back = new Color(0xC9C9C9);
+    }
 
     protected static final Line2D.Float back;
 
-    protected static final Line2D.Float tee;
+    protected static final Arc2D.Float C1;
 
-    protected static final Line2D.Float nearHog;
+    protected static final Arc2D.Float C12;
 
-    protected static final Line2D.Float farHog;
+    protected static final Arc2D.Float C4;
+
+    protected static final Arc2D.Float C8;
 
     protected static final Line2D.Float center;
 
@@ -77,7 +68,19 @@ public class IcePainter {
 
     protected static final Line2D.Float centerRight;
 
-    /** Define the shapes to be filled and drawn */
+    protected static final Line2D.Float farHog;
+
+    protected static final Rectangle2D.Float hog2hog;
+
+    protected static final Rectangle2D.Float hog2tee;
+
+    protected static final Line2D.Float nearHog;
+
+    protected static final Line2D.Float tee;
+
+    protected static final Rectangle2D.Float tee2back;
+
+    /** Define colors and the shapes to be filled and drawn */
     static {
         final int f = JCurlPanel.SCALE;
         final int fhy = (int) (f * Ice.FAR_HOG_2_TEE);
@@ -106,6 +109,8 @@ public class IcePainter {
         centerRight = new Line2D.Float(dx, fhy, dx, -by);
     }
 
+    public final ColorSet color = new ColorSet();
+
     /**
      * 
      * 
@@ -113,23 +118,22 @@ public class IcePainter {
      */
     public void paintIce(final Graphics2D g) {
         // filled stuff
-        g.setColor(outC);
+        g.setColor(color.hog2hog);
         g.fill(hog2hog);
-        g.setColor(frontC);
+        g.setColor(color.hog2tee);
         g.fill(hog2tee);
-        g.setColor(backC);
+        g.setColor(color.tee2back);
         g.fill(tee2back);
-        g.setColor(c12C);
+        g.setColor(color.c12);
         g.fill(C12);
-        g.setColor(c8C);
+        g.setColor(color.c8);
         g.fill(C8);
-        g.setColor(c4C);
+        g.setColor(color.c4);
         g.fill(C4);
-        g.setColor(c1C);
+        g.setColor(color.c1);
         g.fill(C1);
-
         // contours
-        g.setColor(linesC);
+        g.setColor(color.contours);
         g.draw(C12);
         g.draw(C8);
         g.draw(C4);
