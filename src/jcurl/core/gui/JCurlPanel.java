@@ -60,57 +60,24 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
     private static final Font timeF = new Font("SansSerif", Font.PLAIN, 10);
 
     static {
-//        hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION,
-//                RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+        //        hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION,
+        //                RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
         hints.put(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-//        hints.put(RenderingHints.KEY_COLOR_RENDERING,
-//                RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-//        hints.put(RenderingHints.KEY_DITHERING,
-//                RenderingHints.VALUE_DITHER_ENABLE);
-//        hints.put(RenderingHints.KEY_FRACTIONALMETRICS,
-//                RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-//        hints.put(RenderingHints.KEY_INTERPOLATION,
-//                RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-//        hints.put(RenderingHints.KEY_RENDERING,
-//                RenderingHints.VALUE_RENDER_QUALITY);
-//        hints.put(RenderingHints.KEY_STROKE_CONTROL,
-//                RenderingHints.VALUE_STROKE_NORMALIZE);
-//        hints.put(RenderingHints.KEY_TEXT_ANTIALIASING,
-//                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-    }
-
-    /**
-     * Re-compute the transformation from world-coordinates to display
-     * coordinates.
-     * 
-     * @param wid
-     * @param hei
-     * @param zoom
-     * @param uniform
-     * @param mat
-     */
-    private static void computeTrafo(final int wid, final int hei,
-            final ZoomArea zoom, final boolean uniform,
-            final AffineTransform mat) {
-        float x_sca = wid / (zoom.tl.y - zoom.br.y);
-        float y_sca = hei / (-zoom.tl.x + zoom.br.x);
-        if (uniform) {
-            if (y_sca > x_sca)
-                y_sca = x_sca;
-            else
-                x_sca = y_sca;
-        }
-        // then build the transformation wc -> dc matrix
-        mat.setToIdentity();
-
-        // add the transformations in reverse order!
-        mat.translate(wid / 2, hei / 2);
-        mat.scale(x_sca / SCALE, -y_sca / SCALE);
-        mat.rotate(Math.PI / 2);
-        mat
-                .translate((zoom.tl.x + zoom.br.x) / 2,
-                        -(zoom.tl.y + zoom.br.y) / 2);
+        //        hints.put(RenderingHints.KEY_COLOR_RENDERING,
+        //                RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+        //        hints.put(RenderingHints.KEY_DITHERING,
+        //                RenderingHints.VALUE_DITHER_ENABLE);
+        //        hints.put(RenderingHints.KEY_FRACTIONALMETRICS,
+        //                RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+        //        hints.put(RenderingHints.KEY_INTERPOLATION,
+        //                RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        //        hints.put(RenderingHints.KEY_RENDERING,
+        //                RenderingHints.VALUE_RENDER_QUALITY);
+        //        hints.put(RenderingHints.KEY_STROKE_CONTROL,
+        //                RenderingHints.VALUE_STROKE_NORMALIZE);
+        //        hints.put(RenderingHints.KEY_TEXT_ANTIALIASING,
+        //                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
     }
 
     private final IcePainter iceP;
@@ -169,9 +136,13 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
         g2.setPaint(iceP.color.backGround);
         g2.fillRect(0, 0, w, h);
 
-        if (oldWid != w || oldHei != h)
+        if (zom.hasChanged() || oldWid != w || oldHei != h) {
             // re-compute the zoomfactor
-            computeTrafo(oldWid = w, oldHei = h, zom, true, mat);
+            mat.setToIdentity();
+            zom.applyTrafo(this.getBounds(), Orientation.W, true, mat);
+            oldWid = this.getWidth();
+            oldHei = this.getHeight();
+        }
         // paint WC stuff
         g2.transform(mat);
         iceP.paintIce(g2);

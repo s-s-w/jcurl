@@ -18,22 +18,25 @@
  */
 package jcurl.core.gui;
 
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 import jcurl.core.dto.Ice;
 import junit.framework.TestCase;
 
 /**
- * Simple 2d matrix operations test.
+ * JUnit test
  * 
+ * @see jcurl.core.gui.ZoomArea
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class TrafoTest extends TestCase {
+public class ZoomerTest extends TestCase {
 
     public static void main(String[] args) {
-        junit.textui.TestRunner.run(TrafoTest.class);
+        junit.textui.TestRunner.run(ZoomerTest.class);
     }
 
     private static void print(String msg, Point2D p) {
@@ -69,7 +72,7 @@ public class TrafoTest extends TestCase {
         //assertEquals("", (float) 0, p.y, (float) 1e-1);
     }
 
-    public void _test020() {
+    public void test020() {
         final int width = 200;
         final Point2D.Float zero = new Point2D.Float(0, 0);
         final Point2D.Float ch = new Point2D.Float(0, Ice.HOG_2_TEE);
@@ -95,5 +98,78 @@ public class TrafoTest extends TestCase {
 
         //assertEquals("", (float) 0, p.x, (float) 1e-1);
         //assertEquals("", (float) 0, p.y, (float) 1e-1);
+    }
+
+    public void test090_FixP() {
+        double w0 = 1;
+        double w = 3;
+        double wf = 2;
+        double d0 = 10;
+        double d = 30;
+        double df = d0 + (wf - w0) * d / w;
+        assertEquals("", 20, df, 1e-9);
+        d0 = 5;
+        df = d0 + (wf - w0) * d / w;
+        assertEquals("", 15, df, 1e-9);
+        d0 = 10;
+        d = 60;
+        df = d0 + (wf - w0) * d / w;
+        assertEquals("", 30, df, 1e-9);
+    }
+
+    public void test100_Zoom1by1() {
+        final int S = JCurlPanel.SCALE;
+        final double[] flat = new double[6];
+        final Point2D dst = new Point2D.Double();
+        final Point2D src = new Point2D.Double();
+        final AffineTransform mat = new AffineTransform();
+        final Rectangle2D wc = new Rectangle2D.Double(1, 2, 3, 4);
+        Rectangle dc = new Rectangle(1, 2, 3, 4);
+        final Point2D fix = new Point2D.Double(1, 2);
+        ZoomArea zom = new ZoomArea("1:1", wc, fix);
+
+        mat.setToIdentity();
+        zom.applyTrafo(dc, Orientation.N, false, mat);
+        mat.getMatrix(flat);
+        assertEquals("", 1.0 / S, flat[0], 1e-9);
+        assertEquals("", 0.0 / S, flat[1], 1e-9);
+        assertEquals("", 0.0 / S, flat[2], 1e-9);
+        assertEquals("", 1.0 / S, flat[3], 1e-9);
+        assertEquals("", 1.0 - 1.0 / S, flat[4], 1e-9);
+        assertEquals("", 2.0 - 2.0 / S, flat[5], 1e-9);
+        src.setLocation(fix);
+        mat.transform(src, dst);
+        assertEquals(src, dst);
+        src.setLocation(3, 4);
+        mat.transform(src, dst);
+        assertEquals(src, dst);
+    }
+
+    public void test110_ZoomShift() {
+        final double s = 1.0 / JCurlPanel.SCALE;
+        final double[] flat = new double[6];
+        final Point2D dst = new Point2D.Double();
+        final Point2D src = new Point2D.Double();
+        final AffineTransform mat = new AffineTransform();
+        final Rectangle2D wc = new Rectangle2D.Double(1, 2, 3, 4);
+        Rectangle dc = new Rectangle(-1, -2, 3, 4);
+        final Point2D fix = new Point2D.Double(1, 2);
+        ZoomArea zom = new ZoomArea("1:1", wc, fix);
+
+        mat.setToIdentity();
+        zom.applyTrafo(dc, Orientation.N, false, mat);
+        mat.getMatrix(flat);
+        assertEquals("", 1, flat[0], 1e-9);
+        assertEquals("", 0, flat[1], 1e-9);
+        assertEquals("", 0, flat[2], 1e-9);
+        assertEquals("", 1, flat[3], 1e-9);
+        assertEquals("", -2, flat[4], 1e-9);
+        assertEquals("", -4, flat[5], 1e-9);
+        src.setLocation(fix);
+        mat.transform(src, dst);
+        assertEquals(new Point2D.Double(-1, -2), dst);
+        src.setLocation(3, 4);
+        mat.transform(src, dst);
+        assertEquals(new Point2D.Double(-1, -2), dst);
     }
 }
