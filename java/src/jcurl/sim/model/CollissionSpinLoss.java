@@ -18,188 +18,214 @@
  */
 package jcurl.sim.model;
 
-import jcurl.core.NotImplementedYetException;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Point2D;
+
 import jcurl.core.Rock;
+import jcurl.core.dto.RockDouble;
+import jcurl.core.dto.RockProps;
+import jcurl.math.MathVec;
 import jcurl.sim.core.CollissionStrategy;
 
 /**
  * A hitter including spin and loss of energy.
  * <p>
  * This hitter gets the transfer of spin and momentum right. The 'loss of
- * energy'-mechanism bases upon a Hook'sch elasticity-model for the rocks. Only
+ * energy'-mechanism bases upon a Hookisch elasticity-model for the rocks. Only
  * stillstanding rocks cause a loss of energy. For details, mail to <a
  * href="mailto:jcurl@gmx.net">.jcurl@gmx.net </a>
  * 
+ * @see jcurl.sim.model.CollissionSpinLossTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public class CollissionSpinLoss extends CollissionStrategy {
 
-    //        /*
-    //         * (non-Javadoc)
-    //         *
-    //         * @see jcurl.sim.core.CollissionStrategy#compute(jcurl.core.Rock,
-    //         * jcurl.core.Rock, jcurl.core.Rock, jcurl.core.Rock)
-    //         */
-    //    public boolean compute(Rock xa, Rock xb, Rock va, Rock vb) {
-    //        // vector from i[ f]'s center to i[!f]'s:
-    //	    double2d r( S.loc(i[!f]).getx() - S.loc(i[ f]).getx(),
-    //			  S.loc(i[!f]).gety() - S.loc(i[ f]).gety() );
-    //	    double tmp = r.abs();
-    //	    if( !(S.speed(i[ f]).nonzero() || S.speed(i[!f]).nonzero()) ||
-    //		tmp > RADIUS+RADIUS+HIT_MAX_DIST )
-    //		return false;
-    //
-    //	    if( S.speed(i[ 0]).nonzero() + S.speed(i[ 1]).nonzero() == 1 ) {
-    //		if(0!=(f = S.speed(i[ 1]).nonzero()))
-    //		    tmp = -tmp;
-    //	    }
-    //
-    //	    // get the coordinate-system:
-    //	    final double2d eY( r /= tmp );
-    //	    final double2d eX( (eY[1]), -(eY[0]) );
-    //
-    //	    // from here you can reuse 'r' and 'tmp'
-    //
-    //	    // do the coordinate-trafo world->new:
-    //	    // va[0] = eX[0] * Va[0] + eX[1] * Va[1];
-    //	    // va[1] = eY[0] * Va[0] + eY[1] * Va[1];
-    //	    double2d va( eX[0] * S.speed(i[ f]).getx() +
-    //			   eX[1] * S.speed(i[ f]).gety(),
-    //			   eY[0] * S.speed(i[ f]).getx() +
-    //			   eY[1] * S.speed(i[ f]).gety() );
-    //	    double2d vb( eX[0] * S.speed(i[!f]).getx() +
-    //			   eX[1] * S.speed(i[!f]).gety(),
-    //			   eY[0] * S.speed(i[!f]).getx() +
-    //			   eY[1] * S.speed(i[!f]).gety() );
-    //	    double w[2];
-    //	    w[0] = S.speed(i[ f]).getangle();
-    //	    w[1] = S.speed(i[!f]).getangle();
-    //
-    //	    if( S.speed(i[ f]).nonzero() + S.speed(i[!f]).nonzero() == 1 )
-    //		singleLoss(va, w[0], vb, w[1]);
-    //	    singleNoLoss(va, w[0], vb, w[1]);
-    //
-    //	    S.speed(i[ f]).setangle( w[0] );
-    //	    S.speed(i[!f]).setangle( w[1] );
-    //
-    //	    // re-transformation:
-    //	    // do the coordinate-trafo new->world:
-    //	    // Va[0] = eX[0] * va[0] + eY[0] * va[1];
-    //	    // Va[1] = eX[1] * va[0] + eY[1] * va[1];
-    //	    S.speed(i[ f]).setx( eX[0] * va[0] + eY[0] * va[1] );
-    //	    S.speed(i[ f]).sety( eX[1] * va[0] + eY[1] * va[1] );
-    //	    S.speed(i[!f]).setx( eX[0] * vb[0] + eY[0] * vb[1] );
-    //	    S.speed(i[!f]).sety( eX[1] * vb[0] + eY[1] * vb[1] );
-    //	    return true;
-    //    }
-    //
-    //    private double U;
-    //    private double mu;
-    //	    /**
-    //         * The friction rock/rock. Set the parameter for friction rock/rock.
-    //         *
-    //         * @param v
-    //         * the value
-    //         */
-    //void setFricRockRock(final double v) {
-    //    mu = v;
-    //}
-    //
-    //	    /**
-    //         * The loss of energy on raises. Set the parameter for the loss of
-    //         * energy raises suffer.
-    //         *
-    //         * @param v
-    //         * [Joule] the value
-    //         */
-    //void setLoss(final double v) {
-    //    U = v / MASS;
-    //}
-    //
-    //
-    //void singleLoss(double2d& va, double& wa, double2d&, double&) {
-    //    final double I = 2.0 * (1.0/MASS + sqr(RADIUS) / INERTIA);
-    //    final double FHdivOmega = sqrt( 2.0 * MASS * Loss() );
-    //
-    //    // A's real surface-speed:
-    //    final double Veff = va[0] - RADIUS * wa;
-    //
-    //    // t0 is the time when A's effective surface speed becomes 0 (=B's)
-    //    double cost0;
-    //    cost0 = 1.0-fabs(Veff / (mu*va[1]* I * MASS));
-    //    if( 0.0 > cost0 ) cost0 = 0.0;
-    //    assert( cost0 <= 1.0 );
-    //
-    //    double2d dv( sgn(Veff)*mu, 1.0 );
-    //    // sint1 is the time when the Hook-force equals the friction.
-    //    double sint1;
-    //
-    //    sint1 = FHdivOmega / (MASS * va[1] * dv.abs());
-    //    if( sint1 > 1.0 ) sint1 = 1.0;
-    //    assert( 0.0 <= sint1 );
-    //
-    //    if( 1.0-sqr(cost0) < sqr(sint1) || (cost0==0.0 && sint1==1.0) ) {
-    //	// surface speed becomes 0 before the friction is killed:
-    //	// => our force points in || direction only, but the loss of momentum
-    //	// does not!
-    //	dv[0] = 0; dv[1] = 1.0;
-    //
-    //	sint1 = FHdivOmega / (MASS * va[1] * dv.abs());
-    //	if( sint1 > 1.0 ) sint1 = 1.0;
-    //	assert( 0.0 <= sint1 );
-    //
-    //	// the loss of momentum in perp. direction:
-    //	dv[0] = -sgn(Veff) * mu * va[1] * fabs( cost0 - 1.0 );
-    //	dv[1] = va[1] * ( sqrt( 1.0 - sqr( sint1 ) ) - 1.0 );
-    //    } else {
-    //	dv *= va[1] * ( sqrt( 1.0 - sqr( sint1 ) ) - 1.0 );
-    //    }
-    //    assert( sgn(dv[0]) == -sgn(Veff) );
-    //    assert( dv[1] <= 0.0 );
-    //
-    //    va += dv;
-    //    wa -= dv[0] * MASS * RADIUS / INERTIA;
-    //
-    //    return;
-    //}
-    //
-    //private static final double MASS = RockProps.DEFAULT.getMass();
-    //private static final double RADUIS = RockProps.DEFAULT.getRadius();
-    //private static final double INERTIA = RockProps.DEFAULT.getInertia();
-    //
-    //void singleNoLoss(double2d& va, double wa, double2d& vb, double wb) {
-    //    final double Veff = - vb[0] - RADIUS * wb
-    //			+ va[0] - RADIUS * wa;
-    //    final double I = 2.0 * (1.0/MASS +
-    //			   sqr(RADIUS)/INERTIA
-    //			);
-    //    double tmp;
-    //    va[1] += (tmp = vb[1] - va[1]);
-    //    vb[1] -= tmp;
-    //
-    //    double X = - Veff / I;
-    //    if( fabs(X) > (tmp=mu * MASS * fabs( tmp )) )
-    //	X = -sgn(Veff) * tmp;
-    //
-    //    // apply the x-change:
-    //    va[0] += (tmp = X / MASS);
-    //    vb[0] -= tmp;
-    //
-    //    // the spin's change:
-    //    wa -= (tmp = X * RADIUS / INERTIA);
-    //    wb -= tmp;
-    //
-    //    return;
-    //}
+    public void compute(Rock va, Rock vb) {
+        // TODO Auto-generated method stub
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see jcurl.sim.core.CollissionStrategy#compute(jcurl.core.Rock,
-     *      jcurl.core.Rock, jcurl.core.Rock, jcurl.core.Rock)
-     */
+    }
+    private static final double HIT_MAX_DIST = 1e-6;
+
+    private static final double INERTIA = RockProps.DEFAULT.getInertia();
+
+    private static final double MASS = RockProps.DEFAULT.getMass();
+
+    private static final double RADIUS = RockProps.DEFAULT.getRadius();
+
+    protected static double fabs(final double a) {
+        return Math.abs(a);
+    }
+
+    protected static byte sgn(final double a) {
+        if (a < 0)
+            return -1;
+        if (a > 0)
+            return 1;
+        return 0;
+    }
+
+    protected static double sqrt(final double a) {
+        return Math.sqrt(a);
+    }
+
+    private double mu;
+
+    private double U;
+
+    public CollissionSpinLoss() {
+        setLoss(0);
+        setFricRockRock(0);
+    }
+
     public boolean compute(Rock xa, Rock xb, Rock va, Rock vb) {
-        throw new NotImplementedYetException();
+        // vector from a's center to b's:
+        Point2D r = MathVec.sub(xb, xa, null);
+        double tmp = MathVec.abs(r);
+        if (!(va.nonzero() || vb.nonzero())
+                || tmp > RADIUS + RADIUS + HIT_MAX_DIST)
+            return false;
+        boolean f;
+        if (true == (va.nonzero() ^ vb.nonzero())) {
+            if (false != (f = vb.nonzero()))
+                tmp = -tmp;
+        }
+
+        // get the coordinate-system:
+        final Point2D eY = MathVec.mult(1 / tmp, r, null);
+        final Point2D eX = new Point2D.Double(eY.getY(), -eY.getX());
+
+        // from here you can reuse 'r' and 'tmp'
+        final double[] flat = { eX.getX(), eX.getY(), eY.getX(), eY.getY() };
+        final AffineTransform mat = new AffineTransform(flat);
+
+        // do the coordinate-trafo world->new:
+        // va[0] = eX[0] * Va[0] + eX[1] * Va[1];
+        // va[1] = eY[0] * Va[0] + eY[1] * Va[1];
+        final Rock _va = new RockDouble();
+        final Rock _vb = new RockDouble();
+        mat.transform(va, _va);
+        mat.transform(vb, _vb);
+        final double[] w = { va.getZ(), vb.getZ() };
+
+        if (va.nonzero() ^ vb.nonzero())
+            singleLoss(_va, _vb, w);
+        singleNoLoss(_va, _vb, w);
+
+        va.setZ(w[0]);
+        vb.setZ(w[1]);
+
+        try {
+            // re-transformation: do the coordinate-trafo new->world:
+            // Va[0] = eX[0] * va[0] + eY[0] * va[1];
+            // Va[1] = eX[1] * va[0] + eY[1] * va[1];
+            mat.inverseTransform(_va, va);
+            mat.inverseTransform(_vb, vb);
+        } catch (NoninvertibleTransformException e) {
+            throw new RuntimeException("matrix MUST be invertible.", e);
+        }
+        return true;
+    }
+
+    private double Loss() {
+        return U;
+    }
+
+    /**
+     * The friction rock/rock. Set the parameter for friction rock/rock.
+     * 
+     * @param v
+     *            the value
+     */
+    public void setFricRockRock(final double v) {
+        mu = v;
+    }
+
+    /**
+     * The loss of energy on raises. Set the parameter for the loss of energy
+     * raises suffer.
+     * 
+     * @param v
+     *            [Joule] the value
+     */
+    public void setLoss(final double v) {
+        U = v / MASS;
+    }
+
+    void singleLoss(Point2D va, Point2D vb, double[] w) {
+        final double I = 2.0 * (1.0 / MASS + sqr(RADIUS) / INERTIA);
+        final double FHdivOmega = Math.sqrt(2.0 * MASS * Loss());
+
+        // A's real surface-speed:
+        final double Veff = va.getX() - RADIUS * w[0];
+
+        // t0 is the time when A's effective surface speed becomes 0 (=B's)
+        double cost0;
+        cost0 = 1.0 - Math.abs(Veff / (mu * va.getY() * I * MASS));
+        if (0.0 > cost0)
+            cost0 = 0.0;
+        assert cost0 <= 1.0;
+
+        Point2D dv = new Point2D.Double(sgn(Veff) * mu, 1.0);
+        // sint1 is the time when the Hook-force equals the friction.
+        double sint1;
+
+        sint1 = FHdivOmega / (MASS * va.getY() * MathVec.abs(dv));
+        if (sint1 > 1.0)
+            sint1 = 1.0;
+        assert (0.0 <= sint1);
+
+        if (1.0 - sqr(cost0) < sqr(sint1) || (cost0 == 0.0 && sint1 == 1.0)) {
+            // surface speed becomes 0 before the friction is killed:
+            // => our force points in || direction only, but the loss of
+            // momentum
+            // does not!
+            dv.setLocation(0, 1);
+
+            sint1 = FHdivOmega / (MASS * va.getY() * MathVec.abs(dv));
+            if (sint1 > 1.0)
+                sint1 = 1.0;
+            assert 0.0 <= sint1;
+
+            // the loss of momentum in perp. direction:
+            dv.setLocation(-sgn(Veff) * mu * va.getY() * fabs(cost0 - 1.0), va
+                    .getY()
+                    * (sqrt(1.0 - sqr(sint1)) - 1.0));
+        } else {
+            MathVec.mult(va.getY() * (sqrt(1.0 - sqr(sint1)) - 1.0), dv, dv);
+        }
+        assert sgn(dv.getX()) == -sgn(Veff);
+        assert dv.getY() <= 0.0;
+
+        MathVec.add(va, dv, va);
+        w[0] -= dv.getX() * MASS * RADIUS / INERTIA;
+
+        return;
+    }
+
+    void singleNoLoss(Point2D va, Point2D vb, double[] w) {
+        final double Veff = -vb.getX() - RADIUS * w[1] + va.getX() - RADIUS
+                * w[0];
+        final double I = 2.0 * (1.0 / MASS + sqr(RADIUS) / INERTIA);
+        double tmp = vb.getY() - va.getY();
+        va.setLocation(va.getX(), va.getY() + tmp);
+        vb.setLocation(vb.getX(), vb.getY() - tmp);
+
+        double X = -Veff / I;
+        if (fabs(X) > (tmp = mu * MASS * fabs(tmp)))
+            X = -sgn(Veff) * tmp;
+
+        // apply the x-change:
+        tmp = X / MASS;
+        va.setLocation(va.getX() + tmp, va.getY());
+        vb.setLocation(vb.getX() - tmp, vb.getY());
+
+        // the spin's change:
+        tmp = X * RADIUS / INERTIA;
+        w[0] -= tmp;
+        w[1] -= tmp;
+
+        return;
     }
 }

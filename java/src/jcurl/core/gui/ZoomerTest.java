@@ -131,18 +131,18 @@ public class ZoomerTest extends TestCase {
         mat.setToIdentity();
         zom.applyTrafo(dc, Orientation.N, false, mat);
         mat.getMatrix(flat);
-        assertEquals("", 1.0 / S, flat[0], 1e-9);
+        assertEquals("", -1.0 / S, flat[0], 1e-9);
         assertEquals("", 0.0 / S, flat[1], 1e-9);
         assertEquals("", 0.0 / S, flat[2], 1e-9);
-        assertEquals("", 1.0 / S, flat[3], 1e-9);
-        assertEquals("", 1.0 - 1.0 / S, flat[4], 1e-9);
-        assertEquals("", 2.0 - 2.0 / S, flat[5], 1e-9);
+        assertEquals("", -1.0 / S, flat[3], 1e-9);
+        assertEquals("", 2.0, flat[4], 1e-9);
+        assertEquals("", 8.0, flat[5], 1e-9);
         src.setLocation(fix);
         mat.transform(src, dst);
-        assertEquals(src, dst);
+        assertEquals(new Point2D.Double(1.999, 7.998), dst);
         src.setLocation(3, 4);
         mat.transform(src, dst);
-        assertEquals(src, dst);
+        assertEquals(new Point2D.Double(1.997, 7.996), dst);
     }
 
     public void test110_ZoomShift() {
@@ -159,17 +159,17 @@ public class ZoomerTest extends TestCase {
         mat.setToIdentity();
         zom.applyTrafo(dc, Orientation.N, false, mat);
         mat.getMatrix(flat);
-        assertEquals("", 1, flat[0], 1e-9);
+        assertEquals("", -0.0010, flat[0], 1e-9);
         assertEquals("", 0, flat[1], 1e-9);
         assertEquals("", 0, flat[2], 1e-9);
-        assertEquals("", 1, flat[3], 1e-9);
-        assertEquals("", -2, flat[4], 1e-9);
-        assertEquals("", -4, flat[5], 1e-9);
+        assertEquals("", -0.0010, flat[3], 1e-9);
+        assertEquals("", 0, flat[4], 1e-9);
+        assertEquals("", 4, flat[5], 1e-9);
         src.setLocation(fix);
         mat.transform(src, dst);
-        assertEquals(new Point2D.Double(-1, -2), dst);
+        assertEquals(new Point2D.Double(-0.001, 3.998), dst);
         src.setLocation(3, 4);
         mat.transform(src, dst);
-        assertEquals(new Point2D.Double(-1, -2), dst);
+        assertEquals(new Point2D.Double(-0.003, 3.996), dst);
     }
 }

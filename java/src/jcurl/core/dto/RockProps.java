@@ -32,7 +32,7 @@ public class RockProps {
         DEFAULT = new RockProps();
         DEFAULT.mass = 20;
         DEFAULT.radius = Dim.f2m(0.5);
-        DEFAULT.inertia = 1.4F;
+        DEFAULT.inertia = 0.186F; // [Kg*m*m]
     }
 
     public float getInertia() {
