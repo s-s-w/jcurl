@@ -40,9 +40,12 @@ public class CurveInterval extends CurveBase {
 
     /**
      * @param dim
+     *            dimension
      * @param c
+     *            c'th derivative
      * @param t
-     * @return
+     *            parameter
+     * @return value
      */
     public double getC(final int dim, int c, double t) {
         if (t < tmin) {

@@ -47,8 +47,8 @@ public class RealTimePlayer implements Runnable {
 
     private final long timeSleep = 40;
 
-    public RealTimePlayer(final double t0, final double scale, final Source src,
-            final TargetDiscrete dst) {
+    public RealTimePlayer(final double t0, final double scale,
+            final Source src, final TargetDiscrete dst) {
         this.t0Start = t0Last = tNow = t0;
         this.timeScale = scale;
         this.src = src;

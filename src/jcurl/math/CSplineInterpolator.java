@@ -196,7 +196,7 @@ public class CSplineInterpolator {
     /**
      * @see CSplineInterpolator#getC(int, double)
      * @param x
-     * @return
+     * @return 0th derivative (value)
      */
     public double getC0(double x) {
         return getC(0, x);
@@ -205,7 +205,7 @@ public class CSplineInterpolator {
     /**
      * @see CSplineInterpolator#getC(int, double)
      * @param x
-     * @return
+     * @return 1st derivative
      */
     public double getC1(double x) {
         return getC(1, x);
@@ -214,7 +214,7 @@ public class CSplineInterpolator {
     /**
      * @see CSplineInterpolator#getC(int, double)
      * @param x
-     * @return
+     * @return 2nd derivative
      */
     public double getC2(double x) {
         return getC(2, x);

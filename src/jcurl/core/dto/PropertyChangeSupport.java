@@ -73,8 +73,6 @@ public class PropertyChangeSupport {
      * map. This value is chosen because it would be illegal to name a property
      * the same as this value which guarantees that there will be no name
      * clashes.
-     * 
-     * @see mirror.beans.SafePropertyChangeSupport#listenerMap
      */
     private static final String ALL_PROPERTIES = "**GENERAL**";
 

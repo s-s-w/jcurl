@@ -91,6 +91,10 @@ public class Ice {
     /**
      * tests whether a rock is fully between far-hog and back and the arg and
      * right edge.
+     * 
+     * @param x
+     *            the rock to check
+     * @return true/false
      */
     public static boolean ingame(final Rock x) {
         return -x.getY() < (BACK_2_TEE + rad)
@@ -102,6 +106,10 @@ public class Ice {
     /**
      * tests whether a rock is fully between far-hog and back and the arg and
      * right edge.
+     * 
+     * @param x
+     *            rock's location
+     * @return <code>true/false</code>
      */
     public static boolean ingamePlus(final Rock x) {
         return -x.getY() < (BACK_2_TEE + rad)
@@ -115,6 +123,13 @@ public class Ice {
      * center-line), lead rocks first (at the front), color 0 on the arg, 1
      * right. Note: the distance between the rows (0.5 foot) is a little more
      * than a rock's diameter.
+     * 
+     * @param R
+     *            rock
+     * @param isDark
+     *            <code>true/false</code>
+     * @param idx
+     *            index [0-7]
      */
     public static void setHome(final Rock R, final boolean isDark, final int idx) {
         final float D = 1.2F * rad;
@@ -132,6 +147,13 @@ public class Ice {
      * 'Stop'-lineup. Two rows at each edge of the rink (parallel to back-line),
      * lead rocks outmost, color 0 on the arg, 1 right. Note: the distance
      * between the rows (0.5 foot) is a little more than a rock's diameter.
+     * 
+     * @param R
+     *            rock reference
+     * @param isDark
+     *            <code>true/false</code>
+     * @param i
+     *            index
      */
     public static void setOut(final Rock R, final boolean isDark, final int i) {
         final float D = 1.2F * rad;

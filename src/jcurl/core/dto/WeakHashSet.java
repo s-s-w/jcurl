@@ -53,7 +53,7 @@ import java.util.WeakHashMap;
  * the second isn't.
  * </p>
  * 
- * @see java.lang.util.WeakHashMap
+ * @see java.util.WeakHashMap
  * @see java.lang.ref.WeakReference
  */
 public class WeakHashSet extends AbstractSet implements Set {
@@ -79,7 +79,9 @@ public class WeakHashSet extends AbstractSet implements Set {
      * store and fills it with the given collection. Note that duplicates in the
      * collection will merely be overwritten
      * 
-     * @see java.util.WeakHashMap#WeakHashMap(Collection)
+     * @param c
+     *            collection to use
+     * @see WeakHashMap#WeakHashMap(java.util.Map)
      */
     public WeakHashSet(final Collection c) {
         backingStore = new WeakHashMap(Math
@@ -91,6 +93,8 @@ public class WeakHashSet extends AbstractSet implements Set {
      * Constructs a new WeakHashSet with the values given passed the the backing
      * store.
      * 
+     * @param initialCapacity
+     *            start size
      * @see java.util.WeakHashMap#WeakHashMap(int)
      */
     public WeakHashSet(final int initialCapacity) {
@@ -101,6 +105,10 @@ public class WeakHashSet extends AbstractSet implements Set {
      * Constructs a new WeakHashSet with the values given passed the the backing
      * store.
      * 
+     * @param initialCapacity
+     *            start size
+     * @param loadFactor
+     *            load
      * @see java.util.WeakHashMap#WeakHashMap(int, float)
      */
     public WeakHashSet(final int initialCapacity, final float loadFactor) {
@@ -108,6 +116,9 @@ public class WeakHashSet extends AbstractSet implements Set {
     }
 
     /**
+     * @param o
+     *            object to add
+     * @return <code>true</code>
      * @throws NullPointerException
      *             If the user tries to add null to the set.
      */

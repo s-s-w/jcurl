@@ -49,8 +49,6 @@ public class MouseRectPanel extends JPanel implements MouseMotionListener {
         addMouseListener(new MouseAdapter() {
 
             public void mouseClicked(MouseEvent evt) {
-                int x = evt.getX();
-                int y = evt.getY();
                 if (evt.getClickCount() >= 2) {
                     remove(current);
                 }

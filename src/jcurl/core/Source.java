@@ -48,7 +48,7 @@ public interface Source {
      * @param time
      *            [sec]
      * @param rocks
-     * @return
+     * @return the rocks' positions
      */
     public abstract RockSet getPos(final double time, RockSet rocks);
 
@@ -58,7 +58,7 @@ public interface Source {
      * @param time
      *            [sec]
      * @param rocks
-     * @return
+     * @return the rocks' speeds
      */
     public abstract RockSet getSpeed(final double time, RockSet rocks);
 
@@ -71,7 +71,8 @@ public interface Source {
     /**
      * Clear all internal state and set the given initial state.
      * 
-     * @param startTime [msec]
+     * @param startTime
+     *            [msec]
      * @param startPos
      * @param startSpeed
      * @param props

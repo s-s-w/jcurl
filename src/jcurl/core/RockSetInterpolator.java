@@ -95,6 +95,8 @@ public class RockSetInterpolator implements Source, TargetDiscrete {
 
     /**
      * Interpolators are never discrete - that's what they're for.
+     * 
+     * @return <code>false</code>
      */
     public boolean isDiscrete() {
         return false;

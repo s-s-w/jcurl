@@ -57,7 +57,9 @@ public class PointList implements List {
     /**
      * Add point reference to the curve.
      * 
-     * @param p
+     * @param o
+     *            the Point to add
+     * @return <code>true</code>
      */
     public boolean add(Object o) {
         return dat.add((Point) o);

@@ -37,8 +37,12 @@ public abstract class Point3D extends Point2D {
     /**
      * Sets the location of this Point3D to the specified double coordinates.
      * 
-     * @param x,
-     *            y, alpha the coordinates of this Point3D
+     * @param x
+     *            the coordinates of this Point3D
+     * @param y
+     *            the coordinates of this Point3D
+     * @param z
+     *            (angle) the coordinates of this Point3D
      */
     public void setLocation(double x, double y, double z) {
         this.setX(x);

@@ -20,8 +20,6 @@ package jcurl.sim.core;
 
 import java.awt.geom.Point2D;
 
-import org.apache.log4j.Logger;
-
 import jcurl.core.Rock;
 import jcurl.core.RockSet;
 import jcurl.core.Source;
@@ -30,13 +28,13 @@ import jcurl.core.dto.RockProps;
 import jcurl.core.dto.RockSetProps;
 import jcurl.math.MathVec;
 import jcurl.math.Polynome;
-import jcurl.sim.model.SlideStraight;
+
+import org.apache.log4j.Logger;
 
 /**
  * Abstract base class for propagation/friction models.
  * 
  * @see jcurl.sim.core.SlideStrategyTest
- * @see jcurl.sim.core.RunComputer
  * @see jcurl.sim.core.CollissionStrategy
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
@@ -69,6 +67,18 @@ public abstract class SlideStrategy implements Source {
      * Compute the time until two rocks hit. Return {@link Long#MAX_VALUE}/1000
      * if never.
      * 
+     * @param a
+     *            index of first rock
+     * @param ap
+     *            location of first rock
+     * @param av
+     *            speed of first rock
+     * @param b
+     *            index of second rock
+     * @param bp
+     *            location of second rock
+     * @param bv
+     *            speed of second rock
      * @return seconds
      */
     protected static double timetilhit(final int a, final Rock ap,
@@ -133,20 +143,19 @@ public abstract class SlideStrategy implements Source {
                     final double dtNextHit = fact
                             * this.estimateNextHit(maxPos, maxSpeed);
                     if (log.isDebugEnabled())
-                        log.debug("tmax=" + tmax + " dtNextHit="
-                                + dtNextHit);
+                        log.debug("tmax=" + tmax + " dtNextHit=" + dtNextHit);
                     if (dt < dtNextHit)
                         break checkHit;
                     if (dtNextHit <= 0)
-                        throw new IllegalStateException("dtNextHit=" + dtNextHit
-                                + " is in the past!");
+                        throw new IllegalStateException("dtNextHit="
+                                + dtNextHit + " is in the past!");
                     if (dtNextHit < 1e-6)
                         break approach;
                     // move til hit
                     int mov = move(tmax, tmax + dtNextHit, maxPos, maxSpeed);
                     if (mov != rocksInMotion)
-                        set(tmax + dtNextHit, maxPos, maxSpeed,
-                                mov ^ rocksInMotion);
+                        set(tmax + dtNextHit, maxPos, maxSpeed, mov
+                                ^ rocksInMotion);
                     else
                         tmax += dtNextHit;
                     rocksInMotion = mov;
@@ -169,7 +178,7 @@ public abstract class SlideStrategy implements Source {
     /**
      * Test all combinations of the given rocks for upcoming collissions.
      * 
-     * @see SlideStrategy#timetilhit(Rock, Rock, Rock, Rock)
+     * @see SlideStrategy#timetilhit(int, Rock, Rock, int, Rock, Rock)
      * @param pos
      * @param speed
      * @return seconds until the next hit
@@ -203,11 +212,14 @@ public abstract class SlideStrategy implements Source {
      *            start position (y) [meter]
      * @param Trun
      *            from Hog to Hog. [seconds] see ./doc/eiszeit.tex for details.
+     * @return [meter/sec]
      */
     public abstract double getInitialSpeed(final double y0, final double Trun);
 
     /**
      * Not supported.
+     * 
+     * @return not supported
      */
     public double getMaxT() {
         throw new UnsupportedOperationException("Not supported");
@@ -217,7 +229,11 @@ public abstract class SlideStrategy implements Source {
         return tmin;
     }
 
-    /** Query the friction. */
+    /**
+     * Query the friction.
+     * 
+     * @return friction coefficient
+     */
     public abstract double getMu();
 
     public final RockSet getPos(final double time, RockSet rocks) {
@@ -238,8 +254,10 @@ public abstract class SlideStrategy implements Source {
      * Checks if the rock is out of play.
      * 
      * @param x
+     *            rock location
      * @param v
-     * @return
+     *            rock speed
+     * @return <code>true</code> the rock is out
      */
     protected boolean isOut(final Rock x, final Rock v) {
         if (x.getX() > Ice.SIDE_2_CENTER || x.getX() < -Ice.SIDE_2_CENTER)
@@ -264,13 +282,18 @@ public abstract class SlideStrategy implements Source {
             final Rock pos, final Rock speed);
 
     /**
-     * Generic mover. Checks each rock if still in play and motion and calls
-     * {@link SlideStraight#move(long, long, int, Rock, Rock)}if so.
+     * Generic mover. calls
+     * {@link SlideStrategy#move(double, double, int, Rock, Rock)}for each rock
+     * and checks if the rock is still in play afterwards.
      * 
      * @param t0
+     *            [sec] start time
      * @param t1
+     *            [sec] end time
      * @param pos
+     *            positions
      * @param speed
+     *            velocities
      * @return bitmask of the rocks in motion at t1
      */
     protected int move(final double t0, final double t1, final RockSet pos,

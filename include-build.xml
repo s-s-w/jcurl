@@ -34,7 +34,7 @@
 	<property name="lib.dir" value="lib" />
 	<property name="config.dir" value="config" />
 	<property name="reports.dir" value="reports" />
-	<property name="html.viewer" value="firefox" />
+	<property name="html.viewer" value="htmlview" />
 	<property name="src.encoding" value="utf-8" />
 	<property name="src.debug" value="true" />
 
@@ -69,7 +69,7 @@
 	
 	<target name="doc.view" depends="doc" description="View Documentation">
 		<exec executable="${html.viewer}" spawn="true">
-			<arg value="${doc.dir}/index.html" />
+			<arg value="file://${basedir}/${doc.dir}/index.html" />
 		</exec>
 	</target>
 
@@ -106,7 +106,7 @@
 
 	<target name="test.view" depends="test.reports" description="View JUnit reports">
 		<exec executable="${html.viewer}" spawn="true">
-			<arg value="${reports.dir}/junit.html/index.html" />
+			<arg value="file://${basedir}/${reports.dir}/junit.html/index.html" />
 		</exec>
 	</target>
 

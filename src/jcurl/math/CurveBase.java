@@ -86,8 +86,13 @@ public abstract class CurveBase {
     /**
      * Compute <code>x where f(x) = 0</code> using Newton's algorithm.
      * 
-     * @param x0
-     * @return
+     * @param dim
+     *            dimension (0,1,2)
+     * @param c
+     *            c'th derivative
+     * @param x
+     *            start value
+     * @return x for getC(dim, c, x) = 0
      */
     public double computeNewtonZero(final int dim, final int c, double x) {
         final double eps = 1e-9;

@@ -66,8 +66,12 @@ public abstract class Function1D extends CurveBase {
     /**
      * Compute <code>x where f(x) = 0</code> using Newton's algorithm.
      * 
-     * @param x0
-     * @return
+     * @see CurveBase#computeNewtonZero(int, int, double)
+     * @param c
+     *            c'th derivative
+     * @param x
+     *            start value
+     * @return x for getC(c, x) = 0
      */
     public double computeNewtonZero(final int c, double x) {
         return computeNewtonZero(0, c, x);

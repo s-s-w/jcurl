@@ -18,15 +18,14 @@
  */
 package jcurl.sim.core;
 
-import org.apache.log4j.Logger;
-
 import jcurl.core.Rock;
 import jcurl.core.RockSet;
+
+import org.apache.log4j.Logger;
 
 /**
  * Abstract base class for collission models.
  * 
- * @see jcurl.sim.core.RunComputer
  * @see jcurl.sim.core.SlideStrategy
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
