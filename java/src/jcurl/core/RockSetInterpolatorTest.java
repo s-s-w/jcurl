@@ -20,7 +20,7 @@ package jcurl.core;
 
 import jcurl.core.dto.RockSetProps;
 import jcurl.sim.model.CollissionSimple;
-import jcurl.sim.model.SlideSimple;
+import jcurl.sim.model.SlideStraight;
 import junit.framework.TestCase;
 
 /**
@@ -43,7 +43,7 @@ public class RockSetInterpolatorTest extends TestCase {
         RockSet rSpeed = new RockSet();
         rSpeed.getLight(0).setX(0);
         rSpeed.getLight(0).setY(1);
-        SlideSimple slid = new SlideSimple(new CollissionSimple());
+        SlideStraight slid = new SlideStraight(new CollissionSimple());
         assertTrue(slid.isDiscrete());
 
         slid.reset(t0, rPos, rSpeed, RockSetProps.DEFAULT);

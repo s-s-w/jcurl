@@ -18,8 +18,6 @@
  */
 package jcurl.math;
 
-import jcurl.core.Rock;
-import jcurl.core.dto.RockDouble;
 import junit.framework.TestCase;
 
 /**

@@ -19,7 +19,6 @@
 package jcurl.core.gui;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -37,7 +36,7 @@ import org.apache.log4j.Logger;
 /**
  * A simple viewer that brings all together.
  * 
- * @see jcurl.sim.model.SlideSimple
+ * @see jcurl.sim.model.SlideStraight
  * @see jcurl.sim.model.CollissionSimple
  * @see jcurl.core.gui.SimpleKeys
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
