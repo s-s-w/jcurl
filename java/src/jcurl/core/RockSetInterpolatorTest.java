@@ -1,0 +1,64 @@
+/*
+ * jcurl curling simulation framework 
+ * Copyright (C) 2005 M. Rohrmoser
+ * 
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
+package jcurl.core;
+
+import jcurl.core.dto.RockSetProps;
+import jcurl.sim.model.SlideSimple;
+import junit.framework.TestCase;
+
+/**
+ * JUnit test for {@link jcurl.core.RockSetInterpolator}.
+ * 
+ * @see jcurl.core.RockSetInterpolator
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
+public class RockSetInterpolatorTest extends TestCase {
+
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(RockSetInterpolatorTest.class);
+    }
+
+    public void test010_feed() {
+        final long t0 = 0;
+        RockSet rPos = RockSet.allHome();
+        rPos.getLight(0).setLocation(0, 0);
+        RockSet rSpeed = new RockSet();
+        rSpeed.getLight(0).setX(0);
+        rSpeed.getLight(0).setY(1);
+        SlideSimple slid = new SlideSimple();
+        assertTrue(slid.isDiscrete());
+
+        slid.reset(t0, rPos, rSpeed, RockSetProps.DEFAULT);
+        assertEquals(t0, slid.getMinT());
+
+        final RockSetInterpolator ip = new RockSetInterpolator();
+
+        final int loop = 5000;
+        for (int i = 0; i < loop; i++) {
+            long t1 = t0 + i * 2;
+            RockSet p1 = slid.getPos(t1, null);
+            ip.setPos(t1, p1);
+        }
+        for (int i = loop - 2; i >= 0; i--) {
+            long t1 = t0 + i * 2 + 1;
+            ip.getPos(t1, null);
+        }
+    }
+}
