@@ -35,7 +35,7 @@ import jcurl.core.dto.RockSetProps;
  * @see jcurl.sim.core.CollissionStrategy
  * @see jcurl.core.RockSetInterpolator
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: RunComputer.java 13 2005-03-05 22:58:41Z mrohrmoser $
  */
 public class RunComputer implements Source {
 
@@ -95,7 +95,8 @@ public class RunComputer implements Source {
                 inner: for (;;) {
                     // check the next hit
                     final long nextH = currTime
-                            + (long) (fact * slider.estimateNextHit(currPos, currSpeed));
+                            + (long) (fact * slider.estimateNextHit(currPos,
+                                    currSpeed));
                     if (time < nextH)
                         break noHit;
                     if (currTime == nextH)

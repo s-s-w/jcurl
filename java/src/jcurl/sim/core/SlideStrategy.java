@@ -32,7 +32,7 @@ import jcurl.math.MathVec;
  * @see jcurl.sim.core.RunComputer
  * @see jcurl.sim.core.CollissionStrategy
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: SlideStrategy.java 13 2005-03-05 22:58:41Z mrohrmoser $
  */
 public abstract class SlideStrategy implements Source {
 
@@ -109,7 +109,9 @@ public abstract class SlideStrategy implements Source {
      * Overload and typically feed
      * {@link SlideStrategy#estimateNextHit(RockSet, RockSet)}with the current
      * locations and velocities.
-     * @param t TODO
+     * 
+     * @param t
+     *            TODO
      * 
      * @see SlideStrategy#estimateNextHit(RockSet, RockSet)
      * @return seconds

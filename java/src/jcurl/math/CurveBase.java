@@ -21,9 +21,9 @@ package jcurl.math;
 /**
  * Abstract base class for n-dimensional curves (R -&gt; R^n).
  * 
- * @see jcurl.math.CurveTest 
+ * @see jcurl.math.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: CurveBase.java 13 2005-03-05 22:58:41Z mrohrmoser $
  */
 public abstract class CurveBase {
     protected final int dim;

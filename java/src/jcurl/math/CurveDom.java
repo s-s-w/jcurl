@@ -27,10 +27,10 @@ import jcurl.math.dom.MathDom;
 /**
  * An n-dimensional, continuous curve (R -&gt; R^n) based on a {@link CurveDom}
  * node..
- *
- * @see jcurl.math.CurveTest 
+ * 
+ * @see jcurl.math.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: CurveDom.java 13 2005-03-05 22:58:41Z mrohrmoser $
  */
 public class CurveDom extends CurveBase {
 
