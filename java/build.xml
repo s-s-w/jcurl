@@ -1,0 +1,121 @@
+<project name="jcurl" default="compile">
+	<!-- $Id$ 
+		ant build file to compile, package and document.
+		
+		manual: http://ant.apache.org/manual/index.html
+	-->
+
+	<property file="version.properties" />
+
+	<!--************************************************************
+	**** Custom Properties *****************************************
+	*************************************************************-->
+	<property name="doc.title" value="JCurl Curling Simulation Framework" />
+	
+	<!--************************************************************
+	**** Provide standard properties and generic targets ***********
+	*************************************************************-->
+	<import file="include-build.xml"/>
+
+	<!--************************************************************
+	**** File Groups ***********************************************
+	*************************************************************-->
+	
+	<!-- run jar dependencies  -->
+	<patternset id="run.jars">
+		<include name="${lib.dir}/log4j-1.2.8.jar" />
+	</patternset>
+
+	<!-- test jar dependencies  -->
+	<patternset id="test.jars">
+		<include name="${lib.dir}/junit.jar" />
+	</patternset>
+
+	<!-- build dependencies  -->
+	<patternset id="build.jars">
+		<patternset refid="run.jars" />
+		<patternset refid="test.jars" />
+	</patternset>
+
+	<!-- test classes -->
+	<patternset id="test.classes">
+		<include name="**/*Test.class" />
+	</patternset>
+			
+	<!-- different jar configurations -->
+	<property name="jcurl.config.dir" value="${config.dir}/jcurl.jar" />
+	<property name="jcurl-test.config.dir" value="${config.dir}/jcurl-test.jar" />
+	
+	<!-- created jar versions -->
+	<property name="jcurl.jar" value="jcurl-${version.file}.jar" />
+	<property name="jcurl-test.jar" value="jcurl-test-${version.file}.jar" />
+	
+	<!--************************************************************
+	**** Classpaths etc. *******************************************
+	*************************************************************-->
+	<path id="src.path">
+		<pathelement location="${src.dir}" />
+	</path>
+	
+	<path id="build.path">
+		<fileset dir=".">
+			<patternset refid="build.jars" />
+		</fileset>
+	</path>
+
+	<path id="test.path">
+		<path refid="build.path" />
+		<fileset dir="${build.dir}">
+			<include name="${jcurl.jar}" />
+			<include name="${jcurl-test.jar}" />
+		</fileset>
+		<fileset dir="test">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	
+	<!--************************************************************
+	**** Targets ***************************************************
+	*************************************************************-->
+	
+	<target name="build" depends="compile" description="Bundle the jars">
+		<antcall target="manifest.patch"><param name="jar.file" value="jcurl.jar"/></antcall>
+		<antcall target="manifest.patch"><param name="jar.file" value="jcurl-test.jar"/></antcall>
+
+		<mkdir dir="${build.dir}" />
+		<jar destfile="${build.dir}/jcurl-${version.file}.jar" filesetmanifest="merge">
+			<fileset dir="${classes.dir}" excludes="**/Test.class" />
+		    <fileset dir="${config.dir}/jcurl.jar"/>		
+		</jar>
+		<jar destfile="${build.dir}/jcurl-test-${version.file}.jar" filesetmanifest="merge">
+			<fileset dir="${classes.dir}" includes="**/Test.class" />
+		    <fileset dir="${config.dir}/jcurl-test.jar"/>		
+		</jar>
+
+		<buildnumber/>
+	</target>
+		
+	<target name="doc" depends="init" description="Document it.">
+		<mkdir dir="${doc.dir}" />
+		<mkdir dir="${build.dir}" />
+		<javadoc destdir="${doc.dir}" author="true" version="true" 
+			use="true" windowtitle="${doc.title}" Encoding="${src.encoding}" 
+			docencoding="iso-8859-1" classpathref="build.path" private="true" source="1.4">
+			<link href="http://java.sun.com/j2se/1.4.2/docs/api/" />
+			<link href="http://java.sun.com/j2ee/1.4/docs/api/" />
+			<link href="http://logging.apache.org/log4j/docs/api/" />
+			<link href="http://www.junit.org/junit/javadoc/3.8.1/" />
+			
+			<packageset dir="${src.dir}" defaultexcludes="yes">
+				<include name="jcurl/**" />
+			</packageset>
+			<group title="JCurl" packages="jcurl.*" />
+			<doctitle>${doc.title}</doctitle>
+			<bottom>&lt;i&gt;${copyright.txt}&lt;/i&gt;</bottom>
+		</javadoc>
+		<!-- make a jar containing the doc. -->
+		<jar destfile="${build.dir}/jcurl-doc-${version.file}.jar" basedir="${doc.dir}">
+			<include name="**/*" />
+		</jar>
+	</target>
+</project>
