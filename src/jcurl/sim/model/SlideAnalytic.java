@@ -47,7 +47,7 @@ public abstract class SlideAnalytic extends SlideStrategy {
      * Create a new trajectory curve for the given initial state.
      * 
      * @param t0
-     *            [seconds]
+     *            [second]
      * @param pos
      * @param speed
      * @return a 3-dimensional curve

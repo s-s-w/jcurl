@@ -79,9 +79,7 @@ public class SlideSimple extends SlideStrategy {
      * @param speed
      * @param dt
      * @param idx
-     *            TODO
-     * @param t0
-     *            TODO
+     *            Rock index
      * @return '1' if the rock 'r' is still in motion <b>after </b> the given
      *         period 'dt', '0' otherwise.
      */

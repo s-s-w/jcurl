@@ -68,10 +68,29 @@ public class Polynome extends Function1D {
      */
     public static final Polynome getPoly(double t0, double x0, double v0,
             double a0) {
-        final double[] p = { x0 - (v0 * t0 + 0.5 * a0 * t0 * t0), v0, 0.5 * a0 };
-        return new Polynome(p);
+        return new Polynome(getPolyParams(t0, x0, v0, a0));
     }
 
+    /**
+     * Convenience method to get the "bewegungsgleichung" for a given initial
+     * state.
+     * 
+     * @param t0
+     *            initial time
+     * @param x0
+     *            initial location
+     * @param v0
+     *            initial speed
+     * @param a0
+     *            constant acceleration
+     * @return
+     */
+    public static final double[] getPolyParams(double t0, double x0, double v0,
+            double a0) {
+        final double[] p = { x0 - (v0 * t0 + 0.5 * a0 * t0 * t0), v0, 0.5 * a0 };
+        return p;
+    }
+    
     /**
      * /** Compute the polynome p at x.
      * 

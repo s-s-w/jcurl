@@ -18,8 +18,6 @@
  */
 package jcurl.sim.model;
 
-import java.awt.Polygon;
-
 import jcurl.core.Rock;
 import jcurl.core.RockSet;
 import jcurl.core.dto.Ice;
@@ -32,6 +30,7 @@ import jcurl.core.dto.RockSetProps;
  * <p>
  * Requires heavy debugging.
  * 
+ * @see jcurl.sim.model.SlideStraight
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

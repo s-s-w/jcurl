@@ -31,13 +31,13 @@ import jcurl.core.TargetDiscrete;
 import jcurl.core.dto.RockSetProps;
 import jcurl.sim.core.RunComputer;
 import jcurl.sim.model.CollissionSimple;
-import jcurl.sim.model.SlideDenny;
-import jcurl.sim.model.SlideSimple;
 import jcurl.sim.model.SlideStraight;
 
 import org.apache.log4j.Logger;
 
 /**
+ * A simple viewer that brings all together.
+ * 
  * @see jcurl.sim.core.model.SlideSimple
  * @see jcurl.sim.core.model.CollissionSimple
  * @see jcurl.core.gui.SimpleKeys
@@ -73,7 +73,7 @@ public class SimpleMain extends JFrame {
         final RockSet speed = new RockSet();
         speed.getDark(0).setLocation(0, -1.0, 0.75);
         // dynamics engines
-        final Source src = new RunComputer(new SlideDenny(),
+        final Source src = new RunComputer(new SlideStraight(),
                 new CollissionSimple(), new RockSetInterpolator(),
                 RockSetProps.DEFAULT, 0, pos, speed);
         final SimpleMain frame = new SimpleMain();
