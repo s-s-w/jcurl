@@ -51,7 +51,7 @@ public class IcePainter {
 
         public Paint contours = Color.BLACK;
 
-        public Paint hog2hog = new Color(0xFFFFFF);
+        public Paint hog2hog = new Color(0xF8F8F8);
 
         public Paint hog2tee = new Color(0xFFFFFF);
 
