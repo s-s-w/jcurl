@@ -18,6 +18,8 @@
  */
 package jcurl.math;
 
+import org.apache.log4j.Logger;
+
 /**
  * Combined curve.
  * 
@@ -30,6 +32,8 @@ public class CurveParts extends CurveBase {
     private static final int growth = 120;
 
     private static final int initialSize = 5;
+
+    private static final Logger log = Logger.getLogger(CurveParts.class);
 
     /**
      * Search only part of an array.
@@ -50,7 +54,7 @@ public class CurveParts extends CurveBase {
             final int m = (max + min) / 2;
             if (key == a[m])
                 return m;
-            if (min + 1 == max) {
+            if (min + 1 >= max) {
                 if (a[min] < key && key < a[max])
                     return -1 - max;
                 else
@@ -87,12 +91,18 @@ public class CurveParts extends CurveBase {
             final int siz = 1 + parts * growth / 100;
             final double[] t = new double[siz];
             System.arraycopy(t0, 0, t, 0, parts);
+            t0 = t;
             final CurveBase[] c = new CurveBase[siz];
-            System.arraycopy(fkt, 0, c, 0, parts);
+            System.arraycopy(this.fkt, 0, c, 0, parts);
+            this.fkt = c;
         }
         // add
         this.t0[parts] = _t0;
         this.fkt[parts++] = fkt;
+    }
+
+    public void clear() {
+        parts = 0;
     }
 
     /**
@@ -135,12 +145,15 @@ public class CurveParts extends CurveBase {
      * 
      * @param dim
      *            dimension
-     * @param n
+     * @param c
      *            derivative
      * @param t
      * @return
      */
-    public double getC(int dim, int n, double t) {
-        return fkt[findFktIdx_LS(t)].getC(dim, n, t);
+    public double getC(int dim, int c, double t) {
+        final int idx = findFktIdx_BS(t);
+        if (false && log.isDebugEnabled())
+            log.debug("t=" + t + " idx=" + idx);
+        return fkt[idx].getC(dim, c, t);
     }
 }

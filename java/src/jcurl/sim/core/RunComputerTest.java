@@ -47,9 +47,9 @@ public class RunComputerTest extends TestCase {
         speed.getDark(0).setLocation(0, -1.0);
 
         // dynamics engines
-        final Source src = new RunComputer(new SlideSimple(),
-                new CollissionSimple(), new RockSetInterpolator(),
-                RockSetProps.DEFAULT, 0, pos, speed);
+        final Source src = new RunComputer(new SlideSimple(
+                new CollissionSimple()), new CollissionSimple(),
+                new RockSetInterpolator(), RockSetProps.DEFAULT, 0, pos, speed);
         final RockSet rs = RockSet.allHome();
         src.getPos(100, rs);
         assertEquals("", 0, rs.getDark(0).getX(), 1e-6);

@@ -32,6 +32,17 @@ public abstract class CurveBase {
         this.dim = dim;
     }
 
+    /**
+     * Compute the c'th derivative of all dimensions at <code>t</code>.
+     * 
+     * @param c
+     *            derivative (0=location, 1:speed, ...)
+     * @param t
+     *            t-value (input)
+     * @param ret
+     *            return value container
+     * @return the c'th derivative at <code>t</code>
+     */
     public double[] getC(int c, double t, double[] ret) {
         if (ret == null)
             ret = new double[dim];
@@ -40,6 +51,17 @@ public abstract class CurveBase {
         return ret;
     }
 
+    /**
+     * Compute the c'th derivative of all dimensions at <code>t</code>.
+     * 
+     * @param c
+     *            derivative (0=location, 1:speed, ...)
+     * @param t
+     *            t-value (input)
+     * @param ret
+     *            return value container
+     * @return the c'th derivative at <code>t</code>
+     */
     public float[] getC(int c, double t, float[] ret) {
         if (ret == null)
             ret = new float[dim];
@@ -48,5 +70,16 @@ public abstract class CurveBase {
         return ret;
     }
 
+    /**
+     * Compute the c'th derivative of the given dimension at <code>t</code>.
+     * 
+     * @param dim
+     *            which dimension
+     * @param c
+     *            derivative (0=location, 1:speed, ...)
+     * @param t
+     *            t-value
+     * @return the c'th derivative at <code>t</code>
+     */
     public abstract double getC(int dim, int c, double t);
 }

@@ -18,6 +18,8 @@
  */
 package jcurl.sim.core;
 
+import org.apache.log4j.Logger;
+
 import jcurl.core.Rock;
 import jcurl.core.RockSet;
 
@@ -30,6 +32,9 @@ import jcurl.core.RockSet;
  * @version $Id$
  */
 public abstract class CollissionStrategy {
+
+    private static final Logger log = Logger
+            .getLogger(CollissionStrategy.class);
 
     protected static final double sqr(final double a) {
         return a * a;
@@ -60,6 +65,8 @@ public abstract class CollissionStrategy {
      * @return bitmask of the changed rocks
      */
     public int compute(RockSet pos, RockSet speed) {
+        if(log.isDebugEnabled())
+            log.debug("compute()");
         int hits = 0;
         for (int B = 0; B < RockSet.ROCKS_PER_SET; B++) {
             for (int A = 0; A < B; A++) {

@@ -23,6 +23,7 @@ import jcurl.core.RockSet;
 import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
 import jcurl.core.dto.RockSetProps;
+import jcurl.sim.core.CollissionStrategy;
 
 /**
  * Mark Denny's curl-model. Motion of a curling rock acc. to "Curling rock
@@ -66,7 +67,8 @@ public class SlideDenny extends SlideSimple {
 
     private double draw_time;
 
-    public SlideDenny() {
+    public SlideDenny(final CollissionStrategy coll) {
+        super(coll);
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             dat[i] = new DennyDat();
         setDraw2Tee(23, 0.8);

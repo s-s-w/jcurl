@@ -20,6 +20,7 @@ package jcurl.sim.model;
 
 import jcurl.core.RockSet;
 import jcurl.core.dto.RockSetProps;
+import jcurl.sim.core.SlideStrategy;
 import junit.framework.TestCase;
 
 /**
@@ -35,24 +36,6 @@ public class SlideSimpleTest extends TestCase {
         junit.textui.TestRunner.run(SlideSimpleTest.class);
     }
 
-    public void test005_nextHit() {
-        RockSet pos = RockSet.allHome();
-        pos.getDark(0).setLocation(0, 5);
-        pos.getLight(0).setLocation(0.2, 4.0);
-        RockSet speed = new RockSet();
-        speed.getDark(0).setLocation(0, -1);
-
-        SlideSimple slid = new SlideSimple();
-        double dt = slid.tst_timetilhit(pos.getDark(0), speed.getDark(0), pos
-                .getLight(0), speed.getLight(0));
-        assertEquals("", 0.7699933889987538, dt, 1e-9);
-
-        slid.reset(0, pos, speed, null);
-
-        dt = slid.estimateNextHit(0);
-        assertEquals("", 0.7699933889987538, dt, 1e-9);
-    }
-
     public void test010_init() {
         final long t0 = 0;
         RockSet rPos = RockSet.allHome();
@@ -60,7 +43,7 @@ public class SlideSimpleTest extends TestCase {
         RockSet rSpeed = new RockSet();
         rSpeed.getLight(0).setX(0);
         rSpeed.getLight(0).setY(1);
-        SlideSimple slid = new SlideSimple();
+        SlideSimple slid = new SlideSimple(new CollissionSimple());
         assertTrue(slid.isDiscrete());
 
         slid.reset(t0, rPos, rSpeed, RockSetProps.DEFAULT);
@@ -77,7 +60,7 @@ public class SlideSimpleTest extends TestCase {
         RockSet rSpeed = new RockSet();
         rSpeed.getLight(0).setX(0);
         rSpeed.getLight(0).setY(1);
-        SlideSimple slid = new SlideSimple();
+        SlideSimple slid = new SlideSimple(new CollissionSimple());
         assertTrue(slid.isDiscrete());
 
         slid.reset(t0, rPos, rSpeed, RockSetProps.DEFAULT);

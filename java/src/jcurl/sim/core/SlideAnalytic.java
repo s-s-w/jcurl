@@ -16,14 +16,19 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.sim.model;
+package jcurl.sim.core;
+
+import java.awt.geom.Point2D;
 
 import jcurl.core.Rock;
 import jcurl.core.RockSet;
 import jcurl.core.dto.RockSetProps;
 import jcurl.math.CurveBase;
 import jcurl.math.CurveParts;
-import jcurl.sim.core.SlideStrategy;
+import jcurl.math.MathVec;
+import jcurl.math.Polynome;
+
+import org.apache.log4j.Logger;
 
 /**
  * Abstract base class for analytic (non-discrete) curl models.
@@ -33,14 +38,38 @@ import jcurl.sim.core.SlideStrategy;
  */
 public abstract class SlideAnalytic extends SlideStrategy {
 
+    private static final Logger log = Logger.getLogger(SlideAnalytic.class);
+
+    /**
+     * Transform the trajectory from speed-coordinates (the y-axis points along
+     * the direction of motion) to world coordinates and seed the
+     * {@link Polynome}s <code>p[0]</code> and <code>p[1]</code>.
+     * 
+     * @param x0
+     *            initial location x(t0)
+     * @param e
+     *            unit vector of speed
+     * @param xt
+     *            trajectory x(t) in "speed-coordinates"
+     * @param p
+     *            array of {@link Polynome}s of which <code>p[0]</code> and
+     *            <code>p[1]</code> get filled.
+     */
+    protected static void transform(final Point2D x0, final Point2D e,
+            final double[] xt, final Polynome[] p) {
+        // x(t) = x0 + e * x(t)
+        double[] tmp = MathVec.mult(e.getX(), xt, null);
+        tmp[0] += x0.getX();
+        p[0] = new Polynome(tmp);
+        tmp = MathVec.mult(e.getY(), xt, null);
+        tmp[0] += x0.getY();
+        p[1] = new Polynome(tmp);
+    }
+
     private final CurveParts[] c = new CurveParts[RockSet.ROCKS_PER_SET];
 
-    private long tmax = -1;
-
-    private long tmin = -1;
-
-    protected SlideAnalytic() {
-
+    protected SlideAnalytic(final CollissionStrategy coll) {
+        super(coll);
     }
 
     /**
@@ -54,17 +83,18 @@ public abstract class SlideAnalytic extends SlideStrategy {
      */
     protected abstract CurveBase createCurve(double t0, Rock pos, Rock speed);
 
-    /**
-     * Not supported.
-     */
-    public double estimateNextHit(long t) {
-        throw new UnsupportedOperationException("Not supported.");
+    protected Rock getC(final int c, final double time, final int idx,
+            final Rock r) {
+        final CurveBase cu = this.c[idx];
+        r.setLocation(cu.getC(0, c, time), cu.getC(1, c, time), cu.getC(2, c,
+                time));
+        return r;
     }
 
     /**
      * Get the n-th derivative. Used e.g. by
-     * {@link SlideAnalytic#getPos(long, RockSet)},
-     * {@link SlideAnalytic#getSpeed(long, RockSet)}.
+     * {@link SlideStrategy#getPos(long, RockSet)},
+     * {@link SlideStrategy#getSpeed(long, RockSet)}.
      * 
      * @param c
      *            0: value, 1: speed
@@ -75,32 +105,9 @@ public abstract class SlideAnalytic extends SlideStrategy {
      */
     protected RockSet getC(final int c, final long time, RockSet rocks) {
         final double t = 1e-3 * time;
-        final double[] v = new double[3];
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            final Rock r = (Rock)rocks.getRock(i);
-            this.c[i].getC(c, t, v);
-            r.setLocation(v[0], v[1], v[2]);
-        }
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+            getC(c, t, i, rocks.getRock(i));
         return rocks;
-    }
-
-    /**
-     * Not supported.
-     */
-    public long getMaxT() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    public long getMinT() {
-        return tmin;
-    }
-
-    public final RockSet getPos(final long time, RockSet rocks) {
-        return getC(0, time, rocks);
-    }
-
-    public final RockSet getSpeed(final long time, RockSet rocks) {
-        return getC(1, time, rocks);
     }
 
     public final boolean isDiscrete() {
@@ -115,18 +122,24 @@ public abstract class SlideAnalytic extends SlideStrategy {
         return true;
     }
 
-    public final void reset(long startTime, RockSet startPos,
-            RockSet startSpeed, RockSetProps props) {
+    protected boolean move(long t0, long t1, int idx, Rock pos, Rock speed) {
+        getC(0, 1e-3 * t1, idx, pos);
+        getC(1, 1e-3 * t1, idx, speed);
+        return speed.getX() != 0 || speed.getY() != 0;
+    }
+
+    public final void reset(final long startTime, final RockSet startPos,
+            final RockSet startSpeed, final RockSetProps props) {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             c[i] = new CurveParts(3);
-        tmin = tmax = -1;
-        set(startTime, startPos, startSpeed, RockSet.ALL_MASK);
+        super.reset(startTime, startPos, startSpeed, props);
     }
 
     /**
-     * Add a discontinuity.
+     * Add a discontinuity to the model.
      * 
-     * @param t0 [msec]
+     * @param t0
+     *            [msec]
      * @param pos
      * @param speed
      * @param discontinuous
@@ -134,9 +147,12 @@ public abstract class SlideAnalytic extends SlideStrategy {
      */
     public void set(final long t0, final RockSet pos, final RockSet speed,
             final int discontinuous) {
+        if (log.isDebugEnabled())
+            log.debug("t0=" + t0 + " rocks=b"
+                    + Integer.toBinaryString(discontinuous));
         if (t0 <= tmax)
             throw new IllegalArgumentException("t must grow!");
-        if (tmin == -1)
+        if (tmin == T0)
             tmin = t0;
         tmax = t0;
 

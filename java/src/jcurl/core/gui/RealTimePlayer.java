@@ -68,8 +68,8 @@ public class RealTimePlayer implements Runnable {
      */
     public void run() {
         try {
-            RockSet pos = null;
-            RockSet speed = null;
+            RockSet pos = RockSet.allHome(null);
+            RockSet speed = RockSet.allZero(null);
             final long start = System.currentTimeMillis();
             for (;;) {
                 final long dt = System.currentTimeMillis() - start;

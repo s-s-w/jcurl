@@ -25,11 +25,9 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 import jcurl.core.RockSet;
-import jcurl.core.RockSetInterpolator;
 import jcurl.core.Source;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.dto.RockSetProps;
-import jcurl.sim.core.RunComputer;
 import jcurl.sim.model.CollissionSimple;
 import jcurl.sim.model.SlideStraight;
 
@@ -73,9 +71,11 @@ public class SimpleMain extends JFrame {
         final RockSet speed = new RockSet();
         speed.getDark(0).setLocation(0, -1.0, 0.75);
         // dynamics engines
-        final Source src = new RunComputer(new SlideStraight(),
-                new CollissionSimple(), new RockSetInterpolator(),
-                RockSetProps.DEFAULT, 0, pos, speed);
+        //        final Source src = new RunComputer(new SlideStraight(),
+        //                new CollissionSimple(), new RockSetInterpolator(),
+        //                RockSetProps.DEFAULT, 0, pos, speed);
+        final Source src = new SlideStraight(new CollissionSimple());
+        src.reset(0, pos, speed, RockSetProps.DEFAULT);
         final SimpleMain frame = new SimpleMain();
         // set up the keyboard handler
         frame.addKeyListener(new SimpleKeys(src, frame.dst));
