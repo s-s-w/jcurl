@@ -18,10 +18,11 @@
  */
 package jcurl.sim.model;
 
+import jcurl.core.NotImplementedYetException;
 import jcurl.core.Rock;
 import jcurl.core.RockSet;
 import jcurl.core.dto.Ice;
-import jcurl.core.dto.RockSetProps;
+import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.SlideStrategy;
 
 /**
@@ -35,29 +36,9 @@ import jcurl.sim.core.SlideStrategy;
  */
 public class SlideSimple extends SlideStrategy {
 
-    /**
-     * Make the function reachable for testing.
-     * 
-     * @param ap
-     * @param av
-     * @param bp
-     * @param bv
-     * @return seconds
-     */
-    double tst_timetilhit(final Rock ap, final Rock av, final Rock bp,
-            final Rock bv) {
-        return timetilhit(ap, av, bp, bv);
+    public SlideSimple(final CollissionStrategy coll) {
+        super(coll);
     }
-
-    private RockSet currPos = null;
-
-    private RockSet currSpeed = null;
-
-    private long currTime = 0;
-
-    private RockSetProps props = null;
-
-    private long t0 = 0;
 
     /**
      * Move rocks and don't care about hits.
@@ -65,11 +46,11 @@ public class SlideSimple extends SlideStrategy {
      * @param dt
      */
     protected void computeDt(final long t1) {
-        final long dt = t1 - currTime;
+        final long dt = t1 - tmax;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            computeDt(currPos.getRock(i), currSpeed.getRock(i), t1, dt, i);
+            computeDt(maxPos.getRock(i), maxSpeed.getRock(i), t1, dt, i);
         }
-        currTime = t1;
+        tmax = t1;
     }
 
     /**
@@ -95,15 +76,31 @@ public class SlideSimple extends SlideStrategy {
      * @return seconds
      */
     public double estimateNextHit(long t) {
-        return estimateNextHit(currPos, currSpeed);
+        return estimateNextHit(maxPos, maxSpeed);
+    }
+
+    protected RockSet getC(int c, long time, RockSet rocks) {
+        throw new NotImplementedYetException();
+    }
+
+    /**
+     * Guess the initial speed.
+     * 
+     * @param y0
+     *            unused
+     * @param Trun
+     *            from Hog to Hog. see ./doc/eiszeit.tex for details.
+     */
+    public double getInitialSpeed(final double y0, final double Trun) {
+        return Ice.HOG_2_HOG / Trun;
     }
 
     private int getInMotion(long t) {
-        if (t < currTime)
+        if (t < tmax)
             throw new IllegalArgumentException("You cannot walk back in time.");
-        if (t > currTime)
+        if (t > tmax)
             computeDt(t);
-        return RockSet.nonZero(currSpeed);
+        return RockSet.nonZero(maxSpeed);
     }
 
     public long getMaxT() {
@@ -111,25 +108,21 @@ public class SlideSimple extends SlideStrategy {
     }
 
     public long getMinT() {
-        return t0;
+        return tmin;
     }
 
-    public RockSet getPos(final long t, RockSet rocks) {
-        if (t < currTime)
-            throw new IllegalArgumentException("You cannot walk back in time.");
-        if (t == currTime)
-            return currPos;
-        computeDt(t);
-        return currPos;
+    /** Query the friction. */
+    public double getMu() {
+        return 0;
     }
 
-    public RockSet getSpeed(final long t, RockSet rocks) {
-        if (t < currTime)
+    public RockSet getPosOld(final long t, RockSet rocks) {
+        if (t < tmax)
             throw new IllegalArgumentException("You cannot walk back in time.");
-        if (t == currTime)
-            return currSpeed;
+        if (t == tmax)
+            return maxPos;
         computeDt(t);
-        return currSpeed;
+        return maxPos;
     }
 
     public boolean isDiscrete() {
@@ -144,29 +137,13 @@ public class SlideSimple extends SlideStrategy {
         return true;
     }
 
-    public void reset(long startTime, RockSet startPos, RockSet startSpeed,
-            RockSetProps props) {
-        t0 = currTime = startTime;
-        currPos = startPos;
-        currSpeed = startSpeed;
-        this.props = props == null ? RockSetProps.DEFAULT : props;
+    protected boolean move(long t0, long t1, int idx, Rock pos, Rock speed) {
+        throw new NotImplementedYetException();
     }
 
-    /** Query the friction. */
-    public double getMu() {
-        return 0;
-    }
-
-    /**
-     * Guess the initial speed.
-     * 
-     * @param y0
-     *            unused
-     * @param Trun
-     *            from Hog to Hog. see ./doc/eiszeit.tex for details.
-     */
-    public double getInitialSpeed(final double y0, final double Trun) {
-        return Ice.HOG_2_HOG / Trun;
+    protected void set(long t0, RockSet pos, RockSet speed, int discontinuous) {
+        maxPos = pos;
+        maxSpeed = speed;
     }
 
     /**

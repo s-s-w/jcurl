@@ -38,9 +38,7 @@ public class SlideStraightTest extends TestCase {
         junit.textui.TestRunner.run(SlideStraightTest.class);
     }
 
-    private final CollissionSimple cs = new CollissionSimple();
-
-    private final SlideStraight s = new SlideStraight();
+    private final SlideStraight s = new SlideStraight(new CollissionSimple());
 
     private final RockSet pos = RockSet.allOut();
 
@@ -57,7 +55,7 @@ public class SlideStraightTest extends TestCase {
         s.reset(0, pos, speed, RockSetProps.DEFAULT);
     }
 
-    public void test005_createCurve() {
+    public void test010_createCurve() {
         Rock x0 = new RockDouble(0, 0, 0);
         Rock v0 = new RockDouble(0, 0, 0);
         CurveBase c = s.createCurve(0, x0, v0);
@@ -95,9 +93,28 @@ public class SlideStraightTest extends TestCase {
         assertEquals("", 0, c.getC(0, 1, 1), 1e-9);
         assertEquals("", 0, c.getC(1, 1, 1), 1e-9);
         assertEquals("", 0, c.getC(2, 1, 1), 1e-9);
+
+        x0 = new RockDouble(1, 2, 0);
+        v0 = new RockDouble(0.1, 0.2, 0);
+        c = s.createCurve(0, x0, v0);
+        assertEquals("", 1, c.getC(0, 0, 0), 1e-9);
+        assertEquals("", 2, c.getC(1, 0, 0), 1e-9);
+        assertEquals("", 0, c.getC(2, 0, 0), 1e-9);
+
+        assertEquals("", 0.1, c.getC(0, 1, 0), 1e-9);
+        assertEquals("", 0.2, c.getC(1, 1, 0), 1e-9);
+        assertEquals("", 0, c.getC(2, 1, 0), 1e-9);
+        
+        assertEquals("", 1.12396388497, c.getC(0, 0, 1), 1e-9);
+        assertEquals("", 2.24792776995, c.getC(1, 0, 1), 1e-9);
+        assertEquals("", 0, c.getC(2, 0, 1), 1e-9);
+
+        assertEquals("", 0.1479277699, c.getC(0, 1, 1), 1e-9);
+        assertEquals("", 0.2958555399, c.getC(1, 1, 1), 1e-9);
+        assertEquals("", 0, c.getC(2, 1, 1), 1e-9);
     }
 
-    public void test010() {
+    public void test100() {
         double t = 0;
         assertEquals("", 2.26999338899, t = s.estimateNextHit(pos, speed), 1e-6);
         s.getPos((long) (t * 1e3), pos);

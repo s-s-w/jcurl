@@ -90,14 +90,14 @@ public class Polynome extends Function1D {
         final double[] p = { x0 - (v0 * t0 + 0.5 * a0 * t0 * t0), v0, 0.5 * a0 };
         return p;
     }
-    
+
     /**
-     * /** Compute the polynome p at x.
+     * Compute the polynome p at x.
      * 
      * @param x
      * @param p
      *            polynome coefficients
-     * @return p(x)
+     * @return <code>p(x)</code>
      * @see Polynome#poly(int, double, double[])
      */
     public static double poly(final double x, final double[] p) {
@@ -112,7 +112,7 @@ public class Polynome extends Function1D {
      * @param x
      * @param p
      *            polynome coefficients
-     * @return d/dx^c p(x)
+     * @return <code>d/dx^c p(x)</code>
      */
     public static double poly(final int c, final double x, final double[] p) {
         double ret = 0;

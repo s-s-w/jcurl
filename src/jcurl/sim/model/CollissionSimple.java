@@ -20,6 +20,8 @@ package jcurl.sim.model;
 
 import java.awt.geom.Point2D;
 
+import org.apache.log4j.Logger;
+
 import jcurl.core.Rock;
 import jcurl.core.dto.RockProps;
 import jcurl.math.MathVec;
@@ -39,9 +41,12 @@ import jcurl.sim.core.CollissionStrategy;
  * @version $Id$
  */
 public class CollissionSimple extends CollissionStrategy {
-    private static final float Rad = RockProps.DEFAULT.getRadius();
 
     private static final float HIT_MAX_DIST = 1e-3F;
+
+    private static final Logger log = Logger.getLogger(CollissionSimple.class);
+
+    private static final float Rad = RockProps.DEFAULT.getRadius();
 
     private static final double RR = sqr(Rad + Rad + HIT_MAX_DIST);
 
@@ -52,7 +57,8 @@ public class CollissionSimple extends CollissionStrategy {
         final double xrxr = MathVec.scal(xr, xr);
         if (xrxr > RR || !(va.nonzero() || vb.nonzero()))
             return false;
-
+        if (log.isDebugEnabled())
+            log.debug("hit!");
         // get the speed of approach (A -> B):
         final Point2D vr = MathVec.sub(vb, va, new Point2D.Double());
         // get the (speed) component along xr

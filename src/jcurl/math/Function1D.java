@@ -31,11 +31,63 @@ public abstract class Function1D extends CurveBase {
         super(1);
     }
 
-    public abstract double getC(int c, double t);
+    /**
+     * Compute the c'th derivative at <code>x</code>.
+     * 
+     * @param c
+     *            derivative (0=location, 1:speed, ...)
+     * @param x
+     *            x-value
+     * @return the c'th derivative at <code>x</code>
+     * @see Function1D#getC(int, int, double)
+     */
+    public abstract double getC(int c, double x);
 
-    public double getC(int dim, int c, double t) {
+    /**
+     * Compute the c'th derivative at <code>x</code>.
+     * 
+     * @param dim
+     *            must be 0
+     * @param c
+     *            derivative (0=location, 1:speed, ...)
+     * @param x
+     *            x-value
+     * @return the c'th derivative at <code>x</code>
+     * @see Function1D#getC(int, double)
+     * @throws IllegalArgumentException
+     *             if <code>dim != 0</code>
+     */
+    public double getC(int dim, int c, double x) {
         if (dim != 0)
             throw new IllegalArgumentException("Dimension must be 0");
-        return getC(c, t);
+        return getC(c, x);
+    }
+
+    /**
+     * Compute <code>x where f(x) = 0</code> using Newton's algorithm.
+     * 
+     * @param x0
+     * @return
+     */
+    public double computeZeroNewton(double x) {
+        final int c = 0;
+        final double eps = 1e-9;
+        for (;;) {
+            double dx = eps;
+            if (Math.abs(x) > eps)
+                dx = x * eps;
+            final double f1 = getC(c, x);
+            x += dx;
+            final double f = getC(c, x);
+            dx = -f * dx / (f - f1);
+            x += dx;
+            double xa = Math.abs(x);
+            if (xa < 1)
+                xa = 1;
+            if (Math.abs(dx) < eps * xa || Math.abs(f) < eps)
+                ;
+            else
+                return x;
+        }
     }
 }

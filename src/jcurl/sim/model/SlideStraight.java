@@ -21,54 +21,48 @@ package jcurl.sim.model;
 import java.awt.geom.Point2D;
 
 import jcurl.core.Rock;
+import jcurl.core.RockSet;
 import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
 import jcurl.math.CurveBase;
 import jcurl.math.CurveFkt;
 import jcurl.math.MathVec;
 import jcurl.math.Polynome;
+import jcurl.sim.core.CollissionStrategy;
+import jcurl.sim.core.SlideAnalytic;
+
+import org.apache.log4j.Logger;
 
 /**
  * Model without curl and with constant acceleration.
+ * <p>
+ * Public access to rock locations and speed via
+ * {@link SlideStraight#getC(int, long, RockSet)}. The internal computation
+ * (including hit-, out- and stillstand check) is via
+ * {@link SlideStraight#computeUntil(long)}.
+ * 
+ * </p>
  * 
  * @see jcurl.sim.model.SlideStraightTest
  * @see jcurl.sim.model.SlideDenny
+ * @see jcurl.sim.core.RunComputer
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public class SlideStraight extends SlideAnalytic {
 
-    /**
-     * 
-     * @param x0
-     *            initial location x(t0)
-     * @param e
-     *            unit vector of speed
-     * @param xt
-     *            x(t)
-     * @param p
-     */
-    private static void transform(final Point2D x0, final Point2D e,
-            final double[] xt, final Polynome[] p) {
-        // x(t) = x0 + e * x(t)
-        double[] tmp = MathVec.mult(e.getX(), xt, null);
-        tmp[0] += x0.getX();
-        p[0] = new Polynome(tmp);
-        tmp = MathVec.mult(e.getY(), xt, null);
-        tmp[0] += x0.getY();
-        p[1] = new Polynome(tmp);
-    }
+    private static final Logger log = Logger.getLogger(SlideStraight.class);
 
-    private double accel = 0;
+    private double accel;
 
-    private long tknown = 0;
-
-    public SlideStraight() {
-        setDraw2Tee(23, 0);
+    public SlideStraight(final CollissionStrategy coll) {
+        super(coll);
     }
 
     protected CurveBase createCurve(final double t0, final Rock x0,
             final Rock v0) {
+        if (log.isDebugEnabled())
+            log.debug("t0=" + t0);
         // get direction of movement
         final Point2D.Double v0_1 = new Point2D.Double();
         final double vabs = MathVec.abs(v0);
@@ -80,6 +74,9 @@ public class SlideStraight extends SlideAnalytic {
         } else {
             p1 = Polynome.getPolyParams(t0, 0, 0, 0);
         }
+        if (log.isDebugEnabled())
+            log.debug("polynome " + p1[0] + " + " + p1[1] + "x + " + p1[2]
+                    + "x^2");
         // transform it
         final Polynome p[] = new Polynome[3];
         transform(x0, v0_1, p1, p);
@@ -115,6 +112,6 @@ public class SlideStraight extends SlideAnalytic {
      *            unused
      */
     public void setDraw2Tee(final double time, final double curl) {
-        accel = -2.0 * (0 - Ice.FAR_HOG_2_TEE) / sqr(time);
+        accel = -2.0 * Ice.FAR_HOG_2_TEE / sqr(time);
     }
 }

@@ -108,14 +108,18 @@ public abstract class EnumBase extends Number implements Comparable,
     protected EnumBase(final int state, final String text) {
         this.state = new Integer(state);
         this.text = text;
+        final Class clazz = this.getClass();
         // register the value.
-        Map values = (Map) types.get(this.getClass());
+        Map values = (Map) types.get(clazz);
         if (values == null) {
             synchronized (types) {
-                types.put(this.getClass(), values = new TreeMap());
+                types.put(clazz, values = new TreeMap());
             }
         }
         synchronized (values) {
+            if (values.containsKey(this.state))
+                throw new IllegalArgumentException("Duplicate enum ["
+                        + this.state + "] for " + clazz.getName());
             values.put(this.state, this);
         }
     }

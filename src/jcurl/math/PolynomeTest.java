@@ -93,6 +93,20 @@ public class PolynomeTest extends TestCase {
         assertEquals("", y, po.getC(4, x), 1e-9);
     }
 
+    public void test025_Newton() {
+        {
+            double[] a = { -1, 1 };
+            Polynome po = new Polynome(a);
+            assertEquals("", 1, po.computeZeroNewton(0.5), 1e-6);
+        }
+        {
+            double[] a = { -1, 0, 1 };
+            Polynome po = new Polynome(a);
+            assertEquals("", 0, po.getC(0, 1), 1e-6);
+            assertEquals("", 1, po.computeZeroNewton(0.5), 1e-6);
+        }
+    }
+
     public void test030_getPoly() {
         Polynome po = Polynome.getPoly(1.0, 2.0, 3.0, 4.0);
         assertEquals("", 2.0, po.getC(0, 1.0), 1e-9);

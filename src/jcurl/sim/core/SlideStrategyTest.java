@@ -16,40 +16,30 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.math;
+package jcurl.sim.core;
 
+import jcurl.core.RockSet;
 import junit.framework.TestCase;
 
 /**
- * JUnit Test.
- * 
- * @see jcurl.math.CurveBase
- * @see jcurl.math.CurveDom
- * @see jcurl.math.CurveParts
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveTest extends TestCase {
+public class SlideStrategyTest extends TestCase {
 
     public static void main(String[] args) {
-        junit.textui.TestRunner.run(CurveTest.class);
+        junit.textui.TestRunner.run(SlideStrategyTest.class);
     }
 
-    public void test010() {
-        Polynome po = Polynome.getPoly(1.0, 2.0, 3.0, 4.0);
-        assertEquals("", 2.0, po.getC(0, 1.0), 1e-9);
-        assertEquals("", 6.0, po.getC(0, 1.5), 1e-9);
-        assertEquals("", 11.0, po.getC(0, 2.0), 1e-9);
+    public void test005_nextHit() {
+        RockSet pos = RockSet.allHome();
+        pos.getDark(0).setLocation(0, 5);
+        pos.getLight(0).setLocation(0.2, 4.0);
+        RockSet speed = new RockSet();
+        speed.getDark(0).setLocation(0, -1);
+
+        double dt = SlideStrategy.tst_timetilhit(0, pos.getDark(0), speed
+                .getDark(0), 8, pos.getLight(0), speed.getLight(0));
+        assertEquals("", 0.7699933889987538, dt, 1e-9);
     }
-
-
-    public void test020_CurveParts() {
-        final CurveParts c = new CurveParts(1);
-        //c.getC(0, 0, 0.1);
-        c.add(0, Polynome.getPoly(0.0, 2.0, 3.0, 4.0));
-        c.getC(0, 0, 0.1);
-        c.add(1, Polynome.getPoly(1.0, 2.0, 3.0, 4.0));
-        c.getC(0, 0, 0.1);
-        c.getC(0, 0, 1.1);
-    }    
 }
