@@ -35,7 +35,7 @@ import jcurl.core.dto.RockSetProps;
  * @see jcurl.sim.core.CollissionStrategy
  * @see jcurl.core.RockSetInterpolator
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: RunComputer.java 13 2005-03-05 22:58:41Z mrohrmoser $
+ * @version $Id$
  */
 public class RunComputer implements Source {
 
@@ -86,8 +86,8 @@ public class RunComputer implements Source {
     }
 
     public RockSet getPos(final long time, final RockSet rocks) {
-        // convert seconds to milliseconds and slooowly approach hits
-        final double fact = 0.9 * 1e3;
+        // convert seconds to milliseconds and slowly approach hits
+        final double fact = 0.95 * 1e3;
         // check if the interpolator knows about the time
         if (time > ipol.getMaxT()) {
             noHit: for (;;) {

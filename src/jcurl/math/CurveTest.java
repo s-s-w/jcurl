@@ -21,6 +21,8 @@ package jcurl.math;
 import junit.framework.TestCase;
 
 /**
+ * JUnit Test.
+ * 
  * @see jcurl.math.CurveBase
  * @see jcurl.math.CurveDom
  * @see jcurl.math.CurveParts

@@ -31,7 +31,7 @@ import jcurl.sim.core.SlideStrategy;
  * @see jcurl.sim.core.RunComputer
  * @see jcurl.sim.core.model.CollissionSimple
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: SlideSimple.java 13 2005-03-05 22:58:41Z mrohrmoser $
+ * @version $Id$
  */
 public class SlideSimple extends SlideStrategy {
 

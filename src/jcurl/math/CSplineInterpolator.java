@@ -18,11 +18,10 @@
  */
 package jcurl.math;
 
-import java.awt.geom.Point2D;
-
 /**
  * The numerical algorithms are adapted from "Meyberg/Vachenauer": Hoehere
- * Mathematik I, second edition.
+ * Mathematik I, second edition. Could this be based on
+ * {@link jcurl.math.CurveParts}with 3-dimensional polynomes?
  * 
  * @see jcurl.math.CSplineInterpolatorTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -39,41 +38,6 @@ public class CSplineInterpolator {
     private static final int c = 2;
 
     private static final int d = 3;
-
-    /**
-     * Search only part of an array.
-     * 
-     * @see java.util.Arrays#binarySearch(double[], double)
-     * @param a
-     * @param key
-     * @param min
-     * @param max
-     * @return
-     */
-    static int binarySearch(double[] a, final double key, int min, int max) {
-        for (;;) {
-            if (key == a[min])
-                return min;
-            if (key == a[max])
-                return max;
-            final int m = (max + min) / 2;
-            if (key == a[m])
-                return m;
-            if (min + 1 == max) {
-                if (a[min] < key && key < a[max])
-                    return -1 - max;
-                else
-                    return -1;
-            }
-            if (key < a[m]) {
-                max = m;
-                continue;
-            } else if (key > a[m]) {
-                min = m;
-                continue;
-            }
-        }
-    }
 
     /**
      * Compute the spline coefficients for the given points. The numerical
@@ -183,14 +147,6 @@ public class CSplineInterpolator {
     }
 
     /**
-     * @see CSplineInterpolator#add(double, double)
-     * @param pt
-     */
-    public void add(final Point2D pt) {
-        add(pt.getX(), pt.getY());
-    }
-
-    /**
      * Look up the spline index for the given x. Triggers spline computation if
      * not existing yet.
      * 
@@ -206,7 +162,7 @@ public class CSplineInterpolator {
             _splines = computeSplines(points, _x, _y);
         }
         // find the correct index
-        int idx = binarySearch(_x, x, 0, points - 1);
+        int idx = CurveParts.binarySearch(_x, x, 0, points - 1);
         if (idx < 0) {
             if (idx == -1)
                 return -1;

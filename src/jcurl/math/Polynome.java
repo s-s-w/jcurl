@@ -19,42 +19,98 @@
 package jcurl.math;
 
 /**
+ * Polynomes of n-th grade.
+ * 
  * @see jcurl.math.PolynomeTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public class Polynome extends Function1D {
+    /**
+     * Compute a!
+     * 
+     * @param a
+     * @return a!
+     */
+    static long fak(final int a) {
+        return fak(a, 1);
+    }
 
-    private static double[] create(final double a, final double b,
-            final double c) {
-        final double[] ret = new double[3];
-        ret[0] = a;
-        ret[1] = b;
-        ret[2] = c;
+    /**
+     * Compute high! / low!
+     * 
+     * @param high
+     * @param low
+     * @return high! / low!
+     */
+    static long fak(final int high, int low) {
+        if (high < 2)
+            return 1;
+        long ret = 1;
+        for (int i = low < 2 ? 1 : low; i < high; ret *= ++i)
+            ;
         return ret;
     }
 
+    /**
+     * Convenience method to get the "bewegungsgleichung" for a given initial
+     * state.
+     * 
+     * @param t0
+     *            initial time
+     * @param x0
+     *            initial location
+     * @param v0
+     *            initial speed
+     * @param a0
+     *            constant acceleration
+     * @return
+     */
     public static final Polynome getPoly(double t0, double x0, double v0,
             double a0) {
         final double[] p = { x0 - (v0 * t0 + 0.5 * a0 * t0 * t0), v0, 0.5 * a0 };
         return new Polynome(p);
     }
 
-    private final double[] params;
-
-    private Polynome(final double a, final double b, final double c) {
-        this(create(a, b, c));
+    /**
+     * /** Compute the polynome p at x.
+     * 
+     * @param x
+     * @param p
+     *            polynome coefficients
+     * @return p(x)
+     * @see Polynome#poly(int, double, double[])
+     */
+    public static double poly(final double x, final double[] p) {
+        return poly(0, x, p);
     }
+
+    /**
+     * Compute the c-th derivative of the polynome p at x.
+     * 
+     * @param c
+     *            derivative
+     * @param x
+     * @param p
+     *            polynome coefficients
+     * @return d/dx^c p(x)
+     */
+    public static double poly(final int c, final double x, final double[] p) {
+        double ret = 0;
+        for (int i = p.length - 1; i >= c; i--) {
+            ret *= x;
+            ret += fak(i, i - c) * p[i];
+        }
+        return ret;
+    }
+
+    private final double[] params;
 
     public Polynome(final double[] params) {
         this.params = params;
     }
 
-    public double getC(int c, double t) {
-        final int ord = params.length - 1;
-        double ret = 0;
-        for (int i = ord; i >= c; i--)
-            ret = ret * Math.pow(t, i) + params[i];
-        return ret;
+    public double getC(final int c, final double x) {
+        return poly(c, x, params);
     }
 }

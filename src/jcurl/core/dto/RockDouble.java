@@ -25,29 +25,29 @@ import jcurl.core.Rock;
 /**
  * Either location or speed of a rock. This class is mostly for display and
  * storage means. The value array is accessible for direct use with e.g.
- * {@link jcurl.math.CurveBase#getC(int, double, float[])}.
+ * {@link jcurl.math.CurveBase#getC(int, double, double[])}.
  * 
  * @see jcurl.core.RockSet
- * @see jcurl.core.dto.RockDouble
+ * @see jcurl.core.dto.RockFloat
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: RockFloat.java 13 2005-03-05 22:58:41Z mrohrmoser $
  */
-public class RockFloat extends Rock implements Serializable {
+public class RockDouble extends Rock implements Serializable {
 
-    public final float[] x = new float[3];
+    public final double[] x = new double[3];
 
-    public RockFloat() {
+    public RockDouble() {
         this(0, 0, 0);
     }
 
-    public RockFloat(float x, float y, float alpha) {
+    public RockDouble(double x, double y, double alpha) {
         this.x[0] = x;
         this.x[1] = y;
         this.x[2] = alpha;
     }
 
     public Object clone() {
-        return new RockFloat(this.x[0], this.x[1], this.x[2]);
+        return new RockDouble(this.x[0], this.x[1], this.x[2]);
     }
 
     public boolean equals(Object obj) {
@@ -74,25 +74,25 @@ public class RockFloat extends Rock implements Serializable {
     }
 
     public void setLocation(double x, double y) {
-        this.x[0] = (float) x;
-        this.x[1] = (float) y;
+        this.x[0] = x;
+        this.x[1] = y;
     }
 
     public void setLocation(double x, double y, double z) {
-        this.x[0] = (float) x;
-        this.x[1] = (float) y;
-        this.x[2] = (float) z;
+        this.x[0] = x;
+        this.x[1] = y;
+        this.x[2] = z;
     }
 
     public void setX(double x) {
-        this.x[0] = (float) x;
+        this.x[0] = x;
     }
 
     public void setY(double y) {
-        this.x[1] = (float) y;
+        this.x[1] = y;
     }
 
     public void setZ(double alpha) {
-        this.x[2] = (float) alpha;
+        this.x[2] = alpha;
     }
 }

@@ -31,7 +31,9 @@ import jcurl.core.TargetDiscrete;
 import jcurl.core.dto.RockSetProps;
 import jcurl.sim.core.RunComputer;
 import jcurl.sim.model.CollissionSimple;
+import jcurl.sim.model.SlideDenny;
 import jcurl.sim.model.SlideSimple;
+import jcurl.sim.model.SlideStraight;
 
 import org.apache.log4j.Logger;
 
@@ -40,7 +42,7 @@ import org.apache.log4j.Logger;
  * @see jcurl.sim.core.model.CollissionSimple
  * @see jcurl.core.gui.SimpleKeys
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: SimpleMain.java 13 2005-03-05 22:58:41Z mrohrmoser $
+ * @version $Id$
  */
 public class SimpleMain extends JFrame {
 
@@ -71,7 +73,7 @@ public class SimpleMain extends JFrame {
         final RockSet speed = new RockSet();
         speed.getDark(0).setLocation(0, -1.0, 0.75);
         // dynamics engines
-        final Source src = new RunComputer(new SlideSimple(),
+        final Source src = new RunComputer(new SlideDenny(),
                 new CollissionSimple(), new RockSetInterpolator(),
                 RockSetProps.DEFAULT, 0, pos, speed);
         final SimpleMain frame = new SimpleMain();

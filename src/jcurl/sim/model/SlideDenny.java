@@ -18,6 +18,8 @@
  */
 package jcurl.sim.model;
 
+import java.awt.Polygon;
+
 import jcurl.core.Rock;
 import jcurl.core.RockSet;
 import jcurl.core.dto.Ice;
@@ -33,7 +35,7 @@ import jcurl.core.dto.RockSetProps;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-class SlideDenny extends SlideSimple {
+public class SlideDenny extends SlideSimple {
 
     private static class DennyDat {
 
