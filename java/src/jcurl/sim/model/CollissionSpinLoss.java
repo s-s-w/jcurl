@@ -33,8 +33,8 @@ import jcurl.sim.core.CollissionStrategy;
  * <p>
  * This hitter gets the transfer of spin and momentum right. The 'loss of
  * energy'-mechanism bases upon a Hookisch elasticity-model for the rocks. Only
- * stillstanding rocks cause a loss of energy. For details, mail to <a
- * href="mailto:jcurl@gmx.net">.jcurl@gmx.net </a>
+ * stillstanding rocks cause a loss of energy. For details see the paper <a
+ * href="http://jcurl.berlios.de/curlsci.pdf">Curling Scientific </a>.
  * 
  * @see jcurl.sim.model.CollissionSpinLossTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

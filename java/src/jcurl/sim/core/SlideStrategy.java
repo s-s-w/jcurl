@@ -49,6 +49,9 @@ public abstract class SlideStrategy implements Source {
     private static final ULogger log = LoggerFactory
             .getLogger(SlideStrategy.class);
 
+    private static final float outY = -(Ice.BACK_2_TEE + RockProps.DEFAULT
+            .getRadius());
+
     protected static double hypot(final double a, final double b) {
         return Math.sqrt(a * a + b * b);
     }
@@ -85,10 +88,6 @@ public abstract class SlideStrategy implements Source {
             ex.initCause(e);
             throw ex;
         }
-    }
-
-    protected static double poly(final double x, final int dim, final double[] p) {
-        return Polynome.poly(x, p);
     }
 
     protected static byte sgn(final double a) {
@@ -304,7 +303,7 @@ public abstract class SlideStrategy implements Source {
     protected boolean isOut(final Rock x, final Rock v) {
         if (x.getX() > Ice.SIDE_2_CENTER || x.getX() < -Ice.SIDE_2_CENTER)
             return true;
-        if (x.getY() < -Ice.BACK_2_TEE)
+        if (x.getY() < outY)
             return true;
         return false;
     }

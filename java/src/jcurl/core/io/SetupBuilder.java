@@ -21,7 +21,6 @@ package jcurl.core.io;
 import java.util.Map;
 import java.util.TreeMap;
 
-import jcurl.core.NotImplementedYetException;
 import jcurl.core.PositionSet;
 import jcurl.core.Rock;
 import jcurl.core.RockSet;
@@ -30,7 +29,7 @@ import jcurl.core.dto.Ice;
 import jcurl.math.MathVec;
 import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.SlideStrategy;
-import jcurl.sim.model.CollissionSimple;
+import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 
 import org.apache.ugli.LoggerFactory;
@@ -82,7 +81,7 @@ public class SetupBuilder {
 
     private static final int SpeedTo = 4;
 
-    private Class collModel = CollissionSimple.class;
+    private Class collModel = CollissionSpin.class;
 
     private final Map collParams = new TreeMap();
 
