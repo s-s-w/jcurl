@@ -18,12 +18,12 @@
 				value="%-5p %m%n"/ -->
 		</layout>
 	</appender>
-	<!-- category name="jcurl.core.io.DimVal">
+	<category name="jcurl.core.io">
 		<level value="INFO"/>
 	</category>
 	<category name="jcurl.core.io.OldConfigReader">
-		<level value="DEBUG"/>
-	</category -->
+		<level value="INFO"/>
+	</category>
 	<!-- ======================= -->
 	<!-- Setup the Root category -->
 	<!-- ======================= -->
