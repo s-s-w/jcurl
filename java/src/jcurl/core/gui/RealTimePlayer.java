@@ -45,7 +45,7 @@ public class RealTimePlayer implements Runnable {
 
     private volatile double timeScale;
 
-    private final long timeSleep = 40;
+    private final long timeSleep = 25;
 
     public RealTimePlayer(final double t0, final double scale,
             final Source src, final TargetDiscrete dst) {
