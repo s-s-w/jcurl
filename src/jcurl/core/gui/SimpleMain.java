@@ -18,6 +18,7 @@
  */
 package jcurl.core.gui;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -55,10 +56,19 @@ public class SimpleMain extends JFrame {
             }
         });
         setTitle("CurlDemo");
-        setSize(600, 400);
-        Container contentPane = getContentPane();
-        final JCurlPanel mp = new JCurlPanel(null, null);
-        contentPane.add(mp);
+        setSize(900, 400);
+
+        final IcePainter iceP = new IcePainter();
+        iceP.color.tee2back = new Color(0xC9C9C9);
+        iceP.color.c12 = Color.BLUE;
+        iceP.color.c1 = Color.RED;
+        iceP.color.c4 = Color.MAGENTA;
+        iceP.color.c8 = Color.ORANGE;
+        iceP.color.hog2tee = Color.PINK;
+        iceP.color.contours = Color.BLACK;
+        iceP.color.hog2hog = Color.CYAN;
+        final JCurlPanel mp = new JCurlPanel(null, null, iceP, null);
+        getContentPane().add(mp);
         dst = mp;
     }
 
@@ -69,7 +79,7 @@ public class SimpleMain extends JFrame {
         pos.getLight(0).setLocation(0.2, 2.5);
         pos.getLight(1).setLocation(1.0, 1.5);
         final RockSet speed = new RockSet();
-        speed.getDark(0).setLocation(0, -1.5, 0.75);
+        speed.getDark(0).setLocation(0, -1.325, 0.75);
         // dynamics engines
         final Source src = new SlideStraight(new CollissionSimple());
         src.reset(0, pos, speed, RockSetProps.DEFAULT);

@@ -46,7 +46,7 @@ public class Driver extends JFrame {
         setSize(600, 400);
         Container contentPane = getContentPane();
         final RockSet rs = RockSet.allOut();
-        final JCurlPanel mp = new JCurlPanel(rs, ZoomArea.HOUSE);
+        final JCurlPanel mp = new JCurlPanel(rs, ZoomArea.HOUSE, null, null);
         contentPane.add(mp);
     }
 
