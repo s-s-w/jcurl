@@ -37,4 +37,16 @@ public abstract class Rock extends Point3D implements Cloneable {
      * @return whether x or y are non-zero
      */
     public abstract boolean nonzero();
+
+    public String toString() {
+        final StringBuffer buf = new StringBuffer();
+        buf.append('[');
+        buf.append(this.getX());
+        buf.append(", ");
+        buf.append(this.getY());
+        buf.append(", ");
+        buf.append(this.getZ());
+        buf.append(']');
+        return buf.toString();
+    }
 }

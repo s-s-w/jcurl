@@ -87,7 +87,8 @@ public class Polynome extends Function1D {
      */
     public static final double[] getPolyParams(double t0, double x0, double v0,
             double a0) {
-        final double[] p = { x0 - (v0 * t0 + 0.5 * a0 * t0 * t0), v0, 0.5 * a0 };
+        final double[] p = { x0 - v0 * t0 + 0.5 * a0 * t0 * t0, v0 - a0 * t0,
+                0.5 * a0 };
         return p;
     }
 
@@ -131,5 +132,22 @@ public class Polynome extends Function1D {
 
     public double getC(final int c, final double x) {
         return poly(c, x, params);
+    }
+
+    public String toString() {
+        return toString(this.params);
+    }
+
+    public static String toString(final double[] poly) {
+        final StringBuffer ret = new StringBuffer();
+        ret.append("p(x) = ");
+        for (int i = 0; i < poly.length; i++) {
+            ret.append(poly[i]);
+            ret.append("*x**");
+            ret.append(i);
+            ret.append(" + ");
+        }
+        ret.setLength(ret.length() - 3);
+        return ret.toString();
     }
 }

@@ -34,8 +34,8 @@ import org.apache.log4j.Logger;
 /**
  * Abstract base class for analytic (non-discrete) curl models. Based on rock
  * trajectories in {@link jcurl.math.CurveBase}-form.
- *
- * @see jcurl.math.CurveBase 
+ * 
+ * @see jcurl.math.CurveBase
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -150,7 +150,7 @@ public abstract class SlideCurves extends SlideStrategy {
     public void set(final double t0, final RockSet pos, final RockSet speed,
             final int discontinuous) {
         if (log.isDebugEnabled())
-            log.debug("t0=" + t0 + " rocks=b"
+            log.debug("t0=" + t0 + " rockmask="
                     + Integer.toBinaryString(discontinuous));
         if (t0 <= tmax)
             throw new IllegalArgumentException("t must grow!");
@@ -159,8 +159,8 @@ public abstract class SlideCurves extends SlideStrategy {
         tmax = t0;
 
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            int a = (1 << i);
-            if (a == (discontinuous & a)) {
+            if (0 != (discontinuous & (1 << i))) {
+                log.info("compute rock #" + i);
                 // add a new curve to the list
                 final CurveBase cu = createCurve(t0, pos.getRock(i), speed
                         .getRock(i));
