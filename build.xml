@@ -1,4 +1,4 @@
-<project name="jcurl" default="compile">
+<project name="jcurl" default="build">
 	<!-- $Id$ 
 		ant build file to compile, package and document.
 		
@@ -95,7 +95,12 @@
 			<fileset dir="${classes.dir}" includes="**/Test.class" />
 		    <fileset dir="${config.dir}/jcurl-test.jar"/>		
 		</jar>
-
+		<copy todir="${build.dir}" flatten="yes">
+			<fileset dir=".">
+				<patternset refid="run.jars" />
+			</fileset>
+		</copy>
+				
 		<buildnumber/>
 	</target>
 		
