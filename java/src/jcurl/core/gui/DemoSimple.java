@@ -29,7 +29,6 @@ import jcurl.core.SpeedSet;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.dto.RockSetProps;
 import jcurl.sim.model.CollissionSimple;
-import jcurl.sim.model.CollissionSpinLoss;
 import jcurl.sim.model.SlideStraight;
 
 import org.apache.log4j.Logger;
@@ -43,13 +42,13 @@ import org.apache.log4j.Logger;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SimpleMain extends JFrame {
+public class DemoSimple extends JFrame {
 
-    private static final Logger log = Logger.getLogger(SimpleMain.class);
+    private static final Logger log = Logger.getLogger(DemoSimple.class);
 
     private final TargetDiscrete dst;
 
-    public SimpleMain() {
+    public DemoSimple() {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
@@ -74,7 +73,7 @@ public class SimpleMain extends JFrame {
         // dynamics engines
         final Source src = new SlideStraight(new CollissionSimple());
         src.reset(0, pos, speed, RockSetProps.DEFAULT);
-        final SimpleMain frame = new SimpleMain();
+        final DemoSimple frame = new DemoSimple();
         // set up the keyboard handler
         frame.addKeyListener(new SimpleKeys(src, frame.dst));
         // display

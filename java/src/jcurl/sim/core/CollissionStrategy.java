@@ -39,7 +39,7 @@ import org.apache.log4j.Logger;
  */
 public abstract class CollissionStrategy {
 
-    private static final float HIT_MAX_DIST = 1e-3F;
+    private static final float HIT_MAX_DIST = 1e-6F;
 
     private static final Logger log = Logger
             .getLogger(CollissionStrategy.class);
@@ -49,8 +49,8 @@ public abstract class CollissionStrategy {
     private static final double RR = sqr(Rad + Rad + HIT_MAX_DIST);
 
     /**
-     * Compute the trafo to the right handed coordinate-system with origin a and
-     * positive y-axis pointing along b-a.
+     * Compute the trafo to the right handed coordinate-system with origin orig
+     * and positive y-axis pointing from a to b.
      * 
      * @param orig
      * @param a
@@ -115,8 +115,8 @@ public abstract class CollissionStrategy {
     public abstract void compute(final Rock va, final Rock vb);
 
     /**
-     * Check distance, speed of approach, transform speeds to rock-coordinates
-     * and call {@link #compute(Rock, Rock)}.
+     * Check distance, speed of approach, transform speeds to rock-coordinates,
+     * call {@link #compute(Rock, Rock)}and transform back to wc afterwards.
      * 
      * @param xa
      * @param xb
