@@ -18,7 +18,7 @@
       <all-permissions/>
   </security -->
   <resources>
-    <j2se version="1.4+"/>
+    <j2se version="1.4.2+"/>
     <jar href="jar/jcurl-0.1.jar"/>
     <jar href="jar/ugli-simple.jar"/>
   </resources>
