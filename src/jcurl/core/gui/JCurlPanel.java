@@ -89,7 +89,7 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
 
     private int oldWid = -1;
 
-    private Orientation orient = Orientation.N;
+    private Orientation orient = Orientation.W;
 
     private final RockPainter rockP;
 
@@ -155,14 +155,14 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
             rockP.paintRocks(g2, rocks, PositionSet.ALL_MASK);
         }
         g2.setTransform(saved);
-//        { // paint additional stuff
-//            g2.setColor(timeB);
-//            g2.fillRect(w - 70, 0, 70, 20);
-//            //g2.fillRect(0, 0, w, 20);
-//            g2.setFont(timeF);
-//            g2.setColor(timeC);
-//            g2.drawString(Double.toString(time), w - 70 + 10, 3 * 20 / 4);
-//        }
+        { // paint additional stuff
+            g2.setColor(timeB);
+            g2.fillRect(w - 70, 0, 70, 20);
+            //g2.fillRect(0, 0, w, 20);
+            g2.setFont(timeF);
+            g2.setColor(timeC);
+            g2.drawString(Double.toString(time), w - 70 + 10, 3 * 20 / 4);
+        }
     }
 
     /**

@@ -8,7 +8,7 @@
     </meta>
     <collission>
       <loss val="0.5" dim="m"/>
-      <model name="jcurl.sim.model.CollissionSimple">
+      <model name="jcurl.sim.model.CollissionSpin">
         <param name="friction" val="0.5"/>
       </model>
     </collission>

@@ -35,6 +35,7 @@ import jcurl.core.dto.RockSetProps;
 import jcurl.core.io.SetupBuilder;
 import jcurl.core.io.SetupSax;
 import jcurl.sim.model.CollissionSimple;
+import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 
 import org.apache.ugli.LoggerFactory;
@@ -98,7 +99,7 @@ public class DemoSimple extends JFrame {
             final SpeedSet speed = new SpeedSet();
             speed.getDark(0).setLocation(0, -1.325, 0.75);
             // dynamics engines
-            src = new SlideStraight(new CollissionSimple());
+            src = new SlideStraight(new CollissionSpin());
             src.reset(0, pos, speed, RockSetProps.DEFAULT);
         }
         final DemoSimple frame = new DemoSimple();

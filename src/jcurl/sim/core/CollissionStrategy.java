@@ -177,7 +177,9 @@ public abstract class CollissionStrategy {
 
         // re-transform
         mat.transform(_va, va);
+        va.setZ(_va.getZ());
         mat.transform(_vb, vb);
+        vb.setZ(_vb.getZ());
         return true;
     }
 }
