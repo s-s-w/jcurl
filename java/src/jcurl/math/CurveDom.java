@@ -25,15 +25,19 @@ import jcurl.math.dom.DomWalkerEval;
 import jcurl.math.dom.MathDom;
 
 /**
- * An n-dimensional, continuous curve (R -&gt; R^n) based on a {@link CurveDom}
- * node..
+ * A n-dimensional, continuous curve (R -&gt; R^n) based on a
+ * {@link jcurl.math.dom.MathDom}.Node. Maybe it's better to add a
+ * {@link jcurl.math.Function1D}based on {@link jcurl.math.dom.MathDom}and use
+ * {@link jcurl.math.CurveFkt}rather than this class.
  * 
+ * @see jcurl.math.dom.MathDom
  * @see jcurl.math.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: CurveDom.java 13 2005-03-05 22:58:41Z mrohrmoser $
+ * @version $Id$
  */
 public class CurveDom extends CurveBase {
 
+    /** Internal helper - mutable number implementation */
     private static final class Num extends Number {
 
         public double v;

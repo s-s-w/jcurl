@@ -44,30 +44,49 @@ public abstract class SlideAnalytic extends SlideStrategy {
     }
 
     /**
-     * Override!!!
+     * Create a new trajectory curve for the given initial state.
      * 
      * @param t0
+     *            [seconds]
      * @param pos
      * @param speed
-     * @return
+     * @return a 3-dimensional curve
      */
     protected abstract CurveBase createCurve(double t0, Rock pos, Rock speed);
 
+    /**
+     * Not supported.
+     */
     public double estimateNextHit(long t) {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /**
+     * Get the n-th derivative. Used e.g. by
+     * {@link SlideAnalytic#getPos(long, RockSet)},
+     * {@link SlideAnalytic#getSpeed(long, RockSet)}.
+     * 
+     * @param c
+     *            0: value, 1: speed
+     * @param time
+     *            [msec]
+     * @param rocks
+     * @return
+     */
     protected RockSet getC(final int c, final long time, RockSet rocks) {
         final double t = 1e-3 * time;
-        final float[] v = new float[3];
+        final double[] v = new double[3];
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            final Rock r = rocks.getRock(i);
+            final Rock r = (Rock)rocks.getRock(i);
             this.c[i].getC(c, t, v);
             r.setLocation(v[0], v[1], v[2]);
         }
         return rocks;
     }
 
+    /**
+     * Not supported.
+     */
     public long getMaxT() {
         throw new UnsupportedOperationException("Not supported");
     }
@@ -76,28 +95,28 @@ public abstract class SlideAnalytic extends SlideStrategy {
         return tmin;
     }
 
-    public RockSet getPos(final long time, RockSet rocks) {
+    public final RockSet getPos(final long time, RockSet rocks) {
         return getC(0, time, rocks);
     }
 
-    public RockSet getSpeed(final long time, RockSet rocks) {
+    public final RockSet getSpeed(final long time, RockSet rocks) {
         return getC(1, time, rocks);
     }
 
-    public boolean isDiscrete() {
+    public final boolean isDiscrete() {
         return false;
     }
 
-    public boolean isForwardOnly() {
+    public final boolean isForwardOnly() {
         return false;
     }
 
-    public boolean isWithSpeed() {
+    public final boolean isWithSpeed() {
         return true;
     }
 
-    public void reset(long startTime, RockSet startPos, RockSet startSpeed,
-            RockSetProps props) {
+    public final void reset(long startTime, RockSet startPos,
+            RockSet startSpeed, RockSetProps props) {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             c[i] = new CurveParts(3);
         tmin = tmax = -1;
@@ -105,9 +124,9 @@ public abstract class SlideAnalytic extends SlideStrategy {
     }
 
     /**
-     * Add a discontinuity
+     * Add a discontinuity.
      * 
-     * @param t0
+     * @param t0 [msec]
      * @param pos
      * @param speed
      * @param discontinuous

@@ -34,7 +34,7 @@ public class IcePainter {
 
     private static final Color frontC = Color.PINK;
 
-    private static final Color backC = Color.GREEN;
+    private static final Color backC = new Color(0xC9C9C9);
 
     private static final Color c1C = Color.RED;
 

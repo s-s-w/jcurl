@@ -33,15 +33,15 @@ public class CSplineInterpolatorTest extends TestCase {
 
     public void test005_binarySearch() {
         double[] a = { 0, 1, 2, 3, 4 };
-        assertEquals("", 0, CSplineInterpolator.binarySearch(a, 0, 0,
+        assertEquals("", 0, CurveParts.binarySearch(a, 0, 0,
                 a.length - 1));
-        assertEquals("", 1, CSplineInterpolator.binarySearch(a, 1, 0,
+        assertEquals("", 1, CurveParts.binarySearch(a, 1, 0,
                 a.length - 1));
-        assertEquals("", 4, CSplineInterpolator.binarySearch(a, 4, 0,
+        assertEquals("", 4, CurveParts.binarySearch(a, 4, 0,
                 a.length - 1));
-        assertEquals("", -1, CSplineInterpolator.binarySearch(a, 1, 2,
+        assertEquals("", -1, CurveParts.binarySearch(a, 1, 2,
                 a.length - 1));
-        assertEquals("", -2, CSplineInterpolator.binarySearch(a, 0.5, 0,
+        assertEquals("", -2, CurveParts.binarySearch(a, 0.5, 0,
                 a.length - 1));
     }
 

@@ -26,8 +26,11 @@ import jcurl.math.CurveFkt;
 import jcurl.math.Polynome;
 
 /**
+ * Model without curl and with constant acceleration.
+ * 
+ * @see jcurl.sim.model.SlideStraightTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: SlideStraight.java 13 2005-03-05 22:58:41Z mrohrmoser $
+ * @version $Id$
  */
 public class SlideStraight extends SlideAnalytic {
 
@@ -37,31 +40,6 @@ public class SlideStraight extends SlideAnalytic {
 
     public SlideStraight() {
         setDraw2Tee(23, 0);
-    }
-
-    protected int computeDt_old(final Rock X, final Rock V, long tEnd, long Dt,
-            int idx) {
-        double dt = Dt * 1e-3;
-        int ret = 0;
-        double b = hypot(V.getX(), V.getY());
-        if (b == 0.0) // rock isn't moving (spin neglected)
-            return 0;
-
-        if (b < dt * accel) { // rock's gonna stop now
-            dt = b / accel;
-            V.setZ(0); // not quite what we want: skip the following rotation
-        } else
-            ret = 1;
-        // X = c0 + dt*( v - dt/2 * accel * norm( v ) );
-        X.setX(X.getX() + dt * (V.getX() - V.getX() * accel * dt / (2.0 * b)));
-        X.setY(X.getY() + dt * (V.getY() - V.getY() * accel * dt / (2.0 * b)));
-
-        // V = v - dt*accel*norm( v );
-        V.setX(V.getX() - V.getX() * accel * dt / b);
-        V.setY(V.getY() - V.getY() * accel * dt / b);
-
-        X.setZ(X.getZ() + dt * V.getZ());
-        return ret;
     }
 
     /**

@@ -33,18 +33,89 @@ public class PolynomeTest extends TestCase {
         junit.textui.TestRunner.run(PolynomeTest.class);
     }
 
-    public void test010() {
+    public void test010_fak() {
+        assertEquals(1, Polynome.fak(0, 0));
+        assertEquals(1, Polynome.fak(1, 1));
+        assertEquals(2, Polynome.fak(2, 1));
+        assertEquals(6, Polynome.fak(3, 1));
+        assertEquals(3, Polynome.fak(3, 2));
+        assertEquals(24, Polynome.fak(4, 1));
+        assertEquals(12, Polynome.fak(4, 2));
+
+        assertEquals(1, Polynome.fak(3, 3));
+        assertEquals(1, Polynome.fak(2, 2));
+        assertEquals(1, Polynome.fak(1, 1));
+        assertEquals(1, Polynome.fak(0, 0));
+    }
+
+    public void test020_getC() {
+        final double[] a = { 1.1, 1.2, 1.3, 1.4 };
+        Polynome po = new Polynome(a);
+
+        // C0
+        double x = 1.5;
+        double y = a[0] + a[1] * x + a[2] * x * x + a[3] * x * x * x;
+        assertEquals("", y, po.getC(0, x), 1e-9);
+        x = 2.5;
+        y = a[0] + a[1] * x + a[2] * x * x + a[3] * x * x * x;
+        assertEquals("", y, po.getC(0, x), 1e-9);
+
+        // C1
+        x = 1.5;
+        y = 1 * a[1] + 2 * a[2] * x + 3 * a[3] * x * x;
+        assertEquals("", y, po.getC(1, x), 1e-9);
+        x = 2.5;
+        y = 1 * a[1] + 2 * a[2] * x + 3 * a[3] * x * x;
+        assertEquals("", y, po.getC(1, x), 1e-9);
+
+        // C2
+        x = 1.5;
+        y = 1 * 2 * a[2] + 2 * 3 * a[3] * x;
+        assertEquals("", y, po.getC(2, x), 1e-9);
+        x = 2.5;
+        y = 1 * 2 * a[2] + 2 * 3 * a[3] * x;
+        assertEquals("", y, po.getC(2, x), 1e-9);
+
+        // C3
+        x = 1.5;
+        y = 1 * 2 * 3 * a[3];
+        assertEquals("", y, po.getC(3, x), 1e-9);
+        x = 2.5;
+        y = 1 * 2 * 3 * a[3];
+        assertEquals("", y, po.getC(3, x), 1e-9);
+
+        // C4
+        x = 1.5;
+        y = 0;
+        assertEquals("", y, po.getC(4, x), 1e-9);
+        x = 2.5;
+        y = 0;
+        assertEquals("", y, po.getC(4, x), 1e-9);
+    }
+
+    public void test030_getPoly() {
         Polynome po = Polynome.getPoly(1.0, 2.0, 3.0, 4.0);
         assertEquals("", 2.0, po.getC(0, 1.0), 1e-9);
-        assertEquals("", 3.0, po.getC(0, 1.5), 1e-9);
-        assertEquals("", 4.0, po.getC(0, 2.0), 1e-9);
+        assertEquals("", 6.0, po.getC(0, 1.5), 1e-9);
+        assertEquals("", 11.0, po.getC(0, 2.0), 1e-9);
 
-        assertEquals("", 5.0, po.getC(1, 1.0), 1e-9);
-        assertEquals("", 6.0, po.getC(1, 1.5), 1e-9);
-        assertEquals("", 7.0, po.getC(1, 2.0), 1e-9);
+        assertEquals("", 7.0, po.getC(1, 1.0), 1e-9);
+        assertEquals("", 9.0, po.getC(1, 1.5), 1e-9);
+        assertEquals("", 11.0, po.getC(1, 2.0), 1e-9);
 
-        assertEquals("", 2.0, po.getC(2, 1.0), 1e-9);
-        assertEquals("", 2.0, po.getC(2, 1.5), 1e-9);
-        assertEquals("", 2.0, po.getC(2, 2.0), 1e-9);
+        assertEquals("", 4.0, po.getC(2, 1.0), 1e-9);
+        assertEquals("", 4.0, po.getC(2, 1.5), 1e-9);
+        assertEquals("", 4.0, po.getC(2, 2.0), 1e-9);
+    }
+
+    public void test040_load() {
+        final double[] a = { 1.1, 1.2, 1.3, 1.4 };
+        Polynome po = new Polynome(a);
+        final int count = 500000;
+        final long start = System.currentTimeMillis();
+        for (int i = count - 1; i >= 0; i--)
+            po.getC(0, 1.1);
+        double cps = count / (1e-3 * (System.currentTimeMillis() - start));
+        assertTrue(cps > 2000000);
     }
 }

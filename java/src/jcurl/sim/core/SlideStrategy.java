@@ -18,6 +18,7 @@
  */
 package jcurl.sim.core;
 
+import java.awt.Polygon;
 import java.awt.geom.Point2D;
 
 import jcurl.core.Rock;
@@ -25,6 +26,7 @@ import jcurl.core.RockSet;
 import jcurl.core.Source;
 import jcurl.core.dto.RockProps;
 import jcurl.math.MathVec;
+import jcurl.math.Polynome;
 
 /**
  * Abstract base class for propagation/friction models.
@@ -32,7 +34,7 @@ import jcurl.math.MathVec;
  * @see jcurl.sim.core.RunComputer
  * @see jcurl.sim.core.CollissionStrategy
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: SlideStrategy.java 13 2005-03-05 22:58:41Z mrohrmoser $
+ * @version $Id$
  */
 public abstract class SlideStrategy implements Source {
 
@@ -71,10 +73,7 @@ public abstract class SlideStrategy implements Source {
     }
 
     protected static double poly(final double x, final int dim, final double[] p) {
-        double ret = 0.0;
-        for (int i = 0; i <= dim; i++)
-            ret += Math.pow(x, i) * p[i];
-        return ret;
+        return Polynome.poly(x, p);
     }
 
     protected static byte sgn(final double a) {

@@ -31,6 +31,41 @@ public class CurveParts extends CurveBase {
 
     private static final int initialSize = 5;
 
+    /**
+     * Search only part of an array.
+     * 
+     * @see java.util.Arrays#binarySearch(double[], double)
+     * @param a
+     * @param key
+     * @param min
+     * @param max
+     * @return
+     */
+    static int binarySearch(double[] a, final double key, int min, int max) {
+        for (;;) {
+            if (key == a[min])
+                return min;
+            if (key == a[max])
+                return max;
+            final int m = (max + min) / 2;
+            if (key == a[m])
+                return m;
+            if (min + 1 == max) {
+                if (a[min] < key && key < a[max])
+                    return -1 - max;
+                else
+                    return -1;
+            }
+            if (key < a[m]) {
+                max = m;
+                continue;
+            } else if (key > a[m]) {
+                min = m;
+                continue;
+            }
+        }
+    }
+
     private CurveBase[] fkt;
 
     private int parts = 0;
@@ -60,13 +95,52 @@ public class CurveParts extends CurveBase {
         this.fkt[parts++] = fkt;
     }
 
-    public double getC(int dim, int c, double t) {
+    /**
+     * Binary search.
+     * 
+     * @param t
+     * @return
+     */
+    private int findFktIdx_BS(double t) {
+        if (t < t0[0])
+            throw new IllegalArgumentException("t < tmin");
+        // find the correct index
+        int idx = CurveParts.binarySearch(t0, t, 0, parts - 1);
+        if (idx >= 0)
+            return idx;
+        if (idx == -1)
+            return parts - 1;
+        else
+            return -2 - idx;
+    }
+
+    /**
+     * Linear search.
+     * 
+     * @param t
+     * @return
+     */
+    private int findFktIdx_LS(double t) {
         for (int i = 0; i <= parts; i++) {
             if (i == parts)
-                return fkt[i - 1].getC(dim, c, t);
+                return i - 1;
             if (t >= t0[i])
-                return fkt[i].getC(dim, c, t);
+                return i;
         }
-        throw new IllegalArgumentException("t >= tmin");
+        throw new IllegalArgumentException("t < tmin");
+    }
+
+    /**
+     * Get the n-th derivative of one dimension.
+     * 
+     * @param dim
+     *            dimension
+     * @param n
+     *            derivative
+     * @param t
+     * @return
+     */
+    public double getC(int dim, int n, double t) {
+        return fkt[findFktIdx_LS(t)].getC(dim, n, t);
     }
 }

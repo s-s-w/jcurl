@@ -23,7 +23,7 @@ package jcurl.math;
  * 
  * @see jcurl.math.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: CurveBase.java 13 2005-03-05 22:58:41Z mrohrmoser $
+ * @version $Id$
  */
 public abstract class CurveBase {
     protected final int dim;

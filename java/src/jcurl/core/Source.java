@@ -29,23 +29,34 @@ import jcurl.core.dto.RockSetProps;
  */
 public interface Source {
     /**
+     * Get the end time.
      * 
      * @return the max yet known time.
      */
     public abstract long getMaxT();
 
     /**
+     * Get the start time.
      * 
      * @return the start time
      */
     public abstract long getMinT();
 
+    /**
+     * Get the rocks' positions.
+     * 
+     * @param time
+     *            [msec]
+     * @param rocks
+     * @return
+     */
     public abstract RockSet getPos(final long time, RockSet rocks);
 
     /**
-     * Optional
+     * Get the rocks' speeds - optional.
      * 
      * @param time
+     *            [msec]
      * @param rocks
      * @return
      */
@@ -57,6 +68,14 @@ public interface Source {
 
     public abstract boolean isWithSpeed();
 
+    /**
+     * Clear all internal state and set the given initial state.
+     * 
+     * @param startTime [msec]
+     * @param startPos
+     * @param startSpeed
+     * @param props
+     */
     public abstract void reset(long startTime, RockSet startPos,
             RockSet startSpeed, RockSetProps props);
 }

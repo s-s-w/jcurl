@@ -76,7 +76,7 @@ public class RockPainter {
         final int f = JCurlPanel.SCALE;
         final int ro = (int) (f * RockProps.DEFAULT.getRadius());
         final int ri = (int) (f * 0.8 * RockProps.DEFAULT.getRadius());
-        final int p = ro / 8;
+        //final int p = ro / 8;
         // body
         g.setColor(rockC);
         g.fillArc(-ro, -ro, 2 * ro, 2 * ro, 0, 360);

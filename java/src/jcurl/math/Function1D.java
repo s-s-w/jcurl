@@ -19,6 +19,9 @@
 package jcurl.math;
 
 /**
+ * A "normal" one-dimensional function. Because this is the same as a
+ * 1-dimensional curve it extends {@link jcurl.math.CurveBase}.
+ * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

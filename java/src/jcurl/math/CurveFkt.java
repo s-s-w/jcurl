@@ -19,35 +19,15 @@
 package jcurl.math;
 
 /**
- * An n-dimensional, continuous curve (R -&gt; R^n) based on a {@link CurveFkt}.
+ * A n-dimensional, continuous curve (R -&gt; R^n) based on
+ * {@link jcurl.math.Function1D}s.
  * 
+ * @see jcurl.math.Function1D
  * @see jcurl.math.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public class CurveFkt extends CurveBase {
-
-    private static final class Num extends Number {
-
-        public double v;
-
-        public double doubleValue() {
-            return v;
-        }
-
-        public float floatValue() {
-            return (float) v;
-        }
-
-        public int intValue() {
-            return (int) v;
-        }
-
-        public long longValue() {
-            return (long) v;
-        }
-
-    }
 
     private final Function1D[] fkt;
 

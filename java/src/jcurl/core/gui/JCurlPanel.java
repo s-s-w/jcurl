@@ -146,6 +146,7 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
         // paint additional stuff
         g2.setColor(timeB);
         g2.fillRect(w - 70, 0, 70, 20);
+        //g2.fillRect(0, 0, w, 20);
         g2.setFont(timeF);
         g2.setColor(timeC);
         g2.drawString(Long.toString(time), w - 70 + 10, 3 * 20 / 4);
