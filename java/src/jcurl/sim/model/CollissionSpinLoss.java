@@ -97,7 +97,7 @@ public class CollissionSpinLoss extends CollissionStrategy {
     //    private double U;
     //    private double mu;
     //	    /**
-    //         * The friction rock/rock. Set the parameter for friction rock/rock.
+    //         * The friction granite/granite. Set the parameter for friction granite/granite.
     //         *
     //         * @param v
     //         * the value

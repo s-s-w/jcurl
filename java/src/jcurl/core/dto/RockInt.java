@@ -23,7 +23,7 @@ import java.io.Serializable;
 import jcurl.core.Rock;
 
 /**
- * Either location or speed of a rock.
+ * Either location or speed of a granite.
  * 
  * @see jcurl.core.RockSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

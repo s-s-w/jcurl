@@ -21,7 +21,7 @@ package jcurl.core;
 import jcurl.math.Point3D;
 
 /**
- * Base class for rock information (either location or speed). The "Z" component
+ * Base class for granite information (either location or speed). The "Z" component
  * is the handle angle in radians.
  * 
  * @see jcurl.core.RockSet

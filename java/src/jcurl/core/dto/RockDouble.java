@@ -23,14 +23,14 @@ import java.io.Serializable;
 import jcurl.core.Rock;
 
 /**
- * Either location or speed of a rock. This class is mostly for display and
+ * Either location or speed of a granite. This class is mostly for display and
  * storage means. The value array is accessible for direct use with e.g.
  * {@link jcurl.math.CurveBase#getC(int, double, double[])}.
  * 
  * @see jcurl.core.RockSet
  * @see jcurl.core.dto.RockFloat
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: RockFloat.java 13 2005-03-05 22:58:41Z mrohrmoser $
+ * @version $Id$
  */
 public class RockDouble extends Rock implements Serializable {
 

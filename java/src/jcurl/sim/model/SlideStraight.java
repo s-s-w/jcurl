@@ -36,7 +36,7 @@ import org.apache.log4j.Logger;
 /**
  * Model without curl and with constant acceleration.
  * <p>
- * Public access to rock locations and speed via
+ * Public access to granite locations and speed via
  * {@link jcurl.sim.core.SlideCurves#getC(int, double, RockSet)}. The internal
  * computation (including hit-, out- and stillstand check) is via
  * {@link jcurl.sim.core.SlideStrategy#computeUntil(double, double)}.
