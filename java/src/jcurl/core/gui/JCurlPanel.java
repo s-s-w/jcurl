@@ -48,8 +48,9 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
     private static final Map hints = new HashMap();
 
     /**
-     * Scale WC a bit to avoid int rounding errors. This is relevant for all
-     * painters only. WC objects (rocks etc.) remain unaffected by this.
+     * Scale WC a bit to avoid int rounding errors. This is relevant only for
+     * int based drawing operations e.g. fonts. WC objects (rocks etc.) remain
+     * unaffected by this.
      */
     public static final int SCALE = 1000;
 
@@ -87,6 +88,8 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
     private int oldHei = -1;
 
     private int oldWid = -1;
+
+    private Orientation orient = Orientation.W;
 
     private final RockPainter rockP;
 
@@ -128,33 +131,38 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         final Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHints(hints);
-        final AffineTransform ot = g2.getTransform();
-
+        final AffineTransform saved = g2.getTransform();
         final int w = this.getWidth();
         final int h = this.getHeight();
-        g2.setPaint(iceP.color.backGround);
-        g2.fillRect(0, 0, w, h);
-
         if (zom.hasChanged() || oldWid != w || oldHei != h) {
-            // re-compute the zoomfactor
+            // either the wc viewport, fixpoint or dc viewport has changed:
+            // re-compute the transformation
             mat.setToIdentity();
-            zom.applyTrafo(this.getBounds(), Orientation.W, true, mat);
-            oldWid = this.getWidth();
-            oldHei = this.getHeight();
+            zom.applyTrafo(this.getBounds(), orient, true, mat);
+            oldWid = w;
+            oldHei = w;
         }
         // paint WC stuff
+        g2.setRenderingHints(hints);
+        // background
+        g2.setPaint(iceP.color.backGround);
+        g2.fillRect(0, 0, w, h);
         g2.transform(mat);
-        iceP.paintIce(g2);
-        rockP.paintRocks(g2, rocks, RockSet.ALL_MASK);
-        g2.setTransform(ot);
-        // paint additional stuff
-        g2.setColor(timeB);
-        g2.fillRect(w - 70, 0, 70, 20);
-        //g2.fillRect(0, 0, w, 20);
-        g2.setFont(timeF);
-        g2.setColor(timeC);
-        g2.drawString(Double.toString(time), w - 70 + 10, 3 * 20 / 4);
+        { // Ice
+            iceP.paintIce(g2);
+        }
+        { // all rocks
+            rockP.paintRocks(g2, rocks, RockSet.ALL_MASK);
+        }
+        g2.setTransform(saved);
+        { // paint additional stuff
+            g2.setColor(timeB);
+            g2.fillRect(w - 70, 0, 70, 20);
+            //g2.fillRect(0, 0, w, 20);
+            g2.setFont(timeF);
+            g2.setColor(timeC);
+            g2.drawString(Double.toString(time), w - 70 + 10, 3 * 20 / 4);
+        }
     }
 
     /**

@@ -96,15 +96,15 @@ public class IcePainter {
     /** Define colors and the shapes to be filled and drawn */
     static {
         final int f = JCurlPanel.SCALE;
-        final int fhy = (int) (f * Ice.FAR_HOG_2_TEE);
-        final int nhy = (int) (f * Ice.HOG_2_TEE);
-        final int hy = (int) (f * Ice.FAR_HACK_2_TEE);
-        final int dx = (int) (f * Ice.SIDE_2_CENTER);
-        final int by = (int) (f * Ice.BACK_2_TEE);
-        final int c1 = (int) (f * Dim.f2m(0.5));
-        final int c4 = (int) (f * Dim.f2m(2.0));
-        final int c8 = (int) (f * Dim.f2m(4.0));
-        final int c12 = (int) (f * Dim.f2m(6.0));
+        final float fhy = f * Ice.FAR_HOG_2_TEE;
+        final float nhy = f * Ice.HOG_2_TEE;
+        final float hy =  f * Ice.FAR_HACK_2_TEE;
+        final float dx = f * Ice.SIDE_2_CENTER;
+        final float by = f * Ice.BACK_2_TEE;
+        final float c1 = f * Dim.f2m(0.5);
+        final float c4 = f * Dim.f2m(2.0);
+        final float c8 = f * Dim.f2m(4.0);
+        final float c12 = f * Dim.f2m(6.0);
 
         hog2hog = new Rectangle2D.Float(-dx, nhy, 2 * dx, fhy - nhy);
         hog2tee = new Rectangle2D.Float(-dx, 0, 2 * dx, nhy);

@@ -60,8 +60,8 @@ public class RockPainter {
         fo = new Font("SansSerif", Font.BOLD, JCurlPanel.SCALE / 5);
 
         final int f = JCurlPanel.SCALE;
-        final int ro = (int) (f * RockProps.DEFAULT.getRadius());
-        final int ri = (int) (f * 0.7 * RockProps.DEFAULT.getRadius());
+        final float ro = f * RockProps.DEFAULT.getRadius();
+        final float ri = f * 0.7F * RockProps.DEFAULT.getRadius();
         outer = new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 0, 360, Arc2D.CHORD);
         inner = new Arc2D.Float(-ri, -ri, 2 * ri, 2 * ri, 0, 360, Arc2D.CHORD);
     }
@@ -92,7 +92,7 @@ public class RockPainter {
         if (fm == null)
             fm = g.getFontMetrics(fo);
         if (txtXoff == null) {
-            txtYoff = (int) (0.6 * 0.5 * fm.getHeight());
+            txtYoff = (int) (0.6F * 0.5F * fm.getHeight());
             txtXoff = new int[RockSet.ROCKS_PER_COLOR];
             for (int i = RockSet.ROCKS_PER_COLOR - 1; i >= 0; i--)
                 txtXoff[i] = -fm.charWidth(labels[i]) / 2;
