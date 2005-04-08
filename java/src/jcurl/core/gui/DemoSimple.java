@@ -20,6 +20,7 @@ package jcurl.core.gui;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -52,8 +53,7 @@ import org.xml.sax.SAXException;
  */
 public class DemoSimple extends JFrame {
 
-    private static final ULogger log = LoggerFactory
-            .getLogger(DemoSimple.class);
+    private static final ULogger log = LoggerFactory.getLogger(DemoSimple.class);
 
     private final TargetDiscrete dst;
 
@@ -78,17 +78,18 @@ public class DemoSimple extends JFrame {
             final URL url;
             {
                 URL tmp = DemoSimple.class.getResource("/setup/hammy.jcx");
-                if (tmp == null)
-                    tmp = new URL("file", "localhost",
-                            "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup/hammy.jcx");
+                if (tmp == null) {
+                    tmp = new URL(
+                            "file",
+                            "localhost",
+                            new File("./config/jcurl.jar/setup/hammy.jcx").getAbsolutePath());
+                }
                 url = tmp;
             }
             log.info("Loading setup [" + url + "]");
             final SetupBuilder setup = SetupSax.parse(url);
             src = setup.getSlide();
-            src
-                    .reset(0, setup.getPos(), setup.getSpeed(),
-                            RockSetProps.DEFAULT);
+            src.reset(0, setup.getPos(), setup.getSpeed(), RockSetProps.DEFAULT);
         } else {
             // initial state
             final PositionSet pos = PositionSet.allOut();
