@@ -12,7 +12,7 @@ for simulation we need to
 \end{itemize}
 
 \subsection{Basic equations}
-After substituting \eqref{denTau} the baseic equations are:
+After substituting \eqref{denTau} the basic equations are:
 \begin{eqnarray}
 \eqlab{dennyX}
 x(t) &=& -\sgn(\omega_0){{b\,g\,\mu\,t^3\,\left(3\,g\,\mu\,t-4\,v_{0}\right)}\over{48\,
@@ -23,33 +23,39 @@ x''(t) &=& -\sgn(\omega_0){{b\,g\,\mu\,t\,\left(3\,g\,\mu\,t-2\,v_{0}\right)}\ov
  \varepsilon\,R}} \\
 \eqlab{dennyY}
 y(t) &=& -{{t\,\left(g\,\mu\,t-2\,v_{0}\right)}\over{2}} \\
+\eqlab{dennyYdt}
 y'(t) &=& -\left(g\,\mu\,t-v_{0}\right) \\
 y''(t) &=& -g\,\mu \\
-\alpha(t) &=& {{\omega_{0}\,\varepsilon\,\left(g\,\mu\,t\,\left(-{{g\,\mu\,t-v_{0
+\alpha (t) &=& {{\omega_{0}\,\varepsilon\,\left(g\,\mu\,t\,\left(-{{g\,\mu\,t-v_{0
  }}\over{v_{0}}}\right)^{{{1}\over{\varepsilon}}}-v_{0}\,\left(-{{g\,
  \mu\,t-v_{0}}\over{v_{0}}}\right)^{{{1}\over{\varepsilon}}}+v_{0}
  \right)}\over{\left(\varepsilon+1\right)\,g\,\mu}} \\
-\alpha'(t) &=& \omega_{0}\,\left(-{{g\,\mu\,t-v_{0}}\over{v_{0}}}\right)^{{{1
+\alpha '(t) &=& \omega_{0}\,\left(-{{g\,\mu\,t-v_{0}}\over{v_{0}}}\right)^{{{1
  }\over{\varepsilon}}} \\
-\alpha''(t) &=& {{\omega_{0}\,g\,\mu\,\left(-{{g\,\mu\,t-v_{0}}\over{v_{0}}}\right)
+\alpha ''(t) &=& {{\omega_{0}\,g\,\mu\,\left(-{{g\,\mu\,t-v_{0}}\over{v_{0}}}\right)
  ^{{{1}\over{\varepsilon}}}}\over{\varepsilon\,\left(g\,\mu\,t-v_{0}
  \right)}}
 \end{eqnarray}
 
 \subsection{The ice-properties $ \mu $ and $ b $}
-To calculate $\mu$ and $b$ from the time $T$ and curl $B$ of a draw-to-tee
+To calculate $ \mu $ and $ b $ from the time $ T $ and curl $ B $ of a draw-to-tee
+we set up the equations
 \begin{eqnarray}
 \eqlab{dennyXTee}
-\mbox{and} \quad x(T) &=& B \quad \mbox{(curl)} \\
-\mbox{and} \quad x'(T) &=& 0 \\
+x(T) &=& B \quad \mbox{(curl)} \\
+x'(T) &=& 0 \\
 \eqlab{dennyYTee}
-\mbox{with} \quad y(T) &=& D \quad \mbox{(distance hog to tee)} \\
-\mbox{and} \quad y'(T) &=& 0 \\
-\Rightarrow \quad v_0 &=& g \mu t \\
-\eqlab{dennyMu}
-\mu &=& \frac{2 D}{g T^2} \\
-\eqlab{dennyCurl}
-b &=& -{{48\,B\,\varepsilon\,R}\over{g^2\,T^6}}
+y(T) &=& D \quad \mbox{(distance hog to tee)} \\
+\eqlab{dennyYdtTee}
+y'(T) &=& 0 
+\end{eqnarray}
+
+\noindent Solving the set of this 4 equations leads to 
+
+\begin{eqnarray}
+b	&=&	-{{12\,B\,\varepsilon\,R}\over{D^2}} \\
+\mu &=&	{{2\,D}\over{g\,T^2}} \\
+v_{0} &=&	{{2\,D}\over{T}}
 \end{eqnarray}
 
 \subsection{Some initial speeds}
@@ -60,12 +66,8 @@ hog?}
 To calculate $v_0$ at the far hog we don't use the time hog-to-tee for not
 every rock reaches the tee-line. Here the time hog-to-hog ($T_H$) is better.
 \begin{eqnarray}
-\mbox{dist.~hog--hog:} \quad H &=& v_0 \left( T_H - \frac{T_H^2}{2\tau}\right) \\
-&=& v_0 \left(T_H - \frac{T_H^2}{2 \frac{v_0}{\mu g} }\right) \\
-\frac{H}{v_0} &=& T_H - \frac{T_H^2}{v_0} \frac{\mu g}{2} \\
-T_H &=& \frac{1}{v_0} \left(H + T_H^2 \frac{\mu g}{2}\right) \\
-\Longrightarrow\quad
-v_0 &=& \frac{H}{T_H} + \frac{T_H\mu g}{2}
+y(T_H) &=& H \quad \mbox{(dist.~hog-to-hog)} \\
+\Rightarrow \quad v_0 &=& {{g\,\mu\,T_H^2+2\,H}\over{2\,T_H}}
 \end{eqnarray}
 
 If we don't want $v_0$ at the far hog but at any given distance, things get a
