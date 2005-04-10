@@ -18,7 +18,7 @@ y(t) := subst(tau = v[0] / (mu * g), v[0] * ( t - t^2 / (2*tau) ))$
 
 tex(factor(x(t)), "integral.tex")$ 
 tex(factor(diff(x(t),t)), "integral.tex")$ 
-tex(factor(diff(diff(x(t),t),t)), "integral.tex")$ 
+tex(factor(diff(x(t),t,2)), "integral.tex")$ 
 tex(factor(y(t)), "integral.tex")$
 tex(factor(diff(y(t),t)), "integral.tex")$ 
 tex(factor(diff(y(t),t,2)), "integral.tex")$ 
@@ -38,26 +38,41 @@ tex(factor(diff(alpha(t),t)), "integral.tex");
 tex(factor(diff(alpha(t),t,2)), "integral.tex")$
 
 /* 
- Ice coefficients
+ Compute Ice coefficients from draw-to-tee time and curl
 */
-/*subst(v[0] = tau * mu * g, y(t)); */
+/* "manual": 
 solve(diff(y(t),t)=0,v[0]);
-
-subst(v[0] = g*mu*t, y(t));
+subst(%, y(t));
 subst(t = T, %);
 solve(%=D,mu);
 tex(factor(%), "integral.tex")$
 
-subst(v[0] = g*mu*t, x(t));
+solve(diff(y(t),t)=0,v[0]);
+subst(%, x(t));
+subst(%TH(4), %);
 subst(t = T, %);
-subst(mu = T, %);
 solve(%=B,b);
 tex(factor(%), "integral.tex")$
+*/
+tex([ x(T)=B, diff(x(T),T)=0, y(T)=D, diff(y(T),T)=0], "integral.tex")$
+SOLVE([ x(T)=B, y(T)=D, diff(x(T),T)=0, diff(y(T),T)=0],[b, mu, v[0]]); 
+tex(INPART(INPART(%TH(1),1),[1,2,3]), "integral.tex")$
+INPART(INPART(INPART(%TH(2),1),1),2);
+INPART(INPART(INPART(%TH(3),1),2),2);
+INPART(INPART(INPART(%TH(4),1),3),2);
 
 /*
-subst(x = -sqrt(t), %);
-subst(y = 2*mu, %); 
-solve(%=0,t);
+ Compute v[0] at far hog (y=0) from time hog-to-hog
 */
+tex([ y(T)=H ], "integral.tex")$
+SOLVE( y(T)=H, v[0]); 
+tex(%, "integral.tex")$
+
+/*
+ Compute v[0] at a given y != 0 from time hog-to-hog
+*/
+tex([ y(T)=H ], "integral.tex")$
+SOLVE( y(T)=H, v[0] ); 
+tex(%, "integral.tex")$
 
 quit$
