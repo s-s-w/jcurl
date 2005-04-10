@@ -1,89 +1,55 @@
-\chapter{Trajectory}
+% $Id$
+\chapter{Rock trajectory}
+\section{Applying the 'Denny' model}
 
-\section{The 'Denny' model}
+Mark Denny published a model in \cite{denny:98}, see \ref{denny}. To apply it
+for simulation we need to
+\begin{itemize}
+\item compute the ice properties from the draw-to-tee time and curl.
+\item transform from $t_0 = 0$ to $t_0 > 0$
+\item transform the equations from rock-coordinates to world-coordinates
+\item compute the initial speed of a rock from the hog-to-hog time and $y_0$
+\end{itemize}
 
-Mark Denny published a model in \cite{denny:98}. It's quite simple and provides
-polynomes of fourth degree to describe the rock's motion along the sheet.
-
-\begin{figure}[htb]
-\begin{center}
-\input{denny.pic}
-\end{center}
-\caption[Denny setup]{The \emph{running band} of radius $R$ is the surface
-    of contact between rock and ice. Here the velocity components, relative to
-    the ice, of a point on the running band are shown. $v$ is the CM velocity,
-    and $w$ is the angular component at radius $R$. The unit vectors $(u_T, u)$
-    coincide with $(u_x,u_y)$ at time $t=0$. In this case the rock is curling
-    in a counterclockwise sense (so angular velocity unit vector $=u_z$).
-    \figlab{denny}}
-\end{figure}
-
-\iftrue
-\begin{figure}[tb]
-\begin{center}
-\input{denny.emt}
-\end{center}
-\caption[Curling rock trajectories]{\figlab{dennytrj}%
-     Approximate curling rock trajectories, calculated from 
-     \eqref{denA}, \eqref{denB} and \eqref{denC}
-     for three values of initial velocity $v_0$. The other parameters are:
-     $\mu           = 0.0127$,
-     $b_\mathrm{LR} = 0.003$,
-     $\epsilon      = 2.63$,
-     $R             = 0.065$.}
-\end{figure}
-\fi
-
+\subsection{Basic equations}
+After substituting \eqref{denTau} the baseic equations are:
 \begin{eqnarray}
-\eqlab{denA} 
-x(t) &\approx& - \frac{ b_\mathrm{LR} v_0^2 }{ 4 \epsilon R \tau }
-    \left( \frac{ t^3 }{ 3 } - \frac{ t^4 } { 4 \tau } \right) \\
-\eqlab{denB} 
-y(t) &\approx& v_0 \left( t - \frac{ t^2 }{ 2\tau } \right)
+\eqlab{dennyX}
+x(t) &=& -\sgn(\omega_0){{b\,g\,\mu\,t^3\,\left(3\,g\,\mu\,t-4\,v_{0}\right)}\over{48\,
+ \varepsilon\,R}} \\
+x'(t) &=& -\sgn(\omega_0){{b\,g\,\mu\,t^2\,\left(g\,\mu\,t-v_{0}\right)}\over{4\,\varepsilon
+ \,R}} \\
+x''(t) &=& -\sgn(\omega_0){{b\,g\,\mu\,t\,\left(3\,g\,\mu\,t-2\,v_{0}\right)}\over{4\,
+ \varepsilon\,R}} \\
+\eqlab{dennyY}
+y(t) &=& -{{t\,\left(g\,\mu\,t-2\,v_{0}\right)}\over{2}} \\
+y'(t) &=& -\left(g\,\mu\,t-v_{0}\right) \\
+y''(t) &=& -g\,\mu \\
+\alpha(t) &=& {{\omega_{0}\,\varepsilon\,\left(g\,\mu\,t\,\left(-{{g\,\mu\,t-v_{0
+ }}\over{v_{0}}}\right)^{{{1}\over{\varepsilon}}}-v_{0}\,\left(-{{g\,
+ \mu\,t-v_{0}}\over{v_{0}}}\right)^{{{1}\over{\varepsilon}}}+v_{0}
+ \right)}\over{\left(\varepsilon+1\right)\,g\,\mu}} \\
+\alpha'(t) &=& \omega_{0}\,\left(-{{g\,\mu\,t-v_{0}}\over{v_{0}}}\right)^{{{1
+ }\over{\varepsilon}}} \\
+\alpha''(t) &=& {{\omega_{0}\,g\,\mu\,\left(-{{g\,\mu\,t-v_{0}}\over{v_{0}}}\right)
+ ^{{{1}\over{\varepsilon}}}}\over{\varepsilon\,\left(g\,\mu\,t-v_{0}
+ \right)}}
 \end{eqnarray}
 
-\bigskip
-\begin{tabular}{lll}
-$t$		& [s] & time \\
-$x$             & [m] & curl \\
-$y$             & [m] & distance along the track \\
-$b_\mathrm{LR}$ & [1] & parameter for the curl's magnitude \\
-$\epsilon$	& [1] & parameter $ \frac{ I }{ mR^2 } $\\
-$\tau$		& [s] & total time until $v=0$ \\
-$R$		& [m] & radius of the touching area rock/ice $\approx$ 6.3e-2 \\
-$\mu$		& [1] & friction coefficient rock/ice \\
-$I$		&     & moment of inertia (z-direction) \\
-$g$		& [N/kg] & 9.81 gravitation \\
-\end{tabular}
-\bigskip
-
-The final properties are:
+\subsection{The ice-properties $ \mu $ and $ b $}
+To calculate $\mu$ and $b$ from the time $T$ and curl $B$ of a draw-to-tee
 \begin{eqnarray}
-\eqlab{denC} 
-\tau    & = &     \frac{ v_0 }{ \mu g } \\
-x(\tau) &\approx& - \frac{ b_\mathrm{LR} }{ 12\epsilon } \frac{y^2(\tau) }{R} \\
-y(\tau) &\approx& \frac{ v_0^2 }{ 2\mu g }
-\end{eqnarray}
-
-\subsection{The ice-properties $\mu$ and $b$}
-
-To calculate $\mu$ and $b$ from the time $\tau=T$ a draw-to-tee requires
-(hog to tee) we find:
-
-\begin{eqnarray}
-y(T) &=& D \quad \mbox{(distance hog to tee)} \\
-y(t) &=& v_0 \left(t-\frac{t^2}{2\tau}\right) \nonumber\\
-\mbox{and} \quad v_0 &=& \tau \mu g \nonumber\\
-\Rightarrow\quad y(T) &=& T \mu g \left(T - \frac{T^2}{2T} \right) =
-\frac{1}{2} T^2 \mu g \\
-\Longrightarrow\quad \mu &=& \frac{2D}{T^2 g}
-\end{eqnarray}
-
-
-\begin{eqnarray}
-x(T) &\approx& - \frac{b}{12\epsilon} \frac{D^2}{R} \quad(\cdot \sgn(\omega_0)) \nonumber\\
-\Longrightarrow\quad
-b &\approx& \frac{-(curl) \cdot 12\epsilon R}{ D^2 \quad (\cdot \sgn(\omega_0)) }
+\eqlab{dennyXTee}
+\mbox{and} \quad x(T) &=& B \quad \mbox{(curl)} \\
+\mbox{and} \quad x'(T) &=& 0 \\
+\eqlab{dennyYTee}
+\mbox{with} \quad y(T) &=& D \quad \mbox{(distance hog to tee)} \\
+\mbox{and} \quad y'(T) &=& 0 \\
+\Rightarrow \quad v_0 &=& g \mu t \\
+\eqlab{dennyMu}
+\mu &=& \frac{2 D}{g T^2} \\
+\eqlab{dennyCurl}
+b &=& -{{48\,B\,\varepsilon\,R}\over{g^2\,T^6}}
 \end{eqnarray}
 
 \subsection{Some initial speeds}
@@ -105,7 +71,7 @@ v_0 &=& \frac{H}{T_H} + \frac{T_H\mu g}{2}
 If we don't want $v_0$ at the far hog but at any given distance, things get a
 little bit more complicated.
 
-Here we use \eqref{denB} at three times
+Here we use \eqref{denY} at three times
 
 \medskip
 \begin{tabular}{l@{ : }l}
@@ -211,289 +177,4 @@ and a y-component of
 
 Now just the shift is missing.
 
-\subsection{Spin stuff}
-
-So much about speed and location, but what about the spin and angle?
-Denny says:
-\begin{eqnarray}
-\omega = \omega_0 \left(1 - \frac{t}{\tau}\right)^{1/\epsilon}
-\end{eqnarray}
-
-This equation seems pretty hard to integrate, so better just use a numerical
-means to get the actual handle-angles. (For they aren't very important, too.)
-
 \clearpage
-\section{The 'Shegelski et~al.' model}
-
-This model is much more complicated. A sketch is published in
-\cite{shegelski:96}:
-
-\dots
-
-{%% keep the following 'newcommand's local:
-\newcommand{\si}[2]{r_{#1}\omega\sin\Theta #2 v_x}
-\newcommand{\co}[2]{v_y #2 r_{#1}\omega\cos\Theta}
-\newcommand{\tansico}[3]{ \tan^{-1}\left[\frac{ \si{#1}{#2} }{ \co{#1}{#3} }\right] }
-\newcommand{\sqrsico}[3]{ \left[ (\si{#1}{#2})^2 + (\co{#1}{#3})^2 \right]^{\Phi/2} }
-\newenvironment{wideeq}[1]{\begin{list}{}{%
-	\leftmargin=#1%
-	\advance\leftmargin by -\textwidth%
-	\leftmargin=-.5\leftmargin\rightmargin=\leftmargin}\item[]%
-%	\hrulefill
-	\footnotesize
-    \begin{eqnarray}%
-}{\end{eqnarray}\end{list}}
-\newenvironment{flowtext}[1]{%
-%    \begin{multicols}{#1}\small%
-}{%
-%    \end{multicols}%
-}
-
-\subsection{Equations of motion of a curling rock}
-
-\begin{flowtext}{2}
-We next give the equations that determine the motion of the curling rock down
-the pebbled ice surface. This is a straightforward exercise in determining the
-net force and torque exerted by the ice on the rock.
-
-We choose the coordinate axes as follows. The $+y$ axis is in the direction of
-the \emph{initial} velocity of the rock, and the $+x$ axis is perpendicular to
-the initial velocity and in the direction in which the rock is expected to
-curl. In obtaining the results given in the next section, we also used a $+y'$
-axis, which is in the direction of the instantaneous velocity of the rock, as
-well as a $+x'$ axis.
-
-We assume that both wet and dry frictional forces exerted on a small section of
-the annulus of the rock are in the direction opposite to the velocity of the
-point relative to the ice. The magnitude of the dry friction is
-\begin{eqnarray}
-\Delta F^d &=& \mu M g \left( \frac{\Delta\Theta}{2\pi}\right)
-\end{eqnarray}
-where $\mu$ is the coefficient of kinetic friction.\footnote{In the case of a
-curling rock, the nonuniformity in the normal force around the rock is
-neglegible in our model; the nonuniformity is a consequence of the acceleration
-due to friction.} We take the magnitude of the wet friction increase with
-velocity, in analogy with increased drag on an object moving in a fluid, and
-write
-\begin{eqnarray}
-\Delta F^w &=& k \left[ u(\Theta) \right]^\Phi
-\end{eqnarray}
-where $k$ and $\Phi$ are parameters to be discussed below, and $u(\Theta)$ is
-the net speed, relative to the ice, of the portion of the contact annulus at
-angle $\Theta$, as shown in \figref{shegelski}.
-
-To minimize the numerical analysis, instead of integrating over the entire area
-of the annulus, we break each semicircle into an outer and inner semicircle. By
-considering each quadrant of the rock seperately, the following equations for
-the $x$ and $y$ components of the force on the rock are readily obtained. We
-first give the equations, then complete our definitions of symbols used.
-\end{flowtext}
-
-\begin{figure}[htb] 
-\begin{center} 
-\input{sheg.pic}
-\end{center} 
-\caption[Shegelski et al.\ setup]{The contributions $\vec{v}_y$,
-    $\vec{v}_x$ and $\vec{v}_{rot}$ (with $\vec{v}_{rot} = \vec{r}\omega$) to
-    the net velocity $\vec{u} \equiv \vec{u}(\Theta)$, relative to the ice, of
-    a portion of the contact annulus located at the angle $\Theta$ relative to
-    the $x$-axis. The figure shown is for a portion located in the first
-    quadrant; similar figures are readily constructed for the other three
-    quadrants. The angle $\Theta$ in each case is from the $x$-axis toward the
-    $y$-axis. Note that the force $\vec{F}$ exerted on the portion is in the
-    opposite direction to $\vec{u}$. The angle $\eta$ appears in the equations
-    explicitely as the arctan of the ratio of the $x$ and $y$ components of
-    $\vec{u}$. 
-    \figlab{shegelski}} 
-\end{figure}
-
-The x-component of dry friction is:
-\begin{wideeq}{170mm}
-F_x^d &=& - f_L^d \frac{\mu Mg}{2\pi} \Int_0^{\pi/2} d\Theta \left\{
-\sin\left( \tansico{2}{+}{+} \right)
-+
-\sin\left( \tansico{2}{+}{-} \right)
-\right\} \nonumber \\
-&& + f_T^d \frac{\mu Mg}{2\pi} \Int_0^{\pi/2} d\Theta \left\{
-\sin\left( \tansico{1}{-}{+} \right)
-+
-\sin\left( \tansico{1}{-}{-} \right)
-\right\}
-\end{wideeq}
-
-The x-component of wet friction is:
-\begin{wideeq}{170mm}
-F_x^w &=& - kf_L^w \Int_0^{\pi/2} d\Theta
- \sqrsico{1}{+}{+} \sin\left( \tansico{1}{+}{+} \right) \nonumber\\
- && - kf_L^w \Int_0^{\pi/2} d\Theta
- \sqrsico{1}{+}{-} \sin\left( \tansico{1}{+}{-} \right) \nonumber\\
- && + kf_T^w \Int_0^{\pi/2} d\Theta
- \sqrsico{2}{-}{+} \sin\left( \tansico{2}{-}{+} \right) \nonumber\\
- && + kf_T^w \Int_0^{\pi/2} d\Theta
- \sqrsico{2}{-}{-} \sin\left( \tansico{2}{-}{-} \right)
-\end{wideeq}
-
-Similar equations hold for the y-component of the force.
-
-The following equations give the torque due to dry and wet friction:
-\begin{wideeq}{170mm}
-\tau^d &=& - r_2 \frac{\mu Mg}{2\pi} \Int_0^{\pi/2} d\Theta f_L^d
-    \sin\left(\Theta + \frac{\pi}{2} - \tansico{2}{+}{+} \right) \nonumber\\
-&& + r_2 \frac{\mu Mg}{2\pi} \Int_0^{\pi/2} d\Theta f_L^d
-    \sin\left(\Theta + \frac{\pi}{2} + \tansico{2}{+}{-} \right) \nonumber\\
-&& - r_1 \frac{\mu Mg}{2\pi} \Int_0^{\pi/2} d\Theta f_T^d
-    \sin\left(\frac{\pi}{2} - \Theta + \tansico{1}{-}{+} \right) \nonumber\\
-&& + r_1 \frac{\mu Mg}{2\pi} \Int_0^{\pi/2} d\Theta f_T^d
-    \sin\left(\frac{\pi}{2} - \Theta - \tansico{1}{-}{-} \right)
-\end{wideeq}
-
-\begin{wideeq}{170mm}
-\tau^w &=& - r_1 k f_L^w \Int_0^{\pi/2} d\Theta
- \sqrsico{1}{+}{+} \sin\left(\Theta+\frac{\pi}{2} - \tansico{1}{+}{+} \right) \nonumber\\
-&& + r_1 k f_L^w \Int_0^{\pi/2} d\Theta
- \sqrsico{1}{+}{-} \sin\left(\Theta+\frac{\pi}{2} + \tansico{1}{+}{-} \right) \nonumber\\
-&& - r_2 k f_T^w \Int_0^{\pi/2} d\Theta
- \sqrsico{2}{-}{+} \sin\left(\frac{\pi}{2}-\Theta + \tansico{2}{-}{+} \right) \nonumber\\
-&& + r_2 k f_T^w \Int_0^{\pi/2} d\Theta
- \sqrsico{2}{-}{-} \sin\left(\frac{\pi}{2}-\Theta - \tansico{2}{-}{-} \right)
-\end{wideeq}
-
-\begin{flowtext}{2}
-
-In these equations $f_L^d$ is the effective fraction of the leading semicircle
-of the rock which experiences dry friction, and similarly for $f_T^d$, etc.,
-$r_1$ and $r_2$ are the effective values of the radii of the inner and outer
-portions of the semicircle, respectively; $v_x$ and $v_y$ are the components of
-the velocity of the centre of mass of the rock; $\Theta$ in each quadrant is
-measured from the $x$-axis toward the $y$-axis, as shown in \figref{shegelski};
-and $\omega$ is the instantaneous angular speed of the rock.
-
-\Figref{shegelski} is presented to assist in understanding and appreciating the
-significance of the above equations. The figure shows the contributions
-$\vec{v}_y$, $\vec{v}_x$ and $\vec{v}_{rot}$ (with $\vec{v}_{rot} =
-\vec{r}\omega$) to the net velocity $\vec{u} \equiv \vec{u}(\Theta)$, relative
-to the ice, of a portion of the contact annulus located at the angle $\Theta$;
-note that $\vec{u} = \vec{v}_y + \vec{v}_x + \vec{v}_{rot}$, and recall that
-the velocity of the centre of mass of the rock relative to the ice is $\vec{v}
-= \vec{v}_y + \vec{v}_x$. Figure \figref{shegelski} also shows that the force
-$\vec{F}$ exerted on that portion the direction opposite to $\vec{u}$. Similar
-figures are readily structured for the other three quadrants of the rock. We
-p???\ the equations above with each of the four quadrants exp???\ displayed so
-that the reader may easily recognize the ???-bution from the four quadrants and
-further appreciate asymmetries that arise, which are responsible for the curl
-of the rock.
-
-The $x$ and $y$ components of the velocity of the rock at any time $t$ are readily obtained
-numerically from the ???\ equations along with $\vec{F} = M d\vec{v}/dt$, and
-initial conditions. The location of the rock is then obtained by using
-\begin{eqnarray}
-x(t) &=& x_0 + \Int_0^t dt' v_x(t')
-\end{eqnarray}
-and
-\begin{eqnarray}
-y(t) &=& y_0 + \Int_0^t dt' v_y(t')
-\end{eqnarray}
-
-The angular speed $\omega$ is  given by
-\begin{eqnarray}
-\omega(t) &=& \omega_0 + \Int_0^t dt' \alpha(t')
-\end{eqnarray}
-where $\tau = MR^2\alpha/2$ determines the time development of the angular
-acceleration of the rock.
-
-In the first phase of the rock's motion, we put
-$f_L^d = f_T^w = 1$,
-$f_T^d = f_L^w = 0$ and
-$r_1 = r_2 = r$.
-
-In the middle phase of the rock's motion, we put
-$f_L^d = f_T^w = f_T^d = f_L^w = 1/2$ and
-$r_1 = r - \Delta r/2$, and
-$r_2 = r + \Delta r/2$.
-
-In the final phase, we have
-$r_1 = r_2 = r$,
-$f^d = 0$, and $f^w = 1$ for $0 \le \Theta' \le \Theta'_0$, and
-$f^d = 1$, and $f^w = 0$ for $\Theta'_0 \le \Theta' \le 2\pi$, where $\Theta'$
-is measured counterclockwise from the $-x'$ direction, and $\Theta'_0$ gives
-the point on the rock where the velocity relative to the ice is radially
-outwarded from the centre of the rock.
-
-We do not have a first-priciples derivation of the function that should be used
-to describe the transition between the first and middle, and middle and last
-phases of motion. Instead we use a smooth function for the transition in
-$f_L^d$ that has the following features:
-$f_L^d \approx 1  $ for $v \ge 1.5 \meter\second^{-1}$;
-$f_L^d \approx 1/2$ for $1.5 \meter\second^{-1} \ge v \ge 1.0 \meter\second^{-1}$; and
-$f_L^d \approx 0  $ for $1.0 \meter\second^{-1} \ge v \ge 0 \meter\second^{-1}$.
-The transition from one value to the next is smooth and occurs within a full
-width of about $0.2 \meter\second^{-1}$. Small variations in the functional
-form of $f_L^d$ give only very slight changes in the results presented in the
-next section.
-
-\end{flowtext}
-}
-
-\dots
-
-\clearpage
-\section{My own considerations}
-
-\subsection{Introduction}
-
-The rocks are not running straight in general: Besides slowing down they
-\emph{curl} to one side. So the force $ \vec{F} $ caused by friction
-rock/ice\index{friction!rock/ice} is not parallel to the speed $ \vec{v}
-$. Neihter it is constant. The most general form is:
-\begin{eqnarray}
-    \vec{ F } &=& \vec{ F }( \vec{v}, \omega, \vec{x}, \alpha )
-\end{eqnarray}
-
-If ice and rock are homogenous and free of debri it simplifies a little
-bit:
-\begin{eqnarray}
-    \vec{ F } &=& \vec{ F }( \vec{v}, \omega )
-\end{eqnarray}
-
-The components of $ \vec{ F } $ are:
-\begin{equation}
-\begin{array}{ll}
-F_y \parallel \vec{v} & \textrm{force parallel running direction} \\
-F_x \perp     \vec{v} & \textrm{force perpendicular to running direction}
-\end{array}
-\end{equation}
-
-\subsection{Parameters to describe the friction}
-
-Statements:
-\begin{equation}\begin{array}{l@{\textrm{ for }}ll}
-F_x \approx 0 & \omega \gg \omega_0 (\approx \frac{2.5\pi}{25s}) & \textrm{Straight running spinners} \\
-F_x \approx 0 & \omega \approx 0    & \textrm{Straight if without handle} \\
-F_x \max      & \omega = \omega_0   & \textrm{max.\ curl for a smooth handle} \\
-F_y \ll       & \omega \gg \omega_0 & \textrm{few friction for spinners} \\
-F_y \gg       & \omega \approx 0    & \textrm{much friction if without handle} \\
-\end{array}\end{equation}
-
-Practicable parameters to describe the ice might be:
-\begin{itemize}
-\item time hog to tee for a draw-to-tee,
-\item curl for a draw-to-tee,
-\item curl for a take-out of defined speed (e.g.\ 9s hog-to-tee),
-\item do the rocks slow down quick once they started to or don't they.
-\end{itemize}
-
-\subsection{Base for $ \vec{ F } $}
-
-The area of contact rock/ice is a fine ring on the rock's bottom. $ \vec{ F } $
-is the sum of the forces affecting this ring. For a given spot $ (x,y)^T $
-on this ring this force is in general:
-\begin{equation}
-    \vec{f} = \vec{f}(\vec{v}, \omega, x, y )
-\end{equation}
-
-Then $ \vec{ F } $ is:
-\begin{equation}
-    \vec{F} = \Int_R^{R+\Delta R} \Int_0^{2\pi}
-                  \vec{f}(\vec{v}, \omega, x, y )
-              \diff{\varphi} \diff{r}
-\end{equation}

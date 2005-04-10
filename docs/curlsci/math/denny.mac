@@ -1,0 +1,63 @@
+/* $Id$
+software: http://maxima.sourceforge.net 
+manual: file:///usr/share/maxima/5.9.1/doc/html/maxima_toc.html
+*/
+NEXTLAYERFACTOR(TRUE)$
+/* DEBUGMODE(TRUE)$ */
+/* texput(tau, "\\tau")$ */
+
+/* 
+ Location
+*/
+/*
+x(t) := -(b * v[0]^2 / (4*epsilon*R*tau) )*(t^3 / 3 - t^4 / (4*tau) )$
+y(t) := v[0] * ( t - t^2 / (2*tau) )$
+*/
+x(t) := subst(tau = v[0] / (mu * g), -(b * v[0]^2 / (4*epsilon*R*tau) )*(t^3 / 3 - t^4 / (4*tau) ))$
+y(t) := subst(tau = v[0] / (mu * g), v[0] * ( t - t^2 / (2*tau) ))$
+
+tex(factor(x(t)), "integral.tex")$ 
+tex(factor(diff(x(t),t)), "integral.tex")$ 
+tex(factor(diff(diff(x(t),t),t)), "integral.tex")$ 
+tex(factor(y(t)), "integral.tex")$
+tex(factor(diff(y(t),t)), "integral.tex")$ 
+tex(factor(diff(y(t),t,2)), "integral.tex")$ 
+
+/* 
+ Spin 
+*/
+omega(t) := subst(tau = v[0] / (mu * g), omega[0]*(1-t/tau)^(1/epsilon))$
+
+assume( epsilon > 0 )$
+assume( t > 0 )$
+alpha(t) := integrate(omega(t), t, 0, t);
+
+tex(factor(alpha(t)), "integral.tex")$
+tex(factor(diff(alpha(t),t)), "integral.tex"); 
+/*tex(factor(omega(t)), "integral.tex")$*/
+tex(factor(diff(alpha(t),t,2)), "integral.tex")$
+
+/* 
+ Ice coefficients
+*/
+/*subst(v[0] = tau * mu * g, y(t)); */
+solve(diff(y(t),t)=0,v[0]);
+
+subst(v[0] = g*mu*t, y(t));
+subst(t = T, %);
+solve(%=D,mu);
+tex(factor(%), "integral.tex")$
+
+subst(v[0] = g*mu*t, x(t));
+subst(t = T, %);
+subst(mu = T, %);
+solve(%=B,b);
+tex(factor(%), "integral.tex")$
+
+/*
+subst(x = -sqrt(t), %);
+subst(y = 2*mu, %); 
+solve(%=0,t);
+*/
+
+quit$

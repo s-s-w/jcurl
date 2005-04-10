@@ -1,3 +1,4 @@
+% $Id$
 \documentclass[a4paper,11pt,twoside]{report}
 \usepackage[T1]{fontenc}
 \usepackage{bibeng}
@@ -7,9 +8,8 @@
 
 \usepackage{curling}
 
-%\includeonly{chtakeou,chcurl,chphyapp}
-%\includeonly{chspini}
-%\includeonly{chsploss}
+\includeonly{chcurl,chdenny}
+%\includeonly{chdenny}
 
 \nonfrenchspacing
 \renewcommand{\baselinestretch}{1.2}
@@ -20,7 +20,7 @@
 \pagestyle{headings}
 \title{Curling scientific}
 \author{M. Rohrmoser\\{\small jcurl\symbol{64}gmx.net}}
-\date{March 27th 1998}
+%\date{March 27th 1998}
 
 \begin{document}
 \maketitle
@@ -33,13 +33,16 @@
 \include{chloss}		%% model with energy-loss
 \include{chspini}		%% model with spin, try I
 \include{chsploss}		%% model with spin and loss, try I
-\include{chspinii}		%% model with spin and loss, try II
-\include{chtoimp}		%% takeout/improvements
-\include{chsim}			%% takeout/improvements
+%\include{chspinii}		%% model with spin and loss, try II
+%\include{chtoimp}		%% takeout/improvements
+%\include{chsim}			%% takeout/improvements
 \include{chcurl}		%% thoughts about curl
 
 \begin{appendix}
 \include{chphyapp}		%% phys. & math. explanations
+\include{chdenny}		%% Denny ice model
+\include{chsheg}		%% Shegelski ice model
+\include{chmr}		    %% My own considerations
 \end{appendix}
 
 %\addcontentsline{toc}{chapter}{Index}
