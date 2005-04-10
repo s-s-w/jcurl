@@ -1,0 +1,214 @@
+% $Id$
+\section{The 'Shegelski et~al.' model}
+
+This model is much more complicated. A sketch is published in
+\cite{shegelski:96}:
+
+\dots
+
+{%% keep the following 'newcommand's local:
+\newcommand{\si}[2]{r_{#1}\omega\sin\Theta #2 v_x}
+\newcommand{\co}[2]{v_y #2 r_{#1}\omega\cos\Theta}
+\newcommand{\tansico}[3]{ \tan^{-1}\left[\frac{ \si{#1}{#2} }{ \co{#1}{#3} }\right] }
+\newcommand{\sqrsico}[3]{ \left[ (\si{#1}{#2})^2 + (\co{#1}{#3})^2 \right]^{\Phi/2} }
+\newenvironment{wideeq}[1]{\begin{list}{}{%
+	\leftmargin=#1%
+	\advance\leftmargin by -\textwidth%
+	\leftmargin=-.5\leftmargin\rightmargin=\leftmargin}\item[]%
+%	\hrulefill
+	\footnotesize
+    \begin{eqnarray}%
+}{\end{eqnarray}\end{list}}
+\newenvironment{flowtext}[1]{%
+%    \begin{multicols}{#1}\small%
+}{%
+%    \end{multicols}%
+}
+
+\subsection{Equations of motion of a curling rock}
+
+\begin{flowtext}{2}
+We next give the equations that determine the motion of the curling rock down
+the pebbled ice surface. This is a straightforward exercise in determining the
+net force and torque exerted by the ice on the rock.
+
+We choose the coordinate axes as follows. The $+y$ axis is in the direction of
+the \emph{initial} velocity of the rock, and the $+x$ axis is perpendicular to
+the initial velocity and in the direction in which the rock is expected to
+curl. In obtaining the results given in the next section, we also used a $+y'$
+axis, which is in the direction of the instantaneous velocity of the rock, as
+well as a $+x'$ axis.
+
+We assume that both wet and dry frictional forces exerted on a small section of
+the annulus of the rock are in the direction opposite to the velocity of the
+point relative to the ice. The magnitude of the dry friction is
+\begin{eqnarray}
+\Delta F^d &=& \mu M g \left( \frac{\Delta\Theta}{2\pi}\right)
+\end{eqnarray}
+where $\mu$ is the coefficient of kinetic friction.\footnote{In the case of a
+curling rock, the nonuniformity in the normal force around the rock is
+neglegible in our model; the nonuniformity is a consequence of the acceleration
+due to friction.} We take the magnitude of the wet friction increase with
+velocity, in analogy with increased drag on an object moving in a fluid, and
+write
+\begin{eqnarray}
+\Delta F^w &=& k \left[ u(\Theta) \right]^\Phi
+\end{eqnarray}
+where $k$ and $\Phi$ are parameters to be discussed below, and $u(\Theta)$ is
+the net speed, relative to the ice, of the portion of the contact annulus at
+angle $\Theta$, as shown in \figref{shegelski}.
+
+To minimize the numerical analysis, instead of integrating over the entire area
+of the annulus, we break each semicircle into an outer and inner semicircle. By
+considering each quadrant of the rock seperately, the following equations for
+the $x$ and $y$ components of the force on the rock are readily obtained. We
+first give the equations, then complete our definitions of symbols used.
+\end{flowtext}
+
+\begin{figure}[htb] 
+\begin{center} 
+\input{sheg.pic}
+\end{center} 
+\caption[Shegelski et al.\ setup]{The contributions $\vec{v}_y$,
+    $\vec{v}_x$ and $\vec{v}_{rot}$ (with $\vec{v}_{rot} = \vec{r}\omega$) to
+    the net velocity $\vec{u} \equiv \vec{u}(\Theta)$, relative to the ice, of
+    a portion of the contact annulus located at the angle $\Theta$ relative to
+    the $x$-axis. The figure shown is for a portion located in the first
+    quadrant; similar figures are readily constructed for the other three
+    quadrants. The angle $\Theta$ in each case is from the $x$-axis toward the
+    $y$-axis. Note that the force $\vec{F}$ exerted on the portion is in the
+    opposite direction to $\vec{u}$. The angle $\eta$ appears in the equations
+    explicitely as the arctan of the ratio of the $x$ and $y$ components of
+    $\vec{u}$. 
+    \figlab{shegelski}} 
+\end{figure}
+
+The x-component of dry friction is:
+\begin{wideeq}{170mm}
+F_x^d &=& - f_L^d \frac{\mu Mg}{2\pi} \Int_0^{\pi/2} d\Theta \left\{
+\sin\left( \tansico{2}{+}{+} \right)
++
+\sin\left( \tansico{2}{+}{-} \right)
+\right\} \nonumber \\
+&& + f_T^d \frac{\mu Mg}{2\pi} \Int_0^{\pi/2} d\Theta \left\{
+\sin\left( \tansico{1}{-}{+} \right)
++
+\sin\left( \tansico{1}{-}{-} \right)
+\right\}
+\end{wideeq}
+
+The x-component of wet friction is:
+\begin{wideeq}{170mm}
+F_x^w &=& - kf_L^w \Int_0^{\pi/2} d\Theta
+ \sqrsico{1}{+}{+} \sin\left( \tansico{1}{+}{+} \right) \nonumber\\
+ && - kf_L^w \Int_0^{\pi/2} d\Theta
+ \sqrsico{1}{+}{-} \sin\left( \tansico{1}{+}{-} \right) \nonumber\\
+ && + kf_T^w \Int_0^{\pi/2} d\Theta
+ \sqrsico{2}{-}{+} \sin\left( \tansico{2}{-}{+} \right) \nonumber\\
+ && + kf_T^w \Int_0^{\pi/2} d\Theta
+ \sqrsico{2}{-}{-} \sin\left( \tansico{2}{-}{-} \right)
+\end{wideeq}
+
+Similar equations hold for the y-component of the force.
+
+The following equations give the torque due to dry and wet friction:
+\begin{wideeq}{170mm}
+\tau^d &=& - r_2 \frac{\mu Mg}{2\pi} \Int_0^{\pi/2} d\Theta f_L^d
+    \sin\left(\Theta + \frac{\pi}{2} - \tansico{2}{+}{+} \right) \nonumber\\
+&& + r_2 \frac{\mu Mg}{2\pi} \Int_0^{\pi/2} d\Theta f_L^d
+    \sin\left(\Theta + \frac{\pi}{2} + \tansico{2}{+}{-} \right) \nonumber\\
+&& - r_1 \frac{\mu Mg}{2\pi} \Int_0^{\pi/2} d\Theta f_T^d
+    \sin\left(\frac{\pi}{2} - \Theta + \tansico{1}{-}{+} \right) \nonumber\\
+&& + r_1 \frac{\mu Mg}{2\pi} \Int_0^{\pi/2} d\Theta f_T^d
+    \sin\left(\frac{\pi}{2} - \Theta - \tansico{1}{-}{-} \right)
+\end{wideeq}
+
+\begin{wideeq}{170mm}
+\tau^w &=& - r_1 k f_L^w \Int_0^{\pi/2} d\Theta
+ \sqrsico{1}{+}{+} \sin\left(\Theta+\frac{\pi}{2} - \tansico{1}{+}{+} \right) \nonumber\\
+&& + r_1 k f_L^w \Int_0^{\pi/2} d\Theta
+ \sqrsico{1}{+}{-} \sin\left(\Theta+\frac{\pi}{2} + \tansico{1}{+}{-} \right) \nonumber\\
+&& - r_2 k f_T^w \Int_0^{\pi/2} d\Theta
+ \sqrsico{2}{-}{+} \sin\left(\frac{\pi}{2}-\Theta + \tansico{2}{-}{+} \right) \nonumber\\
+&& + r_2 k f_T^w \Int_0^{\pi/2} d\Theta
+ \sqrsico{2}{-}{-} \sin\left(\frac{\pi}{2}-\Theta - \tansico{2}{-}{-} \right)
+\end{wideeq}
+
+\begin{flowtext}{2}
+
+In these equations $f_L^d$ is the effective fraction of the leading semicircle
+of the rock which experiences dry friction, and similarly for $f_T^d$, etc.,
+$r_1$ and $r_2$ are the effective values of the radii of the inner and outer
+portions of the semicircle, respectively; $v_x$ and $v_y$ are the components of
+the velocity of the centre of mass of the rock; $\Theta$ in each quadrant is
+measured from the $x$-axis toward the $y$-axis, as shown in \figref{shegelski};
+and $\omega$ is the instantaneous angular speed of the rock.
+
+\Figref{shegelski} is presented to assist in understanding and appreciating the
+significance of the above equations. The figure shows the contributions
+$\vec{v}_y$, $\vec{v}_x$ and $\vec{v}_{rot}$ (with $\vec{v}_{rot} =
+\vec{r}\omega$) to the net velocity $\vec{u} \equiv \vec{u}(\Theta)$, relative
+to the ice, of a portion of the contact annulus located at the angle $\Theta$;
+note that $\vec{u} = \vec{v}_y + \vec{v}_x + \vec{v}_{rot}$, and recall that
+the velocity of the centre of mass of the rock relative to the ice is $\vec{v}
+= \vec{v}_y + \vec{v}_x$. Figure \figref{shegelski} also shows that the force
+$\vec{F}$ exerted on that portion the direction opposite to $\vec{u}$. Similar
+figures are readily structured for the other three quadrants of the rock. We
+p???\ the equations above with each of the four quadrants exp???\ displayed so
+that the reader may easily recognize the ???-bution from the four quadrants and
+further appreciate asymmetries that arise, which are responsible for the curl
+of the rock.
+
+The $x$ and $y$ components of the velocity of the rock at any time $t$ are readily obtained
+numerically from the ???\ equations along with $\vec{F} = M d\vec{v}/dt$, and
+initial conditions. The location of the rock is then obtained by using
+\begin{eqnarray}
+x(t) &=& x_0 + \Int_0^t dt' v_x(t')
+\end{eqnarray}
+and
+\begin{eqnarray}
+y(t) &=& y_0 + \Int_0^t dt' v_y(t')
+\end{eqnarray}
+
+The angular speed $\omega$ is  given by
+\begin{eqnarray}
+\omega(t) &=& \omega_0 + \Int_0^t dt' \alpha(t')
+\end{eqnarray}
+where $\tau = MR^2\alpha/2$ determines the time development of the angular
+acceleration of the rock.
+
+In the first phase of the rock's motion, we put
+$f_L^d = f_T^w = 1$,
+$f_T^d = f_L^w = 0$ and
+$r_1 = r_2 = r$.
+
+In the middle phase of the rock's motion, we put
+$f_L^d = f_T^w = f_T^d = f_L^w = 1/2$ and
+$r_1 = r - \Delta r/2$, and
+$r_2 = r + \Delta r/2$.
+
+In the final phase, we have
+$r_1 = r_2 = r$,
+$f^d = 0$, and $f^w = 1$ for $0 \le \Theta' \le \Theta'_0$, and
+$f^d = 1$, and $f^w = 0$ for $\Theta'_0 \le \Theta' \le 2\pi$, where $\Theta'$
+is measured counterclockwise from the $-x'$ direction, and $\Theta'_0$ gives
+the point on the rock where the velocity relative to the ice is radially
+outwarded from the centre of the rock.
+
+We do not have a first-priciples derivation of the function that should be used
+to describe the transition between the first and middle, and middle and last
+phases of motion. Instead we use a smooth function for the transition in
+$f_L^d$ that has the following features:
+$f_L^d \approx 1  $ for $v \ge 1.5 \meter\second^{-1}$;
+$f_L^d \approx 1/2$ for $1.5 \meter\second^{-1} \ge v \ge 1.0 \meter\second^{-1}$; and
+$f_L^d \approx 0  $ for $1.0 \meter\second^{-1} \ge v \ge 0 \meter\second^{-1}$.
+The transition from one value to the next is smooth and occurs within a full
+width of about $0.2 \meter\second^{-1}$. Small variations in the functional
+form of $f_L^d$ give only very slight changes in the results presented in the
+next section.
+
+\end{flowtext}
+}
+
+\dots
+
