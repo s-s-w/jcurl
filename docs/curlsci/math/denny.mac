@@ -69,10 +69,11 @@ SOLVE( y(T)=H, v[0]);
 tex(%, "integral.tex")$
 
 /*
- Compute v[0] at a given y != 0 from time hog-to-hog
+ Compute v[1] at a given y[1] != 0 from time hog-to-hog
 */
-tex([ y(T)=H ], "integral.tex")$
-SOLVE( y(T)=H, v[0] ); 
-tex(%, "integral.tex")$
+tex([ y(t[2])=H, y(t[1])=y[1], diff(y(t[1]),t[1])=v[1] ], "integral.tex")$
+/* SOLVE([ y(T)=y[1], diff(y(T),T)=v[1] ], [ v[1], v[0] ] ); */
+SOLVE([ y(t[2])=H, y(t[1])=y[1], diff(y(t[1]),t[1])=v[1] ], [ v[1], t[1], v[0] ] );
+tex(factor(%), "integral.tex")$
 
 quit$

@@ -70,35 +70,16 @@ y(T_H) &=& H \quad \mbox{(dist.~hog-to-hog)} \\
 \Rightarrow \quad v_0 &=& {{g\,\mu\,T_H^2+2\,H}\over{2\,T_H}}
 \end{eqnarray}
 
-If we don't want $v_0$ at the far hog but at any given distance, things get a
-little bit more complicated.
-
-Here we use \eqref{denY} at three times
-
-\medskip
-\begin{tabular}{l@{ : }l}
-$t_0          $ & our starting point \\
-$t_1 \equiv 0 $ & the rock crosses the far hog \\
-$T_H $          & time hog-to-hog
-\end{tabular}
-\medskip
-
-\noindent
-with two distances
-
-\medskip
-\begin{tabular}{l@{ : }l}
-$y_0$ & distance start-to-far-hog \\
-$H  $ & distance hog-to-hog
-\end{tabular}
-\medskip
+If we don't want $v_1$ at the far hog but at any given distance $y_1$, the following 
+equations apply:
+\begin{eqnarray}
+y(t)  &=& y_1 \\
+y'(t) &=& v_1 
+\end{eqnarray}
 
 \begin{eqnarray}
-y(t_0 - t_0) &:& 0 = 0 \\
-\eqlab{denVA}
-y(t_1 - t_0) &:& v_0 \left(-t_0 - \frac{t_0^2 \mu g}{2 v_0}\right) = -y_0 \\
-\eqlab{denVB}
-y(T_H - t_0) &:& v_0 \left(T_H-t_0 - \frac{(T_H-t_0)^2\mu g}{2v_0}\right) = H-y_0 
+v_1 &=& -{{g\,\mu\,T^2-2\,y_{1}}\over{2\,T}} \\
+v_0 &=& {{g \,\mu\,T^2+2\,y_{1}}\over{2\,T}}
 \end{eqnarray}
 
 \eqref{denVA} + \eqref{denVB}:
