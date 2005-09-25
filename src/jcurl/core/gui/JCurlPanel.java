@@ -83,7 +83,7 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
 
     private final IcePainter iceP;
 
-    private final AffineTransform mat = new AffineTransform();
+    private final AffineTransform wc_mat = new AffineTransform();
 
     private int oldHei = -1;
 
@@ -120,7 +120,7 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
      */
     public Point2D dc2wc(final Point2D dc, Point2D wc) {
         try {
-            wc = mat.inverseTransform(dc, wc);
+            wc = wc_mat.inverseTransform(dc, wc);
             wc.setLocation(wc.getX() / SCALE, wc.getY() / SCALE);
             return wc;
         } catch (NoninvertibleTransformException e) {
@@ -131,31 +131,32 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         final Graphics2D g2 = (Graphics2D) g;
-        final AffineTransform saved = g2.getTransform();
-        final int w = this.getWidth();
-        final int h = this.getHeight();
-        if (zom.hasChanged() || oldWid != w || oldHei != h) {
-            // either the wc viewport, fixpoint or dc viewport has changed:
-            // re-compute the transformation
-            mat.setToIdentity();
-            zom.applyTrafo(this.getBounds(), orient, true, mat);
-            oldWid = w;
-            oldHei = w;
-        }
-        // paint WC stuff
+        final AffineTransform dc_mat = g2.getTransform();
         g2.setRenderingHints(hints);
         // background
         g2.setPaint(iceP.color.backGround);
+        final int w = this.getWidth();
+        final int h = this.getHeight();
         g2.fillRect(0, 0, w, h);
-        g2.transform(mat);
-        { // Ice
+        {
+            // paint WC stuff
+            if (zom.hasChanged() || oldWid != w || oldHei != h) {
+                // either the wc viewport, fixpoint or dc viewport has changed:
+                // re-compute the transformation
+                wc_mat.setToIdentity();
+                zom.applyTrafo(this.getBounds(), orient, true, wc_mat);
+                oldWid = w;
+                oldHei = w;
+            }
+            g2.transform(wc_mat);
+            // Ice
             iceP.paintIce(g2);
-        }
-        { // all rocks
+            // all rocks
             rockP.paintRocks(g2, rocks, PositionSet.ALL_MASK);
         }
-        g2.setTransform(saved);
-        { // paint additional stuff
+        // additional DC stuff
+        g2.setTransform(dc_mat);
+        { // paint additional DC stuff
             g2.setColor(timeB);
             g2.fillRect(w - 70, 0, 70, 20);
             //g2.fillRect(0, 0, w, 20);
@@ -205,6 +206,6 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
         if (dc == null)
             dc = new Point2D.Float();
         dc.setLocation(wc.getX() * SCALE, wc.getY() * SCALE);
-        return mat.transform(dc, dc);
+        return wc_mat.transform(dc, dc);
     }
 }

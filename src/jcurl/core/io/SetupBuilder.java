@@ -270,7 +270,7 @@ public class SetupBuilder {
 
     public void setIceModel(final Class val) {
         log.debug(val);
-        // check is class is derived from
+        // check if class is derived from
         final Class parent = SlideStrategy.class;
         if (!parent.isAssignableFrom(val))
             throw new IllegalArgumentException("Class [" + val.getName()

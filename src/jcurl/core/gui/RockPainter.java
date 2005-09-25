@@ -84,6 +84,7 @@ public class RockPainter {
      * @param g
      * @param isDark
      * @param idx
+     * @see #paintRock(Graphics2D, Rock, boolean, int)
      */
     protected void paintRock(final Graphics2D g, final boolean isDark,
             final int idx) {
@@ -120,7 +121,7 @@ public class RockPainter {
      * @param rock
      * @param isDark
      * @param idx
-     * @see RockPainter#paintRock(Graphics2D, boolean, int)
+     * @see #paintRock(Graphics2D, boolean, int)
      */
     private void paintRock(final Graphics2D g, final Rock rock,
             final boolean isDark, final int idx) {
@@ -138,7 +139,7 @@ public class RockPainter {
     /**
      * Paint all rocks given by the mask.
      * 
-     * @see RockPainter#paintRock(Graphics2D, Rock, boolean, int)
+     * @see #paintRock(Graphics2D, Rock, boolean, int)
      * @param g
      *            graphics context
      * @param rocks

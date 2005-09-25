@@ -31,7 +31,7 @@ public class Driver {
     private static final ULogger log = LoggerFactory.getLogger(Driver.class);
 
     public static void main(String[] args) {
-        JFrame frame = new MainFrame();
+        JFrame frame = new MenuDemo();
         frame.show();
     }
 }

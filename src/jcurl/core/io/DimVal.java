@@ -78,7 +78,7 @@ class DimVal {
     }
 
     public DimVal to(final Dim dst) {
-        if (this.dim.BaseDim.getValue() != dst.BaseDim.getValue())
+        if (this.dim.BaseDim.intValue() != dst.BaseDim.intValue())
             throw new IllegalArgumentException("Units are not convertible ("
                     + this.dim.toString() + "->" + dst.toString() + ")");
         // this -> si -> dst
