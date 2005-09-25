@@ -12,29 +12,34 @@
 	to be set.
 	-->
 	
+
 	<!--************************************************************
 	**** Provide standard properties and generic targets ***********
 	*************************************************************-->
 
 	<tstamp>
-	    <format property="NOW_ISO" pattern="yyyy-MM-dd HH:mm:ss" locale="de"/>
+		<format property="NOW_ISO" pattern="yyyy-MM-dd HH:mm:ss" locale="de" />
 	</tstamp>
 	<property file="build.number" />
 	<!-- set to 0 if unset yet: -->
 	<property name="build.number" value="0" />
-	<property name="version.file" value="${major.number}.${minor.number}" />
-	<property name="version.jndi" value="${major.number}_${minor.number}" />
-	<property name="version.number" value="${major.number}.${minor.number}.${revision.number}.${build.number}" />
+	<property name="version.file" value="${version.major}.${version.minor}" />
+	<property name="version.jndi" value="${version.major}_${version.minor}" />
+	<property name="version.number" value="${version.major}.${version.minor}.${revision.version}.${build.number}" />
+
 
 	<!-- basic settings -->
+	<property file="build.properties" />
+
 	<property name="build.dir" value="build" />
 	<property name="classes.dir" value="classes" />
-	<property name="src.dir" value="src" />
+	<property name="main.src.dir" value="src" />
 	<property name="doc.dir" value="docs/api" />
 	<property name="lib.dir" value="lib" />
-	<property name="config.dir" value="config" />
+	<property name="cfg.base" value="config" />
 	<property name="reports.dir" value="reports" />
 	<property name="html.viewer" value="htmlview" />
+
 	<property name="src.encoding" value="utf-8" />
 	<property name="src.debug" value="true" />
 
@@ -44,11 +49,11 @@
 	<!--************************************************************
 	**** Generic targets *******************************************
 	*************************************************************-->
-	
+
 	<target name="init">
 		<echo>${ant.file}</echo>
 	</target>
-	
+
 	<target name="clean" depends="init" description="Remove compiled classes and documentation.">
 		<delete dir="${doc.dir}" />
 		<delete dir="${classes.dir}" />
@@ -57,16 +62,14 @@
 	</target>
 
 	<target name="compile" depends="init" description="compile all classes.">
-		<mkdir dir="${classes.dir}" />		
-		<javac classpathref="build.path" destdir="${classes.dir}" srcdir="${src.dir}" 
-		encoding="${src.encoding}" debug="${src.debug}" debuglevel="lines,vars,source"
-		compiler="javac1.4" source="1.4">
+		<mkdir dir="${classes.dir}" />
+		<javac classpathref="build.path" destdir="${classes.dir}" encoding="${src.encoding}" debug="${src.debug}" debuglevel="lines,vars,source" compiler="javac1.4" source="1.4">
 			<src>
 				<path refid="src.path" />
 			</src>
 		</javac>
 	</target>
-	
+
 	<target name="doc.view" depends="doc" description="View Documentation">
 		<exec executable="${html.viewer}" spawn="true">
 			<arg value="file://${basedir}/${doc.dir}/index.html" />
@@ -116,20 +119,20 @@
 
 	<target name="manifest.patch">
 		<!-- Implant the version number into the given manifest: -->
-		<manifest file="${config.dir}/${jar.file}/META-INF/MANIFEST.MF" mode="update">
+		<manifest file="${cfg.base}/${jar.file}/META-INF/MANIFEST.MF" mode="update">
 			<attribute name="Built-By" value="${user.name}" />
 			<attribute name="Built-Time" value="${NOW_ISO}" />
 			<attribute name="Bundle-Version" value="${version.number}" />
 			<attribute name="Bundle-Vendor" value="${vendor.name}" />
 		</manifest>
-	</target>		
+	</target>
 
 	<target name="jar.finish">
 		<!-- create the versioned jar -->
 		<move file="${build.dir}/${jar.src.file}" tofile="${build.dir}/${jar.dst.file}" />
 		<!-- ensure the manifest is in the jar. The packaging-build should set the jar-attribute 
 			filesetmanifest - but I don't see a way! -->
-		<jar destfile="${build.dir}/${jar.dst.file}" manifest="${config.dir}/${jar.src.file}/META-INF/MANIFEST.MF" index="true" update="true" />
-	</target>		
+		<jar destfile="${build.dir}/${jar.dst.file}" manifest="${cfg.base}/${jar.src.file}/META-INF/MANIFEST.MF" index="true" update="true" />
+	</target>
 	
 </project>

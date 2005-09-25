@@ -1,0 +1,79 @@
+#
+# jcurl curling simulation framework 
+# Copyright (C) 2005 M. Rohrmoser
+# 
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the
+# Free Software Foundation; either version 2 of the License, or (at your
+# option) any later version.
+# 
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+# Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+#
+# $Id$
+#
+# Generated from setup.rnc
+# About RelaxNG, see http://www.relaxng.org/compact-tutorial-20030326.html
+#
+
+namespace local = ""
+default namespace = "http://jcurl.berlios.de/schema/setup/2005/1.0"
+datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+grammar {
+start = JCurl
+
+JCurl = element jcurl {
+	Setup
+}
+
+Setup = element setup {
+	Meta,
+	element collission {
+		element loss { attribute val { xsd:double }, attribute dim { string } },
+		Model
+	},
+	element ice {
+		element drawtotee { attribute val { xsd:double }, attribute dim { string } },
+		element curl { attribute val { xsd:double }, attribute dim { string } },
+		Model
+	},
+	element positions {
+		element rock { 
+			attribute color { string },
+			attribute no {xsd:integer},
+			element x { attribute val {string}, attribute dim { string }? },
+			element y { attribute val {string}, attribute dim { string }? }
+		}+
+	},
+	element speeds {
+		element rock { 
+			attribute color { string },
+			attribute no {xsd:integer},
+			element to_x { attribute val {string}, attribute dim { string } },
+			element to_y { attribute val {string}, attribute dim { string } },
+			element speed { attribute val {string}, attribute dim { string } },
+			element a { attribute val {string}, attribute dim { string } }
+ 		}*
+	}
+}
+
+#
+# Information about the game, teams and rock thrown
+#
+Meta = 	element meta {
+		element event { string },
+		element game { string }
+}
+
+Model = element model { attribute name { string },
+		element param { attribute name { string }, attribute val { string } }*
+}
+
+}
