@@ -18,9 +18,11 @@
  */
 package jcurl.core;
 
+import java.awt.geom.Point2D;
+
+import jcurl.core.io.Dim;
 import junit.framework.TestCase;
 
-import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
 
 /**
@@ -32,7 +34,7 @@ import org.apache.ugli.ULogger;
  */
 public class PositionSetTest extends TestCase {
 
-    private static final ULogger log = LoggerFactory
+    private static final ULogger log = JCLoggerFactory
             .getLogger(PositionSetTest.class);
 
     public static void main(String[] args) {
@@ -51,5 +53,14 @@ public class PositionSetTest extends TestCase {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             a.getRock(i).setLocation(0, i * 0.5);
         assertEquals(1, PositionSet.getShotRocks(a));
+    }
+
+    public void test020_findRockAtPos() {
+        PositionSet a = PositionSet.allHome();
+        a.getRock(1).setLocation(0, 0);
+        assertEquals(1, PositionSet.findRockIndexAtPos(a, new Point2D.Float(0,
+                0)));
+        assertEquals(1, PositionSet.findRockIndexAtPos(a, new Point2D.Float(Dim
+                .f2m(0.4), 0)));
     }
 }

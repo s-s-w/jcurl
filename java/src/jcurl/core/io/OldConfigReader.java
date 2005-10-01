@@ -26,10 +26,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
+import jcurl.core.JCLoggerFactory;
 import jcurl.core.RockSet;
 import jcurl.core.dto.Ice;
 
-import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
 
 /**
@@ -42,7 +42,7 @@ import org.apache.ugli.ULogger;
  */
 public class OldConfigReader {
 
-    private static final ULogger log = LoggerFactory
+    private static final ULogger log = JCLoggerFactory
             .getLogger(OldConfigReader.class);
 
     public static OldConfigReader parse(final File file)

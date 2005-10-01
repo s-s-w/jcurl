@@ -21,6 +21,7 @@ package jcurl.core.io;
 import java.util.Map;
 import java.util.TreeMap;
 
+import jcurl.core.JCLoggerFactory;
 import jcurl.core.PositionSet;
 import jcurl.core.Rock;
 import jcurl.core.RockSet;
@@ -32,7 +33,6 @@ import jcurl.sim.core.SlideStrategy;
 import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 
-import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
 
 /**
@@ -68,7 +68,7 @@ public class SetupBuilder {
 
     private static final String GAME = "game";
 
-    private static final ULogger log = LoggerFactory
+    private static final ULogger log = JCLoggerFactory
             .getLogger(SetupBuilder.class);
 
     private static final String LOSS = "loss";

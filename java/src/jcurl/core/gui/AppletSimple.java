@@ -26,6 +26,7 @@ import java.net.URL;
 import javax.swing.JApplet;
 import javax.xml.parsers.ParserConfigurationException;
 
+import jcurl.core.JCLoggerFactory;
 import jcurl.core.PositionSet;
 import jcurl.core.Source;
 import jcurl.core.SpeedSet;
@@ -36,7 +37,6 @@ import jcurl.core.io.SetupSax;
 import jcurl.sim.model.CollissionSimple;
 import jcurl.sim.model.SlideStraight;
 
-import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
 import org.xml.sax.SAXException;
 
@@ -45,7 +45,7 @@ import org.xml.sax.SAXException;
  * @version $Id$
  */
 public class AppletSimple extends JApplet {
-    private static final ULogger log = LoggerFactory
+    private static final ULogger log = JCLoggerFactory
             .getLogger(AppletSimple.class);
 
     public void init() {
@@ -61,7 +61,8 @@ public class AppletSimple extends JApplet {
             if (true) {
                 final URL url;
                 {
-                    URL tmp = DemoSimple.class.getResource("/setup/hammy.jcx");
+                    URL tmp = JCurlPanelDemo.class
+                            .getResource("/setup/hammy.jcx");
                     if (tmp == null)
                         tmp = new URL("file", "localhost",
                                 "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup/hammy.jcx");

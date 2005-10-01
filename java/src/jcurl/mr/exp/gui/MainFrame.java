@@ -24,9 +24,9 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
+import jcurl.core.JCLoggerFactory;
 import jcurl.mr.exp.math.PointList;
 
-import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
 
 /**
@@ -35,7 +35,8 @@ import org.apache.ugli.ULogger;
  */
 public class MainFrame extends JFrame {
 
-    private static final ULogger log = LoggerFactory.getLogger(MainFrame.class);
+    private static final ULogger log = JCLoggerFactory
+            .getLogger(MainFrame.class);
 
     private final PointList curve;
 

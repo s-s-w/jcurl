@@ -28,6 +28,7 @@ import java.net.URL;
 import javax.swing.JFrame;
 import javax.xml.parsers.ParserConfigurationException;
 
+import jcurl.core.JCLoggerFactory;
 import jcurl.core.PositionSet;
 import jcurl.core.Source;
 import jcurl.core.SpeedSet;
@@ -38,7 +39,6 @@ import jcurl.core.io.SetupSax;
 import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 
-import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
 import org.xml.sax.SAXException;
 
@@ -51,26 +51,10 @@ import org.xml.sax.SAXException;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class DemoSimple extends JFrame {
+public class JCurlPanelDemo extends JFrame {
 
-    private static final ULogger log = LoggerFactory
-            .getLogger(DemoSimple.class);
-
-    private final TargetDiscrete dst;
-
-    public DemoSimple() {
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-        setTitle("CurlDemo");
-        setSize(900, 400);
-
-        final JCurlPanel mp = new JCurlPanel(null, null, null, null);
-        getContentPane().add(mp);
-        dst = mp;
-    }
+    private static final ULogger log = JCLoggerFactory
+            .getLogger(JCurlPanelDemo.class);
 
     public static void main(String[] args) throws MalformedURLException,
             ParserConfigurationException, SAXException, IOException {
@@ -78,7 +62,7 @@ public class DemoSimple extends JFrame {
         if (true) {
             final URL url;
             {
-                URL tmp = DemoSimple.class.getResource("/setup/hammy.jcx");
+                URL tmp = JCurlPanelDemo.class.getResource("/setup/hammy.jcx");
                 if (tmp == null) {
                     tmp = new URL("file", "localhost", new File(
                             "./config/jcurl.jar/setup/hammy.jcx")
@@ -104,10 +88,26 @@ public class DemoSimple extends JFrame {
             src = new SlideStraight(new CollissionSpin());
             src.reset(0, pos, speed, RockSetProps.DEFAULT);
         }
-        final DemoSimple frame = new DemoSimple();
+        final JCurlPanelDemo frame = new JCurlPanelDemo();
         // set up the keyboard handler
         frame.addKeyListener(new SimpleKeys(src, frame.dst));
         // display
         frame.show();
+    }
+
+    private final TargetDiscrete dst;
+
+    public JCurlPanelDemo() {
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+        setTitle("CurlDemo");
+        setSize(900, 400);
+
+        final JCurlPanel mp = new JCurlPanel(null, null, null, null);
+        getContentPane().add(mp);
+        dst = mp;
     }
 }

@@ -16,11 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.mr.exp.gui;
-
-import javax.swing.JFrame;
-
-import jcurl.core.JCLoggerFactory;
+package jcurl.core;
 
 import org.apache.ugli.ULogger;
 
@@ -28,11 +24,8 @@ import org.apache.ugli.ULogger;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class Driver {
-    private static final ULogger log = JCLoggerFactory.getLogger(Driver.class);
-
-    public static void main(String[] args) {
-        JFrame frame = new MenuDemo();
-        frame.show();
+public class JCLoggerFactory {
+    public static ULogger getLogger(final Class clz) {
+        return org.apache.ugli.LoggerFactory.getLogger(clz);
     }
 }

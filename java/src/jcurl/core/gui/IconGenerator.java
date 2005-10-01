@@ -44,7 +44,7 @@ public class IconGenerator {
         // Load an initial setup
         final URL url;
         {
-            URL tmp = DemoSimple.class.getResource("/setup/hammy.jcx");
+            URL tmp = JCurlPanelDemo.class.getResource("/setup/hammy.jcx");
             if (tmp == null)
                 tmp = new URL("file", "localhost",
                         "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup/hammy.jcx");

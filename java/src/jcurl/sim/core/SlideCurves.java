@@ -20,6 +20,7 @@ package jcurl.sim.core;
 
 import java.awt.geom.Point2D;
 
+import jcurl.core.JCLoggerFactory;
 import jcurl.core.PositionSet;
 import jcurl.core.Rock;
 import jcurl.core.RockSet;
@@ -31,7 +32,6 @@ import jcurl.math.CurveParts;
 import jcurl.math.MathVec;
 import jcurl.math.Polynome;
 
-import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
 
 /**
@@ -44,7 +44,7 @@ import org.apache.ugli.ULogger;
  */
 public abstract class SlideCurves extends SlideStrategy {
 
-    private static final ULogger log = LoggerFactory
+    private static final ULogger log = JCLoggerFactory
             .getLogger(SlideCurves.class);
 
     /**

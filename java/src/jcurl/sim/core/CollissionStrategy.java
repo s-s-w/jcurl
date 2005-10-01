@@ -22,13 +22,13 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
+import jcurl.core.JCLoggerFactory;
 import jcurl.core.PositionSet;
 import jcurl.core.Rock;
 import jcurl.core.RockSet;
 import jcurl.core.SpeedSet;
 import jcurl.core.dto.RockProps;
 
-import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
 
 /**
@@ -44,7 +44,7 @@ public abstract class CollissionStrategy {
 
     private static final float HIT_MAX_DIST = 1e-6F;
 
-    private static final ULogger log = LoggerFactory
+    private static final ULogger log = JCLoggerFactory
             .getLogger(CollissionStrategy.class);
 
     /** Maximum distance of two rocks [m] to consider them touching */

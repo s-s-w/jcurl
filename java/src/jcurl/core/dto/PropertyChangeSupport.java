@@ -30,7 +30,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.ugli.LoggerFactory;
+import jcurl.core.JCLoggerFactory;
+
 import org.apache.ugli.ULogger;
 
 /**
@@ -77,7 +78,7 @@ public class PropertyChangeSupport {
      */
     private static final String ALL_PROPERTIES = "**GENERAL**";
 
-    private static final ULogger log = LoggerFactory
+    private static final ULogger log = JCLoggerFactory
             .getLogger(PropertyChangeSupport.class);
 
     /**

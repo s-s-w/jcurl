@@ -24,9 +24,9 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
+import jcurl.core.JCLoggerFactory;
 import jcurl.core.PositionSet;
 
-import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
 
 /**
@@ -35,7 +35,7 @@ import org.apache.ugli.ULogger;
  */
 public class Driver extends JFrame {
 
-    private static final ULogger log = LoggerFactory.getLogger(Driver.class);
+    private static final ULogger log = JCLoggerFactory.getLogger(Driver.class);
 
     public Driver() {
         addWindowListener(new WindowAdapter() {

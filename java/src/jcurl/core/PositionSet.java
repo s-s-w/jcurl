@@ -18,9 +18,12 @@
  */
 package jcurl.core;
 
+import java.awt.geom.Point2D;
+
 import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
 import jcurl.core.io.Dim;
+import jcurl.math.MathVec;
 
 /**
  * A {@link jcurl.core.RockSet}%nbsp;with location semantics.
@@ -34,6 +37,10 @@ public class PositionSet extends RockSet {
     private static final double MaxScoreDistSq = sqr(RockProps.DEFAULT
             .getRadius()
             + Dim.f2m(6));
+
+    private static final double RR = sqr(RockProps.DEFAULT.getRadius());
+
+    private static final double RR4 = RR * 4;
 
     public static PositionSet allHome() {
         return allHome(null);
@@ -59,6 +66,40 @@ public class PositionSet extends RockSet {
             Ice.setOut(ret.light[i], false, i);
         }
         return ret;
+    }
+
+    /**
+     * @see PositionSetTest#test020_findRockAtPos()
+     * @param rocks
+     * @param pos
+     * @return
+     */
+    public static int findRockIndexAtPos(final PositionSet rocks,
+            final Point2D pos) {
+        for (int i = ROCKS_PER_SET - 1; i >= 0; i--) {
+            if (MathVec.distSqr(rocks.getRock(i), pos) <= RR)
+                return i;
+        }
+        return -1;
+    }
+
+    /**
+     * @param rocks
+     * @param pos
+     * @param myself
+     *            TODO
+     * @see PositionSetTest#test020_findRockAtPos()
+     * @return
+     */
+    public static int findRockIndexTouchingRockAtPos(final PositionSet rocks,
+            final Point2D pos, int myself) {
+        for (int i = ROCKS_PER_SET - 1; i >= 0; i--) {
+            if (i == myself)
+                continue;
+            if (MathVec.distSqr(rocks.getRock(i), pos) <= RR4)
+                return i;
+        }
+        return -1;
     }
 
     /**

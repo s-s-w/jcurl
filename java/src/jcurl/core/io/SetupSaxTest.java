@@ -25,9 +25,9 @@ import java.net.URL;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import jcurl.core.JCLoggerFactory;
 import junit.framework.TestCase;
 
-import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
 import org.xml.sax.SAXException;
 
@@ -45,7 +45,7 @@ public class SetupSaxTest extends TestCase {
 
     private static final URL baseUrl;
 
-    private static final ULogger log = LoggerFactory
+    private static final ULogger log = JCLoggerFactory
             .getLogger(SetupSaxTest.class);
     static {
         try {

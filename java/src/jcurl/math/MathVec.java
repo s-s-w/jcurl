@@ -38,11 +38,10 @@ public final class MathVec {
         return ret;
     }
 
-    public static Point2D mult(final double fact, final Point2D a, Point2D b) {
-        if (b == null)
-            b = (Point2D) a.clone();
-        b.setLocation(a.getX() * fact, a.getY() * fact);
-        return b;
+    public static double distSqr(final Point2D a, final Point2D b) {
+        final double x = a.getX() - b.getX();
+        final double y = a.getY() - b.getY();
+        return x * x + y * y;
     }
 
     public static double[] mult(final double fact, final double[] a, double[] b) {
@@ -50,6 +49,13 @@ public final class MathVec {
             b = new double[a.length];
         for (int i = a.length - 1; i >= 0; i--)
             b[i] = a[i] * fact;
+        return b;
+    }
+
+    public static Point2D mult(final double fact, final Point2D a, Point2D b) {
+        if (b == null)
+            b = (Point2D) a.clone();
+        b.setLocation(a.getX() * fact, a.getY() * fact);
         return b;
     }
 
