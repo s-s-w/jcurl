@@ -282,24 +282,26 @@ public class SetupSax extends DefaultHandler {
                         break;
                 else if ("x".equals(elem))
                     if ("positions".equals(grandParent))
-                        if ("OUT".equals(atts.getValue("val")))
-                            setup.setPosOut(currRock.idx16);
-                        else
-                            setup.setPosX(currRock.idx16, getDim(atts));
+                        setup.setPosX(currRock.idx16, getDim(atts));
                     else if ("speeds".equals(grandParent))
                         setup.setSpeedX(currRock.idx16, getDim(atts));
                     else
                         break;
                 else if ("y".equals(elem))
                     if ("positions".equals(grandParent))
-                        if ("OUT".equals(atts.getValue("val")))
-                            setup.setPosOut(currRock.idx16);
-                        else if ("NHOG".equals(atts.getValue("val")))
-                            setup.setPosNHog(currRock.idx16);
-                        else
-                            setup.setPosY(currRock.idx16, getDim(atts));
+                        setup.setPosY(currRock.idx16, getDim(atts));
                     else if ("speeds".equals(grandParent))
                         setup.setSpeedY(currRock.idx16, getDim(atts));
+                    else
+                        break;
+                else if ("out".equals(elem))
+                    if ("positions".equals(grandParent))
+                        setup.setPosOut(currRock.idx16);
+                    else
+                        break;
+                else if ("nearhog".equals(elem))
+                    if ("positions".equals(grandParent))
+                        setup.setPosNHog(currRock.idx16);
                     else
                         break;
                 else if ("to_x".equals(elem))

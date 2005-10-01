@@ -19,8 +19,7 @@
     </ice>
     <positions>
       <rock color="light" no="1">
-        <x val="OUT"/>
-        <y val="OUT"/>
+        <out/>
       </rock>
       <rock color="light" no="2">
         <x val="-1.170732" dim="ft"/>
@@ -51,12 +50,10 @@
         <y val="-1.609756" dim="ft"/>
       </rock>
       <rock color="dark" no="1">
-        <x val="OUT"/>
-        <y val="OUT"/>
+		<out/>
       </rock>
       <rock color="dark" no="2">
-        <x val="OUT"/>
-        <y val="OUT"/>
+		<out/>
       </rock>
       <rock color="dark" no="3">
         <x val="0.878049" dim="ft"/>
@@ -80,7 +77,7 @@
       </rock>
       <rock color="dark" no="8">
         <x val="3.89991" dim="ft"/>
-        <y val="NHOG"/>
+        <nearhog/>
       </rock>
     </positions>
     <speeds>

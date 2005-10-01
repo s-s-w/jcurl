@@ -26,6 +26,9 @@ import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +46,17 @@ import jcurl.core.TargetDiscrete;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class JCurlPanel extends JPanel implements TargetDiscrete {
+public class JCurlPanel extends JPanel implements TargetDiscrete,
+        PropertyChangeListener {
+
+    public void propertyChange(PropertyChangeEvent evt) {
+        final Object tmp = evt.getNewValue();
+        if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass())) {
+            rocks = (PositionSet) tmp;
+            // TODO decide the time stuff
+            repaint();
+        }
+    }
 
     private static final Map hints = new HashMap();
 
@@ -128,29 +141,39 @@ public class JCurlPanel extends JPanel implements TargetDiscrete {
         }
     }
 
+    private BufferedImage img = null;
+
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         final Graphics2D g2 = (Graphics2D) g;
         final AffineTransform dc_mat = g2.getTransform();
         g2.setRenderingHints(hints);
-        // background
-        g2.setPaint(iceP.color.backGround);
         final int w = this.getWidth();
         final int h = this.getHeight();
-        g2.fillRect(0, 0, w, h);
         {
-            // paint WC stuff
+            // paint WC stuff (ice and rocks)
             if (zom.hasChanged() || oldWid != w || oldHei != h) {
                 // either the wc viewport, fixpoint or dc viewport has changed:
                 // re-compute the transformation
                 wc_mat.setToIdentity();
                 zom.applyTrafo(this.getBounds(), orient, true, wc_mat);
                 oldWid = w;
-                oldHei = w;
+                oldHei = h;
+                // re-build the background image
+                img = new BufferedImage(w, h, BufferedImage.TYPE_USHORT_555_RGB);
+                //img = new BufferedImage(w, h,
+                // BufferedImage.TYPE_BYTE_INDEXED);
+                final Graphics2D gi = (Graphics2D) img.getGraphics();
+                gi.setRenderingHints(hints);
+                // background
+                gi.setPaint(iceP.color.backGround);
+                gi.fillRect(0, 0, w, h);
+                gi.transform(wc_mat);
+                // Ice
+                iceP.paintIce(gi);
             }
+            g2.drawImage(img, null, 0, 0);
             g2.transform(wc_mat);
-            // Ice
-            iceP.paintIce(g2);
             // all rocks
             rockP.paintRocks(g2, rocks, PositionSet.ALL_MASK);
         }

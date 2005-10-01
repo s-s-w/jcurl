@@ -111,7 +111,7 @@ public abstract class CollissionStrategy {
         final AffineTransform mat = new AffineTransform();
         for (int B = 0; B < RockSet.ROCKS_PER_SET; B++) {
             for (int A = 0; A < B; A++) {
-                if(log.isDebugEnabled())
+                if (log.isDebugEnabled())
                     log.debug("Compute hit " + A + "<->" + B);
                 if (compute(pos.getRock(A), pos.getRock(B), speed.getRock(A),
                         speed.getRock(B), mat)) {

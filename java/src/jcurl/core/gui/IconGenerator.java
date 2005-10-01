@@ -27,6 +27,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.xml.parsers.ParserConfigurationException;
 
+import jcurl.core.PositionSet;
 import jcurl.core.io.SetupBuilder;
 import jcurl.core.io.SetupSax;
 
@@ -40,10 +41,6 @@ public class IconGenerator {
 
     public static void main(String[] args) throws ParserConfigurationException,
             SAXException, IOException {
-        // Create image and graphics.
-        final BufferedImage img = new BufferedImage(150, 300,
-                BufferedImage.TYPE_INT_ARGB);
-        final Graphics g = img.getGraphics();
         // Load an initial setup
         final URL url;
         {
@@ -55,11 +52,25 @@ public class IconGenerator {
         }
         final SetupBuilder setup = SetupSax.parse(url);
 
-        final JCurlPanel jp = new JCurlPanel(setup.getPos(), Zoomer.HOUSE,
-                null, null);
+        savePng(setup.getPos(), Zoomer.HOUSE2HACK, new File("/tmp/jcurl.png"));
+    }
+
+    /**
+     * @param loc
+     * @param zoom
+     * @param dst
+     * @throws IOException
+     */
+    public static void savePng(final PositionSet loc, final Zoomer zoom,
+            final File dst) throws IOException {
+        // Create image and graphics.
+        final BufferedImage img = new BufferedImage(1024, 768,
+                BufferedImage.TYPE_INT_RGB);
+        final Graphics g = img.getGraphics();
+        final JCurlPanel jp = new JCurlPanel(loc, zoom, null, null);
         jp.setSize(img.getWidth(), img.getHeight());
         jp.paintComponent(g);
         g.dispose();
-        ImageIO.write(img, "png", new File("/tmp/jcurl.png"));
+        ImageIO.write(img, "png", dst);
     }
 }

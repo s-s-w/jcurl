@@ -53,7 +53,8 @@ import org.xml.sax.SAXException;
  */
 public class DemoSimple extends JFrame {
 
-    private static final ULogger log = LoggerFactory.getLogger(DemoSimple.class);
+    private static final ULogger log = LoggerFactory
+            .getLogger(DemoSimple.class);
 
     private final TargetDiscrete dst;
 
@@ -79,17 +80,18 @@ public class DemoSimple extends JFrame {
             {
                 URL tmp = DemoSimple.class.getResource("/setup/hammy.jcx");
                 if (tmp == null) {
-                    tmp = new URL(
-                            "file",
-                            "localhost",
-                            new File("./config/jcurl.jar/setup/hammy.jcx").getAbsolutePath());
+                    tmp = new URL("file", "localhost", new File(
+                            "./config/jcurl.jar/setup/hammy.jcx")
+                            .getAbsolutePath());
                 }
                 url = tmp;
             }
             log.info("Loading setup [" + url + "]");
             final SetupBuilder setup = SetupSax.parse(url);
             src = setup.getSlide();
-            src.reset(0, setup.getPos(), setup.getSpeed(), RockSetProps.DEFAULT);
+            src
+                    .reset(0, setup.getPos(), setup.getSpeed(),
+                            RockSetProps.DEFAULT);
         } else {
             // initial state
             final PositionSet pos = PositionSet.allOut();

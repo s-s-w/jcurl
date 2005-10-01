@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core.util;
+package jcurl.core.io;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -35,14 +35,14 @@ import org.xml.sax.helpers.AttributesImpl;
 /**
  * JUnit Test
  * 
- * @see jcurl.core.util.XmlSimpleWriter
+ * @see jcurl.core.io.XmlSerializer
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: XmlSimpleWriterTest.java 92 2005-03-30 14:41:20Z mrohrmoser $
  */
-public class XmlSimpleWriterTest extends TestCase {
+public class XmlSerializerTest extends TestCase {
 
     public static void main(String[] args) {
-        junit.textui.TestRunner.run(XmlSimpleWriterTest.class);
+        junit.textui.TestRunner.run(XmlSerializerTest.class);
     }
 
     private static String xmlEncode(final String s) {
@@ -109,8 +109,7 @@ public class XmlSimpleWriterTest extends TestCase {
     public void test008_TrivialDefaultEncoding() throws SAXException {
         final StringBuffer exp = new StringBuffer();
         final StringWriter writ = new StringWriter();
-        final XmlSimpleWriter.Content dst = new XmlSimpleWriter.Content(writ,
-                false);
+        final XmlSerializer dst = new XmlSerializer(writ, false);
 
         dst.startDocument();
         dst.startElement(null, null, "root", null);
@@ -133,8 +132,7 @@ public class XmlSimpleWriterTest extends TestCase {
             final String enc = encodings[encIdx];
             final StringBuffer exp = new StringBuffer();
             final ByteArrayOutputStream outStr = new ByteArrayOutputStream();
-            final XmlSimpleWriter.Content dst = new XmlSimpleWriter.Content(
-                    outStr, enc, false);
+            final XmlSerializer dst = new XmlSerializer(outStr, enc, false);
 
             dst.startDocument();
             dst.startElement(null, null, "root", null);
@@ -157,8 +155,7 @@ public class XmlSimpleWriterTest extends TestCase {
     public void test010_NoNamespace() throws IOException, SAXException {
         final StringBuffer exp = new StringBuffer();
         final StringWriter writ = new StringWriter();
-        final XmlSimpleWriter.Content dst = new XmlSimpleWriter.Content(writ,
-                false);
+        final XmlSerializer dst = new XmlSerializer(writ, false);
 
         dst.startDocument();
         AttributesImpl atts = new AttributesImpl();
@@ -206,8 +203,7 @@ public class XmlSimpleWriterTest extends TestCase {
     }
 
     public void test015_NonWellFormed() throws SAXException {
-        XmlSimpleWriter.Content dst = new XmlSimpleWriter.Content(
-                new StringWriter(), true);
+        XmlSerializer dst = new XmlSerializer(new StringWriter(), true);
 
         dst.startDocument();
         dst.startElement(null, null, "root", null);
@@ -242,8 +238,7 @@ public class XmlSimpleWriterTest extends TestCase {
         final String NS2 = "myOtherNamespace2";
         final StringBuffer exp = new StringBuffer();
         final StringWriter writ = new StringWriter();
-        final XmlSimpleWriter.Content dst = new XmlSimpleWriter.Content(writ,
-                false);
+        final XmlSerializer dst = new XmlSerializer(writ, false);
 
         dst.startDocument();
         AttributesImpl atts = new AttributesImpl();
@@ -305,8 +300,7 @@ public class XmlSimpleWriterTest extends TestCase {
         final String P2 = "p2";
         final StringBuffer exp = new StringBuffer();
         final StringWriter writ = new StringWriter();
-        final XmlSimpleWriter.Content dst = new XmlSimpleWriter.Content(writ,
-                false);
+        final XmlSerializer dst = new XmlSerializer(writ, false);
 
         dst.startDocument();
         AttributesImpl atts = new AttributesImpl();
