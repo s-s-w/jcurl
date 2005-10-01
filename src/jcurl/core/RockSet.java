@@ -20,6 +20,7 @@ package jcurl.core;
 
 import java.io.Serializable;
 
+import jcurl.core.dto.MutableObject;
 import jcurl.core.dto.RockFloat;
 
 /**
@@ -28,7 +29,8 @@ import jcurl.core.dto.RockFloat;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class RockSet implements Cloneable, Serializable {
+public abstract class RockSet extends MutableObject implements Cloneable,
+        Serializable {
 
     public static final int ALL_MASK = 0xFFFF;
 
@@ -153,5 +155,9 @@ public abstract class RockSet implements Cloneable, Serializable {
         if (i % 2 == 0)
             return dark[i / 2];
         return light[i / 2];
+    }
+
+    public void notifyChange() {
+        propChange.firePropertyChange("this", this, this);
     }
 }

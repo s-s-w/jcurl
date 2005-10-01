@@ -49,7 +49,9 @@ Setup = element setup {
 			attribute color { string },
 			attribute no {xsd:integer},
 			element x { attribute val {string}, attribute dim { string }? },
-			element y { attribute val {string}, attribute dim { string }? }
+			element y { attribute val {string}, attribute dim { string }? },
+			element out {},
+			element nearhog {}
 		}+
 	},
 	element speeds {

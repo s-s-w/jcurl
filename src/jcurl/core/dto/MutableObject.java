@@ -73,8 +73,7 @@ public abstract class MutableObject extends TransferObject implements
     /**
      * @see java.lang.Object#hashCode()
      */
-    public abstract int hashCode();
-
+    //public abstract int hashCode();
     /**
      * Removes a PropertyChangeListener to the listener list.
      * 
@@ -98,5 +97,9 @@ public abstract class MutableObject extends TransferObject implements
     public void removePropertyChangeListener(final String property,
             final PropertyChangeListener listener) {
         propChange.removePropertyChangeListener(property, listener);
+    }
+
+    protected void fire(final String property) {
+
     }
 }
