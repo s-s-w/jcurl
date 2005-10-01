@@ -22,6 +22,7 @@ import java.awt.geom.Point2D;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import jcurl.core.JCLoggerFactory;
 import jcurl.core.PositionSet;
 import jcurl.core.Rock;
 import jcurl.core.RockSet;
@@ -32,7 +33,6 @@ import jcurl.core.dto.RockProps;
 import jcurl.core.dto.RockSetProps;
 import jcurl.math.MathVec;
 
-import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
 
 /**
@@ -45,7 +45,7 @@ import org.apache.ugli.ULogger;
  */
 public abstract class SlideStrategy implements Source {
 
-    private static final ULogger log = LoggerFactory
+    private static final ULogger log = JCLoggerFactory
             .getLogger(SlideStrategy.class);
 
     private static final float outY = -(Ice.BACK_2_TEE + RockProps.DEFAULT

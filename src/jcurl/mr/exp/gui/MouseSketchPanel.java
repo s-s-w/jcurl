@@ -29,9 +29,9 @@ import java.util.Iterator;
 
 import javax.swing.JPanel;
 
+import jcurl.core.JCLoggerFactory;
 import jcurl.mr.exp.math.PointList;
 
-import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
 
 /**
@@ -67,7 +67,7 @@ public class MouseSketchPanel extends JPanel implements KeyListener {
         g.drawArc(x - r, y - r, d, d, 0, 360);
     }
 
-    private static final ULogger log = LoggerFactory
+    private static final ULogger log = JCLoggerFactory
             .getLogger(MouseSketchPanel.class);
 
     /**

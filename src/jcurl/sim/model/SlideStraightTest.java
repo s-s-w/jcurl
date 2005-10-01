@@ -18,6 +18,7 @@
  */
 package jcurl.sim.model;
 
+import jcurl.core.JCLoggerFactory;
 import jcurl.core.PositionSet;
 import jcurl.core.Rock;
 import jcurl.core.Source;
@@ -28,7 +29,6 @@ import jcurl.math.CurveBase;
 import jcurl.math.Polynome;
 import junit.framework.TestCase;
 
-import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
 
 /**
@@ -39,7 +39,7 @@ import org.apache.ugli.ULogger;
  * @version $Id$
  */
 public class SlideStraightTest extends TestCase {
-    private static final ULogger log = LoggerFactory
+    private static final ULogger log = JCLoggerFactory
             .getLogger(SlideStraightTest.class);
 
     public static void main(String[] args) {

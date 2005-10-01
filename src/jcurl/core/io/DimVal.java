@@ -21,7 +21,8 @@ package jcurl.core.io;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.ugli.LoggerFactory;
+import jcurl.core.JCLoggerFactory;
+
 import org.apache.ugli.ULogger;
 
 /**
@@ -32,7 +33,7 @@ import org.apache.ugli.ULogger;
  * @version $Id$
  */
 class DimVal {
-    private static final ULogger log = LoggerFactory.getLogger(DimVal.class);
+    private static final ULogger log = JCLoggerFactory.getLogger(DimVal.class);
 
     public static final Pattern pat = Pattern
             .compile("^(-?[0-9]+([.][0-9]+)?(e-?[0-9]+)?)(.*)$");

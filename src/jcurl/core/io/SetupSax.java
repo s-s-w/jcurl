@@ -31,9 +31,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import jcurl.core.JCLoggerFactory;
 import jcurl.core.RockSet;
 
-import org.apache.ugli.LoggerFactory;
 import org.apache.ugli.ULogger;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -74,7 +74,8 @@ public class SetupSax extends DefaultHandler {
         }
     }
 
-    private static final ULogger log = LoggerFactory.getLogger(SetupSax.class);
+    private static final ULogger log = JCLoggerFactory
+            .getLogger(SetupSax.class);
 
     private static SAXParserFactory spf = null;
 

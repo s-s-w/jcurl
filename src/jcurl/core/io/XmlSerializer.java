@@ -25,7 +25,8 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.Stack;
 
-import org.apache.ugli.LoggerFactory;
+import jcurl.core.JCLoggerFactory;
+
 import org.apache.ugli.ULogger;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -50,7 +51,7 @@ public class XmlSerializer implements ContentHandler {
      * @version $Id: XmlSimpleWriter.java 92 2005-03-30 14:41:20Z mrohrmoser $
      */
     public static class ErrHandler implements ErrorHandler {
-        private static final ULogger log = LoggerFactory
+        private static final ULogger log = JCLoggerFactory
                 .getLogger(ErrHandler.class);
 
         public void error(final SAXParseException e) throws SAXParseException {

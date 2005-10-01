@@ -48,12 +48,12 @@ public abstract class RockSet extends MutableObject implements Cloneable,
         return ret;
     }
 
-    public static RockSet copy(final RockSet a, final RockSet b) {
+    public static RockSet copy(final RockSet src, final RockSet dst) {
         for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
-            b.dark[i] = (Rock) (a.dark[i].clone());
-            b.light[i] = (Rock) (a.light[i].clone());
+            dst.dark[i] = (Rock) (src.dark[i].clone());
+            dst.light[i] = (Rock) (src.light[i].clone());
         }
-        return b;
+        return dst;
     }
 
     public static int countBits(int a) {
@@ -158,6 +158,6 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     }
 
     public void notifyChange() {
-        propChange.firePropertyChange("this", this, this);
+        propChange.firePropertyChange("rock", null, this);
     }
 }
