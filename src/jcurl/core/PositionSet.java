@@ -71,7 +71,7 @@ public class PositionSet extends RockSet {
      * @see PositionSetTest#test020_findRockAtPos()
      * @param rocks
      * @param pos
-     * @return <code>-1</code> if none 
+     * @return <code>-1</code> if none
      */
     public static int findRockIndexAtPos(final PositionSet rocks,
             final Point2D pos) {
@@ -87,7 +87,7 @@ public class PositionSet extends RockSet {
      * @param rocks
      * @param pos
      * @param myself
-     * @return <code>-1</code> if none 
+     * @return <code>-1</code> if none
      */
     public static int findRockIndexTouchingRockAtPos(final PositionSet rocks,
             final Point2D pos, int myself) {
@@ -108,20 +108,35 @@ public class PositionSet extends RockSet {
      * @see PositionSetTest#test010_getShotRocks()
      */
     public static int getShotRocks(final PositionSet a) {
-        int ret = 0;
-        int scoring = 0;
-        double scoreDistSq = MaxScoreDistSq;
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            final double distSq = a.getRock(i).distanceSq(0, 0);
-            if (distSq < scoreDistSq) {
-                if ((i % 2) != scoring) {
-                    // if the scoring color changes start anew
-                    ret = 0;
-                    scoring = (i % 2);
-                }
-                ret |= (1 << i);
-                scoreDistSq = distSq;
+        final int scorer;
+        final double scoreDistSq;
+        {
+            // first get the best rock's distance square for each dark and
+            // light.
+            double distDarkSq = MaxScoreDistSq;
+            double distLightSq = MaxScoreDistSq;
+            for (int i = RockSet.ROCKS_PER_COLOR - 1; i >= 0; i--) {
+                double distSq = a.getDark(i).distanceSq(0, 0);
+                if (distSq < distDarkSq)
+                    distDarkSq = distSq;
+                distSq = a.getLight(i).distanceSq(0, 0);
+                if (distSq < distLightSq)
+                    distLightSq = distSq;
             }
+            if (distDarkSq == distLightSq)
+                return 0;
+            // who scores?
+            scorer = distDarkSq < distLightSq ? 0 : 1;
+            // limiting distance
+            scoreDistSq = distDarkSq > distLightSq ? distDarkSq : distLightSq;
+        }
+        int ret = 0;
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+            if (i % 2 != scorer)
+                continue;
+            double distSq = a.getRock(i).distanceSq(0, 0);
+            if (distSq <= scoreDistSq)
+                ret |= 1 << i;
         }
         return ret;
     }

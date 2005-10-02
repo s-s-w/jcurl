@@ -43,7 +43,7 @@ import org.xml.sax.SAXParseException;
  * @see XmlSerializerTest
  * @author m
  */
-public class XmlSerializer implements ContentHandler {
+public class XmlSerializerBase implements ContentHandler {
     /**
      * Helper class to make xml validation errors catastrophic.
      * 
@@ -86,14 +86,14 @@ public class XmlSerializer implements ContentHandler {
 
     private final Writer target;
 
-    public XmlSerializer(final OutputStream stream, final String encoding,
+    public XmlSerializerBase(final OutputStream stream, final String encoding,
             final boolean indent) throws UnsupportedEncodingException {
         this.target = new OutputStreamWriter(stream, encoding);
         this.encoding = encoding;
         this.indent = indent;
     }
 
-    public XmlSerializer(final Writer target, final boolean indent) {
+    public XmlSerializerBase(final Writer target, final boolean indent) {
         this.target = target;
         this.encoding = null;
         this.indent = indent;

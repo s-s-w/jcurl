@@ -45,12 +45,12 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * Just do XML parsing and hand values to {@link jcurl.core.io.SetupBuilder}.
  * 
- * @see jcurl.core.io.SetupSaxTest
+ * @see jcurl.core.io.SetupSaxDeSerTest
  * @see jcurl.core.io.OldConfigReader
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SetupSax extends DefaultHandler {
+public class SetupSaxDeSer extends DefaultHandler {
     private static final class RockIdx {
         public final int idx16;
 
@@ -75,7 +75,7 @@ public class SetupSax extends DefaultHandler {
     }
 
     private static final ULogger log = JCLoggerFactory
-            .getLogger(SetupSax.class);
+            .getLogger(SetupSaxDeSer.class);
 
     private static SAXParserFactory spf = null;
 
@@ -104,7 +104,7 @@ public class SetupSax extends DefaultHandler {
     public static SetupBuilder parse(final InputSource in)
             throws ParserConfigurationException, SAXException, IOException {
         final SetupBuilder ret = new SetupBuilder();
-        newParser().parse(in, new SetupSax(ret));
+        newParser().parse(in, new SetupSaxDeSer(ret));
         return ret;
     }
 
@@ -135,7 +135,7 @@ public class SetupSax extends DefaultHandler {
 
     private final SetupBuilder setup;
 
-    private SetupSax(final SetupBuilder setup) {
+    private SetupSaxDeSer(final SetupBuilder setup) {
         this.setup = setup;
     }
 

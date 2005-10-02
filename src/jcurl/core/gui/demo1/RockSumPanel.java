@@ -39,6 +39,7 @@ import jcurl.core.gui.RockPainter.ColorSet;
 import org.apache.ugli.ULogger;
 
 /**
+ * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

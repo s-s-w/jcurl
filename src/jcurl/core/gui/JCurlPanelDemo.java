@@ -35,7 +35,7 @@ import jcurl.core.SpeedSet;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.dto.RockSetProps;
 import jcurl.core.io.SetupBuilder;
-import jcurl.core.io.SetupSax;
+import jcurl.core.io.SetupSaxDeSer;
 import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 
@@ -71,7 +71,7 @@ public class JCurlPanelDemo extends JFrame {
                 url = tmp;
             }
             log.info("Loading setup [" + url + "]");
-            final SetupBuilder setup = SetupSax.parse(url);
+            final SetupBuilder setup = SetupSaxDeSer.parse(url);
             src = setup.getSlide();
             src
                     .reset(0, setup.getPos(), setup.getSpeed(),

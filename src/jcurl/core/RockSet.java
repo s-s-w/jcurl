@@ -108,7 +108,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     }
 
     /**
-     * Convert rock color and index per colot to index per set.
+     * Convert rock color and index per color to index per set.
      * 
      * @param isDark
      * @param idx8
