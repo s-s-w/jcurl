@@ -23,7 +23,6 @@ import java.awt.geom.Point2D;
 import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
 import jcurl.core.io.Dim;
-import jcurl.math.MathVec;
 
 /**
  * A {@link jcurl.core.RockSet}%nbsp;with location semantics.
@@ -72,31 +71,30 @@ public class PositionSet extends RockSet {
      * @see PositionSetTest#test020_findRockAtPos()
      * @param rocks
      * @param pos
-     * @return
+     * @return <code>-1</code> if none 
      */
     public static int findRockIndexAtPos(final PositionSet rocks,
             final Point2D pos) {
         for (int i = ROCKS_PER_SET - 1; i >= 0; i--) {
-            if (MathVec.distSqr(rocks.getRock(i), pos) <= RR)
+            if (rocks.getRock(i).distanceSq(pos) <= RR)
                 return i;
         }
         return -1;
     }
 
     /**
+     * 
      * @param rocks
      * @param pos
      * @param myself
-     *            TODO
-     * @see PositionSetTest#test020_findRockAtPos()
-     * @return
+     * @return <code>-1</code> if none 
      */
     public static int findRockIndexTouchingRockAtPos(final PositionSet rocks,
             final Point2D pos, int myself) {
         for (int i = ROCKS_PER_SET - 1; i >= 0; i--) {
             if (i == myself)
                 continue;
-            if (MathVec.distSqr(rocks.getRock(i), pos) <= RR4)
+            if (rocks.getRock(i).distanceSq(pos) <= RR4)
                 return i;
         }
         return -1;
@@ -107,6 +105,7 @@ public class PositionSet extends RockSet {
      * 
      * @param a
      * @return bitmask of the shot rocks.
+     * @see PositionSetTest#test010_getShotRocks()
      */
     public static int getShotRocks(final PositionSet a) {
         int ret = 0;
@@ -115,12 +114,12 @@ public class PositionSet extends RockSet {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             final double distSq = a.getRock(i).distanceSq(0, 0);
             if (distSq < scoreDistSq) {
-                if (i % 2 != scoring) {
+                if ((i % 2) != scoring) {
                     // if the scoring color changes start anew
                     ret = 0;
-                    scoring = i % 2;
+                    scoring = (i % 2);
                 }
-                ret |= 1 << i;
+                ret |= (1 << i);
                 scoreDistSq = distSq;
             }
         }

@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core.gui;
+package jcurl.core.gui.demo1;
 
 import java.awt.Cursor;
 import java.awt.event.MouseEvent;
@@ -25,6 +25,7 @@ import java.awt.geom.Point2D;
 
 import jcurl.core.JCLoggerFactory;
 import jcurl.core.PositionSet;
+import jcurl.core.gui.RockMotionPanel;
 
 import org.apache.ugli.ULogger;
 
@@ -53,7 +54,7 @@ public class SetupController implements MouseMotionListener {
     /**
      * 
      * @param model
-     *            final
+     *            final. Sets the <code>panel</code>'s model.
      * @param panel
      *            required for wc <->dc conversion. Repaint is triggered via
      *            {@link jcurl.core.RockSet#notifyChange()}.
