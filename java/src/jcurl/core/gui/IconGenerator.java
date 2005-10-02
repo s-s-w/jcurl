@@ -29,7 +29,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import jcurl.core.PositionSet;
 import jcurl.core.io.SetupBuilder;
-import jcurl.core.io.SetupSax;
+import jcurl.core.io.SetupSaxDeSer;
 
 import org.xml.sax.SAXException;
 
@@ -50,7 +50,7 @@ public class IconGenerator {
                         "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup/hammy.jcx");
             url = tmp;
         }
-        final SetupBuilder setup = SetupSax.parse(url);
+        final SetupBuilder setup = SetupSaxDeSer.parse(url);
 
         savePng(setup.getPos(), Zoomer.HOUSE2HACK, new File("/tmp/jcurl.png"));
     }

@@ -25,16 +25,20 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.swing.AbstractAction;
+import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import jcurl.core.JCLoggerFactory;
@@ -42,8 +46,11 @@ import jcurl.core.PositionSet;
 import jcurl.core.RockSet;
 import jcurl.core.SpeedSet;
 import jcurl.core.gui.RockMotionPanel;
+import jcurl.core.gui.Zoomer;
+import jcurl.core.io.SetupSaxSer;
 
 import org.apache.ugli.ULogger;
+import org.xml.sax.SAXException;
 
 /**
  * A simple viewer that brings all together.
@@ -86,7 +93,12 @@ public class RockMotionPanelDemo extends JFrame {
         con.add(panel, "Center");
         con.add(new RockSumPanel(model), "West");
         con.add(new RockSumPanel(model), "East");
-        con.add(new JButton("Exit"), "South");
+        final Box b = Box.createHorizontalBox();
+        b.add(Box.createVerticalStrut(75));
+        b.add(new RockMotionPanel(model, Zoomer.HOG2HACK, null, null));
+        con.add(b, "South");
+        //        con.add(new RockMotionPanel(model, Zoomer.HOG2HACK, null, null),
+        //                "South");
         setJMenuBar(createMenu());
         setTitle(this.getClass().getName());
         setSize(900, 400);
@@ -127,6 +139,14 @@ public class RockMotionPanelDemo extends JFrame {
 
     void cmdSave() {
         log.info("");
+        try {
+            final SetupSaxSer ser = new SetupSaxSer(new File("/tmp/setup.jcx"));
+            ser.write(model);
+        } catch (SAXException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     void cmdSaveAs() {

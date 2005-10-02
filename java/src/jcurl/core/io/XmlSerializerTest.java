@@ -35,7 +35,7 @@ import org.xml.sax.helpers.AttributesImpl;
 /**
  * JUnit Test
  * 
- * @see jcurl.core.io.XmlSerializer
+ * @see jcurl.core.io.XmlSerializerBase
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id: XmlSimpleWriterTest.java 92 2005-03-30 14:41:20Z mrohrmoser $
  */
@@ -109,7 +109,7 @@ public class XmlSerializerTest extends TestCase {
     public void test008_TrivialDefaultEncoding() throws SAXException {
         final StringBuffer exp = new StringBuffer();
         final StringWriter writ = new StringWriter();
-        final XmlSerializer dst = new XmlSerializer(writ, false);
+        final XmlSerializerBase dst = new XmlSerializerBase(writ, false);
 
         dst.startDocument();
         dst.startElement(null, null, "root", null);
@@ -132,7 +132,7 @@ public class XmlSerializerTest extends TestCase {
             final String enc = encodings[encIdx];
             final StringBuffer exp = new StringBuffer();
             final ByteArrayOutputStream outStr = new ByteArrayOutputStream();
-            final XmlSerializer dst = new XmlSerializer(outStr, enc, false);
+            final XmlSerializerBase dst = new XmlSerializerBase(outStr, enc, false);
 
             dst.startDocument();
             dst.startElement(null, null, "root", null);
@@ -155,7 +155,7 @@ public class XmlSerializerTest extends TestCase {
     public void test010_NoNamespace() throws IOException, SAXException {
         final StringBuffer exp = new StringBuffer();
         final StringWriter writ = new StringWriter();
-        final XmlSerializer dst = new XmlSerializer(writ, false);
+        final XmlSerializerBase dst = new XmlSerializerBase(writ, false);
 
         dst.startDocument();
         AttributesImpl atts = new AttributesImpl();
@@ -203,7 +203,7 @@ public class XmlSerializerTest extends TestCase {
     }
 
     public void test015_NonWellFormed() throws SAXException {
-        XmlSerializer dst = new XmlSerializer(new StringWriter(), true);
+        XmlSerializerBase dst = new XmlSerializerBase(new StringWriter(), true);
 
         dst.startDocument();
         dst.startElement(null, null, "root", null);
@@ -238,7 +238,7 @@ public class XmlSerializerTest extends TestCase {
         final String NS2 = "myOtherNamespace2";
         final StringBuffer exp = new StringBuffer();
         final StringWriter writ = new StringWriter();
-        final XmlSerializer dst = new XmlSerializer(writ, false);
+        final XmlSerializerBase dst = new XmlSerializerBase(writ, false);
 
         dst.startDocument();
         AttributesImpl atts = new AttributesImpl();
@@ -300,7 +300,7 @@ public class XmlSerializerTest extends TestCase {
         final String P2 = "p2";
         final StringBuffer exp = new StringBuffer();
         final StringWriter writ = new StringWriter();
-        final XmlSerializer dst = new XmlSerializer(writ, false);
+        final XmlSerializerBase dst = new XmlSerializerBase(writ, false);
 
         dst.startDocument();
         AttributesImpl atts = new AttributesImpl();

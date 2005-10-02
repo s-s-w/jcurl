@@ -38,7 +38,7 @@ import org.apache.ugli.ULogger;
 /**
  * Accumulate setup data.
  * 
- * @see jcurl.core.io.SetupSax
+ * @see jcurl.core.io.SetupSaxDeSer
  * @see jcurl.core.io.OldConfigReader
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$

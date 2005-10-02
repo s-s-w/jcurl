@@ -34,11 +34,11 @@ import org.xml.sax.SAXException;
 /**
  * JUnit test.
  * 
- * @see jcurl.core.io.SetupSax
+ * @see jcurl.core.io.SetupSaxDeSer
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SetupSaxTest extends TestCase {
+public class SetupSaxDeSerTest extends TestCase {
 
     private static final File base = new File(
             "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup");
@@ -46,7 +46,7 @@ public class SetupSaxTest extends TestCase {
     private static final URL baseUrl;
 
     private static final ULogger log = JCLoggerFactory
-            .getLogger(SetupSaxTest.class);
+            .getLogger(SetupSaxDeSerTest.class);
     static {
         try {
             baseUrl = base.toURL();
@@ -56,22 +56,22 @@ public class SetupSaxTest extends TestCase {
     }
 
     public static void main(String[] args) {
-        junit.textui.TestRunner.run(SetupSaxTest.class);
+        junit.textui.TestRunner.run(SetupSaxDeSerTest.class);
     }
 
     public void test010_parse() throws ParserConfigurationException,
             SAXException, IOException {
-        SetupBuilder so = SetupSax.parse(new File(base, "hammy.jcx"));
+        SetupBuilder so = SetupSaxDeSer.parse(new File(base, "hammy.jcx"));
         assertNotNull(so);
-        so = SetupSax.parse(new URL(baseUrl, "hammy.jcx"));
+        so = SetupSaxDeSer.parse(new URL(baseUrl, "hammy.jcx"));
         assertNotNull(so);
     }
 
     public void test020_parseZ() throws ParserConfigurationException,
             SAXException, IOException {
-        SetupBuilder so = SetupSax.parse(new File(base, "hammy.jcz"));
+        SetupBuilder so = SetupSaxDeSer.parse(new File(base, "hammy.jcz"));
         assertNotNull(so);
-        so = SetupSax.parse(new URL(baseUrl, "hammy.jcz"));
+        so = SetupSaxDeSer.parse(new URL(baseUrl, "hammy.jcz"));
         assertNotNull(so);
     }
 }
