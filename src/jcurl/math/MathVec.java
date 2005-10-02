@@ -33,15 +33,31 @@ public final class MathVec {
     }
 
     public static Point2D add(final Point2D a, final Point2D b, final Point2D c) {
-        final Point2D ret = c == null ? new Point2D.Float() : c;
+        final Point2D ret = ensureInstance(a, c);
         ret.setLocation(a.getX() + b.getX(), a.getY() + b.getY());
         return ret;
     }
 
-    public static double distSqr(final Point2D a, final Point2D b) {
-        final double x = a.getX() - b.getX();
-        final double y = a.getY() - b.getY();
-        return x * x + y * y;
+    /**
+     * Ensure c isn't <code>null</code>, if so create a new instance of the
+     * type of <code>template</code>.
+     * 
+     * @param template
+     * @param c
+     * @return <code>c</code> or
+     *         <code>template.getClass().newInstance()</code>
+     */
+    public static Point2D ensureInstance(final Point2D template,
+            final Point2D c) {
+        if (c != null)
+            return c;
+        try {
+            return (Point2D) template.getClass().newInstance();
+        } catch (InstantiationException e) {
+            throw new RuntimeException("Couldn't create a new instance.", e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Couldn't create a new instance.", e);
+        }
     }
 
     public static double[] mult(final double fact, final double[] a, double[] b) {
@@ -53,8 +69,7 @@ public final class MathVec {
     }
 
     public static Point2D mult(final double fact, final Point2D a, Point2D b) {
-        if (b == null)
-            b = (Point2D) a.clone();
+        b = ensureInstance(a, b);
         b.setLocation(a.getX() * fact, a.getY() * fact);
         return b;
     }
@@ -64,7 +79,7 @@ public final class MathVec {
     }
 
     public static Point2D sub(final Point2D a, final Point2D b, final Point2D c) {
-        final Point2D ret = c == null ? new Point2D.Float() : c;
+        final Point2D ret = ensureInstance(a, c);
         ret.setLocation(a.getX() - b.getX(), a.getY() - b.getY());
         return ret;
     }

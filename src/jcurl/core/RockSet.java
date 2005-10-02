@@ -66,6 +66,25 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     }
 
     /**
+     * @param mask
+     * @param index16
+     * @return
+     */
+    public static boolean isSet(int mask, int index16) {
+        return 1 == (1 & (mask >> index16));
+    }
+
+    /**
+     * @param mask
+     * @param index8
+     * @param isDark
+     * @return
+     */
+    public static boolean isSet(int mask, int index8, boolean isDark) {
+        return isSet(mask, toIdx16(isDark, index8));
+    }
+
+    /**
      * Check which rocks are non-zero.
      * 
      * @param rocks
@@ -97,7 +116,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
      * @return [0-15]
      */
     public static int toIdx16(final boolean isDark, final int idx8) {
-        return 2 * idx8 + (isDark ? 1 : 0);
+        return 2 * idx8 + (isDark ? 0 : 1);
     }
 
     protected final Rock[] dark = new Rock[ROCKS_PER_COLOR];

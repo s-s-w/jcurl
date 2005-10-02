@@ -226,8 +226,8 @@ public class RockMotionPanel extends JPanel implements TargetDiscrete,
         this.time = time;
         if (this.rocks != null && this.rocks != rocks) {
             this.rocks.removePropertyChangeListener(this);
-            rocks.addPropertyChangeListener(this);
         }
+        rocks.addPropertyChangeListener(this);
         this.rocks = rocks;
         this.repaint();
     }
