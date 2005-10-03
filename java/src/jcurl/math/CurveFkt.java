@@ -19,7 +19,7 @@
 package jcurl.math;
 
 /**
- * A n-dimensional, continuous curve (R -&gt; R^n) based on
+ * A n-dimensional, continuous curve <code>R -&gt; R^n</code> based on
  * {@link jcurl.math.Function1D}s.
  * 
  * @see jcurl.math.Function1D

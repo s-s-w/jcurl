@@ -30,7 +30,7 @@ import jcurl.sim.core.CollissionStrategy;
  * 
  * @see jcurl.sim.model.CollissionSpinLossTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: CollissionSpinLoss.java 76 2005-03-28 20:26:21Z mrohrmoser $
+ * @version $Id$
  */
 public class CollissionSpin extends CollissionStrategy {
 
@@ -39,22 +39,6 @@ public class CollissionSpin extends CollissionStrategy {
     private static final double m = RockProps.DEFAULT.getMass();
 
     private static final double R = RockProps.DEFAULT.getRadius();
-
-    protected static double fabs(final double a) {
-        return Math.abs(a);
-    }
-
-    protected static byte sgn(final double a) {
-        if (a < 0)
-            return -1;
-        if (a > 0)
-            return 1;
-        return 0;
-    }
-
-    protected static double sqrt(final double a) {
-        return Math.sqrt(a);
-    }
 
     private double mu;
 
@@ -65,13 +49,13 @@ public class CollissionSpin extends CollissionStrategy {
         setFricRockRock(0.5);
     }
 
-    public void compute(final Rock va, final Rock vb) {
+    public void computeRC(final Rock va, final Rock vb) {
         final double Veff = va.getX() + R * va.getZ()
                 - (vb.getX() + R * vb.getZ());
         double X = -Veff / (2 * ((1 / m) + R * R / J));
         final double dVy = vb.getY() - va.getY();
-        final double dPabs = m * fabs(dVy);
-        if (fabs(X) > mu * dPabs)
+        final double dPabs = m * abs(dVy);
+        if (abs(X) > mu * dPabs)
             X = -sgn(Veff) * mu * dPabs;
         final double dVx = X / m;
         final double dW = -X * R / J;
@@ -83,7 +67,7 @@ public class CollissionSpin extends CollissionStrategy {
         vb.setZ(vb.getZ() + dW);
     }
 
-    private double Loss() {
+    private double getLoss() {
         return U;
     }
 

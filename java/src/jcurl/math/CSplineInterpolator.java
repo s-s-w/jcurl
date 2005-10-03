@@ -21,7 +21,7 @@ package jcurl.math;
 /**
  * The numerical algorithms are adapted from "Meyberg/Vachenauer": Hoehere
  * Mathematik I, second edition. Could this be based on
- * {@link jcurl.math.CurveParts}with 3-dimensional polynomes?
+ * {@link jcurl.math.CurveCombined}with 3-dimensional polynomes?
  * 
  * @see jcurl.math.CSplineInterpolatorTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -162,7 +162,7 @@ public class CSplineInterpolator {
             _splines = computeSplines(points, _x, _y);
         }
         // find the correct index
-        int idx = CurveParts.binarySearch(_x, x, 0, points - 1);
+        int idx = CurveCombined.binarySearch(_x, x, 0, points - 1);
         if (idx < 0) {
             if (idx == -1)
                 return -1;

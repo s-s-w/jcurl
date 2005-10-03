@@ -216,13 +216,13 @@ public class SetupBuilder {
     }
 
     public void setCollModel(final Class val) {
-        log.debug(val);
         // check is class is derived from
         final Class parent = CollissionStrategy.class;
         if (!parent.isAssignableFrom(val))
             throw new IllegalArgumentException("Class [" + val.getName()
                     + "] is no descendant of [" + parent.getName() + "]");
         freezeCheck();
+        log.info("Collission model: " + val.getName());
         this.collModel = val;
     }
 
@@ -269,13 +269,13 @@ public class SetupBuilder {
     }
 
     public void setIceModel(final Class val) {
-        log.debug(val);
         // check if class is derived from
         final Class parent = SlideStrategy.class;
         if (!parent.isAssignableFrom(val))
             throw new IllegalArgumentException("Class [" + val.getName()
                     + "] is no descendant of [" + parent.getName() + "]");
         freezeCheck();
+        log.info("Ice model: " + val.getName());
         iceParams.put(MODEL, val);
     }
 

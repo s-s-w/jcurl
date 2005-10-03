@@ -65,14 +65,15 @@ public class SlideStraight extends SlideCurves {
         if (log.isDebugEnabled())
             log.debug("t0=" + t0 + " " + x0 + " " + v0);
         // get direction of movement
-        final Point2D.Double v0_1 = new Point2D.Double();
         final double vabs = MathVec.abs(v0);
         final double[] p1;
+        final Point2D v0_1;
         if (vabs > 0) {
-            MathVec.mult(1.0 / vabs, v0, v0_1);
+            v0_1 = MathVec.mult(1.0 / vabs, v0, null);
             // get the bewegungsgleichung
             p1 = Polynome.getPolyParams(t0, 0, vabs, accel);
         } else {
+            v0_1 = MathVec.mult(0, v0, null);
             p1 = Polynome.getPolyParams(t0, 0, 0, 0);
         }
         if (log.isDebugEnabled())
@@ -80,7 +81,7 @@ public class SlideStraight extends SlideCurves {
                     + "*x + " + p1[2] + "*x**2");
         // transform it
         final Polynome p[] = new Polynome[3];
-        transform(x0, v0_1, p1, p);
+        transformRc2Wc(x0, v0_1, p1, p);
         // rotation remains constant
         p[2] = Polynome.getPoly(t0, x0.getZ(), v0.getZ(), 0);
         {

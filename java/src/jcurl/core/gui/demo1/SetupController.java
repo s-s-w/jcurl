@@ -59,7 +59,8 @@ public class SetupController implements MouseMotionListener {
      *            required for wc <->dc conversion. Repaint is triggered via
      *            {@link jcurl.core.RockSet#notifyChange()}.
      */
-    public SetupController(final PositionSet model, final RockLocationDisplayBase panel) {
+    public SetupController(final PositionSet model,
+            final RockLocationDisplayBase panel) {
         panel.addMouseMotionListener(this);
         panel.setPos(0, model);
 
@@ -70,16 +71,28 @@ public class SetupController implements MouseMotionListener {
         this.CursorIn = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
     }
 
-    private Point2D getWc(final MouseEvent e) {
-        tmpWc.setLocation(e.getX(), e.getY());
-        return panel.dc2wc(tmpWc, tmpWc);
+    /**
+     * Get the world-coordinates where the mouse event happened.
+     * 
+     * @param e
+     * @param dst
+     *            wc container. <code>null</code> creates a
+     *            <code>Point2D.Float</code>
+     * @return the world-coordinate location
+     */
+    private Point2D getWc(final MouseEvent e, Point2D dst) {
+        if (dst == null)
+            dst = new Point2D.Float(e.getX(), e.getY());
+        else
+            dst.setLocation(e.getX(), e.getY());
+        return panel.dc2wc(dst, dst);
     }
 
     public void mouseDragged(final MouseEvent e) {
         if (hotRockIdx < 0) {
             log.debug("no hot rock");
         } else {
-            final Point2D wc = getWc(e);
+            final Point2D wc = getWc(e, tmpWc);
             int idx = PositionSet.findRockIndexTouchingRockAtPos(model, wc,
                     hotRockIdx);
             if (idx >= 0) {
@@ -94,7 +107,7 @@ public class SetupController implements MouseMotionListener {
 
     public void mouseMoved(final MouseEvent e) {
         // check if the mouse is over any rock.
-        final Point2D wc = getWc(e);
+        final Point2D wc = getWc(e, tmpWc);
         if (log.isDebugEnabled())
             log.debug("wc: " + wc);
         int idx = PositionSet.findRockIndexAtPos(model, wc);

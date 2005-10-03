@@ -77,13 +77,13 @@ public class RockPainter {
 
     /**
      * Basic rock drawing method: draw one single rock at (0,0,0). Assumes the
-     * correct transformation is set already.
+     * correct transformation display- to rock-coodinates is set already.
      * 
      * @param g
      * @param isDark
      * @param idx
      */
-    protected void paintRock(final Graphics2D g, final boolean isDark,
+    protected void paintRockRC(final Graphics2D g, final boolean isDark,
             final int idx) {
         // body
         g.setPaint(colors.granite);

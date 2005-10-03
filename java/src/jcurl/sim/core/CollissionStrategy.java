@@ -47,12 +47,17 @@ public abstract class CollissionStrategy {
     private static final ULogger log = JCLoggerFactory
             .getLogger(CollissionStrategy.class);
 
-    /** Maximum distance of two rocks [m] to consider them touching */
+    /** Maximum distance [m] of two rocks to consider them touching */
     public static final double MaxDistSq = sqr(_Rad + _Rad + HIT_MAX_DIST);
 
+    protected static double abs(final double a) {
+        return Math.abs(a);
+    }
+
     /**
-     * Compute the trafo to the right handed coordinate-system with origin orig
-     * and positive y-axis pointing from a to b.
+     * Compute the trafo to the right handed coordinate-system with origin
+     * <code>orig</code> and positive y-axis pointing from <code>a</code> to
+     * <code>b</code>.
      * 
      * @param orig
      * @param a
@@ -90,16 +95,29 @@ public abstract class CollissionStrategy {
         }
     }
 
+    protected static byte sgn(final double a) {
+        if (a < 0)
+            return -1;
+        if (a > 0)
+            return 1;
+        return 0;
+    }
+
     protected static final double sqr(final double a) {
         return a * a;
     }
 
+    protected static double sqrt(final double a) {
+        return Math.sqrt(a);
+    }
+
     /**
      * Iterate over all rocks and call
-     * {@link CollissionStrategy#compute(Rock, Rock, Rock, Rock, AffineTransform)}
+     * {@link CollissionStrategy#computeWC(Rock, Rock, Rock, Rock, AffineTransform)}
      * for each pair.
      * 
-     * @see CollissionStrategy#compute(Rock, Rock, Rock, Rock, AffineTransform)
+     * @see CollissionStrategy#computeWC(Rock, Rock, Rock, Rock,
+     *      AffineTransform)
      * @param pos
      * @param speed
      * @return bitmask of the changed rocks
@@ -113,7 +131,7 @@ public abstract class CollissionStrategy {
             for (int A = 0; A < B; A++) {
                 if (log.isDebugEnabled())
                     log.debug("Compute hit " + A + "<->" + B);
-                if (compute(pos.getRock(A), pos.getRock(B), speed.getRock(A),
+                if (computeWC(pos.getRock(A), pos.getRock(B), speed.getRock(A),
                         speed.getRock(B), mat)) {
                     // mark the rocks' bits hit
                     hits |= (1 << A);
@@ -134,11 +152,11 @@ public abstract class CollissionStrategy {
      * @param vb
      *            speed of rock b (zero before the hit)
      */
-    public abstract void compute(final Rock va, final Rock vb);
+    public abstract void computeRC(final Rock va, final Rock vb);
 
     /**
      * Check distance, speed of approach, transform speeds to rock-coordinates,
-     * call {@link #compute(Rock, Rock)}and transform back to wc afterwards.
+     * call {@link #computeRC(Rock, Rock)}and transform back to wc afterwards.
      * 
      * @param xa
      * @param xb
@@ -148,8 +166,8 @@ public abstract class CollissionStrategy {
      *            may be null. If not avoids frequent instanciations
      * @return <code>true</code> hit, <code>false</code> no hit.
      */
-    protected boolean compute(Rock xa, Rock xb, Rock va, Rock vb,
-            AffineTransform mat) {
+    protected boolean computeWC(final Rock xa, final Rock xb, final Rock va,
+            final Rock vb, AffineTransform mat) {
         if (mat == null)
             mat = new AffineTransform();
         // check distance
@@ -176,7 +194,7 @@ public abstract class CollissionStrategy {
             log.debug("hit!");
 
         // physical model
-        compute(_va, _vb);
+        computeRC(_va, _vb);
 
         // re-transform
         mat.transform(_va, va);

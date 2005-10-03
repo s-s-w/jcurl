@@ -48,7 +48,7 @@ public class XmlSerializerBase implements ContentHandler {
      * Helper class to make xml validation errors catastrophic.
      * 
      * @author mr
-     * @version $Id: XmlSimpleWriter.java 92 2005-03-30 14:41:20Z mrohrmoser $
+     * @version $Id$
      */
     public static class ErrHandler implements ErrorHandler {
         private static final ULogger log = JCLoggerFactory

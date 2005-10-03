@@ -37,7 +37,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * 
  * @see jcurl.core.io.XmlSerializerBase
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: XmlSimpleWriterTest.java 92 2005-03-30 14:41:20Z mrohrmoser $
+ * @version $Id$
  */
 public class XmlSerializerTest extends TestCase {
 
@@ -132,7 +132,8 @@ public class XmlSerializerTest extends TestCase {
             final String enc = encodings[encIdx];
             final StringBuffer exp = new StringBuffer();
             final ByteArrayOutputStream outStr = new ByteArrayOutputStream();
-            final XmlSerializerBase dst = new XmlSerializerBase(outStr, enc, false);
+            final XmlSerializerBase dst = new XmlSerializerBase(outStr, enc,
+                    false);
 
             dst.startDocument();
             dst.startElement(null, null, "root", null);

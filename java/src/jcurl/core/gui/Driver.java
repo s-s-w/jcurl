@@ -47,7 +47,8 @@ public class Driver extends JFrame {
         setSize(600, 400);
         Container contentPane = getContentPane();
         final PositionSet rs = PositionSet.allOut();
-        final JCurlDisplay mp = new JCurlDisplay(rs, Zoomer.HOUSE2HACK, null, null);
+        final JCurlDisplay mp = new JCurlDisplay(rs, Zoomer.HOUSE2HACK, null,
+                null);
         contentPane.add(mp);
     }
 
