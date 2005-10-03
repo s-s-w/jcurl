@@ -42,7 +42,7 @@ import jcurl.sim.core.CollissionStrategy;
  */
 public class CollissionSpinLoss extends CollissionStrategy {
 
-    public void compute(Rock va, Rock vb) {
+    public void computeRC(Rock va, Rock vb) {
         // TODO Auto-generated method stub
 
     }
@@ -57,18 +57,6 @@ public class CollissionSpinLoss extends CollissionStrategy {
 
     protected static double fabs(final double a) {
         return Math.abs(a);
-    }
-
-    protected static byte sgn(final double a) {
-        if (a < 0)
-            return -1;
-        if (a > 0)
-            return 1;
-        return 0;
-    }
-
-    protected static double sqrt(final double a) {
-        return Math.sqrt(a);
     }
 
     private double mu;

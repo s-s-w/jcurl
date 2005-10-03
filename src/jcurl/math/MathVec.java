@@ -47,8 +47,7 @@ public final class MathVec {
      * @return <code>c</code> or
      *         <code>template.getClass().newInstance()</code>
      */
-    public static Point2D ensureInstance(final Point2D template,
-            final Point2D c) {
+    public static Point2D ensureInstance(final Point2D template, final Point2D c) {
         if (c != null)
             return c;
         try {

@@ -26,8 +26,8 @@ import java.awt.Graphics2D;
 import jcurl.core.PositionSet;
 
 /**
- * A {@link jcurl.core.gui.RockLocationDisplayBase}with some additional meta data
- * displayed (here: time).
+ * A {@link jcurl.core.gui.RockLocationDisplayBase}with some additional meta
+ * data displayed (here: time).
  * 
  * @see jcurl.core.gui.RockLocationDisplayBase
  * @see jcurl.core.gui.RealTimePlayer

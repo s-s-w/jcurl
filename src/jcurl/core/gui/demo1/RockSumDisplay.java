@@ -19,6 +19,7 @@
 package jcurl.core.gui.demo1;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Paint;
@@ -91,28 +92,50 @@ public class RockSumDisplay extends JComponent implements TargetDiscrete,
         return PositionSet.getShotRocks(rocks);
     }
 
+    public Dimension getMaximumSize() {
+        return super.getMaximumSize();
+    }
+
+    public Dimension getMinimumSize() {
+        final int d = 10;
+        return new Dimension(d, d);
+    }
+
+    public Dimension getPreferredSize() {
+        return getMinimumSize();
+    }
+
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        final int dy = this.getHeight() / RockSet.ROCKS_PER_SET;
         final Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHints(hints);
         // background
         g2.setPaint(backGround);
-        g2.fillRect(0, 0, this.getWidth(), this.getHeight());
+        g2.fillRect(0, 0, getWidth(), getHeight());
         for (int i = RockSet.ROCKS_PER_COLOR - 1; i >= 0; i--) {
-            g2.setPaint(colors.dark);
-            if (RockSet.isSet(recentMask, i, true)) {
-                int y0 = (int) ((1.0 * i / RockSet.ROCKS_PER_SET) * this
-                        .getHeight());
-                g2.fillRect(0, y0, this.getWidth(), dy);
-            }
-            g2.setPaint(colors.light);
-            if (RockSet.isSet(recentMask, i, false)) {
-                int y0 = (int) ((1.0 * (8 + i) / RockSet.ROCKS_PER_SET) * this
-                        .getHeight());
-                g2.fillRect(0, y0, this.getWidth(), dy);
-            }
+            if (RockSet.isSet(recentMask, i, true))
+                paintRock(g2, i, true);
+            if (RockSet.isSet(recentMask, i, false))
+                paintRock(g2, i, false);
         }
+    }
+
+    protected void paintRock(final Graphics2D g2, int idx8, boolean isDark) {
+        final float r = 0.35F * this.getWidth();
+        // vertical display:
+        float cx = 0.5F * this.getWidth();
+        float cy = this.getHeight() / RockSet.ROCKS_PER_SET;
+        if (isDark) {
+            cy *= idx8 + 0.5F;
+        } else {
+            cy *= RockSet.ROCKS_PER_SET - (idx8 + 0.5F);
+        }
+        g2.setPaint(isDark ? colors.dark : colors.light);
+        g2.fillArc((int) (cx - r), (int) (cy - r), (int) (2 * r),
+                (int) (2 * r), 0, 360);
+        g2.setColor(Color.BLACK);
+        g2.drawArc((int) (cx - r), (int) (cy - r), (int) (2 * r),
+                (int) (2 * r), 0, 360);
     }
 
     public void propertyChange(PropertyChangeEvent evt) {

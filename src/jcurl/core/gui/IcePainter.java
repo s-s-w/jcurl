@@ -135,7 +135,7 @@ public class IcePainter {
      * 
      * @param g
      */
-    public void paintIce(final Graphics2D g) {
+    public void paintIceWC(final Graphics2D g) {
         g.setStroke(color.stroke);
         // filled stuff
         g.setPaint(color.hog2hog);

@@ -20,6 +20,7 @@ package jcurl.core.gui.demo1;
 
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -52,12 +53,13 @@ import org.apache.ugli.ULogger;
 import org.xml.sax.SAXException;
 
 /**
- * A simple viewer that brings all together.
+ * A simple editor that brings all together.
  * 
  * @see jcurl.core.gui.RockLocationDisplay
  * @see jcurl.core.gui.demo1.SetupController
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: DemoSimple.java 126 2005-10-01 19:26:12Z mrohrmoser $
+ * @version $Id: RockLocationDisplayDemo.java 135 2005-10-03 17:47:35Z
+ *          mrohrmoser $
  */
 public class RockLocationDisplayDemo extends JFrame {
 
@@ -84,36 +86,29 @@ public class RockLocationDisplayDemo extends JFrame {
                 cmdExit();
             }
         });
-        final RockLocationDisplayBase panel = new RockLocationDisplay(model,
+        final RockLocationDisplayBase pnl1 = new RockLocationDisplay(model,
                 null, null, null);
+        final RockLocationDisplayBase pnl2 = new RockLocationDisplay(model,
+                Zoomer.HOG2HACK, null, null);
 
         final Container con = getContentPane();
-        //        final Box b0 = Box.createVerticalBox();
-        //        {
-        //            final Box b1 = Box.createHorizontalBox();
-        //            b1.add(new RockSumDisplay(model));
-        //            b1.add(panel);
-        //            b1.add(new RockSumDisplay(model));
-        //            b0.add(b1);
-        //        }
-        //        b0.add(new RockLocationDisplay(model, Zoomer.HOG2HACK, null, null));
-        //        con.add(b0);
 
-        con.add(panel, "Center");
+        con.add(pnl1, "Center");
         con.add(new RockSumDisplay(model), "West");
         con.add(new RockSumDisplay(model), "East");
+        {
+            final Box b = Box.createHorizontalBox();
+            b.add(Box.createRigidArea(new Dimension(0, 75)));
+            b.add(pnl2);
+            con.add(b, "South");
+        }
 
-        final Box b = Box.createHorizontalBox();
-        b.add(Box.createVerticalStrut(75));
-        b.add(new RockLocationDisplay(model, Zoomer.HOG2HACK, null, null));
-        con.add(b, "South");
-        // con.add(new RockMotionPanel(model, Zoomer.HOG2HACK, null, null),
-        // "South");
         setJMenuBar(createMenu());
-        setTitle(this.getClass().getName());
+        setTitle(getClass().getName());
         setSize(900, 400);
 
-        new SetupController(model, panel);
+        new SetupController(model, pnl1);
+        new SetupController(model, pnl2);
     }
 
     void cmdAbout() {
@@ -150,8 +145,7 @@ public class RockLocationDisplayDemo extends JFrame {
     void cmdSave() {
         log.info("");
         try {
-            final SetupSaxSer ser = new SetupSaxSer(new File("/tmp/setup.jcx"));
-            ser.write(model);
+            new SetupSaxSer(new File("/tmp/setup.jcx")).write(model);
         } catch (SAXException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

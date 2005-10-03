@@ -28,7 +28,7 @@ import jcurl.core.SpeedSet;
 import jcurl.core.dto.RockSetProps;
 import jcurl.math.CurveBase;
 import jcurl.math.CurveInterval;
-import jcurl.math.CurveParts;
+import jcurl.math.CurveCombined;
 import jcurl.math.MathVec;
 import jcurl.math.Polynome;
 
@@ -62,7 +62,7 @@ public abstract class SlideCurves extends SlideStrategy {
      *            array of {@link Polynome}s of which <code>p[0]</code> and
      *            <code>p[1]</code> get filled.
      */
-    protected static void transform(final Point2D x0, final Point2D e,
+    protected static void transformRc2Wc(final Point2D x0, final Point2D e,
             final double[] xt, final Polynome[] p) {
         // x(t) = x0 + e * x(t)
         double[] tmp = MathVec.mult(e.getX(), xt, null);
@@ -73,7 +73,7 @@ public abstract class SlideCurves extends SlideStrategy {
         p[1] = new Polynome(tmp);
     }
 
-    private final CurveParts[] c = new CurveParts[RockSet.ROCKS_PER_SET];
+    private final CurveCombined[] c = new CurveCombined[RockSet.ROCKS_PER_SET];
 
     protected SlideCurves(final CollissionStrategy coll) {
         super(coll);
@@ -86,7 +86,7 @@ public abstract class SlideCurves extends SlideStrategy {
      *            [sec]
      * @param pos
      * @param speed
-     * @return a 3-dimensional curve
+     * @return a 3-dimensional curve (x,y,alpha)
      */
     protected abstract CurveBase createCurve(double t0, Rock pos, Rock speed);
 
@@ -137,7 +137,7 @@ public abstract class SlideCurves extends SlideStrategy {
     public final void reset(final double startTime, final PositionSet startPos,
             final SpeedSet startSpeed, final RockSetProps props) {
         for (int i = PositionSet.ROCKS_PER_SET - 1; i >= 0; i--)
-            c[i] = new CurveParts(3);
+            c[i] = new CurveCombined(3);
         super.reset(startTime, startPos, startSpeed, props);
     }
 

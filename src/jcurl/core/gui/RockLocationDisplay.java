@@ -31,7 +31,7 @@ import org.apache.ugli.ULogger;
  * @see jcurl.core.gui.RockPainter
  * @see jcurl.core.gui.IcePainter
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: JCurlPanel.java 126 2005-10-01 19:26:12Z mrohrmoser $
+ * @version $Id$
  */
 public class RockLocationDisplay extends RockLocationDisplayBase {
     private static final ULogger log = JCLoggerFactory
@@ -52,16 +52,17 @@ public class RockLocationDisplay extends RockLocationDisplayBase {
         this(null, zoom, null, null);
     }
 
-    protected void paintIce(final Graphics2D g2) {
+    protected void paintIceDC(final Graphics2D g2) {
         // background
         g2.setPaint(iceP.color.backGround);
-        g2.fillRect(0, 0, this.getWidth(), this.getHeight());
+        g2.fillRect(0, 0, getWidth(), getHeight());
         g2.transform(wc_mat);
         // Ice
-        iceP.paintIce(g2);
+        iceP.paintIceWC(g2);
     }
 
-    protected void paintRock(Graphics2D g, boolean isDark, int idx) {
-        rockP.paintRock(g, isDark, idx);
+    protected void paintRockRC(final Graphics2D g, final boolean isDark,
+            final int idx) {
+        rockP.paintRockRC(g, isDark, idx);
     }
 }

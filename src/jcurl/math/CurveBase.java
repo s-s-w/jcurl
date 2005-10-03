@@ -19,7 +19,7 @@
 package jcurl.math;
 
 /**
- * Abstract base class for n-dimensional curves (R -&gt; R^n).
+ * Abstract base class for n-dimensional curves <code>R -&gt; R^n</code>.
  * 
  * @see jcurl.math.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -74,7 +74,7 @@ public abstract class CurveBase {
      * Compute the c'th derivative of the given dimension at <code>t</code>.
      * 
      * @param dim
-     *            which dimension
+     *            dimension (0,1,2,...)
      * @param c
      *            derivative (0=location, 1:speed, ...)
      * @param t
@@ -87,7 +87,7 @@ public abstract class CurveBase {
      * Compute <code>x where f(x) = 0</code> using Newton's algorithm.
      * 
      * @param dim
-     *            dimension (0,1,2)
+     *            dimension (0,1,2,...)
      * @param c
      *            c'th derivative
      * @param x
@@ -102,7 +102,7 @@ public abstract class CurveBase {
      * Compute <code>x where f^c(x) = y</code> using Newton's algorithm.
      * 
      * @param dim
-     *            dimension (0,1,2)
+     *            dimension (0,1,2,...)
      * @param c
      *            c'th derivative
      * @param y

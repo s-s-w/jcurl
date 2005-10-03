@@ -25,7 +25,7 @@ import junit.framework.TestCase;
  * 
  * @see jcurl.math.CurveBase
  * @see jcurl.math.CurveDom
- * @see jcurl.math.CurveParts
+ * @see jcurl.math.CurveCombined
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -43,7 +43,7 @@ public class CurveTest extends TestCase {
     }
 
     public void test020_CurveParts() {
-        final CurveParts c = new CurveParts(1);
+        final CurveCombined c = new CurveCombined(1);
         //c.getC(0, 0, 0.1);
         c.add(0, Polynome.getPoly(0.0, 2.0, 3.0, 4.0));
         c.getC(0, 0, 0.1);

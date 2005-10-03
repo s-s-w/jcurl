@@ -29,14 +29,14 @@ import org.apache.ugli.ULogger;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveParts extends CurveBase {
+public class CurveCombined extends CurveBase {
 
     private static final int growth = 120;
 
     private static final int initialSize = 5;
 
     private static final ULogger log = JCLoggerFactory
-            .getLogger(CurveParts.class);
+            .getLogger(CurveCombined.class);
 
     /**
      * Search only part of an array.
@@ -81,7 +81,7 @@ public class CurveParts extends CurveBase {
     /**
      * @param dim
      */
-    public CurveParts(int dim) {
+    public CurveCombined(int dim) {
         super(dim);
         t0 = new double[initialSize];
         fkt = new CurveBase[initialSize];
@@ -117,7 +117,7 @@ public class CurveParts extends CurveBase {
         if (t < t0[0])
             throw new IllegalArgumentException("t < tmin");
         // find the correct index
-        int idx = CurveParts.binarySearch(t0, t, 0, parts - 1);
+        int idx = CurveCombined.binarySearch(t0, t, 0, parts - 1);
         if (idx >= 0)
             return idx;
         if (idx == -1)
