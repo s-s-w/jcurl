@@ -33,19 +33,18 @@ import java.lang.reflect.Method;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.Icon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import jcurl.core.JCLoggerFactory;
 import jcurl.core.PositionSet;
 import jcurl.core.RockSet;
 import jcurl.core.SpeedSet;
-import jcurl.core.gui.RockMotionPanel;
+import jcurl.core.gui.RockLocationDisplay;
+import jcurl.core.gui.RockLocationDisplayBase;
 import jcurl.core.gui.Zoomer;
 import jcurl.core.io.SetupSaxSer;
 
@@ -55,13 +54,12 @@ import org.xml.sax.SAXException;
 /**
  * A simple viewer that brings all together.
  * 
- * @see jcurl.sim.model.SlideStraight
- * @see jcurl.sim.model.CollissionSimple
- * @see jcurl.core.gui.SimpleKeys
+ * @see jcurl.core.gui.RockLocationDisplay
+ * @see jcurl.core.gui.demo1.SetupController
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id: DemoSimple.java 126 2005-10-01 19:26:12Z mrohrmoser $
  */
-public class RockMotionPanelDemo extends JFrame {
+public class RockLocationDisplayDemo extends JFrame {
 
     private static final Cursor Cdefault = Cursor
             .getPredefinedCursor(Cursor.DEFAULT_CURSOR);
@@ -70,35 +68,47 @@ public class RockMotionPanelDemo extends JFrame {
             .getPredefinedCursor(Cursor.WAIT_CURSOR);
 
     private static final ULogger log = JCLoggerFactory
-            .getLogger(RockMotionPanelDemo.class);
+            .getLogger(RockLocationDisplayDemo.class);
 
     public static void main(String[] args) {
-        final RockMotionPanelDemo frame = new RockMotionPanelDemo();
+        final RockLocationDisplayDemo frame = new RockLocationDisplayDemo();
         frame.cmdNew();
         frame.show();
     }
 
     private final PositionSet model = new PositionSet();
 
-    public RockMotionPanelDemo() {
+    public RockLocationDisplayDemo() {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 cmdExit();
             }
         });
-        final RockMotionPanel panel = new RockMotionPanel(model, null, null,
-                null);
+        final RockLocationDisplayBase panel = new RockLocationDisplay(model,
+                null, null, null);
 
         final Container con = getContentPane();
+        //        final Box b0 = Box.createVerticalBox();
+        //        {
+        //            final Box b1 = Box.createHorizontalBox();
+        //            b1.add(new RockSumDisplay(model));
+        //            b1.add(panel);
+        //            b1.add(new RockSumDisplay(model));
+        //            b0.add(b1);
+        //        }
+        //        b0.add(new RockLocationDisplay(model, Zoomer.HOG2HACK, null, null));
+        //        con.add(b0);
+
         con.add(panel, "Center");
-        con.add(new RockSumPanel(model), "West");
-        con.add(new RockSumPanel(model), "East");
+        con.add(new RockSumDisplay(model), "West");
+        con.add(new RockSumDisplay(model), "East");
+
         final Box b = Box.createHorizontalBox();
         b.add(Box.createVerticalStrut(75));
-        b.add(new RockMotionPanel(model, Zoomer.HOG2HACK, null, null));
+        b.add(new RockLocationDisplay(model, Zoomer.HOG2HACK, null, null));
         con.add(b, "South");
-        //        con.add(new RockMotionPanel(model, Zoomer.HOG2HACK, null, null),
-        //                "South");
+        // con.add(new RockMotionPanel(model, Zoomer.HOG2HACK, null, null),
+        // "South");
         setJMenuBar(createMenu());
         setTitle(this.getClass().getName());
         setSize(900, 400);
@@ -193,7 +203,7 @@ public class RockMotionPanelDemo extends JFrame {
      * @param executor
      * @param action
      * 
-     * @return
+     * @return the new menu item
      */
     private JMenuItem newMI(final String name, final Icon icon,
             final char mnemonic, final int ctrlAccel, final Object executor,

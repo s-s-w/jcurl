@@ -23,7 +23,7 @@ package jcurl.core;
  * data.
  * 
  * @see jcurl.core.RockSetInterpolator
- * @see jcurl.core.gui.JCurlPanel
+ * @see jcurl.core.gui.JCurlDisplay
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

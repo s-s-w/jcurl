@@ -25,7 +25,7 @@ import java.awt.geom.Point2D;
 
 import jcurl.core.JCLoggerFactory;
 import jcurl.core.PositionSet;
-import jcurl.core.gui.RockMotionPanel;
+import jcurl.core.gui.RockLocationDisplayBase;
 
 import org.apache.ugli.ULogger;
 
@@ -46,7 +46,7 @@ public class SetupController implements MouseMotionListener {
 
     private final PositionSet model;
 
-    private final RockMotionPanel panel;
+    private final RockLocationDisplayBase panel;
 
     // avoid some instanciations. Cost: thread safety
     private final Point2D tmpWc = new Point2D.Double();
@@ -59,7 +59,7 @@ public class SetupController implements MouseMotionListener {
      *            required for wc <->dc conversion. Repaint is triggered via
      *            {@link jcurl.core.RockSet#notifyChange()}.
      */
-    public SetupController(final PositionSet model, final RockMotionPanel panel) {
+    public SetupController(final PositionSet model, final RockLocationDisplayBase panel) {
         panel.addMouseMotionListener(this);
         panel.setPos(0, model);
 

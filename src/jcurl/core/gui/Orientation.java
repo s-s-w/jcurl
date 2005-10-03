@@ -40,11 +40,14 @@ public class Orientation extends EnumBase {
     /** West */
     public static final Orientation W = new Orientation(3, "west");
 
+    public final double angle;
+
     /**
      * @param state
      * @param text
      */
     private Orientation(int state, String text) {
         super(state, text);
+        angle = state * Math.PI / 2;
     }
 }

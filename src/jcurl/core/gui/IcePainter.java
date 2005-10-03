@@ -59,7 +59,7 @@ public class IcePainter {
         public Paint hog2tee = new Color(0xFFFFFF);
 
         /** (wc) millimiters */
-        public Stroke stroke = new BasicStroke(0.005F * JCurlPanel.SCALE);
+        public Stroke stroke = new BasicStroke(0.005F * JCurlDisplay.SCALE);
 
         public Paint tee2back = new Color(0xFFFFFF);
     }
@@ -98,7 +98,7 @@ public class IcePainter {
 
     /** Define colors and the shapes to be filled and drawn */
     static {
-        final int f = JCurlPanel.SCALE;
+        final int f = JCurlDisplay.SCALE;
         final float fhy = f * Ice.FAR_HOG_2_TEE;
         final float nhy = f * Ice.HOG_2_TEE;
         final float hy = f * Ice.FAR_HACK_2_TEE;
