@@ -31,7 +31,7 @@ import jcurl.core.dto.RockProps;
  * Smart handler for creating wc to dc transformations.
  * 
  * @see jcurl.core.gui.ZoomerTest
- * @see jcurl.core.gui.JCurlPanel
+ * @see jcurl.core.gui.JCurlDisplay
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -125,7 +125,8 @@ public class Zoomer {
     }
 
     /**
-     * @see #applyTrafo(Rectangle, Orientation, boolean, AffineTransform)
+     * @see #computeWctoDcTrafo(Rectangle, Orientation, boolean,
+     *      AffineTransform)
      * @param txt
      * @param wc
      *            world-coordinate view-port (zoom-area)
@@ -150,63 +151,52 @@ public class Zoomer {
      * @param mat
      *            Matrix to add the transformation to, usually call yourself a
      *            {@link AffineTransform#setToIdentity()}&nbsp;before.
-     * @return the modified transformation
+     * @return the transformation
      */
-    public AffineTransform applyTrafo(final Rectangle dc,
+    public AffineTransform computeWctoDcTrafo(final Rectangle dc,
             final Orientation orient, final boolean isLeftHanded,
-            final AffineTransform mat) {
-        final int SCALE = JCurlPanel.SCALE;
+            AffineTransform mat) {
+        if (mat == null)
+            mat = new AffineTransform();
+        else
+            mat.setToIdentity();
+        mat.translate(-dc.getX(), -dc.getY());
+        final int SCALE = JCurlDisplay.SCALE;
+        double sca_x = dc.getWidth();
+        double sca_y = dc.getHeight();
         if (Orientation.N.equals(orient)) {
-            double sca_x = dc.getWidth() / viewport.getWidth();
-            double sca_y = dc.getHeight() / viewport.getHeight();
+            sca_x /= viewport.getWidth();
+            sca_y /= viewport.getHeight();
             // compute the fixpoint in dc
-            double fpx = dc.getMinX() + (fixPoint.getX() - viewport.getMinX())
-                    * sca_x;
-            final double dy = dc.getMinY();
-            final double fy = fixPoint.getY();
-            final double vy = viewport.getMinY();
-            double fpy = dc.getMaxY() - (fixPoint.getY() - viewport.getMinY())
-                    * sca_y;
-
+            final double fpx = dc.getMinX()
+                    + (fixPoint.getX() - viewport.getMinX()) * sca_x;
+            final double fpy = dc.getMaxY()
+                    - (fixPoint.getY() - viewport.getMinY()) * sca_y;
             mat.translate(fpx, fpy);
-            if (uniform)
-                if (sca_x > sca_y)
-                    sca_x = sca_y;
-                else
-                    sca_y = sca_x;
-            mat.scale(sca_x / SCALE, sca_y / SCALE);
-            mat.rotate(Math.PI);
-            if (isLeftHanded)
-                mat.scale(-1, 1);
-            mat.translate(-fixPoint.getX() * SCALE, -fixPoint.getY() * SCALE);
-            return mat;
-        }
-        if (Orientation.W.equals(orient)) {
-            double sca_x = dc.getWidth() / viewport.getHeight();
-            double sca_y = dc.getHeight() / viewport.getWidth();
+        } else if (Orientation.W.equals(orient)) {
+            sca_x /= viewport.getHeight();
+            sca_y /= viewport.getWidth();
             // compute the fixpoint in dc
-            double fpx = dc.getMaxX() - (fixPoint.getY() - viewport.getMinY())
-                    * sca_x;
-            final double dy = dc.getMinY();
-            final double fy = fixPoint.getY();
-            final double vy = viewport.getMinY();
-            double fpy = dc.getMinY() + (fixPoint.getX() - viewport.getMinX())
-                    * sca_y;
-
+            final double fpx = dc.getMaxX()
+                    - (fixPoint.getY() - viewport.getMinY()) * sca_x;
+            final double fpy = dc.getMinY()
+                    + (fixPoint.getX() - viewport.getMinX()) * sca_y;
             mat.translate(fpx, fpy);
-            if (uniform)
-                if (sca_x > sca_y)
-                    sca_x = sca_y;
-                else
-                    sca_y = sca_x;
-            mat.scale(sca_x / SCALE, sca_y / SCALE);
-            mat.rotate(Math.PI / 2);
-            if (isLeftHanded)
-                mat.scale(-1, 1);
-            mat.translate(-fixPoint.getX() * SCALE, -fixPoint.getY() * SCALE);
-            return mat;
+        } else {
+            throw new NotImplementedYetException();
         }
-        throw new NotImplementedYetException();
+
+        if (uniform)
+            if (sca_x > sca_y)
+                sca_x = sca_y;
+            else
+                sca_y = sca_x;
+        mat.scale(sca_x / SCALE, sca_y / SCALE);
+        mat.rotate(orient.angle - Math.PI);
+        if (isLeftHanded)
+            mat.scale(-1, 1);
+        mat.translate(-fixPoint.getX() * SCALE, -fixPoint.getY() * SCALE);
+        return mat;
     }
 
     /**

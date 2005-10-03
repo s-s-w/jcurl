@@ -66,19 +66,23 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     }
 
     /**
+     * Check if a bit is set
+     * 
      * @param mask
      * @param index16
-     * @return
+     * @return if the given rock's bit is set
      */
     public static boolean isSet(int mask, int index16) {
         return 1 == (1 & (mask >> index16));
     }
 
     /**
+     * Check if a bit is set
+     * 
      * @param mask
      * @param index8
      * @param isDark
-     * @return
+     * @return if the given rock's bit is set
      */
     public static boolean isSet(int mask, int index8, boolean isDark) {
         return isSet(mask, toIdx16(isDark, index8));

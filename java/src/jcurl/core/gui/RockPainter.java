@@ -23,12 +23,9 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Paint;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 
 import jcurl.core.PositionSet;
-import jcurl.core.Rock;
-import jcurl.core.RockSet;
 import jcurl.core.dto.RockProps;
 
 /**
@@ -61,9 +58,9 @@ public class RockPainter {
     protected static final Arc2D.Float outer;
 
     static {
-        fo = new Font("SansSerif", Font.BOLD, JCurlPanel.SCALE / 5);
+        fo = new Font("SansSerif", Font.BOLD, JCurlDisplay.SCALE / 5);
 
-        final int f = JCurlPanel.SCALE;
+        final int f = JCurlDisplay.SCALE;
         final float ro = f * RockProps.DEFAULT.getRadius();
         final float ri = f * 0.7F * RockProps.DEFAULT.getRadius();
         outer = new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 0, 360, Arc2D.CHORD);
@@ -79,12 +76,12 @@ public class RockPainter {
     private int txtYoff = 0;
 
     /**
-     * Draw one single rock at (0,0,0)
+     * Basic rock drawing method: draw one single rock at (0,0,0). Assumes the
+     * correct transformation is set already.
      * 
      * @param g
      * @param isDark
      * @param idx
-     * @see #paintRock(Graphics2D, Rock, boolean, int)
      */
     protected void paintRock(final Graphics2D g, final boolean isDark,
             final int idx) {
@@ -111,48 +108,5 @@ public class RockPainter {
         //        //g.fillOval(-p, -p, 2 * p, ri + p);
         //        g.draw(inner);
         //        g.draw(outer);
-    }
-
-    /**
-     * Draw one rock at it's wc position. Builds the coordinate transform and
-     * calls {@link RockPainter#paintRock(Graphics2D, boolean, int)}.
-     * 
-     * @param g
-     * @param rock
-     * @param isDark
-     * @param idx
-     * @see #paintRock(Graphics2D, boolean, int)
-     */
-    private void paintRock(final Graphics2D g, final Rock rock,
-            final boolean isDark, final int idx) {
-        final AffineTransform t = g.getTransform();
-        g.translate(JCurlPanel.SCALE * rock.getX(), JCurlPanel.SCALE
-                * rock.getY());
-        g.rotate(Math.PI + rock.getZ());
-        // make the right-handed coordinate system left handed again (for
-        // un-flipped text display)
-        g.scale(-1, 1);
-        paintRock(g, isDark, idx);
-        g.setTransform(t);
-    }
-
-    /**
-     * Paint all rocks given by the mask.
-     * 
-     * @see #paintRock(Graphics2D, Rock, boolean, int)
-     * @param g
-     *            graphics context
-     * @param rocks
-     *            locations
-     * @param mask
-     *            bit field which rocks to paint. {@link PositionSet#ALL_MASK}
-     */
-    public void paintRocks(final Graphics2D g, final PositionSet rocks, int mask) {
-        if ((mask & RockSet.ALL_MASK) == 0)
-            return;
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            if (((mask >> i) & 1) == 1)
-                paintRock(g, rocks.getRock(i), (i % 2) == 0, i / 2);
-        }
     }
 }

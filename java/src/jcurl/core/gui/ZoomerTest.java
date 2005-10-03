@@ -118,7 +118,7 @@ public class ZoomerTest extends TestCase {
     }
 
     public void test100_Zoom1by1() {
-        final int S = JCurlPanel.SCALE;
+        final int S = JCurlDisplay.SCALE;
         final double[] flat = new double[6];
         final Point2D dst = new Point2D.Double();
         final Point2D src = new Point2D.Double();
@@ -129,7 +129,7 @@ public class ZoomerTest extends TestCase {
         Zoomer zom = new Zoomer("1:1", wc, fix);
 
         mat.setToIdentity();
-        zom.applyTrafo(dc, Orientation.N, false, mat);
+        zom.computeWctoDcTrafo(dc, Orientation.N, false, mat);
         mat.getMatrix(flat);
         assertEquals("", -1.0 / S, flat[0], 1e-9);
         assertEquals("", 0.0 / S, flat[1], 1e-9);
@@ -146,7 +146,7 @@ public class ZoomerTest extends TestCase {
     }
 
     public void test110_ZoomShift() {
-        final double s = 1.0 / JCurlPanel.SCALE;
+        final double s = 1.0 / JCurlDisplay.SCALE;
         final double[] flat = new double[6];
         final Point2D dst = new Point2D.Double();
         final Point2D src = new Point2D.Double();
@@ -157,7 +157,7 @@ public class ZoomerTest extends TestCase {
         Zoomer zom = new Zoomer("1:1", wc, fix);
 
         mat.setToIdentity();
-        zom.applyTrafo(dc, Orientation.N, false, mat);
+        zom.computeWctoDcTrafo(dc, Orientation.N, false, mat);
         mat.getMatrix(flat);
         assertEquals("", -0.0010, flat[0], 1e-9);
         assertEquals("", 0, flat[1], 1e-9);

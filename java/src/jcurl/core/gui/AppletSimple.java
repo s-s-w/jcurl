@@ -52,7 +52,7 @@ public class AppletSimple extends JApplet {
         setFocusable(true);
         //resize(200, 100);
         final Container contentPane = getContentPane();
-        final JCurlPanel mp = new JCurlPanel(null, null, null, null);
+        final JCurlDisplay mp = new JCurlDisplay(null, null, null, null);
         getContentPane().add(mp);
         final TargetDiscrete dst = mp;
 

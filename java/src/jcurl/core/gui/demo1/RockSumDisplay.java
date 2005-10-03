@@ -28,7 +28,7 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JPanel;
+import javax.swing.JComponent;
 
 import jcurl.core.JCLoggerFactory;
 import jcurl.core.PositionSet;
@@ -43,7 +43,7 @@ import org.apache.ugli.ULogger;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class RockSumPanel extends JPanel implements TargetDiscrete,
+public class RockSumDisplay extends JComponent implements TargetDiscrete,
         PropertyChangeListener {
 
     private static final ColorSet colors = new ColorSet();
@@ -51,7 +51,7 @@ public class RockSumPanel extends JPanel implements TargetDiscrete,
     private static final Map hints = new HashMap();
 
     private static final ULogger log = JCLoggerFactory
-            .getLogger(RockSumPanel.class);
+            .getLogger(RockSumDisplay.class);
     static {
         //        hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION,
         //                RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
@@ -79,11 +79,11 @@ public class RockSumPanel extends JPanel implements TargetDiscrete,
 
     private int recentMask = -1;
 
-    public RockSumPanel() {
+    public RockSumDisplay() {
         this(null);
     }
 
-    public RockSumPanel(final PositionSet model) {
+    public RockSumDisplay(final PositionSet model) {
         setPos(0, model);
     }
 

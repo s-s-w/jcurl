@@ -106,7 +106,7 @@ public class JCurlPanelDemo extends JFrame {
         setTitle("CurlDemo");
         setSize(900, 400);
 
-        final JCurlPanel mp = new JCurlPanel(null, null, null, null);
+        final JCurlDisplay mp = new JCurlDisplay(null, null, null, null);
         getContentPane().add(mp);
         dst = mp;
     }
