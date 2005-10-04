@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core.gui;
+package jcurl.core.gui.demo0;
 
 import java.awt.Container;
 import java.io.IOException;
@@ -32,6 +32,8 @@ import jcurl.core.Source;
 import jcurl.core.SpeedSet;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.dto.RockSetProps;
+import jcurl.core.gui.JCurlDisplay;
+import jcurl.core.gui.SimpleKeys;
 import jcurl.core.io.SetupBuilder;
 import jcurl.core.io.SetupSaxDeSer;
 import jcurl.sim.model.CollissionSimple;
@@ -42,11 +44,11 @@ import org.xml.sax.SAXException;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: AppletSimple.java 131 2005-10-03 17:26:37Z mrohrmoser $
  */
-public class AppletSimple extends JApplet {
+public class ViewerApplet extends JApplet {
     private static final ULogger log = JCLoggerFactory
-            .getLogger(AppletSimple.class);
+            .getLogger(ViewerApplet.class);
 
     public void init() {
         setFocusable(true);
@@ -61,7 +63,7 @@ public class AppletSimple extends JApplet {
             if (true) {
                 final URL url;
                 {
-                    URL tmp = JCurlPanelDemo.class
+                    URL tmp = ViewerApp.class
                             .getResource("/setup/hammy.jcx");
                     if (tmp == null)
                         tmp = new URL("file", "localhost",

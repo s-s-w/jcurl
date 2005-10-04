@@ -28,6 +28,7 @@ import javax.imageio.ImageIO;
 import javax.xml.parsers.ParserConfigurationException;
 
 import jcurl.core.PositionSet;
+import jcurl.core.gui.demo0.ViewerApp;
 import jcurl.core.io.SetupBuilder;
 import jcurl.core.io.SetupSaxDeSer;
 
@@ -44,7 +45,7 @@ public class IconGenerator {
         // Load an initial setup
         final URL url;
         {
-            URL tmp = JCurlPanelDemo.class.getResource("/setup/hammy.jcx");
+            URL tmp = ViewerApp.class.getResource("/setup/hammy.jcx");
             if (tmp == null)
                 tmp = new URL("file", "localhost",
                         "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup/hammy.jcx");

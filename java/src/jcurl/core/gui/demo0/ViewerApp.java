@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core.gui;
+package jcurl.core.gui.demo0;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -34,6 +34,8 @@ import jcurl.core.Source;
 import jcurl.core.SpeedSet;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.dto.RockSetProps;
+import jcurl.core.gui.JCurlDisplay;
+import jcurl.core.gui.SimpleKeys;
 import jcurl.core.io.SetupBuilder;
 import jcurl.core.io.SetupSaxDeSer;
 import jcurl.sim.model.CollissionSpin;
@@ -49,12 +51,12 @@ import org.xml.sax.SAXException;
  * @see jcurl.sim.model.CollissionSimple
  * @see jcurl.core.gui.SimpleKeys
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: JCurlPanelDemo.java 131 2005-10-03 17:26:37Z mrohrmoser $
  */
-public class JCurlPanelDemo extends JFrame {
+public class ViewerApp extends JFrame {
 
     private static final ULogger log = JCLoggerFactory
-            .getLogger(JCurlPanelDemo.class);
+            .getLogger(ViewerApp.class);
 
     public static void main(String[] args) throws MalformedURLException,
             ParserConfigurationException, SAXException, IOException {
@@ -62,7 +64,7 @@ public class JCurlPanelDemo extends JFrame {
         if (true) {
             final URL url;
             {
-                URL tmp = JCurlPanelDemo.class.getResource("/setup/hammy.jcx");
+                URL tmp = ViewerApp.class.getResource("/setup/hammy.jcx");
                 if (tmp == null) {
                     tmp = new URL("file", "localhost", new File(
                             "./config/jcurl.jar/setup/hammy.jcx")
@@ -88,7 +90,7 @@ public class JCurlPanelDemo extends JFrame {
             src = new SlideStraight(new CollissionSpin());
             src.reset(0, pos, speed, RockSetProps.DEFAULT);
         }
-        final JCurlPanelDemo frame = new JCurlPanelDemo();
+        final ViewerApp frame = new ViewerApp();
         // set up the keyboard handler
         frame.addKeyListener(new SimpleKeys(src, frame.dst));
         // display
@@ -97,7 +99,7 @@ public class JCurlPanelDemo extends JFrame {
 
     private final TargetDiscrete dst;
 
-    public JCurlPanelDemo() {
+    public ViewerApp() {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
