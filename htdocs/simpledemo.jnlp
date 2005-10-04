@@ -16,8 +16,8 @@
   </information>
   <resources>
     <j2se version="1.4+"/>
-    <jar href="jar/jcurl-0.1.jar"/>
+    <jar href="jar/jcurl-0.2.jar"/>
     <jar href="jar/ugli-simple.jar"/>
   </resources>
-  <application-desc main-class="jcurl.core.gui.DemoSimple"/>
+  <application-desc main-class="jcurl.core.gui.demo0.ViewerApp"/>
 </jnlp> 
