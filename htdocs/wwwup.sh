@@ -4,4 +4,4 @@ svn update $dir
 svn status $dir
 rm -rf $dir/api
 mkdir $dir/api
-unzip $dir/jar/jcurl-doc-0.1.war -d $dir/api
+unzip $dir/jar/jcurl-doc-0.2.war -d $dir/api
