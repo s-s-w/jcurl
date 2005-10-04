@@ -61,7 +61,7 @@ import org.xml.sax.SAXException;
  * @version $Id: RockLocationDisplayDemo.java 135 2005-10-03 17:47:35Z
  *          mrohrmoser $
  */
-public class RockLocationDisplayDemo extends JFrame {
+public class EditorApp extends JFrame {
 
     private static final Cursor Cdefault = Cursor
             .getPredefinedCursor(Cursor.DEFAULT_CURSOR);
@@ -70,17 +70,17 @@ public class RockLocationDisplayDemo extends JFrame {
             .getPredefinedCursor(Cursor.WAIT_CURSOR);
 
     private static final ULogger log = JCLoggerFactory
-            .getLogger(RockLocationDisplayDemo.class);
+            .getLogger(EditorApp.class);
 
     public static void main(String[] args) {
-        final RockLocationDisplayDemo frame = new RockLocationDisplayDemo();
+        final EditorApp frame = new EditorApp();
         frame.cmdNew();
         frame.show();
     }
 
     private final PositionSet model = new PositionSet();
 
-    public RockLocationDisplayDemo() {
+    public EditorApp() {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 cmdExit();
