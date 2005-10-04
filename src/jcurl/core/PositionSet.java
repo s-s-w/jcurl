@@ -101,6 +101,27 @@ public class PositionSet extends RockSet {
     }
 
     /**
+     * Get the "out" rocks (as bitmask).
+     * 
+     * @param a
+     * @return bitmask of the out rocks.
+     * @see PositionSetTest#test010_getShotRocks()
+     */
+    public static int getOutRocks(final PositionSet a) {
+        final double xmin = Ice.SIDE_2_CENTER + RockProps.DEFAULT.getRadius();
+        final double ymin = -Ice.BACK_2_TEE - RockProps.DEFAULT.getRadius();
+        int ret = 0;
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+            final Point2D rock = a.getRock(i);
+            final double x = Math.abs(rock.getX());
+            final double y = rock.getY();
+            if (x > xmin || y < ymin)
+                ret |= 1 << i;
+        }
+        return ret;
+    }
+
+    /**
      * Get the "shot" rocks (as bitmask).
      * 
      * @param a
@@ -136,6 +157,27 @@ public class PositionSet extends RockSet {
                 continue;
             double distSq = a.getRock(i).distanceSq(0, 0);
             if (distSq <= scoreDistSq)
+                ret |= 1 << i;
+        }
+        return ret;
+    }
+
+    /**
+     * Get the "waiting" rocks (as bitmask).
+     * 
+     * @param a
+     * @return bitmask of the waiting rocks.
+     * @see PositionSetTest#test010_getShotRocks()
+     */
+    public static int getWaitRocks(final PositionSet a) {
+        final double xmax = Ice.SIDE_2_CENTER + RockProps.DEFAULT.getRadius();
+        final double ymax = Ice.HOG_2_TEE - RockProps.DEFAULT.getRadius();
+        int ret = 0;
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+            final Point2D rock = a.getRock(i);
+            final double x = Math.abs(rock.getX());
+            final double y = rock.getY();
+            if (x < xmax && y > ymax)
                 ret |= 1 << i;
         }
         return ret;

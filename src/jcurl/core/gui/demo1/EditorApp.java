@@ -56,7 +56,7 @@ import org.xml.sax.SAXException;
  * A simple editor that brings all together.
  * 
  * @see jcurl.core.gui.RockLocationDisplay
- * @see jcurl.core.gui.demo1.SetupController
+ * @see jcurl.core.gui.demo1.LocationController
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id: RockLocationDisplayDemo.java 135 2005-10-03 17:47:35Z
  *          mrohrmoser $
@@ -78,7 +78,9 @@ public class EditorApp extends JFrame {
         frame.show();
     }
 
-    private final PositionSet model = new PositionSet();
+    private final PositionSet mod_locations = new PositionSet();
+
+    private final SpeedSet mod_speeds = new SpeedSet();
 
     public EditorApp() {
         addWindowListener(new WindowAdapter() {
@@ -86,16 +88,16 @@ public class EditorApp extends JFrame {
                 cmdExit();
             }
         });
-        final RockLocationDisplayBase pnl1 = new RockLocationDisplay(model,
-                null, null, null);
-        final RockLocationDisplayBase pnl2 = new RockLocationDisplay(model,
-                Zoomer.HOG2HACK, null, null);
+        final RockLocationDisplayBase pnl1 = new RockLocationDisplay(
+                mod_locations, null, null, null);
+        final RockLocationDisplayBase pnl2 = new RockLocationDisplay(
+                mod_locations, Zoomer.HOG2HACK, null, null);
 
         final Container con = getContentPane();
 
         con.add(pnl1, "Center");
-        con.add(new RockSumDisplay(model), "West");
-        con.add(new RockSumDisplay(model), "East");
+        con.add(new SumWaitDisplay(mod_locations), "West");
+        con.add(new SumShotDisplay(mod_locations), "East");
         {
             final Box b = Box.createHorizontalBox();
             b.add(Box.createRigidArea(new Dimension(0, 75)));
@@ -107,8 +109,8 @@ public class EditorApp extends JFrame {
         setTitle(getClass().getName());
         setSize(900, 400);
 
-        new SetupController(model, pnl1);
-        new SetupController(model, pnl2);
+        new SpeedController(mod_locations, mod_speeds, pnl1);
+        new LocationController(mod_locations, pnl2);
     }
 
     void cmdAbout() {
@@ -129,10 +131,12 @@ public class EditorApp extends JFrame {
             pos.getLight(0).setLocation(0.2, 2.5);
             pos.getLight(1).setLocation(1.0, 1.5);
             final SpeedSet speed = new SpeedSet();
-            speed.getDark(0).setLocation(0, -1.325, 0.75);
+            speed.getDark(0).setLocation(0.1, -1.325, 0.75);
             // feed the model
-            RockSet.copy(pos, model);
-            model.notifyChange();
+            RockSet.copy(pos, mod_locations);
+            RockSet.copy(speed, mod_speeds);
+            
+            mod_locations.notifyChange();
         } finally {
             setCursor(Cdefault);
         }
@@ -145,7 +149,7 @@ public class EditorApp extends JFrame {
     void cmdSave() {
         log.info("");
         try {
-            new SetupSaxSer(new File("/tmp/setup.jcx")).write(model);
+            new SetupSaxSer(new File("/tmp/setup.jcx")).write(mod_locations);
         } catch (SAXException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

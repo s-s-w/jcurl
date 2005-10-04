@@ -23,7 +23,8 @@ import junit.framework.TestCase;
 /**
  * @see jcurl.math.CSplineInterpolator
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: CSplineInterpolatorTest.java 136 2005-10-03 22:05:16Z
+ *          mrohrmoser $
  */
 public class CSplineInterpolatorTest extends TestCase {
 
@@ -37,7 +38,8 @@ public class CSplineInterpolatorTest extends TestCase {
         assertEquals("", 1, CurveCombined.binarySearch(a, 1, 0, a.length - 1));
         assertEquals("", 4, CurveCombined.binarySearch(a, 4, 0, a.length - 1));
         assertEquals("", -1, CurveCombined.binarySearch(a, 1, 2, a.length - 1));
-        assertEquals("", -2, CurveCombined.binarySearch(a, 0.5, 0, a.length - 1));
+        assertEquals("", -2, CurveCombined
+                .binarySearch(a, 0.5, 0, a.length - 1));
     }
 
     public void test010() {
@@ -51,36 +53,36 @@ public class CSplineInterpolatorTest extends TestCase {
         ip.add(6, 0);
         ip.add(7, 1);
         ip.add(8, 0);
-        assertEquals("", 0.0, ip.getC0(0), 1e-6);
-        assertEquals("", 0.774484, ip.getC0(0.5), 1e-6);
-        assertEquals("", 1.0, ip.getC0(1), 1e-6);
-        assertEquals("", 0.426546, ip.getC0(1.5), 1e-6);
-        assertEquals("", 0.0, ip.getC0(2), 1e-6);
-        assertEquals("", 0.519329, ip.getC0(2.5), 1e-6);
-        assertEquals("", 1.0, ip.getC0(3), 1e-6);
-        assertEquals("", 0.496134, ip.getC0(3.5), 1e-6);
-        assertEquals("", 0.0, ip.getC0(4), 1e-6);
-        assertEquals("", 0.496134, ip.getC0(4.5), 1e-6);
-        assertEquals("", 1.0, ip.getC0(5), 1e-6);
-        assertEquals("", 0.519329, ip.getC0(5.5), 1e-6);
-        assertEquals("", 0.0, ip.getC0(6), 1e-6);
-        assertEquals("", 0.426546, ip.getC0(6.5), 1e-6);
-        assertEquals("", 1.0, ip.getC0(7), 1e-6);
-        assertEquals("", 0.774484, ip.getC0(7.5), 1e-6);
-        assertEquals("", 0.0, ip.getC0(8), 1e-6);
+        assertEquals("", 0.0, ip.getC(0, 0), 1e-6);
+        assertEquals("", 0.774484, ip.getC(0, 0.5), 1e-6);
+        assertEquals("", 1.0, ip.getC(0, 1), 1e-6);
+        assertEquals("", 0.426546, ip.getC(0, 1.5), 1e-6);
+        assertEquals("", 0.0, ip.getC(0, 2), 1e-6);
+        assertEquals("", 0.519329, ip.getC(0, 2.5), 1e-6);
+        assertEquals("", 1.0, ip.getC(0, 3), 1e-6);
+        assertEquals("", 0.496134, ip.getC(0, 3.5), 1e-6);
+        assertEquals("", 0.0, ip.getC(0, 4), 1e-6);
+        assertEquals("", 0.496134, ip.getC(0, 4.5), 1e-6);
+        assertEquals("", 1.0, ip.getC(0, 5), 1e-6);
+        assertEquals("", 0.519329, ip.getC(0, 5.5), 1e-6);
+        assertEquals("", 0.0, ip.getC(0, 6), 1e-6);
+        assertEquals("", 0.426546, ip.getC(0, 6.5), 1e-6);
+        assertEquals("", 1.0, ip.getC(0, 7), 1e-6);
+        assertEquals("", 0.774484, ip.getC(0, 7.5), 1e-6);
+        assertEquals("", 0.0, ip.getC(0, 8), 1e-6);
         try {
-            ip.getC0(-0.1);
+            ip.getC(0, -0.1);
             fail("Too small");
         } catch (ArrayIndexOutOfBoundsException e) {
             ;
         }
         try {
-            ip.getC0(8.1);
+            ip.getC(0, 8.1);
             fail("Too large");
         } catch (ArrayIndexOutOfBoundsException e) {
             ;
         }
         for (int i = 1000000; i >= 0; i--)
-            ip.getC0(2);
+            ip.getC(0, 2);
     }
 }

@@ -52,7 +52,7 @@ import org.apache.ugli.ULogger;
  */
 public abstract class RockLocationDisplayBase extends JComponent implements
         TargetDiscrete, PropertyChangeListener {
-    protected static final Map hints = new HashMap();
+    public static final Map hints = new HashMap();
 
     private static final ULogger log = JCLoggerFactory
             .getLogger(RockLocationDisplayBase.class);

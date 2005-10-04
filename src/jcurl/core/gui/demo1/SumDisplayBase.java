@@ -44,7 +44,7 @@ import org.apache.ugli.ULogger;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class RockSumDisplay extends JComponent implements TargetDiscrete,
+public abstract class SumDisplayBase extends JComponent implements TargetDiscrete,
         PropertyChangeListener {
 
     private static final ColorSet colors = new ColorSet();
@@ -52,7 +52,7 @@ public class RockSumDisplay extends JComponent implements TargetDiscrete,
     private static final Map hints = new HashMap();
 
     private static final ULogger log = JCLoggerFactory
-            .getLogger(RockSumDisplay.class);
+            .getLogger(SumDisplayBase.class);
     static {
         //        hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION,
         //                RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
@@ -80,17 +80,15 @@ public class RockSumDisplay extends JComponent implements TargetDiscrete,
 
     private int recentMask = -1;
 
-    public RockSumDisplay() {
+    public SumDisplayBase() {
         this(null);
     }
 
-    public RockSumDisplay(final PositionSet model) {
+    public SumDisplayBase(final PositionSet model) {
         setPos(0, model);
     }
 
-    protected int computeMask(final PositionSet rocks) {
-        return PositionSet.getShotRocks(rocks);
-    }
+    protected abstract int computeMask(final PositionSet rocks);
 
     public Dimension getMaximumSize() {
         return super.getMaximumSize();

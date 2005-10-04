@@ -19,8 +19,8 @@
 package jcurl.math;
 
 /**
- * A curve thats <code>0</code> for everything outside
- * the interval <code>[tmin, tmax]</code>.
+ * A curve thats <code>0</code> for everything outside the interval
+ * <code>[tmin, tmax]</code>.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$

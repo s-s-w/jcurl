@@ -27,8 +27,8 @@ import jcurl.core.RockSet;
 import jcurl.core.SpeedSet;
 import jcurl.core.dto.RockSetProps;
 import jcurl.math.CurveBase;
-import jcurl.math.CurveInterval;
 import jcurl.math.CurveCombined;
+import jcurl.math.CurveInterval;
 import jcurl.math.MathVec;
 import jcurl.math.Polynome;
 

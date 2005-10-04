@@ -27,7 +27,7 @@ package jcurl.math;
  */
 public class Polynome extends Function1D {
     /**
-     * Compute a!
+     * Compute <code>a!</code>
      * 
      * @param a
      * @return a!
@@ -37,7 +37,7 @@ public class Polynome extends Function1D {
     }
 
     /**
-     * Compute high! / low!
+     * Compute <code>high! / low!</code>
      * 
      * @param high
      * @param low
@@ -65,6 +65,7 @@ public class Polynome extends Function1D {
      * @param a0
      *            constant acceleration
      * @return the resulting polynome
+     * @see #getPolyParams(double, double, double, double)
      */
     public static final Polynome getPoly(double t0, double x0, double v0,
             double a0) {
@@ -99,7 +100,7 @@ public class Polynome extends Function1D {
      * @param p
      *            polynome coefficients
      * @return <code>p(x)</code>
-     * @see Polynome#poly(int, double, double[])
+     * @see #poly(int, double, double[])
      */
     public static double poly(final double x, final double[] p) {
         return poly(0, x, p);
@@ -143,6 +144,9 @@ public class Polynome extends Function1D {
         this.params = params;
     }
 
+    /**
+     * @see #poly(int, double, double[])
+     */
     public double getC(final int c, final double x) {
         return poly(c, x, params);
     }

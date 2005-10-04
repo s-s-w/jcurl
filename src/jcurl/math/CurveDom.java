@@ -89,7 +89,7 @@ public class CurveDom extends CurveBase {
             this.t.v = t;
             de.reset();
             de.walk(this.c[0][dim]);
-            return de.getValue();
+            return de.doubleValue();
         }
         throw new UnsupportedOperationException("Not supported.");
     }
