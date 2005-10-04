@@ -47,8 +47,13 @@ import org.xml.sax.SAXException;
  * @version $Id: AppletSimple.java 131 2005-10-03 17:26:37Z mrohrmoser $
  */
 public class ViewerApplet extends JApplet {
+
     private static final ULogger log = JCLoggerFactory
             .getLogger(ViewerApplet.class);
+
+    public String getAppletInfo() {
+        return "JCurl Viewer Demo";
+    }
 
     public void init() {
         setFocusable(true);
@@ -63,8 +68,7 @@ public class ViewerApplet extends JApplet {
             if (true) {
                 final URL url;
                 {
-                    URL tmp = ViewerApp.class
-                            .getResource("/setup/hammy.jcx");
+                    URL tmp = ViewerApp.class.getResource("/setup/hammy.jcx");
                     if (tmp == null)
                         tmp = new URL("file", "localhost",
                                 "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup/hammy.jcx");

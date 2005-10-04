@@ -82,5 +82,7 @@ public class OldConfigReaderTest extends TestCase {
 
     public void test040_load() throws FileNotFoundException, IOException {
         OldConfigReader r = OldConfigReader.parse(new File(base, "hammy.ini"));
+        assertNotNull(r);
+        assertNotNull(r.setup);
     }
 }

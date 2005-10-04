@@ -67,17 +67,17 @@ public class CSplineRockInterpolator implements IRockInterpolator {
 
     public Rock getPos(final double t, final Rock rock) {
         final Rock ret = rock == null ? new RockFloat() : rock;
-        ret.setX(x.getC0(t));
-        ret.setY(y.getC0(t));
-        ret.setZ(alpha.getC0(t));
+        ret.setX(x.getC(0, t));
+        ret.setY(y.getC(0, t));
+        ret.setZ(alpha.getC(0, t));
         return ret;
     }
 
     public Rock getSpeed(final double t, final Rock rock) {
         final Rock ret = rock == null ? new RockFloat() : rock;
-        ret.setX(x.getC1(t));
-        ret.setY(y.getC1(t));
-        ret.setZ(alpha.getC1(t));
+        ret.setX(x.getC(1, t));
+        ret.setY(y.getC(1, t));
+        ret.setZ(alpha.getC(1, t));
         return ret;
     }
 

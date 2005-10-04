@@ -87,8 +87,16 @@ public class SetupSaxDeSer extends DefaultHandler {
 
     private static synchronized SAXParser newParser()
             throws ParserConfigurationException, SAXException {
-        if (spf == null)
+        if (spf == null) {
             spf = SAXParserFactory.newInstance();
+            // http://www.cafeconleche.org/slides/xmlone/london2002/namespaces/36.html
+            // http://xml.apache.org/xerces-j/features.html
+            //spf.setFeature("http://xml.org/sax/features/namespaces", true);
+            //spf.setFeature("http://xml.org/sax/features/namespace-prefixes",
+            // true);
+            spf.setNamespaceAware(true);
+            spf.setValidating(false);
+        }
         final SAXParser sp = spf.newSAXParser();
         log.debug(sp.getClass().getName());
         return sp;

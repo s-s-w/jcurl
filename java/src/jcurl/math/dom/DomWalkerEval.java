@@ -35,7 +35,7 @@ public class DomWalkerEval extends DomWalker {
     public static double eval(final MathDom.Node n, final Map params) {
         final DomWalkerEval w = new DomWalkerEval(params);
         w.walk(n);
-        return w.getValue();
+        return w.doubleValue();
     }
 
     private final Map params;
@@ -50,7 +50,7 @@ public class DomWalkerEval extends DomWalker {
         this.params = params;
     }
 
-    public double getValue() {
+    public double doubleValue() {
         return v;
     }
 

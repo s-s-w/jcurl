@@ -48,17 +48,21 @@ import java.util.regex.Pattern;
  * Stroustup, Addison Wesley, 1997".
  * 
  * @see jcurl.math.dom.MathDom
- * @see jcurl.math.dom.MathDomTest
+ * @see jcurl.math.dom.ParserInfix
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-class ParserInfix {
+class ParserInfixRegExp {
 
     private static final int ASSIGN = '=';
 
     private static final int DIV = '/';
 
     private static final int END = 3;
+
+    private static final Pattern unaryPat = Pattern.compile("-");
+
+    private static final Pattern binaryPat = Pattern.compile("[-+/*^=]");
 
     private static final Pattern floatPat = Pattern
             .compile("-?[0-9]+(.[0-9]*(e-?[0-9]+)?)?");
@@ -83,7 +87,7 @@ class ParserInfix {
 
     public static MathDom.Node parse(final PushbackReader cin)
             throws IOException, ParseException {
-        return new ParserInfix(cin).parseInfix();
+        return new ParserInfixRegExp(cin).parseInfix();
     }
 
     public static MathDom.Node parse(final Reader cin) throws IOException,
@@ -107,7 +111,7 @@ class ParserInfix {
 
     private final StringBuffer string_value = new StringBuffer();
 
-    public ParserInfix(final PushbackReader cin) {
+    public ParserInfixRegExp(final PushbackReader cin) {
         this.cin = cin;
     }
 

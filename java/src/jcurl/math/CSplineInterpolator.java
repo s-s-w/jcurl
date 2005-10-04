@@ -27,7 +27,7 @@ package jcurl.math;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CSplineInterpolator {
+public class CSplineInterpolator extends Function1D {
 
     private static final int a = 0;
 
@@ -172,9 +172,10 @@ public class CSplineInterpolator {
     }
 
     /**
-     * Get the value of the n'th derivative at the given location.
+     * Convenience wrapper.
      * 
-     * @see CSplineInterpolator#findSplineIndex(double)
+     * @see #getC(int, int, double)
+     * @see #findSplineIndex(double)
      * @param C
      *            n'th derivative (0=value,1=incline,2=acceleration)
      * @param x
@@ -191,33 +192,6 @@ public class CSplineInterpolator {
             ret += spline[i];
         }
         return ret;
-    }
-
-    /**
-     * @see CSplineInterpolator#getC(int, double)
-     * @param x
-     * @return 0th derivative (value)
-     */
-    public double getC0(double x) {
-        return getC(0, x);
-    }
-
-    /**
-     * @see CSplineInterpolator#getC(int, double)
-     * @param x
-     * @return 1st derivative
-     */
-    public double getC1(double x) {
-        return getC(1, x);
-    }
-
-    /**
-     * @see CSplineInterpolator#getC(int, double)
-     * @param x
-     * @return 2nd derivative
-     */
-    public double getC2(double x) {
-        return getC(2, x);
     }
 
     public double getMaxX() {

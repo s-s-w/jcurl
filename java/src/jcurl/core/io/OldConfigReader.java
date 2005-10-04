@@ -222,7 +222,7 @@ public class OldConfigReader {
         }
     }
 
-    private final SetupBuilder setup = new SetupBuilder();
+    public final SetupBuilder setup = new SetupBuilder();
 
     private void setAngle(final boolean isDark, int no, final String a) {
         final DimVal angle = parseDim(a);

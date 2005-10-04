@@ -33,23 +33,23 @@ import org.apache.ugli.ULogger;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SetupController implements MouseMotionListener {
+public class LocationController implements MouseMotionListener {
 
     private static final ULogger log = JCLoggerFactory
-            .getLogger(SetupController.class);
+            .getLogger(LocationController.class);
+
+    protected final Cursor CursorDefault;
 
     private final Cursor CursorIn;
 
-    private final Cursor CursorOut;
+    protected int hotRockIdx = -1;
 
-    private int hotRockIdx = -1;
+    protected final PositionSet locations;
 
-    private final PositionSet model;
-
-    private final RockLocationDisplayBase panel;
+    protected final RockLocationDisplayBase panel;
 
     // avoid some instanciations. Cost: thread safety
-    private final Point2D tmpWc = new Point2D.Double();
+    protected final Point2D tmpWc = new Point2D.Double();
 
     /**
      * 
@@ -59,16 +59,25 @@ public class SetupController implements MouseMotionListener {
      *            required for wc <->dc conversion. Repaint is triggered via
      *            {@link jcurl.core.RockSet#notifyChange()}.
      */
-    public SetupController(final PositionSet model,
+    public LocationController(final PositionSet model,
             final RockLocationDisplayBase panel) {
         panel.addMouseMotionListener(this);
         panel.setPos(0, model);
 
         this.panel = panel;
-        this.model = model;
+        this.locations = model;
         //this.model.addPropertyChangeListener(this);
-        this.CursorOut = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
+        this.CursorDefault = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
         this.CursorIn = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
+    }
+
+    /**
+     * @param oldIdx
+     * @param newIdx
+     */
+    protected void changedFocus(final int oldIdx, final int newIdx) {
+        log.info("new " + newIdx);
+        panel.setCursor(newIdx < 0 ? CursorDefault : CursorIn);
     }
 
     /**
@@ -80,7 +89,7 @@ public class SetupController implements MouseMotionListener {
      *            <code>Point2D.Float</code>
      * @return the world-coordinate location
      */
-    private Point2D getWc(final MouseEvent e, Point2D dst) {
+    protected Point2D getWc(final MouseEvent e, Point2D dst) {
         if (dst == null)
             dst = new Point2D.Float(e.getX(), e.getY());
         else
@@ -91,15 +100,18 @@ public class SetupController implements MouseMotionListener {
     public void mouseDragged(final MouseEvent e) {
         if (hotRockIdx < 0) {
             log.debug("no hot rock");
-        } else {
+            return;
+        }
+        if (e.getModifiersEx() == MouseEvent.BUTTON1_DOWN_MASK) {
+            // move a rock
             final Point2D wc = getWc(e, tmpWc);
-            int idx = PositionSet.findRockIndexTouchingRockAtPos(model, wc,
+            int idx = PositionSet.findRockIndexTouchingRockAtPos(locations, wc,
                     hotRockIdx);
             if (idx >= 0) {
                 log.debug("new position blocked");
             } else {
-                model.getRock(hotRockIdx).setLocation(wc);
-                model.notifyChange();
+                locations.getRock(hotRockIdx).setLocation(wc);
+                locations.notifyChange();
                 log.debug("relocated");
             }
         }
@@ -110,11 +122,11 @@ public class SetupController implements MouseMotionListener {
         final Point2D wc = getWc(e, tmpWc);
         if (log.isDebugEnabled())
             log.debug("wc: " + wc);
-        int idx = PositionSet.findRockIndexAtPos(model, wc);
+        int idx = PositionSet.findRockIndexAtPos(locations, wc);
         if (idx >= 0 && log.isDebugEnabled())
             log.debug("rock " + idx);
         if (idx != hotRockIdx) {
-            panel.setCursor(idx < 0 ? CursorOut : CursorIn);
+            changedFocus(hotRockIdx, idx);
             hotRockIdx = idx;
         }
     }
