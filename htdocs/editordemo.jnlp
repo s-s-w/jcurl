@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Id$ -->
+<!-- $Id: simpledemo.jnlp 138 2005-10-04 16:44:54Z mrohrmoser $ -->
 <jnlp
   spec="1.0+"
   codebase="http://jcurl.berlios.de"
-  href="simpledemo.jnlp">
+  href="editordemo.jnlp">
   <information>
-    <title>JCurl Demo Application</title>
+    <title>JCurl Editor Demo Application</title>
     <vendor>M. Rohrmoser</vendor>
     <homepage href="index.html"/>
-    <description>JCurl Demo Application</description>
+    <description>JCurl Editor Demo Application</description>
     <description kind="short">A demo of the capabilities of the JCurl Curling Framework.</description>
     <icon href="images/jcurl-icon.png"/>
     <icon kind="splash" href="images/jcurl.png"/>
@@ -19,5 +19,5 @@
     <jar href="jar/jcurl-0.2.jar"/>
     <jar href="jar/ugli-simple.jar"/>
   </resources>
-  <application-desc main-class="jcurl.core.gui.demo0.ViewerApp"/>
+  <application-desc main-class="jcurl.core.gui.demo1.EditorApp"/>
 </jnlp> 
