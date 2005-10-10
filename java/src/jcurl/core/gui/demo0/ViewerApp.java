@@ -36,6 +36,8 @@ import jcurl.core.TargetDiscrete;
 import jcurl.core.dto.RockSetProps;
 import jcurl.core.gui.JCurlDisplay;
 import jcurl.core.gui.SimpleKeys;
+import jcurl.core.gui.demo1.SumShotDisplay;
+import jcurl.core.gui.demo1.SumWaitDisplay;
 import jcurl.core.io.SetupBuilder;
 import jcurl.core.io.SetupSaxDeSer;
 import jcurl.sim.model.CollissionSpin;
@@ -51,7 +53,7 @@ import org.xml.sax.SAXException;
  * @see jcurl.sim.model.CollissionSimple
  * @see jcurl.core.gui.SimpleKeys
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: JCurlPanelDemo.java 131 2005-10-03 17:26:37Z mrohrmoser $
+ * @version $Id$
  */
 public class ViewerApp extends JFrame {
 
@@ -66,9 +68,9 @@ public class ViewerApp extends JFrame {
             {
                 URL tmp = ViewerApp.class.getResource("/setup/hammy.jcx");
                 if (tmp == null) {
-                    tmp = new URL("file", "localhost", new File(
+                    tmp = new File(
                             "./config/jcurl.jar/setup/hammy.jcx")
-                            .getAbsolutePath());
+                            .toURL();
                 }
                 url = tmp;
             }
@@ -109,7 +111,9 @@ public class ViewerApp extends JFrame {
         setSize(900, 400);
 
         final JCurlDisplay mp = new JCurlDisplay(null, null, null, null);
-        getContentPane().add(mp);
+        getContentPane().add(mp, "Center");
+        //getContentPane().add(new SumShotDisplay(), "East");
+        //getContentPane().add(new SumWaitDisplay(), "West");
         dst = mp;
     }
 }
