@@ -30,6 +30,8 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.Enumeration;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -135,7 +137,7 @@ public class EditorApp extends JFrame {
             // feed the model
             RockSet.copy(pos, mod_locations);
             RockSet.copy(speed, mod_speeds);
-            
+
             mod_locations.notifyChange();
         } finally {
             setCursor(Cdefault);
