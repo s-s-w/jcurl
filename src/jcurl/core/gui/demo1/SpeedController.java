@@ -24,10 +24,10 @@ import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 
 import jcurl.core.JCLoggerFactory;
-import jcurl.core.PositionSet;
-import jcurl.core.SpeedSet;
 import jcurl.core.gui.RockLocationDisplayBase;
 import jcurl.math.MathVec;
+import jcurl.model.PositionSet;
+import jcurl.model.SpeedSet;
 
 import org.apache.ugli.ULogger;
 

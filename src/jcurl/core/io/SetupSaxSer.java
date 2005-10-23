@@ -26,10 +26,10 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.zip.GZIPOutputStream;
 
-import jcurl.core.PositionSet;
-import jcurl.core.Rock;
-import jcurl.core.RockSet;
-import jcurl.core.SpeedSet;
+import jcurl.model.PositionSet;
+import jcurl.model.Rock;
+import jcurl.model.RockSet;
+import jcurl.model.SpeedSet;
 import jcurl.sim.core.SlideStrategy;
 
 import org.xml.sax.SAXException;

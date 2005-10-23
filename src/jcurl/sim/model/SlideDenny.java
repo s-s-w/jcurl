@@ -19,10 +19,10 @@
 package jcurl.sim.model;
 
 import jcurl.core.NotImplementedYetException;
-import jcurl.core.Rock;
 import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
 import jcurl.math.CurveBase;
+import jcurl.model.Rock;
 import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.SlideCurves;
 

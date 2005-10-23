@@ -30,8 +30,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.URL;
-import java.util.Enumeration;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -43,13 +41,13 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import jcurl.core.JCLoggerFactory;
-import jcurl.core.PositionSet;
-import jcurl.core.RockSet;
-import jcurl.core.SpeedSet;
 import jcurl.core.gui.RockLocationDisplay;
 import jcurl.core.gui.RockLocationDisplayBase;
 import jcurl.core.gui.Zoomer;
 import jcurl.core.io.SetupSaxSer;
+import jcurl.model.PositionSet;
+import jcurl.model.RockSet;
+import jcurl.model.SpeedSet;
 
 import org.apache.ugli.ULogger;
 import org.xml.sax.SAXException;

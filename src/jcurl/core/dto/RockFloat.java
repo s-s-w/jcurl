@@ -20,14 +20,14 @@ package jcurl.core.dto;
 
 import java.io.Serializable;
 
-import jcurl.core.Rock;
+import jcurl.model.Rock;
 
 /**
  * Either location or speed of a rock. This class is mostly for display and
  * storage means. The value array is accessible for direct use with e.g.
  * {@link jcurl.math.CurveBase#getC(int, double, float[])}.
  * 
- * @see jcurl.core.PositionSet
+ * @see jcurl.model.PositionSet
  * @see jcurl.core.dto.RockDouble
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$

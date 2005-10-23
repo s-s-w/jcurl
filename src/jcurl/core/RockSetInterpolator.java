@@ -19,9 +19,12 @@
 package jcurl.core;
 
 import jcurl.core.dto.RockSetProps;
+import jcurl.model.PositionSet;
+import jcurl.model.RockSet;
+import jcurl.model.SpeedSet;
 
 /**
- * Interpolator for whole {@link jcurl.core.PositionSet}s.
+ * Interpolator for whole {@link jcurl.model.PositionSet}s.
  * 
  * @see jcurl.core.IRockInterpolator
  * @see jcurl.core.CSplineRockInterpolator

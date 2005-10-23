@@ -29,17 +29,15 @@ import javax.swing.JFrame;
 import javax.xml.parsers.ParserConfigurationException;
 
 import jcurl.core.JCLoggerFactory;
-import jcurl.core.PositionSet;
 import jcurl.core.Source;
-import jcurl.core.SpeedSet;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.dto.RockSetProps;
 import jcurl.core.gui.JCurlDisplay;
 import jcurl.core.gui.SimpleKeys;
-import jcurl.core.gui.demo1.SumShotDisplay;
-import jcurl.core.gui.demo1.SumWaitDisplay;
 import jcurl.core.io.SetupBuilder;
 import jcurl.core.io.SetupSaxDeSer;
+import jcurl.model.PositionSet;
+import jcurl.model.SpeedSet;
 import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 
@@ -68,8 +66,7 @@ public class ViewerApp extends JFrame {
             {
                 URL tmp = ViewerApp.class.getResource("/setup/hammy.jcx");
                 if (tmp == null) {
-                    tmp = new File(
-                            "./config/jcurl.jar/setup/hammy.jcx")
+                    tmp = new File("./config/jcurl.jar/setup/hammy.jcx")
                             .toURL();
                 }
                 url = tmp;

@@ -25,7 +25,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 import jcurl.core.JCLoggerFactory;
-import jcurl.core.PositionSet;
+import jcurl.model.PositionSet;
 
 import org.apache.ugli.ULogger;
 

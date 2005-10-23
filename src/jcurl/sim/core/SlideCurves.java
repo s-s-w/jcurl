@@ -21,16 +21,16 @@ package jcurl.sim.core;
 import java.awt.geom.Point2D;
 
 import jcurl.core.JCLoggerFactory;
-import jcurl.core.PositionSet;
-import jcurl.core.Rock;
-import jcurl.core.RockSet;
-import jcurl.core.SpeedSet;
 import jcurl.core.dto.RockSetProps;
 import jcurl.math.CurveBase;
 import jcurl.math.CurveCombined;
 import jcurl.math.CurveInterval;
 import jcurl.math.MathVec;
 import jcurl.math.Polynome;
+import jcurl.model.PositionSet;
+import jcurl.model.Rock;
+import jcurl.model.RockSet;
+import jcurl.model.SpeedSet;
 
 import org.apache.ugli.ULogger;
 

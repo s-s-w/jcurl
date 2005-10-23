@@ -16,29 +16,12 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core;
+package jcurl.model;
 
 /**
- * A {@link jcurl.core.RockSet}%nbsp;with speed semantics.
- * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SpeedSet extends RockSet {
+public abstract class IceModel {
 
-    public SpeedSet() {
-        super();
-    }
-
-    protected SpeedSet(boolean fill) {
-        super(fill);
-    }
-
-    public SpeedSet(final RockSet b) {
-        super(b);
-    }
-
-    public Object clone() {
-        return new SpeedSet(this);
-    }
 }

@@ -16,25 +16,37 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core.gui.demo1;
+package jcurl.model;
 
-import jcurl.model.PositionSet;
+import jcurl.math.Point3D;
 
 /**
+ * Base class for rock information (either location or speed). The "Z" component
+ * is the handle angle in radians.
+ * 
+ * @see jcurl.model.PositionSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SumShotDisplay extends SumDisplayBase {
+public abstract class Rock extends Point3D implements Cloneable {
+    public abstract Object clone();
 
-    public SumShotDisplay() {
-        super();
-    }
+    /**
+     * Convenience method to check if zero or not.
+     * 
+     * @return whether x or y are non-zero
+     */
+    public abstract boolean nonzero();
 
-    public SumShotDisplay(final PositionSet model) {
-        super(model);
-    }
-
-    protected int computeMask(final PositionSet rocks) {
-        return PositionSet.getShotRocks(rocks);
+    public String toString() {
+        final StringBuffer buf = new StringBuffer();
+        buf.append('[');
+        buf.append(this.getX());
+        buf.append(", ");
+        buf.append(this.getY());
+        buf.append(", ");
+        buf.append(this.getZ());
+        buf.append(']');
+        return buf.toString();
     }
 }

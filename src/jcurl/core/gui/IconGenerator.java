@@ -27,10 +27,10 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.xml.parsers.ParserConfigurationException;
 
-import jcurl.core.PositionSet;
 import jcurl.core.gui.demo0.ViewerApp;
 import jcurl.core.io.SetupBuilder;
 import jcurl.core.io.SetupSaxDeSer;
+import jcurl.model.PositionSet;
 
 import org.xml.sax.SAXException;
 

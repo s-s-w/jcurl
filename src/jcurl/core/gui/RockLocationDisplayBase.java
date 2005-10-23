@@ -35,10 +35,10 @@ import java.util.Map;
 import javax.swing.JComponent;
 
 import jcurl.core.JCLoggerFactory;
-import jcurl.core.PositionSet;
-import jcurl.core.Rock;
-import jcurl.core.RockSet;
 import jcurl.core.TargetDiscrete;
+import jcurl.model.PositionSet;
+import jcurl.model.Rock;
+import jcurl.model.RockSet;
 
 import org.apache.ugli.ULogger;
 

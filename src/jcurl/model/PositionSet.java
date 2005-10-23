@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core;
+package jcurl.model;
 
 import java.awt.geom.Point2D;
 
@@ -25,9 +25,9 @@ import jcurl.core.dto.RockProps;
 import jcurl.core.io.Dim;
 
 /**
- * A {@link jcurl.core.RockSet}%nbsp;with location semantics.
+ * A {@link jcurl.model.RockSet}%nbsp;with location semantics.
  * 
- * @see jcurl.core.PositionSetTest
+ * @see jcurl.model.PositionSetTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

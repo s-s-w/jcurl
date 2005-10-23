@@ -25,8 +25,8 @@ import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.geom.Arc2D;
 
-import jcurl.core.PositionSet;
 import jcurl.core.dto.RockProps;
+import jcurl.model.PositionSet;
 
 /**
  * Paint a set of rocks.

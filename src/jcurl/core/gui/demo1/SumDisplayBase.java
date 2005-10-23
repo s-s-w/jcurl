@@ -32,10 +32,10 @@ import java.util.Map;
 import javax.swing.JComponent;
 
 import jcurl.core.JCLoggerFactory;
-import jcurl.core.PositionSet;
-import jcurl.core.RockSet;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.gui.RockPainter.ColorSet;
+import jcurl.model.PositionSet;
+import jcurl.model.RockSet;
 
 import org.apache.ugli.ULogger;
 
@@ -44,8 +44,8 @@ import org.apache.ugli.ULogger;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class SumDisplayBase extends JComponent implements TargetDiscrete,
-        PropertyChangeListener {
+public abstract class SumDisplayBase extends JComponent implements
+        TargetDiscrete, PropertyChangeListener {
 
     private static final ColorSet colors = new ColorSet();
 

@@ -18,7 +18,7 @@
  */
 package jcurl.sim.core;
 
-import jcurl.core.PositionSet;
+import jcurl.model.PositionSet;
 import junit.framework.TestCase;
 
 /**

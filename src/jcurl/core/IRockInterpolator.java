@@ -18,8 +18,10 @@
  */
 package jcurl.core;
 
+import jcurl.model.Rock;
+
 /**
- * Interface for interpolators of single {@link jcurl.core.Rock}s.
+ * Interface for interpolators of single {@link jcurl.model.Rock}s.
  * 
  * @see jcurl.core.RockSetInterpolator
  * @see jcurl.core.CSplineRockInterpolator

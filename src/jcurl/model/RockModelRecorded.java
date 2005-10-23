@@ -16,25 +16,26 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core.gui.demo1;
+package jcurl.model;
 
-import jcurl.model.PositionSet;
+import java.util.Iterator;
+
+import jcurl.core.NotImplementedYetException;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SumShotDisplay extends SumDisplayBase {
-
-    public SumShotDisplay() {
-        super();
+public abstract class RockModelRecorded extends JCurlModel {
+    public void add(PositionSet pos, double t) {
+        throw new NotImplementedYetException();
     }
 
-    public SumShotDisplay(final PositionSet model) {
-        super(model);
+    public Iterator curves() {
+        throw new NotImplementedYetException();
     }
 
-    protected int computeMask(final PositionSet rocks) {
-        return PositionSet.getShotRocks(rocks);
+    public Iterator times() {
+        throw new NotImplementedYetException();
     }
 }
