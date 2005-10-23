@@ -16,25 +16,28 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core.gui.demo1;
+package jcurl.model;
 
-import jcurl.model.PositionSet;
+import jcurl.sim.core.CollissionStrategy;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SumShotDisplay extends SumDisplayBase {
+public abstract class RockModelComputed extends JCurlModel {
 
-    public SumShotDisplay() {
-        super();
+    public void init(CollissionStrategy coll) {
+        ;
     }
 
-    public SumShotDisplay(final PositionSet model) {
-        super(model);
+    /**
+     * Triggers a {@link java.beans.PropertyChangeEvent}.
+     */
+    public void init(double t0, PositionSet pos, SpeedSet spe) {
+        ;
     }
 
-    protected int computeMask(final PositionSet rocks) {
-        return PositionSet.getShotRocks(rocks);
+    public void init(IceModel ice) {
+        ;
     }
 }

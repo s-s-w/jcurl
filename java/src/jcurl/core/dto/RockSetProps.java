@@ -18,7 +18,7 @@
  */
 package jcurl.core.dto;
 
-import jcurl.core.PositionSet;
+import jcurl.model.PositionSet;
 
 /**
  * Properties of a unique set of rocks (size, mass, etc.)

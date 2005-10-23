@@ -19,6 +19,8 @@
 package jcurl.core;
 
 import jcurl.core.dto.RockSetProps;
+import jcurl.model.PositionSet;
+import jcurl.model.SpeedSet;
 import jcurl.sim.model.CollissionSimple;
 import jcurl.sim.model.SlideStraight;
 import junit.framework.TestCase;

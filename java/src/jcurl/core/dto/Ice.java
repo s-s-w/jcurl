@@ -18,10 +18,10 @@
  */
 package jcurl.core.dto;
 
-import jcurl.core.PositionSet;
-import jcurl.core.Rock;
-import jcurl.core.RockSet;
 import jcurl.core.io.Dim;
+import jcurl.model.PositionSet;
+import jcurl.model.Rock;
+import jcurl.model.RockSet;
 
 /**
  * Handle ice properties as friction and curl.

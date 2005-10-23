@@ -16,32 +16,40 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core;
+package jcurl.model;
+
+import jcurl.core.NotImplementedYetException;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class ModelBase {
+public abstract class JCurlModel extends RockModelBase {
 
-    public abstract int getFocusIdx();
+    public JCurlModel() {
+    }
 
-    public abstract PositionSet getPos();
+    public int getFocusIdx() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
-    public abstract int getSelectedMask();
+    public int getSelectedMask() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 
-    public abstract PositionSet getSpeed();
+    /**
+     * Just triggers a {@link java.beans.PropertyChangeEvent}.
+     */
+    public void setFocusIdx(final int idx) {
+        throw new NotImplementedYetException();
+    }
 
-    public abstract long getTmax();
-
-    public abstract long getTmin();
-
-    public abstract long getTnow();
-
-    public abstract void init(final PositionSet pos);
-
-    public abstract void reset();
-
-    public abstract void setTnow(final long tnow);
-
+    /**
+     * Just triggers a {@link java.beans.PropertyChangeEvent}.
+     */
+    public void setSelectedMask(final int selected) {
+        throw new NotImplementedYetException();
+    }
 }

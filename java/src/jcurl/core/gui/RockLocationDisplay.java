@@ -21,7 +21,7 @@ package jcurl.core.gui;
 import java.awt.Graphics2D;
 
 import jcurl.core.JCLoggerFactory;
-import jcurl.core.PositionSet;
+import jcurl.model.PositionSet;
 
 import org.apache.ugli.ULogger;
 

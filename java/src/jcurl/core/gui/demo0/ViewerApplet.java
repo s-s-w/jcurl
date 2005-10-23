@@ -27,15 +27,15 @@ import javax.swing.JApplet;
 import javax.xml.parsers.ParserConfigurationException;
 
 import jcurl.core.JCLoggerFactory;
-import jcurl.core.PositionSet;
 import jcurl.core.Source;
-import jcurl.core.SpeedSet;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.dto.RockSetProps;
 import jcurl.core.gui.JCurlDisplay;
 import jcurl.core.gui.SimpleKeys;
 import jcurl.core.io.SetupBuilder;
 import jcurl.core.io.SetupSaxDeSer;
+import jcurl.model.PositionSet;
+import jcurl.model.SpeedSet;
 import jcurl.sim.model.CollissionSimple;
 import jcurl.sim.model.SlideStraight;
 
@@ -44,7 +44,7 @@ import org.xml.sax.SAXException;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: AppletSimple.java 131 2005-10-03 17:26:37Z mrohrmoser $
+ * @version $Id$
  */
 public class ViewerApplet extends JApplet {
 

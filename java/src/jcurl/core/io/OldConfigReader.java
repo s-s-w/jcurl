@@ -27,8 +27,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import jcurl.core.JCLoggerFactory;
-import jcurl.core.RockSet;
 import jcurl.core.dto.Ice;
+import jcurl.model.RockSet;
 
 import org.apache.ugli.ULogger;
 

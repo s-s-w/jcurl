@@ -22,12 +22,12 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import jcurl.core.JCLoggerFactory;
-import jcurl.core.PositionSet;
-import jcurl.core.Rock;
-import jcurl.core.RockSet;
-import jcurl.core.SpeedSet;
 import jcurl.core.dto.Ice;
 import jcurl.math.MathVec;
+import jcurl.model.PositionSet;
+import jcurl.model.Rock;
+import jcurl.model.RockSet;
+import jcurl.model.SpeedSet;
 import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.SlideStrategy;
 import jcurl.sim.model.CollissionSpin;

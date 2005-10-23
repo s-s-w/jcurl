@@ -19,9 +19,11 @@
 package jcurl.core;
 
 import jcurl.core.dto.RockSetProps;
+import jcurl.model.PositionSet;
+import jcurl.model.SpeedSet;
 
 /**
- * Interface for classes providing {@link jcurl.core.Rock}location and speed
+ * Interface for classes providing {@link jcurl.model.Rock}location and speed
  * data.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

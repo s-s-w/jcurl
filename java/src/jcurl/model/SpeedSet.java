@@ -16,37 +16,29 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core;
-
-import jcurl.math.Point3D;
+package jcurl.model;
 
 /**
- * Base class for rock information (either location or speed). The "Z" component
- * is the handle angle in radians.
+ * A {@link jcurl.model.RockSet}%nbsp;with speed semantics.
  * 
- * @see jcurl.core.PositionSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class Rock extends Point3D implements Cloneable {
-    public abstract Object clone();
+public class SpeedSet extends RockSet {
 
-    /**
-     * Convenience method to check if zero or not.
-     * 
-     * @return whether x or y are non-zero
-     */
-    public abstract boolean nonzero();
+    public SpeedSet() {
+        super();
+    }
 
-    public String toString() {
-        final StringBuffer buf = new StringBuffer();
-        buf.append('[');
-        buf.append(this.getX());
-        buf.append(", ");
-        buf.append(this.getY());
-        buf.append(", ");
-        buf.append(this.getZ());
-        buf.append(']');
-        return buf.toString();
+    protected SpeedSet(boolean fill) {
+        super(fill);
+    }
+
+    public SpeedSet(final RockSet b) {
+        super(b);
+    }
+
+    public Object clone() {
+        return new SpeedSet(this);
     }
 }

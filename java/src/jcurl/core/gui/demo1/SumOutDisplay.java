@@ -18,7 +18,7 @@
  */
 package jcurl.core.gui.demo1;
 
-import jcurl.core.PositionSet;
+import jcurl.model.PositionSet;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

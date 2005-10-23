@@ -21,14 +21,14 @@ package jcurl.sim.model;
 import java.awt.geom.Point2D;
 
 import jcurl.core.JCLoggerFactory;
-import jcurl.core.Rock;
-import jcurl.core.RockSet;
 import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
 import jcurl.math.CurveBase;
 import jcurl.math.CurveFkt;
 import jcurl.math.MathVec;
 import jcurl.math.Polynome;
+import jcurl.model.Rock;
+import jcurl.model.RockSet;
 import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.SlideCurves;
 

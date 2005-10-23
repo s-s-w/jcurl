@@ -26,9 +26,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
-import jcurl.core.PositionSet;
 import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockSetProps;
+import jcurl.model.PositionSet;
 import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.SlideStrategy;
 

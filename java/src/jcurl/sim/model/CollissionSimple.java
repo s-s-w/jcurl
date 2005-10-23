@@ -18,7 +18,7 @@
  */
 package jcurl.sim.model;
 
-import jcurl.core.Rock;
+import jcurl.model.Rock;
 import jcurl.sim.core.CollissionStrategy;
 
 /**

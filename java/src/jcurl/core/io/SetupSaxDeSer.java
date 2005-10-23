@@ -32,7 +32,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import jcurl.core.JCLoggerFactory;
-import jcurl.core.RockSet;
+import jcurl.model.RockSet;
 
 import org.apache.ugli.ULogger;
 import org.xml.sax.Attributes;

@@ -16,10 +16,11 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core;
+package jcurl.model;
 
 import java.awt.geom.Point2D;
 
+import jcurl.core.JCLoggerFactory;
 import jcurl.core.io.Dim;
 import junit.framework.TestCase;
 
@@ -28,7 +29,7 @@ import org.apache.ugli.ULogger;
 /**
  * JUnit Test
  * 
- * @see jcurl.core.PositionSet
+ * @see jcurl.model.PositionSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

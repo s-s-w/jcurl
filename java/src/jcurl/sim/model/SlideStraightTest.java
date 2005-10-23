@@ -19,14 +19,14 @@
 package jcurl.sim.model;
 
 import jcurl.core.JCLoggerFactory;
-import jcurl.core.PositionSet;
-import jcurl.core.Rock;
 import jcurl.core.Source;
-import jcurl.core.SpeedSet;
 import jcurl.core.dto.RockDouble;
 import jcurl.core.dto.RockSetProps;
 import jcurl.math.CurveBase;
 import jcurl.math.Polynome;
+import jcurl.model.PositionSet;
+import jcurl.model.Rock;
+import jcurl.model.SpeedSet;
 import junit.framework.TestCase;
 
 import org.apache.ugli.ULogger;

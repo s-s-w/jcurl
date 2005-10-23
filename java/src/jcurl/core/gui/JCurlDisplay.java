@@ -23,7 +23,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import jcurl.core.PositionSet;
+import jcurl.model.PositionSet;
 
 /**
  * A {@link jcurl.core.gui.RockLocationDisplayBase}with some additional meta

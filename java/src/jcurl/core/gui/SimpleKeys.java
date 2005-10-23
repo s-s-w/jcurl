@@ -21,9 +21,9 @@ package jcurl.core.gui;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import jcurl.core.PositionSet;
 import jcurl.core.Source;
 import jcurl.core.TargetDiscrete;
+import jcurl.model.PositionSet;
 
 /**
  * A first, simple keyboard input class. Uses a

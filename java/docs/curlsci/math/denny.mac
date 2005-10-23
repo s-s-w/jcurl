@@ -1,11 +1,15 @@
 /* $Id$
-software: http://maxima.sourceforge.net 
-manual: file:///usr/share/maxima/5.9.1/doc/html/maxima_toc.html
+	
+	/usr/bin/maxima -b $1
+
+	software: http://maxima.sourceforge.net 
+	manual: file:///usr/share/maxima/5.9.1/doc/html/maxima_toc.html
 */
 NEXTLAYERFACTOR(TRUE)$
 /* DEBUGMODE(TRUE)$ */
 /* texput(tau, "\\tau")$ */
 
+f2m(f) ::= 0.3048 * f$
 /* 
  Location
 */
@@ -74,6 +78,31 @@ tex(%, "integral.tex")$
 tex([ y(t[2])=H, y(t[1])=y[1], diff(y(t[1]),t[1])=v[1] ], "integral.tex")$
 /* SOLVE([ y(T)=y[1], diff(y(T),T)=v[1] ], [ v[1], v[0] ] ); */
 SOLVE([ y(t[2])=H, y(t[1])=y[1], diff(y(t[1]),t[1])=v[1] ], [ v[1], t[1], v[0] ] );
+tex(factor(%), "integral.tex")$
+
+
+
+/**********************************************************
+
+ Compute |v0| and t0 from "split-time" (far back to far hog), y2 and t2:
+ 
+***********************************************************
+
+y(t[0]) = BACK
+y(t[1]) = HOG
+y(t[2]) = END
+t[1]-t[0] = SPLITTIME
+*/
+
+/* BUILDQ( [BACK] , f2m(21.0 + 72.0 + 21.0 + 12.0) );
+BUILDQ( [HOG] , f2m(21.0 + 72.0) );
+BACK := f2m(21.0 + 72.0 + 21.0 + 12.0)$
+HOG  := f2m(21.0 + 72.0)$
+*/
+SOLVE([ y(t[0])=BACK, y(t[1])=HOG, y(t[2])=END, t[1]-t[0]=SPLITTIME, t[2] = 0 ], [ t[0], v[0] ] );
+tex(factor(%), "integral.tex")$
+
+SOLVE([ t[0] = 0, t[1]-t[0]=SPLITTIME ], [ t[0], t[1] ] );
 tex(factor(%), "integral.tex")$
 
 quit$

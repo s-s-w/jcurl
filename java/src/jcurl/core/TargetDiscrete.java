@@ -18,8 +18,11 @@
  */
 package jcurl.core;
 
+import jcurl.model.PositionSet;
+import jcurl.model.SpeedSet;
+
 /**
- * Interface for classes consuming discrete {@link jcurl.core.Rock}location
+ * Interface for classes consuming discrete {@link jcurl.model.Rock}location
  * data.
  * 
  * @see jcurl.core.RockSetInterpolator
