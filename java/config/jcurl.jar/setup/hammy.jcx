@@ -2,10 +2,6 @@
 <!-- $Id$ -->
 <jcurl xmlns="http://jcurl.berlios.de/schema/setup/2005/1.0">
   <setup>
-    <meta>
-    	<event>Curling World Championships 1992</event>
-    	<game>Semi Final</game>
-    </meta>
     <model engine="jcurl.sim.model.CollissionSpin">
       <description>Collissions with spin</description>
       <param name="friction rock-rock" val="0.5"/>

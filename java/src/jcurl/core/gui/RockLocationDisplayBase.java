@@ -29,9 +29,12 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
 import jcurl.core.JCLoggerFactory;
@@ -97,7 +100,7 @@ public abstract class RockLocationDisplayBase extends JComponent implements
 
     protected final AffineTransform wc_mat = new AffineTransform();
 
-    private Zoomer zom;
+    private Zoomer zoom;
 
     /**
      * 
@@ -108,7 +111,7 @@ public abstract class RockLocationDisplayBase extends JComponent implements
      */
     public RockLocationDisplayBase(final PositionSet rocks, final Zoomer zoom) {
         this.rocks = rocks == null ? PositionSet.allHome() : rocks;
-        this.zom = zoom == null ? Zoomer.HOUSE2HACK : zoom;
+        this.zoom = zoom == null ? Zoomer.HOUSE2HACK : zoom;
         this.rocks.addPropertyChangeListener(this);
         this.setOpaque(true);
     }
@@ -154,7 +157,56 @@ public abstract class RockLocationDisplayBase extends JComponent implements
         }
     }
 
-    protected void paintComponent(final Graphics g) {
+    public void exportPng(File dst) throws IOException {
+        final BufferedImage img = new BufferedImage(getWidth(), getHeight(),
+                BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g2 = (Graphics2D) img.getGraphics();
+        {
+            final Map hints = new HashMap();
+            hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION,
+                    RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+            hints.put(RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON);
+            hints.put(RenderingHints.KEY_COLOR_RENDERING,
+                    RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+            hints.put(RenderingHints.KEY_DITHERING,
+                    RenderingHints.VALUE_DITHER_ENABLE);
+            hints.put(RenderingHints.KEY_FRACTIONALMETRICS,
+                    RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+            hints.put(RenderingHints.KEY_INTERPOLATION,
+                    RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            hints.put(RenderingHints.KEY_RENDERING,
+                    RenderingHints.VALUE_RENDER_QUALITY);
+            hints.put(RenderingHints.KEY_STROKE_CONTROL,
+                    RenderingHints.VALUE_STROKE_NORMALIZE);
+            hints.put(RenderingHints.KEY_TEXT_ANTIALIASING,
+                    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            g2.addRenderingHints(hints);
+        }
+        this.paintComponent(g2);
+        g2.dispose();
+        if (!dst.getName().endsWith(".png"))
+            dst = new File(dst.getName() + ".png");
+        ImageIO.write(img, "png", dst);
+    }
+
+    public Dimension getMaximumSize() {
+        return super.getMaximumSize();
+    }
+
+    public Dimension getMinimumSize() {
+        return super.getMinimumSize();
+    }
+
+    public Dimension getPreferredSize() {
+        return super.getPreferredSize();
+    }
+
+    public Zoomer getZoom() {
+        return zoom;
+    }
+
+    public void paintComponent(final Graphics g) {
         super.paintComponent(g);
         if (log.isDebugEnabled())
             log.debug("[" + this.getX() + ", " + this.getY() + ", "
@@ -166,11 +218,11 @@ public abstract class RockLocationDisplayBase extends JComponent implements
         final int h = this.getHeight();
 
         // paint WC stuff (ice and rocks)
-        if (zom.hasChanged() || oldWid != w || oldHei != h) {
+        if (zoom.hasChanged() || oldWid != w || oldHei != h) {
             // either the wc viewport, fixpoint or dc viewport has changed:
             // re-compute the transformation
             wc_mat.setToIdentity();
-            zom.computeWctoDcTrafo(this.getBounds(), orient, true, wc_mat);
+            zoom.computeWctoDcTrafo(this.getBounds(), orient, true, wc_mat);
             oldWid = w;
             oldHei = h;
             // re-build the background image
@@ -208,29 +260,6 @@ public abstract class RockLocationDisplayBase extends JComponent implements
             final boolean isDark, final int idx);
 
     /**
-     * Draw one rock at it's wc position. Builds the coordinate transform and
-     * calls {@link #paintRockRC(Graphics2D, boolean, int)}.
-     * 
-     * @param g
-     * @param rock
-     * @param isDark
-     * @param idx
-     * @see RockPainter#paintRockRC(Graphics2D, boolean, int)
-     */
-    protected void paintRockWC(final Graphics2D g, final Rock rock,
-            final boolean isDark, final int idx) {
-        final AffineTransform t = g.getTransform();
-        g.translate(JCurlDisplay.SCALE * rock.getX(), JCurlDisplay.SCALE
-                * rock.getY());
-        g.rotate(Math.PI + rock.getZ());
-        // make the right-handed coordinate system left handed again (for
-        // un-flipped text display)
-        g.scale(-1, 1);
-        paintRockRC(g, isDark, idx);
-        g.setTransform(t);
-    }
-
-    /**
      * Callback to draw the rocks. Sets the transformation wc to dc and
      * delegates to {@link #paintRocksWC(Graphics2D, PositionSet, int)}.
      * 
@@ -262,6 +291,29 @@ public abstract class RockLocationDisplayBase extends JComponent implements
             if (((mask >> i) & 1) == 1)
                 paintRockWC(g, rocks.getRock(i), (i % 2) == 0, i / 2);
         }
+    }
+
+    /**
+     * Draw one rock at it's wc position. Builds the coordinate transform and
+     * calls {@link #paintRockRC(Graphics2D, boolean, int)}.
+     * 
+     * @param g
+     * @param rock
+     * @param isDark
+     * @param idx
+     * @see RockPainter#paintRockRC(Graphics2D, boolean, int)
+     */
+    protected void paintRockWC(final Graphics2D g, final Rock rock,
+            final boolean isDark, final int idx) {
+        final AffineTransform t = g.getTransform();
+        g.translate(JCurlDisplay.SCALE * rock.getX(), JCurlDisplay.SCALE
+                * rock.getY());
+        g.rotate(Math.PI + rock.getZ());
+        // make the right-handed coordinate system left handed again (for
+        // un-flipped text display)
+        g.scale(-1, 1);
+        paintRockRC(g, isDark, idx);
+        g.setTransform(t);
     }
 
     /**
@@ -326,17 +378,5 @@ public abstract class RockLocationDisplayBase extends JComponent implements
             dc = new Point2D.Float();
         dc.setLocation(wc.getX() * SCALE, wc.getY() * SCALE);
         return wc_mat.transform(dc, dc);
-    }
-
-    public Dimension getMaximumSize() {
-        return super.getMaximumSize();
-    }
-
-    public Dimension getMinimumSize() {
-        return super.getMinimumSize();
-    }
-
-    public Dimension getPreferredSize() {
-        return super.getPreferredSize();
     }
 }

@@ -40,6 +40,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
@@ -67,8 +68,8 @@ import org.xml.sax.SAXException;
 public class EditorApp extends JFrame {
 
     public static class JCurlFileChooser extends JFileChooser {
-        public JCurlFileChooser(File currentDirectory) {
-            super(currentDirectory);
+        public JCurlFileChooser(File currentFile) {
+            super(currentFile == null ? new File(".") : currentFile);
             this.setMultiSelectionEnabled(false);
             this.setAcceptAllFileFilterUsed(true);
             this.setFileFilter(new FileFilter() {
@@ -86,6 +87,26 @@ public class EditorApp extends JFrame {
         }
     }
 
+    public static class PngFileChooser extends JFileChooser {
+        public PngFileChooser(File currentFile) {
+            super(currentFile == null ? new File(".") : currentFile
+                    .isDirectory() ? currentFile : currentFile.getParentFile());
+            this.setMultiSelectionEnabled(false);
+            this.setAcceptAllFileFilterUsed(true);
+            this.setFileFilter(new FileFilter() {
+                public boolean accept(final File f) {
+                    if (f == null)
+                        return false;
+                    return f.isDirectory() || f.getName().endsWith(".png");
+                }
+
+                public String getDescription() {
+                    return "Portable Network Graphics (.png)";
+                }
+            });
+        }
+    }
+
     private static final Cursor Cdefault = Cursor
             .getPredefinedCursor(Cursor.DEFAULT_CURSOR);
 
@@ -95,15 +116,18 @@ public class EditorApp extends JFrame {
     private static final ULogger log = JCLoggerFactory
             .getLogger(EditorApp.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SAXException, IOException {
         final EditorApp frame = new EditorApp();
         frame.cmdNew();
+        frame.load(args);
         frame.setVisible(true);
     }
 
     private File currentFile = null;
 
     private long lastSaved = 0;
+
+    private final RockLocationDisplayBase master;
 
     private final PositionSet mod_locations = new PositionSet();
 
@@ -115,14 +139,13 @@ public class EditorApp extends JFrame {
                 cmdExit();
             }
         });
-        final RockLocationDisplayBase pnl1 = new RockLocationDisplay(
-                mod_locations, null, null, null);
+        master = new RockLocationDisplay(mod_locations, null, null, null);
         final RockLocationDisplayBase pnl2 = new RockLocationDisplay(
                 mod_locations, Zoomer.HOG2HACK, null, null);
 
         final Container con = getContentPane();
 
-        con.add(pnl1, "Center");
+        con.add(master, "Center");
         con.add(new SumWaitDisplay(mod_locations), "West");
         con.add(new SumShotDisplay(mod_locations), "East");
         {
@@ -136,8 +159,9 @@ public class EditorApp extends JFrame {
         refreshTitle();
         setSize(900, 400);
 
-        new SpeedController(mod_locations, mod_speeds, pnl1);
+        new SpeedController(mod_locations, mod_speeds, master);
         new LocationController(mod_locations, pnl2);
+        lastSaved = mod_locations.getLastChanged();
     }
 
     boolean chooseLoadFile(final File def) {
@@ -163,10 +187,28 @@ public class EditorApp extends JFrame {
     }
 
     void cmdExit() {
+        if (!discardUnsavedChanges())
+            return;
         System.exit(0);
     }
 
+    void cmdExportPng() throws IOException {
+        log.debug("-");
+        final JFileChooser fc = new PngFileChooser(currentFile);
+        if (JFileChooser.APPROVE_OPTION == fc.showSaveDialog(this)) {
+            final File dst = fc.getSelectedFile();
+            try {
+                setCursor(Cwait);
+                master.exportPng(dst);
+            } finally {
+                setCursor(Cdefault);
+            }
+        }
+    }
+
     void cmdNew() {
+        if (!discardUnsavedChanges())
+            return;
         try {
             setCursor(Cwait);
             // initial state
@@ -178,20 +220,22 @@ public class EditorApp extends JFrame {
             final SpeedSet speed = new SpeedSet();
             speed.getDark(0).setLocation(0.1, -1.325, 0.75);
             // feed the model
-            RockSet.copy(pos, mod_locations);
-            RockSet.copy(speed, mod_speeds);
-
-            mod_locations.notifyChange();
+            PositionSet.allOut(mod_locations);
+            RockSet.allZero(mod_speeds);
+            lastSaved = mod_locations.getLastChanged();
         } finally {
             setCursor(Cdefault);
         }
     }
 
     void cmdOpen() throws FileNotFoundException, SAXException, IOException {
+        if (!discardUnsavedChanges())
+            return;
         if (!chooseLoadFile(getCurrentFile() == null ? new File(".")
                 : getCurrentFile()))
             return;
         SetupIO.load(getCurrentFile(), mod_locations, null, null, null);
+        lastSaved = mod_locations.getLastChanged();
     }
 
     void cmdSave() throws SAXException, IOException {
@@ -221,6 +265,9 @@ public class EditorApp extends JFrame {
             menu.add(newMI("New", null, 'N', -1, this, "cmdNew"));
             menu.add(newMI("Open", null, 'O', KeyEvent.VK_O, this, "cmdOpen"));
             menu.addSeparator();
+            menu.add(newMI("Export Png", null, 'P', KeyEvent.VK_E, this,
+                    "cmdExportPng"));
+            menu.addSeparator();
             menu.add(newMI("Save", null, 'S', KeyEvent.VK_S, this, "cmdSave"));
             menu.add(newMI("Save As", null, 'A', -1, this, "cmdSaveAs"));
             menu.addSeparator();
@@ -239,6 +286,16 @@ public class EditorApp extends JFrame {
         return bar;
     }
 
+    private boolean discardUnsavedChanges() {
+        if (mod_locations.getLastChanged() <= lastSaved)
+            return true;
+        if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this,
+                "Discard unsaved changes?", "Warning",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE))
+            return true;
+        return false;
+    }
+
     public File getCurrentFile() {
         return currentFile;
     }
@@ -246,6 +303,15 @@ public class EditorApp extends JFrame {
     private void load(final File f, final PositionSet pos)
             throws FileNotFoundException, SAXException, IOException {
         SetupIO.load(f, pos, null, null, null);
+    }
+
+    private void load(final String[] args) throws SAXException, IOException {
+        if (args.length <= 0)
+            return;
+        final File f = new File(args[0]);
+        if (!f.exists())
+            return;
+        load(f, mod_locations);
     }
 
     /**
@@ -309,7 +375,8 @@ public class EditorApp extends JFrame {
     }
 
     public void setCurrentFile(File currentFile) {
-        if (currentFile == null || currentFile.getName().endsWith(".jcx"))
+        if (currentFile == null || currentFile.getName().endsWith(".jcx")
+                || currentFile.getName().endsWith(".jcz"))
             this.currentFile = currentFile;
         else
             this.currentFile = new File(currentFile.getName() + ".jcx");

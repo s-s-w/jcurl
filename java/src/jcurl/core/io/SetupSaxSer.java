@@ -228,14 +228,6 @@ public class SetupSaxSer {
                 "http://jcurl.berlios.de/schema/setup/2005/1.0");
         xml.startElement(NS, null, "jcurl", atts);
         xml.startElement(NS, null, "setup", null);
-        xml.startElement(NS, null, "meta", null);
-        xml.startElement(NS, null, "event", null);
-        characters(xml, "???");
-        xml.endElement(NS, null, "event");
-        xml.startElement(NS, null, "game", null);
-        characters(xml, "???");
-        xml.endElement(NS, null, "game");
-        xml.endElement(NS, null, "meta");
         internal(pos);
         xml.endElement(NS, null, "setup");
         xml.endElement(NS, null, "jcurl");
@@ -250,14 +242,6 @@ public class SetupSaxSer {
                 "http://jcurl.berlios.de/schema/setup/2005/1.0");
         xml.startElement(NS, null, "jcurl", atts);
         xml.startElement(NS, null, "setup", null);
-        xml.startElement(NS, null, "meta", null);
-        xml.startElement(NS, null, "event", null);
-        characters(xml, "???");
-        xml.endElement(NS, null, "event");
-        xml.startElement(NS, null, "game", null);
-        characters(xml, "???");
-        xml.endElement(NS, null, "game");
-        xml.endElement(NS, null, "meta");
         if (slide != null)
             internal(slide.getColl());
         internal(slide);

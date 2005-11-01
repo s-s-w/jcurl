@@ -34,6 +34,7 @@ public abstract class ModelBase {
     public Object getProp(final String key) {
         return props.get(key);
     }
+
     public void init(final Map props) {
         this.props.clear();
         this.props.putAll(props);
