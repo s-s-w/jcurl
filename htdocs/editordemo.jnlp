@@ -14,6 +14,9 @@
     <icon kind="splash" href="images/jcurl.png"/>
     <offline-allowed/>
   </information>
+  <security>
+      <all-permissions/>
+  </security>  
   <resources>
     <j2se version="1.4+"/>
     <jar href="jar/jcurl-0.2.jar"/>
