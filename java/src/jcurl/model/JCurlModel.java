@@ -18,38 +18,44 @@
  */
 package jcurl.model;
 
-import jcurl.core.NotImplementedYetException;
-
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public abstract class JCurlModel extends RockModelBase {
+    private int focusIdx;
+
+    private int selectedMask;
 
     public JCurlModel() {
     }
 
     public int getFocusIdx() {
-        // TODO Auto-generated method stub
-        return 0;
+        return focusIdx;
     }
 
     public int getSelectedMask() {
-        // TODO Auto-generated method stub
-        return 0;
+        return selectedMask;
     }
 
     /**
-     * Just triggers a {@link java.beans.PropertyChangeEvent}.
+     * Triggers a {@link java.beans.PropertyChangeEvent}.
+     * 
+     * @param focusIdx
      */
-    public void setFocusIdx(final int idx) {
-        throw new NotImplementedYetException();
+    public void setFocusIdx(int focusIdx) {
+        this.propChange.firePropertyChange("focusIdx", this.focusIdx, focusIdx);
+        this.focusIdx = focusIdx;
     }
 
     /**
-     * Just triggers a {@link java.beans.PropertyChangeEvent}.
+     * Triggers a {@link java.beans.PropertyChangeEvent}.
+     * 
+     * @param selectedMask
      */
-    public void setSelectedMask(final int selected) {
-        throw new NotImplementedYetException();
+    public void setSelectedMask(int selectedMask) {
+        this.propChange.firePropertyChange("selectedMask", this.selectedMask,
+                selectedMask);
+        this.selectedMask = selectedMask;
     }
 }

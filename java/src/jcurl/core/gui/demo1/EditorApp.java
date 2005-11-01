@@ -34,16 +34,21 @@ import java.lang.reflect.Method;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.Icon;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
+import javax.swing.filechooser.FileFilter;
+import javax.xml.parsers.ParserConfigurationException;
 
 import jcurl.core.JCLoggerFactory;
 import jcurl.core.gui.RockLocationDisplay;
 import jcurl.core.gui.RockLocationDisplayBase;
 import jcurl.core.gui.Zoomer;
+import jcurl.core.io.SetupBuilder;
+import jcurl.core.io.SetupSaxDeSer;
 import jcurl.core.io.SetupSaxSer;
 import jcurl.model.PositionSet;
 import jcurl.model.RockSet;
@@ -63,6 +68,26 @@ import org.xml.sax.SAXException;
  */
 public class EditorApp extends JFrame {
 
+    private static class JCurlFileChooser extends JFileChooser {
+        public JCurlFileChooser(File currentDirectory) {
+            super(currentDirectory);
+            this.setMultiSelectionEnabled(false);
+            this.setAcceptAllFileFilterUsed(true);
+            this.setFileFilter(new FileFilter() {
+                public boolean accept(final File f) {
+                    if (f == null)
+                        return false;
+                    return f.isDirectory() || f.getName().endsWith(".jcx")
+                            || f.getName().endsWith(".jcz");
+                }
+
+                public String getDescription() {
+                    return "JCurl files";
+                }
+            });
+        }
+    }
+
     private static final Cursor Cdefault = Cursor
             .getPredefinedCursor(Cursor.DEFAULT_CURSOR);
 
@@ -75,8 +100,12 @@ public class EditorApp extends JFrame {
     public static void main(String[] args) {
         final EditorApp frame = new EditorApp();
         frame.cmdNew();
-        frame.show();
+        frame.setVisible(true);
     }
+
+    private File currentFile = null;
+
+    private long lastSaved = 0;
 
     private final PositionSet mod_locations = new PositionSet();
 
@@ -106,11 +135,29 @@ public class EditorApp extends JFrame {
         }
 
         setJMenuBar(createMenu());
-        setTitle(getClass().getName());
+        refreshTitle();
         setSize(900, 400);
 
         new SpeedController(mod_locations, mod_speeds, pnl1);
         new LocationController(mod_locations, pnl2);
+    }
+
+    boolean chooseLoadFile(final File def) {
+        final JFileChooser fc = new JCurlFileChooser(def);
+        if (JFileChooser.APPROVE_OPTION == fc.showOpenDialog(this)) {
+            setCurrentFile(fc.getSelectedFile());
+            return true;
+        }
+        return false;
+    }
+
+    boolean chooseSaveFile(final File def) {
+        final JFileChooser fc = new JCurlFileChooser(def);
+        if (JFileChooser.APPROVE_OPTION == fc.showSaveDialog(this)) {
+            setCurrentFile(fc.getSelectedFile());
+            return true;
+        }
+        return false;
     }
 
     void cmdAbout() {
@@ -143,22 +190,25 @@ public class EditorApp extends JFrame {
     }
 
     void cmdOpen() {
-        log.info("");
+        if (!chooseLoadFile(getCurrentFile() == null ? new File(".")
+                : getCurrentFile()))
+            return;
+        load(getCurrentFile(), mod_locations);
     }
 
     void cmdSave() {
-        log.info("");
-        try {
-            new SetupSaxSer(new File("/tmp/setup.jcx")).write(mod_locations);
-        } catch (SAXException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (getCurrentFile() == null) {
+            if (!chooseSaveFile(new File(".")))
+                return;
         }
+        save(getCurrentFile(), mod_locations);
     }
 
     void cmdSaveAs() {
-        log.info("");
+        if (!chooseSaveFile(getCurrentFile() == null ? new File(".")
+                : getCurrentFile()))
+            return;
+        save(getCurrentFile(), mod_locations);
     }
 
     void cmdZoom() {
@@ -189,6 +239,26 @@ public class EditorApp extends JFrame {
             menu.add(newMI("About", null, 'a', -1, this, "cmdAbout"));
         }
         return bar;
+    }
+
+    public File getCurrentFile() {
+        return currentFile;
+    }
+
+    private void load(final File f, final PositionSet pos) {
+        log.info("Loading " + f);
+        try {
+            final SetupBuilder setup = SetupSaxDeSer.parse(f);
+            RockSet.copy(setup.getPos(), pos);
+            lastSaved = System.currentTimeMillis();
+            refreshTitle();
+        } catch (SAXException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -238,5 +308,31 @@ public class EditorApp extends JFrame {
             item.setAccelerator(KeyStroke.getKeyStroke(ctrlAccel,
                     InputEvent.CTRL_MASK));
         return item;
+    }
+
+    private void refreshTitle() {
+        setTitle(getClass().getName() + " - "
+                + (currentFile == null ? "" : currentFile.getAbsolutePath()));
+    }
+
+    private void save(File f, PositionSet pos) {
+        log.info("Saving " + f);
+        try {
+            new SetupSaxSer(f).write(pos);
+            lastSaved = System.currentTimeMillis();
+            refreshTitle();
+        } catch (SAXException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setCurrentFile(File currentFile) {
+        if (currentFile == null || currentFile.getName().endsWith(".jcx"))
+            this.currentFile = currentFile;
+        else
+            this.currentFile = new File(currentFile.getName() + ".jcx");
+        refreshTitle();
     }
 }

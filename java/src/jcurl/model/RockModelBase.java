@@ -18,7 +18,6 @@
  */
 package jcurl.model;
 
-import jcurl.core.NotImplementedYetException;
 import jcurl.core.dto.MutableObject;
 import jcurl.math.CurveBase;
 

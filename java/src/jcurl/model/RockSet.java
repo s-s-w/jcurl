@@ -42,10 +42,11 @@ public abstract class RockSet extends MutableObject implements Cloneable,
 
     public static final int ROCKS_PER_SET = 16;
 
-    public static RockSet allZero(final RockSet ret) {
+    public static RockSet allZero(final RockSet dst) {
         for (int i = ROCKS_PER_SET - 1; i >= 0; i--)
-            ret.getRock(i).setLocation(0, 0, 0);
-        return ret;
+            dst.getRock(i).setLocation(0, 0, 0);
+        dst.notifyChange();
+        return dst;
     }
 
     public static RockSet copy(final RockSet src, final RockSet dst) {
@@ -53,6 +54,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
             dst.dark[i] = (Rock) (src.dark[i].clone());
             dst.light[i] = (Rock) (src.light[i].clone());
         }
+        dst.notifyChange();
         return dst;
     }
 
@@ -124,6 +126,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     }
 
     protected final Rock[] dark = new Rock[ROCKS_PER_COLOR];
+    private long lastChanged = 0;
 
     protected final Rock[] light = new Rock[ROCKS_PER_COLOR];
 
@@ -170,6 +173,10 @@ public abstract class RockSet extends MutableObject implements Cloneable,
         return dark[i];
     }
 
+    public long getLastChanged() {
+        return lastChanged;
+    }
+
     public Rock getLight(int i) {
         return light[i];
     }
@@ -182,5 +189,6 @@ public abstract class RockSet extends MutableObject implements Cloneable,
 
     public void notifyChange() {
         propChange.firePropertyChange("rock", null, this);
+        lastChanged = System.currentTimeMillis();
     }
 }
