@@ -30,7 +30,8 @@ import junit.framework.TestCase;
  * 
  * @see jcurl.core.RockSetInterpolator
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: RockSetInterpolatorTest.java 147 2005-10-23 12:48:46Z
+ *          mrohrmoser $
  */
 public class RockSetInterpolatorTest extends TestCase {
 
