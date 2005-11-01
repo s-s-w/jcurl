@@ -19,7 +19,7 @@
   <resources>
     <j2se version="1.4+"/>
     <jar href="jar/jcurl-0.2.jar" main="true" download="eager"/>
-    <jar href="jar/ugli-simple.jar main="false" download="eager""/>
+    <jar href="jar/ugli-simple.jar main="false" download="eager"/>
   </resources>
   <application-desc main-class="jcurl.core.gui.demo1.EditorApp"/>
 </jnlp> 
