@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- $Id$ -->
 <jnlp
-  spec="1.0+"
+  spec="0.2 1.0"
   codebase="http://jcurl.berlios.de"
-  href="viewerdemo.jnlp">
+  href="editordemo.jnlp">
   <information>
-    <title>JCurl Viewer Demo Application</title>
+    <title>JCurl Editor Demo Application</title>
     <vendor>M. Rohrmoser</vendor>
-    <homepage href="index.html"/>
+    <homepage href="http://jcurl.berlios.de/index.html"/>
     <description>JCurl Viewer Demo Application</description>
     <description kind="short">A demo of the capabilities of the JCurl Curling Framework.</description>
-    <icon href="images/jcurl-icon.png"/>
-    <icon kind="splash" href="images/jcurl.png"/>
+    <icon href="images/jcurl-icon.jpg"/>
     <offline-allowed/>
   </information>
   <resources>
     <j2se version="1.4+"/>
-    <jar href="jar/jcurl-0.2.jar"/>
-    <jar href="jar/ugli-simple.jar"/>
+    <jar href="jar/jcurl-0.2.jar" main="true" download="eager"/>
+    <jar href="jar/ugli-simple.jar main="false" download="eager""/>
   </resources>
   <application-desc main-class="jcurl.core.gui.demo0.ViewerApp"/>
 </jnlp> 
