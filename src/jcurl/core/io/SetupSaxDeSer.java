@@ -24,7 +24,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.net.URL;
+import java.util.Map;
 import java.util.Stack;
+import java.util.TreeMap;
 import java.util.zip.GZIPInputStream;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -85,8 +87,7 @@ public class SetupSaxDeSer extends DefaultHandler {
         return new DimVal(Double.parseDouble(val), dim);
     }
 
-    private static synchronized SAXParser newParser()
-            throws ParserConfigurationException, SAXException {
+    private static synchronized SAXParser newParser() throws SAXException {
         if (spf == null) {
             spf = SAXParserFactory.newInstance();
             // http://www.cafeconleche.org/slides/xmlone/london2002/namespaces/36.html
@@ -97,37 +98,42 @@ public class SetupSaxDeSer extends DefaultHandler {
             spf.setNamespaceAware(true);
             spf.setValidating(false);
         }
-        final SAXParser sp = spf.newSAXParser();
-        log.debug(sp.getClass().getName());
-        return sp;
+        try {
+            final SAXParser sp = spf.newSAXParser();
+            if (log.isDebugEnabled())
+                log.debug(sp.getClass().getName());
+            return sp;
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static SetupBuilder parse(final File file)
-            throws ParserConfigurationException, SAXException, IOException {
+    public static SetupBuilder parse(final File file) throws SAXException,
+            IOException {
         if (file.getName().endsWith("z"))
             return parse(new GZIPInputStream(new FileInputStream(file)));
         return parse(new FileInputStream(file));
     }
 
-    public static SetupBuilder parse(final InputSource in)
-            throws ParserConfigurationException, SAXException, IOException {
+    public static SetupBuilder parse(final InputSource in) throws SAXException,
+            IOException {
         final SetupBuilder ret = new SetupBuilder();
         newParser().parse(in, new SetupSaxDeSer(ret));
         return ret;
     }
 
     public static SetupBuilder parse(final InputStream file)
-            throws ParserConfigurationException, SAXException, IOException {
+            throws SAXException, IOException {
         return parse(new InputSource(file));
     }
 
-    public static SetupBuilder parse(final Reader file)
-            throws ParserConfigurationException, SAXException, IOException {
+    public static SetupBuilder parse(final Reader file) throws SAXException,
+            IOException {
         return parse(new InputSource(file));
     }
 
-    public static SetupBuilder parse(final URL file)
-            throws ParserConfigurationException, SAXException, IOException {
+    public static SetupBuilder parse(final URL file) throws SAXException,
+            IOException {
         if (file.getFile().endsWith("z"))
             return parse(new GZIPInputStream(file.openStream()));
         return parse(file.openStream());
@@ -140,6 +146,10 @@ public class SetupSaxDeSer extends DefaultHandler {
     private final Stack elems = new Stack();
 
     private Locator locator;
+
+    private Class modelClass = null;
+
+    private final Map modelProps = new TreeMap();
 
     private final SetupBuilder setup;
 
@@ -174,6 +184,20 @@ public class SetupSaxDeSer extends DefaultHandler {
             else
                 break;
             return;
+        case 3:
+            if ("model".equals(elem))
+                try {
+                    setup.addModel(modelClass, modelProps);
+                } catch (InstantiationException e) {
+                    log.warn("error in [" + elems + "]", e);
+                    error(new SAXParseException("error in [" + elems + "]", locator, e));
+                } catch (IllegalAccessException e) {
+                    log.warn("error in [" + elems + "]", e);
+                    error(new SAXParseException("error in [" + elems + "]", locator, e));
+                }
+            else
+                break;
+            return;
         case 4:
             if ("rock".equals(elem))
                 currRock = null;
@@ -188,7 +212,7 @@ public class SetupSaxDeSer extends DefaultHandler {
     }
 
     public void endPrefixMapping(String prefix) throws SAXException {
-        log.debug("-");
+        log.debug(prefix);
     }
 
     public void error(SAXParseException e) throws SAXException {
@@ -201,7 +225,8 @@ public class SetupSaxDeSer extends DefaultHandler {
 
     public void processingInstruction(String target, String data)
             throws SAXException {
-        log.debug("-");
+        if (log.isDebugEnabled())
+            log.debug(target + " " + data);
     }
 
     public void setDocumentLocator(Locator locator) {
@@ -220,7 +245,8 @@ public class SetupSaxDeSer extends DefaultHandler {
         final String grandParent = elems.size() > 1 ? (String) elems.get(elems
                 .size() - 2) : null;
         elems.push(elem);
-        log.debug(elems + " " + atts.getLength());
+        if (log.isDebugEnabled())
+            log.debug(elems + " " + atts.getLength());
         buf.setLength(0);
         try {
             // check
@@ -240,11 +266,10 @@ public class SetupSaxDeSer extends DefaultHandler {
             case 3:
                 if ("meta".equals(elem))
                     ;
-                else if ("collission".equals(elem))
-                    ;
-                else if ("ice".equals(elem))
-                    ;
-                else if ("positions".equals(elem))
+                else if ("model".equals(elem)) {
+                    modelClass = Class.forName(atts.getValue("engine"));
+                    modelProps.clear();
+                } else if ("positions".equals(elem))
                     ;
                 else if ("speeds".equals(elem))
                     ;
@@ -256,33 +281,25 @@ public class SetupSaxDeSer extends DefaultHandler {
                     ;
                 else if ("game".equals(elem))
                     ;
-                else if ("loss".equals(elem))
-                    this.setup.setLoss(getDim(atts));
-                else if ("model".equals(elem)) {
-                    if ("ice".equals(parent))
-                        setup.setIceModel(atts.getValue("name"));
-                    else if ("collission".equals(parent))
-                        setup.setCollModel(atts.getValue("name"));
-                    else
-                        error(new SAXParseException("", locator));
-                } else if ("drawtotee".equals(elem))
-                    this.setup.setDrawTime(getDim(atts));
-                else if ("curl".equals(elem))
-                    this.setup.setDrawCurl(getDim(atts));
-                else if ("rock".equals(elem))
+                else if ("description".equals(elem) && "model".equals(parent))
+                    ;
+                else if ("param".equals(elem) && "model".equals(parent)) {
+                    final String key = atts.getValue("name");
+                    final String val = atts.getValue("val");
+                    final String dim = atts.getValue("dim");
+                    if (dim != null) {
+                        modelProps.put(key, new DimVal(Double.parseDouble(val),
+                                Dim.find(dim)));
+                    } else {
+                        modelProps.put(key, val);
+                    }
+                } else if ("rock".equals(elem))
                     currRock = new RockIdx(atts);
                 else
                     break;
                 return;
             case 5:
-                if ("param".equals(elem))
-                    if ("collission".equals(grandParent))
-                        setup.setCollParam(atts.getValue("name"), getDim(atts));
-                    else if ("ice".equals(grandParent))
-                        setup.setIceParam(atts.getValue("name"), getDim(atts));
-                    else
-                        break;
-                else if ("a".equals(elem))
+                if ("a".equals(elem))
                     if ("positions".equals(grandParent))
                         setup.setAngle(currRock.idx16, getDim(atts));
                     else if ("speeds".equals(grandParent))
@@ -350,6 +367,6 @@ public class SetupSaxDeSer extends DefaultHandler {
 
     public void startPrefixMapping(String prefix, String uri)
             throws SAXException {
-        log.debug(prefix + "=" + uri);
+        log.debug("xmlns:" + prefix + "=" + uri);
     }
 }

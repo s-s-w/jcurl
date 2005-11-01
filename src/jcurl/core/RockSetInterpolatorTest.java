@@ -46,7 +46,7 @@ public class RockSetInterpolatorTest extends TestCase {
         SpeedSet rSpeed = new SpeedSet();
         rSpeed.getLight(0).setX(0);
         rSpeed.getLight(0).setY(1);
-        SlideStraight slid = new SlideStraight(new CollissionSimple());
+        SlideStraight slid = new SlideStraight();
         assertTrue(slid.isDiscrete());
 
         slid.reset(t0, rPos, rSpeed, RockSetProps.DEFAULT);

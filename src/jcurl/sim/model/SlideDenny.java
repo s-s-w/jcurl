@@ -23,7 +23,6 @@ import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
 import jcurl.math.CurveBase;
 import jcurl.model.Rock;
-import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.SlideCurves;
 
 /**
@@ -52,14 +51,17 @@ public class SlideDenny extends SlideCurves {
 
     private double draw_time;
 
-    public SlideDenny(final CollissionStrategy coll) {
-        super(coll);
-        setDraw2Tee(23, 0.8);
+    public SlideDenny() {
+        super();
     }
 
     protected CurveBase createCurve(final double t0, final Rock pos,
             final Rock speed) {
         throw new NotImplementedYetException();
+    }
+
+    public String description() {
+        return "Mark Denny's curl model";
     }
 
     /**
@@ -92,6 +94,7 @@ public class SlideDenny extends SlideCurves {
     }
 
     public void setDraw2Tee(final double T, final double X) {
+        super.setDraw2Tee(T, X);
         draw_time = T;
         _mu = 2.0 * Ice.FAR_HOG_2_TEE / (sqr(draw_time) * g);
         draw_curl = X;

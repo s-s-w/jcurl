@@ -29,6 +29,7 @@ import jcurl.model.Rock;
 import jcurl.model.RockSet;
 import jcurl.model.SpeedSet;
 import jcurl.sim.core.CollissionStrategy;
+import jcurl.sim.core.ModelBase;
 import jcurl.sim.core.SlideStrategy;
 import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
@@ -44,6 +45,7 @@ import org.apache.ugli.ULogger;
  * @version $Id$
  */
 public class SetupBuilder {
+
     /** Internal class to accumulate rock data */
     private static class RockData {
 
@@ -60,20 +62,12 @@ public class SetupBuilder {
 
     private static final int Coords = 0;
 
-    private static final String DRAWCURL = "drawcurl";
-
-    private static final String DRAWTIME = "drawtime";
-
     private static final String EVENT_NAME = "event_name";
 
     private static final String GAME = "game";
 
     private static final ULogger log = JCLoggerFactory
             .getLogger(SetupBuilder.class);
-
-    private static final String LOSS = "loss";
-
-    private static final String MODEL = "model";
 
     private static final int Out = 1;
 
@@ -109,19 +103,25 @@ public class SetupBuilder {
             rocks[i] = new RockData();
     }
 
+    public void addModel(final Class clz, final Map props)
+            throws InstantiationException, IllegalAccessException {
+        final ModelBase mb = (ModelBase) clz.newInstance();
+        mb.init(props);
+        if (mb instanceof CollissionStrategy)
+            collStrat = (CollissionStrategy) mb;
+        else if (mb instanceof SlideStrategy)
+            slideStrat = (SlideStrategy) mb;
+        else
+            throw new IllegalArgumentException("Unknown model type "
+                    + clz.getName());
+    }
+
     private void digest() {
         try {
             log.debug("-");
-            // set up the collission engine
-            collStrat = CollissionStrategy.newInstance(collModel);
-            // set up the slide engine
-            slideStrat = SlideStrategy.newInstance(iceModel, collStrat);
-            DimVal drawTime = (DimVal) iceParams.get(DRAWTIME);
-            if (Dim.SEC_HOG_TEE.equals(drawTime.dim))
-                drawTime = new DimVal(drawTime.val, Dim.SECOND);
-            final DimVal drawCurl = (DimVal) iceParams.get(DRAWCURL);
-            slideStrat.setDraw2Tee(drawTime.to(Dim.SECOND).val, drawCurl
-                    .to(Dim.METER).val);
+            // set up the slider's collission engine
+            slideStrat.setColl(collStrat);
+
             // set up positions and speeds
             for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
                 final Rock x = pos.getRock(i);
@@ -236,26 +236,6 @@ public class SetupBuilder {
         collParams.put(name, val);
     }
 
-    public void setDrawCurl(final DimVal val) {
-        log.debug(val);
-        freezeCheck();
-        if (!val.dim.isLength())
-            throw new IllegalArgumentException("Expected something like "
-                    + Dim.METER + ", not " + val.dim);
-        iceParams.put(DRAWCURL, val);
-    }
-
-    public void setDrawTime(final DimVal val) {
-        log.debug(val);
-        freezeCheck();
-        if (val.dim.isTime() || Dim.SEC_HOG_TEE.equals(val.dim))
-            ;
-        else
-            throw new IllegalArgumentException("Expected something like "
-                    + Dim.SECOND + ", not " + val.dim);
-        iceParams.put(DRAWTIME, val);
-    }
-
     public void setEvent(final String val) {
         log.debug(val);
         freezeCheck();
@@ -266,33 +246,6 @@ public class SetupBuilder {
         log.debug(val);
         freezeCheck();
         metaParams.put(GAME, val);
-    }
-
-    public void setIceModel(final Class val) {
-        // check if class is derived from
-        final Class parent = SlideStrategy.class;
-        if (!parent.isAssignableFrom(val))
-            throw new IllegalArgumentException("Class [" + val.getName()
-                    + "] is no descendant of [" + parent.getName() + "]");
-        freezeCheck();
-        log.info("Ice model: " + val.getName());
-        iceParams.put(MODEL, val);
-    }
-
-    public void setIceModel(final String val) throws ClassNotFoundException {
-        setIceModel(Class.forName(val));
-    }
-
-    public void setIceParam(final String name, final DimVal val) {
-        log.debug(val);
-        freezeCheck();
-        iceParams.put(name, val);
-    }
-
-    public void setLoss(final DimVal val) {
-        log.debug(val);
-        freezeCheck();
-        collParams.put(LOSS, val);
     }
 
     public void setPosNHog(final int idx) {

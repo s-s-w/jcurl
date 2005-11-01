@@ -19,6 +19,8 @@
 package jcurl.sim.model;
 
 import jcurl.core.dto.RockProps;
+import jcurl.core.io.Dim;
+import jcurl.core.io.DimVal;
 import jcurl.model.Rock;
 import jcurl.sim.core.CollissionStrategy;
 
@@ -34,7 +36,11 @@ import jcurl.sim.core.CollissionStrategy;
  */
 public class CollissionSpin extends CollissionStrategy {
 
+    private static final String FRR = "friction rock-rock";
+
     private static final double J = RockProps.DEFAULT.getInertia();
+
+    private static final String LOSS = "loss";
 
     private static final double m = RockProps.DEFAULT.getMass();
 
@@ -67,6 +73,10 @@ public class CollissionSpin extends CollissionStrategy {
         vb.setZ(vb.getZ() + dW);
     }
 
+    public String description() {
+        return "Collissions with spin";
+    }
+
     private double getLoss() {
         return U;
     }
@@ -79,6 +89,7 @@ public class CollissionSpin extends CollissionStrategy {
      */
     public void setFricRockRock(final double v) {
         mu = v;
+        props.put(FRR, new Double(v));
     }
 
     /**
@@ -90,5 +101,6 @@ public class CollissionSpin extends CollissionStrategy {
      */
     public void setLoss(final double v) {
         U = v / m;
+        props.put(LOSS, new DimVal(v, Dim.JOULE));
     }
 }

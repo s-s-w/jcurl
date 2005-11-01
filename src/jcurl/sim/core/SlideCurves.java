@@ -75,8 +75,8 @@ public abstract class SlideCurves extends SlideStrategy {
 
     private final CurveCombined[] c = new CurveCombined[RockSet.ROCKS_PER_SET];
 
-    protected SlideCurves(final CollissionStrategy coll) {
-        super(coll);
+    public SlideCurves() {
+        super();
     }
 
     /**
