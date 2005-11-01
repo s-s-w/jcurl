@@ -10,8 +10,8 @@
     <homepage href="index.html"/>
     <description>JCurl Editor Demo Application</description>
     <description kind="short">A demo of the capabilities of the JCurl Curling Framework.</description>
-    <icon href="images/jcurl-icon.png"/>
-    <icon kind="splash" href="images/jcurl.png"/>
+    <icon href="images/jcurl-icon.jpg"/>
+    <icon kind="splash" href="images/jcurl.jpg"/>
     <offline-allowed/>
   </information>
   <security>
@@ -19,7 +19,7 @@
   </security>  
   <resources>
     <j2se version="1.4+"/>
-    <jar href="jar/jcurl-0.2.jar"/>
+    <jar href="jar/jcurl-0.2.jar" main="true" download="eager"/>
     <jar href="jar/ugli-simple.jar"/>
   </resources>
   <application-desc main-class="jcurl.core.gui.demo1.EditorApp"/>
