@@ -3,7 +3,7 @@
 <jnlp
   spec="1.0+"
   codebase="http://jcurl.berlios.de"
-  href="editordemo.jnlp">
+  href="viewerdemo.jnlp">
   <information>
     <title>JCurl Viewer Demo Application</title>
     <vendor>M. Rohrmoser</vendor>
