@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- $Id$ -->
 <jnlp
-  spec="0.2 1.0"
+  spec="1.0+"
   codebase="http://jcurl.berlios.de"
   href="editordemo.jnlp">
   <information>
@@ -15,8 +15,8 @@
   </information>
   <resources>
     <j2se version="1.4+"/>
-    <jar href="jar/jcurl-0.2.jar" main="true" download="eager"/>
-    <jar href="jar/ugli-simple.jar main="false" download="eager"/>
+    <jar href="jar/jcurl-0.2.jar"/>
+    <jar href="jar/ugli-simple.jar"/>
   </resources>
   <application-desc main-class="jcurl.core.gui.demo0.ViewerApp"/>
 </jnlp> 
