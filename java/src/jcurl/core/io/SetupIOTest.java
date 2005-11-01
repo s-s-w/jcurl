@@ -30,8 +30,6 @@ import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 import junit.framework.TestCase;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.apache.ugli.ULogger;
 import org.xml.sax.SAXException;
 
@@ -47,7 +45,7 @@ public class SetupIOTest extends TestCase {
 
     public SetupIOTest() {
         // Set logging to debug
-        Logger.getRootLogger().setLevel(Level.DEBUG);
+        //Logger.getRootLogger().setLevel(Level.DEBUG);
     }
 
     public void test010_save() throws SAXException,

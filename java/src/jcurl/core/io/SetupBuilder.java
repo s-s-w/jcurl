@@ -119,8 +119,9 @@ public class SetupBuilder {
     private void digest() {
         try {
             log.debug("-");
-            // set up the slider's collission engine
-            slideStrat.setColl(collStrat);
+            // set up the slider's collission engine - if possible
+            if (slideStrat != null)
+                slideStrat.setColl(collStrat);
 
             // set up positions and speeds
             for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
