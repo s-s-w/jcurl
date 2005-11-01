@@ -24,7 +24,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.swing.JApplet;
-import javax.xml.parsers.ParserConfigurationException;
 
 import jcurl.core.JCLoggerFactory;
 import jcurl.core.Source;
@@ -36,7 +35,6 @@ import jcurl.core.io.SetupBuilder;
 import jcurl.core.io.SetupSaxDeSer;
 import jcurl.model.PositionSet;
 import jcurl.model.SpeedSet;
-import jcurl.sim.model.CollissionSimple;
 import jcurl.sim.model.SlideStraight;
 
 import org.apache.ugli.ULogger;

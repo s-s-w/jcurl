@@ -34,7 +34,6 @@ import jcurl.model.PositionSet;
 import jcurl.model.Rock;
 import jcurl.model.RockSet;
 import jcurl.model.SpeedSet;
-import jcurl.sim.model.CollissionSimple;
 import jcurl.sim.model.CollissionSpin;
 
 import org.apache.ugli.ULogger;
@@ -434,6 +433,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
      */
     protected abstract void set(final double t0, final PositionSet pos,
             final SpeedSet speed, final int discontinuous);
+
     public void setColl(CollissionStrategy coll) {
         if (coll == null) {
             if (this.coll == null)

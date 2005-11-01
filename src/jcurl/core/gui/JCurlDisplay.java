@@ -53,7 +53,7 @@ public class JCurlDisplay extends RockLocationDisplay {
         this(null, zoom, null, null);
     }
 
-    protected void paintComponent(final Graphics g) {
+    public void paintComponent(final Graphics g) {
         super.paintComponent(g);
         final Graphics2D g2 = (Graphics2D) g;
         // paint additional DC stuff

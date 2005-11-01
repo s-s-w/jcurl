@@ -190,10 +190,12 @@ public class SetupSaxDeSer extends DefaultHandler {
                     setup.addModel(modelClass, modelProps);
                 } catch (InstantiationException e) {
                     log.warn("error in [" + elems + "]", e);
-                    error(new SAXParseException("error in [" + elems + "]", locator, e));
+                    error(new SAXParseException("error in [" + elems + "]",
+                            locator, e));
                 } catch (IllegalAccessException e) {
                     log.warn("error in [" + elems + "]", e);
-                    error(new SAXParseException("error in [" + elems + "]", locator, e));
+                    error(new SAXParseException("error in [" + elems + "]",
+                            locator, e));
                 }
             else
                 break;
@@ -201,10 +203,6 @@ public class SetupSaxDeSer extends DefaultHandler {
         case 4:
             if ("rock".equals(elem))
                 currRock = null;
-            if ("game".equals(elem))
-                setup.setGame(txt);
-            if ("event".equals(elem))
-                setup.setEvent(txt);
             else
                 break;
             return;

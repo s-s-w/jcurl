@@ -139,8 +139,10 @@ public class SlideStraightTest extends TestCase {
         assertEquals("", a, Polynome.poly(2, t0 + dt, par), 1e-9);
 
         dt = 0.1;
-        assertEquals("", 0.011459990937692677, Polynome.poly(0, t0 + dt, par), 1e-9);
-        assertEquals("", 0.11006448548776704, Polynome.poly(1, t0 + dt, par), 1e-9);
+        assertEquals("", 0.011459990937692677, Polynome.poly(0, t0 + dt, par),
+                1e-9);
+        assertEquals("", 0.11006448548776704, Polynome.poly(1, t0 + dt, par),
+                1e-9);
         assertEquals("", a, Polynome.poly(2, t0 + dt, par), 1e-9);
 
         dt = 0;
