@@ -27,6 +27,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -41,15 +42,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
-import javax.xml.parsers.ParserConfigurationException;
 
 import jcurl.core.JCLoggerFactory;
 import jcurl.core.gui.RockLocationDisplay;
 import jcurl.core.gui.RockLocationDisplayBase;
 import jcurl.core.gui.Zoomer;
-import jcurl.core.io.SetupBuilder;
-import jcurl.core.io.SetupSaxDeSer;
-import jcurl.core.io.SetupSaxSer;
+import jcurl.core.io.SetupIO;
 import jcurl.model.PositionSet;
 import jcurl.model.RockSet;
 import jcurl.model.SpeedSet;
@@ -68,7 +66,7 @@ import org.xml.sax.SAXException;
  */
 public class EditorApp extends JFrame {
 
-    private static class JCurlFileChooser extends JFileChooser {
+    public static class JCurlFileChooser extends JFileChooser {
         public JCurlFileChooser(File currentDirectory) {
             super(currentDirectory);
             this.setMultiSelectionEnabled(false);
@@ -82,7 +80,7 @@ public class EditorApp extends JFrame {
                 }
 
                 public String getDescription() {
-                    return "JCurl files";
+                    return "JCurl Setup Files (.jcx) (.jcz)";
                 }
             });
         }
@@ -189,14 +187,14 @@ public class EditorApp extends JFrame {
         }
     }
 
-    void cmdOpen() {
+    void cmdOpen() throws FileNotFoundException, SAXException, IOException {
         if (!chooseLoadFile(getCurrentFile() == null ? new File(".")
                 : getCurrentFile()))
             return;
-        load(getCurrentFile(), mod_locations);
+        SetupIO.load(getCurrentFile(), mod_locations, null, null, null);
     }
 
-    void cmdSave() {
+    void cmdSave() throws SAXException, IOException {
         if (getCurrentFile() == null) {
             if (!chooseSaveFile(new File(".")))
                 return;
@@ -204,7 +202,7 @@ public class EditorApp extends JFrame {
         save(getCurrentFile(), mod_locations);
     }
 
-    void cmdSaveAs() {
+    void cmdSaveAs() throws SAXException, IOException {
         if (!chooseSaveFile(getCurrentFile() == null ? new File(".")
                 : getCurrentFile()))
             return;
@@ -245,20 +243,9 @@ public class EditorApp extends JFrame {
         return currentFile;
     }
 
-    private void load(final File f, final PositionSet pos) {
-        log.info("Loading " + f);
-        try {
-            final SetupBuilder setup = SetupSaxDeSer.parse(f);
-            RockSet.copy(setup.getPos(), pos);
-            lastSaved = System.currentTimeMillis();
-            refreshTitle();
-        } catch (SAXException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        }
+    private void load(final File f, final PositionSet pos)
+            throws FileNotFoundException, SAXException, IOException {
+        SetupIO.load(f, pos, null, null, null);
     }
 
     /**
@@ -315,17 +302,10 @@ public class EditorApp extends JFrame {
                 + (currentFile == null ? "" : currentFile.getAbsolutePath()));
     }
 
-    private void save(File f, PositionSet pos) {
-        log.info("Saving " + f);
-        try {
-            new SetupSaxSer(f).write(pos);
-            lastSaved = System.currentTimeMillis();
-            refreshTitle();
-        } catch (SAXException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    private void save(File f, PositionSet pos) throws SAXException, IOException {
+        SetupIO.save(f, mod_locations, null, null, null);
+        lastSaved = System.currentTimeMillis();
+        refreshTitle();
     }
 
     public void setCurrentFile(File currentFile) {

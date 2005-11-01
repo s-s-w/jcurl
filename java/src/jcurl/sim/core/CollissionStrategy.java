@@ -38,7 +38,7 @@ import org.apache.ugli.ULogger;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class CollissionStrategy {
+public abstract class CollissionStrategy extends ModelBase {
 
     private static final float _Rad = RockProps.DEFAULT.getRadius();
 

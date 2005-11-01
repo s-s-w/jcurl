@@ -16,31 +16,30 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.sim.model;
+package jcurl.sim.core;
 
-import jcurl.model.Rock;
-import jcurl.sim.core.CollissionStrategy;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
- * A very simple hit-model using conservation of energy and momentum.
- * <p>
- * Compute collissions without bothering about inertia. Only exchanges the
- * speed-components along the hit-direction of the two involved rocks. Only
- * conservation of momentum is obeyed, e.g. spin is neglected.
- * 
- * @see jcurl.sim.model.SlideStraight
- * @see jcurl.sim.model.CollissionSimpleTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CollissionSimple extends CollissionStrategy {
-    public void computeRC(final Rock va, final Rock vb) {
-        final double tmp = va.getY();
-        va.setLocation(va.getX(), vb.getY());
-        vb.setLocation(vb.getX(), tmp);
+public abstract class ModelBase {
+    protected final Map props = new TreeMap();
+
+    public abstract String description();
+
+    public Object getProp(final String key) {
+        return props.get(key);
+    }
+    public void init(final Map props) {
+        this.props.clear();
+        this.props.putAll(props);
     }
 
-    public String description() {
-        return "Simple collissions";
+    public Iterator properties() {
+        return props.keySet().iterator();
     }
 }

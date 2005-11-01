@@ -29,7 +29,6 @@ import jcurl.math.MathVec;
 import jcurl.math.Polynome;
 import jcurl.model.Rock;
 import jcurl.model.RockSet;
-import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.SlideCurves;
 
 import org.apache.ugli.ULogger;
@@ -56,8 +55,8 @@ public class SlideStraight extends SlideCurves {
 
     private double accel;
 
-    public SlideStraight(final CollissionStrategy coll) {
-        super(coll);
+    public SlideStraight() {
+        super();
     }
 
     protected CurveBase createCurve(final double t0, final Rock x0,
@@ -92,15 +91,19 @@ public class SlideStraight extends SlideCurves {
         return new CurveFkt(p);
     }
 
+    public String description() {
+        return "Straight movement";
+    }
+
+    double getAccel() {
+        return accel;
+    }
+
     public double getInitialSpeed(final double y0, final double Trun) {
         final double HF = Ice.FAR_HOG_2_TEE;
         final double HN = Ice.HOG_2_TEE;
         return Math.sqrt(2 * accel * (y0 - HF)
                 + sqr(Trun * accel / 2 - (HN - HF) / Trun));
-    }
-
-    double getAccel() {
-        return accel;
     }
 
     public double getMu() {
@@ -115,6 +118,7 @@ public class SlideStraight extends SlideCurves {
      *            unused
      */
     public void setDraw2Tee(final double time, final double curl) {
+        super.setDraw2Tee(time, curl);
         accel = -2.0 * Ice.FAR_HOG_2_TEE / sqr(time);
     }
 }

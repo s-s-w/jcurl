@@ -88,12 +88,10 @@ public class ViewerApplet extends JApplet {
                 final SpeedSet speed = new SpeedSet();
                 speed.getDark(0).setLocation(0, -1.325, 0.75);
                 // dynamics engines
-                src = new SlideStraight(new CollissionSimple());
+                src = new SlideStraight();
                 src.reset(0, pos, speed, RockSetProps.DEFAULT);
             }
         } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        } catch (ParserConfigurationException e) {
             throw new RuntimeException(e);
         } catch (SAXException e) {
             throw new RuntimeException(e);

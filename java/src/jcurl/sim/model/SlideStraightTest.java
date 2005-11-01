@@ -46,7 +46,7 @@ public class SlideStraightTest extends TestCase {
         junit.textui.TestRunner.run(SlideStraightTest.class);
     }
 
-    private final SlideStraight s = new SlideStraight(new CollissionSimple());
+    private final SlideStraight s = new SlideStraight();
 
     private final PositionSet pos = PositionSet.allOut();
 
@@ -196,7 +196,7 @@ public class SlideStraightTest extends TestCase {
         final SpeedSet speed = new SpeedSet();
         speed.getDark(0).setLocation(0, -1.5, 0.75);
         // dynamics engines
-        final Source src = new SlideStraight(new CollissionSimple());
+        final Source src = new SlideStraight();
         src.reset(0, pos, speed, RockSetProps.DEFAULT);
 
         src.getPos(2.85, pos);

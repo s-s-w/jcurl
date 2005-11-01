@@ -19,19 +19,23 @@
 package jcurl.sim.core;
 
 import java.awt.geom.Point2D;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
+import java.util.TreeMap;
 
 import jcurl.core.JCLoggerFactory;
 import jcurl.core.Source;
 import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
 import jcurl.core.dto.RockSetProps;
+import jcurl.core.io.Dim;
+import jcurl.core.io.DimVal;
 import jcurl.math.MathVec;
 import jcurl.model.PositionSet;
 import jcurl.model.Rock;
 import jcurl.model.RockSet;
 import jcurl.model.SpeedSet;
+import jcurl.sim.model.CollissionSimple;
+import jcurl.sim.model.CollissionSpin;
 
 import org.apache.ugli.ULogger;
 
@@ -43,7 +47,11 @@ import org.apache.ugli.ULogger;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class SlideStrategy implements Source {
+public abstract class SlideStrategy extends ModelBase implements Source {
+
+    public static final String D2T_CURL = "curl";
+
+    public static final String D2T_TIME = "drawtotee";
 
     private static final ULogger log = JCLoggerFactory
             .getLogger(SlideStrategy.class);
@@ -55,17 +63,13 @@ public abstract class SlideStrategy implements Source {
         return Math.sqrt(a * a + b * b);
     }
 
-    public static SlideStrategy newInstance(final Class clz,
-            final CollissionStrategy coll) {
+    public static SlideStrategy newInstance(final Class clz) {
         final Class parent = SlideStrategy.class;
         if (!parent.isAssignableFrom(clz))
             throw new IllegalArgumentException("Class [" + clz.getName()
                     + "] is no descendant of [" + parent.getName() + "]");
         try {
-            final Class[] parType = { CollissionStrategy.class };
-            final Constructor ctor = clz.getConstructor(parType);
-            final Object[] par = { coll };
-            return (SlideStrategy) ctor.newInstance(par);
+            return (SlideStrategy) clz.newInstance();
         } catch (InstantiationException e) {
             final IllegalArgumentException ex = new IllegalArgumentException();
             ex.initCause(e);
@@ -75,14 +79,6 @@ public abstract class SlideStrategy implements Source {
             ex.initCause(e);
             throw ex;
         } catch (SecurityException e) {
-            final IllegalArgumentException ex = new IllegalArgumentException();
-            ex.initCause(e);
-            throw ex;
-        } catch (NoSuchMethodException e) {
-            final IllegalArgumentException ex = new IllegalArgumentException();
-            ex.initCause(e);
-            throw ex;
-        } catch (InvocationTargetException e) {
             final IllegalArgumentException ex = new IllegalArgumentException();
             ex.initCause(e);
             throw ex;
@@ -149,7 +145,7 @@ public abstract class SlideStrategy implements Source {
         return timetilhit(a, ap, av, b, bp, bv);
     }
 
-    protected final CollissionStrategy coll;
+    private CollissionStrategy coll;
 
     protected double dt = 0.050;
 
@@ -165,9 +161,12 @@ public abstract class SlideStrategy implements Source {
 
     protected double tmin = -1;
 
-    protected SlideStrategy(final CollissionStrategy coll) {
-        this.coll = coll;
-        setDraw2Tee(23, 1.0);
+    public SlideStrategy() {
+        setColl(new CollissionSpin());
+        final Map tmp = new TreeMap();
+        tmp.put(D2T_TIME, new DimVal(25, Dim.SEC_HOG_TEE));
+        tmp.put(D2T_CURL, new DimVal(1, Dim.METER));
+        init(tmp);
     }
 
     /**
@@ -276,6 +275,10 @@ public abstract class SlideStrategy implements Source {
 
     protected abstract RockSet getC(int c, double time, RockSet rocks);
 
+    public CollissionStrategy getColl() {
+        return coll;
+    }
+
     /**
      * Guess the initial speed.
      * 
@@ -319,6 +322,24 @@ public abstract class SlideStrategy implements Source {
             log.debug("t=" + time);
         computeUntil(time, dt);
         return (SpeedSet) getC(1, time, rocks);
+    }
+
+    public void init(final Map props) {
+        props.clear();
+        props.putAll(props);
+        DimVal time = (DimVal) getProp(D2T_TIME);
+        if (time == null)
+            time = new DimVal(25, Dim.SEC_HOG_TEE);
+        if (!Dim.SEC_HOG_TEE.equals(time.dim))
+            throw new IllegalArgumentException(
+                    "Draw to tee time must be seconds hog/tee");
+        DimVal curl = (DimVal) getProp(D2T_CURL);
+        if (curl == null)
+            curl = new DimVal(1, Dim.METER);
+        if (!curl.dim.isLength())
+            throw new IllegalArgumentException(
+                    "Draw to tee curl must be a length (meter/feet/...)");
+        setDraw2Tee(time.val, curl.val);
     }
 
     /**
@@ -413,6 +434,14 @@ public abstract class SlideStrategy implements Source {
      */
     protected abstract void set(final double t0, final PositionSet pos,
             final SpeedSet speed, final int discontinuous);
+    public void setColl(CollissionStrategy coll) {
+        if (coll == null) {
+            if (this.coll == null)
+                throw new IllegalArgumentException(
+                        "Collission strategy undefined.");
+        } else
+            this.coll = coll;
+    }
 
     /**
      * Set the draw-to-T-time and curl.
@@ -422,5 +451,8 @@ public abstract class SlideStrategy implements Source {
      * @param curl
      *            [meter]
      */
-    public abstract void setDraw2Tee(final double time, final double curl);
+    public void setDraw2Tee(final double time, final double curl) {
+        props.put(D2T_TIME, new DimVal(time, Dim.SEC_HOG_TEE));
+        props.put(D2T_CURL, new DimVal(curl, Dim.METER));
+    }
 }

@@ -6,17 +6,16 @@
     	<event>Curling World Championships 1992</event>
     	<game>Semi Final</game>
     </meta>
-    <collission>
-      <loss val="0.5" dim="m"/>
-      <model name="jcurl.sim.model.CollissionSpin">
-        <param name="friction" val="0.5"/>
-      </model>
-    </collission>
-    <ice>
-      <drawtotee val="24" dim="sht"/>
-      <curl val="0" dim="m"/>
-      <model name="jcurl.sim.model.SlideStraight"/>
-    </ice>
+    <model engine="jcurl.sim.model.CollissionSpin">
+      <description>Collissions with spin</description>
+      <param name="friction rock-rock" val="0.5"/>
+      <param name="loss" val="0.5" dim="m"/>
+    </model>
+    <model engine="jcurl.sim.model.SlideStraight">
+      <description>Straight movement</description>
+      <param name="curl" val="0.0" dim="m"/>
+      <param name="drawtotee" val="24.0" dim="sht"/>
+    </model>
     <positions>
       <rock color="light" no="1">
         <out/>

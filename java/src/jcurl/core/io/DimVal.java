@@ -32,7 +32,7 @@ import org.apache.ugli.ULogger;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-class DimVal {
+public class DimVal {
     private static final ULogger log = JCLoggerFactory.getLogger(DimVal.class);
 
     public static final Pattern pat = Pattern

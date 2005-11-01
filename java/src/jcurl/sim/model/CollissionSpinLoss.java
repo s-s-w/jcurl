@@ -42,11 +42,6 @@ import jcurl.sim.core.CollissionStrategy;
  */
 public class CollissionSpinLoss extends CollissionStrategy {
 
-    public void computeRC(Rock va, Rock vb) {
-        // TODO Auto-generated method stub
-
-    }
-
     private static final double HIT_MAX_DIST = 1e-6;
 
     private static final double INERTIA = RockProps.DEFAULT.getInertia();
@@ -115,6 +110,15 @@ public class CollissionSpinLoss extends CollissionStrategy {
             throw new RuntimeException("matrix MUST be invertible.", e);
         }
         return true;
+    }
+
+    public void computeRC(Rock va, Rock vb) {
+        // TODO Auto-generated method stub
+
+    }
+
+    public String description() {
+        return "Collissions with spin and loss of energy";
     }
 
     private double Loss() {

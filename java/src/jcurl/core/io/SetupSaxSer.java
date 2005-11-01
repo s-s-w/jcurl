@@ -24,14 +24,17 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.Iterator;
 import java.util.zip.GZIPOutputStream;
 
 import jcurl.model.PositionSet;
 import jcurl.model.Rock;
 import jcurl.model.RockSet;
 import jcurl.model.SpeedSet;
+import jcurl.sim.core.ModelBase;
 import jcurl.sim.core.SlideStrategy;
 
+import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
@@ -43,36 +46,82 @@ public class SetupSaxSer {
 
     private static final String NS = null;
 
-    private final XmlSerializer xml;
-
-    public SetupSaxSer(final File dst) throws IOException {
+    private static ContentHandler getCH(File dst) throws IOException {
         OutputStream o = new FileOutputStream(dst, false);
         if (dst.getName().endsWith("z"))
             o = new GZIPOutputStream(o);
         try {
-            this.xml = new XmlSerializer(o, "UTF-8", false);
+            return new XmlSerializer(o, "UTF-8", false);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static ContentHandler getCH(OutputStream dst) {
+        try {
+            return new XmlSerializer(dst, "UTF-8", false);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private final ContentHandler xml;
+
+    public SetupSaxSer(final ContentHandler xml) {
+        this.xml = xml;
+    }
+
+    public SetupSaxSer(final File dst) throws IOException {
+        this(getCH(dst));
     }
 
     public SetupSaxSer(final OutputStream dst) {
-        try {
-            this.xml = new XmlSerializer(dst, "UTF-8", false);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        this(getCH(dst));
     }
 
     public SetupSaxSer(final Writer dst) {
-        this.xml = new XmlSerializer(dst, false);
+        this(new XmlSerializer(dst, false));
     }
 
-    public SetupSaxSer(final XmlSerializer dst) {
-        this.xml = dst;
+    private void characters(final ContentHandler dst, final String str)
+            throws SAXException {
+        final char[] ch = str.toCharArray();
+        dst.characters(ch, 0, ch.length);
+    }
+
+    void internal(final ModelBase model) throws SAXException {
+        if (model == null)
+            return;
+        {
+            final AttributesImpl atts = new AttributesImpl();
+            atts.addAttribute(NS, null, "engine", null, model.getClass()
+                    .getName());
+            xml.startElement(NS, null, "model", atts);
+        }
+        xml.startElement(NS, null, "description", null);
+        characters(xml, model.description());
+        xml.endElement(NS, null, "description");
+        for (Iterator it = model.properties(); it.hasNext();) {
+            final String key = (String) it.next();
+            Object val = model.getProp(key);
+            final AttributesImpl atts = new AttributesImpl();
+            atts.addAttribute(NS, null, "name", null, key);
+            if (val instanceof DimVal) {
+                final DimVal dv = (DimVal) val;
+                atts.addAttribute(NS, null, "val", null, Double
+                        .toString(dv.val));
+                atts.addAttribute(NS, null, "dim", null, dv.dim.toString());
+            } else
+                atts.addAttribute(NS, null, "val", null, val.toString());
+            xml.startElement(NS, null, "param", atts);
+            xml.endElement(NS, null, "param");
+        }
+        xml.endElement(NS, null, "model");
     }
 
     void internal(final PositionSet pos) throws SAXException {
+        if (pos == null)
+            return;
         xml.startElement(NS, null, "positions", null);
         for (int i = RockSet.ROCKS_PER_COLOR - 1; i >= 0; i--) {
             internalLoc(pos.getDark(i), i, true);
@@ -81,50 +130,9 @@ public class SetupSaxSer {
         xml.endElement(NS, null, "positions");
     }
 
-    void internal(final SlideStrategy slid) throws SAXException {
-        xml.startElement(NS, null, "collission", null);
-        {
-            AttributesImpl atts = new AttributesImpl();
-            atts.addAttribute(NS, null, "val", null, "0.5");
-            atts.addAttribute(NS, null, "dim", null, Dim.METER.toString());
-            xml.startElement(NS, null, "loss", atts);
-            xml.endElement(NS, null, "loss");
-            atts = new AttributesImpl();
-            atts.addAttribute(NS, null, "name", null,
-                    "jcurl.sim.model.CollissionSpin");
-            xml.startElement(NS, null, "model", atts);
-            {
-                atts = new AttributesImpl();
-                atts.addAttribute(NS, null, "name", null, "friction");
-                atts.addAttribute(NS, null, "val", null, "0.5");
-                xml.startElement(NS, null, "param", atts);
-                xml.endElement(NS, null, "param");
-            }
-            xml.endElement(NS, null, "model");
-        }
-        xml.endElement(NS, null, "collission");
-        xml.startElement(NS, null, "ice", null);
-        {
-            AttributesImpl atts = new AttributesImpl();
-            atts.addAttribute(NS, null, "val", null, "24");
-            atts.addAttribute(NS, null, "dim", null, "sht");
-            xml.startElement(NS, null, "drawtotee", atts);
-            xml.endElement(NS, null, "drawtotee");
-            atts = new AttributesImpl();
-            atts.addAttribute(NS, null, "val", null, "2");
-            atts.addAttribute(NS, null, "dim", null, "m");
-            xml.startElement(NS, null, "curl", atts);
-            xml.endElement(NS, null, "curl");
-            atts = new AttributesImpl();
-            atts.addAttribute(NS, null, "name", null,
-                    "jcurl.sim.model.SlideStraight");
-            xml.startElement(NS, null, "model", atts);
-            xml.endElement(NS, null, "model");
-        }
-        xml.endElement(NS, null, "ice");
-    }
-
     void internal(final SpeedSet pos) throws SAXException {
+        if (pos == null)
+            return;
         xml.startElement(NS, null, "speeds", null);
         for (int i = RockSet.ROCKS_PER_COLOR - 1; i >= 0; i--) {
             internalSpeed(pos.getDark(i), i, true);
@@ -222,10 +230,10 @@ public class SetupSaxSer {
         xml.startElement(NS, null, "setup", null);
         xml.startElement(NS, null, "meta", null);
         xml.startElement(NS, null, "event", null);
-        xml.characters("???");
+        characters(xml, "???");
         xml.endElement(NS, null, "event");
         xml.startElement(NS, null, "game", null);
-        xml.characters("???");
+        characters(xml, "???");
         xml.endElement(NS, null, "game");
         xml.endElement(NS, null, "meta");
         internal(pos);
@@ -234,7 +242,8 @@ public class SetupSaxSer {
         xml.endDocument();
     }
 
-    public void write(final SetupBuilder setup) throws SAXException {
+    public void write(final PositionSet pos, final SpeedSet speed,
+            final SlideStrategy slide) throws SAXException {
         xml.startDocument();
         AttributesImpl atts = new AttributesImpl();
         atts.addAttribute(NS, null, "xmlns", null,
@@ -243,17 +252,23 @@ public class SetupSaxSer {
         xml.startElement(NS, null, "setup", null);
         xml.startElement(NS, null, "meta", null);
         xml.startElement(NS, null, "event", null);
-        xml.characters("???");
+        characters(xml, "???");
         xml.endElement(NS, null, "event");
         xml.startElement(NS, null, "game", null);
-        xml.characters("???");
+        characters(xml, "???");
         xml.endElement(NS, null, "game");
         xml.endElement(NS, null, "meta");
-        internal(setup.getSlide());
-        internal(setup.getPos());
-        internal(setup.getSpeed());
+        if (slide != null)
+            internal(slide.getColl());
+        internal(slide);
+        internal(pos);
+        internal(speed);
         xml.endElement(NS, null, "setup");
         xml.endElement(NS, null, "jcurl");
         xml.endDocument();
+    }
+
+    public void write(final SetupBuilder setup) throws SAXException {
+        write(setup.getPos(), setup.getSpeed(), setup.getSlide());
     }
 }
