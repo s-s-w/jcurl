@@ -35,6 +35,7 @@ import java.lang.reflect.Method;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.Icon;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -45,6 +46,8 @@ import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
 import jcurl.core.JCLoggerFactory;
+import jcurl.core.Version;
+import jcurl.core.gui.AboutDialog;
 import jcurl.core.gui.RockLocationDisplay;
 import jcurl.core.gui.RockLocationDisplayBase;
 import jcurl.core.gui.Zoomer;
@@ -67,8 +70,8 @@ import org.xml.sax.SAXException;
  */
 public class EditorApp extends JFrame {
 
-    public static class JCurlFileChooser extends JFileChooser {
-        public JCurlFileChooser(File currentFile) {
+    public static class JcxFileChooser extends JFileChooser {
+        public JcxFileChooser(File currentFile) {
             super(currentFile == null ? new File(".") : currentFile);
             this.setMultiSelectionEnabled(false);
             this.setAcceptAllFileFilterUsed(true);
@@ -117,6 +120,7 @@ public class EditorApp extends JFrame {
             .getLogger(EditorApp.class);
 
     public static void main(String[] args) throws SAXException, IOException {
+        log.info("Version: " + Version.find());
         final EditorApp frame = new EditorApp();
         frame.cmdNew();
         frame.load(args);
@@ -165,7 +169,7 @@ public class EditorApp extends JFrame {
     }
 
     boolean chooseLoadFile(final File def) {
-        final JFileChooser fc = new JCurlFileChooser(def);
+        final JFileChooser fc = new JcxFileChooser(def);
         if (JFileChooser.APPROVE_OPTION == fc.showOpenDialog(this)) {
             setCurrentFile(fc.getSelectedFile());
             return true;
@@ -174,7 +178,7 @@ public class EditorApp extends JFrame {
     }
 
     boolean chooseSaveFile(final File def) {
-        final JFileChooser fc = new JCurlFileChooser(def);
+        final JFileChooser fc = new JcxFileChooser(def);
         if (JFileChooser.APPROVE_OPTION == fc.showSaveDialog(this)) {
             setCurrentFile(fc.getSelectedFile());
             return true;
@@ -184,6 +188,9 @@ public class EditorApp extends JFrame {
 
     void cmdAbout() {
         log.info("");
+        if(about == null)
+            about = new AboutDialog(this);        
+        about.setVisible(true);
     }
 
     void cmdExit() {
@@ -367,6 +374,8 @@ public class EditorApp extends JFrame {
         setTitle(getClass().getName() + " - "
                 + (currentFile == null ? "" : currentFile.getAbsolutePath()));
     }
+
+    private JDialog about = null;
 
     private void save(File f, PositionSet pos) throws SAXException, IOException {
         SetupIO.save(f, mod_locations, null, null, null);

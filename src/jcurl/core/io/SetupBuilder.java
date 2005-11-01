@@ -19,7 +19,6 @@
 package jcurl.core.io;
 
 import java.util.Map;
-import java.util.TreeMap;
 
 import jcurl.core.JCLoggerFactory;
 import jcurl.core.dto.Ice;
@@ -31,8 +30,6 @@ import jcurl.model.SpeedSet;
 import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.ModelBase;
 import jcurl.sim.core.SlideStrategy;
-import jcurl.sim.model.CollissionSpin;
-import jcurl.sim.model.SlideStraight;
 
 import org.apache.ugli.ULogger;
 
@@ -62,10 +59,6 @@ public class SetupBuilder {
 
     private static final int Coords = 0;
 
-    private static final String EVENT_NAME = "event_name";
-
-    private static final String GAME = "game";
-
     private static final ULogger log = JCLoggerFactory
             .getLogger(SetupBuilder.class);
 
@@ -75,19 +68,9 @@ public class SetupBuilder {
 
     private static final int SpeedTo = 4;
 
-    private Class collModel = CollissionSpin.class;
-
-    private final Map collParams = new TreeMap();
-
     private CollissionStrategy collStrat = null;
 
-    private Class iceModel = SlideStraight.class;
-
-    private final Map iceParams = new TreeMap();
-
     private boolean isFrozen = false;
-
-    private final Map metaParams = new TreeMap();
 
     private final PositionSet pos = PositionSet.allHome();
 
@@ -97,16 +80,16 @@ public class SetupBuilder {
 
     private final SpeedSet speed = new SpeedSet();
 
-    public SetupBuilder() {
+    SetupBuilder() {
         rocks = new RockData[RockSet.ROCKS_PER_SET];
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             rocks[i] = new RockData();
     }
 
-    public void addModel(final Class clz, final Map props)
+    void addModel(final Class clz, final Map params)
             throws InstantiationException, IllegalAccessException {
         final ModelBase mb = (ModelBase) clz.newInstance();
-        mb.init(props);
+        mb.init(params);
         if (mb instanceof CollissionStrategy)
             collStrat = (CollissionStrategy) mb;
         else if (mb instanceof SlideStrategy)
@@ -182,7 +165,7 @@ public class SetupBuilder {
         }
     }
 
-    public void freeze() {
+    void freeze() {
         log.debug("-");
         if (!isFrozen) {
             isFrozen = true;
@@ -207,7 +190,7 @@ public class SetupBuilder {
         return this.speed;
     }
 
-    public void setAngle(final int idx, final DimVal val) {
+    void setAngle(final int idx, final DimVal val) {
         log.debug(val);
         freezeCheck();
         if (!val.dim.isAngle())
@@ -216,58 +199,25 @@ public class SetupBuilder {
         rocks[idx].a0 = val;
     }
 
-    public void setCollModel(final Class val) {
-        // check is class is derived from
-        final Class parent = CollissionStrategy.class;
-        if (!parent.isAssignableFrom(val))
-            throw new IllegalArgumentException("Class [" + val.getName()
-                    + "] is no descendant of [" + parent.getName() + "]");
-        freezeCheck();
-        log.info("Collission model: " + val.getName());
-        this.collModel = val;
-    }
-
-    public void setCollModel(final String val) throws ClassNotFoundException {
-        setCollModel(Class.forName(val));
-    }
-
-    public void setCollParam(final String name, final DimVal val) {
-        log.debug(name + " " + val);
-        freezeCheck();
-        collParams.put(name, val);
-    }
-
-    public void setEvent(final String val) {
-        log.debug(val);
-        freezeCheck();
-        metaParams.put(EVENT_NAME, val);
-    }
-
-    public void setGame(final String val) {
-        log.debug(val);
-        freezeCheck();
-        metaParams.put(GAME, val);
-    }
-
-    public void setPosNHog(final int idx) {
+    void setPosNHog(final int idx) {
         log.debug("-");
         freezeCheck();
         setPosY(idx, new DimVal(Ice.HOG_2_TEE, Dim.METER));
     }
 
-    public void setPosOut(final int idx) {
+    void setPosOut(final int idx) {
         log.debug("-");
         freezeCheck();
         rocks[idx].positionFlag = Out;
     }
 
-    public void setPosRelease(final int idx) {
+    void setPosRelease(final int idx) {
         log.debug("-");
         freezeCheck();
         rocks[idx].positionFlag = Release;
     }
 
-    public void setPosX(final int idx, final DimVal val) {
+    void setPosX(final int idx, final DimVal val) {
         log.debug(idx + " " + val);
         freezeCheck();
         if (!val.dim.isLength())
@@ -277,7 +227,7 @@ public class SetupBuilder {
         rocks[idx].positionFlag = Coords;
     }
 
-    public void setPosY(final int idx, final DimVal val) {
+    void setPosY(final int idx, final DimVal val) {
         log.debug(idx + " " + val);
         freezeCheck();
         if (!val.dim.isLength())
@@ -287,14 +237,14 @@ public class SetupBuilder {
         rocks[idx].positionFlag = Coords;
     }
 
-    public void setSpeed(final int idx, final DimVal val) {
+    void setSpeed(final int idx, final DimVal val) {
         log.debug(idx + " " + val);
         freezeCheck();
         rocks[idx].speed = val;
         rocks[idx].speedFlag = SpeedTo;
     }
 
-    public void setSpeedX(final int idx, final DimVal val) {
+    void setSpeedX(final int idx, final DimVal val) {
         log.debug(idx + " " + val);
         freezeCheck();
         if (!val.dim.isSpeed())
@@ -304,7 +254,7 @@ public class SetupBuilder {
         rocks[idx].speedFlag = Coords;
     }
 
-    public void setSpeedY(final int idx, final DimVal val) {
+    void setSpeedY(final int idx, final DimVal val) {
         log.debug(idx + " " + val);
         freezeCheck();
         if (!val.dim.isSpeed())
@@ -314,7 +264,7 @@ public class SetupBuilder {
         rocks[idx].speedFlag = Coords;
     }
 
-    public void setSpin(final int idx, final DimVal val) {
+    void setSpin(final int idx, final DimVal val) {
         log.debug(idx + " " + val);
         freezeCheck();
         if (!val.dim.isSpin())
@@ -323,7 +273,7 @@ public class SetupBuilder {
         rocks[idx].spin = val;
     }
 
-    public void setToX(final int idx, final DimVal val) {
+    void setToX(final int idx, final DimVal val) {
         log.debug(idx + " " + val);
         freezeCheck();
         if (!val.dim.isLength())
@@ -333,7 +283,7 @@ public class SetupBuilder {
         rocks[idx].speedFlag = SpeedTo;
     }
 
-    public void setToY(final int idx, final DimVal val) {
+    void setToY(final int idx, final DimVal val) {
         log.debug(idx + " " + val);
         freezeCheck();
         if (!val.dim.isLength())
