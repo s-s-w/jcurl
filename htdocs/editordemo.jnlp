@@ -10,8 +10,13 @@
     <homepage href="http://jcurl.berlios.de/index.html"/>
     <description>JCurl Editor Demo Application</description>
     <description kind="short">A demo of the capabilities of the JCurl Curling Framework.</description>
-    <icon href="images/jcurl-icon.jpg"/>
+	<description kind="tooltip">JCurl Edit</description>
+    <icon href="images/jcurl-icon.gif"/>
     <offline-allowed/>
+    <shortcut online="false">
+    <desktop/>
+    <menu submenu="JCurl"/>
+  </shortcut>
   </information>
   <security>
       <all-permissions/>

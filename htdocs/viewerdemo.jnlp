@@ -10,7 +10,7 @@
     <homepage href="http://jcurl.berlios.de/index.html"/>
     <description>JCurl Viewer Demo Application</description>
     <description kind="short">A demo of the capabilities of the JCurl Curling Framework.</description>
-    <icon href="images/jcurl-icon.jpg"/>
+    <icon href="images/jcurl-icon.gif"/>
     <offline-allowed/>
   </information>
   <resources>
