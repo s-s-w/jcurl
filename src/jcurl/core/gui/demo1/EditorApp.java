@@ -35,6 +35,7 @@ import java.lang.reflect.Method;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -42,6 +43,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JSlider;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
@@ -50,6 +52,7 @@ import jcurl.core.Version;
 import jcurl.core.gui.AboutDialog;
 import jcurl.core.gui.RockLocationDisplay;
 import jcurl.core.gui.RockLocationDisplayBase;
+import jcurl.core.gui.RockEditDisplay;
 import jcurl.core.gui.Zoomer;
 import jcurl.core.io.SetupIO;
 import jcurl.model.PositionSet;
@@ -127,11 +130,13 @@ public class EditorApp extends JFrame {
         frame.setVisible(true);
     }
 
+    private JDialog about = null;
+
     private File currentFile = null;
 
     private long lastSaved = 0;
 
-    private final RockLocationDisplayBase master;
+    private final RockEditDisplay master;
 
     private final PositionSet mod_locations = new PositionSet();
 
@@ -143,7 +148,7 @@ public class EditorApp extends JFrame {
                 cmdExit();
             }
         });
-        master = new RockLocationDisplay(mod_locations, null, null, null);
+        master = new RockEditDisplay(mod_locations, mod_speeds, null);
         final RockLocationDisplayBase pnl2 = new RockLocationDisplay(
                 mod_locations, Zoomer.HOG2HACK, null, null);
 
@@ -153,10 +158,20 @@ public class EditorApp extends JFrame {
         con.add(new SumWaitDisplay(mod_locations), "West");
         con.add(new SumShotDisplay(mod_locations), "East");
         {
-            final Box b = Box.createHorizontalBox();
-            b.add(Box.createRigidArea(new Dimension(0, 75)));
-            b.add(pnl2);
-            con.add(b, "South");
+            final Box b0 = Box.createVerticalBox();
+            final Box b1 = Box.createHorizontalBox();
+            b1.add(Box.createRigidArea(new Dimension(0, 75)));
+            b1.add(pnl2);
+            b0.add(b1);
+            b0.add(new JSlider(0, 100, 0));
+            final Box b2 = Box.createHorizontalBox();
+            b2.add(Box.createHorizontalGlue());
+            b2.add(newButton("Start", this, "cmdRunStart"));
+            b2.add(newButton("Pause", this, "cmdRunPause"));
+            b2.add(newButton("Stop", this, "cmdRunStop"));
+            b2.add(Box.createHorizontalGlue());
+            b0.add(b2);
+            con.add(b0, "South");
         }
 
         setJMenuBar(createMenu());
@@ -188,8 +203,8 @@ public class EditorApp extends JFrame {
 
     void cmdAbout() {
         log.info("");
-        if(about == null)
-            about = new AboutDialog(this);        
+        if (about == null)
+            about = new AboutDialog(this);
         about.setVisible(true);
     }
 
@@ -238,11 +253,33 @@ public class EditorApp extends JFrame {
     void cmdOpen() throws FileNotFoundException, SAXException, IOException {
         if (!discardUnsavedChanges())
             return;
+        //        try {
+        //            final FileOpenService fos = (FileOpenService) ServiceManager
+        //                    .lookup("javax.jnlp.BasicService");
+        //            final FileContents fc = fos.openFileDialog("/home/m", new
+        // String[]{".jcx", ".jcz"});
+        //            if(fc != null)
+        //                log.info(fc.getName());
+        //        } catch (UnavailableServiceException e) {
+        //            throw new RuntimeException("Uncaught exception", e);
+        //        }
         if (!chooseLoadFile(getCurrentFile() == null ? new File(".")
                 : getCurrentFile()))
             return;
         SetupIO.load(getCurrentFile(), mod_locations, null, null, null);
         lastSaved = mod_locations.getLastChanged();
+    }
+
+    void cmdRunPause() {
+        JOptionPane.showMessageDialog(this, "Not implemented yet");
+    }
+
+    void cmdRunStart() {
+        JOptionPane.showMessageDialog(this, "Not implemented yet");
+    }
+
+    void cmdRunStop() {
+        JOptionPane.showMessageDialog(this, "Not implemented yet");
     }
 
     void cmdSave() throws SAXException, IOException {
@@ -286,6 +323,13 @@ public class EditorApp extends JFrame {
             menu.add(newMI("Zoom", null, 'z', -1, this, "cmdZoom"));
         }
         {
+            final JMenu menu = bar.add(new JMenu("Play"));
+            menu.setMnemonic('P');
+            menu.add(newMI("Start", null, 'a', -1, this, "cmdRunStart"));
+            menu.add(newMI("Pause", null, 'P', -1, this, "cmdRunPause"));
+            menu.add(newMI("Stop", null, 'o', -1, this, "cmdRunStop"));
+        }
+        {
             final JMenu menu = bar.add(new JMenu("Help"));
             menu.setMnemonic('H');
             menu.add(newMI("About", null, 'a', -1, this, "cmdAbout"));
@@ -319,6 +363,43 @@ public class EditorApp extends JFrame {
         if (!f.exists())
             return;
         load(f, mod_locations);
+    }
+
+    private JButton newButton(final String name, final Object executor,
+            final String action) {
+        final Icon icon = null;
+        final JButton item = new JButton(new AbstractAction(name, icon) {
+            private Method m = null;
+
+            public void actionPerformed(final ActionEvent evt) {
+                if (m == null) {
+                    try {
+                        m = executor.getClass().getMethod(action, null);
+                    } catch (Exception e) {
+                        try {
+                            m = executor.getClass().getDeclaredMethod(action,
+                                    null);
+                        } catch (SecurityException e1) {
+                            throw new RuntimeException(e1);
+                        } catch (NoSuchMethodException e1) {
+                            throw new RuntimeException(e1);
+                        }
+                    }
+                }
+                try {
+                    m.invoke(executor, null);
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                } catch (InvocationTargetException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        //        item.setMnemonic(mnemonic);
+        //        if (ctrlAccel >= 0)
+        //            item.setAccelerator(KeyStroke.getKeyStroke(ctrlAccel,
+        //                    InputEvent.CTRL_MASK));
+        return item;
     }
 
     /**
@@ -374,8 +455,6 @@ public class EditorApp extends JFrame {
         setTitle(getClass().getName() + " - "
                 + (currentFile == null ? "" : currentFile.getAbsolutePath()));
     }
-
-    private JDialog about = null;
 
     private void save(File f, PositionSet pos) throws SAXException, IOException {
         SetupIO.save(f, mod_locations, null, null, null);

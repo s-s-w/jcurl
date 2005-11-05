@@ -51,9 +51,11 @@ public class AboutDialog extends JDialog {
         b.add(new JLabel("by M. Rohrmoser"));
         b.add(Box.createGlue());
         final Version v = Version.find(owner.getClass());
-        b.add(new JLabel("Version: " + v.toString()));
-        b.add(new JLabel("Build time: " + v.getTime()));
-        b.add(Box.createGlue());
+        if (v != null) {
+            b.add(new JLabel("Version: " + v.toString()));
+            b.add(new JLabel("Build time: " + v.getTime()));
+            b.add(Box.createGlue());
+        }
         getContentPane().add(b, "Center");
 
         JPanel p2 = new JPanel();

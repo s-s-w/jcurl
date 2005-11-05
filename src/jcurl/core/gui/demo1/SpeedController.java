@@ -18,14 +18,13 @@
  */
 package jcurl.core.gui.demo1;
 
-import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 
 import jcurl.core.JCLoggerFactory;
-import jcurl.core.gui.RockLocationDisplayBase;
-import jcurl.math.MathVec;
+import jcurl.core.gui.RockEditDisplay;
 import jcurl.model.PositionSet;
 import jcurl.model.SpeedSet;
 
@@ -35,15 +34,20 @@ import org.apache.ugli.ULogger;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SpeedController extends LocationController implements
-        MouseListener {
+public class SpeedController implements MouseMotionListener, MouseListener {
 
     private static final ULogger log = JCLoggerFactory
             .getLogger(SpeedController.class);
 
-    protected int selectedIdx = -1;
+    private final RockEditDisplay.HotStuff hot = new RockEditDisplay.HotStuff();
 
-    private final SpeedSet speeds;
+    private final RockEditDisplay panel;
+
+    private final PositionSet rocks;
+
+//    private final SpeedSet speeds;
+
+    private final Point2D tmp = new Point2D.Double();
 
     /**
      * @param locations
@@ -51,47 +55,62 @@ public class SpeedController extends LocationController implements
      * @param panel
      */
     public SpeedController(PositionSet locations, SpeedSet speeds,
-            RockLocationDisplayBase panel) {
-        super(locations, panel);
-        this.speeds = speeds;
-        panel.addMouseListener(this);
+            RockEditDisplay panel) {
+        this.rocks = locations;
+//        this.speeds = speeds;
+        this.panel = panel;
+        this.panel.addMouseListener(this);
+        this.panel.addMouseMotionListener(this);
+        this.panel.setPos(0, this.rocks);
     }
 
-    protected void changedFocus(final int oldIdx, final int newIdx) {
-        super.changedFocus(oldIdx, newIdx);
-        if (speeds == null)
-            return;
-        if (newIdx < 0) {
-            // remove the speed paint when loosing focus:
-            panel.repaint();
-            return;
-        }
-        paintSpeed(newIdx);
-    }
-
-    protected void changedSelected(int oldIdx, int newIdx) {
-        log.info("new " + newIdx);
-        ;//paintSpeed(newIdx);
+    /**
+     * Get the world-coordinates where the mouse event happened.
+     * 
+     * @param e
+     * @param dst
+     *            wc container. <code>null</code> creates a
+     *            <code>Point2D.Float</code>
+     * @return the world-coordinate location
+     */
+    protected Point2D getWc(final MouseEvent e, Point2D dst) {
+        if (dst == null)
+            dst = new Point2D.Float(e.getX(), e.getY());
+        else
+            dst.setLocation(e.getX(), e.getY());
+        return panel.dc2wc(dst, dst);
     }
 
     public void mouseClicked(MouseEvent e) {
-        log.info("" + hotRockIdx);
-        if (e.getButton() == MouseEvent.BUTTON1)
-            if (selectedIdx != hotRockIdx) {
-                changedSelected(selectedIdx, hotRockIdx);
-                selectedIdx = hotRockIdx;
+        log.info("" + hot.idx);
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            int mask = 1 << hot.idx;
+            if (e.isShiftDown()) {
+                int old = panel.getSelectedMask();
+                if ((mask & old) == 0)
+                    mask |= old;
+                else
+                    mask = ~mask & old;
             }
+            panel.setSelectedMask(mask);
+        }
     }
 
     public void mouseDragged(MouseEvent e) {
-        super.mouseDragged(e);
-        if (hotRockIdx < 0) {
-            log.debug("no hot rock");
-            return;
-        }
-        if (e.getModifiersEx() == MouseEvent.BUTTON3_DOWN_MASK) {
-            // move a rock
-            final Point2D wc = getWc(e, tmpWc);
+        if (e.getModifiersEx() == MouseEvent.BUTTON1_DOWN_MASK) {
+            if (RockEditDisplay.HotObject.ROCK.equals(hot.what)) {
+                // move a rock
+                final Point2D wc = getWc(e, tmp);
+                int idx = PositionSet.findRockIndexTouchingRockAtPos(rocks, wc,
+                        hot.idx);
+                if (idx >= 0) {
+                    log.debug("new position blocked");
+                } else {
+                    rocks.getRock(hot.idx).setLocation(wc);
+                    rocks.notifyChange();
+                    log.debug("relocated");
+                }
+            }
         }
     }
 
@@ -102,74 +121,16 @@ public class SpeedController extends LocationController implements
     }
 
     public void mouseMoved(MouseEvent e) {
-        super.mouseMoved(e);
-        // do speed stuff
+        // check if the mouse is over something hot:
+        // - a speed handle
+        // - a rock
+        tmp.setLocation(e.getX(), e.getY());
+        panel.findHotDc(tmp, hot);
     }
 
     public void mousePressed(MouseEvent e) {
     }
 
     public void mouseReleased(MouseEvent e) {
-    }
-
-    protected void paintSpeed(final Graphics2D g2, final int idx) {
-        if (idx < 0)
-            return;
-        final Point2D cwc = locations.getRock(idx);
-        final Point2D cdc = panel.wc2dc(cwc, null);
-        // prepare a direction beam (line) 5 Meters long from cwc
-        final Point2D dir_dc;
-        final Point2D normwc;
-        final double vwc_abs;
-        {
-            Point2D norm = speeds.getRock(idx);
-            vwc_abs = MathVec.abs(norm);
-            if (vwc_abs == 0.0)
-                normwc = new Point2D.Double(0, -1);
-            else
-                normwc = MathVec.mult(1.0 / vwc_abs, norm, null);
-            norm = MathVec.mult(5, normwc, null);
-            MathVec.add(cwc, norm, norm);
-            panel.wc2dc(norm, norm);
-            dir_dc = norm;
-        }
-        // prepare a perpendicular line for the "strength"
-        final Point2D abs1_dc;
-        final Point2D abs2_dc;
-        {
-            final double len = 0.5;
-            Point2D base = MathVec.add(cwc, speeds.getRock(idx), null);
-            // get a perpendicular
-            abs2_dc = new Point2D.Double(-normwc.getY(), normwc.getX());
-            MathVec.mult(len, abs2_dc, abs2_dc);
-            abs1_dc = MathVec.add(base, abs2_dc, null);
-            MathVec.mult(-1, abs2_dc, abs2_dc);
-            MathVec.add(base, abs2_dc, abs2_dc);
-            panel.wc2dc(abs1_dc, abs1_dc);
-            panel.wc2dc(abs2_dc, abs2_dc);
-        }
-
-        final int r = 30;
-        // direction beam:
-        g2.drawLine((int) cdc.getX(), (int) cdc.getY(), (int) dir_dc.getX(),
-                (int) dir_dc.getY());
-        // perpendicular line for the "strength"
-        g2.drawLine((int) abs1_dc.getX(), (int) abs1_dc.getY(), (int) abs2_dc
-                .getX(), (int) abs2_dc.getY());
-    }
-
-    /**
-     * paint the speed stuff.
-     * 
-     * @param newIdx
-     */
-    private void paintSpeed(int newIdx) {
-        final Graphics2D g2 = (Graphics2D) panel.getGraphics();
-        try {
-            g2.setRenderingHints(panel.hints);
-            paintSpeed(g2, newIdx);
-        } finally {
-            g2.dispose();
-        }
     }
 }

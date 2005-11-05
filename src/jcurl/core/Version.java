@@ -83,6 +83,11 @@ public class Version {
             if (url.getPath().indexOf(marker) >= 0)
                 return new Manifest(url.openStream());
         }
+        log.info("Manifest not found in");
+        for (Enumeration enum = clz.getResources("META-INF/MANIFEST.MF"); enum
+                .hasMoreElements();) {
+            log.info("url=" + enum.nextElement());
+        }
         return new Manifest(new File("config/jcurl.jar/"
                 + "META-INF/MANIFEST.MF").toURL().openStream());
     }
