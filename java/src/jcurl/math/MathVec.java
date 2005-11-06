@@ -50,13 +50,14 @@ public final class MathVec {
     public static Point2D ensureInstance(final Point2D template, final Point2D c) {
         if (c != null)
             return c;
-        try {
-            return (Point2D) template.getClass().newInstance();
-        } catch (InstantiationException e) {
-            throw new RuntimeException("Couldn't create a new instance.", e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException("Couldn't create a new instance.", e);
-        }
+//        try {
+            //return (Point2D) template.getClass().newInstance();
+            return (Point2D) template.clone();
+//        } catch (InstantiationException e) {
+//            throw new RuntimeException("Couldn't create a new instance.", e);
+//        } catch (IllegalAccessException e) {
+//            throw new RuntimeException("Couldn't create a new instance.", e);
+//        }
     }
 
     public static double[] mult(final double fact, final double[] a, double[] b) {

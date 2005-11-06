@@ -149,34 +149,14 @@ public class SetupSaxSer {
      */
     void internalLoc(final Rock r, int i, final boolean isDark)
             throws SAXException {
-        final Dim len = Dim.FOOT;
-        final Dim angle = Dim.DEGREE;
-
         AttributesImpl atts = new AttributesImpl();
         atts.addAttribute(NS, null, "color", null, isDark ? "dark" : "light");
         atts.addAttribute(NS, null, "no", null, Integer.toString(1 + i));
         xml.startElement(NS, null, "rock", atts);
 
-        atts = new AttributesImpl();
-        final DimVal x = new DimVal(r.getX(), Dim.METER).to(len);
-        atts.addAttribute(NS, null, "val", null, Double.toString(x.val));
-        atts.addAttribute(NS, null, "dim", null, x.dim.toString());
-        xml.startElement(NS, null, "x", atts);
-        xml.endElement(NS, null, "x");
-
-        atts = new AttributesImpl();
-        final DimVal y = new DimVal(r.getY(), Dim.METER).to(len);
-        atts.addAttribute(NS, null, "val", null, Double.toString(y.val));
-        atts.addAttribute(NS, null, "dim", null, y.dim.toString());
-        xml.startElement(NS, null, "y", atts);
-        xml.endElement(NS, null, "y");
-
-        atts = new AttributesImpl();
-        final DimVal a = new DimVal(r.getY(), Dim.RADIANT).to(angle);
-        atts.addAttribute(NS, null, "val", null, Double.toString(a.val));
-        atts.addAttribute(NS, null, "dim", null, a.dim.toString());
-        xml.startElement(NS, null, "a", atts);
-        xml.endElement(NS, null, "a");
+        part(xml, r.getX(), Dim.METER, "x", Dim.FOOT);
+        part(xml, r.getY(), Dim.METER, "y", Dim.FOOT);
+        part(xml, r.getZ(), Dim.RADIANT, "a", Dim.DEGREE);
 
         xml.endElement(NS, null, "rock");
     }
@@ -189,36 +169,28 @@ public class SetupSaxSer {
      */
     void internalSpeed(final Rock r, int i, final boolean isDark)
             throws SAXException {
-        final Dim len = Dim.METER_PER_SEC;
-        final Dim angle = Dim.HERTZ;
-
+        if(!r.nonZero())
+            return;
         AttributesImpl atts = new AttributesImpl();
         atts.addAttribute(NS, null, "color", null, isDark ? "dark" : "light");
         atts.addAttribute(NS, null, "no", null, Integer.toString(1 + i));
         xml.startElement(NS, null, "rock", atts);
 
-        atts = new AttributesImpl();
-        final DimVal x = new DimVal(r.getX(), Dim.METER_PER_SEC).to(len);
-        atts.addAttribute(NS, null, "val", null, Double.toString(x.val));
-        atts.addAttribute(NS, null, "dim", null, x.dim.toString());
-        xml.startElement(NS, null, "x", atts);
-        xml.endElement(NS, null, "x");
-
-        atts = new AttributesImpl();
-        final DimVal y = new DimVal(r.getY(), Dim.METER_PER_SEC).to(len);
-        atts.addAttribute(NS, null, "val", null, Double.toString(y.val));
-        atts.addAttribute(NS, null, "dim", null, y.dim.toString());
-        xml.startElement(NS, null, "y", atts);
-        xml.endElement(NS, null, "y");
-
-        atts = new AttributesImpl();
-        final DimVal a = new DimVal(r.getY(), Dim.RAD_PER_SEC).to(angle);
-        atts.addAttribute(NS, null, "val", null, Double.toString(a.val));
-        atts.addAttribute(NS, null, "dim", null, a.dim.toString());
-        xml.startElement(NS, null, "spin", atts);
-        xml.endElement(NS, null, "spin");
+        part(xml, r.getX(), Dim.METER_PER_SEC, "x", Dim.METER_PER_SEC);
+        part(xml, r.getY(), Dim.METER_PER_SEC, "y", Dim.METER_PER_SEC);
+        part(xml, r.getZ(), Dim.RAD_PER_SEC, "spin", Dim.HERTZ);
 
         xml.endElement(NS, null, "rock");
+    }
+
+    private static void part(final ContentHandler xml, final double val,
+            final Dim src, String label, Dim dst) throws SAXException {
+        final AttributesImpl atts = new AttributesImpl();
+        final DimVal tmp = new DimVal(val, src).to(dst);
+        atts.addAttribute(NS, null, "val", null, Double.toString(tmp.val));
+        atts.addAttribute(NS, null, "dim", null, tmp.dim.toString());
+        xml.startElement(NS, null, label, atts);
+        xml.endElement(NS, null, label);
     }
 
     public void write(final PositionSet pos) throws SAXException {

@@ -111,6 +111,11 @@ public class SpeedController implements MouseMotionListener, MouseListener {
                     log.debug("relocated");
                 }
             }
+            if (RockEditDisplay.HotObject.SPEED.equals(hot.what)) {
+                // change the speed of a rock
+                final Point2D wc = getWc(e, tmp);
+                panel.setSpeedSpot(hot.idx, wc);
+            }
         }
     }
 

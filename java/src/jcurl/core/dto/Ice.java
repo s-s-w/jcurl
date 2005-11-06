@@ -79,7 +79,7 @@ public class Ice {
             final PositionSet speed) {
         int ret = 0;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            if (speed.getRock(i).nonzero()) {
+            if (speed.getRock(i).nonZero()) {
                 final Rock r = pos.getRock(i);
                 if (r.getX() > outX || r.getX() < -outX || r.getY() < -outY) {
                     setOut(r, (i % 2) == 0, i / 2);

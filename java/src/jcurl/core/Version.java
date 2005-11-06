@@ -66,7 +66,7 @@ public class Version {
 
     public static final Version find(final ClassLoader clz) {
         try {
-            final Manifest mf = findManifest(clz, "/jcurl-");
+            final Manifest mf = findManifest(clz, "jcurl-");
             final Attributes main = mf.getMainAttributes();
             return create(main.getValue("Bundle-Version"), main
                     .getValue("Built-Time"));

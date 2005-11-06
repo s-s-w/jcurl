@@ -34,7 +34,7 @@ import jcurl.model.Rock;
  */
 public class RockDouble extends Rock implements Serializable {
 
-    public final double[] x = new double[3];
+    private final double[] x = new double[3];
 
     public RockDouble() {
         this(0, 0, 0);
@@ -69,7 +69,7 @@ public class RockDouble extends Rock implements Serializable {
         return x[2];
     }
 
-    public boolean nonzero() {
+    public boolean nonZero() {
         return x[0] * x[0] + x[1] * x[1] > 1e-4;
     }
 
