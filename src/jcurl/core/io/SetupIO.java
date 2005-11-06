@@ -57,6 +57,7 @@ public class SetupIO {
             log.debug("Loading " + src);
         final SetupBuilder setup = SetupSaxDeSer.parse(src);
         RockSet.copy(setup.getPos(), pos);
+        RockSet.copy(setup.getSpeed(), speed);        
     }
 
     public static void load(final InputStream src, final PositionSet pos,

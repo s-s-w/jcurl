@@ -67,12 +67,12 @@ public class CollissionSpinLoss extends CollissionStrategy {
         // vector from a's center to b's:
         Point2D r = MathVec.sub(xb, xa, null);
         double tmp = MathVec.abs(r);
-        if (!(va.nonzero() || vb.nonzero())
+        if (!(va.nonZero() || vb.nonZero())
                 || tmp > RADIUS + RADIUS + HIT_MAX_DIST)
             return false;
         boolean f;
-        if (true == (va.nonzero() ^ vb.nonzero())) {
-            if (false != (f = vb.nonzero()))
+        if (true == (va.nonZero() ^ vb.nonZero())) {
+            if (false != (f = vb.nonZero()))
                 tmp = -tmp;
         }
 
@@ -93,7 +93,7 @@ public class CollissionSpinLoss extends CollissionStrategy {
         mat.transform(vb, _vb);
         final double[] w = { va.getZ(), vb.getZ() };
 
-        if (va.nonzero() ^ vb.nonzero())
+        if (va.nonZero() ^ vb.nonZero())
             singleLoss(_va, _vb, w);
         singleNoLoss(_va, _vb, w);
 

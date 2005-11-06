@@ -7,7 +7,7 @@
 
 	<property name="version.major" value="0" />
 	<property name="version.minor" value="2" />
-	<property name="revision.version" value="1" />
+	<property name="revision.version" value="2" />
 
 	<!--************************************************************
 	**** Custom Properties *****************************************

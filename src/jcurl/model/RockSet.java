@@ -91,19 +91,32 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     }
 
     /**
+     * Check if a rock is non-zero.
+     * 
+     * @param rock
+     * @return true/false
+     */
+    private static boolean nonZero(final Rock rock) {
+        final double zero = 1e-6;
+        if (rock.getX() > zero || rock.getX() < -zero)
+            return true;
+        else if (rock.getY() > zero || rock.getY() < -zero)
+            return true;
+        else if (rock.getZ() > zero || rock.getZ() < -zero)
+            return true;
+        return false;
+    }
+
+    /**
      * Check which rocks are non-zero.
      * 
      * @param rocks
      * @return bitset of the rocks being non-zero
      */
     public static int nonZero(final RockSet rocks) {
-        final double zero = 1e-6;
         int ret = 0;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            final Rock r = rocks.getRock(i);
-            if (r.getX() > zero || r.getX() < -zero)
-                ret |= 1 << i;
-            else if (r.getY() > zero || r.getY() < -zero)
+            if (rocks.getRock(i).nonZero())
                 ret |= 1 << i;
         }
         return ret;

@@ -33,6 +33,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -122,6 +123,44 @@ public class EditorApp extends JFrame {
     private static final ULogger log = JCLoggerFactory
             .getLogger(EditorApp.class);
 
+    /**
+     * @param name
+     * @param icon
+     * @param executor
+     * @param action
+     * @return
+     */
+    private static AbstractAction createAction(final String name,
+            final Icon icon, final Object executor, final String action) {
+        return new AbstractAction(name, icon) {
+            private Method m = null;
+
+            public void actionPerformed(final ActionEvent evt) {
+                if (m == null) {
+                    try {
+                        m = executor.getClass().getMethod(action, null);
+                    } catch (Exception e) {
+                        try {
+                            m = executor.getClass().getDeclaredMethod(action,
+                                    null);
+                        } catch (SecurityException e1) {
+                            throw new RuntimeException(e1);
+                        } catch (NoSuchMethodException e1) {
+                            throw new RuntimeException(e1);
+                        }
+                    }
+                }
+                try {
+                    m.invoke(executor, null);
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                } catch (InvocationTargetException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+    }
+
     public static void main(String[] args) throws SAXException, IOException {
         log.info("Version: " + Version.find());
         final EditorApp frame = new EditorApp();
@@ -131,6 +170,12 @@ public class EditorApp extends JFrame {
     }
 
     private JDialog about = null;
+
+    private final JButton bPause;
+
+    private final JButton bStart;
+
+    private final JButton bStop;
 
     private File currentFile = null;
 
@@ -166,13 +211,14 @@ public class EditorApp extends JFrame {
             b0.add(new JSlider(0, 100, 0));
             final Box b2 = Box.createHorizontalBox();
             b2.add(Box.createHorizontalGlue());
-            b2.add(newButton("Start", this, "cmdRunStart"));
-            b2.add(newButton("Pause", this, "cmdRunPause"));
-            b2.add(newButton("Stop", this, "cmdRunStop"));
+            b2.add(bStart = newButton("Start", this, "cmdRunStart"));
+            b2.add(bPause = newButton("Pause", this, "cmdRunPause"));
+            b2.add(bStop = newButton("Stop", this, "cmdRunStop"));
             b2.add(Box.createHorizontalGlue());
             b0.add(b2);
             con.add(b0, "South");
         }
+        bStop.getAction().actionPerformed(null);
 
         setJMenuBar(createMenu());
         refreshTitle();
@@ -244,7 +290,7 @@ public class EditorApp extends JFrame {
             // feed the model
             PositionSet.allOut(mod_locations);
             RockSet.allZero(mod_speeds);
-            lastSaved = mod_locations.getLastChanged();
+            lastSaved = System.currentTimeMillis();
         } finally {
             setCursor(Cdefault);
         }
@@ -266,20 +312,28 @@ public class EditorApp extends JFrame {
         if (!chooseLoadFile(getCurrentFile() == null ? new File(".")
                 : getCurrentFile()))
             return;
-        SetupIO.load(getCurrentFile(), mod_locations, null, null, null);
-        lastSaved = mod_locations.getLastChanged();
+        SetupIO.load(getCurrentFile(), mod_locations, mod_speeds, null, null);
+        lastSaved = System.currentTimeMillis();
     }
 
     void cmdRunPause() {
         JOptionPane.showMessageDialog(this, "Not implemented yet");
+        bStart.getAction().setEnabled(true);
+        bPause.getAction().setEnabled(false);
+        bStop.getAction().setEnabled(false);
     }
 
     void cmdRunStart() {
         JOptionPane.showMessageDialog(this, "Not implemented yet");
+        bStart.getAction().setEnabled(false);
+        bPause.getAction().setEnabled(true);
+        bStop.getAction().setEnabled(true);
     }
 
     void cmdRunStop() {
-        JOptionPane.showMessageDialog(this, "Not implemented yet");
+        bStart.getAction().setEnabled(true);
+        bPause.getAction().setEnabled(false);
+        bStop.getAction().setEnabled(false);
     }
 
     void cmdSave() throws SAXException, IOException {
@@ -287,14 +341,14 @@ public class EditorApp extends JFrame {
             if (!chooseSaveFile(new File(".")))
                 return;
         }
-        save(getCurrentFile(), mod_locations);
+        save(getCurrentFile());
     }
 
     void cmdSaveAs() throws SAXException, IOException {
         if (!chooseSaveFile(getCurrentFile() == null ? new File(".")
                 : getCurrentFile()))
             return;
-        save(getCurrentFile(), mod_locations);
+        save(getCurrentFile());
     }
 
     void cmdZoom() {
@@ -325,9 +379,9 @@ public class EditorApp extends JFrame {
         {
             final JMenu menu = bar.add(new JMenu("Play"));
             menu.setMnemonic('P');
-            menu.add(newMI("Start", null, 'a', -1, this, "cmdRunStart"));
-            menu.add(newMI("Pause", null, 'P', -1, this, "cmdRunPause"));
-            menu.add(newMI("Stop", null, 'o', -1, this, "cmdRunStop"));
+            menu.add(newMI('a', -1, bStart.getAction()));
+            menu.add(newMI('P', -1, bPause.getAction()));
+            menu.add(newMI('o', -1, bStop.getAction()));
         }
         {
             final JMenu menu = bar.add(new JMenu("Help"));
@@ -338,7 +392,8 @@ public class EditorApp extends JFrame {
     }
 
     private boolean discardUnsavedChanges() {
-        if (mod_locations.getLastChanged() <= lastSaved)
+        if (mod_locations.getLastChanged() <= lastSaved
+                && mod_speeds.getLastChanged() <= lastSaved)
             return true;
         if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this,
                 "Discard unsaved changes?", "Warning",
@@ -365,36 +420,8 @@ public class EditorApp extends JFrame {
         load(f, mod_locations);
     }
 
-    private JButton newButton(final String name, final Object executor,
-            final String action) {
-        final Icon icon = null;
-        final JButton item = new JButton(new AbstractAction(name, icon) {
-            private Method m = null;
-
-            public void actionPerformed(final ActionEvent evt) {
-                if (m == null) {
-                    try {
-                        m = executor.getClass().getMethod(action, null);
-                    } catch (Exception e) {
-                        try {
-                            m = executor.getClass().getDeclaredMethod(action,
-                                    null);
-                        } catch (SecurityException e1) {
-                            throw new RuntimeException(e1);
-                        } catch (NoSuchMethodException e1) {
-                            throw new RuntimeException(e1);
-                        }
-                    }
-                }
-                try {
-                    m.invoke(executor, null);
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                } catch (InvocationTargetException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+    private JButton newButton(final Action action) {
+        final JButton item = new JButton(action);
         //        item.setMnemonic(mnemonic);
         //        if (ctrlAccel >= 0)
         //            item.setAccelerator(KeyStroke.getKeyStroke(ctrlAccel,
@@ -402,48 +429,14 @@ public class EditorApp extends JFrame {
         return item;
     }
 
-    /**
-     * Create a new menu item.
-     * 
-     * @param name
-     * @param icon
-     * @param mnemonic
-     * @param ctrlAccel
-     * @param executor
-     * @param action
-     * 
-     * @return the new menu item
-     */
-    private JMenuItem newMI(final String name, final Icon icon,
-            final char mnemonic, final int ctrlAccel, final Object executor,
+    private JButton newButton(final String name, final Object executor,
             final String action) {
-        final JMenuItem item = new JMenuItem(new AbstractAction(name, icon) {
-            private Method m = null;
+        return newButton(createAction(name, null, executor, action));
+    }
 
-            public void actionPerformed(final ActionEvent evt) {
-                if (m == null) {
-                    try {
-                        m = executor.getClass().getMethod(action, null);
-                    } catch (Exception e) {
-                        try {
-                            m = executor.getClass().getDeclaredMethod(action,
-                                    null);
-                        } catch (SecurityException e1) {
-                            throw new RuntimeException(e1);
-                        } catch (NoSuchMethodException e1) {
-                            throw new RuntimeException(e1);
-                        }
-                    }
-                }
-                try {
-                    m.invoke(executor, null);
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                } catch (InvocationTargetException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+    private JMenuItem newMI(final char mnemonic, final int ctrlAccel,
+            final Action action) {
+        final JMenuItem item = new JMenuItem(action);
         item.setMnemonic(mnemonic);
         if (ctrlAccel >= 0)
             item.setAccelerator(KeyStroke.getKeyStroke(ctrlAccel,
@@ -451,13 +444,20 @@ public class EditorApp extends JFrame {
         return item;
     }
 
+    private JMenuItem newMI(final String name, final Icon icon,
+            final char mnemonic, final int ctrlAccel, final Object executor,
+            final String action) {
+        return newMI(mnemonic, ctrlAccel, createAction(name, icon, executor,
+                action));
+    }
+
     private void refreshTitle() {
         setTitle(getClass().getName() + " - "
                 + (currentFile == null ? "" : currentFile.getAbsolutePath()));
     }
 
-    private void save(File f, PositionSet pos) throws SAXException, IOException {
-        SetupIO.save(f, mod_locations, null, null, null);
+    private void save(File f) throws SAXException, IOException {
+        SetupIO.save(f, mod_locations, mod_speeds, null, null);
         lastSaved = System.currentTimeMillis();
         refreshTitle();
     }

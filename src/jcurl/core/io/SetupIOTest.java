@@ -55,7 +55,7 @@ public class SetupIOTest extends TestCase {
         SetupIO.save(bout, pos, null, new SlideStraight(), null);
         final byte[] data = bout.toByteArray();
         log.info(new String(data, "UTF-8"));
-        assertEquals(3048, data.length);
+        assertEquals(2808, data.length);
     }
 
     public void test020_save_load() throws SAXException, IOException {
@@ -63,7 +63,7 @@ public class SetupIOTest extends TestCase {
         final PositionSet pos = PositionSet.allOut();
         SetupIO.save(bout, pos, null, new SlideStraight(), null);
         final byte[] data = bout.toByteArray();
-        assertEquals(3048, data.length);
+        assertEquals(2808, data.length);
 
         SetupBuilder sb = SetupIO.load(new ByteArrayInputStream(data));
         assertEquals(SlideStraight.class, sb.getSlide().getClass());

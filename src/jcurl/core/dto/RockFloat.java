@@ -34,7 +34,7 @@ import jcurl.model.Rock;
  */
 public class RockFloat extends Rock implements Serializable {
 
-    public final float[] x = new float[3];
+    private final float[] x = new float[3];
 
     public RockFloat() {
         this(0, 0, 0);
@@ -69,8 +69,8 @@ public class RockFloat extends Rock implements Serializable {
         return x[2];
     }
 
-    public boolean nonzero() {
-        return x[0] * x[0] + x[1] * x[1] > 1e-4;
+    public boolean nonZero() {
+        return x[0] * x[0] + x[1] * x[1] > 1e-12;
     }
 
     public void setLocation(double x, double y) {

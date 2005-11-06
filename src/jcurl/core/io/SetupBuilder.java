@@ -260,7 +260,7 @@ public class SetupBuilder {
         if (!val.dim.isSpeed())
             throw new IllegalArgumentException("Expected something like "
                     + Dim.METER_PER_SEC + ", not " + val.dim);
-        rocks[idx].vx = val;
+        rocks[idx].vy = val;
         rocks[idx].speedFlag = Coords;
     }
 

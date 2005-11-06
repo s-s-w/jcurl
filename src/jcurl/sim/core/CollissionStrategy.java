@@ -188,7 +188,7 @@ public abstract class CollissionStrategy extends ModelBase {
             throw new RuntimeException("Matrix must be invertible", e);
         }
         // check speed of approach
-        if (!_va.nonzero())
+        if (!_va.nonZero())
             return false;
         if (log.isDebugEnabled())
             log.debug("hit!");
