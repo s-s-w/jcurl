@@ -6,6 +6,7 @@ tmp=$HOME/api.tmp
 
 if [ `svn status --show-updates --quiet $dir | wc --lines` -lt 2 ]
 then
+	echo "Nothing new there!"
     exit 0
 fi    
 
