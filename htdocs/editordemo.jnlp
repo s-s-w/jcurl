@@ -8,7 +8,7 @@
     <title>JCurl Editor Demo Application</title>
     <vendor>M. Rohrmoser</vendor>
     <homepage href="http://jcurl.berlios.de/index.html"/>
-    <description>JCurl Editor Demo Application</description>
+    <description>JCurl Editor Demo</description>
     <description kind="short">A demo of the capabilities of the JCurl Curling Framework.</description>
 	<description kind="tooltip">JCurl Edit</description>
     <icon href="images/jcurl-icon.gif"/>
