@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Id: simpledemo.jnlp 138 2005-10-04 16:44:54Z mrohrmoser $ -->
+<!-- $Id$ -->
 <jnlp
   spec="1.0+"
   codebase="http://jcurl.berlios.de"
   href="editordemo.jnlp">
   <information>
-    <title>JCurl Editor Demo Application</title>
+    <title>JCurl Editor Demo</title>
     <vendor>M. Rohrmoser</vendor>
     <homepage href="http://jcurl.berlios.de/index.html"/>
     <description>JCurl Editor Demo</description>

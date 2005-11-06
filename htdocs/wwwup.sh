@@ -1,6 +1,14 @@
 #!/bin/sh
+# $Id$
 dir=/home/groups/jcurl/htdocs
+#dir=/home/m/eclipse/berlios/htdocs
 tmp=$HOME/api.tmp
+
+if [ `svn status --show-updates --quiet $dir | wc --lines` -lt 2 ]
+then
+    exit 0
+fi    
+
 svn update $dir
 svn status $dir
 mkdir $tmp
