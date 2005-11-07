@@ -44,6 +44,7 @@
 		<include name="**/*Test.class" />
 		<exclude name="jcurl/core/RockSetInterpolatorTest.class" />
 		<exclude name="jcurl/sim/model/SlideSimpleTest.class" />
+		<exclude name="jcurl/core/io/OldConfigReaderTest.class" />
 	</patternset>
 
 	<!-- different jar configurations -->
