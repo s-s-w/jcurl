@@ -65,6 +65,16 @@ public class SetupSaxSer {
         }
     }
 
+    private static void part(final ContentHandler xml, final double val,
+            final Dim src, final String label, final Dim dst) throws SAXException {
+        final AttributesImpl atts = new AttributesImpl();
+        final DimVal tmp = new DimVal(val, src).to(dst);
+        atts.addAttribute(NS, null, "val", null, Double.toString(tmp.val));
+        atts.addAttribute(NS, null, "dim", null, tmp.dim.toString());
+        xml.startElement(NS, null, label, atts);
+        xml.endElement(NS, null, label);
+    }
+
     private final ContentHandler xml;
 
     public SetupSaxSer(final ContentHandler xml) {
@@ -181,16 +191,6 @@ public class SetupSaxSer {
         part(xml, r.getZ(), Dim.RAD_PER_SEC, "spin", Dim.HERTZ);
 
         xml.endElement(NS, null, "rock");
-    }
-
-    private static void part(final ContentHandler xml, final double val,
-            final Dim src, String label, Dim dst) throws SAXException {
-        final AttributesImpl atts = new AttributesImpl();
-        final DimVal tmp = new DimVal(val, src).to(dst);
-        atts.addAttribute(NS, null, "val", null, Double.toString(tmp.val));
-        atts.addAttribute(NS, null, "dim", null, tmp.dim.toString());
-        xml.startElement(NS, null, label, atts);
-        xml.endElement(NS, null, label);
     }
 
     public void write(final PositionSet pos) throws SAXException {

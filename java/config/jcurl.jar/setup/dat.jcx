@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcurl xmlns="http://jcurl.berlios.de/schema/setup/2005/1.0">
+  <setup>
+    <model engine="jcurl.sim.model.CollissionSpin">
+      <description>Collissions with spin</description>
+      <param name="friction rock-rock" val="0.5"/>
+      <param name="loss" val="0.5" dim="m"/>
+    </model>
+    <model engine="jcurl.sim.model.SlideStraight">
+      <description>Straight movement</description>
+      <param name="curl" val="0.0" dim="m"/>
+      <param name="drawtotee" val="24.0" dim="sht"/>
+    </model>
+    <positions>
+      <rock color="dark" no="8">
+        <x val="-2.26582260206928" dim="ft"/>
+        <y val="21.552743874196928" dim="ft"/>
+        <a val="0.0" dim="deg"/>
+      </rock>
+      <rock color="light" no="8">
+        <x val="7.589743362637016" dim="ft"/>
+        <y val="23.145300196850393" dim="ft"/>
+        <a val="0.0" dim="deg"/>
+      </rock>
+      <rock color="dark" no="7">
+        <x val="-4.635193138297774" dim="ft"/>
+        <y val="16.429184928653747" dim="ft"/>
+        <a val="0.0" dim="deg"/>
+      </rock>
+      <rock color="light" no="7">
+        <x val="-0.37768239698072115" dim="ft"/>
+        <y val="-0.05150175338068346" dim="ft"/>
+        <a val="0.0" dim="deg"/>
+      </rock>
+      <rock color="dark" no="6">
+        <x val="7.589743362637016" dim="ft"/>
+        <y val="21.29914566600729" dim="ft"/>
+        <a val="0.0" dim="deg"/>
+      </rock>
+      <rock color="light" no="6">
+        <x val="2.7124464433650015" dim="ft"/>
+        <y val="6.540773187096662" dim="ft"/>
+        <a val="0.0" dim="deg"/>
+      </rock>
+      <rock color="dark" no="5">
+        <x val="-2.987124514704927" dim="ft"/>
+        <y val="11.416309931146817" dim="ft"/>
+        <a val="0.0" dim="deg"/>
+      </rock>
+      <rock color="light" no="5">
+        <x val="-0.5150214815390078" dim="ft"/>
+        <y val="17.459228282838353" dim="ft"/>
+        <a val="0.0" dim="deg"/>
+      </rock>
+      <rock color="dark" no="4">
+        <x val="-0.7210300350439517" dim="ft"/>
+        <y val="-4.446351622033307" dim="ft"/>
+        <a val="0.0" dim="deg"/>
+      </rock>
+      <rock color="light" no="4">
+        <x val="-0.4463519148157024" dim="ft"/>
+        <y val="11.82832664705011" dim="ft"/>
+        <a val="0.0" dim="deg"/>
+      </rock>
+      <rock color="dark" no="3">
+        <x val="3.4678111395497955" dim="ft"/>
+        <y val="14.300429289109436" dim="ft"/>
+        <a val="0.0" dim="deg"/>
+      </rock>
+      <rock color="light" no="3">
+        <x val="-2.3690986586367986" dim="ft"/>
+        <y val="3.381974584474338" dim="ft"/>
+        <a val="0.0" dim="deg"/>
+      </rock>
+      <rock color="dark" no="2">
+        <x val="-0.2403433613107586" dim="ft"/>
+        <y val="-2.248926660207313" dim="ft"/>
+        <a val="0.0" dim="deg"/>
+      </rock>
+      <rock color="light" no="2">
+        <x val="-0.6523605172089704" dim="ft"/>
+        <y val="6.197425402368459" dim="ft"/>
+        <a val="0.0" dim="deg"/>
+      </rock>
+      <rock color="dark" no="1">
+        <x val="0.995708204160525" dim="ft"/>
+        <y val="15.124464285342398" dim="ft"/>
+        <a val="0.0" dim="deg"/>
+      </rock>
+      <rock color="light" no="1">
+        <x val="1.6137339624520046" dim="ft"/>
+        <y val="18.969957284101348" dim="ft"/>
+        <a val="0.0" dim="deg"/>
+      </rock>
+    </positions>
+    <speeds>
+      <rock color="dark" no="8">
+        <x val="0.08" dim="m/s"/>
+        <y val="-2.8" dim="m/s"/>
+        <spin val="-0.30000000834826057" dim="Hz"/>
+      </rock>
+    </speeds>
+  </setup>
+</jcurl>
