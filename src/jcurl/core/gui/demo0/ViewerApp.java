@@ -63,9 +63,9 @@ public class ViewerApp extends JFrame {
         if (true) {
             final URL url;
             {
-                URL tmp = ViewerApp.class.getResource("/setup/hammy.jcx");
+                URL tmp = ViewerApp.class.getResource("/setup/dat.jcx");
                 if (tmp == null) {
-                    tmp = new File("./config/jcurl.jar/setup/hammy.jcx")
+                    tmp = new File("./config/jcurl.jar/setup/dat.jcx")
                             .toURL();
                 }
                 url = tmp;
