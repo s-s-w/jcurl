@@ -40,13 +40,14 @@ import org.xml.sax.SAXException;
  */
 public class SetupSaxDeSerTest extends TestCase {
 
-    private static final File base = new File(
-            "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup");
+//    private static final File _base = new File(
+//            "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup");
+
+    private static final File base = new File("config/jcurl.jar/setup");
 
     private static final URL baseUrl;
 
-    private static final ULogger log = JCLoggerFactory
-            .getLogger(SetupSaxDeSerTest.class);
+    private static final ULogger log = JCLoggerFactory.getLogger(SetupSaxDeSerTest.class);
     static {
         try {
             baseUrl = base.toURL();
