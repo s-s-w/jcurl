@@ -2,12 +2,12 @@
 <!-- $Id$ -->
 <jnlp
   spec="1.0+"
-  codebase="http://jcurl.berlios.de"
+  codebase="http://www.jcurl.org"
   href="viewerdemo.jnlp">
   <information>
     <title>JCurl Viewer Demo</title>
     <vendor>M. Rohrmoser</vendor>
-    <homepage href="http://jcurl.berlios.de/index.html"/>
+    <homepage href="http://www.jcurl.org/index.html"/>
     <description>JCurl Viewer Demo Application</description>
     <description kind="short">A demo of the capabilities of the JCurl Curling Framework.</description>
     <icon href="images/jcurl-icon.gif"/>
