@@ -1,7 +1,7 @@
 #!/bin/sh
 # $Id$
 dir=/home/groups/jcurl/htdocs
-dir=/kunden/homepages/6/d143911421/htdocs/www.jcurl.org
+#dir=/kunden/homepages/6/d143911421/htdocs/www.jcurl.org
 #dir=/home/m/eclipse/berlios/htdocs
 tmp=$HOME/api.tmp
 
