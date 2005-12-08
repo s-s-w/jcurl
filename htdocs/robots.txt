@@ -3,7 +3,7 @@
  
 User-agent: *
 Allow: /index.html
-Allow: /api
+Allow: /api/
 Disallow: /jar/
 Disallow: /images/
 Disallow: /logs/
