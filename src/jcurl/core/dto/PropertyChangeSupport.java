@@ -215,7 +215,24 @@ public class PropertyChangeSupport {
     }
 
     /**
-     * Shortcut for firing an event on boolean properties.
+     * Shortcut for firing an event on double properties.
+     * 
+     * @param property
+     *            the name of the property which changed.
+     * @param old
+     *            The old value.
+     * @param neo
+     *            The new value.
+     */
+    public void firePropertyChange(final String property, final double old,
+            final double neo) {
+        PropertyChangeEvent event = new PropertyChangeEvent(producer, property,
+                new Double(old), new Double(neo));
+        firePropertyChange(event);
+    }
+
+    /**
+     * Shortcut for firing an event on integer properties.
      * 
      * @param property
      *            the name of the property which changed.
@@ -230,7 +247,7 @@ public class PropertyChangeSupport {
                 new Integer(old), new Integer(neo));
         firePropertyChange(event);
     }
-
+    
     /**
      * Notify listeners that an object type property has changed
      * 

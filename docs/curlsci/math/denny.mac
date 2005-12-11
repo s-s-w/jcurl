@@ -19,7 +19,8 @@ y(t) := v[0] * ( t - t^2 / (2*tau) )$
 */
 x(t) := subst(tau = v[0] / (mu * g), -(b * v[0]^2 / (4*epsilon*R*tau) )*(t^3 / 3 - t^4 / (4*tau) ))$
 y(t) := subst(tau = v[0] / (mu * g), v[0] * ( t - t^2 / (2*tau) ))$
-
+expand(x(t));
+expand(y(t));
 tex(factor(x(t)), "integral.tex")$ 
 tex(factor(diff(x(t),t)), "integral.tex")$ 
 tex(factor(diff(x(t),t,2)), "integral.tex")$ 
@@ -35,6 +36,7 @@ omega(t) := subst(tau = v[0] / (mu * g), omega[0]*(1-t/tau)^(1/epsilon))$
 assume( epsilon > 0 )$
 assume( t > 0 )$
 alpha(t) := integrate(omega(t), t, 0, t);
+expand(alpha(t));
 
 tex(factor(alpha(t)), "integral.tex")$
 tex(factor(diff(alpha(t),t)), "integral.tex"); 

@@ -19,7 +19,6 @@
 package jcurl.core.dto;
 
 import java.beans.PropertyChangeListener;
-import java.io.Serializable;
 
 /**
  * Base class for all mutable value Objects. Provides a generic toString and
@@ -29,8 +28,7 @@ import java.io.Serializable;
  * @version $Id$
  *  
  */
-public abstract class MutableObject extends TransferObject implements
-        Serializable {
+public abstract class MutableObject extends TransferObject {
     /** Utility field used by bound properties. */
     protected final transient PropertyChangeSupport propChange = new PropertyChangeSupport(
             this);
