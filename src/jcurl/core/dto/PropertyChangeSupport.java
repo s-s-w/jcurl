@@ -247,7 +247,7 @@ public class PropertyChangeSupport {
                 new Integer(old), new Integer(neo));
         firePropertyChange(event);
     }
-    
+
     /**
      * Notify listeners that an object type property has changed
      * 

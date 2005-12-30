@@ -56,7 +56,7 @@ public class SlideStraightTest extends TestCase {
         pos.getLight(1).setLocation(1.0, 1.5);
         PositionSet.allZero(speed);
         speed.getDark(0).setLocation(0, -1.0, 0.75);
-        s.reset(0, pos, speed, RockSetProps.DEFAULT);
+        s.reset(pos, speed, RockSetProps.DEFAULT);
     }
 
     public void test010_createCurve() {
@@ -171,7 +171,7 @@ public class SlideStraightTest extends TestCase {
     public void test100() {
         double t = 0;
         assertEquals("", 2.26999338899, t = s.estimateNextHit(pos, speed), 1e-6);
-        s.getPos(t, pos);
+        s.getPos();
         assertEquals("", 0, pos.getDark(0).getX(), 1e-6);
         assertEquals("", 2.9637110233306885, pos.getDark(0).getY(), 1e-6);
         assertEquals("", 0, speed.getDark(0).getX(), 1e-6);
@@ -181,7 +181,7 @@ public class SlideStraightTest extends TestCase {
         assertEquals("", 1.0, pos.getLight(1).getX(), 1e-6);
         assertEquals("", 1.5, pos.getLight(1).getY(), 1e-6);
 
-        s.getSpeed(t, speed);
+        s.getSpeed();
         assertEquals("", 0.2943038177141753, t = s.estimateNextHit(pos, speed),
                 1e-6);
     }
@@ -195,9 +195,9 @@ public class SlideStraightTest extends TestCase {
         speed.getDark(0).setLocation(0, -1.5, 0.75);
         // dynamics engines
         final Source src = new SlideStraight();
-        src.reset(0, pos, speed, RockSetProps.DEFAULT);
+        ;//src.reset(pos, speed, RockSetProps.DEFAULT);
 
-        src.getPos(2.85, pos);
-        src.getPos(2.9, pos);
+        src.getPos();
+        src.getPos();
     }
 }

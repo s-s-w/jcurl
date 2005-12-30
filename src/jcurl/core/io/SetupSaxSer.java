@@ -66,7 +66,8 @@ public class SetupSaxSer {
     }
 
     private static void part(final ContentHandler xml, final double val,
-            final Dim src, final String label, final Dim dst) throws SAXException {
+            final Dim src, final String label, final Dim dst)
+            throws SAXException {
         final AttributesImpl atts = new AttributesImpl();
         final DimVal tmp = new DimVal(val, src).to(dst);
         atts.addAttribute(NS, null, "val", null, Double.toString(tmp.val));
@@ -179,7 +180,7 @@ public class SetupSaxSer {
      */
     void internalSpeed(final Rock r, int i, final boolean isDark)
             throws SAXException {
-        if(!r.nonZero())
+        if (!r.nonZero())
             return;
         AttributesImpl atts = new AttributesImpl();
         atts.addAttribute(NS, null, "color", null, isDark ? "dark" : "light");

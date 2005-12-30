@@ -26,15 +26,13 @@ import java.net.URL;
 import javax.swing.JApplet;
 
 import jcurl.core.JCLoggerFactory;
-import jcurl.core.Source;
 import jcurl.core.TargetDiscrete;
-import jcurl.core.dto.RockSetProps;
 import jcurl.core.gui.JCurlDisplay;
 import jcurl.core.gui.SimpleKeys;
-import jcurl.core.io.SetupBuilder;
-import jcurl.core.io.SetupSaxDeSer;
 import jcurl.model.PositionSet;
 import jcurl.model.SpeedSet;
+import jcurl.sim.model.CollissionSpin;
+import jcurl.sim.model.ComputedSource;
 import jcurl.sim.model.SlideStraight;
 
 import org.apache.ugli.ULogger;
@@ -61,7 +59,7 @@ public class ViewerApplet extends JApplet {
         getContentPane().add(mp);
         final TargetDiscrete dst = mp;
 
-        final Source src;
+        final ComputedSource src = new ComputedSource();
         try {
             if (true) {
                 final URL url;
@@ -73,10 +71,7 @@ public class ViewerApplet extends JApplet {
                     url = tmp;
                 }
                 log.info("Loading setup [" + url + "]");
-                final SetupBuilder setup = SetupSaxDeSer.parse(url);
-                src = setup.getSlide();
-                src.reset(0, setup.getPos(), setup.getSpeed(),
-                        RockSetProps.DEFAULT);
+                src.load(url.openStream());
             } else {
                 // initial state
                 final PositionSet pos = PositionSet.allOut();
@@ -86,8 +81,7 @@ public class ViewerApplet extends JApplet {
                 final SpeedSet speed = new SpeedSet();
                 speed.getDark(0).setLocation(0, -1.325, 0.75);
                 // dynamics engines
-                src = new SlideStraight();
-                src.reset(0, pos, speed, RockSetProps.DEFAULT);
+                src.init(pos, speed, new SlideStraight(), new CollissionSpin());
             }
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);

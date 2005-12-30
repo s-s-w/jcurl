@@ -34,7 +34,7 @@ import jcurl.sim.core.SlideCurves;
 import org.apache.ugli.ULogger;
 
 /**
- * ModelImpl without curl and with constant acceleration.
+ * ComputedSource without curl and with constant acceleration.
  * <p>
  * Public access to rock locations and speed via
  * {@link jcurl.sim.core.SlideCurves#getC(int, double, RockSet)}. The internal

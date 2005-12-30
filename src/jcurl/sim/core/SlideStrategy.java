@@ -152,7 +152,13 @@ public abstract class SlideStrategy extends ModelBase implements Source {
 
     protected SpeedSet maxSpeed = new SpeedSet();
 
+    protected final PositionSet rocks = PositionSet.allHome();
+
     protected int rocksInMotion = 0;
+
+    protected final SpeedSet speed = new SpeedSet();
+
+    private double t;
 
     protected final double T0 = -1;
 
@@ -309,18 +315,22 @@ public abstract class SlideStrategy extends ModelBase implements Source {
      */
     public abstract double getMu();
 
-    public final PositionSet getPos(final double time, PositionSet rocks) {
+    public final PositionSet getPos() {
         if (log.isDebugEnabled())
-            log.debug("t=" + time);
-        computeUntil(time, dt);
-        return (PositionSet) getC(0, time, rocks);
+            log.debug("t=" + getT());
+        computeUntil(getT(), dt);
+        return (PositionSet) getC(0, getT(), rocks);
     }
 
-    public final SpeedSet getSpeed(final double time, SpeedSet rocks) {
+    public final SpeedSet getSpeed() {
         if (log.isDebugEnabled())
-            log.debug("t=" + time);
-        computeUntil(time, dt);
-        return (SpeedSet) getC(1, time, rocks);
+            log.debug("t=" + getT());
+        computeUntil(getT(), dt);
+        return (SpeedSet) getC(1, getT(), speed);
+    }
+
+    public double getT() {
+        return t;
     }
 
     public void init(final Map props) {
@@ -404,15 +414,17 @@ public abstract class SlideStrategy extends ModelBase implements Source {
                     ret |= 1 << i;
             }
         }
+        this.rocks.notifyChange();
+        this.speed.notifyChange();
         return ret;
     }
 
-    public void reset(double startTime, PositionSet startPos,
-            SpeedSet startSpeed, RockSetProps props) {
+    public void reset(PositionSet startPos, SpeedSet startSpeed,
+            RockSetProps props) {
         tmin = tmax = T0;
         RockSet.copy(startPos, maxPos);
         RockSet.copy(startSpeed, maxSpeed);
-        set(startTime, startPos, startSpeed, PositionSet.ALL_MASK);
+        set(0, startPos, startSpeed, PositionSet.ALL_MASK);
         rocksInMotion = 0;
         for (int i = PositionSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             final Rock v = startSpeed.getRock(i);
@@ -454,5 +466,10 @@ public abstract class SlideStrategy extends ModelBase implements Source {
     public void setDraw2Tee(final double time, final double curl) {
         props.put(D2T_TIME, new DimVal(time, Dim.SEC_HOG_TEE));
         props.put(D2T_CURL, new DimVal(curl, Dim.METER));
+    }
+
+    public void setT(double t) {
+        move(this.t, t, this.rocks, this.speed);
+        this.t = t;
     }
 }

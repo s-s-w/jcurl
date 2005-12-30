@@ -45,7 +45,7 @@ public class SpeedController implements MouseMotionListener, MouseListener {
 
     private final PositionSet rocks;
 
-//    private final SpeedSet speeds;
+    //    private final SpeedSet speeds;
 
     private final Point2D tmp = new Point2D.Double();
 
@@ -57,7 +57,7 @@ public class SpeedController implements MouseMotionListener, MouseListener {
     public SpeedController(PositionSet locations, SpeedSet speeds,
             RockEditDisplay panel) {
         this.rocks = locations;
-//        this.speeds = speeds;
+        //        this.speeds = speeds;
         this.panel = panel;
         this.panel.addMouseListener(this);
         this.panel.addMouseMotionListener(this);

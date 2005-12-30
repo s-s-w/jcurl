@@ -47,6 +47,15 @@ public abstract class SlideCurves extends SlideStrategy {
     private static final ULogger log = JCLoggerFactory
             .getLogger(SlideCurves.class);
 
+    private static double findThalt(final double t0, final CurveBase cu) {
+        final double thx = cu.computeNewtonZero(0, 1, t0);
+        final double thy = cu.computeNewtonZero(1, 1, t0);
+        final double thalt = thx > thy ? thx : thy;
+        if (log.isDebugEnabled())
+            log.debug("thalt=" + thalt);
+        return thalt;
+    }
+
     /**
      * Transform the trajectory from speed-coordinates (the y-axis points along
      * the direction of motion) to world coordinates and seed the
@@ -99,9 +108,8 @@ public abstract class SlideCurves extends SlideStrategy {
     }
 
     /**
-     * Get the n-th derivative. Used e.g. by
-     * {@link SlideStrategy#getPos(double, PositionSet)},
-     * {@link SlideStrategy#getSpeed(double, SpeedSet)}.
+     * Get the n-th derivative. Used e.g. by {@link SlideStrategy#getPos()},
+     * {@link SlideStrategy#getSpeed()}.
      * 
      * @param c
      *            0: value, 1: speed
@@ -134,11 +142,11 @@ public abstract class SlideCurves extends SlideStrategy {
         return speed.getX() != 0 || speed.getY() != 0;
     }
 
-    public final void reset(final double startTime, final PositionSet startPos,
+    public final void reset(final PositionSet startPos,
             final SpeedSet startSpeed, final RockSetProps props) {
         for (int i = PositionSet.ROCKS_PER_SET - 1; i >= 0; i--)
             c[i] = new CurveCombined(3);
-        super.reset(startTime, startPos, startSpeed, props);
+        super.reset(startPos, startSpeed, props);
     }
 
     /**
@@ -171,14 +179,5 @@ public abstract class SlideCurves extends SlideStrategy {
                 c[i].add(t0, new CurveInterval(t0, findThalt(t0, cu), cu));
             }
         }
-    }
-
-    private static double findThalt(final double t0, final CurveBase cu) {
-        final double thx = cu.computeNewtonZero(0, 1, t0);
-        final double thy = cu.computeNewtonZero(1, 1, t0);
-        final double thalt = thx > thy ? thx : thy;
-        if (log.isDebugEnabled())
-            log.debug("thalt=" + thalt);
-        return thalt;
     }
 }

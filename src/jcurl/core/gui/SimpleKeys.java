@@ -23,7 +23,6 @@ import java.awt.event.KeyListener;
 
 import jcurl.core.Source;
 import jcurl.core.TargetDiscrete;
-import jcurl.model.PositionSet;
 
 /**
  * A first, simple keyboard input class. Uses a
@@ -49,7 +48,7 @@ public class SimpleKeys implements KeyListener {
         final double t0 = src.getMinT();
         player = new RealTimePlayer(t0, 1.0, src, dst);
         // push the initial state from src to dst
-        dst.setPos(t0, src.getPos(t0, new PositionSet()));
+        dst.setPos(t0, src.getPos());
     }
 
     public void keyPressed(KeyEvent e) {

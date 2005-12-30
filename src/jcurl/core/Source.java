@@ -18,7 +18,6 @@
  */
 package jcurl.core;
 
-import jcurl.core.dto.RockSetProps;
 import jcurl.model.PositionSet;
 import jcurl.model.SpeedSet;
 
@@ -47,22 +46,23 @@ public interface Source {
     /**
      * Get the rocks' positions.
      * 
-     * @param time
-     *            [sec]
-     * @param rocks
      * @return the rocks' positions
      */
-    public abstract PositionSet getPos(final double time, PositionSet rocks);
+    public abstract PositionSet getPos();
 
     /**
      * Get the rocks' speeds - optional.
      * 
-     * @param time
-     *            [sec]
-     * @param rocks
      * @return the rocks' speeds
      */
-    public abstract SpeedSet getSpeed(final double time, SpeedSet rocks);
+    public abstract SpeedSet getSpeed();
+
+    /**
+     * Get the current time.
+     * 
+     * @return the start time
+     */
+    public abstract double getT();
 
     public abstract boolean isDiscrete();
 
@@ -71,14 +71,9 @@ public interface Source {
     public abstract boolean isWithSpeed();
 
     /**
-     * Clear all internal state and set the given initial state.
+     * Set the current time.
      * 
-     * @param startTime
-     *            [msec]
-     * @param startPos
-     * @param startSpeed
-     * @param props
+     * @param t
      */
-    public abstract void reset(double startTime, PositionSet startPos,
-            SpeedSet startSpeed, RockSetProps props);
+    public abstract void setT(final double t);
 }

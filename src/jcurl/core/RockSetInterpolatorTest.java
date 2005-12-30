@@ -48,7 +48,7 @@ public class RockSetInterpolatorTest extends TestCase {
         SlideStraight slid = new SlideStraight();
         assertTrue(slid.isDiscrete());
 
-        slid.reset(t0, rPos, rSpeed, RockSetProps.DEFAULT);
+        slid.reset(rPos, rSpeed, RockSetProps.DEFAULT);
         assertEquals("", t0, slid.getMinT(), 1e-6);
 
         final RockSetInterpolator ip = new RockSetInterpolator();
@@ -56,12 +56,12 @@ public class RockSetInterpolatorTest extends TestCase {
         final int loop = 5000;
         for (int i = 0; i < loop; i++) {
             long t1 = t0 + i * 2;
-            PositionSet p1 = slid.getPos(t1, null);
+            PositionSet p1 = slid.getPos();
             ip.setPos(t1, p1);
         }
         for (int i = loop - 2; i >= 0; i--) {
             long t1 = t0 + i * 2 + 1;
-            ip.getPos(t1, null);
+            ip.getPos();
         }
     }
 }
