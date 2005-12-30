@@ -50,6 +50,7 @@ public class LocationController implements MouseMotionListener {
 
     // avoid some instanciations. Cost: thread safety
     protected final Point2D tmpWc = new Point2D.Double();
+
     /**
      * 
      * @param model

@@ -42,7 +42,6 @@ import jcurl.core.TargetDiscrete;
 import jcurl.model.PositionSet;
 import jcurl.model.Rock;
 import jcurl.model.RockSet;
-import jcurl.model.SpeedSet;
 
 import org.apache.ugli.ULogger;
 
@@ -327,7 +326,7 @@ public abstract class RockLocationDisplayBase extends JComponent implements
         final Object tmp = evt.getNewValue();
         if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass())) {
             setPos(0, (PositionSet) tmp);
-        } 
+        }
     }
 
     /**

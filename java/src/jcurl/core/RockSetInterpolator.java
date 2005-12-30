@@ -36,6 +36,12 @@ public class RockSetInterpolator implements Source, TargetDiscrete {
 
     private final IRockInterpolator[] ip;
 
+    private final PositionSet pos = PositionSet.allHome();
+
+    private final SpeedSet speed = new SpeedSet();
+
+    private double t;
+
     /**
      * Use a {@link CSplineRockInterpolator}
      * 
@@ -78,22 +84,24 @@ public class RockSetInterpolator implements Source, TargetDiscrete {
         return ip[0].getMinT();
     }
 
-    public PositionSet getPos(final double t, final PositionSet rocks) {
+    public PositionSet getPos() {
         if (t < ip[0].getMinT() || t > ip[0].getMaxT())
             return null;
-        final PositionSet dat = rocks != null ? rocks : new PositionSet();
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
-            ip[i].getPos(t, dat.getRock(i));
-        return dat;
+            ip[i].getPos(t, pos.getRock(i));
+        return pos;
     }
 
-    public SpeedSet getSpeed(final double t, final SpeedSet rocks) {
+    public SpeedSet getSpeed() {
         if (t < ip[0].getMinT() || t > ip[0].getMaxT())
             return null;
-        final SpeedSet dat = rocks != null ? rocks : new SpeedSet();
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
-            ip[i].getSpeed(t, dat.getRock(i));
-        return dat;
+            ip[i].getSpeed(t, speed.getRock(i));
+        return speed;
+    }
+
+    public double getT() {
+        return t;
     }
 
     /**
@@ -113,11 +121,11 @@ public class RockSetInterpolator implements Source, TargetDiscrete {
         return true;
     }
 
-    public void reset(double startTime, PositionSet startPos,
-            SpeedSet startSpeed, RockSetProps props) {
+    public void reset(PositionSet startPos, SpeedSet startSpeed,
+            RockSetProps props) {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             this.ip[i].reset();
-        setPos(startTime, startPos);
+        setPos(0, startPos);
     }
 
     public void setPos(final double t, final PositionSet rocks) {
@@ -129,5 +137,9 @@ public class RockSetInterpolator implements Source, TargetDiscrete {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             ip[i].add(t, rocks.getRock(i), 0 != ((1 << i) | discontinuous));
         }
+    }
+
+    public void setT(double t) {
+        this.t = t;
     }
 }
