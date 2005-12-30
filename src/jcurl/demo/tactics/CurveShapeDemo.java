@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.demo.editor;
+package jcurl.demo.tactics;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -38,7 +38,7 @@ import org.apache.ugli.ULogger;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: CurveShapeDemo.java 209 2005-12-30 16:06:15Z mrohrmoser $
  */
 public class CurveShapeDemo extends JFrame {
 
