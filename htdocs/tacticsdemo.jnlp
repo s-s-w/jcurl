@@ -3,7 +3,7 @@
 <jnlp
   spec="1.0+"
   codebase="http://www.jcurl.org"
-  href="editordemo.jnlp">
+  href="tacticsdemo.jnlp">
   <information>
     <title>JCurl Tactics Demo</title>
     <vendor>M. Rohrmoser</vendor>
