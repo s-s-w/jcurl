@@ -18,5 +18,5 @@
     <jar href="jar/jcurl-0.2.jar"/>
     <jar href="jar/ugli-simple.jar"/>
   </resources>
-  <application-desc main-class="jcurl.core.gui.demo0.ViewerApp"/>
+  <application-desc main-class="jcurl.demo.viewer.ViewerApp"/>
 </jnlp> 
