@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core.gui.demo1;
+package jcurl.core.gui.edit;
 
 import java.awt.Container;
 import java.awt.Cursor;
@@ -54,6 +54,8 @@ import jcurl.core.gui.AboutDialog;
 import jcurl.core.gui.RockEditDisplay;
 import jcurl.core.gui.RockLocationDisplay;
 import jcurl.core.gui.RockLocationDisplayBase;
+import jcurl.core.gui.SumShotDisplay;
+import jcurl.core.gui.SumWaitDisplay;
 import jcurl.core.gui.Zoomer;
 import jcurl.core.io.SetupIO;
 import jcurl.model.PositionSet;
@@ -67,7 +69,7 @@ import org.xml.sax.SAXException;
  * A simple editor that brings all together.
  * 
  * @see jcurl.core.gui.RockLocationDisplay
- * @see jcurl.core.gui.demo1.LocationController
+ * @see jcurl.core.gui.edit.LocationController
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id: RockLocationDisplayDemo.java 135 2005-10-03 17:47:35Z
  *          mrohrmoser $

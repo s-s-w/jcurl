@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.sim.model;
+package jcurl.sim.core;
 
 import java.awt.geom.PathIterator;
 import java.io.IOException;
@@ -33,13 +33,18 @@ import jcurl.math.CurveBase;
 import jcurl.model.PositionSet;
 import jcurl.model.RockSet;
 import jcurl.model.SpeedSet;
-import jcurl.sim.core.CollissionStrategy;
-import jcurl.sim.core.SlideStrategy;
+import jcurl.sim.model.CollissionSpin;
+import jcurl.sim.model.SlideStraight;
 
 import org.xml.sax.SAXException;
 
 /**
- * @see jcurl.sim.model.ModelImplTest
+ * Base for all - both numerical or analytic - computed rock paths.
+ * <p>
+ * Closely related to {@link jcurl.sim.core.SlideStrategy}.
+ * </p>
+ * 
+ * @see jcurl.sim.core.ComputedSourceTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -91,17 +96,14 @@ public class ComputedSource extends MutableObject implements Source {
         return slide.getT();
     }
 
-    private void init(PositionSet startPos, SpeedSet startSpeed,
-            RockSetProps props) {
-        init(startPos, startSpeed, null, null);
-    }
-
     public void init(final PositionSet x, final SpeedSet v,
             final SlideStrategy ice, final CollissionStrategy coll) {
         minT = 0;
         maxT = 35;
-        if (coll != null)
-            setColl(coll);
+        if (coll != null) {
+            propChange.firePropertyChange("coll", this.slide.getColl(), coll);
+            this.slide.setColl(coll);
+        }
         if (ice != null) {
             propChange.firePropertyChange("slide", this.slide, ice);
             this.slide = ice;
@@ -128,24 +130,40 @@ public class ComputedSource extends MutableObject implements Source {
         return true;
     }
 
-    public void load(final InputStream in) throws SAXException, IOException {
+    /**
+     * Load a start setup. Rock positions + speeds as well as ice properties.
+     * 
+     * @param in
+     * @throws SAXException
+     * @throws IOException
+     */
+    public void loadStart(final InputStream in) throws SAXException,
+            IOException {
         final SetupBuilder sb = SetupIO.load(in);
         this.init(sb.getPos(), sb.getSpeed(), sb.getSlide(),
                 new CollissionSpin());
     }
 
+    /**
+     * Get a Java2d drawable rock trajectory per rock.
+     * 
+     * @param idx
+     *            rock index
+     * @return
+     */
     public PathIterator pathIterator(int idx) {
         throw new NotImplementedYetException();
     }
 
-    public void save(final OutputStream out) throws SAXException {
+    /**
+     * Save a start setup. Rock positions + speeds as well as ice properties.
+     * 
+     * @param out
+     * @throws SAXException
+     */
+    public void saveStart(final OutputStream out) throws SAXException {
         SetupIO.save(out, this.startPos, this.startSpeed, this.getSlide(), this
                 .getColl());
-    }
-
-    private void setColl(CollissionStrategy coll) {
-        propChange.firePropertyChange("coll", this.slide.getColl(), coll);
-        this.slide.setColl(coll);
     }
 
     public void setT(double current) {
