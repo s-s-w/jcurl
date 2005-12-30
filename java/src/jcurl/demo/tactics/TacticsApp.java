@@ -18,6 +18,7 @@
  */
 package jcurl.demo.tactics;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -34,18 +35,25 @@ import java.lang.reflect.Method;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BoundedRangeModel;
 import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JSpinner;
+import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
+import javax.swing.SpinnerModel;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 
 import jcurl.core.JCLoggerFactory;
@@ -54,7 +62,6 @@ import jcurl.core.gui.AboutDialog;
 import jcurl.core.gui.RockEditDisplay;
 import jcurl.core.gui.RockLocationDisplay;
 import jcurl.core.gui.RockLocationDisplayBase;
-import jcurl.core.gui.SumShotDisplay;
 import jcurl.core.gui.SumWaitDisplay;
 import jcurl.core.gui.Zoomer;
 import jcurl.core.io.SetupIO;
@@ -116,6 +123,13 @@ public class TacticsApp extends JFrame {
         }
     }
 
+    private class SpeedModel {
+
+        double broomPos;
+
+        double splitTime;
+    }
+
     private static final Cursor Cdefault = Cursor
             .getPredefinedCursor(Cursor.DEFAULT_CURSOR);
 
@@ -173,12 +187,6 @@ public class TacticsApp extends JFrame {
 
     private JDialog about = null;
 
-    private final JButton bPause;
-
-    private final JButton bStart;
-
-    private final JButton bStop;
-
     private File currentFile = null;
 
     private long lastSaved = 0;
@@ -202,26 +210,83 @@ public class TacticsApp extends JFrame {
         final Container con = getContentPane();
 
         con.add(master, "Center");
-        con.add(new SumWaitDisplay(mod_locations), "West");
-        con.add(new SumShotDisplay(mod_locations), "East");
         {
-            final Box b0 = Box.createVerticalBox();
             final Box b1 = Box.createHorizontalBox();
             b1.add(Box.createRigidArea(new Dimension(0, 75)));
             b1.add(pnl2);
-            b0.add(b1);
-            b0.add(new JSlider(0, 100, 0));
-            final Box b2 = Box.createHorizontalBox();
-            b2.add(Box.createHorizontalGlue());
-            b2.add(bStart = newButton("Start", this, "cmdRunStart"));
-            b2.add(bPause = newButton("Pause", this, "cmdRunPause"));
-            b2.add(bStop = newButton("Stop", this, "cmdRunStop"));
-            b2.add(Box.createHorizontalGlue());
-            b0.add(b2);
-            con.add(b0, "South");
+            con.add(b1, "South");
         }
-        bStop.getAction().actionPerformed(null);
+        con.add(new SumWaitDisplay(mod_locations), "West");
+        final JTabbedPane t = new JTabbedPane();
+        con.add(t, "East");
+        {
+            final Box b0 = Box.createHorizontalBox();
+            t.add("Rock", b0);
+            {
+                final JPanel b1 = new JPanel(new BorderLayout());
+                b1.add(new JLabel("Broom"), "North");
+                JSlider s = new JSlider(-2000, 2000, 0);
+                s.setOrientation(JSlider.VERTICAL);
+                s.setMajorTickSpacing(1000);
+                s.setMinorTickSpacing(100);
+                s.setPaintLabels(true);
+                s.setPaintTicks(true);
+                b1.add(s, "Center");
 
+                final JSpinner s1 = new JSpinner();
+                b1.add(s1, "South");
+                b0.add(b1);
+            }
+            {
+                final JPanel b1 = new JPanel(new BorderLayout());
+                b1.add(new JLabel("Splittime"), "North");
+                JSlider s = new JSlider(500, 2500, 1500);
+                s.setOrientation(JSlider.VERTICAL);
+                s.setMajorTickSpacing(1000);
+                s.setMinorTickSpacing(100);
+                s.setPaintLabels(true);
+                s.setPaintTicks(true);
+                b1.add(s, "Center");
+
+                final JSpinner s1 = new JSpinner();
+                b1.add(s1, "South");
+                b0.add(b1);
+            }
+        }
+        {
+            final Box b0 = Box.createHorizontalBox();
+            t.add("Ice", b0);
+            {
+                final JPanel b1 = new JPanel(new BorderLayout());
+                b1.add(new JLabel("Curl"), "North");
+                JSlider s = new JSlider(0, 5000, 0);
+                s.setOrientation(JSlider.VERTICAL);
+                s.setMajorTickSpacing(1000);
+                s.setMinorTickSpacing(100);
+                s.setPaintLabels(true);
+                s.setPaintTicks(true);
+                b1.add(s, "Center");
+
+                final JSpinner s1 = new JSpinner();
+                b1.add(s1, "South");
+                b0.add(b1);
+            }
+            {
+                final JPanel b1 = new JPanel(new BorderLayout());
+                b1.add(new JLabel("DrawToTee"), "North");
+                JSlider s = new JSlider(15000, 30000, 25000);
+                s.setOrientation(JSlider.VERTICAL);
+                s.setMajorTickSpacing(5000);
+                s.setMinorTickSpacing(1000);
+                s.setPaintLabels(true);
+                s.setPaintTicks(true);
+                b1.add(s, "Center");
+
+                final JSpinner s1 = new JSpinner();
+                b1.add(s1, "South");
+                b0.add(b1);
+            }
+        }
         setJMenuBar(createMenu());
         refreshTitle();
         setSize(900, 400);
@@ -318,26 +383,6 @@ public class TacticsApp extends JFrame {
         lastSaved = System.currentTimeMillis();
     }
 
-    void cmdRunPause() {
-        JOptionPane.showMessageDialog(this, "Not implemented yet");
-        bStart.getAction().setEnabled(true);
-        bPause.getAction().setEnabled(false);
-        bStop.getAction().setEnabled(false);
-    }
-
-    void cmdRunStart() {
-        JOptionPane.showMessageDialog(this, "Not implemented yet");
-        bStart.getAction().setEnabled(false);
-        bPause.getAction().setEnabled(true);
-        bStop.getAction().setEnabled(true);
-    }
-
-    void cmdRunStop() {
-        bStart.getAction().setEnabled(true);
-        bPause.getAction().setEnabled(false);
-        bStop.getAction().setEnabled(false);
-    }
-
     void cmdSave() throws SAXException, IOException {
         if (getCurrentFile() == null) {
             if (!chooseSaveFile(new File(".")))
@@ -381,9 +426,10 @@ public class TacticsApp extends JFrame {
         {
             final JMenu menu = bar.add(new JMenu("Play"));
             menu.setMnemonic('P');
-            menu.add(newMI('a', -1, bStart.getAction()));
-            menu.add(newMI('P', -1, bPause.getAction()));
-            menu.add(newMI('o', -1, bStop.getAction()));
+            menu.setEnabled(false);
+            //            menu.add(newMI('a', -1, bStart.getAction()));
+            //            menu.add(newMI('P', -1, bPause.getAction()));
+            //            menu.add(newMI('o', -1, bStop.getAction()));
         }
         {
             final JMenu menu = bar.add(new JMenu("Help"));
