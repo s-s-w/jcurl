@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.sim.model;
+package jcurl.sim.core;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -26,19 +26,21 @@ import java.io.UnsupportedEncodingException;
 import jcurl.core.JCLoggerFactory;
 import jcurl.model.PositionSet;
 import jcurl.model.SpeedSet;
+import jcurl.sim.model.CollissionSpin;
+import jcurl.sim.model.SlideStraight;
 import junit.framework.TestCase;
 
 import org.apache.ugli.ULogger;
 import org.xml.sax.SAXException;
 
 /**
- * @see jcurl.sim.model.ComputedSource
+ * @see jcurl.sim.core.ComputedSource
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class ModelImplTest extends TestCase {
+public class ComputedSourceTest extends TestCase {
     private static final ULogger log = JCLoggerFactory
-            .getLogger(ModelImplTest.class);
+            .getLogger(ComputedSourceTest.class);
 
     public void test010_init() {
         final ComputedSource m = new ComputedSource();
@@ -56,7 +58,7 @@ public class ModelImplTest extends TestCase {
                 new CollissionSpin());
 
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        m.save(bout);
+        m.saveStart(bout);
         final byte[] data = bout.toByteArray();
         assertEquals(2825, data.length);
         assertEquals(
@@ -71,7 +73,7 @@ public class ModelImplTest extends TestCase {
 
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         final PositionSet pos = PositionSet.allOut();
-        m0.save(bout);
+        m0.saveStart(bout);
         final byte[] data = bout.toByteArray();
         assertEquals(2825, data.length);
         assertEquals(
@@ -79,7 +81,7 @@ public class ModelImplTest extends TestCase {
                 new String(data, "UTF-8"));
 
         final ComputedSource m1 = new ComputedSource();
-        m1.load(new ByteArrayInputStream(data));
+        m1.loadStart(new ByteArrayInputStream(data));
         assertEquals(SlideStraight.class, m1.getSlide().getClass());
         assertEquals(CollissionSpin.class, m1.getSlide().getColl().getClass());
         assertEquals(PositionSet.class, m1.getPos().getClass());

@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core.gui.demo0;
+package jcurl.core.gui.view;
 
 import java.awt.Container;
 import java.io.IOException;
@@ -31,8 +31,8 @@ import jcurl.core.gui.JCurlDisplay;
 import jcurl.core.gui.SimpleKeys;
 import jcurl.model.PositionSet;
 import jcurl.model.SpeedSet;
+import jcurl.sim.core.ComputedSource;
 import jcurl.sim.model.CollissionSpin;
-import jcurl.sim.model.ComputedSource;
 import jcurl.sim.model.SlideStraight;
 
 import org.apache.ugli.ULogger;
@@ -71,7 +71,7 @@ public class ViewerApplet extends JApplet {
                     url = tmp;
                 }
                 log.info("Loading setup [" + url + "]");
-                src.load(url.openStream());
+                src.loadStart(url.openStream());
             } else {
                 // initial state
                 final PositionSet pos = PositionSet.allOut();
