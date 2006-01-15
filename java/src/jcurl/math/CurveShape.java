@@ -17,77 +17,152 @@
  */
 package jcurl.math;
 
-import java.awt.Rectangle;
 import java.awt.Shape;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
-import java.awt.geom.PathIterator;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 
 /**
- * Abstract base for wrapper classes to enabling convenient approximated Java2D
- * drawing of arbitratry curves. Internally uses a
- * {@link java.awt.geom.GeneralPath}to handle some maths.
+ * Enable convenient approximated Java2D drawing of arbitratry curves.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class CurveShape implements Shape {
+public abstract class CurveShape {
 
-    private GeneralPath _gp = null;
-
-    private final CurveBase curve;
-
-    public CurveShape(CurveBase curve) {
-        this.curve = curve;
+    public static Shape approximate(final CurveBase c, final double[] sections) {
+        //return approximateLinear(c, sections);
+        return approximateQuadratic(c, sections);
     }
 
-    protected abstract GeneralPath computeGP(final CurveBase c);
-
-    public boolean contains(double x, double y) {
-        return getGp().contains(x, y);
+    private static Shape approximate(final Function1D fx, final Function1D fy,
+            final double[] sections) {
+        final Function1D[] f = { fx, fy };
+        return approximate(new CurveFkt(f), sections);
     }
 
-    public boolean contains(double x, double y, double w, double h) {
-        return getGp().contains(x, y, w, h);
+    public static Shape approximateLinear(final CurveBase c,
+            final double[] sections) {
+        final double[] x_1 = { c.getC(0, 0, sections[0]),
+                c.getC(1, 0, sections[0]) };
+        final double[] x_2 = { 0, 0 };
+        final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
+                sections.length + 1);
+        gp.moveTo((float) x_1[0], (float) x_1[1]);
+        for (int i = 1; i < sections.length; i++) {
+            x_2[0] = c.getC(0, 0, sections[i]);
+            x_2[1] = c.getC(1, 0, sections[i]);
+            gp.lineTo((float) x_2[0], (float) x_2[1]);
+            x_1[0] = x_2[0];
+            x_1[1] = x_2[1];
+        }
+        return gp;
     }
 
-    public boolean contains(Point2D p) {
-        return getGp().contains(p);
+    public static Shape approximateQuadratic(final CurveBase c,
+            final double[] sections) {
+        final double[] p0 = { c.getC(0, 0, sections[0]),
+                c.getC(1, 0, sections[0]) };
+        final double[] v0 = { c.getC(0, 1, sections[0]),
+                c.getC(1, 1, sections[0]) };
+        final double[] p1 = { 0, 0 };
+        final double[] v1 = { 0, 0 };
+        final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
+                sections.length + 1);
+        gp.moveTo((float) p0[0], (float) p0[1]);
+        final double tmp_a[][] = { { 0, 0 }, { 0, 0 } };
+        final double tmp_b[] = { 0, 0 };
+        final double pc[] = { 0, 0 };
+        for (int i = 1; i < sections.length; i++) {
+            p1[0] = c.getC(0, 0, sections[i]);
+            p1[1] = c.getC(1, 0, sections[i]);
+            v1[0] = c.getC(0, 1, sections[i]);
+            v1[1] = c.getC(1, 1, sections[i]);
+            computeControlPoint(p0, v0, p1, v1, tmp_a, tmp_b, pc);
+            gp.quadTo((float) pc[0], (float) pc[1], (float) p1[0],
+                    (float) p1[1]);
+            p0[0] = p1[0];
+            p0[1] = p1[1];
+            v0[0] = v1[0];
+            v0[1] = v1[1];
+        }
+        return gp;
     }
 
-    public boolean contains(Rectangle2D r) {
-        return getGp().contains(r);
+    /**
+     * Compute the control point for a quadratic bezier spline from pa to pb.
+     * Maxima code:
+     * 
+     * <pre>
+     * NEXTLAYERFACTOR(TRUE)$
+     * DEBUGMODE(TRUE)$ 
+     *  
+     * pa[0] + k * va[0] = pb[0] + l * vb[0];
+     * pa[1] + k * va[1] = pb[1] + l * vb[1];
+     *  
+     * LINSOLVE([%i4, %i5],[k, l]),GLOBALSOLVE:TRUE,BACKSUBST:TRUE$
+     *  
+     * SCSIMP(PART(%o6,1,2)); 
+     *  
+     * quit$
+     * </pre>
+     * 
+     * @param pa
+     *            startpoint
+     * @param va
+     *            incline in startpoint
+     * @param pb
+     *            endpoint
+     * @param vb
+     *            incline in endpoint
+     * @param tmp_matrix
+     *            2x2 matrix for temporary use
+     * @param tmp_right
+     *            2-dimensional vector for temporary use
+     * @param pc
+     *            control point coordinates
+     * @return coordinates of the control point (stored in x)
+     * @see MathVec#gauss(double[][], double[], double[])
+     * @see CurveShapeTest#test020_computeControlPoint()
+     */
+    static double[] computeControlPoint(final double[] pa, final double[] va,
+            final double[] pb, final double[] vb, final double[][] tmp_matrix,
+            final double[] tmp_right, final double[] pc) {
+        //        tmp_matrix[0][0] = va[0];
+        //        tmp_matrix[1][0] = va[1];
+        //        tmp_matrix[0][1] = vb[0];
+        //        tmp_matrix[1][1] = vb[1];
+        //        tmp_right[0] = pb[0] - pa[0];
+        //        tmp_right[1] = pb[1] - pa[1];
+        //        MathVec.gauss(tmp_matrix, tmp_right, pc);
+        // 		  final double f = pc[0];
+        final double f = (-pb[0] * vb[1] + pa[0] * vb[1] + vb[0]
+                * (pb[1] - pa[1]))
+                / (vb[0] * va[1] - va[0] * vb[1]);
+        pc[0] = pa[0] + f * va[0];
+        pc[1] = pa[1] + f * va[1];
+        return pc;
     }
 
-    public Rectangle getBounds() {
-        return getGp().getBounds();
+    /**
+     * Split the given interval [min,max] into equidistant sections.
+     * 
+     * @param min
+     * @param max
+     * @param sections
+     * @return @see CurveShapeTest#test010_sections()
+     */
+    public static double[] sections(final double min, final double max,
+            final double[] sections) {
+        final int n = sections.length;
+        if (n == 0)
+            return sections;
+        sections[0] = min;
+        sections[n - 1] = max;
+        if (n <= 2)
+            return sections;
+        final double d = (max - min) / (n - 1);
+        for (int i = n - 2; i > 0; i--)
+            sections[i] = min + i * d;
+        return sections;
     }
 
-    public Rectangle2D getBounds2D() {
-        return getGp().getBounds2D();
-    }
-
-    private GeneralPath getGp() {
-        if (_gp == null)
-            _gp = computeGP(curve);
-        return _gp;
-    }
-
-    public PathIterator getPathIterator(AffineTransform at) {
-        return getGp().getPathIterator(at);
-    }
-
-    public PathIterator getPathIterator(AffineTransform at, double flatness) {
-        return getGp().getPathIterator(at, flatness);
-    }
-
-    public boolean intersects(double x, double y, double w, double h) {
-        return getGp().intersects(x, y, w, h);
-    }
-
-    public boolean intersects(Rectangle2D r) {
-        return getGp().intersects(r);
-    }
 }

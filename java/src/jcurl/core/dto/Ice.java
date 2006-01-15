@@ -135,13 +135,10 @@ public class Ice {
      *            index [0-7]
      */
     public static void setHome(final Rock R, final boolean isDark, final int idx) {
-        final float D = 1.2F * rad;
-        final float homeX[] = { Ice.SIDE_2_CENTER - 1.0F * D,
-                Ice.SIDE_2_CENTER - 3.0F * D };
-        final float homeY[] = { Ice.FAR_HACK_2_TEE - 1.0F * D,
-                Ice.FAR_HACK_2_TEE - 3.0F * D, Ice.FAR_HACK_2_TEE - 5.0F * D,
-                Ice.FAR_HACK_2_TEE - 7.0F * D };
-        R.setLocation((isDark ? -1 : 1) * homeX[idx % 2], homeY[idx / 2], 0);
+        //        R.setLocation((isDark ? -1 : 1) * Dim.f2m(5 + (idx % 2) * 1.2), Dim
+        //                .f2m(120 + 1.2 * (idx / 2)), 0);
+        R.setLocation((isDark ? -1 : 1) * Dim.f2m(7.25), Dim
+                .f2m(31 - 1.2 * idx), 0);
     }
 
     /**
@@ -157,12 +154,7 @@ public class Ice {
      *            index
      */
     public static void setOut(final Rock R, final boolean isDark, final int i) {
-        final float D = 1.2F * rad;
-        final float outY[] = { -Ice.BACK_2_TEE - 5.0F * D,
-                -Ice.BACK_2_TEE - 7.0F * D };
-        final float outX[] = { Ice.SIDE_2_CENTER - 7.0F * D,
-                Ice.SIDE_2_CENTER - 5.0F * D, Ice.SIDE_2_CENTER - 3.0F * D,
-                Ice.SIDE_2_CENTER - 1.0F * D };
-        R.setLocation((isDark ? -1 : 1) * outX[i / 2], outY[i % 2], 0);
+        R.setLocation((isDark ? -1 : 1) * Dim.f2m(2.5 + 1.2 * (i / 2)), Dim
+                .f2m((i % 2) == 0 ? -8 : -9.2), 0);
     }
 }
