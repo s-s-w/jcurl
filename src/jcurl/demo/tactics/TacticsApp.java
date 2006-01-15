@@ -35,12 +35,13 @@ import java.lang.reflect.Method;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.BoundedRangeModel;
 import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -52,8 +53,7 @@ import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
-import javax.swing.SpinnerModel;
-import javax.swing.event.ChangeListener;
+import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileFilter;
 
 import jcurl.core.JCLoggerFactory;
@@ -62,6 +62,8 @@ import jcurl.core.gui.AboutDialog;
 import jcurl.core.gui.RockEditDisplay;
 import jcurl.core.gui.RockLocationDisplay;
 import jcurl.core.gui.RockLocationDisplayBase;
+import jcurl.core.gui.SumOutDisplay;
+import jcurl.core.gui.SumShotDisplay;
 import jcurl.core.gui.SumWaitDisplay;
 import jcurl.core.gui.Zoomer;
 import jcurl.core.io.SetupIO;
@@ -208,15 +210,21 @@ public class TacticsApp extends JFrame {
                 mod_locations, Zoomer.HOG2HACK, null, null);
 
         final Container con = getContentPane();
-
-        con.add(master, "Center");
+        {
+            final JPanel p = new JPanel(new BorderLayout());
+            p.add(new SumWaitDisplay(mod_locations), "West");
+            p.add(master, "Center");
+            p.add(new SumShotDisplay(mod_locations), "East");
+            con.add(p, "Center");
+        }
+        //con.add(new SumWaitDisplay(mod_locations), "West");
+        con.add(new SumOutDisplay(mod_locations), "West");
         {
             final Box b1 = Box.createHorizontalBox();
             b1.add(Box.createRigidArea(new Dimension(0, 75)));
             b1.add(pnl2);
             con.add(b1, "South");
         }
-        con.add(new SumWaitDisplay(mod_locations), "West");
         final JTabbedPane t = new JTabbedPane();
         con.add(t, "East");
         {
@@ -224,7 +232,10 @@ public class TacticsApp extends JFrame {
             t.add("Rock", b0);
             {
                 final JPanel b1 = new JPanel(new BorderLayout());
-                b1.add(new JLabel("Broom"), "North");
+                final Box b2 = Box.createVerticalBox();
+                b2.add(new JComboBox(new String[] { "Dark", "Light" }));
+                b2.add(new JLabel("Broom", SwingConstants.LEFT));
+                b1.add(b2, "North");
                 JSlider s = new JSlider(-2000, 2000, 0);
                 s.setOrientation(JSlider.VERTICAL);
                 s.setMajorTickSpacing(1000);
@@ -233,13 +244,19 @@ public class TacticsApp extends JFrame {
                 s.setPaintTicks(true);
                 b1.add(s, "Center");
 
-                final JSpinner s1 = new JSpinner();
-                b1.add(s1, "South");
+                final Box b3 = Box.createHorizontalBox();
+                b3.add(new JFormattedTextField());
+                b3.add(new JLabel("mm", SwingConstants.LEFT));
+                b1.add(b3, "South");
                 b0.add(b1);
             }
             {
                 final JPanel b1 = new JPanel(new BorderLayout());
-                b1.add(new JLabel("Splittime"), "North");
+                final Box b2 = Box.createVerticalBox();
+                b2.add(new JComboBox(new String[] { "1", "2", "3", "4", "5",
+                        "6", "7", "8" }));
+                b2.add(new JLabel("Splittime", SwingConstants.LEFT));
+                b1.add(b2, "North");
                 JSlider s = new JSlider(500, 2500, 1500);
                 s.setOrientation(JSlider.VERTICAL);
                 s.setMajorTickSpacing(1000);
@@ -248,8 +265,10 @@ public class TacticsApp extends JFrame {
                 s.setPaintTicks(true);
                 b1.add(s, "Center");
 
-                final JSpinner s1 = new JSpinner();
-                b1.add(s1, "South");
+                final Box b3 = Box.createHorizontalBox();
+                b3.add(new JSpinner());
+                b3.add(new JLabel("ms", SwingConstants.LEFT));
+                b1.add(b3, "South");
                 b0.add(b1);
             }
         }
@@ -347,15 +366,7 @@ public class TacticsApp extends JFrame {
         try {
             setCursor(Cwait);
             // initial state
-            final PositionSet pos = PositionSet.allOut();
-            pos.getDark(0).setLocation(0, 5, 0);
-            pos.getDark(1).setLocation(0, 0, 0.5);
-            pos.getLight(0).setLocation(0.2, 2.5);
-            pos.getLight(1).setLocation(1.0, 1.5);
-            final SpeedSet speed = new SpeedSet();
-            speed.getDark(0).setLocation(0.1, -1.325, 0.75);
-            // feed the model
-            PositionSet.allOut(mod_locations);
+            PositionSet.allHome(mod_locations);
             RockSet.allZero(mod_speeds);
             lastSaved = System.currentTimeMillis();
         } finally {

@@ -22,9 +22,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Shape;
 import java.awt.Stroke;
-import java.awt.geom.GeneralPath;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -32,66 +30,66 @@ import javax.swing.JPanel;
 import jcurl.core.JCLoggerFactory;
 import jcurl.core.Version;
 import jcurl.math.CurveBase;
+import jcurl.math.CurveFkt;
 import jcurl.math.CurveShape;
+import jcurl.math.Function1D;
+import jcurl.math.Polynome;
 
 import org.apache.ugli.ULogger;
 
 /**
+ * Demonstrate how to draw a {@link jcurl.math.CurveBase}converted to a
+ * {@link java.awt.Shape}.
+ * 
+ * @see jcurl.math.CurveShape
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id: CurveShapeDemo.java 209 2005-12-30 16:06:15Z mrohrmoser $
  */
 public class CurveShapeDemo extends JFrame {
-
-    private static class MyCurve extends CurveShape {
-
-        public MyCurve(CurveBase curve) {
-            super(curve);
-        }
-
-        protected GeneralPath computeGP(final CurveBase c) {
-            final GeneralPath ret = new GeneralPath();
-            ret.moveTo(100, 100);
-            ret.curveTo(130, 220, 160, 220, 200, 200);
-            //gp.quadTo(140, 220, 200, 200);
-            ret.lineTo(300, 100);
-            ret.lineTo(400, 200);
-            ret.lineTo(500, 100);
-            return ret;
-        }
-    }
 
     private static final ULogger log = JCLoggerFactory
             .getLogger(CurveShapeDemo.class);
 
     public static void main(String[] args) {
         log.info("Version: " + Version.find());
-        final CurveShapeDemo frame = new CurveShapeDemo();
+        final CurveBase c;
+        {
+            final Function1D[] f = new Function1D[2];
+            final double[] fx = { 200, 150 };
+            final double[] fy = { 4, 4, 4, 4, 4 };
+            f[0] = new Polynome(fx);
+            f[1] = new Polynome(fy);
+            c = new CurveFkt(f);
+        }
+        final CurveShapeDemo frame = new CurveShapeDemo(c);
         frame.setSize(500, 400);
         frame.setVisible(true);
         frame.setContentPane(new JPanel() {
+
+            private final double[] sections = new double[10];
+
             final Stroke st = new BasicStroke(20, BasicStroke.CAP_ROUND,
                     BasicStroke.JOIN_ROUND, 0);
 
             public void paintComponent(Graphics g) {
                 this.setBackground(new Color(255, 255, 255));
                 super.paintComponent(g);
+                this.setBackground(new Color(255, 255, 255));
                 final Graphics2D g2 = (Graphics2D) g;
-                g2.scale(0.75, 0.5);
+                g2.scale(0.75, 0.75);
                 g2.setPaint(new Color(0, 0, 255));
                 g2.setStroke(st);
-                g2.drawLine(0, 0, 500, 200);
-                g2.setPaint(new Color(255, 255, 0, 128));
-                g2.draw(frame.s);
+                g2.drawLine(0, 0, 650, 500);
+                g2.setPaint(new Color(255, 170, 0, 128));
+                g2.draw(CurveShape.approximate(frame.curve, CurveShape
+                        .sections(-1, 3, sections)));
             }
         });
     }
 
-    private final Shape s;
+    private final CurveBase curve;
 
-    /**
-     * @throws java.awt.HeadlessException
-     */
-    public CurveShapeDemo() {
-        s = new MyCurve(null);
+    public CurveShapeDemo(final CurveBase c) {
+        this.curve = c;
     }
 }

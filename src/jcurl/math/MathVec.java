@@ -28,6 +28,101 @@ import java.awt.geom.Point2D;
  */
 public final class MathVec {
 
+    /**
+     * Solve a linear equation of the form a*x=b.
+     * <p>
+     * See Numerische Mathematik, H. R. Schwarz, B. G. Teubner Verlag, 1998,
+     * S.22f.
+     * </p>
+     * 
+     * @see MathVecTest#test010_gauss()
+     * @param a
+     *            coefficient matrix. Attention! All fields a[i][j] are
+     *            overwritten!
+     * @param b
+     *            constant vector. Attention! All fields b[i] are overwritten!
+     * @param x
+     *            solution (max be null)
+     * @return x solution of a*x=b
+     */
+    public static double[] gauss(final double[][] a, final double[] b,
+            double[] x) {
+        final int n = a.length;
+        // check parameters
+        if (n != a[0].length)
+            throw new IllegalArgumentException(
+                    "Matrix a must be quadratic but is " + n + "x"
+                            + a[0].length);
+        if (n != b.length)
+            throw new IllegalArgumentException(
+                    "Dimension of vector b must match Matrix a but is "
+                            + b.length);
+        if (x == null)
+            x = new double[n];
+        if (n != x.length)
+            throw new IllegalArgumentException(
+                    "Dimension of vector x must match Matrix a but is "
+                            + x.length);
+        // start to work
+        double det = 1;
+        final int p[] = new int[n];
+        outer: for (int k = 0; k < n - 1; k++) {
+            double max = 0;
+            p[k] = 0;
+            for (int i = k; i < n; i++) {
+                double s = 0;
+                for (int j = k; j < n; j++)
+                    s += Math.abs(a[i][j]);
+                double q = Math.abs(a[i][k]) / s;
+                if (q > max) {
+                    max = q;
+                    p[k] = i;
+                }
+            }
+            if (max == 0)
+                break outer;
+            if (p[k] != k) {
+                det = -det;
+                for (int j = 0; j < n; j++) {
+                    final double h = a[k][j];
+                    a[k][j] = a[p[k]][j];
+                    a[p[k]][j] = h;
+                }
+            }
+            det *= a[k][k];
+            for (int i = k + 1; i < n; i++) {
+                a[i][k] /= a[k][k];
+                for (int j = k + 1; j < n; j++) {
+                    a[i][j] -= a[i][k] * a[k][j];
+                }
+            }
+        }
+        det *= a[n - 1][n - 1];
+        // Vorwärtseinsetzen
+        for (int k = 0; k < n - 1; k++) {
+            if (p[k] != k) {
+                final double h = b[k];
+                b[k] = b[p[k]];
+                b[p[k]] = h;
+            }
+        }
+        final double[] c = new double[n];
+        for (int i = 0; i < n; i++) {
+            c[i] = b[i];
+            for (int j = 0; j < i - 1; j++) {
+                c[i] -= a[i][j] * c[j];
+            }
+        }
+        // Rückwärtseinsetzen
+        for (int i = n - 1; i >= 0; i--) {
+            double s = c[i];
+            for (int k = i + 1; k < n; k++)
+                s += a[i][k] * x[k];
+            x[i] = -s / a[i][i];
+        }
+        return x;
+    }
+
     public static double abs(final Point2D a) {
         return Math.sqrt(scal(a, a));
     }
