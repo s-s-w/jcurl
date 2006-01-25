@@ -249,11 +249,11 @@ public class XMLWriterTest extends TestCase {
 
         atts = new AttributesImpl();
         atts.addAttribute(null, "att1", null, null, "Attribute 1" + UGLY);
-        dst.startPrefixMapping(null, NS2);
+        dst.startPrefixMapping("p2", NS2);
         dst.startElement(NS2,  "sub1", null,atts);
         dst.characters(UGLY.toCharArray(), 0, UGLY.length());
         dst.endElement(NS2, "sub1", null);
-        dst.endPrefixMapping(null);
+        dst.endPrefixMapping("p2");
 
         dst.startElement(NS1,  "sub2", null,atts);
         dst.characters(UGLY.toCharArray(), 0, UGLY.length());
@@ -269,16 +269,16 @@ public class XMLWriterTest extends TestCase {
         dst.endElement(NS1, "root", null);
         dst.endDocument();
 
-        exp.append("<?xml version=\"1.0\" standalone=\"yes\"?>");
+        exp.append("<?xml version=\"1.0\" standalone=\"yes\"?>\n");
         exp.append("<root xmlns=\"" + NS1 + "\" att1=\"Attribute 1");
         xmlEncode(UGLY, exp, true);
         exp.append("\">");
 
-        exp.append("<sub1 xmlns=\"" + NS2 + "\" att1=\"Attribute 1");
+        exp.append("<p2:sub1 xmlns:p2=\"" + NS2 + "\" att1=\"Attribute 1");
         xmlEncode(UGLY, exp, true);
         exp.append("\">");
         xmlEncode(UGLY, exp, false);
-        exp.append("</sub1>");
+        exp.append("</p2:sub1>");
 
         exp.append("<sub2 att1=\"Attribute 1");
         xmlEncode(UGLY, exp, true);
@@ -304,23 +304,25 @@ public class XMLWriterTest extends TestCase {
         final XMLWriter dst = new XMLWriter(writ);
 
         dst.startDocument();
+        dst.startPrefixMapping(P1, NS1);
+        dst.startPrefixMapping(P2, NS2);
         AttributesImpl atts = new AttributesImpl();
-        atts.addAttribute(NS1, "att1", P1 + ":" + "att1", null, "Attribute 1"
+        atts.addAttribute(NS1, "att1", "att1", null, "Attribute 1"
                 + UGLY);
-        atts.addAttribute(NS2, "att2", P2 + ":" + "att2", null, "Attribute 2"
+        atts.addAttribute(NS2, "att2", "att2", null, "Attribute 2"
                 + UGLY);
         atts.addAttribute(null, null, "att3", null, "Attribute 3" + UGLY);
-        dst.startElement(NS1, "root", P1 + ":" + "root", atts);
+        dst.startElement(NS1, "root", null, atts);
 
         atts = new AttributesImpl();
-        atts.addAttribute(NS1, "att1", P1 + ":" + "att1", null, "Attribute 1"
+        atts.addAttribute(NS1, "att1", null, null, "Attribute 1"
                 + UGLY);
-        atts.addAttribute(NS2, "att2", P2 + ":" + "att2", null, "Attribute 2"
+        atts.addAttribute(NS2, "att2", null, null, "Attribute 2"
                 + UGLY);
         atts.addAttribute(null, null, "att3", null, "Attribute 3" + UGLY);
-        dst.startElement(NS1, "sub1", P1 + ":" + "sub1", atts);
+        dst.startElement(NS1, "sub1", null, atts);
         dst.characters(UGLY.toCharArray(), 0, UGLY.length());
-        dst.endElement(NS1, "sub1", P1 + ":" + "sub1");
+        dst.endElement(NS1, "sub1", null);
 
         //		atts = new AttributesImpl();
         //		atts.addAttribute(null, null, "att1", null, "Attribute 1" + UGLY);
@@ -329,10 +331,10 @@ public class XMLWriterTest extends TestCase {
         //		dst.characters(txt.toCharArray(), 0, txt.length());
         //		dst.endElement(null, null, "sub2");
 
-        dst.endElement(NS1, "root", P1 + ":" + "root");
+        dst.endElement(NS1, "root", null);
         dst.endDocument();
 
-        exp.append("<?xml version=\"1.0\"?>\n");
+        exp.append("<?xml version=\"1.0\" standalone=\"yes\"?>\n\n");
         exp.append("<root att1=\"Attribute 1");
         xmlEncode(UGLY, exp, false);
         exp.append("\">");
@@ -349,7 +351,7 @@ public class XMLWriterTest extends TestCase {
         //		exp.append(UGLY);
         //		exp.append(" ]]></sub2>");
 
-        exp.append("</root>\n");
+        exp.append("</root>\n\n");
 
         final String res = writ.getBuffer().toString();
         //assertEquals(exp.toString(), res);
