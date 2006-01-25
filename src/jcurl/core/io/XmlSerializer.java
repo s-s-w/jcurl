@@ -19,16 +19,19 @@
 package jcurl.core.io;
 
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
 import org.xml.sax.SAXException;
 
+import com.megginson.sax.XMLWriter;
+
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class XmlSerializer extends XmlSerializerBase {
+public class XmlSerializer extends XMLWriter {
 
     /**
      * @param stream
@@ -38,7 +41,7 @@ public class XmlSerializer extends XmlSerializerBase {
      */
     public XmlSerializer(OutputStream stream, String encoding, boolean indent)
             throws UnsupportedEncodingException {
-        super(stream, encoding, indent);
+        super(new OutputStreamWriter(stream, encoding));
     }
 
     /**
@@ -46,7 +49,7 @@ public class XmlSerializer extends XmlSerializerBase {
      * @param indent
      */
     public XmlSerializer(Writer target, boolean indent) {
-        super(target, indent);
+        super(target);
     }
 
     /**

@@ -44,7 +44,7 @@ import org.xml.sax.helpers.AttributesImpl;
  */
 public class SetupSaxSer {
 
-    private static final String NS = null;
+    private static final String NS = "http://www.jcurl.org/schemas/2006/basic";
 
     private static ContentHandler getCH(File dst) throws IOException {
         OutputStream o = new FileOutputStream(dst, false);
@@ -210,6 +210,7 @@ public class SetupSaxSer {
     public void write(final PositionSet pos, final SpeedSet speed,
             final SlideStrategy slide) throws SAXException {
         xml.startDocument();
+        xml.startPrefixMapping(null, NS);
         AttributesImpl atts = new AttributesImpl();
         atts.addAttribute(NS, null, "xmlns", null,
                 "http://jcurl.berlios.de/schema/setup/2005/1.0");

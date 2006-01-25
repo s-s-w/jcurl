@@ -40,7 +40,7 @@ import org.xml.sax.SAXParseException;
  * changing default namespaces. Checks well-formedness. Does not support smart
  * namespace prefix handling - which it should.
  * 
- * @see XmlSerializerTest
+ * @see jcurl.core.io.XmlSerializerTest
  * @author m
  */
 public class XmlSerializerBase implements ContentHandler {
