@@ -124,6 +124,7 @@
 
 			<packageset dir="${main.src.dir}" defaultexcludes="yes">
 				<include name="jcurl/**" />
+				<include name="com/**" />
 			</packageset>
 			<group title="JCurl" packages="jcurl.*" />
 			<doctitle>${doc.title}</doctitle>
