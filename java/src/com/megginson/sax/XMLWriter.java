@@ -84,8 +84,16 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *    
  *     
  *      
- *          &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
- *          &lt;greeting&gt;Hello, world!&lt;/greeting&gt;
+ *       
+ *        
+ *         
+ *          
+ *              &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *              &lt;greeting&gt;Hello, world!&lt;/greeting&gt;
+ *           
+ *          
+ *         
+ *        
  *       
  *      
  *     
@@ -133,7 +141,15 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *    
  *     
  *      
- *          &lt;item&gt;1&lt;/item&gt;&lt;item&gt;3&lt;/item&gt;&lt;item&gt;3&lt;/item&gt;
+ *       
+ *        
+ *         
+ *          
+ *              &lt;item&gt;1&lt;/item&gt;&lt;item&gt;3&lt;/item&gt;&lt;item&gt;3&lt;/item&gt;
+ *           
+ *          
+ *         
+ *        
  *       
  *      
  *     
@@ -179,8 +195,16 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *    
  *     
  *      
- *          &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
- *          &lt;_NS1:foo xmlns:_NS1=&quot;http://www.foo.com/ns/&quot;/&gt;
+ *       
+ *        
+ *         
+ *          
+ *              &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *              &lt;_NS1:foo xmlns:_NS1=&quot;http://www.foo.com/ns/&quot;/&gt;
+ *           
+ *          
+ *         
+ *        
  *       
  *      
  *     
@@ -230,8 +254,16 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *    
  *     
  *      
- *          &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
- *          &lt;foo:foo xmlns:foo=&quot;http://www.foo.com/ns/&quot;/&gt;
+ *       
+ *        
+ *         
+ *          
+ *              &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *              &lt;foo:foo xmlns:foo=&quot;http://www.foo.com/ns/&quot;/&gt;
+ *           
+ *          
+ *         
+ *        
  *       
  *      
  *     
@@ -262,8 +294,16 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *    
  *     
  *      
- *          &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
- *          &lt;foo xmlns=&quot;http://www.foo.com/ns/&quot;/&gt;
+ *       
+ *        
+ *         
+ *          
+ *              &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *              &lt;foo xmlns=&quot;http://www.foo.com/ns/&quot;/&gt;
+ *           
+ *          
+ *         
+ *        
  *       
  *      
  *     
@@ -285,14 +325,22 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *    
  *     
  *      
- *          &lt;xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
- *          &lt;rdf:RDF xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;&gt;
- *           &lt;rdf:Description about=&quot;http://www.foo.com/ids/books/12345&quot;&gt;
- *            &lt;dc:title xmlns:dc=&quot;http://www.purl.org/dc/&quot;&gt;A Dark Night&lt;/dc:title&gt;
- *            &lt;dc:creator xmlns:dc=&quot;http://www.purl.org/dc/&quot;&gt;Jane Smith&lt;/dc:title&gt;
- *            &lt;dc:date xmlns:dc=&quot;http://www.purl.org/dc/&quot;&gt;2000-09-09&lt;/dc:title&gt;
- *           &lt;/rdf:Description&gt;
- *          &lt;/rdf:RDF&gt;
+ *       
+ *        
+ *         
+ *          
+ *              &lt;xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *              &lt;rdf:RDF xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;&gt;
+ *               &lt;rdf:Description about=&quot;http://www.foo.com/ids/books/12345&quot;&gt;
+ *                &lt;dc:title xmlns:dc=&quot;http://www.purl.org/dc/&quot;&gt;A Dark Night&lt;/dc:title&gt;
+ *                &lt;dc:creator xmlns:dc=&quot;http://www.purl.org/dc/&quot;&gt;Jane Smith&lt;/dc:title&gt;
+ *                &lt;dc:date xmlns:dc=&quot;http://www.purl.org/dc/&quot;&gt;2000-09-09&lt;/dc:title&gt;
+ *               &lt;/rdf:Description&gt;
+ *              &lt;/rdf:RDF&gt;
+ *           
+ *          
+ *         
+ *        
  *       
  *      
  *     
@@ -325,16 +373,24 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *    
  *     
  *      
- *          &lt;xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *       
+ *        
  *         
- *          &lt;rdf:RDF xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;
- *                      xmlns:dc=&quot;http://www.purl.org/dc/&quot;&gt;
- *           &lt;rdf:Description about=&quot;http://www.foo.com/ids/books/12345&quot;&gt;
- *            &lt;dc:title&gt;A Dark Night&lt;/dc:title&gt;
- *            &lt;dc:creator&gt;Jane Smith&lt;/dc:title&gt;
- *            &lt;dc:date&gt;2000-09-09&lt;/dc:title&gt;
- *           &lt;/rdf:Description&gt;
- *          &lt;/rdf:RDF&gt;
+ *          
+ *              &lt;xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *             
+ *              &lt;rdf:RDF xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;
+ *                          xmlns:dc=&quot;http://www.purl.org/dc/&quot;&gt;
+ *               &lt;rdf:Description about=&quot;http://www.foo.com/ids/books/12345&quot;&gt;
+ *                &lt;dc:title&gt;A Dark Night&lt;/dc:title&gt;
+ *                &lt;dc:creator&gt;Jane Smith&lt;/dc:title&gt;
+ *                &lt;dc:date&gt;2000-09-09&lt;/dc:title&gt;
+ *               &lt;/rdf:Description&gt;
+ *              &lt;/rdf:RDF&gt;
+ *           
+ *          
+ *         
+ *        
  *       
  *      
  *     
@@ -354,6 +410,18 @@ import org.xml.sax.helpers.XMLFilterImpl;
  * @see org.xml.sax.ContentHandler
  */
 public class XMLWriter extends XMLFilterImpl {
+
+    public void endPrefixMapping(String prefix) throws SAXException {
+        super.endPrefixMapping(prefix);
+    }
+
+    public void startPrefixMapping(String prefix, String uri)
+            throws SAXException {
+        if(prefix == null)
+            prefix = "";
+        prefixTable.put(uri, prefix);
+        super.startPrefixMapping(prefix, uri);
+    }
 
     private static final boolean encodeHighChars = false;
 
@@ -919,7 +987,7 @@ public class XMLWriter extends XMLFilterImpl {
      * @return The preferred prefix, or "" for the default Namespace.
      * @see #setPrefix
      */
-    public String getPrefix(String uri) {
+    private String getPrefix(String uri) {
         return (String) prefixTable.get(uri);
     }
 
@@ -1054,7 +1122,7 @@ public class XMLWriter extends XMLFilterImpl {
      * @see #forceNSDecl(java.lang.String)
      * @see #forceNSDecl(java.lang.String,java.lang.String)
      */
-    public void setPrefix(String uri, String prefix) {
+    private void setPrefix(String uri, String prefix) {
         prefixTable.put(uri, prefix);
     }
 
@@ -1158,11 +1226,11 @@ public class XMLWriter extends XMLFilterImpl {
         nsSupport.pushContext();
         write('<');
         writeName(uri, localName, qName, true);
-        writeAttributes(atts);
         if (elementLevel == 1) {
             forceNSDecls();
         }
         writeNSDecls();
+        writeAttributes(atts);
         write('>');
         super.startElement(uri, localName, qName, atts);
     }
@@ -1214,14 +1282,14 @@ public class XMLWriter extends XMLFilterImpl {
      */
     private void writeAttributes(Attributes atts) throws SAXException {
         if (atts == null)
-            atts = EMPTY_ATTS;
-        int len = atts.getLength();
+            return;
+        final int len = atts.getLength();
         for (int i = 0; i < len; i++) {
-            char ch[] = atts.getValue(i).toCharArray();
             write(' ');
             writeName(atts.getURI(i), atts.getLocalName(i), atts.getQName(i),
                     false);
             write("=\"");
+            final char ch[] = atts.getValue(i).toCharArray();
             writeEsc(ch, 0, ch.length, true);
             write('"');
         }
