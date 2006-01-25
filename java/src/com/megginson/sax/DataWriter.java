@@ -60,15 +60,12 @@ import org.xml.sax.XMLReader;
  * 
  * <pre>
  * 
- *  
- *   &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
- *  
- *   &lt;Person&gt;
- *     &lt;name&gt;Jane Smith&lt;/name&gt;
- *     &lt;date-of-birth&gt;1965-05-23&lt;/date-of-birth&gt;
- *     &lt;citizenship&gt;US&lt;/citizenship&gt;
- *   &lt;/Person&gt;
- *   
+ *    &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *    &lt;Person&gt;
+ *      &lt;name&gt;Jane Smith&lt;/name&gt;
+ *      &lt;date-of-birth&gt;1965-05-23&lt;/date-of-birth&gt;
+ *      &lt;citizenship&gt;US&lt;/citizenship&gt;
+ *    &lt;/Person&gt;
  *  
  * </pre>
  * 
@@ -109,13 +106,6 @@ public class DataWriter extends XMLWriter {
     ////////////////////////////////////////////////////////////////////
 
     /**
-     * Create a new data writer for standard output.
-     */
-    public DataWriter() {
-        super();
-    }
-
-    /**
      * Create a new data writer for the specified output.
      * 
      * @param writer
@@ -123,20 +113,6 @@ public class DataWriter extends XMLWriter {
      */
     public DataWriter(Writer writer) {
         super(writer);
-    }
-
-    /**
-     * Create a new data writer for standard output.
-     * 
-     * <p>
-     * Use the XMLReader provided as the source of events.
-     * </p>
-     * 
-     * @param xmlreader
-     *            The parent in the filter chain.
-     */
-    public DataWriter(XMLReader xmlreader) {
-        super(xmlreader);
     }
 
     /**
