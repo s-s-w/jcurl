@@ -18,9 +18,10 @@ else
         $svn checkout $uri $dst
 fi
 
-tmp=$base/api.tmp
+#$svn status $dst
 
-$svn status $dir
+# Unpack the javadocs:
+tmp=$base/api.tmp
 mkdir $tmp
 unzip $dst/jar/jcurl-doc-0.3.war -d $tmp > /dev/null
 mv $dst/api $base/api.old
