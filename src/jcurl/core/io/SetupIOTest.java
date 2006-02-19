@@ -23,14 +23,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-import jcurl.core.JCLoggerFactory;
-import jcurl.model.PositionSet;
-import jcurl.model.SpeedSet;
 import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 import junit.framework.TestCase;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.SpeedSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
 import org.xml.sax.SAXException;
 
 /**
@@ -45,7 +45,7 @@ public class SetupIOTest extends TestCase {
 
     public SetupIOTest() {
         // Set logging to debug
-        //Logger.getRootLogger().setLevel(Level.DEBUG);
+        // Logger.getRootLogger().setLevel(Level.DEBUG);
     }
 
     public void test010_save() throws SAXException,

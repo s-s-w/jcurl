@@ -29,10 +29,10 @@ import java.util.Iterator;
 
 import javax.swing.JPanel;
 
-import jcurl.core.JCLoggerFactory;
 import jcurl.mr.exp.math.PointList;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**
  * Draw lines if the "hot" key is pressed.

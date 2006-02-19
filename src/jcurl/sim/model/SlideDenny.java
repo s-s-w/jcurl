@@ -18,14 +18,15 @@
  */
 package jcurl.sim.model;
 
-import jcurl.core.NotImplementedYetException;
 import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
-import jcurl.math.CurveBase;
-import jcurl.math.CurveFkt;
-import jcurl.math.Polynome;
-import jcurl.model.Rock;
 import jcurl.sim.core.SlideCurves;
+
+import org.jcurl.core.Rock;
+import org.jcurl.core.helpers.NotImplementedYetException;
+import org.jcurl.math.CurveBase;
+import org.jcurl.math.CurveFkt;
+import org.jcurl.math.Polynome;
 
 /**
  * Mark Denny's curl-model. Motion of a curling rock acc. to "Curling rock
@@ -89,7 +90,7 @@ public class SlideDenny extends SlideCurves {
         final double Y = Ice.FAR_HOG_2_TEE - y;
         tmp = _mu * g * t + 2.0 * Ice.HOG_2_HOG / t;
         tmp *= tmp;
-        //        tmp += 4.0 * _mu * g * Ice.HOG_2_HOG;
+        // tmp += 4.0 * _mu * g * Ice.HOG_2_HOG;
 
         assert Y <= tmp / (8.0 * g * _mu); // ensure a positive sqrt-arg.
 

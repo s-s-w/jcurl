@@ -56,8 +56,6 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileFilter;
 
-import jcurl.core.JCLoggerFactory;
-import jcurl.core.Version;
 import jcurl.core.gui.AboutDialog;
 import jcurl.core.gui.RockEditDisplay;
 import jcurl.core.gui.RockLocationDisplay;
@@ -67,11 +65,13 @@ import jcurl.core.gui.SumShotDisplay;
 import jcurl.core.gui.SumWaitDisplay;
 import jcurl.core.gui.Zoomer;
 import jcurl.core.io.SetupIO;
-import jcurl.model.PositionSet;
-import jcurl.model.RockSet;
-import jcurl.model.SpeedSet;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.RockSet;
+import org.jcurl.core.SpeedSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.core.helpers.Version;
 import org.xml.sax.SAXException;
 
 /**
@@ -216,7 +216,7 @@ public class TacticsApp extends JFrame {
             p.add(new SumShotDisplay(mod_locations), "East");
             con.add(p, "Center");
         }
-        //con.add(new SumWaitDisplay(mod_locations), "West");
+        // con.add(new SumWaitDisplay(mod_locations), "West");
         con.add(new SumOutDisplay(mod_locations), "West");
         {
             final Box b1 = Box.createHorizontalBox();
@@ -376,16 +376,16 @@ public class TacticsApp extends JFrame {
     void cmdOpen() throws FileNotFoundException, SAXException, IOException {
         if (!discardUnsavedChanges())
             return;
-        //        try {
-        //            final FileOpenService fos = (FileOpenService) ServiceManager
-        //                    .lookup("javax.jnlp.BasicService");
-        //            final FileContents fc = fos.openFileDialog("/home/m", new
+        // try {
+        // final FileOpenService fos = (FileOpenService) ServiceManager
+        // .lookup("javax.jnlp.BasicService");
+        // final FileContents fc = fos.openFileDialog("/home/m", new
         // String[]{".jcx", ".jcz"});
-        //            if(fc != null)
-        //                log.info(fc.getName());
-        //        } catch (UnavailableServiceException e) {
-        //            throw new RuntimeException("Uncaught exception", e);
-        //        }
+        // if(fc != null)
+        // log.info(fc.getName());
+        // } catch (UnavailableServiceException e) {
+        // throw new RuntimeException("Uncaught exception", e);
+        // }
         if (!chooseLoadFile(getCurrentFile() == null ? new File(".")
                 : getCurrentFile()))
             return;
@@ -437,9 +437,9 @@ public class TacticsApp extends JFrame {
             final JMenu menu = bar.add(new JMenu("Play"));
             menu.setMnemonic('P');
             menu.setEnabled(false);
-            //            menu.add(newMI('a', -1, bStart.getAction()));
-            //            menu.add(newMI('P', -1, bPause.getAction()));
-            //            menu.add(newMI('o', -1, bStop.getAction()));
+            // menu.add(newMI('a', -1, bStart.getAction()));
+            // menu.add(newMI('P', -1, bPause.getAction()));
+            // menu.add(newMI('o', -1, bStop.getAction()));
         }
         {
             final JMenu menu = bar.add(new JMenu("Help"));
@@ -480,10 +480,10 @@ public class TacticsApp extends JFrame {
 
     private JButton newButton(final Action action) {
         final JButton item = new JButton(action);
-        //        item.setMnemonic(mnemonic);
-        //        if (ctrlAccel >= 0)
-        //            item.setAccelerator(KeyStroke.getKeyStroke(ctrlAccel,
-        //                    InputEvent.CTRL_MASK));
+        // item.setMnemonic(mnemonic);
+        // if (ctrlAccel >= 0)
+        // item.setAccelerator(KeyStroke.getKeyStroke(ctrlAccel,
+        // InputEvent.CTRL_MASK));
         return item;
     }
 

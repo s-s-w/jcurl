@@ -36,7 +36,7 @@ import org.xml.sax.helpers.XMLFilterImpl;
 /**
  * JUnit Test
  * 
- * @see jcurl.core.io.XmlSerializerBase
+ * @see org.jcurl.core.helpers.XmlSerializerBase
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -170,12 +170,12 @@ public class XMLWriterTest extends TestCase {
         dst.characters(txt.toCharArray(), 0, txt.length());
         dst.endElement(null, "sub1", null);
 
-        //		atts = new AttributesImpl();
-        //		atts.addAttribute(null, null, "att1", null, "Attribute 1" + ugly);
-        //		dst.startElement(null, null, "sub2", atts);
-        //		txt = "Attribute 1" + ugly;
-        //		dst.characters(txt.toCharArray(), 0, txt.length());
-        //		dst.endElement(null, null, "sub2");
+        // atts = new AttributesImpl();
+        // atts.addAttribute(null, null, "att1", null, "Attribute 1" + ugly);
+        // dst.startElement(null, null, "sub2", atts);
+        // txt = "Attribute 1" + ugly;
+        // dst.characters(txt.toCharArray(), 0, txt.length());
+        // dst.endElement(null, null, "sub2");
 
         dst.endElement(null, "root", null);
         dst.endDocument();
@@ -191,11 +191,11 @@ public class XMLWriterTest extends TestCase {
         xmlEncode(UGLY, exp, false);
         exp.append("</sub1>");
 
-        //		exp.append("<sub2 att1=\"Attribute 1");
-        //		xmlEncode(ugly, exp);
-        //		exp.append("\"><![CDATA[ ");
-        //		exp.append(ugly);
-        //		exp.append(" ]]></sub2>");
+        // exp.append("<sub2 att1=\"Attribute 1");
+        // xmlEncode(ugly, exp);
+        // exp.append("\"><![CDATA[ ");
+        // exp.append(ugly);
+        // exp.append(" ]]></sub2>");
 
         exp.append("</root>\n\n");
 
@@ -250,21 +250,21 @@ public class XMLWriterTest extends TestCase {
         atts = new AttributesImpl();
         atts.addAttribute(null, "att1", null, null, "Attribute 1" + UGLY);
         dst.startPrefixMapping("p2", NS2);
-        dst.startElement(NS2,  "sub1", null,atts);
+        dst.startElement(NS2, "sub1", null, atts);
         dst.characters(UGLY.toCharArray(), 0, UGLY.length());
         dst.endElement(NS2, "sub1", null);
         dst.endPrefixMapping("p2");
 
-        dst.startElement(NS1,  "sub2", null,atts);
+        dst.startElement(NS1, "sub2", null, atts);
         dst.characters(UGLY.toCharArray(), 0, UGLY.length());
         dst.endElement(NS1, "sub2", null);
 
-        //		atts = new AttributesImpl();
-        //		atts.addAttribute(null, null, "att1", null, "Attribute 1" + UGLY);
-        //		dst.startElement(null, null, "sub2", atts);
-        //		txt = "Attribute 1" + UGLY;
-        //		dst.characters(txt.toCharArray(), 0, txt.length());
-        //		dst.endElement(null, null, "sub2");
+        // atts = new AttributesImpl();
+        // atts.addAttribute(null, null, "att1", null, "Attribute 1" + UGLY);
+        // dst.startElement(null, null, "sub2", atts);
+        // txt = "Attribute 1" + UGLY;
+        // dst.characters(txt.toCharArray(), 0, txt.length());
+        // dst.endElement(null, null, "sub2");
 
         dst.endElement(NS1, "root", null);
         dst.endDocument();
@@ -307,29 +307,25 @@ public class XMLWriterTest extends TestCase {
         dst.startPrefixMapping(P1, NS1);
         dst.startPrefixMapping(P2, NS2);
         AttributesImpl atts = new AttributesImpl();
-        atts.addAttribute(NS1, "att1", "att1", null, "Attribute 1"
-                + UGLY);
-        atts.addAttribute(NS2, "att2", "att2", null, "Attribute 2"
-                + UGLY);
+        atts.addAttribute(NS1, "att1", "att1", null, "Attribute 1" + UGLY);
+        atts.addAttribute(NS2, "att2", "att2", null, "Attribute 2" + UGLY);
         atts.addAttribute(null, null, "att3", null, "Attribute 3" + UGLY);
         dst.startElement(NS1, "root", null, atts);
 
         atts = new AttributesImpl();
-        atts.addAttribute(NS1, "att1", null, null, "Attribute 1"
-                + UGLY);
-        atts.addAttribute(NS2, "att2", null, null, "Attribute 2"
-                + UGLY);
+        atts.addAttribute(NS1, "att1", null, null, "Attribute 1" + UGLY);
+        atts.addAttribute(NS2, "att2", null, null, "Attribute 2" + UGLY);
         atts.addAttribute(null, null, "att3", null, "Attribute 3" + UGLY);
         dst.startElement(NS1, "sub1", null, atts);
         dst.characters(UGLY.toCharArray(), 0, UGLY.length());
         dst.endElement(NS1, "sub1", null);
 
-        //		atts = new AttributesImpl();
-        //		atts.addAttribute(null, null, "att1", null, "Attribute 1" + UGLY);
-        //		dst.startElement(null, null, "sub2", atts);
-        //		txt = "Attribute 1" + UGLY;
-        //		dst.characters(txt.toCharArray(), 0, txt.length());
-        //		dst.endElement(null, null, "sub2");
+        // atts = new AttributesImpl();
+        // atts.addAttribute(null, null, "att1", null, "Attribute 1" + UGLY);
+        // dst.startElement(null, null, "sub2", atts);
+        // txt = "Attribute 1" + UGLY;
+        // dst.characters(txt.toCharArray(), 0, txt.length());
+        // dst.endElement(null, null, "sub2");
 
         dst.endElement(NS1, "root", null);
         dst.endDocument();
@@ -345,16 +341,16 @@ public class XMLWriterTest extends TestCase {
         xmlEncode(UGLY, exp, false);
         exp.append("</sub1>");
 
-        //		exp.append("<sub2 att1=\"Attribute 1");
-        //		xmlEncode(UGLY, exp);
-        //		exp.append("\"><![CDATA[ ");
-        //		exp.append(UGLY);
-        //		exp.append(" ]]></sub2>");
+        // exp.append("<sub2 att1=\"Attribute 1");
+        // xmlEncode(UGLY, exp);
+        // exp.append("\"><![CDATA[ ");
+        // exp.append(UGLY);
+        // exp.append(" ]]></sub2>");
 
         exp.append("</root>\n\n");
 
         final String res = writ.getBuffer().toString();
-        //assertEquals(exp.toString(), res);
+        // assertEquals(exp.toString(), res);
         assertNotNull(res);
     }
 }

@@ -19,10 +19,11 @@
 package jcurl.sim.model;
 
 import jcurl.core.dto.RockProps;
-import jcurl.core.io.Dim;
-import jcurl.core.io.DimVal;
-import jcurl.model.Rock;
 import jcurl.sim.core.CollissionStrategy;
+
+import org.jcurl.core.Dim;
+import org.jcurl.core.DimVal;
+import org.jcurl.core.Rock;
 
 /**
  * A hitter including spin.

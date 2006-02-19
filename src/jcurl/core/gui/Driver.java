@@ -24,10 +24,9 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import jcurl.core.JCLoggerFactory;
-import jcurl.model.PositionSet;
-
 import org.apache.ugli.ULogger;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

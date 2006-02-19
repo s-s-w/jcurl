@@ -78,7 +78,6 @@ import org.xml.sax.helpers.XMLFilterImpl;
  * </p>
  * 
  * <pre>
- * 
  *  
  *   
  *    
@@ -88,8 +87,10 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *        
  *         
  *          
- *              &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
- *              &lt;greeting&gt;Hello, world!&lt;/greeting&gt;
+ *           
+ *               &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *               &lt;greeting&gt;Hello, world!&lt;/greeting&gt;
+ *            
  *           
  *          
  *         
@@ -99,7 +100,6 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *     
  *    
  *   
- *  
  * </pre>
  * 
  * <p>
@@ -135,7 +135,6 @@ import org.xml.sax.helpers.XMLFilterImpl;
  * </p>
  * 
  * <pre>
- * 
  *  
  *   
  *    
@@ -145,7 +144,9 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *        
  *         
  *          
- *              &lt;item&gt;1&lt;/item&gt;&lt;item&gt;3&lt;/item&gt;&lt;item&gt;3&lt;/item&gt;
+ *           
+ *               &lt;item&gt;1&lt;/item&gt;&lt;item&gt;3&lt;/item&gt;&lt;item&gt;3&lt;/item&gt;
+ *            
  *           
  *          
  *         
@@ -155,7 +156,6 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *     
  *    
  *   
- *  
  * </pre>
  * 
  * <p>
@@ -189,7 +189,6 @@ import org.xml.sax.helpers.XMLFilterImpl;
  * </p>
  * 
  * <pre>
- * 
  *  
  *   
  *    
@@ -199,8 +198,10 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *        
  *         
  *          
- *              &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
- *              &lt;_NS1:foo xmlns:_NS1=&quot;http://www.foo.com/ns/&quot;/&gt;
+ *           
+ *               &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *               &lt;_NS1:foo xmlns:_NS1=&quot;http://www.foo.com/ns/&quot;/&gt;
+ *            
  *           
  *          
  *         
@@ -210,7 +211,6 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *     
  *    
  *   
- *  
  * </pre>
  * 
  * <p>
@@ -248,7 +248,6 @@ import org.xml.sax.helpers.XMLFilterImpl;
  * </p>
  * 
  * <pre>
- * 
  *  
  *   
  *    
@@ -258,8 +257,10 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *        
  *         
  *          
- *              &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
- *              &lt;foo:foo xmlns:foo=&quot;http://www.foo.com/ns/&quot;/&gt;
+ *           
+ *               &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *               &lt;foo:foo xmlns:foo=&quot;http://www.foo.com/ns/&quot;/&gt;
+ *            
  *           
  *          
  *         
@@ -269,7 +270,6 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *     
  *    
  *   
- *  
  * </pre>
  * 
  * <p>
@@ -288,7 +288,6 @@ import org.xml.sax.helpers.XMLFilterImpl;
  * </p>
  * 
  * <pre>
- * 
  *  
  *   
  *    
@@ -298,8 +297,10 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *        
  *         
  *          
- *              &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
- *              &lt;foo xmlns=&quot;http://www.foo.com/ns/&quot;/&gt;
+ *           
+ *               &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *               &lt;foo xmlns=&quot;http://www.foo.com/ns/&quot;/&gt;
+ *            
  *           
  *          
  *         
@@ -309,7 +310,6 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *     
  *    
  *   
- *  
  * </pre>
  * 
  * <p>
@@ -319,7 +319,6 @@ import org.xml.sax.helpers.XMLFilterImpl;
  * </p>
  * 
  * <pre>
- * 
  *  
  *   
  *    
@@ -329,14 +328,16 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *        
  *         
  *          
- *              &lt;xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
- *              &lt;rdf:RDF xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;&gt;
- *               &lt;rdf:Description about=&quot;http://www.foo.com/ids/books/12345&quot;&gt;
- *                &lt;dc:title xmlns:dc=&quot;http://www.purl.org/dc/&quot;&gt;A Dark Night&lt;/dc:title&gt;
- *                &lt;dc:creator xmlns:dc=&quot;http://www.purl.org/dc/&quot;&gt;Jane Smith&lt;/dc:title&gt;
- *                &lt;dc:date xmlns:dc=&quot;http://www.purl.org/dc/&quot;&gt;2000-09-09&lt;/dc:title&gt;
- *               &lt;/rdf:Description&gt;
- *              &lt;/rdf:RDF&gt;
+ *           
+ *               &lt;xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *               &lt;rdf:RDF xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;&gt;
+ *                &lt;rdf:Description about=&quot;http://www.foo.com/ids/books/12345&quot;&gt;
+ *                 &lt;dc:title xmlns:dc=&quot;http://www.purl.org/dc/&quot;&gt;A Dark Night&lt;/dc:title&gt;
+ *                 &lt;dc:creator xmlns:dc=&quot;http://www.purl.org/dc/&quot;&gt;Jane Smith&lt;/dc:title&gt;
+ *                 &lt;dc:date xmlns:dc=&quot;http://www.purl.org/dc/&quot;&gt;2000-09-09&lt;/dc:title&gt;
+ *                &lt;/rdf:Description&gt;
+ *               &lt;/rdf:RDF&gt;
+ *            
  *           
  *          
  *         
@@ -346,7 +347,6 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *     
  *    
  *   
- *  
  * </pre>
  * 
  * <p>
@@ -367,7 +367,6 @@ import org.xml.sax.helpers.XMLFilterImpl;
  * </p>
  * 
  * <pre>
- * 
  *  
  *   
  *    
@@ -377,16 +376,18 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *        
  *         
  *          
- *              &lt;xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
- *             
- *              &lt;rdf:RDF xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;
- *                          xmlns:dc=&quot;http://www.purl.org/dc/&quot;&gt;
- *               &lt;rdf:Description about=&quot;http://www.foo.com/ids/books/12345&quot;&gt;
- *                &lt;dc:title&gt;A Dark Night&lt;/dc:title&gt;
- *                &lt;dc:creator&gt;Jane Smith&lt;/dc:title&gt;
- *                &lt;dc:date&gt;2000-09-09&lt;/dc:title&gt;
- *               &lt;/rdf:Description&gt;
- *              &lt;/rdf:RDF&gt;
+ *           
+ *               &lt;xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *              
+ *               &lt;rdf:RDF xmlns:rdf=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;
+ *                           xmlns:dc=&quot;http://www.purl.org/dc/&quot;&gt;
+ *                &lt;rdf:Description about=&quot;http://www.foo.com/ids/books/12345&quot;&gt;
+ *                 &lt;dc:title&gt;A Dark Night&lt;/dc:title&gt;
+ *                 &lt;dc:creator&gt;Jane Smith&lt;/dc:title&gt;
+ *                 &lt;dc:date&gt;2000-09-09&lt;/dc:title&gt;
+ *                &lt;/rdf:Description&gt;
+ *               &lt;/rdf:RDF&gt;
+ *            
  *           
  *          
  *         
@@ -396,7 +397,6 @@ import org.xml.sax.helpers.XMLFilterImpl;
  *     
  *    
  *   
- *  
  * </pre>
  * 
  * <p>
@@ -417,7 +417,7 @@ public class XMLWriter extends XMLFilterImpl {
 
     public void startPrefixMapping(String prefix, String uri)
             throws SAXException {
-        if(prefix == null)
+        if (prefix == null)
             prefix = "";
         prefixTable.put(uri, prefix);
         super.startPrefixMapping(prefix, uri);
@@ -429,9 +429,9 @@ public class XMLWriter extends XMLFilterImpl {
 
     private int elementLevel = 0;
 
-    ////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////
     // Constants.
-    ////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////
 
     private final Attributes EMPTY_ATTS = new AttributesImpl();
 
@@ -443,15 +443,15 @@ public class XMLWriter extends XMLFilterImpl {
 
     private int prefixCounter = 0;
 
-    ////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////
     // Internal state.
-    ////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////
 
     private Map prefixTable;
 
-    ////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////
     // Constructors.
-    ////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////
 
     /**
      * Create a new XML writer.
@@ -461,7 +461,7 @@ public class XMLWriter extends XMLFilterImpl {
      * </p>
      * 
      * @throws UnsupportedEncodingException
-     *  
+     * 
      */
     public XMLWriter(OutputStream dst, final String encoding)
             throws UnsupportedEncodingException {
@@ -757,9 +757,9 @@ public class XMLWriter extends XMLFilterImpl {
         emptyElement(uri, localName, "", EMPTY_ATTS);
     }
 
-    ////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////
     // Additional markup.
-    ////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////
 
     /**
      * Write an empty element.
@@ -945,8 +945,8 @@ public class XMLWriter extends XMLFilterImpl {
      * Force a Namespace declaration with a preferred prefix.
      * 
      * <p>
-     * This is a convenience method that invokes {@link #setPrefix}
-     * then {@link #forceNSDecl(java.lang.String)}.
+     * This is a convenience method that invokes {@link #setPrefix} then
+     * {@link #forceNSDecl(java.lang.String)}.
      * </p>
      * 
      * @param uri
@@ -962,9 +962,9 @@ public class XMLWriter extends XMLFilterImpl {
         forceNSDecl(uri);
     }
 
-    ////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////
     // Internal methods.
-    ////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////
 
     /**
      * Force all Namespaces to be declared.
@@ -1057,9 +1057,9 @@ public class XMLWriter extends XMLFilterImpl {
         super.processingInstruction(target, data);
     }
 
-    ////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////
     // Public methods.
-    ////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////
 
     /**
      * Reset the writer.
@@ -1100,7 +1100,7 @@ public class XMLWriter extends XMLFilterImpl {
     public void setOutput(Writer writer) {
         if (writer == null) {
             throw new UnsupportedOperationException();
-            //output = new OutputStreamWriter(System.out);
+            // output = new OutputStreamWriter(System.out);
         }
         output = writer;
     }
@@ -1126,9 +1126,9 @@ public class XMLWriter extends XMLFilterImpl {
         prefixTable.put(uri, prefix);
     }
 
-    ////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////
     // Methods from org.xml.sax.ContentHandler.
-    ////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////
 
     /**
      * Write the XML declaration at the beginning of the document.
@@ -1173,9 +1173,9 @@ public class XMLWriter extends XMLFilterImpl {
         startElement(null, localName, null, EMPTY_ATTS);
     }
 
-    ////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////
     // Convenience methods.
-    ////////////////////////////////////////////////////////////////////
+    // //////////////////////////////////////////////////////////////////
 
     /**
      * Start a new element without a qname or attributes.

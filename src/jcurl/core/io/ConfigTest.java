@@ -20,6 +20,9 @@ package jcurl.core.io;
 
 import junit.framework.TestCase;
 
+import org.jcurl.core.Dim;
+import org.jcurl.core.DimVal;
+
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
@@ -33,6 +36,6 @@ public class ConfigTest extends TestCase {
     public void test010_ToDim() {
         DimVal dim = Config.getDim("-1.4e-3m/s");
         assertEquals(Dim.METER_PER_SEC, dim.dim);
-        //assertEquals(-1.4e-3, dim.value);
+        // assertEquals(-1.4e-3, dim.value);
     }
 }

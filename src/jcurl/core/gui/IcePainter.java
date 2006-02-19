@@ -29,7 +29,8 @@ import java.awt.geom.Rectangle2D;
 
 import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
-import jcurl.core.io.Dim;
+
+import org.jcurl.core.Dim;
 
 /**
  * Paint the ice (sheet).
@@ -157,10 +158,10 @@ public class IcePainter {
         g.fill(C1);
         // contours
         g.setPaint(color.contours);
-        //        g.draw(C12);
-        //        g.draw(C8);
-        //        g.draw(C4);
-        //        g.draw(C1);
+        // g.draw(C12);
+        // g.draw(C8);
+        // g.draw(C4);
+        // g.draw(C1);
         g.draw(back);
         g.draw(tee);
         g.draw(nearHog);

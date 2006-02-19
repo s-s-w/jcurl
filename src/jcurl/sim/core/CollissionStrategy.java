@@ -22,14 +22,14 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
-import jcurl.core.JCLoggerFactory;
 import jcurl.core.dto.RockProps;
-import jcurl.model.PositionSet;
-import jcurl.model.Rock;
-import jcurl.model.RockSet;
-import jcurl.model.SpeedSet;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.Rock;
+import org.jcurl.core.RockSet;
+import org.jcurl.core.SpeedSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**
  * Abstract base class for collission models.

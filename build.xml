@@ -6,8 +6,8 @@
 	-->
 
 	<property name="version.major" value="0" />
-	<property name="version.minor" value="2" />
-	<property name="revision.version" value="3" />
+	<property name="version.minor" value="3" />
+	<property name="revision.version" value="0" />
 
 	<!--************************************************************
 	**** Custom Properties *****************************************
@@ -85,7 +85,7 @@
 			<attribute name="Main-Class" value="jcurl.core.gui.DemoSimple" />
 			<attribute name="Class-Path" value="ugli-simple.jar" />
 			<attribute name="License" value="Gnu Public License" />
-			<attribute name="Copyright" value="1998-2005 M. Rohrmoser" />
+			<attribute name="Copyright" value="1998-2006 M. Rohrmoser" />
 		</manifest>
 
 		<antcall target="manifest.patch">
@@ -123,10 +123,11 @@
 			<link href="http://www.junit.org/junit/javadoc/3.8.1/" />
 
 			<packageset dir="${main.src.dir}" defaultexcludes="yes">
+				<include name="org/jcurl/**" />
 				<include name="jcurl/**" />
-				<include name="com/**" />
+				<include name="com/megginson/sax/**" />
 			</packageset>
-			<group title="JCurl" packages="jcurl.*" />
+			<group title="JCurl" packages="org.jcurl.*" />
 			<doctitle>${doc.title}</doctitle>
 			<bottom>&lt;i&gt;${copyright.txt}&lt;/i&gt;</bottom>
 		</javadoc>

@@ -31,13 +31,13 @@ import java.util.Map;
 
 import javax.swing.JComponent;
 
-import jcurl.core.JCLoggerFactory;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.gui.RockPainter.ColorSet;
-import jcurl.model.PositionSet;
-import jcurl.model.RockSet;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.RockSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**
  * 
@@ -54,24 +54,24 @@ public abstract class SumDisplayBase extends JComponent implements
     private static final ULogger log = JCLoggerFactory
             .getLogger(SumDisplayBase.class);
     static {
-        //        hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION,
-        //                RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+        // hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION,
+        // RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
         hints.put(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        //        hints.put(RenderingHints.KEY_COLOR_RENDERING,
-        //                RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-        //        hints.put(RenderingHints.KEY_DITHERING,
-        //                RenderingHints.VALUE_DITHER_ENABLE);
-        //        hints.put(RenderingHints.KEY_FRACTIONALMETRICS,
-        //                RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-        //        hints.put(RenderingHints.KEY_INTERPOLATION,
-        //                RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-        //        hints.put(RenderingHints.KEY_RENDERING,
-        //                RenderingHints.VALUE_RENDER_QUALITY);
-        //        hints.put(RenderingHints.KEY_STROKE_CONTROL,
-        //                RenderingHints.VALUE_STROKE_NORMALIZE);
-        //        hints.put(RenderingHints.KEY_TEXT_ANTIALIASING,
-        //                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        // hints.put(RenderingHints.KEY_COLOR_RENDERING,
+        // RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+        // hints.put(RenderingHints.KEY_DITHERING,
+        // RenderingHints.VALUE_DITHER_ENABLE);
+        // hints.put(RenderingHints.KEY_FRACTIONALMETRICS,
+        // RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+        // hints.put(RenderingHints.KEY_INTERPOLATION,
+        // RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        // hints.put(RenderingHints.KEY_RENDERING,
+        // RenderingHints.VALUE_RENDER_QUALITY);
+        // hints.put(RenderingHints.KEY_STROKE_CONTROL,
+        // RenderingHints.VALUE_STROKE_NORMALIZE);
+        // hints.put(RenderingHints.KEY_TEXT_ANTIALIASING,
+        // RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
     }
 
     public Paint backGround = new Color(0xF0F0FF);

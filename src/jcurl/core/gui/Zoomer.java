@@ -23,9 +23,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import jcurl.core.NotImplementedYetException;
 import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
+
+import org.jcurl.core.helpers.NotImplementedYetException;
 
 /**
  * Smart handler for creating wc to dc transformations.

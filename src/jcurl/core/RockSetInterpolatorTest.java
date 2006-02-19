@@ -19,10 +19,11 @@
 package jcurl.core;
 
 import jcurl.core.dto.RockSetProps;
-import jcurl.model.PositionSet;
-import jcurl.model.SpeedSet;
 import jcurl.sim.model.SlideStraight;
 import junit.framework.TestCase;
+
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.SpeedSet;
 
 /**
  * JUnit test for {@link jcurl.core.RockSetInterpolator}.

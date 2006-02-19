@@ -26,11 +26,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import jcurl.core.JCLoggerFactory;
 import jcurl.core.dto.Ice;
-import jcurl.model.RockSet;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.Dim;
+import org.jcurl.core.DimVal;
+import org.jcurl.core.RockSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**
  * Read onld config files.
@@ -236,7 +238,7 @@ public class OldConfigReader {
         log.debug(v + ", " + c);
         if (!v.dim.equals(Dim.SEC_HOG_TEE))
             throw new IllegalArgumentException("Must be seconds hog/tee.");
-        //slide.setDraw2Tee(v.val, c.to(Dim.METER).val);
+        // slide.setDraw2Tee(v.val, c.to(Dim.METER).val);
     }
 
     private void setFrictionRockRock(final String type, final String amount) {

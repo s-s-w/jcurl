@@ -18,12 +18,12 @@
  */
 package jcurl.core;
 
-import jcurl.model.PositionSet;
-import jcurl.model.SpeedSet;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.SpeedSet;
 
 /**
- * Interface for classes providing {@link jcurl.model.Rock}location and speed
- * data.
+ * Interface for classes providing {@link org.jcurl.core.Rock}location and
+ * speed data.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$

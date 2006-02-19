@@ -20,9 +20,8 @@ package jcurl.mr.exp.gui;
 
 import javax.swing.JFrame;
 
-import jcurl.core.JCLoggerFactory;
-
 import org.apache.ugli.ULogger;
+import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

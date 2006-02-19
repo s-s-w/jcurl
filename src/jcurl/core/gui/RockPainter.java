@@ -26,7 +26,8 @@ import java.awt.Paint;
 import java.awt.geom.Arc2D;
 
 import jcurl.core.dto.RockProps;
-import jcurl.model.PositionSet;
+
+import org.jcurl.core.PositionSet;
 
 /**
  * Paint a set of rocks.
@@ -103,10 +104,10 @@ public class RockPainter {
         g.setPaint(colors.label);
         g.drawChars(labels, idx, 1, txtXoff[idx], txtYoff);
         // contours
-        //        g.setPaint(colors.contour);
-        //        // handle
-        //        //g.fillOval(-p, -p, 2 * p, ri + p);
-        //        g.draw(inner);
-        //        g.draw(outer);
+        // g.setPaint(colors.contour);
+        // // handle
+        // //g.fillOval(-p, -p, 2 * p, ri + p);
+        // g.draw(inner);
+        // g.draw(outer);
     }
 }

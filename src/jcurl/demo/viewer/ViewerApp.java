@@ -28,17 +28,17 @@ import java.net.URL;
 import javax.swing.JFrame;
 import javax.xml.parsers.ParserConfigurationException;
 
-import jcurl.core.JCLoggerFactory;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.gui.JCurlDisplay;
 import jcurl.core.gui.SimpleKeys;
-import jcurl.model.PositionSet;
-import jcurl.model.SpeedSet;
 import jcurl.sim.core.ComputedSource;
 import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.SpeedSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
 import org.xml.sax.SAXException;
 
 /**
@@ -101,8 +101,8 @@ public class ViewerApp extends JFrame {
 
         final JCurlDisplay mp = new JCurlDisplay(src.getPos(), null, null, null);
         getContentPane().add(mp, "Center");
-        //getContentPane().add(new SumShotDisplay(), "East");
-        //getContentPane().add(new SumWaitDisplay(), "West");
+        // getContentPane().add(new SumShotDisplay(), "East");
+        // getContentPane().add(new SumWaitDisplay(), "West");
         dst = mp;
     }
 }
