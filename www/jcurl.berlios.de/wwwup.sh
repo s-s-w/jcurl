@@ -1,6 +1,6 @@
 #!/bin/sh
 # $Id: wwwup.sh 231 2006-02-19 13:12:31Z mrohrmoser $
-dir=/home/groups/jcurl/htdocs
+dir=$WWWHOME
 
 if [ `svn update $dir | wc --lines` -lt 2 ]
 then
