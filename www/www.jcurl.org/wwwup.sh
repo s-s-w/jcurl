@@ -6,7 +6,7 @@ echo "$HOME" > $base/recent.log
 svn=$base/bin/svn
 
 dst=$base/www.jcurl.org
-uri=svn://svn.berlios.de/jcurl/trunk/htdocs
+uri=svn://svn.berlios.de/jcurl/trunk/www/www.jcurl.org
 
 cd $base
 if [ -e $dst ]
