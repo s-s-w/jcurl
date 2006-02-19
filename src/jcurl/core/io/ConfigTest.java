@@ -20,8 +20,8 @@ package jcurl.core.io;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.Dim;
-import org.jcurl.core.DimVal;
+import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.helpers.DimVal;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

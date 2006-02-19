@@ -23,6 +23,7 @@ import java.awt.geom.Point2D;
 import junit.framework.TestCase;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**

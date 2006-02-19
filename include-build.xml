@@ -43,7 +43,7 @@
 	<property name="src.encoding" value="utf-8" />
 	<property name="src.debug" value="true" />
 
-	<property name="copyright.txt" value="Copyright &#169; 1998-2005 M. Rohrmoser. All Rights Reserved." />
+	<property name="copyright.txt" value="Copyright &#169; 1998-2006 M. Rohrmoser. All Rights Reserved." />
 	<property name="doc.title" value="No Title" />
 
 	<!--************************************************************

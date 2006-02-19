@@ -54,7 +54,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
-import javax.swing.filechooser.FileFilter;
 
 import jcurl.core.gui.AboutDialog;
 import jcurl.core.gui.RockEditDisplay;
@@ -72,6 +71,8 @@ import org.jcurl.core.RockSet;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.helpers.Version;
+import org.jcurl.core.swing.JcxFileChooser;
+import org.jcurl.core.swing.PngFileChooser;
 import org.xml.sax.SAXException;
 
 /**
@@ -85,45 +86,7 @@ import org.xml.sax.SAXException;
  */
 public class TacticsApp extends JFrame {
 
-    public static class JcxFileChooser extends JFileChooser {
-        public JcxFileChooser(File currentFile) {
-            super(currentFile == null ? new File(".") : currentFile);
-            this.setMultiSelectionEnabled(false);
-            this.setAcceptAllFileFilterUsed(true);
-            this.setFileFilter(new FileFilter() {
-                public boolean accept(final File f) {
-                    if (f == null)
-                        return false;
-                    return f.isDirectory() || f.getName().endsWith(".jcx")
-                            || f.getName().endsWith(".jcz");
-                }
-
-                public String getDescription() {
-                    return "JCurl Setup Files (.jcx) (.jcz)";
-                }
-            });
-        }
-    }
-
-    public static class PngFileChooser extends JFileChooser {
-        public PngFileChooser(File currentFile) {
-            super(currentFile == null ? new File(".") : currentFile
-                    .isDirectory() ? currentFile : currentFile.getParentFile());
-            this.setMultiSelectionEnabled(false);
-            this.setAcceptAllFileFilterUsed(true);
-            this.setFileFilter(new FileFilter() {
-                public boolean accept(final File f) {
-                    if (f == null)
-                        return false;
-                    return f.isDirectory() || f.getName().endsWith(".png");
-                }
-
-                public String getDescription() {
-                    return "Portable Network Graphics (.png)";
-                }
-            });
-        }
-    }
+    private static final long serialVersionUID = 2586556187989718873L;
 
     private class SpeedModel {
 
@@ -146,10 +109,13 @@ public class TacticsApp extends JFrame {
      * @param icon
      * @param executor
      * @param action
+     * @return the generated action
      */
     private static AbstractAction createAction(final String name,
             final Icon icon, final Object executor, final String action) {
         return new AbstractAction(name, icon) {
+            private static final long serialVersionUID = -6445283333165071107L;
+
             private Method m = null;
 
             public void actionPerformed(final ActionEvent evt) {

@@ -34,9 +34,9 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.ugli.ULogger;
-import org.jcurl.core.Dim;
-import org.jcurl.core.DimVal;
 import org.jcurl.core.RockSet;
+import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;

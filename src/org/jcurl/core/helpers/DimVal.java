@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core;
+package org.jcurl.core.helpers;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 /**
  * A value with attached unit of measurement {@link Dim}.
  * 
- * @see org.jcurl.core.Dim
+ * @see org.jcurl.core.helpers.Dim
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

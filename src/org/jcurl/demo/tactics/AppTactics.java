@@ -16,27 +16,25 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core;
+package org.jcurl.demo.tactics;
 
-import junit.framework.TestCase;
+import javax.swing.JFrame;
 
 /**
+ * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class DimValTest extends TestCase {
+public class AppTactics extends JFrame {
 
+    private static final long serialVersionUID = 8095378616823309313L;
+
+    /**
+     * @param args
+     */
     public static void main(String[] args) {
-        junit.textui.TestRunner.run(DimValTest.class);
+        // TODO Auto-generated method stub
+
     }
 
-    public void test010_Convert() {
-        DimVal in = new DimVal(12, Dim.INCH);
-        DimVal ft = new DimVal(1, Dim.FOOT);
-        DimVal m = new DimVal(0.3048, Dim.METER);
-
-        assertEquals(m, m.to(Dim.METER));
-        assertEquals(m, in.to(Dim.METER));
-        assertEquals(m, ft.to(Dim.METER));
-    }
 }
