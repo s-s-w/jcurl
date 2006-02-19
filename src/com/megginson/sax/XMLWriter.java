@@ -945,7 +945,7 @@ public class XMLWriter extends XMLFilterImpl {
      * Force a Namespace declaration with a preferred prefix.
      * 
      * <p>
-     * This is a convenience method that invokes {@link#setPrefix setPrefix}
+     * This is a convenience method that invokes {@link #setPrefix}
      * then {@link #forceNSDecl(java.lang.String)}.
      * </p>
      * 

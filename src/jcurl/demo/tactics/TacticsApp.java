@@ -146,7 +146,6 @@ public class TacticsApp extends JFrame {
      * @param icon
      * @param executor
      * @param action
-     * @return
      */
     private static AbstractAction createAction(final String name,
             final Icon icon, final Object executor, final String action) {

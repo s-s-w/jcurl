@@ -149,7 +149,6 @@ public class ComputedSource extends MutableObject implements Source {
      * 
      * @param idx
      *            rock index
-     * @return
      */
     public PathIterator pathIterator(int idx) {
         throw new NotImplementedYetException();
