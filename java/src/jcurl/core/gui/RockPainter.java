@@ -83,7 +83,7 @@ public class RockPainter {
      * @param isDark
      * @param idx
      */
-    protected void paintRockRC(final Graphics2D g, final boolean isDark,
+    public void paintRockRC(final Graphics2D g, final boolean isDark,
             final int idx) {
         // body
         g.setPaint(colors.granite);

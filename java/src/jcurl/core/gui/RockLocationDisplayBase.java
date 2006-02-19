@@ -50,7 +50,7 @@ import org.apache.ugli.ULogger;
  * and provides callbacks for actual drawing.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: RockLocationDisplayBase.java 135 2005-10-03 17:47:35Z
+ * @version $Id: JCurlBase.java 135 2005-10-03 17:47:35Z
  *          mrohrmoser $
  */
 public abstract class RockLocationDisplayBase extends JComponent implements

@@ -26,10 +26,10 @@ import java.awt.Graphics2D;
 import jcurl.model.PositionSet;
 
 /**
- * A {@link jcurl.core.gui.RockLocationDisplayBase}with some additional meta
+ * A {@link jcurl.core.gui.RockLocationDisplay}with some additional meta
  * data displayed (here: time).
  * 
- * @see jcurl.core.gui.RockLocationDisplayBase
+ * @see jcurl.core.gui.RockLocationDisplay
  * @see jcurl.core.gui.RealTimePlayer
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
