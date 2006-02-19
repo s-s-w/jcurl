@@ -1,6 +1,8 @@
 #!/bin/sh
 export LC_CTYPE="POSIX"
 base=/kunden/homepages/6/d143911421/htdocs
+#base=$HOME
+echo "$HOME" > $base/recent.log
 svn=$base/bin/svn
 
 dst=$base/www.jcurl.org
