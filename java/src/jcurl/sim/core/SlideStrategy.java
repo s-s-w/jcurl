@@ -29,12 +29,12 @@ import jcurl.core.dto.RockSetProps;
 import jcurl.sim.model.CollissionSpin;
 
 import org.apache.ugli.ULogger;
-import org.jcurl.core.Dim;
-import org.jcurl.core.DimVal;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.Rock;
 import org.jcurl.core.RockSet;
 import org.jcurl.core.SpeedSet;
+import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.math.MathVec;
 

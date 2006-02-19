@@ -31,9 +31,9 @@ import jcurl.core.dto.RockSetProps;
 import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.SlideStrategy;
 
-import org.jcurl.core.Dim;
-import org.jcurl.core.DimVal;
 import org.jcurl.core.PositionSet;
+import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.helpers.DimVal;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

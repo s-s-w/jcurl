@@ -16,40 +16,27 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core.dto;
+package org.jcurl.core.helpers;
 
-import org.jcurl.core.helpers.Dim;
+import junit.framework.TestCase;
 
 /**
- * Rock properties.
- * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class RockProps {
-    public static final RockProps DEFAULT;
-    static {
-        DEFAULT = new RockProps();
-        DEFAULT.mass = 20;
-        DEFAULT.radius = Dim.f2m(0.5);
-        DEFAULT.inertia = 0.186F; // [Kg*m*m]
+public class DimValTest extends TestCase {
+
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(DimValTest.class);
     }
 
-    public float getInertia() {
-        return inertia;
+    public void test010_Convert() {
+        DimVal in = new DimVal(12, Dim.INCH);
+        DimVal ft = new DimVal(1, Dim.FOOT);
+        DimVal m = new DimVal(0.3048, Dim.METER);
+
+        assertEquals(m, m.to(Dim.METER));
+        assertEquals(m, in.to(Dim.METER));
+        assertEquals(m, ft.to(Dim.METER));
     }
-
-    public float getMass() {
-        return mass;
-    }
-
-    public float getRadius() {
-        return radius;
-    }
-
-    private float inertia;
-
-    private float mass;
-
-    private float radius;
 }

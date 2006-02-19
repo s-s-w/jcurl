@@ -16,19 +16,18 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core;
+package org.jcurl.core.helpers;
 
 import java.util.Map;
 import java.util.TreeMap;
 
 import jcurl.core.dto.Ice;
 
-import org.jcurl.core.helpers.EnumBase;
 
 /**
  * Various units of measurement incl. conversion.
  * 
- * @see org.jcurl.core.DimVal
+ * @see org.jcurl.core.helpers.DimVal
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

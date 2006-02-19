@@ -29,9 +29,9 @@ import java.io.Reader;
 import jcurl.core.dto.Ice;
 
 import org.apache.ugli.ULogger;
-import org.jcurl.core.Dim;
-import org.jcurl.core.DimVal;
 import org.jcurl.core.RockSet;
+import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**

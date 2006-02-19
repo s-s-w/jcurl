@@ -30,7 +30,7 @@ import java.awt.geom.Rectangle2D;
 import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
 
-import org.jcurl.core.Dim;
+import org.jcurl.core.helpers.Dim;
 
 /**
  * Paint the ice (sheet).

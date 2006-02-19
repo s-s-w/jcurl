@@ -71,12 +71,14 @@ import org.xml.sax.SAXException;
  * @see jcurl.core.gui.RockLocationDisplay
  * @see jcurl.demo.editor.LocationController
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: RockLocationDisplayDemo.java 135 2005-10-03 17:47:35Z
- *          mrohrmoser $
+ * @version $Id$
  */
 public class EditorApp extends JFrame {
 
     public static class JcxFileChooser extends JFileChooser {
+
+        private static final long serialVersionUID = 1751534301417867530L;
+
         public JcxFileChooser(File currentFile) {
             super(currentFile == null ? new File(".") : currentFile);
             this.setMultiSelectionEnabled(false);
@@ -97,6 +99,9 @@ public class EditorApp extends JFrame {
     }
 
     public static class PngFileChooser extends JFileChooser {
+
+        private static final long serialVersionUID = 469045005897437813L;
+
         public PngFileChooser(File currentFile) {
             super(currentFile == null ? new File(".") : currentFile
                     .isDirectory() ? currentFile : currentFile.getParentFile());
@@ -125,15 +130,21 @@ public class EditorApp extends JFrame {
     private static final ULogger log = JCLoggerFactory
             .getLogger(EditorApp.class);
 
+    private static final long serialVersionUID = -5330160383513753742L;
+
     /**
      * @param name
      * @param icon
      * @param executor
      * @param action
+     * @return the generated action
      */
     private static AbstractAction createAction(final String name,
             final Icon icon, final Object executor, final String action) {
         return new AbstractAction(name, icon) {
+
+            private static final long serialVersionUID = 1L;
+
             private Method m = null;
 
             public void actionPerformed(final ActionEvent evt) {
