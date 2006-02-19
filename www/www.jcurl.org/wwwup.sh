@@ -1,20 +1,28 @@
 #!/bin/sh
-# $Id$
-dir=/home/groups/jcurl/htdocs
-#dir=/kunden/homepages/6/d143911421/htdocs/www.jcurl.org
-#dir=/home/m/eclipse/berlios/htdocs
-tmp=$HOME/api.tmp
+export LC_CTYPE="POSIX"
+base=/kunden/homepages/6/d143911421/htdocs
+svn=$base/bin/svn
 
-if [ `svn update $dir | wc --lines` -lt 2 ]
+dst=$base/www.jcurl.org
+uri=svn://svn.berlios.de/jcurl/trunk/htdocs
+
+cd $base
+if [ -e $dst ]
 then
-	echo "Nothing new there!"
-    exit 0
-fi    
+        if [ `$svn update $dst | wc --lines` -lt 2 ]
+        then
+                echo "Nothing new there!"
+                exit 0
+        fi
+else
+        $svn checkout $uri $dst
+fi
 
-#svn update $dir
-svn status $dir
+tmp=$base/api.tmp
+
+$svn status $dir
 mkdir $tmp
-unzip $dir/jar/jcurl-doc-0.3.war -d $tmp > /dev/null
-mv $dir/api $HOME/api.old
-mv $tmp $dir/api
-rm -rf $HOME/api.old
+unzip $dst/jar/jcurl-doc-0.3.war -d $tmp > /dev/null
+mv $dst/api $base/api.old
+mv $tmp $dst/api
+rm -rf $base/api.old
