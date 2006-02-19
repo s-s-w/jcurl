@@ -1,6 +1,5 @@
 #!/bin/sh
 export LC_CTYPE="POSIX"
-#base=/kunden/homepages/6/d143911421/htdocs
 base=$HOME
 svn=$base/bin/svn
 
