@@ -22,11 +22,12 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
-import jcurl.core.dto.RockDouble;
 import jcurl.core.dto.RockProps;
-import jcurl.math.MathVec;
-import jcurl.model.Rock;
 import jcurl.sim.core.CollissionStrategy;
+
+import org.jcurl.core.Rock;
+import org.jcurl.core.RockDouble;
+import org.jcurl.math.MathVec;
 
 /**
  * A hitter including spin and loss of energy.

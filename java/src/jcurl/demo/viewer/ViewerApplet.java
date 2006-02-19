@@ -25,17 +25,17 @@ import java.net.URL;
 
 import javax.swing.JApplet;
 
-import jcurl.core.JCLoggerFactory;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.gui.JCurlDisplay;
 import jcurl.core.gui.SimpleKeys;
-import jcurl.model.PositionSet;
-import jcurl.model.SpeedSet;
 import jcurl.sim.core.ComputedSource;
 import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.SpeedSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
 import org.xml.sax.SAXException;
 
 /**
@@ -53,7 +53,7 @@ public class ViewerApplet extends JApplet {
 
     public void init() {
         setFocusable(true);
-        //resize(200, 100);
+        // resize(200, 100);
         final Container contentPane = getContentPane();
         final JCurlDisplay mp = new JCurlDisplay(null, null, null, null);
         getContentPane().add(mp);

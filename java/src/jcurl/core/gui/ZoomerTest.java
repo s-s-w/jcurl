@@ -64,8 +64,8 @@ public class ZoomerTest extends TestCase {
         print("Back:", cbt);
         print("0,0 :", zerot);
 
-        //assertEquals("", (float) 0, p.x, (float) 1e-1);
-        //assertEquals("", (float) 0, p.y, (float) 1e-1);
+        // assertEquals("", (float) 0, p.x, (float) 1e-1);
+        // assertEquals("", (float) 0, p.y, (float) 1e-1);
     }
 
     public void test020() {
@@ -79,8 +79,8 @@ public class ZoomerTest extends TestCase {
         AffineTransform mat = new AffineTransform();
         mat.translate(0, (cb.y + ch.y) / 2);
         mat.scale(sca, sca);
-        //        mat.rotate(Math.PI / 2);
-        //        mat.translate(width / 2, height / 2);
+        // mat.rotate(Math.PI / 2);
+        // mat.translate(width / 2, height / 2);
 
         final Point2D.Float cht = new Point2D.Float(0, 0);
         final Point2D.Float cbt = new Point2D.Float(0, 0);
@@ -92,8 +92,8 @@ public class ZoomerTest extends TestCase {
         print("Back:", cbt);
         print("0,0 :", zerot);
 
-        //assertEquals("", (float) 0, p.x, (float) 1e-1);
-        //assertEquals("", (float) 0, p.y, (float) 1e-1);
+        // assertEquals("", (float) 0, p.x, (float) 1e-1);
+        // assertEquals("", (float) 0, p.y, (float) 1e-1);
     }
 
     public void test090_FixP() {

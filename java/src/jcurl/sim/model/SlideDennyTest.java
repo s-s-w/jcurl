@@ -18,9 +18,10 @@
  */
 package jcurl.sim.model;
 
-import jcurl.core.dto.RockDouble;
-import jcurl.math.CurveBase;
 import junit.framework.TestCase;
+
+import org.jcurl.core.RockDouble;
+import org.jcurl.math.CurveBase;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

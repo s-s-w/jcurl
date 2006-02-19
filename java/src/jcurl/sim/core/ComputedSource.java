@@ -23,19 +23,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import jcurl.core.NotImplementedYetException;
 import jcurl.core.Source;
-import jcurl.core.dto.MutableObject;
 import jcurl.core.dto.RockSetProps;
 import jcurl.core.io.SetupBuilder;
 import jcurl.core.io.SetupIO;
-import jcurl.math.CurveBase;
-import jcurl.model.PositionSet;
-import jcurl.model.RockSet;
-import jcurl.model.SpeedSet;
 import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.RockSet;
+import org.jcurl.core.SpeedSet;
+import org.jcurl.core.helpers.MutableObject;
+import org.jcurl.core.helpers.NotImplementedYetException;
+import org.jcurl.math.CurveBase;
 import org.xml.sax.SAXException;
 
 /**
@@ -112,9 +112,9 @@ public class ComputedSource extends MutableObject implements Source {
         RockSet.copy(x, startPos);
         RockSet.copy(v, startSpeed);
         this.slide.reset(x, v, RockSetProps.DEFAULT);
-        //        propChange.firePropertyChange("pos", slide.getPos(), ice.getPos());
-        //        propChange
-        //                .firePropertyChange("speed", slide.getSpeed(), ice.getSpeed());
+        // propChange.firePropertyChange("pos", slide.getPos(), ice.getPos());
+        // propChange
+        // .firePropertyChange("speed", slide.getSpeed(), ice.getSpeed());
         setT(minT);
     }
 

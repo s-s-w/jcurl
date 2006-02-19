@@ -20,10 +20,9 @@ package jcurl.core.gui;
 
 import java.awt.Graphics2D;
 
-import jcurl.core.JCLoggerFactory;
-import jcurl.model.PositionSet;
-
 import org.apache.ugli.ULogger;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**
  * A simple display for rock locations. Delegates rock- and ice painting.

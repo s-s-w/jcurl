@@ -18,10 +18,10 @@
  */
 package jcurl.core.dto;
 
-import jcurl.core.io.Dim;
-import jcurl.model.PositionSet;
-import jcurl.model.Rock;
-import jcurl.model.RockSet;
+import org.jcurl.core.Dim;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.Rock;
+import org.jcurl.core.RockSet;
 
 /**
  * Handle ice properties as friction and curl.
@@ -135,8 +135,8 @@ public class Ice {
      *            index [0-7]
      */
     public static void setHome(final Rock R, final boolean isDark, final int idx) {
-        //        R.setLocation((isDark ? -1 : 1) * Dim.f2m(5 + (idx % 2) * 1.2), Dim
-        //                .f2m(120 + 1.2 * (idx / 2)), 0);
+        // R.setLocation((isDark ? -1 : 1) * Dim.f2m(5 + (idx % 2) * 1.2), Dim
+        // .f2m(120 + 1.2 * (idx / 2)), 0);
         R.setLocation((isDark ? -1 : 1) * Dim.f2m(7.25), Dim
                 .f2m(31 - 1.2 * idx), 0);
     }

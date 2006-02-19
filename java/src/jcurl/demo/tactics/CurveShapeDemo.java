@@ -27,23 +27,22 @@ import java.awt.Stroke;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import jcurl.core.JCLoggerFactory;
-import jcurl.core.Version;
-import jcurl.math.CurveBase;
-import jcurl.math.CurveFkt;
-import jcurl.math.CurveShape;
-import jcurl.math.Function1D;
-import jcurl.math.Polynome;
-
 import org.apache.ugli.ULogger;
+import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.core.helpers.Version;
+import org.jcurl.math.CurveBase;
+import org.jcurl.math.CurveFkt;
+import org.jcurl.math.CurveShape;
+import org.jcurl.math.Function1D;
+import org.jcurl.math.Polynome;
 
 /**
- * Demonstrate how to draw a {@link jcurl.math.CurveBase}converted to a
+ * Demonstrate how to draw a {@link org.jcurl.math.CurveBase}converted to a
  * {@link java.awt.Shape}.
  * 
- * @see jcurl.math.CurveShape
+ * @see org.jcurl.math.CurveShape
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: CurveShapeDemo.java 209 2005-12-30 16:06:15Z mrohrmoser $
+ * @version $Id$
  */
 public class CurveShapeDemo extends JFrame {
 

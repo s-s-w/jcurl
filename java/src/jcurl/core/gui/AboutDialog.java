@@ -29,7 +29,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import jcurl.core.Version;
+import org.jcurl.core.helpers.Version;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

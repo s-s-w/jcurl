@@ -20,18 +20,20 @@ package jcurl.core.io;
 
 import java.util.Map;
 
-import jcurl.core.JCLoggerFactory;
 import jcurl.core.dto.Ice;
-import jcurl.math.MathVec;
-import jcurl.model.PositionSet;
-import jcurl.model.Rock;
-import jcurl.model.RockSet;
-import jcurl.model.SpeedSet;
 import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.ModelBase;
 import jcurl.sim.core.SlideStrategy;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.Dim;
+import org.jcurl.core.DimVal;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.Rock;
+import org.jcurl.core.RockSet;
+import org.jcurl.core.SpeedSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.math.MathVec;
 
 /**
  * Accumulate setup data.

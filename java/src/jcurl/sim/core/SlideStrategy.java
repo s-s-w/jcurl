@@ -22,21 +22,21 @@ import java.awt.geom.Point2D;
 import java.util.Map;
 import java.util.TreeMap;
 
-import jcurl.core.JCLoggerFactory;
 import jcurl.core.Source;
 import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
 import jcurl.core.dto.RockSetProps;
-import jcurl.core.io.Dim;
-import jcurl.core.io.DimVal;
-import jcurl.math.MathVec;
-import jcurl.model.PositionSet;
-import jcurl.model.Rock;
-import jcurl.model.RockSet;
-import jcurl.model.SpeedSet;
 import jcurl.sim.model.CollissionSpin;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.Dim;
+import org.jcurl.core.DimVal;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.Rock;
+import org.jcurl.core.RockSet;
+import org.jcurl.core.SpeedSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.math.MathVec;
 
 /**
  * Abstract base class for propagation/friction models.

@@ -18,18 +18,18 @@
  */
 package jcurl.sim.model;
 
-import jcurl.core.JCLoggerFactory;
 import jcurl.core.Source;
-import jcurl.core.dto.RockDouble;
 import jcurl.core.dto.RockSetProps;
-import jcurl.math.CurveBase;
-import jcurl.math.Polynome;
-import jcurl.model.PositionSet;
-import jcurl.model.Rock;
-import jcurl.model.SpeedSet;
 import junit.framework.TestCase;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.Rock;
+import org.jcurl.core.RockDouble;
+import org.jcurl.core.SpeedSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.math.CurveBase;
+import org.jcurl.math.Polynome;
 
 /**
  * JUnit test.
@@ -109,12 +109,12 @@ public class SlideStraightTest extends TestCase {
         assertEquals("", 0.2, c.getC(1, 1, 0), 1e-9);
         assertEquals("", 0, c.getC(2, 1, 0), 1e-9);
 
-        //assertEquals("", 1.07603611502, c.getC(0, 0, 1), 1e-9);
-        //assertEquals("", 2.15207223004, c.getC(1, 0, 1), 1e-9);
+        // assertEquals("", 1.07603611502, c.getC(0, 0, 1), 1e-9);
+        // assertEquals("", 2.15207223004, c.getC(1, 0, 1), 1e-9);
         assertEquals("", 0, c.getC(2, 0, 1), 1e-9);
 
-        //assertEquals("", 0.052072230042, c.getC(0, 1, 1), 1e-9);
-        //assertEquals("", 0.104144460085, c.getC(1, 1, 1), 1e-9);
+        // assertEquals("", 0.052072230042, c.getC(0, 1, 1), 1e-9);
+        // assertEquals("", 0.104144460085, c.getC(1, 1, 1), 1e-9);
         assertEquals("", 0, c.getC(2, 1, 1), 1e-9);
     }
 
@@ -147,13 +147,13 @@ public class SlideStraightTest extends TestCase {
 
         dt = 0;
         CurveBase c = s.createCurve(t0, x0, v0);
-        //untransformed : p(x) = 0.10406485628694145 + 0.11913533326608741*x +
+        // untransformed : p(x) = 0.10406485628694145 + 0.11913533326608741*x +
         // -0.0535848758171096*x**2
-        //Curve x : p(x) = 0.9316956597747996*x**0 + 0.1020171046257019*x**1 +
+        // Curve x : p(x) = 0.9316956597747996*x**0 + 0.1020171046257019*x**1 +
         // -0.04588541226791033*x**2
-        //Curve y : p(x) = 1.8147494171518157*x**0 + 0.061528351157903664*x**1
+        // Curve y : p(x) = 1.8147494171518157*x**0 + 0.061528351157903664*x**1
         // + -0.027674317649021823*x**2
-        //Curve z : p(x) = 0.0*x**0 + 0.0*x**1 + 0.0*x**2
+        // Curve z : p(x) = 0.0*x**0 + 0.0*x**1 + 0.0*x**2
         assertEquals("", x0.getX(), c.getC(0, 0, t0 + dt), 1e-9);
         assertEquals("", x0.getY(), c.getC(1, 0, t0 + dt), 1e-9);
         assertEquals("", x0.getZ(), c.getC(2, 0, t0 + dt), 1e-9);
@@ -195,7 +195,7 @@ public class SlideStraightTest extends TestCase {
         speed.getDark(0).setLocation(0, -1.5, 0.75);
         // dynamics engines
         final Source src = new SlideStraight();
-        ;//src.reset(pos, speed, RockSetProps.DEFAULT);
+        ;// src.reset(pos, speed, RockSetProps.DEFAULT);
 
         src.getPos();
         src.getPos();

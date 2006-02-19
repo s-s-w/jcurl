@@ -24,10 +24,10 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import jcurl.core.JCLoggerFactory;
 import jcurl.mr.exp.math.PointList;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -50,8 +50,8 @@ public class MainFrame extends JFrame {
         setTitle("FirstFrame");
         setSize(600, 600);
         Container contentPane = getContentPane();
-        //contentPane.add(new KeySketchPanel());
-        //contentPane.add(new MouseRectPanel());
+        // contentPane.add(new KeySketchPanel());
+        // contentPane.add(new MouseRectPanel());
         final MouseSketchPanel mp = new MouseSketchPanel(' ');
         this.curve = mp.getCurve();
         contentPane.add(mp);

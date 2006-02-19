@@ -18,8 +18,9 @@
  */
 package jcurl.sim.model;
 
-import jcurl.model.Rock;
 import jcurl.sim.core.CollissionStrategy;
+
+import org.jcurl.core.Rock;
 
 /**
  * A very simple hit-model using conservation of energy and momentum.

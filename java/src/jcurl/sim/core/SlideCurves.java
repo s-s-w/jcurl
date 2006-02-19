@@ -20,25 +20,25 @@ package jcurl.sim.core;
 
 import java.awt.geom.Point2D;
 
-import jcurl.core.JCLoggerFactory;
 import jcurl.core.dto.RockSetProps;
-import jcurl.math.CurveBase;
-import jcurl.math.CurveCombined;
-import jcurl.math.CurveInterval;
-import jcurl.math.MathVec;
-import jcurl.math.Polynome;
-import jcurl.model.PositionSet;
-import jcurl.model.Rock;
-import jcurl.model.RockSet;
-import jcurl.model.SpeedSet;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.Rock;
+import org.jcurl.core.RockSet;
+import org.jcurl.core.SpeedSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.math.CurveBase;
+import org.jcurl.math.CurveCombined;
+import org.jcurl.math.CurveInterval;
+import org.jcurl.math.MathVec;
+import org.jcurl.math.Polynome;
 
 /**
  * Abstract base class for analytic (non-discrete) curl models. Based on rock
- * trajectories in {@link jcurl.math.CurveBase}-form.
+ * trajectories in {@link org.jcurl.math.CurveBase}-form.
  * 
- * @see jcurl.math.CurveBase
+ * @see org.jcurl.math.CurveBase
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

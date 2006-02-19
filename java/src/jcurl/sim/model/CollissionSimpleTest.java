@@ -22,12 +22,13 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import jcurl.core.dto.RockProps;
-import jcurl.math.MathVec;
-import jcurl.model.PositionSet;
-import jcurl.model.Rock;
-import jcurl.model.SpeedSet;
 import jcurl.sim.core.CollissionStrategy;
 import junit.framework.TestCase;
+
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.Rock;
+import org.jcurl.core.SpeedSet;
+import org.jcurl.math.MathVec;
 
 /**
  * @see jcurl.sim.model.CollissionSimple

@@ -25,14 +25,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
-import jcurl.core.JCLoggerFactory;
-import jcurl.model.PositionSet;
-import jcurl.model.RockSet;
-import jcurl.model.SpeedSet;
 import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.SlideStrategy;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.RockSet;
+import org.jcurl.core.SpeedSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 

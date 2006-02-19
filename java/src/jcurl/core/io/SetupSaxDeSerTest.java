@@ -25,10 +25,10 @@ import java.net.URL;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import jcurl.core.JCLoggerFactory;
 import junit.framework.TestCase;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.helpers.JCLoggerFactory;
 import org.xml.sax.SAXException;
 
 /**
@@ -40,8 +40,8 @@ import org.xml.sax.SAXException;
  */
 public class SetupSaxDeSerTest extends TestCase {
 
-    //    private static final File _base = new File(
-    //            "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup");
+    // private static final File _base = new File(
+    // "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup");
 
     private static final File base = new File("config/jcurl.jar/setup");
 

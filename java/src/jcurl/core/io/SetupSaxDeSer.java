@@ -33,10 +33,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import jcurl.core.JCLoggerFactory;
-import jcurl.model.RockSet;
-
 import org.apache.ugli.ULogger;
+import org.jcurl.core.Dim;
+import org.jcurl.core.DimVal;
+import org.jcurl.core.RockSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
@@ -92,8 +93,8 @@ public class SetupSaxDeSer extends DefaultHandler {
             spf = SAXParserFactory.newInstance();
             // http://www.cafeconleche.org/slides/xmlone/london2002/namespaces/36.html
             // http://xml.apache.org/xerces-j/features.html
-            //spf.setFeature("http://xml.org/sax/features/namespaces", true);
-            //spf.setFeature("http://xml.org/sax/features/namespace-prefixes",
+            // spf.setFeature("http://xml.org/sax/features/namespaces", true);
+            // spf.setFeature("http://xml.org/sax/features/namespace-prefixes",
             // true);
             spf.setNamespaceAware(true);
             spf.setValidating(false);
@@ -237,7 +238,7 @@ public class SetupSaxDeSer extends DefaultHandler {
 
     public void startElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
-        //log.debug("[" + localName + "] [" + qName + "] [" + uri + "]");
+        // log.debug("[" + localName + "] [" + qName + "] [" + uri + "]");
         final String elem = qName;
         final String parent = elems.size() > 0 ? (String) elems.peek() : null;
         final String grandParent = elems.size() > 1 ? (String) elems.get(elems

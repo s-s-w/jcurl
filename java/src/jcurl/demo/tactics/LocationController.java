@@ -23,15 +23,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 
-import jcurl.core.JCLoggerFactory;
 import jcurl.core.gui.RockLocationDisplayBase;
-import jcurl.model.PositionSet;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: LocationController.java 209 2005-12-30 16:06:15Z mrohrmoser $
+ * @version $Id$
  */
 public class LocationController implements MouseMotionListener {
 
@@ -57,7 +57,7 @@ public class LocationController implements MouseMotionListener {
      *            final. Sets the <code>panel</code>'s model.
      * @param panel
      *            required for wc <->dc conversion. Repaint is triggered via
-     *            {@link jcurl.model.RockSet#notifyChange()}.
+     *            {@link org.jcurl.core.RockSet#notifyChange()}.
      */
     public LocationController(final PositionSet model,
             final RockLocationDisplayBase panel) {
@@ -66,7 +66,7 @@ public class LocationController implements MouseMotionListener {
 
         this.panel = panel;
         this.locations = model;
-        //this.model.addPropertyChangeListener(this);
+        // this.model.addPropertyChangeListener(this);
         this.CursorDefault = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
         this.CursorIn = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
     }

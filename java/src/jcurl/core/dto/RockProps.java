@@ -18,7 +18,7 @@
  */
 package jcurl.core.dto;
 
-import jcurl.core.io.Dim;
+import org.jcurl.core.Dim;
 
 /**
  * Rock properties.

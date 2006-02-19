@@ -24,14 +24,13 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.beans.PropertyChangeEvent;
 
-import jcurl.core.JCLoggerFactory;
-import jcurl.core.dto.EnumBase;
-import jcurl.math.MathVec;
-import jcurl.model.PositionSet;
-import jcurl.model.RockSet;
-import jcurl.model.SpeedSet;
-
 import org.apache.ugli.ULogger;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.RockSet;
+import org.jcurl.core.SpeedSet;
+import org.jcurl.core.helpers.EnumBase;
+import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.math.MathVec;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -63,7 +62,7 @@ public class RockEditDisplay extends RockLocationDisplay {
     }
 
     public static class HotStuff {
-        //public boolean changed = false;
+        // public boolean changed = false;
 
         public int idx;
 

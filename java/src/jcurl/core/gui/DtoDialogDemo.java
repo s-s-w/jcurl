@@ -26,11 +26,11 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-import jcurl.core.JCLoggerFactory;
-import jcurl.core.Version;
 import jcurl.sim.model.SlideDenny;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.core.helpers.Version;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

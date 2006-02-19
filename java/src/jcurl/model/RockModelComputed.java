@@ -20,6 +20,9 @@ package jcurl.model;
 
 import jcurl.sim.core.CollissionStrategy;
 
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.SpeedSet;
+
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$

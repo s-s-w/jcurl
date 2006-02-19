@@ -23,11 +23,11 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import jcurl.model.PositionSet;
+import org.jcurl.core.PositionSet;
 
 /**
- * A {@link jcurl.core.gui.RockLocationDisplay}with some additional meta
- * data displayed (here: time).
+ * A {@link jcurl.core.gui.RockLocationDisplay}with some additional meta data
+ * displayed (here: time).
  * 
  * @see jcurl.core.gui.RockLocationDisplay
  * @see jcurl.core.gui.RealTimePlayer
@@ -59,7 +59,7 @@ public class JCurlDisplay extends RockLocationDisplay {
         // paint additional DC stuff
         g2.setColor(timeB);
         g2.fillRect(this.getWidth() - 70, 0, 70, 20);
-        //g2.fillRect(0, 0, w, 20);
+        // g2.fillRect(0, 0, w, 20);
         g2.setFont(timeF);
         g2.setColor(timeC);
         g2.drawString(Double.toString(time), this.getWidth() - 70 + 10,

@@ -23,16 +23,16 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 
-import jcurl.core.JCLoggerFactory;
 import jcurl.core.gui.RockEditDisplay;
-import jcurl.model.PositionSet;
-import jcurl.model.SpeedSet;
 
 import org.apache.ugli.ULogger;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.SpeedSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: SpeedController.java 209 2005-12-30 16:06:15Z mrohrmoser $
+ * @version $Id$
  */
 public class SpeedController implements MouseMotionListener, MouseListener {
 
@@ -45,7 +45,7 @@ public class SpeedController implements MouseMotionListener, MouseListener {
 
     private final PositionSet rocks;
 
-    //    private final SpeedSet speeds;
+    // private final SpeedSet speeds;
 
     private final Point2D tmp = new Point2D.Double();
 
@@ -57,7 +57,7 @@ public class SpeedController implements MouseMotionListener, MouseListener {
     public SpeedController(PositionSet locations, SpeedSet speeds,
             RockEditDisplay panel) {
         this.rocks = locations;
-        //        this.speeds = speeds;
+        // this.speeds = speeds;
         this.panel = panel;
         this.panel.addMouseListener(this);
         this.panel.addMouseMotionListener(this);

@@ -19,7 +19,7 @@
 package jcurl.core;
 
 /**
- * Marker interface for classes consuming {@link jcurl.model.Rock}location
+ * Marker interface for classes consuming {@link org.jcurl.core.Rock}location
  * data.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
