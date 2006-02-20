@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.demo.viewer;
+package org.jcurl.demo.viewer;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -51,6 +51,8 @@ import org.xml.sax.SAXException;
  * @version $Id$
  */
 public class ViewerApp extends JFrame {
+
+    private static final long serialVersionUID = -5809346296249873005L;
 
     private static final ULogger log = JCLoggerFactory
             .getLogger(ViewerApp.class);

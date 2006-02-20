@@ -16,9 +16,8 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.demo.viewer;
+package org.jcurl.demo.viewer;
 
-import java.awt.Container;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -44,6 +43,7 @@ import org.xml.sax.SAXException;
  */
 public class ViewerApplet extends JApplet {
 
+    private static final long serialVersionUID = 3098543777055838932L;
     private static final ULogger log = JCLoggerFactory
             .getLogger(ViewerApplet.class);
 
@@ -54,7 +54,7 @@ public class ViewerApplet extends JApplet {
     public void init() {
         setFocusable(true);
         // resize(200, 100);
-        final Container contentPane = getContentPane();
+        //final Container contentPane = getContentPane();
         final JCurlDisplay mp = new JCurlDisplay(null, null, null, null);
         getContentPane().add(mp);
         final TargetDiscrete dst = mp;
