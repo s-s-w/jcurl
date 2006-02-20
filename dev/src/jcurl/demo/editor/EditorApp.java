@@ -46,7 +46,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.KeyStroke;
-import javax.swing.filechooser.FileFilter;
 
 import jcurl.core.gui.AboutDialog;
 import jcurl.core.gui.RockEditDisplay;
@@ -63,6 +62,8 @@ import org.jcurl.core.RockSet;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.helpers.Version;
+import org.jcurl.core.swing.JcxFileChooser;
+import org.jcurl.core.swing.PngFileChooser;
 import org.xml.sax.SAXException;
 
 /**
@@ -74,52 +75,6 @@ import org.xml.sax.SAXException;
  * @version $Id$
  */
 public class EditorApp extends JFrame {
-
-    public static class JcxFileChooser extends JFileChooser {
-
-        private static final long serialVersionUID = 1751534301417867530L;
-
-        public JcxFileChooser(File currentFile) {
-            super(currentFile == null ? new File(".") : currentFile);
-            this.setMultiSelectionEnabled(false);
-            this.setAcceptAllFileFilterUsed(true);
-            this.setFileFilter(new FileFilter() {
-                public boolean accept(final File f) {
-                    if (f == null)
-                        return false;
-                    return f.isDirectory() || f.getName().endsWith(".jcx")
-                            || f.getName().endsWith(".jcz");
-                }
-
-                public String getDescription() {
-                    return "JCurl Setup Files (.jcx) (.jcz)";
-                }
-            });
-        }
-    }
-
-    public static class PngFileChooser extends JFileChooser {
-
-        private static final long serialVersionUID = 469045005897437813L;
-
-        public PngFileChooser(File currentFile) {
-            super(currentFile == null ? new File(".") : currentFile
-                    .isDirectory() ? currentFile : currentFile.getParentFile());
-            this.setMultiSelectionEnabled(false);
-            this.setAcceptAllFileFilterUsed(true);
-            this.setFileFilter(new FileFilter() {
-                public boolean accept(final File f) {
-                    if (f == null)
-                        return false;
-                    return f.isDirectory() || f.getName().endsWith(".png");
-                }
-
-                public String getDescription() {
-                    return "Portable Network Graphics (.png)";
-                }
-            });
-        }
-    }
 
     private static final Cursor Cdefault = Cursor
             .getPredefinedCursor(Cursor.DEFAULT_CURSOR);
