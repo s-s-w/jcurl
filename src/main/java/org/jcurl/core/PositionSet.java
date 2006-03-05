@@ -20,12 +20,10 @@ package org.jcurl.core;
 
 import java.awt.geom.Point2D;
 
-
-import org.jcurl.core.PositionSetTest;
-import org.jcurl.core.helpers.Dim;
-
 import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
+
+import org.jcurl.core.helpers.Dim;
 
 /**
  * A {@link org.jcurl.core.RockSet}&nbsp;with location semantics.
