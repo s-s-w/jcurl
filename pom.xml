@@ -1,11 +1,41 @@
-<?xml version="1.0" encoding="UTF-8"?><project>
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <profiles>
+    <profile>
+      <repositories>
+        <repository>
+          <id>Maven Snapshots</id>
+          <url>http://snapshots.maven.codehaus.org/maven2/</url>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>Maven Snapshots</id>
+          <url>http://snapshots.maven.codehaus.org/maven2/</url>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+          <releases>
+            <enabled>false</enabled>
+          </releases>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
   <modelVersion>4.0.0</modelVersion>
   <groupId>jcurl</groupId>
-<name>JCurl Curling Framework</name>
-<inceptionYear>2005</inceptionYear>
-<url>http://www.jcurl.org/</url>  <artifactId>jcurl</artifactId>
+  <name>JCurl Curling Framework</name>
+  <inceptionYear>2005</inceptionYear>
+  <url>http://www.jcurl.org/</url>
+  <artifactId>jcurl</artifactId>
   <version>0.3.0</version>
-  <description></description>
+  <description>Java library and sample applications for rock trajectory simulation, game filing, analysis and visualisation</description>
   <licenses>
     <license>
       <name>GNU GENERAL PUBLIC LICENSE</name>
@@ -14,13 +44,45 @@
       <comments/>
     </license>
   </licenses>
+  <issueManagement>
+    <system>Bugzilla</system>
+    <url>http://developer.berlios.de/bugs/?group_id=3203</url>
+  </issueManagement>
   <scm>
-	<connection>scm:svn:svn://svn.berlios.de/repos/jcurl/trunk</connection>
-    <developerConnection>scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk</developerConnection>    
+    <connection>scm:svn:svn://svn.berlios.de/jcurl/trunk</connection>
+    <developerConnection>scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk</developerConnection>
     <tag/>
-    <url/>
+    <url>http://svn.berlios.de/wsvn/jcurl</url>
   </scm>
-<build>
+  <developers>
+    <developer>
+      <id>mrohrmoser</id>
+      <name>M. Rohrmoser</name>
+      <email>jcurl@gmx.net</email>
+      <roles>
+        <role>Admin</role>
+        <role>Developer</role>
+      </roles>
+      <timezone>CET</timezone>
+    </developer>
+  </developers>
+  <mailingLists>
+    <mailingList>
+      <name>JCurl Announce</name>
+      <subscribe>http://lists.berlios.de/mailman/listinfo/jcurl-announce</subscribe>
+      <unsubscribe>http://lists.berlios.de/mailman/listinfo/jcurl-announce</unsubscribe>
+      <post>jcurl-announce@lists.berlios.de</post>
+      <archive>http://lists.berlios.de/pipermail/jcurl-announce/</archive>
+    </mailingList>
+    <mailingList>
+      <name>JCurl Dev</name>
+      <subscribe>http://lists.berlios.de/mailman/listinfo/jcurl-dev</subscribe>
+      <unsubscribe>http://lists.berlios.de/mailman/listinfo/jcurl-dev</unsubscribe>
+      <post>jcurl-dev@lists.berlios.de</post>
+      <archive>http://lists.berlios.de/pipermail/jcurl-dev/</archive>
+    </mailingList>
+  </mailingLists>
+  <build>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -32,8 +94,35 @@
           <target>1.4</target>
         </configuration>
       </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+<!-- http://maven.apache.org/plugins/maven-javadoc-plugin/javadoc-mojo.html -->
+          <source>1.4</source>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jdepend-maven-plugin</artifactId>
+        <version>2.0-beta-1-SNAPSHOT</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+<!-- http://maven.apache.org/plugins/maven-javadoc-plugin/javadoc-mojo.html -->
+          <source>1.4</source>
+        </configuration>
+      </plugin>
+      <!-- plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>surefire-report-maven-plugin</artifactId>
+      </plugin -->
+    </plugins>
+  </reporting>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
