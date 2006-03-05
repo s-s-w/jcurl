@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
-<!-- $Id: log4j.xml 98 2005-03-31 12:54:30Z mrohrmoser $ -->
+<!-- $Id:log4j.xml 143 2005-10-04 21:26:44Z mrohrmoser $ -->
 <!--
    | For more configuration information and examples see the Jakarta Log4j
    | website: http://jakarta.apache.org/log4j
