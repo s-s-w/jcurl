@@ -1,0 +1,46 @@
+                                    ------
+							JCurl Curling Framework
+
+
+JCurl Curling Framework
+
+[images/jcurl.png]
+
+* Project Information
+
+      * {{{http://developer.berlios.de/projects/jcurl/} Berlios Project Page}}
+      
+      * {{{http://forum.jcurl.org/} Forum}}
+      
+      * {{{http://openfacts.berlios.de/index-en.phtml?title=JCurl} Wiki}}
+      
+      * {{{api/index.html} JavaDocs}}
+      
+      * {{{http://developer.berlios.de/mail/?group_id=3203} Mailing Lists}}
+      
+      * {{{todos.html} Todos}}
+
+* Demo Applications
+
+	  * {{{tacticsdemo.jnlp} JCurl Tactics via Java Web Start}}
+		Requires Java Webstart 1.4+ and comes with a download of ca. 330K.
+	
+	  * {{{editordemo.jnlp} JCurl Editor via Java Web Start}}
+		Requires Java Webstart 1.4+ and comes with a download of ca. 330K.
+	
+	  * {{{viewerdemo.jnlp} JCurl Viewer via Java Web Start}}
+		Requires Java Webstart 1.4+ and comes with a download of ca. 330K.</dd>
+	
+	  * {{{applet.html} JCurl Viewer Applet}}
+		Requires the Browser Plugin Java 1.4+ and comes with a download of ca. 330K.
+
+* Math
+
+	  * {{{http://www.google.de/search?hl\=de&amp;as_qdr\=all&amp;q\=bezier\+spline\+approximate\+planar\+curves&amp;btnG\=Suche&amp}Google:
+	Curves to B-Splines}}
+	
+	  * {{{http://users.cs.cf.ac.uk/M.Li/file/imp.pdf}Approximate
+	Implicitization of Planar Parametric Curves using Quadratic Splines}}
+
+The project is hosted by 
+{{{http://developer.berlios.de/} [http://developer.berlios.de/bslogo.php?group_id\=0&amp;type\=1] }}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <profiles>
+  <!-- profiles>
     <profile>
       <repositories>
         <repository>
@@ -27,9 +27,9 @@
         </pluginRepository>
       </pluginRepositories>
     </profile>
-  </profiles>
+  </profiles -->
   <modelVersion>4.0.0</modelVersion>
-  <groupId>jcurl</groupId>
+  <groupId>org.jcurl.maven</groupId>
   <name>JCurl Curling Framework</name>
   <inceptionYear>2005</inceptionYear>
   <url>http://www.jcurl.org/</url>
@@ -82,6 +82,10 @@
       <archive>http://lists.berlios.de/pipermail/jcurl-dev/</archive>
     </mailingList>
   </mailingLists>
+  <organization>
+    <name>jcurl.org</name>
+    <url>http://www.jcurl.org</url>
+  </organization>
   <build>
     <plugins>
       <plugin>
@@ -101,10 +105,22 @@
           <source>1.4</source>
         </configuration>
       </plugin>
+<!-- plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>changelog-maven-plugin</artifactId>
+      </plugin -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>surefire-report-maven-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
   <reporting>
     <plugins>
+<!-- plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>surefire-report-maven-plugin</artifactId>
+      </plugin -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>jdepend-maven-plugin</artifactId>
@@ -117,17 +133,18 @@
           <source>1.4</source>
         </configuration>
       </plugin>
-      <!-- plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>surefire-report-maven-plugin</artifactId>
-      </plugin -->
-    </plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+             </plugin>
+         </plugins>    
   </reporting>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>log4j</groupId>
@@ -135,4 +152,14 @@
       <version>1.3.0</version>
     </dependency>
   </dependencies>
+  <distributionManagement>
+    <site>
+      <id>jcurl-website</id>
+      <url>scp://mrohrmoser.de/kunden/homepages/6/d143911421/htdocs/www.jcurl.org/maven/</url>
+    </site>
+    <repository>
+      <id>jcurl-repository</id>
+      <url>scp://mrohrmoser.de/kunden/homepages/6/d143911421/htdocs/www.jcurl.org/m2-repo/</url>
+    </repository>
+  </distributionManagement>
 </project>

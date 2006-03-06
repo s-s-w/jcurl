@@ -1,0 +1,35 @@
+                                    ------
+								JCurl Todos
+
+In Progress
+
+	* Sophisticated editing UI
+
+Planned
+
+	* Proper viewing UI
+
+	* Meta data (event, game, players, etc.)
+								
+Postponed
+
+	* Realistic collission model including loss of energy
+
+	* Realistic curl model
+
+Finished
+
+	* Save game situations
+
+	* physical collission model including rock rotation
+
+	* Reduce download size
+
+	* Load game situations
+
+	* Display of a (hard-coded) rock setup
+
+	* animation of rock movement
+
+	* very simple physical model (ice without curl, fully 
+          elastic hits neglecting rock rotation)
