@@ -1,0 +1,18 @@
+									------
+							JCurl Demo Applications
+
+Via Java Web Start 1.4+ 
+
+	  * {{{tacticsdemo.jnlp} JCurl Tactics via Java Web Start}}
+		Comes with a download of ca. 330K.
+	
+	  * {{{editordemo.jnlp} JCurl Editor via Java Web Start}}
+		Comes with a download of ca. 330K.
+	
+	  * {{{viewerdemo.jnlp} JCurl Viewer via Java Web Start}}
+		Comes with a download of ca. 330K.
+
+Applets
+	
+	  * {{{applet.html} JCurl Viewer Applet}}
+		Requires the Browser Plugin Java 1.4+ and comes with a download of ca. 330K.
