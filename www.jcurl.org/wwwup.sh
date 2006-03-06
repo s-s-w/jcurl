@@ -23,7 +23,7 @@ fi
 # Unpack the javadocs:
 tmp=$base/api.tmp
 mkdir $tmp
-unzip $dst/jar/jcurl-doc-0.3.war -d $tmp > /dev/null
+unzip $dst/jar/jcurl-0.3.0-javadoc.jar -d $tmp > /dev/null
 mv $dst/api $base/api.old
 mv $tmp $dst/api
 rm -rf $base/api.old
