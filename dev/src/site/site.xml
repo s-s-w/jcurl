@@ -2,7 +2,7 @@
 <project name="Maven">
   <bannerLeft>
     <name>JCurl</name>
-    <src>images/jcurl-horizontal.png</src>
+    <src>images/jcurl-banner-left.png</src>
     <href>http://www.jcurl.org/</href>
   </bannerLeft>
   <bannerRight>
