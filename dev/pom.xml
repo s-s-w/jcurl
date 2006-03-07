@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <!-- profiles>
+<!-- profiles>
     <profile>
       <repositories>
         <repository>
@@ -63,7 +63,7 @@
         <role>Admin</role>
         <role>Developer</role>
       </roles>
-      <timezone>CET</timezone>
+      <timezone>+1</timezone>
     </developer>
   </developers>
   <mailingLists>
@@ -133,11 +133,11 @@
           <source>1.4</source>
         </configuration>
       </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-             </plugin>
-         </plugins>    
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+      </plugin>
+    </plugins>
   </reporting>
   <dependencies>
     <dependency>
