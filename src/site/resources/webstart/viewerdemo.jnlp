@@ -2,7 +2,7 @@
 <!-- $Id: viewerdemo.jnlp 213 2005-12-30 17:42:01Z mrohrmoser $ -->
 <jnlp
   spec="1.0+"
-  codebase="http://www.jcurl.org"
+  codebase="http://www.jcurl.org/webstart"
   href="viewerdemo.jnlp">
   <information>
     <title>JCurl Viewer Demo</title>
@@ -10,13 +10,13 @@
     <homepage href="http://www.jcurl.org/index.html"/>
     <description>JCurl Viewer Demo Application</description>
     <description kind="short">A demo of the capabilities of the JCurl Curling Framework.</description>
-    <icon href="images/jcurl-icon.gif"/>
+    <icon href="../images/jcurl-icon.gif"/>
     <offline-allowed/>
   </information>
   <resources>
     <j2se version="1.4+"/>
-    <jar href="jar/jcurl-0.2.jar"/>
-    <jar href="jar/ugli-simple.jar"/>
+    <jar href="jcurl-0.2.jar"/>
+    <jar href="ugli-simple.jar"/>
   </resources>
   <application-desc main-class="jcurl.demo.viewer.ViewerApp"/>
 </jnlp> 
