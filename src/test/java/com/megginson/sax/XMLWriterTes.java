@@ -39,7 +39,7 @@ import org.xml.sax.helpers.XMLFilterImpl;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class XMLWriterTest extends TestCase {
+public class XMLWriterTes extends TestCase {
 
     private static String xmlEncode(final String s) {
         return xmlEncode(s, null, false).toString();

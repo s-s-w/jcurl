@@ -27,10 +27,8 @@ import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 import junit.framework.TestCase;
 
-import org.apache.ugli.ULogger;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.SpeedSet;
-import org.jcurl.core.helpers.JCLoggerFactory;
 import org.xml.sax.SAXException;
 
 /**
@@ -39,8 +37,6 @@ import org.xml.sax.SAXException;
  * @version $Id$
  */
 public class ComputedSourceTest extends TestCase {
-    private static final ULogger log = JCLoggerFactory
-            .getLogger(ComputedSourceTest.class);
 
     public void test010_init() {
         final ComputedSource m = new ComputedSource();
@@ -60,7 +56,7 @@ public class ComputedSourceTest extends TestCase {
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         m.saveStart(bout);
         final byte[] data = bout.toByteArray();
-        assertEquals(2825, data.length);
+        assertEquals(2854, data.length);
         assertEquals(
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?><jcurl xmlns=\"http://jcurl.berlios.de/schema/setup/2005/1.0\"><setup><model engine=\"jcurl.sim.model.CollissionSpin\"><description>Collissions with spin</description><param name=\"friction rock-rock\" val=\"0.5\"></param><param name=\"loss\" val=\"0.0\" dim=\"J\"></param></model><model engine=\"jcurl.sim.model.SlideStraight\"><description>Straight movement</description><param name=\"curl\" val=\"1.0\" dim=\"m\"></param><param name=\"drawtotee\" val=\"25.0\" dim=\"sht\"></param></model><positions><rock color=\"dark\" no=\"8\"><x val=\"-5.199999946934657\" dim=\"ft\"></x><y val=\"121.80000465373041\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"light\" no=\"8\"><x val=\"5.199999946934657\" dim=\"ft\"></x><y val=\"121.80000465373041\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"dark\" no=\"7\"><x val=\"-6.399999844433441\" dim=\"ft\"></x><y val=\"121.80000465373041\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"light\" no=\"7\"><x val=\"6.399999844433441\" dim=\"ft\"></x><y val=\"121.80000465373041\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"dark\" no=\"6\"><x val=\"-5.199999946934657\" dim=\"ft\"></x><y val=\"123.00000728897534\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"light\" no=\"6\"><x val=\"5.199999946934657\" dim=\"ft\"></x><y val=\"123.00000728897534\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"dark\" no=\"5\"><x val=\"-6.399999844433441\" dim=\"ft\"></x><y val=\"123.00000728897534\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"light\" no=\"5\"><x val=\"6.399999844433441\" dim=\"ft\"></x><y val=\"123.00000728897534\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"dark\" no=\"4\"><x val=\"-5.199999946934657\" dim=\"ft\"></x><y val=\"124.1999974088093\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"light\" no=\"4\"><x val=\"5.199999946934657\" dim=\"ft\"></x><y val=\"124.1999974088093\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"dark\" no=\"3\"><x val=\"-6.399999844433441\" dim=\"ft\"></x><y val=\"124.1999974088093\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"light\" no=\"3\"><x val=\"6.399999844433441\" dim=\"ft\"></x><y val=\"124.1999974088093\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"dark\" no=\"2\"><x val=\"-5.199999946934657\" dim=\"ft\"></x><y val=\"125.40000004405424\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"light\" no=\"2\"><x val=\"5.199999946934657\" dim=\"ft\"></x><y val=\"125.40000004405424\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"dark\" no=\"1\"><x val=\"-6.399999844433441\" dim=\"ft\"></x><y val=\"125.40000004405424\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"light\" no=\"1\"><x val=\"6.399999844433441\" dim=\"ft\"></x><y val=\"125.40000004405424\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock></positions><speeds></speeds></setup></jcurl>",
                 new String(data, "UTF-8"));
@@ -75,7 +71,7 @@ public class ComputedSourceTest extends TestCase {
         final PositionSet pos = PositionSet.allOut();
         m0.saveStart(bout);
         final byte[] data = bout.toByteArray();
-        assertEquals(2825, data.length);
+        assertEquals(2854, data.length);
         assertEquals(
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?><jcurl xmlns=\"http://jcurl.berlios.de/schema/setup/2005/1.0\"><setup><model engine=\"jcurl.sim.model.CollissionSpin\"><description>Collissions with spin</description><param name=\"friction rock-rock\" val=\"0.5\"></param><param name=\"loss\" val=\"0.0\" dim=\"J\"></param></model><model engine=\"jcurl.sim.model.SlideStraight\"><description>Straight movement</description><param name=\"curl\" val=\"1.0\" dim=\"m\"></param><param name=\"drawtotee\" val=\"25.0\" dim=\"sht\"></param></model><positions><rock color=\"dark\" no=\"8\"><x val=\"-5.199999946934657\" dim=\"ft\"></x><y val=\"121.80000465373041\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"light\" no=\"8\"><x val=\"5.199999946934657\" dim=\"ft\"></x><y val=\"121.80000465373041\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"dark\" no=\"7\"><x val=\"-6.399999844433441\" dim=\"ft\"></x><y val=\"121.80000465373041\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"light\" no=\"7\"><x val=\"6.399999844433441\" dim=\"ft\"></x><y val=\"121.80000465373041\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"dark\" no=\"6\"><x val=\"-5.199999946934657\" dim=\"ft\"></x><y val=\"123.00000728897534\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"light\" no=\"6\"><x val=\"5.199999946934657\" dim=\"ft\"></x><y val=\"123.00000728897534\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"dark\" no=\"5\"><x val=\"-6.399999844433441\" dim=\"ft\"></x><y val=\"123.00000728897534\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"light\" no=\"5\"><x val=\"6.399999844433441\" dim=\"ft\"></x><y val=\"123.00000728897534\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"dark\" no=\"4\"><x val=\"-5.199999946934657\" dim=\"ft\"></x><y val=\"124.1999974088093\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"light\" no=\"4\"><x val=\"5.199999946934657\" dim=\"ft\"></x><y val=\"124.1999974088093\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"dark\" no=\"3\"><x val=\"-6.399999844433441\" dim=\"ft\"></x><y val=\"124.1999974088093\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"light\" no=\"3\"><x val=\"6.399999844433441\" dim=\"ft\"></x><y val=\"124.1999974088093\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"dark\" no=\"2\"><x val=\"-5.199999946934657\" dim=\"ft\"></x><y val=\"125.40000004405424\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"light\" no=\"2\"><x val=\"5.199999946934657\" dim=\"ft\"></x><y val=\"125.40000004405424\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"dark\" no=\"1\"><x val=\"-6.399999844433441\" dim=\"ft\"></x><y val=\"125.40000004405424\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock><rock color=\"light\" no=\"1\"><x val=\"6.399999844433441\" dim=\"ft\"></x><y val=\"125.40000004405424\" dim=\"ft\"></y><a val=\"0.0\" dim=\"deg\"></a></rock></positions><speeds></speeds></setup></jcurl>",
                 new String(data, "UTF-8"));
@@ -86,10 +82,5 @@ public class ComputedSourceTest extends TestCase {
         assertEquals(CollissionSpin.class, m1.getSlide().getColl().getClass());
         assertEquals(PositionSet.class, m1.getPos().getClass());
         assertEquals(SpeedSet.class, m1.getSpeed().getClass());
-        log.info("");
-    }
-
-    public void test300_compute() {
-
     }
 }
