@@ -31,7 +31,6 @@ import org.jcurl.core.helpers.NotImplementedYetException;
 /**
  * Smart handler for creating wc to dc transformations.
  * 
- * @see jcurl.core.gui.ZoomerTest
  * @see jcurl.core.gui.JCurlDisplay
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$

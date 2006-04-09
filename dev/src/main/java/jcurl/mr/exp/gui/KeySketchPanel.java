@@ -33,6 +33,8 @@ import javax.swing.JPanel;
  */
 public class KeySketchPanel extends JPanel implements KeyListener {
 
+    private static final long serialVersionUID = -3879989219730493694L;
+
     private Point end = new Point(0, 0);
 
     private Point start = new Point(0, 0);

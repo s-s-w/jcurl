@@ -46,6 +46,8 @@ import org.jcurl.math.Polynome;
  */
 public class CurveShapeDemo extends JFrame {
 
+    private static final long serialVersionUID = 1596300831419412317L;
+
     private static final ULogger log = JCLoggerFactory
             .getLogger(CurveShapeDemo.class);
 
@@ -64,6 +66,8 @@ public class CurveShapeDemo extends JFrame {
         frame.setSize(500, 400);
         frame.setVisible(true);
         frame.setContentPane(new JPanel() {
+
+            private static final long serialVersionUID = -3582299332757831635L;
 
             private final double[] sections = new double[10];
 

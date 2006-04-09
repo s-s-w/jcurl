@@ -42,6 +42,8 @@ import org.jcurl.core.helpers.JCLoggerFactory;
  */
 public class MouseSketchPanel extends JPanel implements KeyListener {
 
+    private static final long serialVersionUID = -4606015027709328552L;
+
     /*
      * (non-Javadoc)
      * 

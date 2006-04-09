@@ -31,7 +31,6 @@ import org.jcurl.core.helpers.DimVal;
  * This hitter gets the transfer of spin and momentum right. For details see the
  * paper <a href="http://jcurl.berlios.de/curlsci.pdf">Curling Scientific </a>.
  * 
- * @see jcurl.sim.model.CollissionSpinLossTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

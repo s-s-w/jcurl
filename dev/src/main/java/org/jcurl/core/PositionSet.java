@@ -28,7 +28,6 @@ import org.jcurl.core.helpers.Dim;
 /**
  * A {@link org.jcurl.core.RockSet}&nbsp;with location semantics.
  * 
- * @see org.jcurl.core.PositionSetTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
