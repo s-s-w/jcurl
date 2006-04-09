@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package com.megginson.sax;
+package org.jcurl.util;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -24,30 +24,33 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import junit.framework.TestCase;
 
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.AttributesImpl;
-import org.xml.sax.helpers.XMLFilterImpl;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * JUnit Test
  * 
- * @see org.jcurl.core.helpers.XmlSerializerBase
+ * @see XmlSimpleWriter
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:XmlSimpleWriterTest.java 8046 2006-02-27 17:03:05Z rohrmoser $
+ * 
  */
-public class XMLWriterTest extends TestCase {
-
-    private static String xmlEncode(final String s) {
-        return xmlEncode(s, null, false).toString();
-    }
+public class XmlSimpleWriterTest extends TestCase {
 
     private static StringBuffer xmlEncode(final String s,
-            final StringBuffer buf0, boolean isatt) {
+            final StringBuffer buf0) {
         final StringBuffer buf = buf0 != null ? buf0 : new StringBuffer(s
                 .length() * 2);
         final int len = s.length();
@@ -64,13 +67,10 @@ public class XMLWriterTest extends TestCase {
                 buf.append("&gt;");
                 break;
             case '"':
-                if (isatt)
-                    buf.append("&quot;");
-                else
-                    buf.append(ch);
+                buf.append("&quot;");
                 break;
             case '\'':
-                buf.append(ch);
+                buf.append("&apos;");
                 break;
             default:
                 buf.append(ch);
@@ -85,7 +85,6 @@ public class XMLWriterTest extends TestCase {
     /**
      * @param stream
      * @param encoding
-     * @param buf
      * @return -
      * @throws UnsupportedEncodingException
      * @throws IOException
@@ -106,22 +105,103 @@ public class XMLWriterTest extends TestCase {
         return buf;
     }
 
+    public void test001_XMLReader() throws ParserConfigurationException,
+            IOException, SAXException {
+        final StringWriter writ = new StringWriter(1000);
+        final SAXParserFactory fact = SAXParserFactory.newInstance();
+        final XMLReader reader = fact.newSAXParser().getXMLReader();
+        final DefaultHandler handler = new XmlSimpleWriter(writ);
+        reader.setContentHandler(handler);
+        reader.setErrorHandler(handler);
+
+        String xml = "<?xml version='1.0'?><root />";
+        reader.parse(new InputSource(new StringReader(xml)));
+        assertEquals("<?xml version=\"1.0\"?><root></root>", writ.toString());
+
+        writ.getBuffer().setLength(0);
+        xml = "<?xml version='1.0'?><root att='val'/>";
+        reader.parse(new InputSource(new StringReader(xml)));
+        assertEquals("<?xml version=\"1.0\"?><root att=\"val\"></root>", writ
+                .toString());
+
+        writ.getBuffer().setLength(0);
+        xml = "<?xml version=\"1.0\"?><root att=\"val\"></root>";
+        reader.parse(new InputSource(new StringReader(xml)));
+        assertEquals(xml, writ.toString());
+
+        writ.getBuffer().setLength(0);
+        xml = "<?xml version=\"1.0\"?><root xmlns=\"a\" att=\"val\"></root>";
+        reader.parse(new InputSource(new StringReader(xml)));
+        assertEquals(xml, writ.toString());
+
+        writ.getBuffer().setLength(0);
+        xml = "<?xml version=\"1.0\"?><root xmlns=\"a\" att=\"root\"><sub xmlns=\"b\" att=\"sub\"></sub></root>";
+        reader.parse(new InputSource(new StringReader(xml)));
+        assertEquals(xml, writ.toString());
+
+        writ.getBuffer().setLength(0);
+        xml = "<?xml version=\"1.0\"?><root><![CDATA[some ugly &<>\"' characters?]]></root>";
+        reader.parse(new InputSource(new StringReader(xml)));
+        assertEquals(
+                "<?xml version=\"1.0\"?><root>some ugly &amp;&lt;&gt;&quot;&apos; characters?</root>",
+                writ.toString());
+    }
+
+    public void test002_SAXParser() throws ParserConfigurationException,
+            IOException, SAXException {
+        final StringWriter writ = new StringWriter(1000);
+        final SAXParserFactory fact = SAXParserFactory.newInstance();
+        final SAXParser reader = fact.newSAXParser();
+        final DefaultHandler handler = new XmlSimpleWriter(writ);
+
+        String xml = "<?xml version='1.0'?><root />";
+        reader.parse(new InputSource(new StringReader(xml)), handler);
+        assertEquals("<?xml version=\"1.0\"?><root></root>", writ.toString());
+
+        writ.getBuffer().setLength(0);
+        xml = "<?xml version='1.0'?><root att='val'/>";
+        reader.parse(new InputSource(new StringReader(xml)), handler);
+        assertEquals("<?xml version=\"1.0\"?><root att=\"val\"></root>", writ
+                .toString());
+
+        writ.getBuffer().setLength(0);
+        xml = "<?xml version=\"1.0\"?><root att=\"val\"></root>";
+        reader.parse(new InputSource(new StringReader(xml)), handler);
+        assertEquals(xml, writ.toString());
+
+        writ.getBuffer().setLength(0);
+        xml = "<?xml version=\"1.0\"?><root xmlns=\"a\" att=\"val\"></root>";
+        reader.parse(new InputSource(new StringReader(xml)), handler);
+        assertEquals(xml, writ.toString());
+
+        writ.getBuffer().setLength(0);
+        xml = "<?xml version=\"1.0\"?><root xmlns=\"a\" att=\"root\"><sub xmlns=\"b\" att=\"sub\"></sub></root>";
+        reader.parse(new InputSource(new StringReader(xml)), handler);
+        assertEquals(xml, writ.toString());
+
+        writ.getBuffer().setLength(0);
+        xml = "<?xml version=\"1.0\"?><root><![CDATA[some ugly &<>\"' characters?]]></root>";
+        reader.parse(new InputSource(new StringReader(xml)), handler);
+        assertEquals(
+                "<?xml version=\"1.0\"?><root>some ugly &amp;&lt;&gt;&quot;&apos; characters?</root>",
+                writ.toString());
+    }
+
     public void test008_TrivialDefaultEncoding() throws SAXException {
         final StringBuffer exp = new StringBuffer();
         final StringWriter writ = new StringWriter();
-        final XMLFilterImpl dst = new XMLWriter(writ);
+        final XmlSimpleWriter dst = new XmlSimpleWriter(writ);
 
         dst.startDocument();
-        dst.startPrefixMapping("", "");
-        dst.startElement("", "root", "root", null);
+        dst.startElement(null, null, "root", null);
         dst.characters(UGLY.toCharArray(), 0, UGLY.length());
-        dst.endElement("", "root", "root");
+        dst.endElement(null, null, "root");
         dst.endDocument();
 
-        exp.append("<?xml version=\"1.0\" standalone=\"yes\"?>\n");
+        exp.append("<?xml version=\"1.0\"?>");
         exp.append("<root>");
-        xmlEncode(UGLY, exp, false);
-        exp.append("</root>\n\n");
+        xmlEncode(UGLY, exp);
+        exp.append("</root>");
 
         final String res = writ.getBuffer().toString();
         assertEquals(exp.toString(), res);
@@ -133,19 +213,18 @@ public class XMLWriterTest extends TestCase {
             final String enc = encodings[encIdx];
             final StringBuffer exp = new StringBuffer();
             final ByteArrayOutputStream outStr = new ByteArrayOutputStream();
-            final XMLWriter dst = null;//new XMLWriter(outStr, enc);
+            final XmlSimpleWriter dst = new XmlSimpleWriter(outStr, enc, false);
 
             dst.startDocument();
-            dst.startElement(null, "root", null, null);
+            dst.startElement(null, null, "root", null);
             dst.characters(UGLY.toCharArray(), 0, UGLY.length());
-            dst.endElement(null, "root", null);
+            dst.endElement(null, null, "root");
             dst.endDocument();
 
-            exp.append("<?xml version=\"1.0\" encoding=\"" + enc
-                    + "\" standalone=\"yes\"?>\n");
+            exp.append("<?xml version=\"1.0\" encoding=\"" + enc + "\"?>");
             exp.append("<root>");
-            xmlEncode(UGLY, exp, false);
-            exp.append("</root>\n\n");
+            xmlEncode(UGLY, exp);
+            exp.append("</root>\n");
 
             final InputStream iStream = new ByteArrayInputStream(outStr
                     .toByteArray());
@@ -157,19 +236,19 @@ public class XMLWriterTest extends TestCase {
     public void test010_NoNamespace() throws IOException, SAXException {
         final StringBuffer exp = new StringBuffer();
         final StringWriter writ = new StringWriter();
-        final XMLWriter dst = new XMLWriter(writ);
+        final XmlSimpleWriter dst = new XmlSimpleWriter(writ);
 
         dst.startDocument();
         AttributesImpl atts = new AttributesImpl();
-        atts.addAttribute(null, "att1", null, null, "Attribute 1" + UGLY);
-        dst.startElement(null, "root", null, atts);
+        atts.addAttribute(null, null, "att1", null, "Attribute 1" + UGLY);
+        dst.startElement(null, null, "root", atts);
 
         atts = new AttributesImpl();
-        atts.addAttribute(null, "att1", null, null, "Attribute 1" + UGLY);
-        dst.startElement(null, "sub1", null, atts);
+        atts.addAttribute(null, null, "att1", null, "Attribute 1" + UGLY);
+        dst.startElement(null, null, "sub1", atts);
         String txt = UGLY;
         dst.characters(txt.toCharArray(), 0, txt.length());
-        dst.endElement(null, "sub1", null);
+        dst.endElement(null, null, "sub1");
 
         // atts = new AttributesImpl();
         // atts.addAttribute(null, null, "att1", null, "Attribute 1" + ugly);
@@ -178,18 +257,18 @@ public class XMLWriterTest extends TestCase {
         // dst.characters(txt.toCharArray(), 0, txt.length());
         // dst.endElement(null, null, "sub2");
 
-        dst.endElement(null, "root", null);
+        dst.endElement(null, null, "root");
         dst.endDocument();
 
-        exp.append("<?xml version=\"1.0\" standalone=\"yes\"?>\n");
+        exp.append("<?xml version=\"1.0\"?>");
         exp.append("<root att1=\"Attribute 1");
-        xmlEncode(UGLY, exp, true);
+        xmlEncode(UGLY, exp);
         exp.append("\">");
 
         exp.append("<sub1 att1=\"Attribute 1");
-        xmlEncode(UGLY, exp, true);
+        xmlEncode(UGLY, exp);
         exp.append("\">");
-        xmlEncode(UGLY, exp, false);
+        xmlEncode(UGLY, exp);
         exp.append("</sub1>");
 
         // exp.append("<sub2 att1=\"Attribute 1");
@@ -198,14 +277,14 @@ public class XMLWriterTest extends TestCase {
         // exp.append(ugly);
         // exp.append(" ]]></sub2>");
 
-        exp.append("</root>\n\n");
+        exp.append("</root>");
 
         final String res = writ.getBuffer().toString();
         assertEquals(exp.toString(), res);
     }
 
     public void test015_NonWellFormed() throws SAXException {
-        XMLWriter dst = new XMLWriter(new StringWriter());
+        XmlSimpleWriter dst = new XmlSimpleWriter(new StringWriter());
 
         dst.startDocument();
         dst.startElement(null, null, "root", null);
@@ -240,25 +319,25 @@ public class XMLWriterTest extends TestCase {
         final String NS2 = "myOtherNamespace2";
         final StringBuffer exp = new StringBuffer();
         final StringWriter writ = new StringWriter();
-        final XMLWriter dst = new XMLWriter(writ);
+        final XmlSimpleWriter dst = new XmlSimpleWriter(writ);
 
         dst.startDocument();
         AttributesImpl atts = new AttributesImpl();
-        atts.addAttribute(null, "att1", null, null, "Attribute 1" + UGLY);
+        atts.addAttribute(null, null, "att1", null, "Attribute 1" + UGLY);
         dst.startPrefixMapping(null, NS1);
-        dst.startElement(NS1, "root", null, atts);
+        dst.startElement(NS1, null, "root", atts);
 
         atts = new AttributesImpl();
-        atts.addAttribute(null, "att1", null, null, "Attribute 1" + UGLY);
-        dst.startPrefixMapping("p2", NS2);
-        dst.startElement(NS2, "sub1", null, atts);
+        atts.addAttribute(null, null, "att1", null, "Attribute 1" + UGLY);
+        dst.startPrefixMapping(null, NS2);
+        dst.startElement(NS2, null, "sub1", atts);
         dst.characters(UGLY.toCharArray(), 0, UGLY.length());
-        dst.endElement(NS2, "sub1", null);
-        dst.endPrefixMapping("p2");
+        dst.endElement(NS2, null, "sub1");
+        dst.endPrefixMapping(null);
 
-        dst.startElement(NS1, "sub2", null, atts);
+        dst.startElement(NS1, null, "sub2", atts);
         dst.characters(UGLY.toCharArray(), 0, UGLY.length());
-        dst.endElement(NS1, "sub2", null);
+        dst.endElement(NS1, null, "sub2");
 
         // atts = new AttributesImpl();
         // atts.addAttribute(null, null, "att1", null, "Attribute 1" + UGLY);
@@ -267,27 +346,27 @@ public class XMLWriterTest extends TestCase {
         // dst.characters(txt.toCharArray(), 0, txt.length());
         // dst.endElement(null, null, "sub2");
 
-        dst.endElement(NS1, "root", null);
+        dst.endElement(NS1, null, "root");
         dst.endDocument();
 
-        exp.append("<?xml version=\"1.0\" standalone=\"yes\"?>\n");
+        exp.append("<?xml version=\"1.0\"?>");
         exp.append("<root xmlns=\"" + NS1 + "\" att1=\"Attribute 1");
-        xmlEncode(UGLY, exp, true);
+        xmlEncode(UGLY, exp);
         exp.append("\">");
 
-        exp.append("<p2:sub1 xmlns:p2=\"" + NS2 + "\" att1=\"Attribute 1");
-        xmlEncode(UGLY, exp, true);
+        exp.append("<sub1 xmlns=\"" + NS2 + "\" att1=\"Attribute 1");
+        xmlEncode(UGLY, exp);
         exp.append("\">");
-        xmlEncode(UGLY, exp, false);
-        exp.append("</p2:sub1>");
+        xmlEncode(UGLY, exp);
+        exp.append("</sub1>");
 
         exp.append("<sub2 att1=\"Attribute 1");
-        xmlEncode(UGLY, exp, true);
+        xmlEncode(UGLY, exp);
         exp.append("\">");
-        xmlEncode(UGLY, exp, false);
+        xmlEncode(UGLY, exp);
         exp.append("</sub2>");
 
-        exp.append("</root>\n\n");
+        exp.append("</root>");
 
         final String res = writ.getBuffer().toString();
         assertNotNull(res);
@@ -302,24 +381,26 @@ public class XMLWriterTest extends TestCase {
         final String P2 = "p2";
         final StringBuffer exp = new StringBuffer();
         final StringWriter writ = new StringWriter();
-        final XMLWriter dst = new XMLWriter(writ);
+        final XmlSimpleWriter dst = new XmlSimpleWriter(writ);
 
         dst.startDocument();
-        dst.startPrefixMapping(P1, NS1);
-        dst.startPrefixMapping(P2, NS2);
         AttributesImpl atts = new AttributesImpl();
-        atts.addAttribute(NS1, "att1", "att1", null, "Attribute 1" + UGLY);
-        atts.addAttribute(NS2, "att2", "att2", null, "Attribute 2" + UGLY);
+        atts.addAttribute(NS1, "att1", P1 + ":" + "att1", null, "Attribute 1"
+                + UGLY);
+        atts.addAttribute(NS2, "att2", P2 + ":" + "att2", null, "Attribute 2"
+                + UGLY);
         atts.addAttribute(null, null, "att3", null, "Attribute 3" + UGLY);
-        dst.startElement(NS1, "root", null, atts);
+        dst.startElement(NS1, "root", P1 + ":" + "root", atts);
 
         atts = new AttributesImpl();
-        atts.addAttribute(NS1, "att1", null, null, "Attribute 1" + UGLY);
-        atts.addAttribute(NS2, "att2", null, null, "Attribute 2" + UGLY);
+        atts.addAttribute(NS1, "att1", P1 + ":" + "att1", null, "Attribute 1"
+                + UGLY);
+        atts.addAttribute(NS2, "att2", P2 + ":" + "att2", null, "Attribute 2"
+                + UGLY);
         atts.addAttribute(null, null, "att3", null, "Attribute 3" + UGLY);
-        dst.startElement(NS1, "sub1", null, atts);
+        dst.startElement(NS1, "sub1", P1 + ":" + "sub1", atts);
         dst.characters(UGLY.toCharArray(), 0, UGLY.length());
-        dst.endElement(NS1, "sub1", null);
+        dst.endElement(NS1, "sub1", P1 + ":" + "sub1");
 
         // atts = new AttributesImpl();
         // atts.addAttribute(null, null, "att1", null, "Attribute 1" + UGLY);
@@ -328,18 +409,18 @@ public class XMLWriterTest extends TestCase {
         // dst.characters(txt.toCharArray(), 0, txt.length());
         // dst.endElement(null, null, "sub2");
 
-        dst.endElement(NS1, "root", null);
+        dst.endElement(NS1, "root", P1 + ":" + "root");
         dst.endDocument();
 
-        exp.append("<?xml version=\"1.0\" standalone=\"yes\"?>\n\n");
+        exp.append("<?xml version=\"1.0\"?>\n");
         exp.append("<root att1=\"Attribute 1");
-        xmlEncode(UGLY, exp, false);
+        xmlEncode(UGLY, exp);
         exp.append("\">");
 
         exp.append("<sub1 att1=\"Attribute 1");
-        xmlEncode(UGLY, exp, false);
+        xmlEncode(UGLY, exp);
         exp.append("\">");
-        xmlEncode(UGLY, exp, false);
+        xmlEncode(UGLY, exp);
         exp.append("</sub1>");
 
         // exp.append("<sub2 att1=\"Attribute 1");
@@ -348,7 +429,7 @@ public class XMLWriterTest extends TestCase {
         // exp.append(UGLY);
         // exp.append(" ]]></sub2>");
 
-        exp.append("</root>\n\n");
+        exp.append("</root>\n");
 
         final String res = writ.getBuffer().toString();
         // assertEquals(exp.toString(), res);
