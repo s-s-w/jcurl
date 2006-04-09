@@ -2,7 +2,7 @@ package com.megginson.sax;
 // TestXMLWriter.java - Test harness for the XML writer.
 // Usage: java -Dorg.xml.sax.driver="..." TestXMLWriter [files...]
 
-// $Id: TestXMLWriter.java,v 1.1.1.1 2000/09/16 14:15:33 david Exp $
+// $Id$
 
 import java.io.FileReader;
 

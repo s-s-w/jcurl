@@ -28,10 +28,6 @@ import org.jcurl.core.PositionSet;
  */
 public class SlideStrategyTest extends TestCase {
 
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(SlideStrategyTest.class);
-    }
-
     public void test005_nextHit() {
         PositionSet pos = PositionSet.allHome();
         pos.getDark(0).setLocation(0, 5);

@@ -2,7 +2,7 @@
 // Written by David Megginson, david@megginson.com
 // NO WARRANTY!  This class is in the public domain.
 
-// $Id: XMLWriter.java,v 1.5 2000/09/17 01:08:16 david Exp $
+// $Id$
 
 package com.megginson.sax;
 

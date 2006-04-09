@@ -18,17 +18,17 @@
 				value="%-5p %m%n"/ -->
 		</layout>
 	</appender>
-	<category name="jcurl.core.io">
+	<!-- category name="jcurl.core.io">
 		<level value="INFO"/>
-	</category>
+	</category -->
 	<category name="jcurl.core.io.OldConfigReader">
-		<level value="INFO"/>
+		<level value="WARN"/>
 	</category>
 	<!-- ======================= -->
 	<!-- Setup the Root category -->
 	<!-- ======================= -->
 	<root>
-		<level value="info"/>
+		<level value="INFO"/>
 		<appender-ref ref="CONSOLE"/>
 	</root>
 </log4j:configuration>

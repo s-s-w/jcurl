@@ -22,31 +22,18 @@ import java.awt.geom.Point2D;
 
 import junit.framework.TestCase;
 
-import org.apache.ugli.ULogger;
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.RockSet;
 import org.jcurl.core.helpers.Dim;
-import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**
  * JUnit Test
  * 
  * @see org.jcurl.core.PositionSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: PositionSetTest.java 238 2006-02-19 16:17:09Z mrohrmoser $
+ * @version $Id$
  */
 public class PositionSetTest extends TestCase {
 
-    private static final ULogger log = JCLoggerFactory
-            .getLogger(PositionSetTest.class);
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(PositionSetTest.class);
-    }
-
     public void test010_CountBits() {
-        log.info("Dark : " + Integer.toBinaryString(RockSet.DARK_MASK));
-        log.info("Light: " + Integer.toBinaryString(RockSet.LIGHT_MASK));
         assertEquals(8, PositionSet.countBits(RockSet.DARK_MASK));
         assertEquals(8, PositionSet.countBits(RockSet.LIGHT_MASK));
     }
