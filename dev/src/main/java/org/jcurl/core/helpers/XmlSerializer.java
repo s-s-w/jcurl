@@ -23,15 +23,14 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
+import org.jcurl.util.XmlSimpleWriter;
 import org.xml.sax.SAXException;
-
-import com.megginson.sax.XMLWriter;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class XmlSerializer extends XMLWriter {
+public class XmlSerializer extends XmlSimpleWriter {
 
     /**
      * @param stream

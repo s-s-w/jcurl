@@ -13,7 +13,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.AttributesImpl;
@@ -271,7 +270,7 @@ import org.xml.sax.helpers.XMLFilterImpl;
  * @see org.xml.sax.XMLFilter
  * @see org.xml.sax.ContentHandler
  */
-public class XMLWriter extends XMLFilterImpl {
+class XMLWriter extends XMLFilterImpl {
 
     // //////////////////////////////////////////////////////////////////
     // Constructors.
