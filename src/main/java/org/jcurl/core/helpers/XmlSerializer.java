@@ -23,7 +23,6 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
-import org.jcurl.util.XmlSimpleWriter;
 import org.xml.sax.SAXException;
 
 /**

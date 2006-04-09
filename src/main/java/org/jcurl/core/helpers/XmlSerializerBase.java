@@ -41,7 +41,7 @@ import org.xml.sax.SAXParseException;
  * @see org.jcurl.core.helpers.XmlSerializerTest
  * @author m
  */
-public class XmlSerializerBase implements ContentHandler {
+class XmlSerializerBase implements ContentHandler {
     /**
      * Helper class to make xml validation errors catastrophic.
      * 
