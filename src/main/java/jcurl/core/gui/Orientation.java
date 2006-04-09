@@ -28,6 +28,8 @@ import org.jcurl.core.helpers.EnumBase;
  */
 public class Orientation extends EnumBase {
 
+    private static final long serialVersionUID = -2356484723388215100L;
+
     /** North */
     public static final Orientation N = new Orientation(0, "north");
 

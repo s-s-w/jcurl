@@ -35,6 +35,9 @@ public abstract class RockModelComputed extends JCurlModel {
 
     /**
      * Triggers a {@link java.beans.PropertyChangeEvent}.
+     * @param t0
+     * @param pos
+     * @param spe
      */
     public void init(double t0, PositionSet pos, SpeedSet spe) {
         ;

@@ -20,9 +20,7 @@ package jcurl.core.gui;
 
 import java.awt.Graphics2D;
 
-import org.apache.ugli.ULogger;
 import org.jcurl.core.PositionSet;
-import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**
  * A simple display for rock locations. Delegates rock- and ice painting.
@@ -33,8 +31,11 @@ import org.jcurl.core.helpers.JCLoggerFactory;
  * @version $Id$
  */
 public class RockLocationDisplay extends RockLocationDisplayBase {
-    private static final ULogger log = JCLoggerFactory
-            .getLogger(RockLocationDisplay.class);
+
+    private static final long serialVersionUID = 146935083360365782L;
+
+//    private static final ULogger log = JCLoggerFactory
+//            .getLogger(RockLocationDisplay.class);
 
     private final IcePainter iceP;
 

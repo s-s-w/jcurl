@@ -35,6 +35,8 @@ import org.jcurl.core.helpers.JCLoggerFactory;
  */
 public class MainFrame extends JFrame {
 
+    private static final long serialVersionUID = 7094013076400484227L;
+
     private static final ULogger log = JCLoggerFactory
             .getLogger(MainFrame.class);
 

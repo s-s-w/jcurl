@@ -39,6 +39,8 @@ import javax.swing.JTextField;
  */
 public class DtoDialog extends JDialog {
 
+    private static final long serialVersionUID = 3804055217216790918L;
+
     public DtoDialog(Object data, Frame owner) throws HeadlessException {
         this(data, owner, true);
     }

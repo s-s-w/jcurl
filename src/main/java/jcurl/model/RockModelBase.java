@@ -56,6 +56,7 @@ public abstract class RockModelBase extends MutableObject {
 
     /**
      * Triggers a {@link java.beans.PropertyChangeEvent}.
+     * @param tnow
      */
     public abstract void setTNow(double tnow);
 }

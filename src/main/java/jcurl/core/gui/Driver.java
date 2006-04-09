@@ -24,9 +24,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import org.apache.ugli.ULogger;
 import org.jcurl.core.PositionSet;
-import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -34,7 +32,10 @@ import org.jcurl.core.helpers.JCLoggerFactory;
  */
 public class Driver extends JFrame {
 
-    private static final ULogger log = JCLoggerFactory.getLogger(Driver.class);
+    private static final long serialVersionUID = 5974527099430727076L;
+
+    // private static final ULogger log =
+    // JCLoggerFactory.getLogger(Driver.class);
 
     public Driver() {
         addWindowListener(new WindowAdapter() {

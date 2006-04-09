@@ -37,6 +37,8 @@ import org.jcurl.core.helpers.Version;
  */
 public class AboutDialog extends JDialog {
 
+    private static final long serialVersionUID = -6876982740130350850L;
+
     /**
      * @param owner
      * @throws java.awt.HeadlessException

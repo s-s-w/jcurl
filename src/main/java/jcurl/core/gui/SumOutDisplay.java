@@ -26,6 +26,8 @@ import org.jcurl.core.PositionSet;
  */
 public class SumOutDisplay extends SumDisplayBase {
 
+    private static final long serialVersionUID = 2862725525779204760L;
+
     public SumOutDisplay() {
         super();
     }

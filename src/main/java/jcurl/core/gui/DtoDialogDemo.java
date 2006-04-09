@@ -38,6 +38,8 @@ import org.jcurl.core.helpers.Version;
  */
 public class DtoDialogDemo extends JFrame {
 
+    private static final long serialVersionUID = 7619830975686009904L;
+
     private static final ULogger log = JCLoggerFactory
             .getLogger(DtoDialogDemo.class);
 
@@ -56,6 +58,9 @@ public class DtoDialogDemo extends JFrame {
         final Container con = getContentPane();
         final JFrame fr = this;
         con.add(new JButton(new AbstractAction("Edit") {
+
+            private static final long serialVersionUID = -508686443887297017L;
+
             public void actionPerformed(final ActionEvent evt) {
                 if (dialog == null)
                     dialog = new DtoDialog(data, fr);

@@ -32,7 +32,7 @@
 
     <menu name="Community">
       <item name="Forum" href="forum/index.html"/>      
-      <item name="Mailing Lists" href="forum/mail-lists.html"/>
+      <item name="Mailing Lists" href="mail-lists.html"/>
     </menu>
 
     ${reports}

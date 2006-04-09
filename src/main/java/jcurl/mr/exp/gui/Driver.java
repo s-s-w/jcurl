@@ -20,15 +20,12 @@ package jcurl.mr.exp.gui;
 
 import javax.swing.JFrame;
 
-import org.apache.ugli.ULogger;
-import org.jcurl.core.helpers.JCLoggerFactory;
-
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public class Driver {
-    private static final ULogger log = JCLoggerFactory.getLogger(Driver.class);
+    //private static final ULogger log = JCLoggerFactory.getLogger(Driver.class);
 
     public static void main(String[] args) {
         JFrame frame = new MenuDemo();

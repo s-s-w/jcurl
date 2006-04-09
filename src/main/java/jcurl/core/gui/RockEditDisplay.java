@@ -38,7 +38,11 @@ import org.jcurl.math.MathVec;
  */
 public class RockEditDisplay extends RockLocationDisplay {
 
+    private static final long serialVersionUID = 8273672905059423985L;
+
     public static class HotObject extends EnumBase {
+
+        private static final long serialVersionUID = -1579660062770601846L;
 
         public static final HotObject NONE = new HotObject(0, "None",
                 Cursor.DEFAULT_CURSOR);

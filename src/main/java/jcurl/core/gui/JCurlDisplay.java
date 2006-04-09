@@ -36,6 +36,8 @@ import org.jcurl.core.PositionSet;
  */
 public class JCurlDisplay extends RockLocationDisplay {
 
+    private static final long serialVersionUID = -3587954807831602402L;
+
     private static final Color timeB = new Color(0.9F, 0.9F, 1.0F, 0.75F);
 
     private static final Color timeC = Color.BLACK;

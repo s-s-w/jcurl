@@ -6,12 +6,8 @@ package com.megginson.sax;
 
 import java.io.FileReader;
 
-import org.xml.sax.XMLReader;
 import org.xml.sax.InputSource;
-import org.xml.sax.helpers.ParserAdapter;
 import org.xml.sax.helpers.XMLReaderFactory;
-
-import com.megginson.sax.XMLWriter;
 
 
 /**

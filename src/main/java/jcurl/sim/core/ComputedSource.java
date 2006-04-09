@@ -50,6 +50,8 @@ import org.xml.sax.SAXException;
  */
 public class ComputedSource extends MutableObject implements Source {
 
+    private static final long serialVersionUID = 6736340176255195690L;
+
     private double maxT;
 
     private double minT;
@@ -149,6 +151,7 @@ public class ComputedSource extends MutableObject implements Source {
      * 
      * @param idx
      *            rock index
+     * @return ???           
      */
     public PathIterator pathIterator(int idx) {
         throw new NotImplementedYetException();

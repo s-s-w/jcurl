@@ -36,7 +36,12 @@ import javax.swing.KeyStroke;
  */
 public class MenuDemo extends JFrame {
 
+    private static final long serialVersionUID = -2968454290313186955L;
+
     private static class MyAboutDialog extends JDialog {
+
+        private static final long serialVersionUID = -7533904080833071647L;
+
         public MyAboutDialog(final JFrame owner) {
             super(owner, "About", true);
             setResizable(false);
@@ -70,6 +75,9 @@ public class MenuDemo extends JFrame {
             final JMenu animation = new JMenu("Animation");
             animation.setMnemonic('A');
             final Action toggleStartStop = new AbstractAction("Start/Stop") {
+
+                private static final long serialVersionUID = 5755124125303854954L;
+
                 private boolean started = false;
 
                 public void actionPerformed(ActionEvent evt) {
@@ -96,6 +104,9 @@ public class MenuDemo extends JFrame {
             final JMenu help = new JMenu("Help");
             help.setMnemonic('H');
             final JMenuItem about = new JMenuItem(new AbstractAction("About") {
+
+                private static final long serialVersionUID = -1288940924434544822L;
+
                 public void actionPerformed(ActionEvent evt) {
                     new MyAboutDialog(owner).setVisible(true);
                 }

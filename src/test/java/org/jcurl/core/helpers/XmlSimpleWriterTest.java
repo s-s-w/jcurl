@@ -85,6 +85,7 @@ public class XmlSimpleWriterTest extends TestCase {
     /**
      * @param stream
      * @param encoding
+     * @param buf
      * @return -
      * @throws UnsupportedEncodingException
      * @throws IOException
