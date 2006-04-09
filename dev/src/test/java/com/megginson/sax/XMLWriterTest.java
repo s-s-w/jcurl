@@ -36,7 +36,6 @@ import org.xml.sax.helpers.XMLFilterImpl;
 /**
  * JUnit Test
  * 
- * @see org.jcurl.core.helpers.XmlSerializerBase
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

@@ -20,6 +20,7 @@
     <menu name="JCurl">
       <item name="Introduction" href="index.html"/>
       <item name="Demo Applications" href="demoapps.html"/>
+      <item name="Scientific Resources" href="science/index.html"/>
       
       <!-- item name="Release Notes" href="release-notes.html" />
       <item name="General Information" href="about.html"/>
@@ -27,6 +28,11 @@
       <item name="Road Map" href="roadmap.html" / -->
       
       <item name="Todos" href="todos.html" />
+    </menu>
+
+    <menu name="Community">
+      <item name="Forum" href="forum/index.html"/>      
+      <item name="Mailing Lists" href="forum/mail-lists.html"/>
     </menu>
 
     ${reports}

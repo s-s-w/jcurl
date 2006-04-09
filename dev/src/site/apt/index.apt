@@ -8,13 +8,13 @@ applications concerning the sport of curling.
 
  Possible topics are e.g.
 
- 	* Games
- 	
-	* Statistics and archiving
+      * Games
 
-	* Coaching, strategy and analysis tools
+      * Statistics and archiving
 
-	* Scientific simulation of rock dynamics
+      * Coaching, strategy and analysis tools
+
+      * Scientific simulation of rock dynamics
 
  This project doesn't provide readymade applications yet but rather a framework to
 easily develop such.	
