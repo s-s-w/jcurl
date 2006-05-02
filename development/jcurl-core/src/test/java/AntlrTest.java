@@ -1,4 +1,3 @@
-
 import java.io.StringReader;
 
 import antlr.RecognitionException;
@@ -18,7 +17,8 @@ public class AntlrTest extends TestCase {
     public void test010() throws RecognitionException, TokenStreamException {
         final StringReader s = new StringReader("3+(4*5)");
         final ExprParser parser = new ExprParser(new ExprLexer(s));
-        parser.expr();
+        double x = parser.expr();
+        assertEquals(23, x, 1e-9);
         final AST t = parser.getAST();
         assertEquals(" 3", t.toStringTree());
     }

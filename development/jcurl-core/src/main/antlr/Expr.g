@@ -4,17 +4,24 @@ options {
         buildAST=true;
 }
 
-expr:   mexpr ((PLUS|MINUS) mexpr)*
-    ;      
-
-mexpr      
-    :   atom (STAR atom)*
-    ;    
-
-atom:   INT
-    |   LPAREN expr RPAREN 
+expr returns [double value=0]
+{double x;}
+    :   value=mexpr
+        ( PLUS x=mexpr  {value += x;}
+        | MINUS x=mexpr {value -= x;} 
+        )*
     ;
-    
+
+mexpr returns [double value=0]
+{double x;}
+    :   value=atom ( MULT x=atom {value *= x;} )*
+    ;
+
+atom returns [double value=0]
+    :   i:INT {value=Integer.parseInt(i.getText());}
+    |   LPAREN value=expr RPAREN
+    ;
+        
 class ExprLexer extends Lexer;
 
 options {
@@ -26,7 +33,7 @@ LPAREN: '(' ;
 RPAREN: ')' ;
 PLUS  : '+' ;
 MINUS : '-' ;
-STAR  : '*' ;
+MULT  : '*' ;
 INT   : ('0'..'9')+ ;
 // REAL  : ('0'..'9')+ '.' ('0'..'9')+ ('e' ('+'|'-') ('0'..'9')+)?;
 WS    : ( ' '
