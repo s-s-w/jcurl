@@ -33,7 +33,7 @@
   <name>JCurl Curling Framework</name>
   <inceptionYear>2005</inceptionYear>
   <url>http://www.jcurl.org/</url>
-  <artifactId>jcurl</artifactId>
+  <artifactId>jcurl-core</artifactId>
   <version>0.3.0</version>
   <description>Java library and sample applications for rock trajectory simulation, game filing, analysis and visualisation</description>
   <licenses>
@@ -87,6 +87,13 @@
     <url>http://www.jcurl.org</url>
   </organization>
   <build>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ftp</artifactId>
+        <version>1.0-alpha-6</version>
+      </extension>
+    </extensions>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -96,6 +103,12 @@
           <compilerVersion>1.4</compilerVersion>
           <source>1.4</source>
           <target>1.4</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antlr-plugin</artifactId>
+        <configuration>
+          <grammars>Expr.g</grammars>
         </configuration>
       </plugin>
       <plugin>
@@ -122,7 +135,7 @@
         <artifactId>jxr-maven-plugin</artifactId>
         <version>2.0-beta-1</version>
       </plugin>
-      <!-- plugin>
+<!-- plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>changelog-maven-plugin</artifactId>
         <version>2.0-beta-1</version>
@@ -166,15 +179,25 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>antlr</groupId>
+      <artifactId>antlr</artifactId>
+      <version>2.7.6</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
       <version>1.3.0</version>
     </dependency>
   </dependencies>
   <distributionManagement>
-    <site>
+<!-- site>
       <id>jcurl-website</id>
       <url>scp://mrohrmoser.de/kunden/homepages/6/d143911421/htdocs/www.jcurl.org/</url>
+    </site -->
+    <site>
+      <id>jcurl-ftp</id>
+      <url>ftp://www.jcurl.org/</url>
     </site>
     <repository>
       <id>jcurl-repository</id>
