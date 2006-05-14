@@ -30,13 +30,13 @@ public class DistanceSqTest extends TestCase {
     public void testStraightLine() throws ConvergenceException,
             FunctionEvaluationException {
         final DifferentiableCurve g1 = DifferentiableCurve.straightLine(1, 0.5);
-        final DifferentiableCurve g2 = DifferentiableCurve.straightLine(-6, 3);
+        final DifferentiableCurve g2 = DifferentiableCurve.straightLine(-6, 4);
         final DifferentiableUnivariateRealFunction distSq = new DistanceSq(g1,
                 g2);
         assertEquals("", 49, distSq.value(0), 1e-11);
-        assertEquals("", 20.25, distSq.value(1), 1e-11);
-        assertEquals("", 4, distSq.value(2), 1e-11);
-        assertEquals("", 0.25, distSq.value(3), 1e-11);
-        assertEquals("", 9, distSq.value(4), 1e-11);
+        assertEquals("", 12.25, distSq.value(1), 1e-11);
+        assertEquals("", 0, distSq.value(2), 1e-11);
+        assertEquals("", 12.25, distSq.value(3), 1e-11);
+        assertEquals("", 49, distSq.value(4), 1e-11);
     }
 }

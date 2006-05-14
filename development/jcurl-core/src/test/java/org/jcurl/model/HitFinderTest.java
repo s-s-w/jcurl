@@ -28,9 +28,19 @@ public class HitFinderTest extends TestCase {
 
     public void testStraightLine() throws ConvergenceException,
             FunctionEvaluationException {
-        final DifferentiableCurve g1 = DifferentiableCurve.straightLine(1, 0.5);
-        final DifferentiableCurve g2 = DifferentiableCurve.straightLine(-6, 3);
-        final double root = new HitFinder(g1, g2, 0.0).solve(2, 4);
-        assertEquals("", 2.0, root, 1e-11);
+        {
+            final DifferentiableCurve g1 = DifferentiableCurve.straightLine(1,
+                    0.5);
+            final DifferentiableCurve g2 = DifferentiableCurve.straightLine(-6,
+                    4);
+            assertEquals("", 2.0, new HitFinder(g1, g2, 0.0).solve(2, 4), 1e-11);
+        }
+        {
+            final DifferentiableCurve g1 = DifferentiableCurve.straightLine(1,
+                    0.5);
+            final DifferentiableCurve g2 = DifferentiableCurve.straightLine(-6,
+                    3);
+            assertEquals("", 2.0, new HitFinder(g1, g2, 0.0).solve(2, 10), 1e-11);
+        }
     }
 }
