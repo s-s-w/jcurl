@@ -34,7 +34,7 @@ import javax.swing.JComponent;
 import jcurl.core.TargetDiscrete;
 import jcurl.core.gui.RockPainter.ColorSet;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.RockSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
@@ -51,7 +51,7 @@ public abstract class SumDisplayBase extends JComponent implements
 
     private static final Map hints = new HashMap();
 
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(SumDisplayBase.class);
     static {
         // hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION,

@@ -24,7 +24,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.beans.PropertyChangeEvent;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.RockSet;
 import org.jcurl.core.SpeedSet;
@@ -75,7 +75,7 @@ public class RockEditDisplay extends RockLocationDisplay {
 
     private static final int hotRadiusDC = 5;
 
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(RockEditDisplay.class);
 
     protected static void circleDC(final Graphics2D g, final Point2D center,

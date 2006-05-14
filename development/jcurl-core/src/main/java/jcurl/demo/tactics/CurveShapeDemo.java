@@ -27,7 +27,7 @@ import java.awt.Stroke;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.helpers.Version;
 import org.jcurl.math.CurveBase;
@@ -48,7 +48,7 @@ public class CurveShapeDemo extends JFrame {
 
     private static final long serialVersionUID = 1596300831419412317L;
 
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(CurveShapeDemo.class);
 
     public static void main(String[] args) {

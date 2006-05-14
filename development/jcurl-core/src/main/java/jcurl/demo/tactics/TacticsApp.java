@@ -65,7 +65,7 @@ import jcurl.core.gui.SumWaitDisplay;
 import jcurl.core.gui.Zoomer;
 import jcurl.core.io.SetupIO;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.RockSet;
 import org.jcurl.core.SpeedSet;
@@ -101,7 +101,7 @@ public class TacticsApp extends JFrame {
     private static final Cursor Cwait = Cursor
             .getPredefinedCursor(Cursor.WAIT_CURSOR);
 
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(TacticsApp.class);
 
     /**

@@ -26,7 +26,7 @@ import javax.swing.JFrame;
 
 import jcurl.mr.exp.math.PointList;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**
@@ -37,7 +37,7 @@ public class MainFrame extends JFrame {
 
     private static final long serialVersionUID = 7094013076400484227L;
 
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(MainFrame.class);
 
     private final PointList curve;

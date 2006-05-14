@@ -22,7 +22,7 @@ import jcurl.core.Source;
 import jcurl.core.dto.RockSetProps;
 import junit.framework.TestCase;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.Rock;
 import org.jcurl.core.RockDouble;
@@ -39,7 +39,7 @@ import org.jcurl.math.Polynome;
  * @version $Id$
  */
 public class SlideStraightTest extends TestCase {
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(SlideStraightTest.class);
 
     private final SlideStraight s = new SlideStraight();

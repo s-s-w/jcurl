@@ -27,7 +27,7 @@ import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 import junit.framework.TestCase;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
@@ -40,7 +40,7 @@ import org.xml.sax.SAXException;
  */
 public class SetupIOTest extends TestCase {
 
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(SetupIOTest.class);
 
     public SetupIOTest() {

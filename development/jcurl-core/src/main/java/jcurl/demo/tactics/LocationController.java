@@ -25,7 +25,7 @@ import java.awt.geom.Point2D;
 
 import jcurl.core.gui.RockLocationDisplayBase;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
 
@@ -35,7 +35,7 @@ import org.jcurl.core.helpers.JCLoggerFactory;
  */
 public class LocationController implements MouseMotionListener {
 
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(LocationController.class);
 
     protected final Cursor CursorDefault;

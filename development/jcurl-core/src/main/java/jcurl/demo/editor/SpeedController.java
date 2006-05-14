@@ -25,7 +25,7 @@ import java.awt.geom.Point2D;
 
 import jcurl.core.gui.RockEditDisplay;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
@@ -36,7 +36,7 @@ import org.jcurl.core.helpers.JCLoggerFactory;
  */
 public class SpeedController implements MouseMotionListener, MouseListener {
 
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(SpeedController.class);
 
     private final RockEditDisplay.HotStuff hot = new RockEditDisplay.HotStuff();

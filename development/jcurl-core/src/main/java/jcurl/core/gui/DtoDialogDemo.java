@@ -28,7 +28,7 @@ import javax.swing.JFrame;
 
 import jcurl.sim.model.SlideDenny;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.helpers.Version;
 
@@ -40,7 +40,7 @@ public class DtoDialogDemo extends JFrame {
 
     private static final long serialVersionUID = 7619830975686009904L;
 
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(DtoDialogDemo.class);
 
     public static void main(String[] args) {

@@ -34,7 +34,7 @@ public class Driver extends JFrame {
 
     private static final long serialVersionUID = 5974527099430727076L;
 
-    // private static final ULogger log =
+    // private static final Log log =
     // JCLoggerFactory.getLogger(Driver.class);
 
     public Driver() {

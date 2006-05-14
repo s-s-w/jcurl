@@ -24,7 +24,7 @@ import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockProps;
 import jcurl.sim.core.SlideCurves;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.Rock;
 import org.jcurl.core.RockSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
@@ -50,7 +50,7 @@ import org.jcurl.math.Polynome;
  */
 public class SlideStraight extends SlideCurves {
 
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(SlideStraight.class);
 
     private double accel;

@@ -27,7 +27,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import junit.framework.TestCase;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.xml.sax.SAXException;
 
@@ -47,7 +47,7 @@ public class SetupSaxDeSerTest extends TestCase {
 
     private static final URL baseUrl;
 
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(SetupSaxDeSerTest.class);
     static {
         try {

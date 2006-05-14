@@ -18,7 +18,7 @@
  */
 package org.jcurl.math;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**
@@ -34,7 +34,7 @@ public class CurveCombined extends CurveBase {
 
     private static final int initialSize = 5;
 
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(CurveCombined.class);
 
     /**

@@ -1,5 +1,4 @@
 package com.megginson.sax;
-import com.megginson.sax.DataWriter;
 
 public class TestDataWriter
 {

@@ -115,18 +115,22 @@ public class MathDomTest extends TestCase {
         }
         long dt = System.currentTimeMillis() - start;
         long cps = loop * 1000 / dt;
+        System.out.println("Parsing: " + cps + " calls per second");
         assertTrue("MatDom creation was too slow, only " + cps
                 + " calls per second", cps > 50000);
-
+        
         // evaluation
         final MathDom.Node n = ParserInfix.parse(" 2 * 4 +3 ");
         final DomWalkerEval de = new DomWalkerEval();
         start = System.currentTimeMillis();
         for (int i = loop - 1; i >= 0; i--) {
+            de.reset();
             de.walk(n);
+            double d = de.doubleValue();
         }
         dt = System.currentTimeMillis() - start;
         cps = loop * 1000 / dt;
+        System.out.println("Computing: " + cps + " calls per second");
         assertTrue("MatDom evaluation was too slow, only " + cps
                 + " calls per second", cps > 2000000);
 
@@ -138,6 +142,7 @@ public class MathDomTest extends TestCase {
         }
         dt = System.currentTimeMillis() - start;
         cps = loop * 1000 / dt;
+        System.out.println("Built-in: " + cps + " calls per second");
         assertTrue("Built-in math evaluation was too slow, only " + cps
                 + " calls per second", cps > 18000000);
     }

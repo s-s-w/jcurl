@@ -24,7 +24,7 @@ import java.awt.geom.Point2D;
 
 import jcurl.core.dto.RockProps;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.Rock;
 import org.jcurl.core.RockSet;
@@ -44,7 +44,7 @@ public abstract class CollissionStrategy extends ModelBase {
 
     private static final float HIT_MAX_DIST = 1e-6F;
 
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(CollissionStrategy.class);
 
     /** Maximum distance [m] of two rocks to consider them touching */

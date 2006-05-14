@@ -28,7 +28,7 @@ import java.io.Reader;
 
 import jcurl.core.dto.Ice;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.RockSet;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
@@ -44,7 +44,7 @@ import org.jcurl.core.helpers.JCLoggerFactory;
  */
 public class OldConfigReader {
 
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(OldConfigReader.class);
 
     public static OldConfigReader parse(final File file)
@@ -189,15 +189,15 @@ public class OldConfigReader {
             case content:
                 final String s0 = ret.toString().trim();
                 if (ch == -1) {
-                    log.debug("token=[{}]", s0);
+                    log.debug("token=[" + s0 + "]");
                     return s0;
                 }
                 if (sep == ' ' && Character.isWhitespace((char) ch)) {
-                    log.debug("token=[{}]", s0);
+                    log.debug("token=[" + s0 + "]");
                     return s0;
                 }
                 if (sep == '"' && '"' == (char) ch) {
-                    log.debug("token=[{}]", s0);
+                    log.debug("token=[" + s0 + "]");
                     return s0;
                 }
                 if (sep == ' ' && '#' == (char) ch)
@@ -208,14 +208,14 @@ public class OldConfigReader {
             case comment:
                 final String s = ret.toString().trim();
                 if (ch == -1) {
-                    log.debug("token=[{}]", s);
+                    log.debug("token=[" + s + "]");
                     return s;
                 }
                 if ('\n' == (char) ch || '\r' == (char) ch) {
                     if (s.length() == 0)
                         state = pre;
                     else {
-                        log.debug("token=[{}]", s);
+                        log.debug("token=[" + s + "]");
                         return s;
                     }
                 }

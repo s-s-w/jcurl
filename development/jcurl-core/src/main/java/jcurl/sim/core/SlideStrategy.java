@@ -28,7 +28,7 @@ import jcurl.core.dto.RockProps;
 import jcurl.core.dto.RockSetProps;
 import jcurl.sim.model.CollissionSpin;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.Rock;
 import org.jcurl.core.RockSet;
@@ -52,7 +52,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
 
     public static final String D2T_TIME = "drawtotee";
 
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(SlideStrategy.class);
 
     private static final float outY = -(Ice.BACK_2_TEE + RockProps.DEFAULT
