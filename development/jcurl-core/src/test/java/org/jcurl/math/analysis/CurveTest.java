@@ -20,10 +20,12 @@ package org.jcurl.math.analysis;
 
 import junit.framework.TestCase;
 
+import org.apache.commons.math.FunctionEvaluationException;
+
 /**
  * JUnit Test.
  * 
- * @see org.jcurl.math.analysis.CurveBase
+ * @see org.jcurl.math.analysis.CurveGhost
  * @see org.jcurl.math.analysis.CurveDom
  * @see org.jcurl.math.analysis.CurveCombined
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -42,7 +44,7 @@ public class CurveTest extends TestCase {
         assertEquals("", 7.0, po.getC(0, 2.0), 1e-9);
     }
 
-    public void test020_CurveParts() {
+    public void test020_CurveParts() throws FunctionEvaluationException {
         final CurveCombined c = new CurveCombined(1);
         // c.getC(0, 0, 0.1);
         c.add(0, Polynome.getPoly(0.0, 2.0, 3.0, 4.0));

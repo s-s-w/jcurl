@@ -24,8 +24,8 @@ import jcurl.sim.core.SlideCurves;
 
 import org.jcurl.core.Rock;
 import org.jcurl.core.helpers.NotImplementedYetException;
-import org.jcurl.math.analysis.CurveBase;
 import org.jcurl.math.analysis.CurveFkt;
+import org.jcurl.math.analysis.CurveGhost;
 import org.jcurl.math.analysis.Polynome;
 
 /**
@@ -58,12 +58,12 @@ public class SlideDenny extends SlideCurves {
         super();
     }
 
-    protected CurveBase createCurve(final double t0, final Rock pos,
+    protected CurveGhost createCurve(final double t0, final Rock pos,
             final Rock speed) {
         throw new NotImplementedYetException();
     }
 
-    protected CurveBase createCurve(final Rock speed) {
+    protected CurveGhost createCurve(final Rock speed) {
         final Polynome[] x = new Polynome[3];
         x[0] = new Polynome(new double[] { 0, 1, 2, 3 });
         x[1] = new Polynome(new double[] { 0, 1, 2, 3 });

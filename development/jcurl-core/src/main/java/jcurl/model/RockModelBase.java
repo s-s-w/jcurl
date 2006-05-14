@@ -21,7 +21,7 @@ package jcurl.model;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.MutableObject;
-import org.jcurl.math.analysis.CurveBase;
+import org.jcurl.math.analysis.CurveGhost;
 
 /**
  * Atom for rock (set) data. Combines the two canonical approaches: curve-based
@@ -32,7 +32,7 @@ import org.jcurl.math.analysis.CurveBase;
  */
 public abstract class RockModelBase extends MutableObject {
 
-    public abstract CurveBase curve(int rockIdx);
+    public abstract CurveGhost curve(int rockIdx);
 
     public abstract void finish();
 

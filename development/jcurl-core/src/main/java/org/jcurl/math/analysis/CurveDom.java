@@ -36,7 +36,7 @@ import org.jcurl.math.dom.MathDom;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveDom extends CurveBase {
+public class CurveDom extends CurveGhost {
 
     /** Internal helper - mutable number implementation */
     private static final class Num extends Number {

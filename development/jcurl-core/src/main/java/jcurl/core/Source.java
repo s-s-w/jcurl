@@ -18,6 +18,7 @@
  */
 package jcurl.core;
 
+import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.SpeedSet;
 
@@ -48,14 +49,14 @@ public interface Source {
      * 
      * @return the rocks' positions
      */
-    public abstract PositionSet getPos();
+    public abstract PositionSet getPos() throws FunctionEvaluationException;
 
     /**
      * Get the rocks' speeds - optional.
      * 
      * @return the rocks' speeds
      */
-    public abstract SpeedSet getSpeed();
+    public abstract SpeedSet getSpeed() throws FunctionEvaluationException;
 
     /**
      * Get the current time.
@@ -75,5 +76,6 @@ public interface Source {
      * 
      * @param t
      */
-    public abstract void setT(final double t);
+    public abstract void setT(final double t)
+            throws FunctionEvaluationException;
 }

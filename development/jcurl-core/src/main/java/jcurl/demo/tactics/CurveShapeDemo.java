@@ -28,16 +28,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.helpers.Version;
-import org.jcurl.math.analysis.CurveBase;
 import org.jcurl.math.analysis.CurveFkt;
+import org.jcurl.math.analysis.CurveGhost;
 import org.jcurl.math.analysis.Function1D;
 import org.jcurl.math.analysis.Polynome;
 import org.jcurl.math.helpers.CurveShape;
 
 /**
- * Demonstrate how to draw a {@link org.jcurl.math.analysis.CurveBase}converted
+ * Demonstrate how to draw a {@link org.jcurl.math.analysis.CurveGhost}converted
  * to a {@link java.awt.Shape}.
  * 
  * @see org.jcurl.math.helpers.CurveShape
@@ -53,7 +54,7 @@ public class CurveShapeDemo extends JFrame {
 
     public static void main(String[] args) {
         log.info("Version: " + Version.find());
-        final CurveBase c;
+        final CurveGhost c;
         {
             final Function1D[] f = new Function1D[2];
             final double[] fx = { 200, 150 };
@@ -84,15 +85,19 @@ public class CurveShapeDemo extends JFrame {
                 g2.setStroke(st);
                 g2.drawLine(0, 0, 650, 500);
                 g2.setPaint(new Color(255, 170, 0, 128));
-                g2.draw(CurveShape.approximate(frame.curve, CurveShape
-                        .sections(-1, 3, sections)));
+                try {
+                    g2.draw(CurveShape.approximate(frame.curve, CurveShape
+                            .sections(-1, 3, sections)));
+                } catch (FunctionEvaluationException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
 
-    private final CurveBase curve;
+    private final CurveGhost curve;
 
-    public CurveShapeDemo(final CurveBase c) {
+    public CurveShapeDemo(final CurveGhost c) {
         this.curve = c;
     }
 }

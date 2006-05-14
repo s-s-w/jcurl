@@ -23,7 +23,7 @@ import java.io.Serializable;
 /**
  * Either location or speed of a rock. This class is mostly for display and
  * storage means. The value array is accessible for direct use with e.g.
- * {@link org.jcurl.math.analysis.CurveBase#getC(int, double, float[])}.
+ * {@link org.jcurl.math.analysis.CurveGhost#getC(int, double, float[])}.
  * 
  * @see org.jcurl.core.PositionSet
  * @see org.jcurl.core.RockDouble

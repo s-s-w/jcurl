@@ -18,28 +18,17 @@
  */
 package org.jcurl.math.analysis;
 
+
 /**
- * A n-dimensional, continuous curve <code>R -&gt; R^n</code> based on
- * {@link org.jcurl.math.analysis.Function1D}s.
+ * Abstract base class for n-dimensional curves <code>R -&gt; R^n</code>.
  * 
- * @see org.jcurl.math.analysis.Function1D
  * @see org.jcurl.math.analysis.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveFkt extends CurveGhost {
+public abstract class CurveGhost extends CurveBase {
 
-    private final Function1D[] fkt;
-
-    public CurveFkt(final Function1D[] fkt) {
-        super(fkt.length);
-        this.fkt = new Function1D[dim];
-        for (int i = dim - 1; i >= 0; i--) {
-            this.fkt[i] = fkt[i];
-        }
-    }
-
-    public double getC(int dim, int c, double t) {
-        return fkt[dim].getC(0, c, t);
+    protected CurveGhost(int dim) {
+        super(dim);
     }
 }

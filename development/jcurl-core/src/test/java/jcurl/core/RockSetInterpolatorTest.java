@@ -22,6 +22,7 @@ import jcurl.core.dto.RockSetProps;
 import jcurl.sim.model.SlideStraight;
 import junit.framework.TestCase;
 
+import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.SpeedSet;
 
@@ -35,11 +36,7 @@ import org.jcurl.core.SpeedSet;
  */
 public class RockSetInterpolatorTest extends TestCase {
 
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(RockSetInterpolatorTest.class);
-    }
-
-    public void test010_feed() {
+    public void test010_feed() throws FunctionEvaluationException {
         final long t0 = 0;
         PositionSet rPos = PositionSet.allHome();
         rPos.getLight(0).setLocation(0, 0);

@@ -23,22 +23,23 @@ import java.awt.geom.Point2D;
 import jcurl.core.dto.RockSetProps;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.Rock;
 import org.jcurl.core.RockSet;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.math.analysis.CurveBase;
 import org.jcurl.math.analysis.CurveCombined;
+import org.jcurl.math.analysis.CurveGhost;
 import org.jcurl.math.analysis.CurveInterval;
 import org.jcurl.math.analysis.Polynome;
 import org.jcurl.math.linalg.MathVec;
 
 /**
  * Abstract base class for analytic (non-discrete) curl models. Based on rock
- * trajectories in {@link org.jcurl.math.analysis.CurveBase}-form.
+ * trajectories in {@link org.jcurl.math.analysis.CurveGhost}-form.
  * 
- * @see org.jcurl.math.analysis.CurveBase
+ * @see org.jcurl.math.analysis.CurveGhost
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -46,7 +47,8 @@ public abstract class SlideCurves extends SlideStrategy {
 
     private static final Log log = JCLoggerFactory.getLogger(SlideCurves.class);
 
-    private static double findThalt(final double t0, final CurveBase cu) {
+    private static double findThalt(final double t0, final CurveGhost cu)
+            throws FunctionEvaluationException {
         final double thx = cu.computeNewtonZero(0, 1, t0);
         final double thy = cu.computeNewtonZero(1, 1, t0);
         final double thalt = thx > thy ? thx : thy;
@@ -96,11 +98,11 @@ public abstract class SlideCurves extends SlideStrategy {
      * @param speed
      * @return a 3-dimensional curve (x,y,alpha)
      */
-    protected abstract CurveBase createCurve(double t0, Rock pos, Rock speed);
+    protected abstract CurveGhost createCurve(double t0, Rock pos, Rock speed);
 
     protected Rock getC(final int c, final double time, final int idx,
-            final Rock r) {
-        final CurveBase cu = this.c[idx];
+            final Rock r) throws FunctionEvaluationException {
+        final CurveGhost cu = this.c[idx];
         r.setLocation(cu.getC(0, c, time), cu.getC(1, c, time), cu.getC(2, c,
                 time));
         return r;
@@ -116,8 +118,10 @@ public abstract class SlideCurves extends SlideStrategy {
      *            [sec]
      * @param rocks
      * @return the c'th derivative of x,y,alpha
+     * @throws FunctionEvaluationException
      */
-    protected RockSet getC(final int c, final double time, RockSet rocks) {
+    protected RockSet getC(final int c, final double time, RockSet rocks)
+            throws FunctionEvaluationException {
         for (int i = PositionSet.ROCKS_PER_SET - 1; i >= 0; i--)
             getC(c, time, i, rocks.getRock(i));
         return rocks;
@@ -135,14 +139,16 @@ public abstract class SlideCurves extends SlideStrategy {
         return true;
     }
 
-    protected boolean move(double t0, double t1, int idx, Rock pos, Rock speed) {
+    protected boolean move(double t0, double t1, int idx, Rock pos, Rock speed)
+            throws FunctionEvaluationException {
         getC(0, t1, idx, pos);
         getC(1, t1, idx, speed);
         return speed.getX() != 0 || speed.getY() != 0;
     }
 
     public final void reset(final PositionSet startPos,
-            final SpeedSet startSpeed, final RockSetProps props) {
+            final SpeedSet startSpeed, final RockSetProps props)
+            throws FunctionEvaluationException {
         for (int i = PositionSet.ROCKS_PER_SET - 1; i >= 0; i--)
             c[i] = new CurveCombined(3);
         super.reset(startPos, startSpeed, props);
@@ -157,9 +163,11 @@ public abstract class SlideCurves extends SlideStrategy {
      * @param speed
      * @param discontinuous
      *            bitmask of the discontuous rocks
+     * @throws FunctionEvaluationException
      */
     public void set(final double t0, final PositionSet pos,
-            final SpeedSet speed, final int discontinuous) {
+            final SpeedSet speed, final int discontinuous)
+            throws FunctionEvaluationException {
         if (log.isDebugEnabled())
             log.debug("t0=" + t0 + " rockmask="
                     + Integer.toBinaryString(discontinuous));
@@ -173,7 +181,7 @@ public abstract class SlideCurves extends SlideStrategy {
             if (0 != (discontinuous & (1 << i))) {
                 log.info("compute rock #" + i);
                 // add a new curve to the list
-                final CurveBase cu = createCurve(t0, pos.getRock(i), speed
+                final CurveGhost cu = createCurve(t0, pos.getRock(i), speed
                         .getRock(i));
                 c[i].add(t0, new CurveInterval(t0, findThalt(t0, cu), cu));
             }

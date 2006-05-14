@@ -28,8 +28,8 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.Rock;
 import org.jcurl.core.RockSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.math.analysis.CurveBase;
 import org.jcurl.math.analysis.CurveFkt;
+import org.jcurl.math.analysis.CurveGhost;
 import org.jcurl.math.analysis.Polynome;
 import org.jcurl.math.linalg.MathVec;
 
@@ -59,7 +59,7 @@ public class SlideStraight extends SlideCurves {
         super();
     }
 
-    protected CurveBase createCurve(final double t0, final Rock x0,
+    protected CurveGhost createCurve(final double t0, final Rock x0,
             final Rock v0) {
         if (log.isDebugEnabled())
             log.debug("t0=" + t0 + " " + x0 + " " + v0);

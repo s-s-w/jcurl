@@ -24,6 +24,8 @@ import java.awt.event.KeyListener;
 import jcurl.core.Source;
 import jcurl.core.TargetDiscrete;
 
+import org.apache.commons.math.FunctionEvaluationException;
+
 /**
  * A first, simple keyboard input class. Uses a
  * {@link jcurl.core.gui.RealTimePlayer}to play.
@@ -42,7 +44,8 @@ public class SimpleKeys implements KeyListener {
 
     private Thread worker = null;
 
-    public SimpleKeys(final Source src, final TargetDiscrete dst) {
+    public SimpleKeys(final Source src, final TargetDiscrete dst)
+            throws FunctionEvaluationException {
         this.src = src;
         this.dst = dst;
         final double t0 = src.getMinT();

@@ -36,6 +36,7 @@ import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
@@ -57,7 +58,8 @@ public class ViewerApp extends JFrame {
     private static final Log log = JCLoggerFactory.getLogger(ViewerApp.class);
 
     public static void main(String[] args) throws MalformedURLException,
-            ParserConfigurationException, SAXException, IOException {
+            ParserConfigurationException, SAXException, IOException,
+            FunctionEvaluationException {
         final ComputedSource src = new ComputedSource();
         if (true) {
             final URL url;
@@ -91,7 +93,7 @@ public class ViewerApp extends JFrame {
 
     private final TargetDiscrete dst;
 
-    public ViewerApp(ComputedSource src) {
+    public ViewerApp(ComputedSource src) throws FunctionEvaluationException {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);

@@ -21,7 +21,7 @@ package jcurl.sim.model;
 import junit.framework.TestCase;
 
 import org.jcurl.core.RockDouble;
-import org.jcurl.math.analysis.CurveBase;
+import org.jcurl.math.analysis.CurveGhost;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -31,6 +31,6 @@ public class SlideDennyTest extends TestCase {
 
     public void test010() {
         SlideDenny s = new SlideDenny();
-        CurveBase c = s.createCurve(new RockDouble());
+        CurveGhost c = s.createCurve(new RockDouble());
     }
 }

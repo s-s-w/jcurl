@@ -23,12 +23,12 @@ import org.apache.commons.math.analysis.UnivariateRealFunction;
 
 /**
  * A "normal" one-dimensional function. Because this is the same as a
- * 1-dimensional curve it extends {@link org.jcurl.math.analysis.CurveBase}.
+ * 1-dimensional curve it extends {@link org.jcurl.math.analysis.CurveGhost}.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class Function1D extends CurveBase implements
+public abstract class Function1D extends CurveGhost implements
         UnivariateRealFunction {
 
     protected Function1D() {
@@ -38,14 +38,16 @@ public abstract class Function1D extends CurveBase implements
     /**
      * Compute <code>x where f(x) = 0</code> using Newton's algorithm.
      * 
-     * @see CurveBase#computeNewtonZero(int, int, double)
+     * @see CurveGhost#computeNewtonZero(int, int, double)
      * @param c
      *            c'th derivative
      * @param x
      *            start value
      * @return x for getC(c, x) = 0
+     * @throws FunctionEvaluationException
      */
-    public double computeNewtonZero(final int c, double x) {
+    public double computeNewtonZero(final int c, double x)
+            throws FunctionEvaluationException {
         return computeNewtonZero(0, c, x);
     }
 

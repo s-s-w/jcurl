@@ -20,8 +20,9 @@ package org.jcurl.math.helpers;
 import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 
-import org.jcurl.math.analysis.CurveBase;
+import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.math.analysis.CurveFkt;
+import org.jcurl.math.analysis.CurveGhost;
 import org.jcurl.math.analysis.Function1D;
 import org.jcurl.math.linalg.MathVec;
 
@@ -33,19 +34,20 @@ import org.jcurl.math.linalg.MathVec;
  */
 public abstract class CurveShape {
 
-    public static Shape approximate(final CurveBase c, final double[] sections) {
+    public static Shape approximate(final CurveGhost c, final double[] sections)
+            throws FunctionEvaluationException {
         // return approximateLinear(c, sections);
         return approximateQuadratic(c, sections);
     }
 
     private static Shape approximate(final Function1D fx, final Function1D fy,
-            final double[] sections) {
+            final double[] sections) throws FunctionEvaluationException {
         final Function1D[] f = { fx, fy };
         return approximate(new CurveFkt(f), sections);
     }
 
-    public static Shape approximateLinear(final CurveBase c,
-            final double[] sections) {
+    public static Shape approximateLinear(final CurveGhost c,
+            final double[] sections) throws FunctionEvaluationException {
         final double[] x_1 = { c.getC(0, 0, sections[0]),
                 c.getC(1, 0, sections[0]) };
         final double[] x_2 = { 0, 0 };
@@ -62,8 +64,8 @@ public abstract class CurveShape {
         return gp;
     }
 
-    public static Shape approximateQuadratic(final CurveBase c,
-            final double[] sections) {
+    public static Shape approximateQuadratic(final CurveGhost c,
+            final double[] sections) throws FunctionEvaluationException {
         final double[] p0 = { c.getC(0, 0, sections[0]),
                 c.getC(1, 0, sections[0]) };
         final double[] v0 = { c.getC(0, 1, sections[0]),
@@ -97,17 +99,17 @@ public abstract class CurveShape {
      * Maxima code:
      * 
      * <pre>
-     *    NEXTLAYERFACTOR(TRUE)$
-     *    DEBUGMODE(TRUE)$ 
-     *     
-     *    pa[0] + k * va[0] = pb[0] + l * vb[0];
-     *    pa[1] + k * va[1] = pb[1] + l * vb[1];
-     *     
-     *    LINSOLVE([%i4, %i5],[k, l]),GLOBALSOLVE:TRUE,BACKSUBST:TRUE$
-     *     
-     *    SCSIMP(PART(%o6,1,2)); 
-     *     
-     *    quit$
+     *     NEXTLAYERFACTOR(TRUE)$
+     *     DEBUGMODE(TRUE)$ 
+     *      
+     *     pa[0] + k * va[0] = pb[0] + l * vb[0];
+     *     pa[1] + k * va[1] = pb[1] + l * vb[1];
+     *      
+     *     LINSOLVE([%i4, %i5],[k, l]),GLOBALSOLVE:TRUE,BACKSUBST:TRUE$
+     *      
+     *     SCSIMP(PART(%o6,1,2)); 
+     *      
+     *     quit$
      * </pre>
      * 
      * @param pa

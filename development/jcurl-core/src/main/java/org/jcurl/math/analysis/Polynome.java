@@ -20,7 +20,6 @@ package org.jcurl.math.analysis;
 
 import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
 import org.apache.commons.math.analysis.UnivariateRealFunction;
-import org.jcurl.core.helpers.NotImplementedYetException;
 
 /**
  * Polynomes of n-th grade.
@@ -32,13 +31,47 @@ import org.jcurl.core.helpers.NotImplementedYetException;
 public class Polynome extends Function1D implements
         DifferentiableUnivariateRealFunction {
     /**
+     * Compute the polynome p at x.
+     * 
+     * @param x
+     * @param p
+     *            polynome coefficients
+     * @return <code>p(x)</code>
+     * @see #evaluate(double[], double, int)
+     */
+    public static double evaluate(final double x, final double[] p) {
+        return evaluate(p, x, 0);
+    }
+
+    /**
+     * Compute the c-th derivative of the polynome p at x.
+     * 
+     * @param coefficients
+     *            polynome coefficients
+     * @param x
+     * @param derivative
+     *            derivative
+     * 
+     * @return <code>d/dx^c p(x)</code>
+     */
+    public static double evaluate(final double[] coefficients, final double x,
+            final int derivative) {
+        double ret = 0;
+        for (int i = coefficients.length - 1; i >= derivative; i--) {
+            ret *= x;
+            ret += factorial(i, i - derivative) * coefficients[i];
+        }
+        return ret;
+    }
+
+    /**
      * Compute <code>a!</code>
      * 
      * @param a
      * @return a!
      */
-    static long fak(final int a) {
-        return fak(a, 1);
+    static long factorial(final int a) {
+        return factorial(a, 1);
     }
 
     /**
@@ -48,7 +81,7 @@ public class Polynome extends Function1D implements
      * @param low
      * @return high! / low!
      */
-    static long fak(final int high, int low) {
+    static long factorial(final int high, int low) {
         if (high < 2)
             return 1;
         long ret = 1;
@@ -98,38 +131,6 @@ public class Polynome extends Function1D implements
         return p;
     }
 
-    /**
-     * Compute the polynome p at x.
-     * 
-     * @param x
-     * @param p
-     *            polynome coefficients
-     * @return <code>p(x)</code>
-     * @see #poly(int, double, double[])
-     */
-    public static double poly(final double x, final double[] p) {
-        return poly(0, x, p);
-    }
-
-    /**
-     * Compute the c-th derivative of the polynome p at x.
-     * 
-     * @param c
-     *            derivative
-     * @param x
-     * @param p
-     *            polynome coefficients
-     * @return <code>d/dx^c p(x)</code>
-     */
-    public static double poly(final int c, final double x, final double[] p) {
-        double ret = 0;
-        for (int i = p.length - 1; i >= c; i--) {
-            ret *= x;
-            ret += fak(i, i - c) * p[i];
-        }
-        return ret;
-    }
-
     public static String toString(final double[] poly) {
         final StringBuffer ret = new StringBuffer();
         ret.append("p(x) = ");
@@ -143,24 +144,31 @@ public class Polynome extends Function1D implements
         return ret.toString();
     }
 
-    private final double[] params;
+    private final double[] coefficients;
 
     public Polynome(final double[] params) {
-        this.params = params;
+        this.coefficients = params;
     }
 
     public UnivariateRealFunction derivative() {
-        throw new NotImplementedYetException();
+        return polynomialDerivative();
     }
 
     /**
-     * @see #poly(int, double, double[])
+     * @see #evaluate(double[], double, int)
      */
     public double getC(final int c, final double x) {
-        return poly(c, x, params);
+        return evaluate(coefficients, x, c);
+    }
+
+    public Polynome polynomialDerivative() {
+        final double[] ret = new double[coefficients.length - 1];
+        for (int i = ret.length - 1; i >= 0; i--)
+            ret[i] = (i + 1) * coefficients[i + 1];
+        return new Polynome(ret);
     }
 
     public String toString() {
-        return toString(this.params);
+        return toString(this.coefficients);
     }
 }

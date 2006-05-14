@@ -23,12 +23,13 @@ import jcurl.core.dto.RockSetProps;
 import junit.framework.TestCase;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.Rock;
 import org.jcurl.core.RockDouble;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.math.analysis.CurveBase;
+import org.jcurl.math.analysis.CurveGhost;
 import org.jcurl.math.analysis.Polynome;
 
 /**
@@ -48,7 +49,7 @@ public class SlideStraightTest extends TestCase {
 
     private final SpeedSet speed = new SpeedSet();
 
-    public void setUp() {
+    public void setUp() throws FunctionEvaluationException {
         // initial state
         PositionSet.allOut(pos);
         pos.getDark(0).setLocation(0, 5, 0);
@@ -59,10 +60,10 @@ public class SlideStraightTest extends TestCase {
         s.reset(pos, speed, RockSetProps.DEFAULT);
     }
 
-    public void test010_createCurve() {
+    public void test010_createCurve() throws FunctionEvaluationException {
         Rock x0 = new RockDouble(0, 0, 0);
         Rock v0 = new RockDouble(0, 0, 0);
-        CurveBase c = s.createCurve(0, x0, v0);
+        CurveGhost c = s.createCurve(0, x0, v0);
         assertEquals("", 0, c.getC(0, 0, 0), 1e-9);
         assertEquals("", 0, c.getC(1, 0, 0), 1e-9);
         assertEquals("", 0, c.getC(2, 0, 0), 1e-9);
@@ -122,7 +123,7 @@ public class SlideStraightTest extends TestCase {
         return a * a;
     }
 
-    public void test020_createCurve() {
+    public void test020_createCurve() throws FunctionEvaluationException {
         log.debug("start");
         double t0 = 2.894295921183459;
         double dt = 0;
@@ -134,19 +135,19 @@ public class SlideStraightTest extends TestCase {
         double[] par = Polynome.getPolyParams(t0, 0, v, a);
         log.info("raw : " + Polynome.toString(par));
 
-        assertEquals("", 0, Polynome.poly(0, t0 + dt, par), 1e-9);
-        assertEquals("", v, Polynome.poly(1, t0 + dt, par), 1e-9);
-        assertEquals("", a, Polynome.poly(2, t0 + dt, par), 1e-9);
+        assertEquals("", 0, Polynome.evaluate(par, t0 + dt, 0), 1e-9);
+        assertEquals("", v, Polynome.evaluate(par, t0 + dt, 1), 1e-9);
+        assertEquals("", a, Polynome.evaluate(par, t0 + dt, 2), 1e-9);
 
         dt = 0.1;
-        assertEquals("", 0.011459990937692677, Polynome.poly(0, t0 + dt, par),
-                1e-9);
-        assertEquals("", 0.11006448548776704, Polynome.poly(1, t0 + dt, par),
-                1e-9);
-        assertEquals("", a, Polynome.poly(2, t0 + dt, par), 1e-9);
+        assertEquals("", 0.011459990937692677, Polynome.evaluate(par, t0 + dt,
+                0), 1e-9);
+        assertEquals("", 0.11006448548776704, Polynome
+                .evaluate(par, t0 + dt, 1), 1e-9);
+        assertEquals("", a, Polynome.evaluate(par, t0 + dt, 2), 1e-9);
 
         dt = 0;
-        CurveBase c = s.createCurve(t0, x0, v0);
+        CurveGhost c = s.createCurve(t0, x0, v0);
         // untransformed : p(x) = 0.10406485628694145 + 0.11913533326608741*x +
         // -0.0535848758171096*x**2
         // Curve x : p(x) = 0.9316956597747996*x**0 + 0.1020171046257019*x**1 +
@@ -168,7 +169,7 @@ public class SlideStraightTest extends TestCase {
         assertEquals("", v0.getZ(), c.getC(2, 1, t0 + dt), 1e-9);
     }
 
-    public void test100() {
+    public void test100() throws FunctionEvaluationException {
         double t = 0;
         assertEquals("", 2.26999338899, t = s.estimateNextHit(pos, speed), 1e-6);
         s.getPos();
@@ -186,7 +187,7 @@ public class SlideStraightTest extends TestCase {
                 1e-6);
     }
 
-    public void test110() {
+    public void test110() throws FunctionEvaluationException {
         final PositionSet pos = PositionSet.allOut();
         pos.getDark(0).setLocation(0, 5, 0);
         pos.getLight(0).setLocation(0.2, 2.5);

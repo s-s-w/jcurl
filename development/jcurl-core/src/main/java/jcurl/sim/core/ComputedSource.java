@@ -30,12 +30,13 @@ import jcurl.core.io.SetupIO;
 import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 
+import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.RockSet;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.helpers.NotImplementedYetException;
-import org.jcurl.math.analysis.CurveBase;
+import org.jcurl.math.analysis.CurveGhost;
 import org.xml.sax.SAXException;
 
 /**
@@ -62,7 +63,7 @@ public class ComputedSource extends MutableObject implements Source {
 
     private final SpeedSet startSpeed = new SpeedSet();
 
-    private CurveBase curveIterator(int idx) {
+    private CurveGhost curveIterator(int idx) {
         throw new NotImplementedYetException();
     }
 
@@ -82,7 +83,7 @@ public class ComputedSource extends MutableObject implements Source {
         return minT;
     }
 
-    public PositionSet getPos() {
+    public PositionSet getPos() throws FunctionEvaluationException {
         return slide.getPos();
     }
 
@@ -90,7 +91,7 @@ public class ComputedSource extends MutableObject implements Source {
         return slide;
     }
 
-    public SpeedSet getSpeed() {
+    public SpeedSet getSpeed() throws FunctionEvaluationException {
         return slide.getSpeed();
     }
 
@@ -99,7 +100,8 @@ public class ComputedSource extends MutableObject implements Source {
     }
 
     public void init(final PositionSet x, final SpeedSet v,
-            final SlideStrategy ice, final CollissionStrategy coll) {
+            final SlideStrategy ice, final CollissionStrategy coll)
+            throws FunctionEvaluationException {
         minT = 0;
         maxT = 35;
         if (coll != null) {
@@ -138,9 +140,10 @@ public class ComputedSource extends MutableObject implements Source {
      * @param in
      * @throws SAXException
      * @throws IOException
+     * @throws FunctionEvaluationException
      */
     public void loadStart(final InputStream in) throws SAXException,
-            IOException {
+            IOException, FunctionEvaluationException {
         final SetupBuilder sb = SetupIO.load(in);
         this.init(sb.getPos(), sb.getSpeed(), sb.getSlide(),
                 new CollissionSpin());
@@ -168,7 +171,7 @@ public class ComputedSource extends MutableObject implements Source {
                 .getColl());
     }
 
-    public void setT(double current) {
+    public void setT(double current) throws FunctionEvaluationException {
         propChange.firePropertyChange("t", this.slide.getT(), current);
         slide.setT(current);
     }

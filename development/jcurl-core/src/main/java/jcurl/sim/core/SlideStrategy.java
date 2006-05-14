@@ -29,6 +29,7 @@ import jcurl.core.dto.RockSetProps;
 import jcurl.sim.model.CollissionSpin;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.Rock;
 import org.jcurl.core.RockSet;
@@ -183,8 +184,10 @@ public abstract class SlideStrategy extends ModelBase implements Source {
      * @param time
      * @param dt
      *            intervals
+     * @throws FunctionEvaluationException
      */
-    protected void computeUntil(final double time, final double dt) {
+    protected void computeUntil(final double time, final double dt)
+            throws FunctionEvaluationException {
         if (log.isDebugEnabled())
             log.debug("t=" + time + " dt=" + dt);
         // convert seconds to milliseconds and slowly approach hits
@@ -278,7 +281,8 @@ public abstract class SlideStrategy extends ModelBase implements Source {
         return t;
     }
 
-    protected abstract RockSet getC(int c, double time, RockSet rocks);
+    protected abstract RockSet getC(int c, double time, RockSet rocks)
+            throws FunctionEvaluationException;
 
     public CollissionStrategy getColl() {
         return coll;
@@ -315,14 +319,14 @@ public abstract class SlideStrategy extends ModelBase implements Source {
      */
     public abstract double getMu();
 
-    public final PositionSet getPos() {
+    public final PositionSet getPos() throws FunctionEvaluationException {
         if (log.isDebugEnabled())
             log.debug("t=" + getT());
         computeUntil(getT(), dt);
         return (PositionSet) getC(0, getT(), rocks);
     }
 
-    public final SpeedSet getSpeed() {
+    public final SpeedSet getSpeed() throws FunctionEvaluationException {
         if (log.isDebugEnabled())
             log.debug("t=" + getT());
         computeUntil(getT(), dt);
@@ -380,7 +384,8 @@ public abstract class SlideStrategy extends ModelBase implements Source {
      * @return <code>true</code> the rock moves at t1
      */
     protected abstract boolean move(final double t0, final double t1, int idx,
-            final Rock pos, final Rock speed);
+            final Rock pos, final Rock speed)
+            throws FunctionEvaluationException;
 
     /**
      * Generic mover. calls
@@ -398,7 +403,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
      * @return bitmask of the rocks in motion at t1
      */
     protected int move(final double t0, final double t1, final PositionSet pos,
-            final SpeedSet speed) {
+            final SpeedSet speed) throws FunctionEvaluationException {
         if (log.isDebugEnabled())
             log.debug("t0=" + t0 + " t1=" + t1);
         int ret = 0;
@@ -420,7 +425,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
     }
 
     public void reset(PositionSet startPos, SpeedSet startSpeed,
-            RockSetProps props) {
+            RockSetProps props) throws FunctionEvaluationException {
         tmin = tmax = T0;
         RockSet.copy(startPos, maxPos);
         RockSet.copy(startSpeed, maxSpeed);
@@ -444,7 +449,8 @@ public abstract class SlideStrategy extends ModelBase implements Source {
      *            bitmask of the discontinuous rocks
      */
     protected abstract void set(final double t0, final PositionSet pos,
-            final SpeedSet speed, final int discontinuous);
+            final SpeedSet speed, final int discontinuous)
+            throws FunctionEvaluationException;
 
     public void setColl(CollissionStrategy coll) {
         if (coll == null) {
@@ -468,7 +474,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
         props.put(D2T_CURL, new DimVal(curl, Dim.METER));
     }
 
-    public void setT(double t) {
+    public void setT(double t) throws FunctionEvaluationException {
         move(this.t, t, this.rocks, this.speed);
         this.t = t;
     }

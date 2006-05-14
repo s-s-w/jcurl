@@ -27,6 +27,7 @@ import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 import junit.framework.TestCase;
 
+import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.SpeedSet;
 import org.xml.sax.SAXException;
@@ -38,7 +39,7 @@ import org.xml.sax.SAXException;
  */
 public class ComputedSourceTest extends TestCase {
 
-    public void test010_init() {
+    public void test010_init() throws FunctionEvaluationException {
         final ComputedSource m = new ComputedSource();
         m.init(PositionSet.allHome(), new SpeedSet(), new SlideStraight(),
                 new CollissionSpin());
@@ -48,7 +49,7 @@ public class ComputedSourceTest extends TestCase {
     }
 
     public void test100_save() throws SAXException,
-            UnsupportedEncodingException {
+            UnsupportedEncodingException, FunctionEvaluationException {
         final ComputedSource m = new ComputedSource();
         m.init(PositionSet.allHome(), new SpeedSet(), new SlideStraight(),
                 new CollissionSpin());
@@ -62,7 +63,8 @@ public class ComputedSourceTest extends TestCase {
                 new String(data, "UTF-8"));
     }
 
-    public void test110_save_load() throws SAXException, IOException {
+    public void test110_save_load() throws SAXException, IOException,
+            FunctionEvaluationException {
         final ComputedSource m0 = new ComputedSource();
         m0.init(PositionSet.allHome(), new SpeedSet(), new SlideStraight(),
                 new CollissionSpin());

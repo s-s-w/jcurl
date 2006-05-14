@@ -18,6 +18,8 @@
  */
 package org.jcurl.math.analysis;
 
+import org.apache.commons.math.FunctionEvaluationException;
+
 /**
  * Abstract base class for n-dimensional curves <code>R -&gt; R^n</code>.
  * 
@@ -43,7 +45,8 @@ public abstract class CurveBase {
      *            return value container
      * @return the c'th derivative at <code>t</code>
      */
-    public double[] getC(int c, double t, double[] ret) {
+    public double[] getC(int c, double t, double[] ret)
+            throws FunctionEvaluationException {
         if (ret == null)
             ret = new double[dim];
         for (int i = dim - 1; i >= 0; i--)
@@ -62,7 +65,8 @@ public abstract class CurveBase {
      *            return value container
      * @return the c'th derivative at <code>t</code>
      */
-    public float[] getC(int c, double t, float[] ret) {
+    public float[] getC(int c, double t, float[] ret)
+            throws FunctionEvaluationException {
         if (ret == null)
             ret = new float[dim];
         for (int i = dim - 1; i >= 0; i--)
@@ -81,7 +85,8 @@ public abstract class CurveBase {
      *            t-value
      * @return the c'th derivative at <code>t</code>
      */
-    public abstract double getC(int dim, int c, double t);
+    public abstract double getC(int dim, int c, double t)
+            throws FunctionEvaluationException;
 
     /**
      * Compute <code>x where f(x) = 0</code> using Newton's algorithm.
@@ -94,7 +99,8 @@ public abstract class CurveBase {
      *            start value
      * @return x for getC(dim, c, x) = 0
      */
-    public double computeNewtonZero(final int dim, final int c, double x) {
+    public double computeNewtonZero(final int dim, final int c, double x)
+            throws FunctionEvaluationException {
         return computeNewtonValue(dim, c, 0, x);
     }
 
@@ -112,7 +118,7 @@ public abstract class CurveBase {
      * @return x for getC(dim, c, x) = y
      */
     public double computeNewtonValue(final int dim, final int c, double y,
-            double x) {
+            double x) throws FunctionEvaluationException {
         final double eps = 1e-9;
         for (;;) {
             double dx = getC(dim, c + 1, x);

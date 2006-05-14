@@ -18,6 +18,8 @@
  */
 package org.jcurl.math.analysis;
 
+import org.apache.commons.math.FunctionEvaluationException;
+
 /**
  * A curve thats <code>0</code> for everything outside the interval
  * <code>[tmin, tmax]</code>.
@@ -25,16 +27,16 @@ package org.jcurl.math.analysis;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveInterval extends CurveBase {
+public class CurveInterval extends CurveGhost {
 
-    private final CurveBase curve;
+    private final CurveGhost curve;
 
     private final double tmax;
 
     private final double tmin;
 
     public CurveInterval(final double tmin, final double tmax,
-            final CurveBase curve) {
+            final CurveGhost curve) {
         super(curve.dim);
         this.curve = curve;
         this.tmin = tmin;
@@ -49,8 +51,10 @@ public class CurveInterval extends CurveBase {
      * @param t
      *            parameter
      * @return value
+     * @throws FunctionEvaluationException
      */
-    public double getC(final int dim, int c, double t) {
+    public double getC(final int dim, int c, double t)
+            throws FunctionEvaluationException {
         if (t < tmin) {
             if (c > 0)
                 return 0;

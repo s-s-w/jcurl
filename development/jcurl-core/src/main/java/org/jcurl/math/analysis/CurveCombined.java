@@ -19,6 +19,7 @@
 package org.jcurl.math.analysis;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**
@@ -28,7 +29,7 @@ import org.jcurl.core.helpers.JCLoggerFactory;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveCombined extends CurveBase {
+public class CurveCombined extends CurveGhost {
 
     private static final int growth = 120;
 
@@ -71,7 +72,7 @@ public class CurveCombined extends CurveBase {
         }
     }
 
-    private CurveBase[] fkt;
+    private CurveGhost[] fkt;
 
     private int parts = 0;
 
@@ -83,17 +84,17 @@ public class CurveCombined extends CurveBase {
     public CurveCombined(int dim) {
         super(dim);
         t0 = new double[initialSize];
-        fkt = new CurveBase[initialSize];
+        fkt = new CurveGhost[initialSize];
     }
 
-    public void add(final double _t0, final CurveBase fkt) {
+    public void add(final double _t0, final CurveGhost fkt) {
         // re-alloc?
         if (parts == t0.length) {
             final int siz = 1 + parts * growth / 100;
             final double[] t = new double[siz];
             System.arraycopy(t0, 0, t, 0, parts);
             t0 = t;
-            final CurveBase[] c = new CurveBase[siz];
+            final CurveGhost[] c = new CurveGhost[siz];
             System.arraycopy(this.fkt, 0, c, 0, parts);
             this.fkt = c;
         }
@@ -149,8 +150,10 @@ public class CurveCombined extends CurveBase {
      *            derivative
      * @param t
      * @return the value
+     * @throws FunctionEvaluationException
      */
-    public double getC(int dim, int c, double t) {
+    public double getC(int dim, int c, double t)
+            throws FunctionEvaluationException {
         final int idx = findFktIdx_BS(t);
         if (false && log.isDebugEnabled())
             log.debug("t=" + t + " idx=" + idx);

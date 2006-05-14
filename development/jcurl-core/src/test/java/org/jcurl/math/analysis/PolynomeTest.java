@@ -20,6 +20,9 @@ package org.jcurl.math.analysis;
 
 import junit.framework.TestCase;
 
+import org.apache.commons.math.FunctionEvaluationException;
+import org.apache.commons.math.analysis.PolynomialFunction;
+
 /**
  * JUnit Test
  * 
@@ -29,23 +32,19 @@ import junit.framework.TestCase;
  */
 public class PolynomeTest extends TestCase {
 
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(PolynomeTest.class);
-    }
-
     public void test010_fak() {
-        assertEquals(1, Polynome.fak(0, 0));
-        assertEquals(1, Polynome.fak(1, 1));
-        assertEquals(2, Polynome.fak(2, 1));
-        assertEquals(6, Polynome.fak(3, 1));
-        assertEquals(3, Polynome.fak(3, 2));
-        assertEquals(24, Polynome.fak(4, 1));
-        assertEquals(12, Polynome.fak(4, 2));
+        assertEquals(1, Polynome.factorial(0, 0));
+        assertEquals(1, Polynome.factorial(1, 1));
+        assertEquals(2, Polynome.factorial(2, 1));
+        assertEquals(6, Polynome.factorial(3, 1));
+        assertEquals(3, Polynome.factorial(3, 2));
+        assertEquals(24, Polynome.factorial(4, 1));
+        assertEquals(12, Polynome.factorial(4, 2));
 
-        assertEquals(1, Polynome.fak(3, 3));
-        assertEquals(1, Polynome.fak(2, 2));
-        assertEquals(1, Polynome.fak(1, 1));
-        assertEquals(1, Polynome.fak(0, 0));
+        assertEquals(1, Polynome.factorial(3, 3));
+        assertEquals(1, Polynome.factorial(2, 2));
+        assertEquals(1, Polynome.factorial(1, 1));
+        assertEquals(1, Polynome.factorial(0, 0));
     }
 
     public void test020_getC() {
@@ -93,7 +92,7 @@ public class PolynomeTest extends TestCase {
         assertEquals("", y, po.getC(4, x), 1e-9);
     }
 
-    public void test025_Newton() {
+    public void test025_Newton() throws FunctionEvaluationException {
         {
             double[] a = { -1, 1 };
             Polynome po = new Polynome(a);
@@ -123,14 +122,14 @@ public class PolynomeTest extends TestCase {
         double a = -0.1071697516342192;
         double[] par = Polynome.getPolyParams(t0, 0, v, a);
 
-        assertEquals("", 0, Polynome.poly(0, t0 + dt, par), 1e-9);
-        assertEquals("", v, Polynome.poly(1, t0 + dt, par), 1e-9);
-        assertEquals("", a, Polynome.poly(2, t0 + dt, par), 1e-9);
+        assertEquals("", 0, Polynome.evaluate(par, t0 + dt, 0), 1e-9);
+        assertEquals("", v, Polynome.evaluate(par, t0 + dt, 1), 1e-9);
+        assertEquals("", a, Polynome.evaluate(par, t0 + dt, 2), 1e-9);
 
         dt = 0.1;
-        assertEquals("", 0.0113776845, Polynome.poly(0, t0 + dt, par), 1e-9);
-        assertEquals("", 0.1084183581, Polynome.poly(1, t0 + dt, par), 1e-9);
-        assertEquals("", a, Polynome.poly(2, t0 + dt, par), 1e-9);
+        assertEquals("", 0.0113776845, Polynome.evaluate(par, t0 + dt, 0), 1e-9);
+        assertEquals("", 0.1084183581, Polynome.evaluate(par, t0 + dt, 1), 1e-9);
+        assertEquals("", a, Polynome.evaluate(par, t0 + dt, 2), 1e-9);
 
     }
 
@@ -158,5 +157,30 @@ public class PolynomeTest extends TestCase {
             po.getC(0, 1.1);
         double cps = count / (1e-3 * (System.currentTimeMillis() - start));
         assertTrue(cps > 2000000);
+    }
+
+    public void testCompare() throws FunctionEvaluationException {
+        final double[] coeff = { 1.1, 1.2, 1.3 };
+        final double[] points = { -1.1, -1, 0, 1, 1.1, 100 };
+        final PolynomialFunction pa = new PolynomialFunction(coeff);
+        final Polynome pj = new Polynome(coeff);
+        for (int i = points.length - 1; i >= 0; i--)
+            assertEquals("", pa.value(points[i]), pj.value(points[i]), 1e-11);
+
+        final PolynomialFunction pa1 = pa.polynomialDerivative();
+        for (int i = points.length - 1; i >= 0; i--)
+            assertEquals("", pa1.value(points[i]), pj.getC(1, points[i]), 1e-11);
+
+        final PolynomialFunction pa2 = pa1.polynomialDerivative();
+        for (int i = points.length - 1; i >= 0; i--)
+            assertEquals("", pa2.value(points[i]), pj.getC(2, points[i]), 1e-11);
+
+        final Polynome pj1 = pj.polynomialDerivative();
+        for (int i = points.length - 1; i >= 0; i--)
+            assertEquals("", pj1.value(points[i]), pj.getC(1, points[i]), 1e-11);
+
+        final Polynome pj2 = pj1.polynomialDerivative();
+        for (int i = points.length - 1; i >= 0; i--)
+            assertEquals("", pj2.value(points[i]), pj.getC(2, points[i]), 1e-11);
     }
 }

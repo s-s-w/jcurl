@@ -32,6 +32,7 @@ import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
@@ -84,14 +85,16 @@ public class ViewerApplet extends JApplet {
                 // dynamics engines
                 src.init(pos, speed, new SlideStraight(), new CollissionSpin());
             }
+            // set up the keyboard handler
+            this.addKeyListener(new SimpleKeys(src, dst));
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         } catch (SAXException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (FunctionEvaluationException e) {
+            throw new RuntimeException(e);
         }
-        // set up the keyboard handler
-        this.addKeyListener(new SimpleKeys(src, dst));
     }
 }
