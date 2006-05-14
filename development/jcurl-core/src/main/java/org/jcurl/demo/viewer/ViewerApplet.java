@@ -44,6 +44,7 @@ import org.xml.sax.SAXException;
 public class ViewerApplet extends JApplet {
 
     private static final long serialVersionUID = 3098543777055838932L;
+
     private static final Log log = JCLoggerFactory
             .getLogger(ViewerApplet.class);
 
@@ -54,7 +55,7 @@ public class ViewerApplet extends JApplet {
     public void init() {
         setFocusable(true);
         // resize(200, 100);
-        //final Container contentPane = getContentPane();
+        // final Container contentPane = getContentPane();
         final JCurlDisplay mp = new JCurlDisplay(null, null, null, null);
         getContentPane().add(mp);
         final TargetDiscrete dst = mp;

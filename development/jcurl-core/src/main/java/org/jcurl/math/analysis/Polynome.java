@@ -16,16 +16,21 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.math;
+package org.jcurl.math.analysis;
+
+import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
+import org.apache.commons.math.analysis.UnivariateRealFunction;
+import org.jcurl.core.helpers.NotImplementedYetException;
 
 /**
  * Polynomes of n-th grade.
  * 
- * @see org.jcurl.math.PolynomeTest
+ * @see org.jcurl.math.analysis.PolynomeTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class Polynome extends Function1D {
+public class Polynome extends Function1D implements
+        DifferentiableUnivariateRealFunction {
     /**
      * Compute <code>a!</code>
      * 
@@ -142,6 +147,10 @@ public class Polynome extends Function1D {
 
     public Polynome(final double[] params) {
         this.params = params;
+    }
+
+    public UnivariateRealFunction derivative() {
+        throw new NotImplementedYetException();
     }
 
     /**

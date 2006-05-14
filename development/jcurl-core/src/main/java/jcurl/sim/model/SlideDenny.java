@@ -24,9 +24,9 @@ import jcurl.sim.core.SlideCurves;
 
 import org.jcurl.core.Rock;
 import org.jcurl.core.helpers.NotImplementedYetException;
-import org.jcurl.math.CurveBase;
-import org.jcurl.math.CurveFkt;
-import org.jcurl.math.Polynome;
+import org.jcurl.math.analysis.CurveBase;
+import org.jcurl.math.analysis.CurveFkt;
+import org.jcurl.math.analysis.Polynome;
 
 /**
  * Mark Denny's curl-model. Motion of a curling rock acc. to "Curling rock

@@ -30,17 +30,17 @@ import javax.swing.JPanel;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.helpers.Version;
-import org.jcurl.math.CurveBase;
-import org.jcurl.math.CurveFkt;
-import org.jcurl.math.CurveShape;
-import org.jcurl.math.Function1D;
-import org.jcurl.math.Polynome;
+import org.jcurl.math.analysis.CurveBase;
+import org.jcurl.math.analysis.CurveFkt;
+import org.jcurl.math.analysis.Function1D;
+import org.jcurl.math.analysis.Polynome;
+import org.jcurl.math.helpers.CurveShape;
 
 /**
- * Demonstrate how to draw a {@link org.jcurl.math.CurveBase}converted to a
- * {@link java.awt.Shape}.
+ * Demonstrate how to draw a {@link org.jcurl.math.analysis.CurveBase}converted
+ * to a {@link java.awt.Shape}.
  * 
- * @see org.jcurl.math.CurveShape
+ * @see org.jcurl.math.helpers.CurveShape
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

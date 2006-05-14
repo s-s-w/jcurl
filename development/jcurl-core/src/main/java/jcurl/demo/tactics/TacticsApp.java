@@ -101,8 +101,7 @@ public class TacticsApp extends JFrame {
     private static final Cursor Cwait = Cursor
             .getPredefinedCursor(Cursor.WAIT_CURSOR);
 
-    private static final Log log = JCLoggerFactory
-            .getLogger(TacticsApp.class);
+    private static final Log log = JCLoggerFactory.getLogger(TacticsApp.class);
 
     /**
      * @param name

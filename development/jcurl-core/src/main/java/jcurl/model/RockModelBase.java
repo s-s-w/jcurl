@@ -21,7 +21,7 @@ package jcurl.model;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.MutableObject;
-import org.jcurl.math.CurveBase;
+import org.jcurl.math.analysis.CurveBase;
 
 /**
  * Atom for rock (set) data. Combines the two canonical approaches: curve-based
@@ -56,6 +56,7 @@ public abstract class RockModelBase extends MutableObject {
 
     /**
      * Triggers a {@link java.beans.PropertyChangeEvent}.
+     * 
      * @param tnow
      */
     public abstract void setTNow(double tnow);

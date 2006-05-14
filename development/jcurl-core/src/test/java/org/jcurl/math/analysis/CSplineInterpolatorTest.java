@@ -16,12 +16,12 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.math;
+package org.jcurl.math.analysis;
 
 import junit.framework.TestCase;
 
 /**
- * @see org.jcurl.math.CSplineInterpolator
+ * @see org.jcurl.math.analysis.CSplineInterpolator
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id: CSplineInterpolatorTest.java 136 2005-10-03 22:05:16Z
  *          mrohrmoser $

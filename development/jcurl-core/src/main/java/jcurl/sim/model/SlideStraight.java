@@ -28,10 +28,10 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.Rock;
 import org.jcurl.core.RockSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.math.CurveBase;
-import org.jcurl.math.CurveFkt;
-import org.jcurl.math.MathVec;
-import org.jcurl.math.Polynome;
+import org.jcurl.math.analysis.CurveBase;
+import org.jcurl.math.analysis.CurveFkt;
+import org.jcurl.math.analysis.Polynome;
+import org.jcurl.math.linalg.MathVec;
 
 /**
  * ComputedSource without curl and with constant acceleration.

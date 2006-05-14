@@ -28,24 +28,23 @@ import org.jcurl.core.Rock;
 import org.jcurl.core.RockSet;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.math.CurveBase;
-import org.jcurl.math.CurveCombined;
-import org.jcurl.math.CurveInterval;
-import org.jcurl.math.MathVec;
-import org.jcurl.math.Polynome;
+import org.jcurl.math.analysis.CurveBase;
+import org.jcurl.math.analysis.CurveCombined;
+import org.jcurl.math.analysis.CurveInterval;
+import org.jcurl.math.analysis.Polynome;
+import org.jcurl.math.linalg.MathVec;
 
 /**
  * Abstract base class for analytic (non-discrete) curl models. Based on rock
- * trajectories in {@link org.jcurl.math.CurveBase}-form.
+ * trajectories in {@link org.jcurl.math.analysis.CurveBase}-form.
  * 
- * @see org.jcurl.math.CurveBase
+ * @see org.jcurl.math.analysis.CurveBase
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public abstract class SlideCurves extends SlideStrategy {
 
-    private static final Log log = JCLoggerFactory
-            .getLogger(SlideCurves.class);
+    private static final Log log = JCLoggerFactory.getLogger(SlideCurves.class);
 
     private static double findThalt(final double t0, final CurveBase cu) {
         final double thx = cu.computeNewtonZero(0, 1, t0);

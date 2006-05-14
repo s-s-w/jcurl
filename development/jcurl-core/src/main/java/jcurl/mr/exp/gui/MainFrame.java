@@ -37,8 +37,7 @@ public class MainFrame extends JFrame {
 
     private static final long serialVersionUID = 7094013076400484227L;
 
-    private static final Log log = JCLoggerFactory
-            .getLogger(MainFrame.class);
+    private static final Log log = JCLoggerFactory.getLogger(MainFrame.class);
 
     private final PointList curve;
 

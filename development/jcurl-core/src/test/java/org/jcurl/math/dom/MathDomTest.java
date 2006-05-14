@@ -118,7 +118,7 @@ public class MathDomTest extends TestCase {
         System.out.println("Parsing: " + cps + " calls per second");
         assertTrue("MatDom creation was too slow, only " + cps
                 + " calls per second", cps > 50000);
-        
+
         // evaluation
         final MathDom.Node n = ParserInfix.parse(" 2 * 4 +3 ");
         final DomWalkerEval de = new DomWalkerEval();

@@ -34,8 +34,8 @@ public class RockLocationDisplay extends RockLocationDisplayBase {
 
     private static final long serialVersionUID = 146935083360365782L;
 
-//    private static final Log log = JCLoggerFactory
-//            .getLogger(RockLocationDisplay.class);
+    // private static final Log log = JCLoggerFactory
+    // .getLogger(RockLocationDisplay.class);
 
     private final IcePainter iceP;
 

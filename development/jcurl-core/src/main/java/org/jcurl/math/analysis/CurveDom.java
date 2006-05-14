@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.math;
+package org.jcurl.math.analysis;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -27,11 +27,12 @@ import org.jcurl.math.dom.MathDom;
 /**
  * A n-dimensional, continuous curve (R -&gt; R^n) based on a
  * {@link org.jcurl.math.dom.MathDom}.Node. Maybe it's better to add a
- * {@link org.jcurl.math.Function1D}based on {@link org.jcurl.math.dom.MathDom}and
- * use {@link org.jcurl.math.CurveFkt}rather than this class.
+ * {@link org.jcurl.math.analysis.Function1D}based on
+ * {@link org.jcurl.math.dom.MathDom}and use
+ * {@link org.jcurl.math.analysis.CurveFkt}rather than this class.
  * 
  * @see org.jcurl.math.dom.MathDom
- * @see org.jcurl.math.CurveTest
+ * @see org.jcurl.math.analysis.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

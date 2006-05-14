@@ -27,7 +27,7 @@ import jcurl.sim.core.CollissionStrategy;
 
 import org.jcurl.core.Rock;
 import org.jcurl.core.RockDouble;
-import org.jcurl.math.MathVec;
+import org.jcurl.math.linalg.MathVec;
 
 /**
  * A hitter including spin and loss of energy.

@@ -15,10 +15,15 @@
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.math;
+package org.jcurl.math.helpers;
 
 import java.awt.Shape;
 import java.awt.geom.GeneralPath;
+
+import org.jcurl.math.analysis.CurveBase;
+import org.jcurl.math.analysis.CurveFkt;
+import org.jcurl.math.analysis.Function1D;
+import org.jcurl.math.linalg.MathVec;
 
 /**
  * Enable convenient approximated Java2D drawing of arbitratry curves.
@@ -92,17 +97,17 @@ public abstract class CurveShape {
      * Maxima code:
      * 
      * <pre>
-     *   NEXTLAYERFACTOR(TRUE)$
-     *   DEBUGMODE(TRUE)$ 
-     *    
-     *   pa[0] + k * va[0] = pb[0] + l * vb[0];
-     *   pa[1] + k * va[1] = pb[1] + l * vb[1];
-     *    
-     *   LINSOLVE([%i4, %i5],[k, l]),GLOBALSOLVE:TRUE,BACKSUBST:TRUE$
-     *    
-     *   SCSIMP(PART(%o6,1,2)); 
-     *    
-     *   quit$
+     *    NEXTLAYERFACTOR(TRUE)$
+     *    DEBUGMODE(TRUE)$ 
+     *     
+     *    pa[0] + k * va[0] = pb[0] + l * vb[0];
+     *    pa[1] + k * va[1] = pb[1] + l * vb[1];
+     *     
+     *    LINSOLVE([%i4, %i5],[k, l]),GLOBALSOLVE:TRUE,BACKSUBST:TRUE$
+     *     
+     *    SCSIMP(PART(%o6,1,2)); 
+     *     
+     *    quit$
      * </pre>
      * 
      * @param pa

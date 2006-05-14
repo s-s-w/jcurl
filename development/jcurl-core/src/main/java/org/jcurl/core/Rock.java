@@ -18,7 +18,7 @@
  */
 package org.jcurl.core;
 
-import org.jcurl.math.Point3D;
+import org.jcurl.math.helpers.Point3D;
 
 /**
  * Base class for rock information (either location or speed). The "Z" component

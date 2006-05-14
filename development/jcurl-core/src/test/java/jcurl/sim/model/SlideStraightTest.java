@@ -28,8 +28,8 @@ import org.jcurl.core.Rock;
 import org.jcurl.core.RockDouble;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.math.CurveBase;
-import org.jcurl.math.Polynome;
+import org.jcurl.math.analysis.CurveBase;
+import org.jcurl.math.analysis.Polynome;
 
 /**
  * JUnit test.

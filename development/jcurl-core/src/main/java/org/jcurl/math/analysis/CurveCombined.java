@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.math;
+package org.jcurl.math.analysis;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.JCLoggerFactory;
@@ -24,7 +24,7 @@ import org.jcurl.core.helpers.JCLoggerFactory;
 /**
  * Combined curve.
  * 
- * @see org.jcurl.math.CurveTest
+ * @see org.jcurl.math.analysis.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

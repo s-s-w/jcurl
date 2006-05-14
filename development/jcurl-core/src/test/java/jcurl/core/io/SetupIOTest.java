@@ -40,8 +40,7 @@ import org.xml.sax.SAXException;
  */
 public class SetupIOTest extends TestCase {
 
-    private static final Log log = JCLoggerFactory
-            .getLogger(SetupIOTest.class);
+    private static final Log log = JCLoggerFactory.getLogger(SetupIOTest.class);
 
     public SetupIOTest() {
         // Set logging to debug

@@ -54,8 +54,7 @@ public class ViewerApp extends JFrame {
 
     private static final long serialVersionUID = -5809346296249873005L;
 
-    private static final Log log = JCLoggerFactory
-            .getLogger(ViewerApp.class);
+    private static final Log log = JCLoggerFactory.getLogger(ViewerApp.class);
 
     public static void main(String[] args) throws MalformedURLException,
             ParserConfigurationException, SAXException, IOException {

@@ -30,7 +30,7 @@ import org.jcurl.core.RockSet;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.EnumBase;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.math.MathVec;
+import org.jcurl.math.linalg.MathVec;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

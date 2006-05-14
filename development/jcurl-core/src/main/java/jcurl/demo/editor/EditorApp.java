@@ -82,8 +82,7 @@ public class EditorApp extends JFrame {
     private static final Cursor Cwait = Cursor
             .getPredefinedCursor(Cursor.WAIT_CURSOR);
 
-    private static final Log log = JCLoggerFactory
-            .getLogger(EditorApp.class);
+    private static final Log log = JCLoggerFactory.getLogger(EditorApp.class);
 
     private static final long serialVersionUID = -5330160383513753742L;
 

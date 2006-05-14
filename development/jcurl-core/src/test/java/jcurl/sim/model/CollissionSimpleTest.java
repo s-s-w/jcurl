@@ -28,7 +28,7 @@ import junit.framework.TestCase;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.Rock;
 import org.jcurl.core.SpeedSet;
-import org.jcurl.math.MathVec;
+import org.jcurl.math.linalg.MathVec;
 
 /**
  * @see jcurl.sim.model.CollissionSimple

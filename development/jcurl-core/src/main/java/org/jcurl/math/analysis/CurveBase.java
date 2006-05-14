@@ -16,12 +16,12 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.math;
+package org.jcurl.math.analysis;
 
 /**
  * Abstract base class for n-dimensional curves <code>R -&gt; R^n</code>.
  * 
- * @see org.jcurl.math.CurveTest
+ * @see org.jcurl.math.analysis.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

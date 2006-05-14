@@ -16,14 +16,14 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.math;
+package org.jcurl.math.analysis;
 
 /**
  * A n-dimensional, continuous curve <code>R -&gt; R^n</code> based on
- * {@link org.jcurl.math.Function1D}s.
+ * {@link org.jcurl.math.analysis.Function1D}s.
  * 
- * @see org.jcurl.math.Function1D
- * @see org.jcurl.math.CurveTest
+ * @see org.jcurl.math.analysis.Function1D
+ * @see org.jcurl.math.analysis.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

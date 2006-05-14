@@ -139,87 +139,87 @@ public class SaxParserTest extends TestCase {
         spf.setValidating(false);
         final SAXParser p = spf.newSAXParser();
         final DefaultHandler h = new DefaultHandler() {
-    
+
             public void characters(char[] arg0, int arg1, int arg2)
                     throws SAXException {
                 super.characters(arg0, arg1, arg2);
             }
-    
+
             public void endDocument() throws SAXException {
                 super.endDocument();
             }
-    
+
             public void endElement(String arg0, String arg1, String arg2)
                     throws SAXException {
                 super.endElement(arg0, arg1, arg2);
             }
-    
+
             public void endPrefixMapping(String arg0) throws SAXException {
                 super.endPrefixMapping(arg0);
             }
-    
+
             public void error(SAXParseException arg0) throws SAXException {
                 super.error(arg0);
             }
-    
+
             public void fatalError(SAXParseException arg0) throws SAXException {
                 super.fatalError(arg0);
             }
-    
+
             public void ignorableWhitespace(char[] arg0, int arg1, int arg2)
                     throws SAXException {
                 super.ignorableWhitespace(arg0, arg1, arg2);
             }
-    
+
             public void notationDecl(String arg0, String arg1, String arg2)
                     throws SAXException {
                 super.notationDecl(arg0, arg1, arg2);
             }
-    
+
             public void processingInstruction(String arg0, String arg1)
                     throws SAXException {
                 assertEquals("pi", arg0);
                 assertEquals("a b c", arg1);
             }
-    
+
             public InputSource resolveEntity(String arg0, String arg1)
                     throws SAXException {
                 return super.resolveEntity(arg0, arg1);
             }
-    
+
             public void setDocumentLocator(Locator arg0) {
                 super.setDocumentLocator(arg0);
             }
-    
+
             public void skippedEntity(String arg0) throws SAXException {
                 super.skippedEntity(arg0);
             }
-    
+
             public void startDocument() throws SAXException {
                 super.startDocument();
             }
-    
+
             public void startElement(String arg0, String arg1, String arg2,
                     Attributes arg3) throws SAXException {
                 super.startElement(arg0, arg1, arg2, arg3);
             }
-    
+
             public void startPrefixMapping(String arg0, String arg1)
                     throws SAXException {
                 super.startPrefixMapping(arg0, arg1);
             }
-    
+
             public void unparsedEntityDecl(String arg0, String arg1,
                     String arg2, String arg3) throws SAXException {
                 super.unparsedEntityDecl(arg0, arg1, arg2, arg3);
             }
-    
+
             public void warning(SAXParseException arg0) throws SAXException {
                 super.warning(arg0);
             }
-    
+
         };
-    
+
         p
                 .parse(
                         new InputSource(

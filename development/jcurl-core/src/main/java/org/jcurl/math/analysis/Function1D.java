@@ -16,19 +16,37 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.math;
+package org.jcurl.math.analysis;
+
+import org.apache.commons.math.FunctionEvaluationException;
+import org.apache.commons.math.analysis.UnivariateRealFunction;
 
 /**
  * A "normal" one-dimensional function. Because this is the same as a
- * 1-dimensional curve it extends {@link org.jcurl.math.CurveBase}.
+ * 1-dimensional curve it extends {@link org.jcurl.math.analysis.CurveBase}.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class Function1D extends CurveBase {
+public abstract class Function1D extends CurveBase implements
+        UnivariateRealFunction {
 
     protected Function1D() {
         super(1);
+    }
+
+    /**
+     * Compute <code>x where f(x) = 0</code> using Newton's algorithm.
+     * 
+     * @see CurveBase#computeNewtonZero(int, int, double)
+     * @param c
+     *            c'th derivative
+     * @param x
+     *            start value
+     * @return x for getC(c, x) = 0
+     */
+    public double computeNewtonZero(final int c, double x) {
+        return computeNewtonZero(0, c, x);
     }
 
     /**
@@ -63,18 +81,8 @@ public abstract class Function1D extends CurveBase {
         return getC(c, x);
     }
 
-    /**
-     * Compute <code>x where f(x) = 0</code> using Newton's algorithm.
-     * 
-     * @see CurveBase#computeNewtonZero(int, int, double)
-     * @param c
-     *            c'th derivative
-     * @param x
-     *            start value
-     * @return x for getC(c, x) = 0
-     */
-    public double computeNewtonZero(final int c, double x) {
-        return computeNewtonZero(0, c, x);
+    public double value(double arg0) throws FunctionEvaluationException {
+        return getC(0, arg0);
     }
 
 }

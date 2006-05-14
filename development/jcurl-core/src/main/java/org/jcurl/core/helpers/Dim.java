@@ -23,7 +23,6 @@ import java.util.TreeMap;
 
 import jcurl.core.dto.Ice;
 
-
 /**
  * Various units of measurement incl. conversion.
  * 

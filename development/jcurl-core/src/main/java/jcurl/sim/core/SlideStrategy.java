@@ -36,7 +36,7 @@ import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.math.MathVec;
+import org.jcurl.math.linalg.MathVec;
 
 /**
  * Abstract base class for propagation/friction models.

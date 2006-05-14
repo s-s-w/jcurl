@@ -50,7 +50,8 @@ import org.jcurl.core.helpers.JCLoggerFactory;
  * and provides callbacks for actual drawing.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: RockLocationDisplayBase.java 295 2006-05-14 11:50:09Z
+ *          mrohrmoser $
  */
 public abstract class RockLocationDisplayBase extends JComponent implements
         TargetDiscrete, PropertyChangeListener {

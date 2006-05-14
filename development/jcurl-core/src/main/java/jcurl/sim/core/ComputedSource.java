@@ -35,7 +35,7 @@ import org.jcurl.core.RockSet;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.helpers.NotImplementedYetException;
-import org.jcurl.math.CurveBase;
+import org.jcurl.math.analysis.CurveBase;
 import org.xml.sax.SAXException;
 
 /**
@@ -151,7 +151,7 @@ public class ComputedSource extends MutableObject implements Source {
      * 
      * @param idx
      *            rock index
-     * @return ???           
+     * @return ???
      */
     public PathIterator pathIterator(int idx) {
         throw new NotImplementedYetException();
