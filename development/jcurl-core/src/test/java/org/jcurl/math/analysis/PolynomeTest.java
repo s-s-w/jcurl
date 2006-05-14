@@ -92,28 +92,6 @@ public class PolynomeTest extends TestCase {
         assertEquals("", y, po.getC(4, x), 1e-9);
     }
 
-    public void test025_Newton() throws FunctionEvaluationException {
-        {
-            double[] a = { -1, 1 };
-            Polynome po = new Polynome(a);
-            assertEquals("", 1, po.computeNewtonZero(0, 0.5), 1e-6);
-        }
-        {
-            double[] a = { -1, 0, 1 };
-            Polynome po = new Polynome(a);
-            assertEquals("", 0, po.getC(0, 1), 1e-6);
-            assertEquals("", 1, po.computeNewtonZero(0, 0.5), 1e-6);
-        }
-        {
-            double[] a = { 0, 1, -0.0535848758171096 };
-            Polynome po = new Polynome(a);
-            assertEquals("", 0.0, po.getC(0, 0), 1e-6);
-            assertEquals("", 1.0, po.getC(1, 0), 1e-6);
-            assertEquals("", 9.330991112241236, po.computeNewtonZero(1, 0),
-                    1e-6);
-        }
-    }
-
     public void test029_getPolyParams() {
         double t0 = 2.894295921183459;
         double dt = 0;
@@ -175,11 +153,11 @@ public class PolynomeTest extends TestCase {
         for (int i = points.length - 1; i >= 0; i--)
             assertEquals("", pa2.value(points[i]), pj.getC(2, points[i]), 1e-11);
 
-        final Polynome pj1 = pj.polynomialDerivative();
+        final PolynomialFunction pj1 = pj.polynomialDerivative();
         for (int i = points.length - 1; i >= 0; i--)
             assertEquals("", pj1.value(points[i]), pj.getC(1, points[i]), 1e-11);
 
-        final Polynome pj2 = pj1.polynomialDerivative();
+        final PolynomialFunction pj2 = pj1.polynomialDerivative();
         for (int i = points.length - 1; i >= 0; i--)
             assertEquals("", pj2.value(points[i]), pj.getC(2, points[i]), 1e-11);
     }

@@ -55,4 +55,21 @@ public class MathVecTest extends TestCase {
         assertEquals(1.0, x[1], 3e-3);
         assertEquals(5.0, x[0], 2e-2);
     }
+
+    public void testScal() {
+        final double[] a = { 1, 2 };
+        final double[] b = { 0.6, 1.2 };
+        final double c = MathVec.scal(a, b);
+        assertEquals("", 3.0, c, 1e-100);
+    }
+
+    public void testSub() {
+        final double[] a = { 1, 2 };
+        final double[] b = { 0.6, 1.2 };
+        final double[] c = MathVec.sub(a, b, a);
+        assertEquals("", 0.4, a[0], 1e-100);
+        assertEquals("", 0.8, a[1], 1e-100);
+        assertEquals("", 0.4, c[0], 1e-100);
+        assertEquals("", 0.8, c[1], 1e-100);
+    }
 }

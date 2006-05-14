@@ -21,12 +21,13 @@ package org.jcurl.math.analysis;
 import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
 
-public class DifferentiableUnivariateRealCurve {
+public class DifferentiableCurve {
 
     private final DifferentiableUnivariateRealFunction[] c;
 
-    public DifferentiableUnivariateRealCurve(
-            DifferentiableUnivariateRealFunction[] c) {
+    transient private DifferentiableCurve derived = null;
+
+    public DifferentiableCurve(DifferentiableUnivariateRealFunction[] c) {
         this.c = new DifferentiableUnivariateRealFunction[c.length];
         System.arraycopy(c, 0, this.c, 0, c.length);
     }
@@ -41,12 +42,15 @@ public class DifferentiableUnivariateRealCurve {
         return ret;
     }
 
-    public DifferentiableUnivariateRealCurve derivative() {
-        final DifferentiableUnivariateRealFunction[] tmp = new DifferentiableUnivariateRealFunction[getDimension()];
-        for (int i = getDimension(); i >= 0; i--)
-            tmp[i] = (DifferentiableUnivariateRealFunction) component(i)
-                    .derivative();
-        return new DifferentiableUnivariateRealCurve(tmp);
+    public DifferentiableCurve derivative() {
+        if (derived == null) {
+            final DifferentiableUnivariateRealFunction[] tmp = new DifferentiableUnivariateRealFunction[getDimension()];
+            for (int i = getDimension() - 1; i >= 0; i--)
+                tmp[i] = (DifferentiableUnivariateRealFunction) component(i)
+                        .derivative();
+            derived = new DifferentiableCurve(tmp);
+        }
+        return derived;
     }
 
     public int getDimension() {
@@ -59,7 +63,7 @@ public class DifferentiableUnivariateRealCurve {
             ret = new double[getDimension()];
         else if (ret.length != getDimension())
             throw new IllegalArgumentException();
-        for (int i = getDimension(); i >= 0; i--)
+        for (int i = getDimension() - 1; i >= 0; i--)
             ret[i] = value(i, t);
         return ret;
     }

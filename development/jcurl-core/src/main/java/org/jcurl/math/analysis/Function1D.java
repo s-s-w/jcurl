@@ -19,6 +19,7 @@
 package org.jcurl.math.analysis;
 
 import org.apache.commons.math.FunctionEvaluationException;
+import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
 import org.apache.commons.math.analysis.UnivariateRealFunction;
 
 /**
@@ -29,7 +30,7 @@ import org.apache.commons.math.analysis.UnivariateRealFunction;
  * @version $Id$
  */
 public abstract class Function1D extends CurveGhost implements
-        UnivariateRealFunction {
+        DifferentiableUnivariateRealFunction {
 
     protected Function1D() {
         super(1);

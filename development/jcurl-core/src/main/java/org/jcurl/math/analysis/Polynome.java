@@ -18,7 +18,7 @@
  */
 package org.jcurl.math.analysis;
 
-import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
+import org.apache.commons.math.analysis.PolynomialFunction;
 import org.apache.commons.math.analysis.UnivariateRealFunction;
 
 /**
@@ -28,8 +28,10 @@ import org.apache.commons.math.analysis.UnivariateRealFunction;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class Polynome extends Function1D implements
-        DifferentiableUnivariateRealFunction {
+public class Polynome extends PolynomialFunction {
+
+    private static final long serialVersionUID = -745491227197828208L;
+
     /**
      * Compute the polynome p at x.
      * 
@@ -144,10 +146,8 @@ public class Polynome extends Function1D implements
         return ret.toString();
     }
 
-    private final double[] coefficients;
-
     public Polynome(final double[] params) {
-        this.coefficients = params;
+        super(params);
     }
 
     public UnivariateRealFunction derivative() {
@@ -155,20 +155,16 @@ public class Polynome extends Function1D implements
     }
 
     /**
+     * @param c 
+     * @param x 
+     * @return #value
      * @see #evaluate(double[], double, int)
      */
-    public double getC(final int c, final double x) {
-        return evaluate(coefficients, x, c);
-    }
-
-    public Polynome polynomialDerivative() {
-        final double[] ret = new double[coefficients.length - 1];
-        for (int i = ret.length - 1; i >= 0; i--)
-            ret[i] = (i + 1) * coefficients[i + 1];
-        return new Polynome(ret);
+    double getC(final int c, final double x) {
+        return evaluate(getCoefficients(), x, c);
     }
 
     public String toString() {
-        return toString(this.coefficients);
+        return toString(this.getCoefficients());
     }
 }

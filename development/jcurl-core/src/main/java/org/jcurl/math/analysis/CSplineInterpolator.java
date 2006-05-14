@@ -18,6 +18,9 @@
  */
 package org.jcurl.math.analysis;
 
+import org.apache.commons.math.analysis.UnivariateRealFunction;
+import org.jcurl.core.helpers.NotImplementedYetException;
+
 /**
  * The numerical algorithms are adapted from "Meyberg/Vachenauer": Hoehere
  * Mathematik I, second edition. Could this be based on
@@ -208,5 +211,9 @@ public class CSplineInterpolator extends Function1D {
     public void reset() {
         this.points = 0;
         this._splines = null;
+    }
+
+    public UnivariateRealFunction derivative() {
+        throw new NotImplementedYetException();
     }
 }

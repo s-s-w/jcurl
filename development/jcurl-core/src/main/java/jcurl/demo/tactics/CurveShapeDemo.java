@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.math.FunctionEvaluationException;
+import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.helpers.Version;
 import org.jcurl.math.analysis.CurveFkt;
@@ -56,7 +57,7 @@ public class CurveShapeDemo extends JFrame {
         log.info("Version: " + Version.find());
         final CurveGhost c;
         {
-            final Function1D[] f = new Function1D[2];
+            final DifferentiableUnivariateRealFunction[] f = new DifferentiableUnivariateRealFunction[2];
             final double[] fx = { 200, 150 };
             final double[] fy = { 4, 4, 4, 4, 4 };
             f[0] = new Polynome(fx);

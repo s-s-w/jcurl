@@ -27,7 +27,7 @@ import org.apache.commons.math.FunctionEvaluationException;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class CurveBase {
+abstract class CurveBase {
     protected final int dim;
 
     protected CurveBase(final int dim) {

@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework 
- * Copyright (C) 2005 M. Rohrmoser
+ * Copyright (C) 2005-2006 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -27,6 +27,44 @@ import java.awt.geom.Point2D;
  * @version $Id$
  */
 public final class MathVec {
+
+    public static double abs(final Point2D a) {
+        return Math.sqrt(scal(a, a));
+    }
+
+    public static Point2D add(final Point2D a, final Point2D b, final Point2D c) {
+        final Point2D ret = ensureInstance(a, c);
+        ret.setLocation(a.getX() + b.getX(), a.getY() + b.getY());
+        return ret;
+    }
+
+    public static double distSq(final double[] a, final double[] b,
+            final double[] tmp) {
+        final double[] c = MathVec.sub(a, b, tmp);
+        return MathVec.scal(c, c);
+    }
+
+    /**
+     * Ensure c isn't <code>null</code>, if so create a new instance of the
+     * type of <code>template</code>.
+     * 
+     * @param template
+     * @param c
+     * @return <code>c</code> or
+     *         <code>template.getClass().newInstance()</code>
+     */
+    public static Point2D ensureInstance(final Point2D template, final Point2D c) {
+        if (c != null)
+            return c;
+        // try {
+        // return (Point2D) template.getClass().newInstance();
+        return (Point2D) template.clone();
+        // } catch (InstantiationException e) {
+        // throw new RuntimeException("Couldn't create a new instance.", e);
+        // } catch (IllegalAccessException e) {
+        // throw new RuntimeException("Couldn't create a new instance.", e);
+        // }
+    }
 
     /**
      * Solve a linear equation of the form a*x=b.
@@ -123,38 +161,6 @@ public final class MathVec {
         return x;
     }
 
-    public static double abs(final Point2D a) {
-        return Math.sqrt(scal(a, a));
-    }
-
-    public static Point2D add(final Point2D a, final Point2D b, final Point2D c) {
-        final Point2D ret = ensureInstance(a, c);
-        ret.setLocation(a.getX() + b.getX(), a.getY() + b.getY());
-        return ret;
-    }
-
-    /**
-     * Ensure c isn't <code>null</code>, if so create a new instance of the
-     * type of <code>template</code>.
-     * 
-     * @param template
-     * @param c
-     * @return <code>c</code> or
-     *         <code>template.getClass().newInstance()</code>
-     */
-    public static Point2D ensureInstance(final Point2D template, final Point2D c) {
-        if (c != null)
-            return c;
-        // try {
-        // return (Point2D) template.getClass().newInstance();
-        return (Point2D) template.clone();
-        // } catch (InstantiationException e) {
-        // throw new RuntimeException("Couldn't create a new instance.", e);
-        // } catch (IllegalAccessException e) {
-        // throw new RuntimeException("Couldn't create a new instance.", e);
-        // }
-    }
-
     public static double[] mult(final double fact, final double[] a, double[] b) {
         if (b == null)
             b = new double[a.length];
@@ -169,13 +175,53 @@ public final class MathVec {
         return b;
     }
 
+    public static double scal(final double[] a, final double[] b) {
+        if (a.length != b.length)
+            throw new IllegalArgumentException("Dimension mismatch: "
+                    + a.length + "!=" + b.length);
+        double c = 0;
+        for (int i = a.length - 1; i >= 0; i--)
+            c += a[i] * b[i];
+        return c;
+    }
+
     public static double scal(final Point2D a, final Point2D b) {
         return a.getX() * b.getX() + a.getY() * b.getY();
+    }
+
+    public static double[] sub(final double[] a, final double[] b, double[] c) {
+        if (a.length != b.length)
+            throw new IllegalArgumentException("Dimension mismatch: "
+                    + a.length + "!=" + b.length);
+        if (c == null)
+            c = new double[a.length];
+        else if (a.length != c.length)
+            throw new IllegalArgumentException("Dimension mismatch: "
+                    + a.length + "!=" + c.length);
+        for (int i = a.length - 1; i >= 0; i--)
+            c[i] = a[i] - b[i];
+        return c;
     }
 
     public static Point2D sub(final Point2D a, final Point2D b, final Point2D c) {
         final Point2D ret = ensureInstance(a, c);
         ret.setLocation(a.getX() - b.getX(), a.getY() - b.getY());
         return ret;
+    }
+
+    public static String toString(double[] v) {
+        if (v == null)
+            return "null";
+        final StringBuffer buf = new StringBuffer();
+        final int n = v.length;
+        buf.append('[');
+        for (int i = 0; i < n; i++) {
+            buf.append(v[i]);
+            buf.append(", ");
+        }
+        if (n > 0)
+            buf.setLength(buf.length() - 2);
+        buf.append(']');
+        return buf.toString();
     }
 }

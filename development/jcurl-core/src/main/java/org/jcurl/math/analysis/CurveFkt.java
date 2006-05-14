@@ -18,6 +18,10 @@
  */
 package org.jcurl.math.analysis;
 
+import org.apache.commons.math.FunctionEvaluationException;
+import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
+import org.jcurl.core.helpers.NotImplementedYetException;
+
 /**
  * A n-dimensional, continuous curve <code>R -&gt; R^n</code> based on
  * {@link org.jcurl.math.analysis.Function1D}s.
@@ -29,17 +33,23 @@ package org.jcurl.math.analysis;
  */
 public class CurveFkt extends CurveGhost {
 
-    private final Function1D[] fkt;
+    private final DifferentiableUnivariateRealFunction[] fkt;
 
-    public CurveFkt(final Function1D[] fkt) {
+    public CurveFkt(final DifferentiableUnivariateRealFunction[] fkt) {
         super(fkt.length);
-        this.fkt = new Function1D[dim];
-        for (int i = dim - 1; i >= 0; i--) {
-            this.fkt[i] = fkt[i];
-        }
+        this.fkt = new DifferentiableUnivariateRealFunction[dim];
+        System.arraycopy(fkt, 0, this.fkt, 0, fkt.length);
     }
 
-    public double getC(int dim, int c, double t) {
-        return fkt[dim].getC(0, c, t);
+    public CurveFkt(final Polynome x, final Polynome y) {
+        this(new Polynome[] { x, y });
     }
+
+    public double getC(int dim, int c, double t)
+            throws FunctionEvaluationException {
+        if (c > 0)
+            throw new NotImplementedYetException();
+        return fkt[dim].value(t);
+    }
+    
 }
