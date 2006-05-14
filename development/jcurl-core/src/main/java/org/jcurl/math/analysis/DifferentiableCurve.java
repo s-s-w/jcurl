@@ -23,6 +23,12 @@ import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
 
 public class DifferentiableCurve {
 
+    public static DifferentiableCurve straightLine(double y0, double incline) {
+        return new DifferentiableCurve(new Polynome[] {
+                new Polynome(new double[] { 0, 1 }),
+                new Polynome(new double[] { y0, incline }) });
+    }
+
     private final DifferentiableUnivariateRealFunction[] c;
 
     transient private DifferentiableCurve derived = null;

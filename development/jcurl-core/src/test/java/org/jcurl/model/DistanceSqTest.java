@@ -18,24 +18,19 @@
  */
 package org.jcurl.model;
 
+import junit.framework.TestCase;
+
 import org.apache.commons.math.ConvergenceException;
 import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
 import org.jcurl.math.analysis.DifferentiableCurve;
-import org.jcurl.math.analysis.Polynome;
-
-import junit.framework.TestCase;
 
 public class DistanceSqTest extends TestCase {
 
     public void testStraightLine() throws ConvergenceException,
             FunctionEvaluationException {
-        final DifferentiableCurve g1 = new DifferentiableCurve(new Polynome[] {
-                new Polynome(new double[] { 0, 1 }),
-                new Polynome(new double[] { 1, 0.5 }) });
-        final DifferentiableCurve g2 = new DifferentiableCurve(new Polynome[] {
-                new Polynome(new double[] { 0, 1 }),
-                new Polynome(new double[] { -6, 3 }) });
+        final DifferentiableCurve g1 = DifferentiableCurve.straightLine(1, 0.5);
+        final DifferentiableCurve g2 = DifferentiableCurve.straightLine(-6, 3);
         final DifferentiableUnivariateRealFunction distSq = new DistanceSq(g1,
                 g2);
         assertEquals("", 49, distSq.value(0), 1e-11);

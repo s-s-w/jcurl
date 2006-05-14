@@ -23,18 +23,13 @@ import junit.framework.TestCase;
 import org.apache.commons.math.ConvergenceException;
 import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.math.analysis.DifferentiableCurve;
-import org.jcurl.math.analysis.Polynome;
 
 public class HitFinderTest extends TestCase {
 
     public void testStraightLine() throws ConvergenceException,
             FunctionEvaluationException {
-        final DifferentiableCurve g1 = new DifferentiableCurve(new Polynome[] {
-                new Polynome(new double[] { 0, 1 }),
-                new Polynome(new double[] { 1, 0.5 }) });
-        final DifferentiableCurve g2 = new DifferentiableCurve(new Polynome[] {
-                new Polynome(new double[] { 0, 1 }),
-                new Polynome(new double[] { -6, 3 }) });
+        final DifferentiableCurve g1 = DifferentiableCurve.straightLine(1, 0.5);
+        final DifferentiableCurve g2 = DifferentiableCurve.straightLine(-6, 3);
         final double root = new HitFinder(g1, g2, 0.0).solve(2, 4);
         assertEquals("", 2.0, root, 1e-11);
     }
