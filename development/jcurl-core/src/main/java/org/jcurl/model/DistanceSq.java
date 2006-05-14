@@ -28,6 +28,8 @@ import org.jcurl.math.linalg.MathVec;
 
 public class DistanceSq implements DifferentiableUnivariateRealFunction {
 
+    private static final Log log = JCLoggerFactory.getLogger(DistanceSq.class);
+
     private final DifferentiableCurve c1;
 
     private final DifferentiableCurve c2;
@@ -44,27 +46,30 @@ public class DistanceSq implements DifferentiableUnivariateRealFunction {
 
     public DistanceSq(DifferentiableCurve c1, DifferentiableCurve c2,
             final double[] tmp1, final double[] tmp2) {
+        if (c1.dimension() != c2.dimension())
+            throw new IllegalArgumentException("Dimension mismatch: "
+                    + c1.dimension() + "!=" + c2.dimension());
+        if (tmp1 != null && tmp1.length != c1.dimension())
+            throw new IllegalArgumentException("Dimension mismatch: "
+                    + tmp1.length + "!=" + c1.dimension());
+        if (tmp2 != null && tmp2.length != c2.dimension())
+            throw new IllegalArgumentException("Dimension mismatch: "
+                    + tmp2.length + "!=" + c2.dimension());
         this.tmp1 = tmp1;
         this.tmp2 = tmp2;
         this.c1 = c1;
         this.c2 = c2;
-        if (c1.getDimension() != c2.getDimension())
-            throw new IllegalArgumentException("Dimension mismatch: "
-                    + c1.getDimension() + "!=" + c2.getDimension());
     }
 
     public UnivariateRealFunction derivative() {
         if (derived == null)
-            this.derived = new DistanceSq(this.c1.derivative(), this.c2
-                    .derivative());
+            derived = new DistanceSq(c1.derivative(), c2.derivative());
         return derived;
     }
 
     public double value(double t) throws FunctionEvaluationException {
         return value(t, tmp1, tmp2);
     }
-
-    private static final Log log = JCLoggerFactory.getLogger(DistanceSq.class);
 
     public double value(double t, double[] tmp1, double[] tmp2)
             throws FunctionEvaluationException {

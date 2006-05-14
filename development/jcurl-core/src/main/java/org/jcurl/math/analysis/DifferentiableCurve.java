@@ -44,8 +44,8 @@ public class DifferentiableCurve {
 
     public DifferentiableCurve derivative() {
         if (derived == null) {
-            final DifferentiableUnivariateRealFunction[] tmp = new DifferentiableUnivariateRealFunction[getDimension()];
-            for (int i = getDimension() - 1; i >= 0; i--)
+            final DifferentiableUnivariateRealFunction[] tmp = new DifferentiableUnivariateRealFunction[dimension()];
+            for (int i = dimension() - 1; i >= 0; i--)
                 tmp[i] = (DifferentiableUnivariateRealFunction) component(i)
                         .derivative();
             derived = new DifferentiableCurve(tmp);
@@ -53,17 +53,18 @@ public class DifferentiableCurve {
         return derived;
     }
 
-    public int getDimension() {
+    public int dimension() {
         return c.length;
     }
 
     public double[] value(double t, double[] ret)
             throws FunctionEvaluationException {
         if (ret == null)
-            ret = new double[getDimension()];
-        else if (ret.length != getDimension())
-            throw new IllegalArgumentException();
-        for (int i = getDimension() - 1; i >= 0; i--)
+            ret = new double[dimension()];
+        else if (ret.length != dimension())
+            throw new IllegalArgumentException("Dimension mismatch: "
+                    + dimension() + "!=" + ret.length);
+        for (int i = dimension() - 1; i >= 0; i--)
             ret[i] = value(i, t);
         return ret;
     }
