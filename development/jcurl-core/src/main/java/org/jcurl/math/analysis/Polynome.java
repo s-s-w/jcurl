@@ -146,8 +146,20 @@ public class Polynome extends PolynomialFunction {
         return ret.toString();
     }
 
+    /** prevent inner-loop array copies. */
+    transient double[] coff = null;
+
     public Polynome(final double[] params) {
         super(params);
+    }
+
+    /**
+     * prevent inner-loop array copies.
+     */
+    protected double[] coffs() {
+        if (coff == null)
+            coff = super.getCoefficients();
+        return coff;
     }
 
     public UnivariateRealFunction derivative() {
@@ -155,16 +167,16 @@ public class Polynome extends PolynomialFunction {
     }
 
     /**
-     * @param c 
-     * @param x 
+     * @param c
+     * @param x
      * @return #value
      * @see #evaluate(double[], double, int)
      */
     double getC(final int c, final double x) {
-        return evaluate(getCoefficients(), x, c);
+        return evaluate(coffs(), x, c);
     }
 
     public String toString() {
-        return toString(this.getCoefficients());
+        return toString(this.coffs());
     }
 }
