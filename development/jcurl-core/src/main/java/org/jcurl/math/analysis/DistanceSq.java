@@ -16,12 +16,11 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.model;
+package org.jcurl.math.analysis;
 
 import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
 import org.apache.commons.math.analysis.UnivariateRealFunction;
-import org.jcurl.math.analysis.DifferentiableCurve;
 
 /**
  * Function that describes the distance between two n-dimensional curves. 
