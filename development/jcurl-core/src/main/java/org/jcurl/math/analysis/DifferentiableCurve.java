@@ -21,6 +21,13 @@ package org.jcurl.math.analysis;
 import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
 
+/**
+ * Convenience wrapper for at least 1x differentiable curves
+ * <code>R1 -&gt; Rn</code>.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public class DifferentiableCurve {
 
     public static DifferentiableCurve straightLine(double y0, double incline) {

@@ -18,12 +18,22 @@
  */
 package org.jcurl.math.analysis;
 
-/**
- * Ghost class to derive curve-solvers from. Maybe obsolete.
- * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
- */
-public abstract class CurveSolver {
+import junit.framework.TestCase;
 
+import org.apache.commons.math.FunctionEvaluationException;
+import org.apache.commons.math.analysis.UnivariateRealFunction;
+
+public class PieceWiseRealFunctionTest extends TestCase {
+
+    public void test010() {
+        final UnivariateRealFunction sine = new UnivariateRealFunction() {
+            public double value(double t) throws FunctionEvaluationException {
+                return Math.sin(t);
+            }
+        };
+        final PieceWiseRealFunction f = new PieceWiseRealFunction();
+        f.add(Double.NEGATIVE_INFINITY, false, 1.0, false, sine);
+        f.add(-1, false, 1.0, false, null);
+        f.add(-3, false, -2, false, sine);
+    }
 }
