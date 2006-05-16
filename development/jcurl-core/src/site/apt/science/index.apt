@@ -29,9 +29,10 @@ Physics of Curling
       E.T. Jensen and Mark R.A. Shegelski,
       Canadian Journal of Physics, 82(10): 791-809 (2004)
 
-      * {{{http://web.unbc.ca/~bagnallp/Bio/tripod_paper.pdf}
+      * {{{http://pubs.nrc-cnrc.gc.ca/cgi-bin/rp/rp2_abst_e?cjp_p04-062_82_ns_nf_cjp}
 	  Exact Normal Forces and Trajectories for a Rotating Tripod Sliding on a Smooth Surface}},
 	  Mark R.A. Shegelski et al.
+~~http://web.unbc.ca/~bagnallp/Bio/tripod_paper.pdf
 
       * {{{http://www.ub.uni-duisburg.de/ETD-db/theses/available/duett-01272006-083621/}
       Mesoscopic Aspects of Solid Friction}},
@@ -58,11 +59,14 @@ Physics of Curling
 
 2D Geometry
 
-	  * {{{http://www.google.de/search?hl\=de&amp;as_qdr\=all&amp;q\=bezier\+spline\+approximate\+planar\+curves&amp;btnG\=Suche&amp}Google:
-	Curves to B-Splines}}
+	  * {{{http://www.google.de/search?hl\=de&amp;as_qdr\=all&amp;q\=bezier\+spline\+approximate\+planar\+curves&amp;btnG\=Suche&amp}
+	  Google Search: Curves to B-Splines}}
 	
-	  * {{{http://users.cs.cf.ac.uk/M.Li/file/imp.pdf} Approximate
-	Implicitization of Planar Parametric Curves using Quadratic Splines}}
+	  * {{{http://users.cs.cf.ac.uk/M.Li/file/imp.pdf}
+	  Approximate Implicitization of Planar Parametric Curves using Quadratic Splines}},
+	  Xiao-Shan Gao and Ming Li, 
+	  Key Lab of Mathematics Mechanization,
+	  Institute of System Science, AMSS, Academia Sinica Beijing 100080, China
 
  The project is hosted by {{{http://developer.berlios.de/} Berlios}} 
  [http://developer.berlios.de/bslogo.php]
