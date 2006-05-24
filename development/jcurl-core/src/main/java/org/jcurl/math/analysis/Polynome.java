@@ -136,13 +136,23 @@ public class Polynome extends PolynomialFunction {
     public static String toString(final double[] poly) {
         final StringBuffer ret = new StringBuffer();
         ret.append("p(x) = ");
-        for (int i = 0; i < poly.length; i++) {
-            ret.append(poly[i]);
-            ret.append("*x**");
+        int i = poly.length - 1;
+        ret.append(poly[i]);
+        ret.append("*x^");
+        ret.append(i);
+        while (--i >= 0) {
+            if (poly[i] == 0.0)
+                continue;
+            if (poly[i] < 0) {
+                ret.append(" - ");
+                ret.append(-poly[i]);
+            } else {
+                ret.append(" + ");
+                ret.append(poly[i]);
+            }
+            ret.append("*x^");
             ret.append(i);
-            ret.append(" + ");
         }
-        ret.setLength(ret.length() - 3);
         return ret.toString();
     }
 

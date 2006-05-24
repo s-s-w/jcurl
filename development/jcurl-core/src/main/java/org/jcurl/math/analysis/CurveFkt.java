@@ -47,9 +47,10 @@ public class CurveFkt extends CurveGhost {
 
     public double getC(int dim, int c, double t)
             throws FunctionEvaluationException {
-        if (c > 0)
-            throw new NotImplementedYetException();
-        return fkt[dim].value(t);
+        DifferentiableUnivariateRealFunction f = fkt[dim];
+        while (c-- > 0)
+            f = (DifferentiableUnivariateRealFunction) f.derivative();
+        return f.value(t);
     }
-    
+
 }

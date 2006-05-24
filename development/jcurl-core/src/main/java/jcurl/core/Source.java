@@ -49,14 +49,14 @@ public interface Source {
      * 
      * @return the rocks' positions
      */
-    public abstract PositionSet getPos() throws FunctionEvaluationException;
+    public abstract PositionSet getPos();
 
     /**
      * Get the rocks' speeds - optional.
      * 
      * @return the rocks' speeds
      */
-    public abstract SpeedSet getSpeed() throws FunctionEvaluationException;
+    public abstract SpeedSet getSpeed();
 
     /**
      * Get the current time.

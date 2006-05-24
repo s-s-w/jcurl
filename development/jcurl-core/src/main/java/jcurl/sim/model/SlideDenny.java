@@ -29,8 +29,8 @@ import org.jcurl.math.analysis.CurveGhost;
 import org.jcurl.math.analysis.Polynome;
 
 /**
- * Mark Denny's curl-model. Motion of a curling rock acc. to "Curling rock
- * dynamics", Mark Denny, Canadian Journal of Physics, 1988, P. 295-304.
+ * Mark DennyModel's curl-model. Motion of a curling rock acc. to "Curling rock
+ * dynamics", Mark DennyModel, Canadian Journal of Physics, 1988, P. 295-304.
  * <p>
  * 
  * @see jcurl.sim.model.SlideStraight
@@ -72,7 +72,7 @@ public class SlideDenny extends SlideCurves {
     }
 
     public String description() {
-        return "Mark Denny's curl model";
+        return "Mark DennyModel's curl model";
     }
 
     /**

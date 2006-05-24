@@ -83,7 +83,7 @@ public class ComputedSource extends MutableObject implements Source {
         return minT;
     }
 
-    public PositionSet getPos() throws FunctionEvaluationException {
+    public PositionSet getPos() {
         return slide.getPos();
     }
 
@@ -91,7 +91,7 @@ public class ComputedSource extends MutableObject implements Source {
         return slide;
     }
 
-    public SpeedSet getSpeed() throws FunctionEvaluationException {
+    public SpeedSet getSpeed() {
         return slide.getSpeed();
     }
 

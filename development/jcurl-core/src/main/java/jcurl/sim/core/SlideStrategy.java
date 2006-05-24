@@ -319,18 +319,12 @@ public abstract class SlideStrategy extends ModelBase implements Source {
      */
     public abstract double getMu();
 
-    public final PositionSet getPos() throws FunctionEvaluationException {
-        if (log.isDebugEnabled())
-            log.debug("t=" + getT());
-        computeUntil(getT(), dt);
-        return (PositionSet) getC(0, getT(), rocks);
+    public final PositionSet getPos() {
+        return rocks;
     }
 
-    public final SpeedSet getSpeed() throws FunctionEvaluationException {
-        if (log.isDebugEnabled())
-            log.debug("t=" + getT());
-        computeUntil(getT(), dt);
-        return (SpeedSet) getC(1, getT(), speed);
+    public final SpeedSet getSpeed() {
+        return speed;
     }
 
     public double getT() {
@@ -475,7 +469,8 @@ public abstract class SlideStrategy extends ModelBase implements Source {
     }
 
     public void setT(double t) throws FunctionEvaluationException {
-        move(this.t, t, this.rocks, this.speed);
-        this.t = t;
+        computeUntil(getT(), dt);
+        getC(0, getT(), rocks);
+        getC(1, getT(), speed);
     }
 }

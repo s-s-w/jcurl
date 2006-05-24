@@ -161,4 +161,10 @@ public class PolynomeTest extends TestCase {
         for (int i = points.length - 1; i >= 0; i--)
             assertEquals("", pj2.value(points[i]), pj.getC(2, points[i]), 1e-11);
     }
+
+    public void testToString() {
+        assertEquals("p(x) = 2.0*x^2 + 1.0*x^0", new Polynome(new double[] { 1, 0, 2 }).toString());
+        assertEquals("p(x) = -2.0*x^2 + 1.0*x^0", new Polynome(new double[] { 1, 0, -2 }).toString());
+        assertEquals("p(x) = -2.0*x^2 - 1.0*x^0", new Polynome(new double[] { -1, 0, -2 }).toString());
+    }
 }
