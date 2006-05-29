@@ -22,14 +22,21 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.jcurl.core.helpers.MutableObject;
+
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class ModelBase {
+public abstract class ModelBase extends MutableObject {
+
     protected final Map props = new TreeMap();
 
     public abstract String description();
+
+    public boolean equals(Object obj) {
+        return false;
+    }
 
     public Object getProp(final String key) {
         return props.get(key);

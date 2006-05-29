@@ -18,7 +18,6 @@
  */
 package org.jcurl.math.analysis;
 
-
 /**
  * Abstract base class for n-dimensional curves <code>R -&gt; R^n</code>.
  * 

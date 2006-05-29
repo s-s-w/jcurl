@@ -18,6 +18,25 @@
  */
 package org.jcurl.model;
 
-public abstract class IceModel {
+import org.apache.commons.math.FunctionEvaluationException;
+import org.jcurl.core.Rock;
+
+/**
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
+public interface JCurlCurve {
+    /**
+     * @see #valueWC(double, Rock)
+     * @param t
+     * @param dst
+     * @return {@link #valueWC(double, Rock)}
+     * @throws FunctionEvaluationException
+     */
+    public Rock value(double t, Rock dst) throws FunctionEvaluationException;
+
+    public Rock valueRC(double t, Rock dst) throws FunctionEvaluationException;
+
+    public Rock valueWC(double t, Rock dst) throws FunctionEvaluationException;
 
 }

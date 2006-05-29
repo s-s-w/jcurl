@@ -16,13 +16,14 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.sim.core;
+package org.jcurl.model;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
 import jcurl.core.dto.RockProps;
+import jcurl.sim.core.ModelBase;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.PositionSet;
@@ -34,18 +35,18 @@ import org.jcurl.core.helpers.JCLoggerFactory;
 /**
  * Abstract base class for collission models.
  * 
- * @see jcurl.sim.core.SlideStrategy
+ * @see org.jcurl.model.CurveFactory
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: CollissionModel.java 295 2006-05-14 11:50:09Z mrohrmoser $
  */
-public abstract class CollissionStrategy extends ModelBase {
+public abstract class CollissionModel extends ModelBase {
 
     private static final float _Rad = RockProps.DEFAULT.getRadius();
 
     private static final float HIT_MAX_DIST = 1e-6F;
 
     private static final Log log = JCLoggerFactory
-            .getLogger(CollissionStrategy.class);
+            .getLogger(CollissionModel.class);
 
     /** Maximum distance [m] of two rocks to consider them touching */
     public static final double MaxDistSq = sqr(_Rad + _Rad + HIT_MAX_DIST);
@@ -77,13 +78,13 @@ public abstract class CollissionStrategy extends ModelBase {
         return mat;
     }
 
-    public static CollissionStrategy newInstance(final Class clz) {
-        final Class parent = CollissionStrategy.class;
+    public static CollissionModel newInstance(final Class clz) {
+        final Class parent = CollissionModel.class;
         if (!parent.isAssignableFrom(clz))
             throw new IllegalArgumentException("Class [" + clz.getName()
                     + "] is no descendant of [" + parent.getName() + "]");
         try {
-            return (CollissionStrategy) clz.newInstance();
+            return (CollissionModel) clz.newInstance();
         } catch (InstantiationException e) {
             final IllegalArgumentException ex = new IllegalArgumentException();
             ex.initCause(e);
@@ -113,11 +114,10 @@ public abstract class CollissionStrategy extends ModelBase {
 
     /**
      * Iterate over all rocks and call
-     * {@link CollissionStrategy#computeWC(Rock, Rock, Rock, Rock, AffineTransform)}
+     * {@link CollissionModel#computeWC(Rock, Rock, Rock, Rock, AffineTransform)}
      * for each pair.
      * 
-     * @see CollissionStrategy#computeWC(Rock, Rock, Rock, Rock,
-     *      AffineTransform)
+     * @see CollissionModel#computeWC(Rock, Rock, Rock, Rock, AffineTransform)
      * @param pos
      * @param speed
      * @return bitmask of the changed rocks

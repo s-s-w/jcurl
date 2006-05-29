@@ -20,7 +20,6 @@ package org.jcurl.math.analysis;
 
 import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
-import org.jcurl.core.helpers.NotImplementedYetException;
 
 /**
  * A n-dimensional, continuous curve <code>R -&gt; R^n</code> based on

@@ -22,13 +22,13 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import jcurl.core.dto.RockProps;
-import jcurl.sim.core.CollissionStrategy;
 import junit.framework.TestCase;
 
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.Rock;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.math.linalg.MathVec;
+import org.jcurl.model.CollissionModel;
 
 /**
  * @see jcurl.sim.model.CollissionSimple
@@ -138,7 +138,7 @@ public class CollissionSimpleTest extends TestCase {
 
         a = new Point2D.Double(1, 1);
         b = new Point2D.Double(1.1, 1.1);
-        CollissionStrategy.getInverseTrafo(a, a, b, mat);
+        CollissionModel.getInverseTrafo(a, a, b, mat);
         mat.getMatrix(flat);
         double sq2 = Math.sqrt(2);
         assertEquals("", sq2 / 2, flat[0], 1e-9);

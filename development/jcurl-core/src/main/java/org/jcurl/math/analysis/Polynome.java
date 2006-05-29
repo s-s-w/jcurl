@@ -28,7 +28,7 @@ import org.apache.commons.math.analysis.UnivariateRealFunction;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class Polynome extends PolynomialFunction {
+public class Polynome extends PolynomialFunction implements R1R1Function {
 
     private static final long serialVersionUID = -745491227197828208L;
 
@@ -184,6 +184,10 @@ public class Polynome extends PolynomialFunction {
      */
     double getC(final int c, final double x) {
         return evaluate(coffs(), x, c);
+    }
+
+    public boolean isLinear() {
+        return true;
     }
 
     public String toString() {

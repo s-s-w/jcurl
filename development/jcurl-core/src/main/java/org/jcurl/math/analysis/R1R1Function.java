@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework 
- * Copyright (C) 2005 M. Rohrmoser
+ * Copyright (C) 2005-2006 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -16,31 +16,29 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.sim.model;
+package org.jcurl.math.analysis;
 
-import org.jcurl.core.Rock;
-import org.jcurl.model.CollissionModel;
+import org.apache.commons.math.FunctionEvaluationException;
+import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
+import org.apache.commons.math.analysis.UnivariateRealFunction;
 
 /**
- * A very simple hit-model using conservation of energy and momentum.
- * <p>
- * Compute collissions without bothering about inertia. Only exchanges the
- * speed-components along the hit-direction of the two involved rocks. Only
- * conservation of momentum is obeyed, e.g. spin is neglected.
+ * Functions <code>f : R -&gt; R</code>. If it's not differentiable the
+ * derivative shall return <code>null</code>
  * 
- * @see jcurl.sim.model.SlideStraight
- * @see jcurl.sim.model.CollissionSimpleTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CollissionSimple extends CollissionModel {
-    public void computeRC(final Rock va, final Rock vb) {
-        final double tmp = va.getY();
-        va.setLocation(va.getX(), vb.getY());
-        vb.setLocation(vb.getX(), tmp);
-    }
+public interface R1R1Function extends DifferentiableUnivariateRealFunction {
 
-    public String description() {
-        return "Simple collissions";
-    }
+    /**
+     * Get the derivative or <code>null</code> if not differentiable.
+     * 
+     * @return <code>null</code> if not differentiable.
+     */
+    public abstract UnivariateRealFunction derivative();
+
+    public abstract boolean isLinear();
+
+    public abstract double value(double x) throws FunctionEvaluationException;
 }

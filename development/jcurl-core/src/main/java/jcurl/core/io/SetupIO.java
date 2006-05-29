@@ -25,7 +25,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
-import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.SlideStrategy;
 
 import org.apache.commons.logging.Log;
@@ -33,6 +32,7 @@ import org.jcurl.core.PositionSet;
 import org.jcurl.core.RockSet;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.model.CollissionModel;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
@@ -51,7 +51,7 @@ public class SetupIO {
 
     public static void load(final File src, final PositionSet pos,
             final SpeedSet speed, final SlideStrategy slide,
-            final CollissionStrategy coll) throws FileNotFoundException,
+            final CollissionModel coll) throws FileNotFoundException,
             SAXException, IOException {
         if (log.isDebugEnabled())
             log.debug("Loading " + src);
@@ -62,7 +62,7 @@ public class SetupIO {
 
     public static void load(final InputStream src, final PositionSet pos,
             final SpeedSet speed, final SlideStrategy slide,
-            final CollissionStrategy coll) throws SAXException, IOException {
+            final CollissionModel coll) throws SAXException, IOException {
         final SetupBuilder setup = SetupSaxDeSer.parse(src);
         RockSet.copy(setup.getPos(), pos);
     }
@@ -74,7 +74,7 @@ public class SetupIO {
 
     public static void load(final URL src, final PositionSet pos,
             final SpeedSet speed, final SlideStrategy slide,
-            final CollissionStrategy coll) throws SAXException, IOException {
+            final CollissionModel coll) throws SAXException, IOException {
         if (log.isDebugEnabled())
             log.debug("Loading " + src);
         final SetupBuilder setup = SetupSaxDeSer.parse(src);
@@ -83,13 +83,13 @@ public class SetupIO {
 
     public static void save(final ContentHandler dst, final PositionSet pos,
             final SpeedSet speed, final SlideStrategy slide,
-            final CollissionStrategy coll) throws SAXException {
+            final CollissionModel coll) throws SAXException {
         new SetupSaxSer(dst).write(pos, speed, slide);
     }
 
     public static void save(final File dst, final PositionSet pos,
             final SpeedSet speed, final SlideStrategy slide,
-            final CollissionStrategy coll) throws SAXException, IOException {
+            final CollissionModel coll) throws SAXException, IOException {
         if (log.isDebugEnabled())
             log.debug("Saving " + dst);
         new SetupSaxSer(dst).write(pos, speed, slide);
@@ -97,7 +97,7 @@ public class SetupIO {
 
     public static void save(final OutputStream dst, final PositionSet pos,
             final SpeedSet speed, final SlideStrategy slide,
-            final CollissionStrategy coll) throws SAXException {
+            final CollissionModel coll) throws SAXException {
         new SetupSaxSer(dst).write(pos, speed, slide);
     }
 }

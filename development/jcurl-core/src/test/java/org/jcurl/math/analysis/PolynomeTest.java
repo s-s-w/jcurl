@@ -163,8 +163,11 @@ public class PolynomeTest extends TestCase {
     }
 
     public void testToString() {
-        assertEquals("p(x) = 2.0*x^2 + 1.0*x^0", new Polynome(new double[] { 1, 0, 2 }).toString());
-        assertEquals("p(x) = -2.0*x^2 + 1.0*x^0", new Polynome(new double[] { 1, 0, -2 }).toString());
-        assertEquals("p(x) = -2.0*x^2 - 1.0*x^0", new Polynome(new double[] { -1, 0, -2 }).toString());
+        assertEquals("p(x) = 2.0*x^2 + 1.0*x^0", new Polynome(new double[] { 1,
+                0, 2 }).toString());
+        assertEquals("p(x) = -2.0*x^2 + 1.0*x^0", new Polynome(new double[] {
+                1, 0, -2 }).toString());
+        assertEquals("p(x) = -2.0*x^2 - 1.0*x^0", new Polynome(new double[] {
+                -1, 0, -2 }).toString());
     }
 }

@@ -21,7 +21,6 @@ package jcurl.core.io;
 import java.util.Map;
 
 import jcurl.core.dto.Ice;
-import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.ModelBase;
 import jcurl.sim.core.SlideStrategy;
 
@@ -34,6 +33,7 @@ import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.math.linalg.MathVec;
+import org.jcurl.model.CollissionModel;
 
 /**
  * Accumulate setup data.
@@ -70,7 +70,7 @@ public class SetupBuilder {
 
     private static final int SpeedTo = 4;
 
-    private CollissionStrategy collStrat = null;
+    private CollissionModel collStrat = null;
 
     private boolean isFrozen = false;
 
@@ -92,8 +92,8 @@ public class SetupBuilder {
             throws InstantiationException, IllegalAccessException {
         final ModelBase mb = (ModelBase) clz.newInstance();
         mb.init(params);
-        if (mb instanceof CollissionStrategy)
-            collStrat = (CollissionStrategy) mb;
+        if (mb instanceof CollissionModel)
+            collStrat = (CollissionModel) mb;
         else if (mb instanceof SlideStrategy)
             slideStrat = (SlideStrategy) mb;
         else

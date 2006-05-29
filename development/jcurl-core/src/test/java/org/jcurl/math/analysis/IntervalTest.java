@@ -47,6 +47,9 @@ public class IntervalTest extends TestCase {
         assertFalse(Double.NaN < 0);
         assertFalse(Double.NaN > 0);
         assertFalse(Double.NaN == 0);
+        assertFalse(Double.NaN == Double.NaN);
+        assertFalse(Double.NaN > Double.NaN);
+        assertFalse(Double.NaN < Double.NaN);
     }
 
     public void testCompareTo() {
@@ -115,7 +118,7 @@ public class IntervalTest extends TestCase {
         assertTrue(Interval.isWithin(a, -2));
         assertTrue(Interval.isWithin(a, -1));
         assertFalse(Interval.isWithin(a, 0));
-        
+
         a = new Interval(-1, true, -1, true);
         assertFalse(Interval.isWithin(a, -2));
         assertTrue(Interval.isWithin(a, -1));

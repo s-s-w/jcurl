@@ -19,49 +19,47 @@
 package org.jcurl.math.analysis;
 
 import org.apache.commons.math.FunctionEvaluationException;
-import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
 
 /**
  * Convenience wrapper for at least 1x differentiable curves
- * <code>R1 -&gt; Rn</code>.
+ * <code>f : R1 -&gt; Rn</code>.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class DifferentiableCurve {
+public class R1RnCurve {
 
-    public static DifferentiableCurve straightLine(double y0, double incline) {
-        return new DifferentiableCurve(new Polynome[] {
+    public static R1RnCurve straightLine(double y0, double incline) {
+        return new R1RnCurve(new Polynome[] {
                 new Polynome(new double[] { 0, 1 }),
                 new Polynome(new double[] { y0, incline }) });
     }
 
-    private final DifferentiableUnivariateRealFunction[] c;
+    private final R1R1Function[] c;
 
-    transient private DifferentiableCurve derived = null;
+    transient private R1RnCurve derived = null;
 
-    public DifferentiableCurve(DifferentiableUnivariateRealFunction[] c) {
-        this.c = new DifferentiableUnivariateRealFunction[c.length];
+    public R1RnCurve(R1R1Function[] c) {
+        this.c = new R1R1Function[c.length];
         System.arraycopy(c, 0, this.c, 0, c.length);
     }
 
-    public DifferentiableUnivariateRealFunction component(int dim) {
+    public R1R1Function component(int dim) {
         return this.c[dim];
     }
 
-    public DifferentiableUnivariateRealFunction[] components() {
-        final DifferentiableUnivariateRealFunction[] ret = new DifferentiableUnivariateRealFunction[c.length];
+    public R1R1Function[] components() {
+        final R1R1Function[] ret = new R1R1Function[c.length];
         System.arraycopy(c, 0, ret, 0, c.length);
         return ret;
     }
 
-    public DifferentiableCurve derivative() {
+    public R1RnCurve derivative() {
         if (derived == null) {
-            final DifferentiableUnivariateRealFunction[] tmp = new DifferentiableUnivariateRealFunction[dimension()];
+            final R1R1Function[] tmp = new R1R1Function[dimension()];
             for (int i = dimension() - 1; i >= 0; i--)
-                tmp[i] = (DifferentiableUnivariateRealFunction) component(i)
-                        .derivative();
-            derived = new DifferentiableCurve(tmp);
+                tmp[i] = (R1R1Function) component(i).derivative();
+            derived = new R1RnCurve(tmp);
         }
         return derived;
     }

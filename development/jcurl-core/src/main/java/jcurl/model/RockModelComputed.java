@@ -18,10 +18,9 @@
  */
 package jcurl.model;
 
-import jcurl.sim.core.CollissionStrategy;
-
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.SpeedSet;
+import org.jcurl.model.CollissionModel;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -29,7 +28,7 @@ import org.jcurl.core.SpeedSet;
  */
 public abstract class RockModelComputed extends JCurlModel {
 
-    public void init(CollissionStrategy coll) {
+    public void init(CollissionModel coll) {
         ;
     }
 

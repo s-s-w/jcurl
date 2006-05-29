@@ -18,54 +18,161 @@
  */
 package org.jcurl.model;
 
-import jcurl.sim.core.CollissionStrategy;
-import jcurl.sim.core.SlideStrategy;
-import jcurl.sim.model.SlideStraight;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
+import jcurl.sim.model.CollissionSpinLoss;
+
+import org.apache.commons.math.ConvergenceException;
 import org.apache.commons.math.FunctionEvaluationException;
+import org.apache.commons.math.analysis.NewtonSolver;
+import org.apache.commons.math.analysis.UnivariateRealSolver;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.RockSet;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.NotImplementedYetException;
+import org.jcurl.math.analysis.DistanceSq;
 
-public class ComputedPaths extends RockSetPaths {
+/**
+ * Manages the interaction of {@link org.jcurl.model.CurveFactory} and
+ * {@link org.jcurl.model.CollissionModel} and provides high-level access to
+ * computed rock locations and velocities.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
+public class ComputedPaths extends RockSetPaths implements
+        PropertyChangeListener {
+    private static final double Never = Double.POSITIVE_INFINITY;
 
-    private CollissionStrategy collider;
+    private static final double NoSweep = 0.0;
 
-    private SlideStrategy ice = new SlideStraight();
+    private static final long serialVersionUID = -4785102667266867444L;
+
+    private static final double Unknown = Double.NaN;
+
+    private CollissionModel collider;
+
+    private PositionSet currentPos = new PositionSet();
+
+    private SpeedSet currentSpeed = new SpeedSet();
+
+    private double currentT = 0;
+
+    private final PathSet[] curves = new PathSet[RockSet.ROCKS_PER_SET];
+
+    private CurveFactory ice;
 
     private PositionSet initialPos = new PositionSet();
 
-    private SpeedSet initialSpeed  = new SpeedSet();
+    private SpeedSet initialSpeed = new SpeedSet();
 
-    public ComputedPaths() throws FunctionEvaluationException {
-        setInitialPos(new PositionSet());
-        setInitialSpeed(new SpeedSet());
-        setCurrentPos(new PositionSet());
-        setCurrentSpeed(new SpeedSet());
+    private double known;
+
+    private double maxT;
+
+    private final HitTimeMatrix pm = new HitTimeMatrix();
+
+    /**
+     * Defaults to {@link DennyCurves} and {@link CollissionSpinLoss} and calls
+     * {@link #clear()}.
+     */
+    public ComputedPaths() {
+        ice = new DennyCurves();
+        collider = new CollissionSpinLoss();
+        clear();
     }
 
-    public RecordedPaths export(final RecordedPaths dst) {
+    void clear() {
+        known = -1;
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+            curves[i].clear();
+        pm.reset(Unknown);
+    }
+
+    /**
+     * Ensure the curvestore has no unprocessed hits until t.
+     * 
+     * @throws FunctionEvaluationException
+     */
+    protected double computeUntil(double t) throws FunctionEvaluationException {
+        if (t < 0)
+            t = 0;
+        if (known < 0) {
+            // initial setup!
+            known = 0;
+            pm.reset(Unknown);
+            for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+                curves[i].append(known, ice.compute(known, getInitialPos()
+                        .getRock(i), getInitialSpeed().getRock(i), NoSweep));
+            }
+        }
+        while (t > known) {
+            double hitTime = Never;
+            int hitPair = 0;
+            for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+                for (int j = i - 1; j >= 0; j--) {
+                    // NaN proof comparison:
+                    if (!(pm.get(i, j) != Unknown)) {
+                        try {
+                            // compute the hit-time
+                            final DistanceSq dist = new DistanceSq(curves[i]
+                                    .getCurve(t), curves[j].getCurve(t));
+                            final UnivariateRealSolver solver = new NewtonSolver(
+                                    dist);
+                            pm.set(i, j, solver.solve(known, t, known));
+                        } catch (ConvergenceException e) {
+                            pm.set(i, j, Never);
+                        }
+                    }
+                    // find the soonest hit time+pair (could move to
+                    // HitTimeMatrix):
+                    final double tmp = pm.get(i, j);
+                    if (tmp < hitTime) {
+                        hitTime = tmp;
+                        hitPair = (1 << i) | (1 << j);
+                    }
+                }
+            }
+            if (hitTime == Never || hitPair == 0) {
+                maxT = Never;
+                break;
+            }
+            maxT = known = hitTime;
+            hitPair = collider.compute(getCurrentPos(), getCurrentSpeed());
+            // mark all hit rocks' combinations dirty and compute the new curves
+            for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+                if ((hitPair & (1 << i)) == 0)
+                    continue;
+                pm.dirty(i, Unknown);
+                curves[i].append(known, ice.compute(known, getCurrentPos()
+                        .getRock(i), getCurrentSpeed().getRock(i), NoSweep));
+            }
+        }
+        return t;
+    }
+
+    public boolean equals(Object obj) {
         throw new NotImplementedYetException();
     }
 
-    public CollissionStrategy getCollider() {
+    public CollissionModel getCollider() {
         return collider;
     }
 
-    public PositionSet getCurrentPos() throws FunctionEvaluationException {
-        return ice.getPos();
+    public PositionSet getCurrentPos() {
+        return currentPos;
     }
 
     public SpeedSet getCurrentSpeed() {
-        return ice.getSpeed();
+        return currentSpeed;
     }
 
     public double getCurrentT() {
-        return ice.getT();
+        return currentT;
     }
 
-    public SlideStrategy getIce() {
+    public CurveFactory getIce() {
         return ice;
     }
 
@@ -78,46 +185,79 @@ public class ComputedPaths extends RockSetPaths {
     }
 
     public double getKnown() {
-        return ice.getMaxT();
+        return known;
     }
 
     public double getMaxT() {
-        return ice.getMaxT();
+        return maxT;
     }
 
-    public void setCollider(CollissionStrategy collider) {
+    public void propertyChange(PropertyChangeEvent arg0) {
+        try {
+            recompute();
+        } catch (FunctionEvaluationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * @throws FunctionEvaluationException
+     */
+    protected void recompute() throws FunctionEvaluationException {
+        clear();
+        final double tmp = currentT;
+        currentT = 0;
+        setCurrentT(tmp);
+    }
+
+    public void setCollider(CollissionModel collider)
+            throws FunctionEvaluationException {
+        final CollissionModel old = this.collider;
+        this.collider.removePropertyChangeListener(this);
         this.collider = collider;
+        this.collider.addPropertyChangeListener(this);
+        propChange.firePropertyChange("collider", old, this.collider);
+        recompute();
     }
 
     public void setCurrentPos(PositionSet currentPos) {
-        ;
+        this.currentPos = currentPos;
     }
 
     public void setCurrentSpeed(SpeedSet currentSpeed) {
-        ;
+        this.currentSpeed = currentSpeed;
     }
 
     public void setCurrentT(double currentT) throws FunctionEvaluationException {
-        ice.setT(currentT);
+        this.currentT = computeUntil(currentT);
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+            // compute rock locations + speeds
+            throw new NotImplementedYetException();
+        }
     }
 
-    public void setIce(SlideStrategy slide) throws FunctionEvaluationException {
+    public void setIce(CurveFactory slide) throws FunctionEvaluationException {
+        final CurveFactory old = this.ice;
+        this.ice.removePropertyChangeListener(this);
         this.ice = slide;
-        RockSet.copy(getInitialPos(), getCurrentPos());
-        RockSet.copy(getInitialSpeed(), getCurrentSpeed());
-        if (ice != null)
-            this.ice.reset(getCurrentPos(), getCurrentSpeed(), null);
+        this.ice.addPropertyChangeListener(this);
+        propChange.firePropertyChange("ice", old, this.ice);
+        recompute();
     }
 
     public void setInitialPos(PositionSet initialPos)
             throws FunctionEvaluationException {
+        this.initialPos.removePropertyChangeListener(this);
         this.initialPos = initialPos;
+        this.initialPos.addPropertyChangeListener(this);
         setIce(getIce());
     }
 
     public void setInitialSpeed(SpeedSet initialSpeed)
             throws FunctionEvaluationException {
+        this.initialSpeed.removePropertyChangeListener(this);
         this.initialSpeed = initialSpeed;
+        this.initialSpeed.removePropertyChangeListener(this);
         setIce(getIce());
     }
 }

@@ -23,7 +23,7 @@ import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
 import org.apache.commons.math.analysis.UnivariateRealFunction;
 
 /**
- * Function that describes the distance between two n-dimensional curves. 
+ * Function that describes the distance between two n-dimensional curves.
  * 
  * Differentiable max. 1x.
  * 
@@ -32,15 +32,15 @@ import org.apache.commons.math.analysis.UnivariateRealFunction;
  */
 public class DistanceSq implements DifferentiableUnivariateRealFunction {
 
-    private final DifferentiableCurve c1;
+    private final R1RnCurve c1;
 
-    private final DifferentiableCurve c2;
+    private final R1RnCurve c2;
 
     transient private UnivariateRealFunction derived;
 
-    transient private DifferentiableCurve diff1;
+    transient private R1RnCurve diff1;
 
-    transient private DifferentiableCurve diff2;
+    transient private R1RnCurve diff2;
 
     private final double r2;
 
@@ -50,7 +50,7 @@ public class DistanceSq implements DifferentiableUnivariateRealFunction {
      * @param c1
      * @param c2
      */
-    public DistanceSq(DifferentiableCurve c1, DifferentiableCurve c2) {
+    public DistanceSq(R1RnCurve c1, R1RnCurve c2) {
         this(c1, 0, c2, 0);
     }
 
@@ -63,7 +63,7 @@ public class DistanceSq implements DifferentiableUnivariateRealFunction {
      * @param c2
      * @param r
      */
-    public DistanceSq(DifferentiableCurve c1, DifferentiableCurve c2, double r) {
+    public DistanceSq(R1RnCurve c1, R1RnCurve c2, double r) {
         this(c1, r, c2, r);
     }
 
@@ -77,8 +77,7 @@ public class DistanceSq implements DifferentiableUnivariateRealFunction {
      * @param c2
      * @param r2
      */
-    public DistanceSq(DifferentiableCurve c1, double r1,
-            DifferentiableCurve c2, double r2) {
+    public DistanceSq(R1RnCurve c1, double r1, R1RnCurve c2, double r2) {
         if (c1.dimension() != c2.dimension())
             throw new IllegalArgumentException("Dimension mismatch: "
                     + c1.dimension() + "!=" + c2.dimension());
@@ -89,15 +88,14 @@ public class DistanceSq implements DifferentiableUnivariateRealFunction {
     }
 
     /**
-     * <code>2 * (c1 - c2) * (c1' - c2')</code>
-     * Feed into maxima:
+     * <code>2 * (c1 - c2) * (c1' - c2')</code> Feed into maxima:
      * 
      * <pre>
-     *a(t) := [ ax(t), ay(t) ];
-     *b(t) := [ bx(t), by(t) ];
-     *d(t) := (a(t) - b(t)) . (a(t) - b(t));
-     *diff(d(t), t);
-     *quit$
+     *  a(t) := [ ax(t), ay(t) ];
+     *  b(t) := [ bx(t), by(t) ];
+     *  d(t) := (a(t) - b(t)) . (a(t) - b(t));
+     *  diff(d(t), t);
+     *  quit$
      * </pre>
      */
     public UnivariateRealFunction derivative() {

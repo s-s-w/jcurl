@@ -23,11 +23,11 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
 import jcurl.core.dto.RockProps;
-import jcurl.sim.core.CollissionStrategy;
 
 import org.jcurl.core.Rock;
 import org.jcurl.core.RockDouble;
 import org.jcurl.math.linalg.MathVec;
+import org.jcurl.model.CollissionModel;
 
 /**
  * A hitter including spin and loss of energy.
@@ -41,7 +41,7 @@ import org.jcurl.math.linalg.MathVec;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CollissionSpinLoss extends CollissionStrategy {
+public class CollissionSpinLoss extends CollissionModel {
 
     private static final double HIT_MAX_DIST = 1e-6;
 

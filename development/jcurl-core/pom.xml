@@ -73,7 +73,7 @@
 			<timezone>+1</timezone>
 		</developer>
 	</developers>
-	<mailingLists>
+	<!--  mailingLists>
 		<mailingList>
 			<name>JCurl Announce</name>
 			<subscribe>
@@ -100,7 +100,7 @@
 				http://lists.berlios.de/pipermail/jcurl-dev/
 			</archive>
 		</mailingList>
-	</mailingLists>
+	</mailingLists -->
 	<organization>
 		<name>jcurl.org</name>
 		<url>http://www.jcurl.org</url>

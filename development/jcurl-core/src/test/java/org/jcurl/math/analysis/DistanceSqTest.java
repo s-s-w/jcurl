@@ -24,8 +24,6 @@ import org.apache.commons.math.ConvergenceException;
 import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
 import org.apache.commons.math.analysis.NewtonSolver;
-import org.jcurl.math.analysis.DifferentiableCurve;
-import org.jcurl.math.analysis.DistanceSq;
 
 public class DistanceSqTest extends TestCase {
 
@@ -33,10 +31,8 @@ public class DistanceSqTest extends TestCase {
             FunctionEvaluationException {
         {
             final double dt = 1e-6;
-            final DifferentiableCurve g1 = DifferentiableCurve.straightLine(1,
-                    0.5);
-            final DifferentiableCurve g2 = DifferentiableCurve.straightLine(-6,
-                    4);
+            final R1RnCurve g1 = R1RnCurve.straightLine(1, 0.5);
+            final R1RnCurve g2 = R1RnCurve.straightLine(-6, 4);
             final DifferentiableUnivariateRealFunction distSq = new DistanceSq(
                     g1, g2);
             double t = new NewtonSolver(distSq).solve(2, 4);
@@ -45,10 +41,8 @@ public class DistanceSqTest extends TestCase {
         }
         {
             final double dt = 1e-6;
-            final DifferentiableCurve g1 = DifferentiableCurve.straightLine(1,
-                    0.5);
-            final DifferentiableCurve g2 = DifferentiableCurve.straightLine(-6,
-                    3);
+            final R1RnCurve g1 = R1RnCurve.straightLine(1, 0.5);
+            final R1RnCurve g2 = R1RnCurve.straightLine(-6, 3);
             final DifferentiableUnivariateRealFunction distSq = new DistanceSq(
                     g1, g2);
             double t = new NewtonSolver(distSq).solve(2, 4);
@@ -59,8 +53,8 @@ public class DistanceSqTest extends TestCase {
 
     public void testStraightLine() throws ConvergenceException,
             FunctionEvaluationException {
-        final DifferentiableCurve g1 = DifferentiableCurve.straightLine(1, 0.5);
-        final DifferentiableCurve g2 = DifferentiableCurve.straightLine(-6, 4);
+        final R1RnCurve g1 = R1RnCurve.straightLine(1, 0.5);
+        final R1RnCurve g2 = R1RnCurve.straightLine(-6, 4);
         final DifferentiableUnivariateRealFunction distSq = new DistanceSq(g1,
                 g2);
         assertEquals("", 49, distSq.value(0), 1e-11);

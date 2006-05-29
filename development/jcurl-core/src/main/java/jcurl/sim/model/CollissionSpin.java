@@ -19,11 +19,11 @@
 package jcurl.sim.model;
 
 import jcurl.core.dto.RockProps;
-import jcurl.sim.core.CollissionStrategy;
 
 import org.jcurl.core.Rock;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
+import org.jcurl.model.CollissionModel;
 
 /**
  * A hitter including spin.
@@ -34,7 +34,7 @@ import org.jcurl.core.helpers.DimVal;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CollissionSpin extends CollissionStrategy {
+public class CollissionSpin extends CollissionModel {
 
     private static final String FRR = "friction rock-rock";
 

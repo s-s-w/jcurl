@@ -28,9 +28,9 @@ public class DifferentiableCurveTest extends TestCase {
     public void testStraightLine() throws ConvergenceException,
             FunctionEvaluationException {
         {
-            final DifferentiableCurve g1 = new DifferentiableCurve(
-                    new Polynome[] { new Polynome(new double[] { 0, 1 }),
-                            new Polynome(new double[] { 1, 0.5 }) });
+            final R1RnCurve g1 = new R1RnCurve(new Polynome[] {
+                    new Polynome(new double[] { 0, 1 }),
+                    new Polynome(new double[] { 1, 0.5 }) });
             final double[] tmp = { 0, 0 };
             g1.value(0, tmp);
             assertEquals("", 0, tmp[0], 1e-11);
@@ -49,9 +49,9 @@ public class DifferentiableCurveTest extends TestCase {
             assertEquals("", 2.5, tmp[1], 1e-11);
         }
         {
-            final DifferentiableCurve g1 = new DifferentiableCurve(
-                    new Polynome[] { new Polynome(new double[] { 0, 1 }),
-                            new Polynome(new double[] { -6, 3 }) });
+            final R1RnCurve g1 = new R1RnCurve(new Polynome[] {
+                    new Polynome(new double[] { 0, 1 }),
+                    new Polynome(new double[] { -6, 3 }) });
             final double[] tmp = { 0, 0 };
             g1.value(0, tmp);
             assertEquals("", 0, tmp[0], 1e-11);

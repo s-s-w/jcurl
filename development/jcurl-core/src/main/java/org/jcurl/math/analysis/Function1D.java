@@ -20,7 +20,6 @@ package org.jcurl.math.analysis;
 
 import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
-import org.apache.commons.math.analysis.UnivariateRealFunction;
 
 /**
  * A "normal" one-dimensional function. Because this is the same as a

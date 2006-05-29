@@ -28,12 +28,12 @@ import java.io.UnsupportedEncodingException;
 
 import jcurl.core.dto.Ice;
 import jcurl.core.dto.RockSetProps;
-import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.SlideStrategy;
 
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
+import org.jcurl.model.CollissionModel;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -68,7 +68,7 @@ public class Config {
 
     }
 
-    public CollissionStrategy getHitter() {
+    public CollissionModel getHitter() {
         return null;
     }
 

@@ -18,11 +18,32 @@
  */
 package org.jcurl.model;
 
+import org.apache.commons.math.FunctionEvaluationException;
+import org.jcurl.core.PositionSet;
+import org.jcurl.core.SpeedSet;
+import org.jcurl.core.helpers.MutableObject;
+import org.jcurl.core.helpers.NotImplementedYetException;
 
-public abstract class RockSetPaths {
+public abstract class RockSetPaths extends MutableObject {
 
+    public abstract PositionSet getCurrentPos()
+            throws FunctionEvaluationException;
+
+    public abstract SpeedSet getCurrentSpeed();
+
+    public abstract double getCurrentT();
 
     public abstract double getMaxT();
 
+    public void setCurrentPos(PositionSet currentPos) {
+        throw new NotImplementedYetException();
+    }
+
+    public void setCurrentSpeed(SpeedSet currentSpeed) {
+        throw new NotImplementedYetException();
+    }
+
+    public abstract void setCurrentT(double currentT)
+            throws FunctionEvaluationException;
 
 }

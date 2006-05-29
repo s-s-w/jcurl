@@ -25,29 +25,28 @@ import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
 import org.apache.commons.math.analysis.NewtonSolver;
 
-public class DennyTest extends TestCase {
+public class DennyCurvesTest extends TestCase {
 
     public void testStraight() throws FunctionEvaluationException,
             ConvergenceException {
-        final DennyModel m = new DennyModel();
-        m.init(24, 0);
-        final DifferentiableUnivariateRealFunction[] f = m.compute(0,
-                new double[] { 0, 0, 0 }, new double[] { 0, 2.5, 0 });
-        assertEquals("", 0.0, f[0].value(0), 1e-9);
-        assertEquals("", 0.0, f[1].value(0), 1e-9);
+        final DennyCurves m = new DennyCurves();
+        final PathSegment f = m.compute(0, 0, 0, 0, 0, 2.5, 0, 1);
+        assertEquals("", 0.0, f.value(0, 0), 1e-9);
+        assertEquals("", 0.0, f.value(1, 0), 1e-9);
 
         assertEquals(
                 "p(x) = 1.7565092079712113E-5*x^4 - 4.699551873981532E-4*x^3",
-                f[0].toString());
-        assertEquals("p(x) = -0.0622935*x^2 + 2.5*x^1", f[1].toString());
+                f.component(0).toString());
+        assertEquals("p(x) = -0.0622935*x^2 + 2.5*x^1", f.component(1)
+                .toString());
 
         // find the stop
         double tStopX = new NewtonSolver(
-                (DifferentiableUnivariateRealFunction) f[0].derivative())
-                .solve(0, 100);
+                (DifferentiableUnivariateRealFunction) f.component(0)
+                        .derivative()).solve(0, 100);
         assertEquals("", 20.066299052068032, tStopX, 1e-12);
         assertEquals("", tStopX, new NewtonSolver(
-                (DifferentiableUnivariateRealFunction) f[1].derivative())
-                .solve(0, 100, 0.1), 1e-12);
+                (DifferentiableUnivariateRealFunction) f.component(1)
+                        .derivative()).solve(0, 100, 0.1), 1e-12);
     }
 }

@@ -19,9 +19,9 @@
 package org.jcurl.model;
 
 import org.apache.commons.math.FunctionEvaluationException;
-import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
 import org.apache.commons.math.analysis.UnivariateRealFunction;
 import org.jcurl.math.analysis.Polynome;
+import org.jcurl.math.analysis.R1R1Function;
 
 /**
  * Curling rock propagation model published by Mark Denny, Can. J. Phys. Vol.
@@ -30,16 +30,19 @@ import org.jcurl.math.analysis.Polynome;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class DennyModel extends IceModel {
+public class DennyCurves extends CurveFactory {
 
     /**
      * Angular Handle position.
      */
-    public class DennyAlphaDiff0 implements
-            DifferentiableUnivariateRealFunction {
+    public class DennyAlphaDiff0 implements R1R1Function {
 
         public UnivariateRealFunction derivative() {
             return new DennyAlphaDiff1();
+        }
+
+        public boolean isLinear() {
+            return false;
         }
 
         public double value(double t) throws FunctionEvaluationException {
@@ -54,10 +57,13 @@ public class DennyModel extends IceModel {
     /**
      * Angular Handle speed.
      */
-    public class DennyAlphaDiff1 implements
-            DifferentiableUnivariateRealFunction {
+    public class DennyAlphaDiff1 implements R1R1Function {
         public UnivariateRealFunction derivative() {
             return new DennyAlphaDiff2();
+        }
+
+        public boolean isLinear() {
+            return false;
         }
 
         public double value(double t) throws FunctionEvaluationException {
@@ -70,10 +76,13 @@ public class DennyModel extends IceModel {
     /**
      * Angular Handle acceleration.
      */
-    public class DennyAlphaDiff2 implements
-            DifferentiableUnivariateRealFunction {
+    public class DennyAlphaDiff2 implements R1R1Function {
         public UnivariateRealFunction derivative() {
             return null;
+        }
+
+        public boolean isLinear() {
+            return false;
         }
 
         public double value(double t) throws FunctionEvaluationException {
@@ -89,7 +98,7 @@ public class DennyModel extends IceModel {
 
     private static final double R = 6.3e-2;
 
-    private double curl;
+    private static final long serialVersionUID = 3289346496211556915L;
 
     private double epsilon = 0;
 
@@ -97,39 +106,29 @@ public class DennyModel extends IceModel {
 
     private double omega0 = 0;
 
-    private double tee;
-
     private double v0 = 0;
 
-    public JCurlPathSegment computePath(final double t0,
-            final double[] x0, final double[] v0) {
-        return null;
+    public DennyCurves() {
+        this.mu = 0.0127;
+        this.epsilon = 2.63;
     }
-    
-    
-    public DifferentiableUnivariateRealFunction[] compute(final double t0,
-            final double[] x0, final double[] v0) {
 
-        final double v02 = v0[0] * v0[0] + v0[1] * v0[1];
-        this.v0 = Math.sqrt(v02);
-        this.omega0 = v0[2];
+    R1R1Function[] compute(final double v0Square, final double w0) {
+        this.v0 = Math.sqrt(v0Square);
+        this.omega0 = w0;
         final double tau = this.v0 / (mu * g);
 
-        double tmp = -bLR * v02 / (4 * epsilon * R * tau);
-        final DifferentiableUnivariateRealFunction[] ret = new DifferentiableUnivariateRealFunction[3];
+        double tmp = -bLR * v0Square / (4 * epsilon * R * tau);
+        final R1R1Function[] ret = new R1R1Function[3];
         ret[0] = new Polynome(
                 new double[] { 0, 0, 0, tmp / 3, -tmp / (4 * tau) });
-        tmp = Math.sqrt(v02);
+        tmp = Math.sqrt(v0Square);
         ret[1] = new Polynome(new double[] { 0, tmp, -tmp / (2 * tau) });
-
         return ret;
     }
 
-    public void init(final double tee, final double curl) {
-        this.tee = tee;
-        this.curl = curl;
-        this.mu = 0.0127;
-        this.epsilon = 2.63;
+    public boolean equals(Object obj) {
+        return false;
     }
 
 }

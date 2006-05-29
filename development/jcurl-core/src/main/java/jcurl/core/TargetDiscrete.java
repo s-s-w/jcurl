@@ -40,7 +40,7 @@ public interface TargetDiscrete extends Target {
      * @param rocks
      * @param discontinuous
      *            bitmask of discontinuous rocks as returned by
-     *            {@link jcurl.sim.core.CollissionStrategy#compute(PositionSet, SpeedSet)}.
+     *            {@link org.jcurl.model.CollissionModel#compute(PositionSet, SpeedSet)}.
      */
     public void setPos(final double t, final PositionSet rocks,
             final int discontinuous);

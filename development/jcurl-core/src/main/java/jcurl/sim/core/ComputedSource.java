@@ -37,6 +37,7 @@ import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.math.analysis.CurveGhost;
+import org.jcurl.model.CollissionModel;
 import org.xml.sax.SAXException;
 
 /**
@@ -71,7 +72,7 @@ public class ComputedSource extends MutableObject implements Source {
         return false;
     }
 
-    public CollissionStrategy getColl() {
+    public CollissionModel getColl() {
         return slide.getColl();
     }
 
@@ -100,7 +101,7 @@ public class ComputedSource extends MutableObject implements Source {
     }
 
     public void init(final PositionSet x, final SpeedSet v,
-            final SlideStrategy ice, final CollissionStrategy coll)
+            final SlideStrategy ice, final CollissionModel coll)
             throws FunctionEvaluationException {
         minT = 0;
         maxT = 35;

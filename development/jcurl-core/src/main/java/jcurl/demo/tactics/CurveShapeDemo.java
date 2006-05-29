@@ -34,7 +34,6 @@ import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.helpers.Version;
 import org.jcurl.math.analysis.CurveFkt;
 import org.jcurl.math.analysis.CurveGhost;
-import org.jcurl.math.analysis.Function1D;
 import org.jcurl.math.analysis.Polynome;
 import org.jcurl.math.helpers.CurveShape;
 

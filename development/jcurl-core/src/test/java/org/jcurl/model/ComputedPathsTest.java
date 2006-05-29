@@ -21,8 +21,6 @@ package org.jcurl.model;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import jcurl.sim.model.CollissionSpinLoss;
-import jcurl.sim.model.SlideStraight;
 import junit.framework.TestCase;
 
 import org.apache.commons.math.FunctionEvaluationException;
@@ -42,9 +40,7 @@ public class ComputedPathsTest extends TestCase {
 
     public void testNoneMoving() throws FunctionEvaluationException {
         final ComputedPaths cp = new ComputedPaths();
-        cp.setCollider(new CollissionSpinLoss());
         assertEquals(0, ec);
-        cp.setIce(new SlideStraight());
         cp.getCurrentPos().addPropertyChangeListener(
                 new PropertyChangeListener() {
                     public void propertyChange(PropertyChangeEvent e) {
@@ -75,9 +71,7 @@ public class ComputedPathsTest extends TestCase {
 
     public void testOneMovingEvents() throws FunctionEvaluationException {
         final ComputedPaths cp = new ComputedPaths();
-        cp.setCollider(new CollissionSpinLoss());
         assertEquals(0, ec);
-        cp.setIce(new SlideStraight());
         cp.getCurrentPos().addPropertyChangeListener(
                 new PropertyChangeListener() {
                     public void propertyChange(PropertyChangeEvent e) {

@@ -20,26 +20,56 @@ package org.jcurl.model;
 
 import java.awt.geom.PathIterator;
 
+import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.SpeedSet;
+import org.jcurl.core.helpers.NotImplementedYetException;
 
+/**
+ * Paths for quick display via java2d.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public class AwtPaths extends RecordedPaths {
+
+    private static final long serialVersionUID = 1530923593296287467L;
 
     private PathIterator[] paths;
 
-    public PositionSet getPosition(double t, PositionSet dst) {
-        return null;
+    public boolean equals(Object obj) {
+        throw new NotImplementedYetException();
     }
 
-    public SpeedSet getSpeed(double t, SpeedSet dst) {
-        return null;
+    public PathIterator getAwtPath(int i) {
+        return paths[i];
+    }
+
+    public PositionSet getCurrentPos() throws FunctionEvaluationException {
+        throw new NotImplementedYetException();
+    }
+
+    public SpeedSet getCurrentSpeed() {
+        throw new NotImplementedYetException();
+    }
+
+    public double getCurrentT() {
+        throw new NotImplementedYetException();
     }
 
     public double getMaxT() {
-        return 0;
+        throw new NotImplementedYetException();
     }
-    
-    public PathIterator getAwtPath(int i) {
-        return paths[i];
+
+    public PositionSet getPosition(double t, PositionSet dst) {
+        throw new NotImplementedYetException();
+    }
+
+    public SpeedSet getSpeed(double t, SpeedSet dst) {
+        throw new NotImplementedYetException();
+    }
+
+    public void setCurrentT(double currentT) throws FunctionEvaluationException {
+        throw new NotImplementedYetException();
     }
 }
