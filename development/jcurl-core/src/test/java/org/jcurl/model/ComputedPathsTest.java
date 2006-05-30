@@ -41,7 +41,7 @@ public class ComputedPathsTest extends TestCase {
         vel = 128;
     }
 
-    public void testNoneMoving() throws FunctionEvaluationException {
+    public void testNoneMoving() throws FunctionEvaluationException, InterruptedException {
         final ComputedPaths cp = new ComputedPaths();
         assertEquals(0, ec);
         cp.getCurrentPos().addPropertyChangeListener(
@@ -63,14 +63,14 @@ public class ComputedPathsTest extends TestCase {
         assertEquals(0, ec);
         assertEquals("", 0.0, cp.getCurrentT(), 1e-9);
         cp.setCurrentT(1);
-        // TODO Strange - I'd expect a vel+pos here!
-        assertEquals(vel, ec);
+        // Strange! Eclipse fails here, but maven does it right!
+        assertEquals((vel + pos), ec);
         assertEquals("", 1.0, cp.getCurrentT(), 1e-9);
         cp.setCurrentT(Double.MAX_VALUE);
-        assertEquals(vel * 2, ec);
+        assertEquals((vel + pos) * 2, ec);
         assertEquals("", Double.MAX_VALUE, cp.getCurrentT(), 1e-9);
         cp.setCurrentT(Double.POSITIVE_INFINITY);
-        assertEquals(vel * 3, ec);
+        assertEquals((vel + pos) * 3, ec);
         assertEquals("", Double.POSITIVE_INFINITY, cp.getCurrentT(), 1e-9);
     }
 
