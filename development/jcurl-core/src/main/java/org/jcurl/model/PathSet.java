@@ -38,9 +38,11 @@ public class PathSet implements JCurlCurve {
     private final SortedMap pieces = new TreeMap();
 
     public void append(double t0, PathSegment curve) {
-        final Double last = (Double) pieces.lastKey();
-        if (t0 <= last.doubleValue())
-            throw new IllegalArgumentException("t0 <= tmax");
+        if (pieces.size() > 0) {
+            final Double last = (Double) pieces.lastKey();
+            if (t0 <= last.doubleValue())
+                throw new IllegalArgumentException("t0 <= tmax");
+        }
         pieces.put(new Double(t0), curve);
     }
 

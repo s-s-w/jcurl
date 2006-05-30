@@ -33,6 +33,7 @@ public class DennyCurvesTest extends TestCase {
         final PathSegment f = m.compute(0, 0, 0, 0, 0, 2.5, 0, 1);
         assertEquals("", 0.0, f.value(0, 0), 1e-9);
         assertEquals("", 0.0, f.value(1, 0), 1e-9);
+        assertEquals("", 0.0, f.value(2, 0), 1e-9);
 
         assertEquals(
                 "p(x) = 1.7565092079712113E-5*x^4 - 4.699551873981532E-4*x^3",

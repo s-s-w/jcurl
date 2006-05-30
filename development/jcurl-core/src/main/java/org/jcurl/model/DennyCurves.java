@@ -124,6 +124,7 @@ public class DennyCurves extends CurveFactory {
                 new double[] { 0, 0, 0, tmp / 3, -tmp / (4 * tau) });
         tmp = Math.sqrt(v0Square);
         ret[1] = new Polynome(new double[] { 0, tmp, -tmp / (2 * tau) });
+        ret[2] = new DennyAlphaDiff0();
         return ret;
     }
 

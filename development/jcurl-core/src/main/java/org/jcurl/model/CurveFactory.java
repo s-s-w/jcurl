@@ -24,16 +24,27 @@ import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.math.analysis.R1R1Function;
 
 /**
- * Base class to create "curled" curves in rock coordinates.
+ * Base class to create "curled" curves in rock coordinates. Each
+ * {@link org.jcurl.model.PathSegment} is responsible for RC&lt;-&gt;WC
+ * transformation.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public abstract class CurveFactory extends MutableObject {
 
-    private double curl = 1;
+    private double curl;
 
-    private double tee = 24;
+    private double tee;
+
+    /**
+     * Default curl is 1m and default draw-to-tee-time is 24s.
+     * 
+     */
+    public CurveFactory() {
+        curl = 1;
+        tee = 24;
+    }
 
     /**
      * Do the real work and get the path in rock-coordinates.
@@ -47,7 +58,7 @@ public abstract class CurveFactory extends MutableObject {
     PathSegment compute(final double t0, final double x0, final double y0,
             final double a0, final double vx0, final double vy0,
             final double w0, final double sweepFactor) {
-        return new PathSegment(compute(vx0 * vx0 + vy0 * vy0, w0));
+        return new PathSegment(t0, compute(vx0 * vx0 + vy0 * vy0, w0));
     }
 
     public PathSegment compute(final double t0, final Rock x0, final Rock v0,

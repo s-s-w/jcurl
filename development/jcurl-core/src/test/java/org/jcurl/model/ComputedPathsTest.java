@@ -31,11 +31,14 @@ public class ComputedPathsTest extends TestCase {
 
     private int ec = -1;
 
-    private int off = -1;
+    private int pos = -1;
+
+    private int vel = -1;
 
     public void setUp() {
         ec = 0;
-        off = 128;
+        pos = 2;
+        vel = 128;
     }
 
     public void testNoneMoving() throws FunctionEvaluationException {
@@ -46,7 +49,7 @@ public class ComputedPathsTest extends TestCase {
                     public void propertyChange(PropertyChangeEvent e) {
                         assertEquals("rock", e.getPropertyName());
                         assertTrue(e.getSource() instanceof PositionSet);
-                        ec++;
+                        ec += pos;
                     }
                 });
         cp.getCurrentSpeed().addPropertyChangeListener(
@@ -54,19 +57,21 @@ public class ComputedPathsTest extends TestCase {
                     public void propertyChange(PropertyChangeEvent e) {
                         assertEquals("rock", e.getPropertyName());
                         assertTrue(e.getSource() instanceof SpeedSet);
-                        ec += off;
+                        ec += vel;
                     }
                 });
         assertEquals(0, ec);
+        assertEquals("", 0.0, cp.getCurrentT(), 1e-9);
         cp.setCurrentT(1);
-        assertEquals(0, ec);
-        assertEquals("", 0.0, cp.getCurrentT(), 1e-9);
+        // TODO Strange - I'd expect a vel+pos here!
+        assertEquals(vel, ec);
+        assertEquals("", 1.0, cp.getCurrentT(), 1e-9);
         cp.setCurrentT(Double.MAX_VALUE);
-        assertEquals(0, ec);
-        assertEquals("", 0.0, cp.getCurrentT(), 1e-9);
+        assertEquals(vel * 2, ec);
+        assertEquals("", Double.MAX_VALUE, cp.getCurrentT(), 1e-9);
         cp.setCurrentT(Double.POSITIVE_INFINITY);
-        assertEquals(0, ec);
-        assertEquals("", 0.0, cp.getCurrentT(), 1e-9);
+        assertEquals(vel * 3, ec);
+        assertEquals("", Double.POSITIVE_INFINITY, cp.getCurrentT(), 1e-9);
     }
 
     public void testOneMovingEvents() throws FunctionEvaluationException {
@@ -77,7 +82,7 @@ public class ComputedPathsTest extends TestCase {
                     public void propertyChange(PropertyChangeEvent e) {
                         assertEquals("rock", e.getPropertyName());
                         assertTrue(e.getSource() instanceof PositionSet);
-                        ec++;
+                        ec += pos;
                     }
                 });
         cp.getCurrentSpeed().addPropertyChangeListener(
@@ -85,21 +90,21 @@ public class ComputedPathsTest extends TestCase {
                     public void propertyChange(PropertyChangeEvent e) {
                         assertEquals("rock", e.getPropertyName());
                         assertTrue(e.getSource() instanceof SpeedSet);
-                        ec += off;
+                        ec += vel;
                     }
                 });
         assertEquals(0, ec);
         cp.getInitialSpeed().getLight(0).setY(-1);
-        cp.setInitialSpeed(cp.getInitialSpeed());
-        assertEquals(1 + off, ec);
+        cp.getInitialSpeed().notifyChange();
+        assertEquals((vel + pos) * 1, ec);
         cp.setCurrentT(1);
-        assertEquals(1 + off, ec);
+        assertEquals((vel + pos) * 2, ec);
         assertEquals("", 1.0, cp.getCurrentT(), 1e-9);
         cp.setCurrentT(Double.MAX_VALUE);
-        assertEquals(1 + off, ec);
+        assertEquals((vel + pos) * 3, ec);
         assertEquals("", Double.MAX_VALUE, cp.getCurrentT(), 1e-9);
         cp.setCurrentT(Double.POSITIVE_INFINITY);
-        assertEquals(1 + off, ec);
-        assertEquals("", Double.MAX_VALUE, cp.getCurrentT(), 1e-9);
+        assertEquals((vel + pos) * 4, ec);
+        assertEquals("", Double.POSITIVE_INFINITY, cp.getCurrentT(), 1e-9);
     }
 }

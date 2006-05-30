@@ -38,6 +38,9 @@ public interface R1R1Function extends DifferentiableUnivariateRealFunction {
      */
     public abstract UnivariateRealFunction derivative();
 
+    /**
+     * Very useful if e.g.&nbsp;coordinate transformations are involved.
+     */
     public abstract boolean isLinear();
 
     public abstract double value(double x) throws FunctionEvaluationException;

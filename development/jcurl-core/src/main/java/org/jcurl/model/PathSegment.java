@@ -33,7 +33,7 @@ import org.jcurl.math.analysis.R1RnCurve;
  */
 public class PathSegment extends R1RnCurve implements JCurlCurve {
 
-    private final boolean doTransform;
+    private final boolean isRockCoordinates;
 
     private final double t0;
 
@@ -47,14 +47,14 @@ public class PathSegment extends R1RnCurve implements JCurlCurve {
 
     private final double y0;
 
-    protected PathSegment(boolean tr, double t0, double x0, double y0,
-            double vx0, double vy0, final R1R1Function[] c) {
+    protected PathSegment(boolean isRockCoordinates, double t0, double x0,
+            double y0, double vx0, double vy0, final R1R1Function[] c) {
         super(c);
         if (c.length != 3)
             throw new IllegalArgumentException(
                     "rock path curve must have 3 dimensions, but had "
                             + c.length);
-        this.doTransform = tr;
+        this.isRockCoordinates = isRockCoordinates;
         this.t0 = t0;
         this.x0 = x0;
         this.y0 = y0;
@@ -62,13 +62,27 @@ public class PathSegment extends R1RnCurve implements JCurlCurve {
         this.vy0 = vy0;
     }
 
+    /**
+     * 
+     * @param t0
+     * @param x0
+     * @param y0
+     * @param vx0
+     * @param vy0
+     * @param c
+     *            curves in rock coordinates
+     */
     public PathSegment(double t0, double x0, double y0, double vx0, double vy0,
             final R1R1Function[] c) {
         this(true, t0, x0, y0, vx0, vy0, c);
     }
 
-    public PathSegment(final R1R1Function[] c) {
-        this(false, 0, 0, 0, 0, 0, c);
+    /**
+     * @param c
+     *            curves in world coordinates
+     */
+    public PathSegment(double t0, final R1R1Function[] c) {
+        this(false, t0, 0, 0, 0, 0, c);
     }
 
     public Rock value(double t, Rock dst) throws FunctionEvaluationException {

@@ -75,15 +75,21 @@ public class ComputedPaths extends RockSetPaths implements
 
     /**
      * Defaults to {@link DennyCurves} and {@link CollissionSpinLoss} and calls
-     * {@link #clear()}.
+     * {@link #clearCurves()}.
      */
     public ComputedPaths() {
-        ice = new DennyCurves();
-        collider = new CollissionSpinLoss();
-        clear();
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+            curves[i] = new PathSet();
+        this.ice = new DennyCurves();
+        this.collider = new CollissionSpinLoss();
+        this.ice.addPropertyChangeListener(this);
+        this.collider.addPropertyChangeListener(this);
+        this.initialPos.addPropertyChangeListener(this);
+        this.initialSpeed.addPropertyChangeListener(this);
+        clearCurves();
     }
 
-    void clear() {
+    void clearCurves() {
         known = -1;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             curves[i].clear();
@@ -204,9 +210,8 @@ public class ComputedPaths extends RockSetPaths implements
      * @throws FunctionEvaluationException
      */
     protected void recompute() throws FunctionEvaluationException {
-        clear();
         final double tmp = currentT;
-        currentT = 0;
+        clearCurves();
         setCurrentT(tmp);
     }
 
@@ -229,11 +234,15 @@ public class ComputedPaths extends RockSetPaths implements
     }
 
     public void setCurrentT(double currentT) throws FunctionEvaluationException {
+        final double old = this.currentT;
         this.currentT = computeUntil(currentT);
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            // compute rock locations + speeds
-            throw new NotImplementedYetException();
+            curves[i].value(this.currentT, getCurrentPos().getRock(i));
+            // TODO compute rock speeds
         }
+        propChange.firePropertyChange("currentT", old, this.currentT);
+        getCurrentPos().notifyChange();
+        getCurrentSpeed().notifyChange();
     }
 
     public void setIce(CurveFactory slide) throws FunctionEvaluationException {
@@ -250,14 +259,14 @@ public class ComputedPaths extends RockSetPaths implements
         this.initialPos.removePropertyChangeListener(this);
         this.initialPos = initialPos;
         this.initialPos.addPropertyChangeListener(this);
-        setIce(getIce());
+        recompute();
     }
 
     public void setInitialSpeed(SpeedSet initialSpeed)
             throws FunctionEvaluationException {
         this.initialSpeed.removePropertyChangeListener(this);
         this.initialSpeed = initialSpeed;
-        this.initialSpeed.removePropertyChangeListener(this);
-        setIce(getIce());
+        this.initialSpeed.addPropertyChangeListener(this);
+        recompute();
     }
 }
