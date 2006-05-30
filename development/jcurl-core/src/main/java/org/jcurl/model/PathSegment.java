@@ -85,6 +85,9 @@ public class PathSegment extends R1RnCurve implements JCurlCurve {
         this(false, t0, 0, 0, 0, 0, c);
     }
 
+    /**
+     * @see #valueWC(double, Rock)
+     */
     public Rock value(double t, Rock dst) throws FunctionEvaluationException {
         return valueWC(t, dst);
     }

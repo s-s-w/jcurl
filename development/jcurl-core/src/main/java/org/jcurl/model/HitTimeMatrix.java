@@ -39,7 +39,7 @@ class HitTimeMatrix {
         reset(Double.NaN);
     }
 
-    /** TODO mark all combinations Unknown */
+    /** Mark all combinations Unknown */
     public void dirty(int index, double v) {
         for (int i = RockSet.ROCKS_PER_SET - 1; i > index; i--)
             set(i, index, v);

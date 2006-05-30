@@ -25,7 +25,6 @@ import java.util.TreeMap;
 
 import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.Rock;
-import org.jcurl.core.helpers.NotImplementedYetException;
 
 /**
  * Several {@link org.jcurl.model.PathSegment}s with discontinuities.
@@ -71,16 +70,24 @@ public class PathSet implements JCurlCurve {
         return (PathSegment) prev.getValue();
     }
 
+    /**
+     * @see PathSegment#value(double, Rock)
+     */
     public Rock value(double t, Rock dst) throws FunctionEvaluationException {
-        return valueWC(t, dst);
-    }
-
-    public Rock valueRC(double t, Rock dst) throws FunctionEvaluationException {
-        throw new NotImplementedYetException();
-    }
-
-    public Rock valueWC(double t, Rock dst) throws FunctionEvaluationException {
         return getCurve(t).value(t, dst);
     }
 
+    /**
+     * @see PathSegment#valueRC(double, Rock)
+     */
+    public Rock valueRC(double t, Rock dst) throws FunctionEvaluationException {
+        return getCurve(t).valueRC(t, dst);
+    }
+
+    /**
+     * @see PathSegment#valueWC(double, Rock)
+     */
+    public Rock valueWC(double t, Rock dst) throws FunctionEvaluationException {
+        return getCurve(t).valueWC(t, dst);
+    }
 }
