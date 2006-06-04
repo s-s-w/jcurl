@@ -29,14 +29,14 @@
 		</profile>
 		</profiles -->
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jcurl.maven</groupId>
+	<groupId>org.jcurl.core</groupId>
 	<name>JCurl Curling Framework</name>
 	<inceptionYear>2005</inceptionYear>
 	<url>http://www.jcurl.org/</url>
 	<artifactId>jcurl-core</artifactId>
 	<version>0.3.0</version>
 	<description>
-		Java library and sample applications for rock trajectory
+		Java library for rock trajectory
 		simulation, game filing, analysis and visualisation
 	</description>
 	<licenses>

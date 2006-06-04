@@ -30,7 +30,6 @@ import org.jcurl.core.PositionSet;
  * displayed (here: time).
  * 
  * @see jcurl.core.gui.RockLocationDisplay
- * @see jcurl.core.gui.RealTimePlayer
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
