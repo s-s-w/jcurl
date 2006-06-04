@@ -18,20 +18,15 @@
  */
 package org.jcurl.math.dom;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.Map;
 import java.util.TreeMap;
 
-import jcurl.mr.exp.math.Calc0;
-import jcurl.mr.exp.math.Calc1;
 import junit.framework.TestCase;
 
 /**
  * JUnit Test.
  * 
- * @see jcurl.mr.exp.math.Calc0
- * @see jcurl.mr.exp.math.Calc1
  * @see org.jcurl.math.dom.MathDom
  * @see org.jcurl.math.dom.ParserInfix
  * @see org.jcurl.math.dom.DomWalkerInfix
@@ -41,35 +36,6 @@ import junit.framework.TestCase;
  * @version $Id$
  */
 public class MathDomTest extends TestCase {
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(MathDomTest.class);
-    }
-
-    public void test010_0() throws IOException {
-        Calc0 c = new Calc0(" 2 * 4 +3 ");
-        assertEquals("", 11, c.compute(), 1e-9);
-
-        c = new Calc0(" 2 * (4 +3) ");
-        assertEquals("", 14, c.compute(), 1e-9);
-
-        c = new Calc0(" 2 / 4 +3 ");
-        assertEquals("", 3.5, c.compute(), 1e-9);
-    }
-
-    public void test020_1() throws IOException {
-        Calc1 c = new Calc1(" 2 * 4 +3 ");
-        assertEquals("", 11, c.compute(), 1e-9);
-
-        c = new Calc1(" 2 * (3-4) ");
-        assertEquals("", -2, c.compute(), 1e-9);
-
-        c = new Calc1(" 2 * abs(3-4) ");
-        assertEquals("", 2, c.compute(), 1e-9);
-
-        c = new Calc1(" 2 / 4 +3 ");
-        assertEquals("", 3.5, c.compute(), 1e-9);
-    }
 
     public void test030_Dom() throws ParseException {
         MathDom.Node n = ParserInfix.parse(" 2 * 4 +3 ");
