@@ -190,6 +190,10 @@ public class Polynome extends PolynomialFunction implements R1R1Function {
         return true;
     }
 
+    public PolynomialFunction polynomialDerivative() {
+        return new Polynome(super.polynomialDerivative().getCoefficients());
+    }
+
     public String toString() {
         return toString(this.coffs());
     }

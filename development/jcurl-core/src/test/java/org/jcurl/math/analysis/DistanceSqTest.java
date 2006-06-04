@@ -33,8 +33,7 @@ public class DistanceSqTest extends TestCase {
             final double dt = 1e-6;
             final R1RnCurve g1 = R1RnCurve.straightLine(1, 0.5);
             final R1RnCurve g2 = R1RnCurve.straightLine(-6, 4);
-            final DifferentiableUnivariateRealFunction distSq = new DistanceSq(
-                    g1, g2);
+            final R1R1Function distSq = new DistanceSq(g1, g2);
             double t = new NewtonSolver(distSq).solve(2, 4);
             assertEquals("", 2.0, t, dt);
             assertEquals("", 0.0, distSq.value(t), dt);

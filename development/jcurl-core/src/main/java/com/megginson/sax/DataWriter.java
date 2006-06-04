@@ -59,13 +59,13 @@ import org.xml.sax.XMLReader;
  * </p>
  * 
  * <pre>
- *      &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
- *     
- *      &lt;Person&gt;
- *        &lt;name&gt;Jane Smith&lt;/name&gt;
- *        &lt;date-of-birth&gt;1965-05-23&lt;/date-of-birth&gt;
- *        &lt;citizenship&gt;US&lt;/citizenship&gt;
- *      &lt;/Person&gt;
+ *       &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *      
+ *       &lt;Person&gt;
+ *         &lt;name&gt;Jane Smith&lt;/name&gt;
+ *         &lt;date-of-birth&gt;1965-05-23&lt;/date-of-birth&gt;
+ *         &lt;citizenship&gt;US&lt;/citizenship&gt;
+ *       &lt;/Person&gt;
  * </pre>
  * 
  * <p>

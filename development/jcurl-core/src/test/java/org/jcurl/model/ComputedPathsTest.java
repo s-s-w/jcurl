@@ -41,7 +41,8 @@ public class ComputedPathsTest extends TestCase {
         vel = 128;
     }
 
-    public void testNoneMoving() throws FunctionEvaluationException, InterruptedException {
+    public void testNoneMoving() throws FunctionEvaluationException,
+            InterruptedException {
         final ComputedPaths cp = new ComputedPaths();
         assertEquals(0, ec);
         cp.getCurrentPos().addPropertyChangeListener(
