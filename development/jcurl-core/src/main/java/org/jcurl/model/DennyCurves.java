@@ -46,7 +46,6 @@ public class DennyCurves extends CurveFactory {
         }
 
         public double value(double t) throws FunctionEvaluationException {
-
             double tmp = Math.exp(1 - (g * mu * t / v0))
                     / Math.log(1 / epsilon);
             return -epsilon * omega0 * (v0 * tmp - g * mu * t * tmp - v0)
@@ -125,7 +124,7 @@ public class DennyCurves extends CurveFactory {
         double tmp = -bLR * v0Square / (4 * epsilon * R * tau);
         final R1R1Function[] ret = new R1R1Function[3];
         ret[0] = new Polynome(
-                new double[] { 0, 0, 0, tmp / 3, -tmp / (4 * tau) });
+                new double[] { 0, 0, 0, -tmp / 3, +tmp / (4 * tau) });
         tmp = Math.sqrt(v0Square);
         ret[1] = new Polynome(new double[] { 0, tmp, -tmp / (2 * tau) });
         ret[2] = new DennyAlphaDiff0();

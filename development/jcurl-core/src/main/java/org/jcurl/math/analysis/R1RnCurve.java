@@ -76,7 +76,7 @@ public class R1RnCurve {
             throw new IllegalArgumentException("Dimension mismatch: "
                     + dimension() + "!=" + ret.length);
         for (int i = dimension() - 1; i >= 0; i--)
-            ret[i] = value(i, t);
+            ret[i] = component(i).value(t);//value(i, t);
         return ret;
     }
 
@@ -87,7 +87,7 @@ public class R1RnCurve {
      * @param t
      * @throws FunctionEvaluationException
      */
-    public double value(int dim, double t) throws FunctionEvaluationException {
+    private double value(int dim, double t) throws FunctionEvaluationException {
         return component(dim).value(t);
     }
 }

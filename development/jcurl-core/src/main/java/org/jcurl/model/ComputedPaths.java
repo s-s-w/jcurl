@@ -27,11 +27,13 @@ import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.analysis.NewtonSolver;
 import org.apache.commons.math.analysis.UnivariateRealSolver;
 import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.Rock;
 import org.jcurl.core.dto.RockSet;
 import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.math.analysis.DistanceSq;
+import org.jcurl.math.analysis.R1RnCurve;
 
 /**
  * Manages the interaction of {@link org.jcurl.model.CurveFactory} and
@@ -98,7 +100,9 @@ public class ComputedPaths extends RockSetPaths implements
 
     /**
      * Ensure the curvestore has no unprocessed hits until t. Does NOT compute
-     * {@link #currentPos} and {@link #currentSpeed}.
+     * {@link #currentPos} and {@link #currentSpeed}. Calls
+     * {@link #computeCurve(int, double, Rock, Rock, double)} for every "dirty"
+     * rock.
      * 
      * @throws FunctionEvaluationException
      */
@@ -108,11 +112,11 @@ public class ComputedPaths extends RockSetPaths implements
         if (known < 0) {
             // initial setup!
             known = 0;
-            pm.reset(Unknown);
+            // pm.reset(Unknown);
             for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
                 curves[i].clear();
-                curves[i].append(known, ice.compute(known, getInitialPos()
-                        .getRock(i), getInitialSpeed().getRock(i), NoSweep));
+                computeCurve(i, known, getInitialPos().getRock(i),
+                        getInitialSpeed().getRock(i), NoSweep);
             }
         }
         while (t > known) {
@@ -121,18 +125,9 @@ public class ComputedPaths extends RockSetPaths implements
             for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
                 for (int j = i - 1; j >= 0; j--) {
                     // NaN proof comparison:
-                    if (!(pm.get(i, j) != Unknown)) {
-                        try {
-                            // compute the hit-time
-                            final DistanceSq dist = new DistanceSq(curves[i]
-                                    .getCurve(t), curves[j].getCurve(t));
-                            final UnivariateRealSolver solver = new NewtonSolver(
-                                    dist);
-                            pm.set(i, j, solver.solve(known, t, known));
-                        } catch (ConvergenceException e) {
-                            pm.set(i, j, Never);
-                        }
-                    }
+                    if (Double.isNaN(pm.get(i, j)) || pm.get(i, j) == Unknown)
+                        pm.set(i, j, firstHit(curves[i].getCurve(t), curves[j]
+                                .getCurve(t), known, t));
                     // find the soonest hit time+pair (could move to
                     // HitTimeMatrix):
                     final double tmp = pm.get(i, j);
@@ -153,12 +148,27 @@ public class ComputedPaths extends RockSetPaths implements
             for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
                 if ((hitPair & (1 << i)) == 0)
                     continue;
-                pm.dirty(i, Unknown);
-                curves[i].append(known, ice.compute(known, getCurrentPos()
-                        .getRock(i), getCurrentSpeed().getRock(i), NoSweep));
+                computeCurve(i, known, getCurrentPos().getRock(i),
+                        getCurrentSpeed().getRock(i), NoSweep);
             }
         }
         return t;
+    }
+
+    static double firstHit(final R1RnCurve a, final R1RnCurve b, double tmin,
+            double tmax) throws FunctionEvaluationException {
+        final DistanceSq dist = new DistanceSq(a, b);
+        final UnivariateRealSolver solver = new NewtonSolver(dist);
+        try {
+            return solver.solve(tmin, tmax, tmin + 1e-2);
+        } catch (ConvergenceException e) {
+            return Never;
+        }
+    }
+
+    private void computeCurve(int i, double t0, Rock x, Rock v, double sweep) {
+        pm.dirty(i, Unknown);
+        curves[i].append(t0, ice.compute(t0, x, v, sweep));
     }
 
     public boolean equals(Object obj) {
@@ -203,11 +213,11 @@ public class ComputedPaths extends RockSetPaths implements
 
     public void propertyChange(PropertyChangeEvent arg0) {
         log.info(arg0);
-        // try {
-        // recompute();
-        // } catch (FunctionEvaluationException e) {
-        // throw new RuntimeException(e);
-        // }
+        try {
+            recompute();
+        } catch (FunctionEvaluationException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -243,7 +253,8 @@ public class ComputedPaths extends RockSetPaths implements
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             curves[i].value(this.currentT, getCurrentPos().getRock(i));
             if (log.isDebugEnabled()) {
-                log.debug("c(i=" + i + ",t=" + currentT + ")=" + getCurrentPos().getRock(i));
+                log.debug("c(i=" + i + ",t=" + currentT + ")="
+                        + getCurrentPos().getRock(i));
                 final PathSegment p = curves[i].getCurve(currentT);
                 log.debug("    c_x(t)=" + p.component(0));
                 log.debug("    c_y(t)=" + p.component(1));
@@ -251,6 +262,7 @@ public class ComputedPaths extends RockSetPaths implements
             }
             // TODO compute rock speeds
         }
+
         propChange.firePropertyChange("currentT", old, this.currentT);
         getCurrentPos().notifyChange();
         getCurrentSpeed().notifyChange();

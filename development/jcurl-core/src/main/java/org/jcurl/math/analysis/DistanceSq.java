@@ -20,6 +20,7 @@ package org.jcurl.math.analysis;
 
 import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.analysis.UnivariateRealFunction;
+import org.jcurl.math.helpers.MathVec;
 
 /**
  * Function that describes the distance between two n-dimensional curves.
@@ -41,6 +42,7 @@ public class DistanceSq implements R1R1Function {
 
     transient private R1RnCurve diff2;
 
+    /** (r1+r2)^2 */
     private final double r2;
 
     /**
@@ -90,11 +92,11 @@ public class DistanceSq implements R1R1Function {
      * <code>2 * (c1 - c2) * (c1' - c2')</code> Feed into maxima:
      * 
      * <pre>
-     *    a(t) := [ ax(t), ay(t) ];
-     *    b(t) := [ bx(t), by(t) ];
-     *    d(t) := (a(t) - b(t)) . (a(t) - b(t));
-     *    diff(d(t), t);
-     *    quit$
+     *        a(t) := [ ax(t), ay(t) ];
+     *        b(t) := [ bx(t), by(t) ];
+     *        d(t) := (a(t) - b(t)) . (a(t) - b(t));
+     *        diff(d(t), t);
+     *        quit$
      * </pre>
      */
     public UnivariateRealFunction derivative() {
@@ -112,11 +114,13 @@ public class DistanceSq implements R1R1Function {
 
                 public double value(double t)
                         throws FunctionEvaluationException {
+                    double[] a = c1.value(t, null);
+                    double[] b = c2.value(t, null);
+                    double[] da = diff1.value(t, null);
+                    double[] db = diff2.value(t, null);
                     double ret = 0.0;
-                    for (int i = c1.dimension() - 1; i >= 0; i--) {
-                        ret += (c1.value(i, t) - c2.value(i, t))
-                                * (diff1.value(i, t) - diff2.value(i, t));
-                    }
+                    for (int i = c1.dimension() - 1; i >= 0; i--)
+                        ret += (a[i] - b[i]) * (da[i] - db[i]);
                     return 2.0 * ret;
                 }
             };
@@ -132,11 +136,9 @@ public class DistanceSq implements R1R1Function {
      * <code>(c1(t) - c2(t))^2 - (r1 + r2)^2</code>.
      */
     public double value(double t) throws FunctionEvaluationException {
-        double ret = 0.0;
-        for (int i = c1.dimension() - 1; i >= 0; i--) {
-            final double diff = c1.value(i, t) - c2.value(i, t);
-            ret += diff * diff;
-        }
-        return ret - r2;
+        double[] a = c1.value(t, null);
+        double[] b = c2.value(t, null);
+        MathVec.sub(a, b, a);
+        return MathVec.scal(a, a) - r2;
     }
 }

@@ -25,13 +25,9 @@ import javax.swing.JFrame;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.math.FunctionEvaluationException;
-import org.jcurl.core.dto.PositionSet;
-import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.swing.RockLocationDisplay;
-import org.jcurl.model.CollissionSpinLoss;
 import org.jcurl.model.ComputedPaths;
-import org.jcurl.model.DennyCurves;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -47,16 +43,27 @@ public class JCurlFrame extends JFrame {
             FunctionEvaluationException {
         JCurlFrame f = new JCurlFrame();
         f.show();
-        Thread.sleep(4000);
-//        // PositionSet.allOut(f.rld.getPositions());
-//
-        f.model.getInitialPos().notifyChange();
-        f.model.getInitialPos().getDark(0).setLocation(0, 10, 0);
-        f.model.getInitialSpeed().getDark(0).setLocation(0, -1, 0);
-        //f.model.recompute();
-//
         Thread.sleep(2000);
-//        f.model.setCurrentT(2);
+        // PositionSet.allOut(f.rld.getPositions());
+        //
+        f.model.getInitialPos().getDark(0).setLocation(0, 10, 0);
+        f.model.getInitialPos().getLight(0).setLocation(0, 2, 0);
+        f.model.getInitialSpeed().getDark(0).setLocation(0, -1.5, 0.25);
+        f.model.getInitialPos().notifyChange();
+        f.model.recompute();
+        f.model.setCurrentT(30);
+        
+        for (;;) {
+            Thread.sleep(2000);
+            int dt = 33;
+            final long start = System.currentTimeMillis();
+            final long stop = start + 15000;
+            for (long i = System.currentTimeMillis(); i < stop; i += dt) {
+                long now = System.currentTimeMillis();
+                f.model.setCurrentT((now - start) * 1e-3);
+                Thread.sleep(dt);
+            }
+        }
     }
 
     private RockLocationDisplay rld;
@@ -70,14 +77,14 @@ public class JCurlFrame extends JFrame {
             }
         });
         setTitle(this.getClass().getName());
-        setSize(800, 600);
+        setSize(1000, 350);
 
         model = new ComputedPaths();
-//        model.setInitialPos(PositionSet.allHome());
-//        model.setInitialSpeed(new SpeedSet());
-//        model.setCollider(new CollissionSpinLoss());
-//        model.setIce(new DennyCurves());
-//        model.recompute();
+        // model.setInitialPos(PositionSet.allHome());
+        // model.setInitialSpeed(new SpeedSet());
+        // model.setCollider(new CollissionSpinLoss());
+        // model.setIce(new DennyCurves());
+        // model.recompute();
 
         rld = new RockLocationDisplay();
         rld.setDoubleBuffered(false);

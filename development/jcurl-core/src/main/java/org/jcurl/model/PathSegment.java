@@ -22,9 +22,11 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
+import org.apache.commons.logging.Log;
 import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.dto.Rock;
 import org.jcurl.core.dto.RockDouble;
+import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.math.analysis.R1R1Function;
 import org.jcurl.math.analysis.R1RnCurve;
@@ -38,6 +40,8 @@ import org.jcurl.math.analysis.R1RnCurve;
  * @version $Id$
  */
 public class PathSegment extends R1RnCurve implements JCurlCurve {
+
+    private static final Log log = JCLoggerFactory.getLogger(PathSegment.class);
 
     private final boolean isRockCoordinates;
 
@@ -97,11 +101,24 @@ public class PathSegment extends R1RnCurve implements JCurlCurve {
         throw new NotImplementedYetException();
     }
 
+    public R1RnCurve derivative() {
+        log.error("!!!");
+        return super.derivative();
+    }
+
+    public double getT0() {
+        return t0;
+    }
+
     /**
      * @see #valueWC(double, Rock)
      */
     public Rock value(double t, Rock dst) throws FunctionEvaluationException {
         return valueWC(t, dst);
+    }
+
+    public double value(int dim, double t) throws FunctionEvaluationException {
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -121,7 +138,6 @@ public class PathSegment extends R1RnCurve implements JCurlCurve {
             throw new RuntimeException("Trafo MUST be invertible.", e);
         }
     }
-
     /**
      * @param t
      *            [t0, x[
@@ -134,9 +150,5 @@ public class PathSegment extends R1RnCurve implements JCurlCurve {
         if (isRockCoordinates)
             rc2wc.transform(dst, dst);
         return dst;
-    }
-
-    public double getT0() {
-        return t0;
     }
 }
