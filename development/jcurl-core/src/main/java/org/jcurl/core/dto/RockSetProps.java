@@ -16,40 +16,44 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core.dto;
+package org.jcurl.core.dto;
 
-import org.jcurl.core.helpers.Dim;
+import org.jcurl.model.PositionSet;
 
 /**
- * Rock properties.
+ * Properties of a unique set of rocks (size, mass, etc.)
  * 
+ * @see org.jcurl.core.dto.RockProps
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class RockProps {
-    public static final RockProps DEFAULT;
+public class RockSetProps {
+
+    public static final RockSetProps DEFAULT;
     static {
-        DEFAULT = new RockProps();
-        DEFAULT.mass = 20;
-        DEFAULT.radius = Dim.f2m(0.5);
-        DEFAULT.inertia = 0.186F; // [Kg*m*m]
+        DEFAULT = new RockSetProps();
+        for (int i = DEFAULT.dark.length - 1; i >= 0; i--) {
+            DEFAULT.dark[i] = RockProps.DEFAULT;
+            DEFAULT.light[i] = RockProps.DEFAULT;
+        }
     }
 
-    public float getInertia() {
-        return inertia;
+    private final RockProps[] dark = new RockProps[PositionSet.ROCKS_PER_COLOR];
+
+    private final RockProps[] light = new RockProps[PositionSet.ROCKS_PER_COLOR];
+
+    public RockSetProps() {
+        for (int i = dark.length - 1; i >= 0; i--) {
+            dark[i] = new RockProps();
+            light[i] = new RockProps();
+        }
     }
 
-    public float getMass() {
-        return mass;
+    public RockProps getDark(int i) {
+        return dark[i];
     }
 
-    public float getRadius() {
-        return radius;
+    public RockProps getLight(int i) {
+        return light[i];
     }
-
-    private float inertia;
-
-    private float mass;
-
-    private float radius;
 }

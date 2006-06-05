@@ -16,14 +16,12 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.sim.model;
+package org.jcurl.model;
 
-import jcurl.core.dto.RockProps;
 
-import org.jcurl.core.Rock;
+import org.jcurl.core.dto.RockProps;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
-import org.jcurl.model.CollissionModel;
 
 /**
  * A hitter including spin.

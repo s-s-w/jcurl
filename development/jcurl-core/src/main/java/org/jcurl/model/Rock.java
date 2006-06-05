@@ -16,24 +16,37 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.sim.model;
+package org.jcurl.model;
 
-import junit.framework.TestCase;
+import org.jcurl.math.helpers.Point3D;
 
 /**
- * JUnit test
+ * Base class for rock information (either location or speed). The "Z" component
+ * is the handle angle in radians.
  * 
- * @see jcurl.sim.model.CollissionSpinLoss
+ * @see org.jcurl.model.PositionSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CollissionSpinLossTest extends TestCase {
+public abstract class Rock extends Point3D implements Cloneable {
+    public abstract Object clone();
 
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(CollissionSpinLossTest.class);
-    }
+    /**
+     * Convenience method to check if zero or not.
+     * 
+     * @return whether x or y are non-zero
+     */
+    public abstract boolean nonZero();
 
-    public void test010() {
-
+    public String toString() {
+        final StringBuffer buf = new StringBuffer();
+        buf.append('[');
+        buf.append(this.getX());
+        buf.append(", ");
+        buf.append(this.getY());
+        buf.append(", ");
+        buf.append(this.getZ());
+        buf.append(']');
+        return buf.toString();
     }
 }

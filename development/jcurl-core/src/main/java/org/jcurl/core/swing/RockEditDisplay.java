@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.gui;
+package org.jcurl.core.swing;
 
 import java.awt.Cursor;
 import java.awt.Graphics;
@@ -25,16 +25,19 @@ import java.awt.geom.Point2D;
 import java.beans.PropertyChangeEvent;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.RockSet;
-import org.jcurl.core.SpeedSet;
+import org.jcurl.core.gui.IcePainter;
+import org.jcurl.core.gui.RockPainter;
+import org.jcurl.core.gui.Zoomer;
 import org.jcurl.core.helpers.EnumBase;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.math.linalg.MathVec;
+import org.jcurl.model.PositionSet;
+import org.jcurl.model.RockSet;
+import org.jcurl.model.SpeedSet;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:RockEditDisplay.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
 public class RockEditDisplay extends RockLocationDisplay {
 

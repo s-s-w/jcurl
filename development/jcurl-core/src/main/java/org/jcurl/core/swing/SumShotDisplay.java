@@ -16,31 +16,27 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core;
+package org.jcurl.core.swing;
+
+import org.jcurl.model.PositionSet;
 
 /**
- * A {@link org.jcurl.core.RockSet}&nbsp;with speed semantics.
- * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SumShotDisplay.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
-public class SpeedSet extends RockSet {
+public class SumShotDisplay extends SumDisplayBase {
 
-    private static final long serialVersionUID = 7650353293030622027L;
+    private static final long serialVersionUID = -8749102492237360027L;
 
-    public SpeedSet() {
+    public SumShotDisplay() {
         super();
     }
 
-    protected SpeedSet(boolean fill) {
-        super(fill);
+    public SumShotDisplay(final PositionSet model) {
+        super(model);
     }
 
-    public SpeedSet(final RockSet b) {
-        super(b);
-    }
-
-    public Object clone() {
-        return new SpeedSet(this);
+    protected int computeMask(final PositionSet rocks) {
+        return PositionSet.getShotRocks(rocks);
     }
 }

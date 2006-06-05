@@ -21,8 +21,6 @@ package org.jcurl.model;
 import java.awt.geom.PathIterator;
 
 import org.apache.commons.math.FunctionEvaluationException;
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.NotImplementedYetException;
 
 /**

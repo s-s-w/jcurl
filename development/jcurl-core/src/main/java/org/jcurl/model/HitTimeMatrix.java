@@ -18,7 +18,6 @@
  */
 package org.jcurl.model;
 
-import org.jcurl.core.RockSet;
 
 /**
  * Keep track of the time of the next hit of ALL pairs of rocks.

@@ -16,31 +16,27 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.sim.model;
+package org.jcurl.core.swing;
 
-import org.jcurl.core.Rock;
-import org.jcurl.model.CollissionModel;
+import org.jcurl.model.PositionSet;
 
 /**
- * A very simple hit-model using conservation of energy and momentum.
- * <p>
- * Compute collissions without bothering about inertia. Only exchanges the
- * speed-components along the hit-direction of the two involved rocks. Only
- * conservation of momentum is obeyed, e.g. spin is neglected.
- * 
- * @see jcurl.sim.model.SlideStraight
- * @see jcurl.sim.model.CollissionSimpleTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SumWaitDisplay.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
-public class CollissionSimple extends CollissionModel {
-    public void computeRC(final Rock va, final Rock vb) {
-        final double tmp = va.getY();
-        va.setLocation(va.getX(), vb.getY());
-        vb.setLocation(vb.getX(), tmp);
+public class SumWaitDisplay extends SumDisplayBase {
+
+    private static final long serialVersionUID = 620126083372910176L;
+
+    public SumWaitDisplay() {
+        super();
     }
 
-    public String description() {
-        return "Simple collissions";
+    public SumWaitDisplay(final PositionSet model) {
+        super(model);
+    }
+
+    protected int computeMask(final PositionSet rocks) {
+        return PositionSet.getWaitRocks(rocks);
     }
 }

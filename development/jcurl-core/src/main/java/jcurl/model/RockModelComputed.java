@@ -18,9 +18,9 @@
  */
 package jcurl.model;
 
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.SpeedSet;
 import org.jcurl.model.CollissionModel;
+import org.jcurl.model.PositionSet;
+import org.jcurl.model.SpeedSet;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

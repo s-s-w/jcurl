@@ -16,27 +16,24 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.gui;
+package org.jcurl.model;
 
-import org.jcurl.core.PositionSet;
+import junit.framework.TestCase;
 
 /**
+ * JUnit test
+ * 
+ * @see org.jcurl.model.CollissionSpinLoss
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SumShotDisplay extends SumDisplayBase {
+public class CollissionSpinLossTest extends TestCase {
 
-    private static final long serialVersionUID = -8749102492237360027L;
-
-    public SumShotDisplay() {
-        super();
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(CollissionSpinLossTest.class);
     }
 
-    public SumShotDisplay(final PositionSet model) {
-        super(model);
-    }
+    public void test010() {
 
-    protected int computeMask(final PositionSet rocks) {
-        return PositionSet.getShotRocks(rocks);
     }
 }

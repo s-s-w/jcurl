@@ -23,13 +23,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 import junit.framework.TestCase;
 
 import org.apache.commons.math.FunctionEvaluationException;
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.SpeedSet;
+import org.jcurl.model.CollissionSpin;
+import org.jcurl.model.PositionSet;
+import org.jcurl.model.SpeedSet;
 import org.xml.sax.SAXException;
 
 /**

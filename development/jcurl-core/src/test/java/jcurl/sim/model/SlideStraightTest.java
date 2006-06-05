@@ -19,18 +19,18 @@
 package jcurl.sim.model;
 
 import jcurl.core.Source;
-import jcurl.core.dto.RockSetProps;
 import junit.framework.TestCase;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.math.FunctionEvaluationException;
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.Rock;
-import org.jcurl.core.RockDouble;
-import org.jcurl.core.SpeedSet;
+import org.jcurl.core.dto.RockSetProps;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.math.analysis.CurveGhost;
 import org.jcurl.math.analysis.Polynome;
+import org.jcurl.model.PositionSet;
+import org.jcurl.model.Rock;
+import org.jcurl.model.RockDouble;
+import org.jcurl.model.SpeedSet;
 
 /**
  * JUnit test.

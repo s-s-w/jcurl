@@ -34,7 +34,7 @@ import org.jcurl.core.helpers.Version;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:DtoDialogDemo.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
 public class DtoDialogDemo extends JFrame {
 

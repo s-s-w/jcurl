@@ -25,13 +25,13 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.gui.JCurlDisplay;
 import org.jcurl.core.gui.Zoomer;
+import org.jcurl.core.swing.JCurlDisplay;
+import org.jcurl.model.PositionSet;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:Driver.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
 public class Driver extends JFrame {
 

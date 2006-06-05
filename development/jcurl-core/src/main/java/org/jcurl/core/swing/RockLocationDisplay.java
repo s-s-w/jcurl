@@ -16,11 +16,14 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.gui;
+package org.jcurl.core.swing;
 
 import java.awt.Graphics2D;
 
-import org.jcurl.core.PositionSet;
+import org.jcurl.core.gui.IcePainter;
+import org.jcurl.core.gui.RockPainter;
+import org.jcurl.core.gui.Zoomer;
+import org.jcurl.model.PositionSet;
 
 /**
  * A simple display for rock locations. Delegates rock- and ice painting.
@@ -28,7 +31,7 @@ import org.jcurl.core.PositionSet;
  * @see org.jcurl.core.gui.RockPainter
  * @see org.jcurl.core.gui.IcePainter
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:RockLocationDisplay.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
 public class RockLocationDisplay extends RockLocationDisplayBase {
 

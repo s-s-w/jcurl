@@ -16,12 +16,12 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core.dto;
+package org.jcurl.core.dto;
 
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.Rock;
-import org.jcurl.core.RockSet;
 import org.jcurl.core.helpers.Dim;
+import org.jcurl.model.PositionSet;
+import org.jcurl.model.Rock;
+import org.jcurl.model.RockSet;
 
 /**
  * Handle ice properties as friction and curl.

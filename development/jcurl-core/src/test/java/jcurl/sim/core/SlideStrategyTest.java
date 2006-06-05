@@ -20,7 +20,7 @@ package jcurl.sim.core;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.PositionSet;
+import org.jcurl.model.PositionSet;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

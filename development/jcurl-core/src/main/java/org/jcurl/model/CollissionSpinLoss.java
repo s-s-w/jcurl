@@ -16,18 +16,15 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.sim.model;
+package org.jcurl.model;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
-import jcurl.core.dto.RockProps;
 
-import org.jcurl.core.Rock;
-import org.jcurl.core.RockDouble;
+import org.jcurl.core.dto.RockProps;
 import org.jcurl.math.linalg.MathVec;
-import org.jcurl.model.CollissionModel;
 
 /**
  * A hitter including spin and loss of energy.
@@ -37,7 +34,7 @@ import org.jcurl.model.CollissionModel;
  * stillstanding rocks cause a loss of energy. For details see the paper <a
  * href="http://jcurl.berlios.de/curlsci.pdf">Curling Scientific </a>.
  * 
- * @see jcurl.sim.model.CollissionSpinLossTest
+ * @see org.jcurl.model.CollissionSpinLossTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

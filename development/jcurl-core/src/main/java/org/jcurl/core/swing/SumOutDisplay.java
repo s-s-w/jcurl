@@ -16,37 +16,27 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core;
+package org.jcurl.core.swing;
 
-import org.jcurl.math.helpers.Point3D;
+import org.jcurl.model.PositionSet;
 
 /**
- * Base class for rock information (either location or speed). The "Z" component
- * is the handle angle in radians.
- * 
- * @see org.jcurl.core.PositionSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SumOutDisplay.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
-public abstract class Rock extends Point3D implements Cloneable {
-    public abstract Object clone();
+public class SumOutDisplay extends SumDisplayBase {
 
-    /**
-     * Convenience method to check if zero or not.
-     * 
-     * @return whether x or y are non-zero
-     */
-    public abstract boolean nonZero();
+    private static final long serialVersionUID = 2862725525779204760L;
 
-    public String toString() {
-        final StringBuffer buf = new StringBuffer();
-        buf.append('[');
-        buf.append(this.getX());
-        buf.append(", ");
-        buf.append(this.getY());
-        buf.append(", ");
-        buf.append(this.getZ());
-        buf.append(']');
-        return buf.toString();
+    public SumOutDisplay() {
+        super();
+    }
+
+    public SumOutDisplay(final PositionSet model) {
+        super(model);
+    }
+
+    protected int computeMask(final PositionSet rocks) {
+        return PositionSet.getOutRocks(rocks);
     }
 }

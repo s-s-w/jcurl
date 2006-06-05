@@ -16,27 +16,40 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.gui;
+package org.jcurl.core.dto;
 
-import org.jcurl.core.PositionSet;
+import org.jcurl.core.helpers.Dim;
 
 /**
+ * Rock properties.
+ * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SumOutDisplay extends SumDisplayBase {
-
-    private static final long serialVersionUID = 2862725525779204760L;
-
-    public SumOutDisplay() {
-        super();
+public class RockProps {
+    public static final RockProps DEFAULT;
+    static {
+        DEFAULT = new RockProps();
+        DEFAULT.mass = 20;
+        DEFAULT.radius = Dim.f2m(0.5);
+        DEFAULT.inertia = 0.186F; // [Kg*m*m]
     }
 
-    public SumOutDisplay(final PositionSet model) {
-        super(model);
+    public float getInertia() {
+        return inertia;
     }
 
-    protected int computeMask(final PositionSet rocks) {
-        return PositionSet.getOutRocks(rocks);
+    public float getMass() {
+        return mass;
     }
+
+    public float getRadius() {
+        return radius;
+    }
+
+    private float inertia;
+
+    private float mass;
+
+    private float radius;
 }

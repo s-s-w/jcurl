@@ -24,8 +24,6 @@ import java.beans.PropertyChangeListener;
 import junit.framework.TestCase;
 
 import org.apache.commons.math.FunctionEvaluationException;
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.SpeedSet;
 
 public class ComputedPathsTest extends TestCase {
 

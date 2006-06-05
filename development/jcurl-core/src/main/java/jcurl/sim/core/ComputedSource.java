@@ -24,20 +24,20 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import jcurl.core.Source;
-import jcurl.core.dto.RockSetProps;
 import jcurl.core.io.SetupBuilder;
 import jcurl.core.io.SetupIO;
-import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 
 import org.apache.commons.math.FunctionEvaluationException;
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.RockSet;
-import org.jcurl.core.SpeedSet;
+import org.jcurl.core.dto.RockSetProps;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.math.analysis.CurveGhost;
 import org.jcurl.model.CollissionModel;
+import org.jcurl.model.CollissionSpin;
+import org.jcurl.model.PositionSet;
+import org.jcurl.model.RockSet;
+import org.jcurl.model.SpeedSet;
 import org.xml.sax.SAXException;
 
 /**

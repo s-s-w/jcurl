@@ -23,22 +23,22 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import jcurl.core.Source;
-import jcurl.core.dto.Ice;
-import jcurl.core.dto.RockProps;
-import jcurl.core.dto.RockSetProps;
-import jcurl.sim.model.CollissionSpin;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.math.FunctionEvaluationException;
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.Rock;
-import org.jcurl.core.RockSet;
-import org.jcurl.core.SpeedSet;
+import org.jcurl.core.dto.Ice;
+import org.jcurl.core.dto.RockProps;
+import org.jcurl.core.dto.RockSetProps;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.math.linalg.MathVec;
 import org.jcurl.model.CollissionModel;
+import org.jcurl.model.CollissionSpin;
+import org.jcurl.model.PositionSet;
+import org.jcurl.model.Rock;
+import org.jcurl.model.RockSet;
+import org.jcurl.model.SpeedSet;
 
 /**
  * Abstract base class for propagation/friction models.

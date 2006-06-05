@@ -22,14 +22,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
-import jcurl.core.dto.RockProps;
 import jcurl.sim.core.ModelBase;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.Rock;
-import org.jcurl.core.RockSet;
-import org.jcurl.core.SpeedSet;
+import org.jcurl.core.dto.RockProps;
 import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**

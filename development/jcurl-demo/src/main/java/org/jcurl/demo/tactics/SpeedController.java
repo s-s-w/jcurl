@@ -25,14 +25,14 @@ import java.awt.geom.Point2D;
 
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.SpeedSet;
-import org.jcurl.core.gui.RockEditDisplay;
 import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.core.swing.RockEditDisplay;
+import org.jcurl.model.PositionSet;
+import org.jcurl.model.SpeedSet;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SpeedController.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
 public class SpeedController implements MouseMotionListener, MouseListener {
 

@@ -16,31 +16,31 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core;
-
-import org.jcurl.model.Rock;
+package org.jcurl.model;
 
 /**
- * Interface for interpolators of single {@link org.jcurl.model.Rock}s.
+ * A {@link org.jcurl.model.RockSet}&nbsp;with speed semantics.
  * 
- * @see jcurl.core.RockSetInterpolator
- * @see jcurl.core.CSplineRockInterpolator
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface IRockInterpolator {
-    public abstract void add(final double t, final Rock rock);
+public class SpeedSet extends RockSet {
 
-    public abstract void add(final double t, final Rock rock,
-            final boolean discontinuous);
+    private static final long serialVersionUID = 7650353293030622027L;
 
-    public abstract double getMaxT();
+    public SpeedSet() {
+        super();
+    }
 
-    public abstract double getMinT();
+    protected SpeedSet(boolean fill) {
+        super(fill);
+    }
 
-    public abstract Rock getPos(final double t, final Rock rock);
+    public SpeedSet(final RockSet b) {
+        super(b);
+    }
 
-    public abstract Rock getSpeed(final double t, final Rock rock);
-
-    public abstract void reset();
+    public Object clone() {
+        return new SpeedSet(this);
+    }
 }

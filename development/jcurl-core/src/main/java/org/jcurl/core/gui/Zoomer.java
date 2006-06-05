@@ -23,17 +23,18 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import jcurl.core.dto.Ice;
-import jcurl.core.dto.RockProps;
 
+import org.jcurl.core.dto.Ice;
+import org.jcurl.core.dto.RockProps;
 import org.jcurl.core.helpers.NotImplementedYetException;
+import org.jcurl.core.swing.JCurlDisplay;
 
 /**
  * Smart handler for creating wc to dc transformations.
  * 
- * @see org.jcurl.core.gui.JCurlDisplay
+ * @see org.jcurl.core.swing.JCurlDisplay
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:Zoomer.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
 public class Zoomer {
 

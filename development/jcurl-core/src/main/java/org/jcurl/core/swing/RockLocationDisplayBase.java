@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.gui;
+package org.jcurl.core.swing;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -40,10 +40,13 @@ import javax.swing.JComponent;
 import jcurl.core.TargetDiscrete;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.Rock;
-import org.jcurl.core.RockSet;
+import org.jcurl.core.gui.Orientation;
+import org.jcurl.core.gui.RockPainter;
+import org.jcurl.core.gui.Zoomer;
 import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.model.PositionSet;
+import org.jcurl.model.Rock;
+import org.jcurl.model.RockSet;
 
 /**
  * Base for rock location displays. Does all the coordinate transformation math
@@ -65,7 +68,7 @@ public abstract class RockLocationDisplayBase extends JComponent implements
      * int based wc drawing operations e.g. fonts. WC objects (rocks etc.)
      * remain unaffected by this.
      */
-    protected static final int SCALE = 1000;
+    public static final int SCALE = 1000;
 
     static {
         // hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION,

@@ -21,15 +21,11 @@ package org.jcurl.model;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import jcurl.sim.model.CollissionSpinLoss;
 
 import org.apache.commons.math.ConvergenceException;
 import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.analysis.NewtonSolver;
 import org.apache.commons.math.analysis.UnivariateRealSolver;
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.RockSet;
-import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.math.analysis.DistanceSq;
 

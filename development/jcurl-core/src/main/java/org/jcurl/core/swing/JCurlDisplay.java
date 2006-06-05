@@ -16,22 +16,25 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.gui;
+package org.jcurl.core.swing;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import org.jcurl.core.PositionSet;
+import org.jcurl.core.gui.IcePainter;
+import org.jcurl.core.gui.RockPainter;
+import org.jcurl.core.gui.Zoomer;
+import org.jcurl.model.PositionSet;
 
 /**
- * A {@link org.jcurl.core.gui.RockLocationDisplay}with some additional meta data
+ * A {@link org.jcurl.core.swing.RockLocationDisplay}with some additional meta data
  * displayed (here: time).
  * 
- * @see org.jcurl.core.gui.RockLocationDisplay
+ * @see org.jcurl.core.swing.RockLocationDisplay
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:JCurlDisplay.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
 public class JCurlDisplay extends RockLocationDisplay {
 

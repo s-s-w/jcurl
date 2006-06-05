@@ -27,17 +27,18 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
-import jcurl.core.dto.Ice;
-import jcurl.core.dto.RockProps;
 
+import org.jcurl.core.dto.Ice;
+import org.jcurl.core.dto.RockProps;
 import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.swing.JCurlDisplay;
 
 /**
  * Paint the ice (sheet).
  * 
  * @see org.jcurl.core.gui.RockPainter
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:IcePainter.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
 public class IcePainter {
     /** Ice colors */

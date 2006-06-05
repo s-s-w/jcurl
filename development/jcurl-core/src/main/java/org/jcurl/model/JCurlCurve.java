@@ -19,7 +19,6 @@
 package org.jcurl.model;
 
 import org.apache.commons.math.FunctionEvaluationException;
-import org.jcurl.core.Rock;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

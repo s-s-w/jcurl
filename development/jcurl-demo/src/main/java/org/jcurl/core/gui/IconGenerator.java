@@ -30,12 +30,13 @@ import javax.xml.parsers.ParserConfigurationException;
 import jcurl.core.io.SetupBuilder;
 import jcurl.core.io.SetupSaxDeSer;
 
-import org.jcurl.core.PositionSet;
+import org.jcurl.core.swing.JCurlDisplay;
+import org.jcurl.model.PositionSet;
 import org.xml.sax.SAXException;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:IconGenerator.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
 public class IconGenerator {
 

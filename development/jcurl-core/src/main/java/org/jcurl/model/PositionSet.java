@@ -16,17 +16,17 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core;
+package org.jcurl.model;
 
 import java.awt.geom.Point2D;
 
-import jcurl.core.dto.Ice;
-import jcurl.core.dto.RockProps;
 
+import org.jcurl.core.dto.Ice;
+import org.jcurl.core.dto.RockProps;
 import org.jcurl.core.helpers.Dim;
 
 /**
- * A {@link org.jcurl.core.RockSet}&nbsp;with location semantics.
+ * A {@link org.jcurl.model.RockSet}&nbsp;with location semantics.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
@@ -72,7 +72,6 @@ public class PositionSet extends RockSet {
     }
 
     /**
-     * @see PositionSetTest#test020_findRockAtPos()
      * @param rocks
      * @param pos
      * @return <code>-1</code> if none
@@ -109,7 +108,6 @@ public class PositionSet extends RockSet {
      * 
      * @param a
      * @return bitmask of the out rocks.
-     * @see PositionSetTest#test010_getShotRocks()
      */
     public static int getOutRocks(final PositionSet a) {
         final double xmin = Ice.SIDE_2_CENTER + RockProps.DEFAULT.getRadius();
@@ -130,7 +128,6 @@ public class PositionSet extends RockSet {
      * 
      * @param a
      * @return bitmask of the shot rocks.
-     * @see PositionSetTest#test010_getShotRocks()
      */
     public static int getShotRocks(final PositionSet a) {
         final int scorer;
@@ -171,7 +168,6 @@ public class PositionSet extends RockSet {
      * 
      * @param a
      * @return bitmask of the waiting rocks.
-     * @see PositionSetTest#test010_getShotRocks()
      */
     public static int getWaitRocks(final PositionSet a) {
         final double xmax = Ice.SIDE_2_CENTER + RockProps.DEFAULT.getRadius();

@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core;
+package org.jcurl.model;
 
 import java.io.Serializable;
 
@@ -25,8 +25,8 @@ import java.io.Serializable;
  * storage means. The value array is accessible for direct use with e.g.
  * {@link org.jcurl.math.analysis.CurveGhost#getC(int, double, float[])}.
  * 
- * @see org.jcurl.core.PositionSet
- * @see org.jcurl.core.RockDouble
+ * @see org.jcurl.model.PositionSet
+ * @see org.jcurl.model.RockDouble
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

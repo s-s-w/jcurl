@@ -21,8 +21,8 @@ package org.jcurl.core.gui;
 import jcurl.core.Source;
 import jcurl.core.TargetDiscrete;
 
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.SpeedSet;
+import org.jcurl.model.PositionSet;
+import org.jcurl.model.SpeedSet;
 
 /**
  * Extract locations from a (non-discrete) {@link jcurl.core.Source}and push
@@ -31,7 +31,7 @@ import org.jcurl.core.SpeedSet;
  * @see jcurl.core.Source
  * @see jcurl.core.TargetDiscrete
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:RealTimePlayer.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
 public class RealTimePlayer implements Runnable {
 

@@ -25,15 +25,16 @@ import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.geom.Arc2D;
 
-import jcurl.core.dto.RockProps;
 
-import org.jcurl.core.PositionSet;
+import org.jcurl.core.dto.RockProps;
+import org.jcurl.core.swing.JCurlDisplay;
+import org.jcurl.model.PositionSet;
 
 /**
  * Paint a set of rocks.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:RockPainter.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
 public class RockPainter {
     /** Rock colors */

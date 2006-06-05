@@ -26,14 +26,14 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
-import jcurl.core.dto.Ice;
-import jcurl.core.dto.RockSetProps;
 import jcurl.sim.core.SlideStrategy;
 
-import org.jcurl.core.PositionSet;
+import org.jcurl.core.dto.Ice;
+import org.jcurl.core.dto.RockSetProps;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.model.CollissionModel;
+import org.jcurl.model.PositionSet;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

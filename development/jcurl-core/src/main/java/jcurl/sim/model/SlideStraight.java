@@ -20,18 +20,18 @@ package jcurl.sim.model;
 
 import java.awt.geom.Point2D;
 
-import jcurl.core.dto.Ice;
-import jcurl.core.dto.RockProps;
 import jcurl.sim.core.SlideCurves;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.Rock;
-import org.jcurl.core.RockSet;
+import org.jcurl.core.dto.Ice;
+import org.jcurl.core.dto.RockProps;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.math.analysis.CurveFkt;
 import org.jcurl.math.analysis.CurveGhost;
 import org.jcurl.math.analysis.Polynome;
 import org.jcurl.math.linalg.MathVec;
+import org.jcurl.model.Rock;
+import org.jcurl.model.RockSet;
 
 /**
  * ComputedSource without curl and with constant acceleration.

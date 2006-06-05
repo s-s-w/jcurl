@@ -58,27 +58,27 @@ import javax.swing.SwingConstants;
 import jcurl.core.io.SetupIO;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.RockSet;
-import org.jcurl.core.SpeedSet;
 import org.jcurl.core.gui.AboutDialog;
-import org.jcurl.core.gui.RockEditDisplay;
-import org.jcurl.core.gui.RockLocationDisplay;
-import org.jcurl.core.gui.RockLocationDisplayBase;
-import org.jcurl.core.gui.SumOutDisplay;
-import org.jcurl.core.gui.SumShotDisplay;
-import org.jcurl.core.gui.SumWaitDisplay;
 import org.jcurl.core.gui.Zoomer;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.helpers.Version;
 import org.jcurl.core.swing.JcxFileChooser;
 import org.jcurl.core.swing.PngFileChooser;
+import org.jcurl.core.swing.RockEditDisplay;
+import org.jcurl.core.swing.RockLocationDisplay;
+import org.jcurl.core.swing.RockLocationDisplayBase;
+import org.jcurl.core.swing.SumOutDisplay;
+import org.jcurl.core.swing.SumShotDisplay;
+import org.jcurl.core.swing.SumWaitDisplay;
+import org.jcurl.model.PositionSet;
+import org.jcurl.model.RockSet;
+import org.jcurl.model.SpeedSet;
 import org.xml.sax.SAXException;
 
 /**
  * A simple editor that brings all together.
  * 
- * @see org.jcurl.core.gui.RockLocationDisplay
+ * @see org.jcurl.core.swing.RockLocationDisplay
  * @see org.jcurl.demo.editor.LocationController
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id: RockLocationDisplayDemo.java 135 2005-10-03 17:47:35Z
