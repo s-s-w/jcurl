@@ -58,7 +58,8 @@ public abstract class CurveFactory extends MutableObject {
     PathSegment compute(final double t0, final double x0, final double y0,
             final double a0, final double vx0, final double vy0,
             final double w0, final double sweepFactor) {
-        return new PathSegment(t0, compute(vx0 * vx0 + vy0 * vy0, w0));
+        return new PathSegment(t0, x0, y0, vx0, vy0, compute(vx0 * vx0 + vy0
+                * vy0, w0));
     }
 
     public PathSegment compute(final double t0, final Rock x0, final Rock v0,

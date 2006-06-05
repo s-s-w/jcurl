@@ -23,7 +23,7 @@ import junit.framework.TestCase;
 import org.apache.commons.math.ConvergenceException;
 import org.apache.commons.math.FunctionEvaluationException;
 
-public class DifferentiableCurveTest extends TestCase {
+public class R1RnCurveTest extends TestCase {
 
     public void testStraightLine() throws ConvergenceException,
             FunctionEvaluationException {

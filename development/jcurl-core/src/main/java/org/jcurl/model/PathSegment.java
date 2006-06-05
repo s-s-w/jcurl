@@ -18,6 +18,10 @@
  */
 package org.jcurl.model;
 
+import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Point2D;
+
 import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.Rock;
 import org.jcurl.core.RockDouble;
@@ -26,8 +30,10 @@ import org.jcurl.math.analysis.R1R1Function;
 import org.jcurl.math.analysis.R1RnCurve;
 
 /**
- * R^3 Curve with one component for x and y each plus one for rotation.
+ * R^3 Curve with one component for x and y each plus one for rotation. Manages
+ * Rock Coordinates &lt;-&gt; World Coordinates transformation.
  * 
+ * @see java.awt.geom.AffineTransform
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -35,36 +41,37 @@ public class PathSegment extends R1RnCurve implements JCurlCurve {
 
     private final boolean isRockCoordinates;
 
+    private final AffineTransform rc2wc;
+
     private final double t0;
 
     private transient double[] tmp = null;
 
-    private final double vx0;
+    protected PathSegment(boolean isRockCoordinates, double t0, double x_0,
+            double y_0, double vx0, double vy0, final R1R1Function[] c) {
+        this(isRockCoordinates, t0, new Point2D.Double(x_0, y_0),
+                new Point2D.Double(vx0, vy0), c);
+    }
 
-    private final double vy0;
-
-    private final double x0;
-
-    private final double y0;
-
-    protected PathSegment(boolean isRockCoordinates, double t0, double x0,
-            double y0, double vx0, double vy0, final R1R1Function[] c) {
+    protected PathSegment(boolean isRockCoordinates, double t0, Point2D x0,
+            Point2D v0, final R1R1Function[] c) {
         super(c);
         if (c.length != 3)
             throw new IllegalArgumentException(
                     "rock path curve must have 3 dimensions, but had "
                             + c.length);
         this.isRockCoordinates = isRockCoordinates;
+        this.rc2wc = new AffineTransform();
+        rc2wc.rotate(-Math.acos((v0.getX() * 0 + v0.getY() * 1)
+                / v0.distance(0, 0)), x0.getX(), x0.getY());
+        rc2wc.translate(x0.getX(), x0.getY());
         this.t0 = t0;
-        this.x0 = x0;
-        this.y0 = y0;
-        this.vx0 = vx0;
-        this.vy0 = vy0;
     }
 
     /**
      * 
      * @param t0
+     *            [0,x[
      * @param x0
      * @param y0
      * @param vx0
@@ -78,11 +85,14 @@ public class PathSegment extends R1RnCurve implements JCurlCurve {
     }
 
     /**
+     * @param t0
+     *            [0,x[
      * @param c
      *            curves in world coordinates
      */
     public PathSegment(double t0, final R1R1Function[] c) {
-        this(false, t0, 0, 0, 0, 0, c);
+        super(c);
+        throw new NotImplementedYetException();
     }
 
     /**
@@ -92,15 +102,39 @@ public class PathSegment extends R1RnCurve implements JCurlCurve {
         return valueWC(t, dst);
     }
 
+    /**
+     * @param t
+     *            [t0, x[
+     */
     public Rock valueRC(double t, Rock dst) throws FunctionEvaluationException {
-        throw new NotImplementedYetException();
+        try {
+            tmp = super.value(t - t0, tmp);
+            if (dst == null)
+                dst = new RockDouble();
+            dst.setLocation(tmp[0], tmp[1], tmp[2]);
+            if (!isRockCoordinates)
+                rc2wc.inverseTransform(dst, dst);
+            return dst;
+        } catch (NoninvertibleTransformException e) {
+            throw new RuntimeException("Trafo MUST be invertible.", e);
+        }
     }
 
+    /**
+     * @param t
+     *            [t0, x[
+     */
     public Rock valueWC(double t, Rock dst) throws FunctionEvaluationException {
-        tmp = super.value(t, tmp);
+        tmp = super.value(t - t0, tmp);
         if (dst == null)
             dst = new RockDouble();
         dst.setLocation(tmp[0], tmp[1], tmp[2]);
+        if (isRockCoordinates)
+            rc2wc.transform(dst, dst);
         return dst;
+    }
+
+    public double getT0() {
+        return t0;
     }
 }
