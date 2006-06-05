@@ -24,7 +24,7 @@ import org.jcurl.core.dto.Rock;
  * A very simple hit-model using conservation of energy and momentum.
  * <p>
  * Compute collissions without bothering about inertia. Only exchanges the
- * speed-components along the hit-direction of the two involved rocks. Only
+ * speed-components along the hit-direction of the two involved positions. Only
  * conservation of momentum is obeyed, e.g. spin is neglected.
  * 
  * @see jcurl.sim.model.SlideStraight

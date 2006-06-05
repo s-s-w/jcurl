@@ -37,35 +37,52 @@ public class RockLocationDisplay extends RockLocationDisplayBase {
 
     private static final long serialVersionUID = 146935083360365782L;
 
-    // private static final Log log = JCLoggerFactory
-    // .getLogger(RockLocationDisplay.class);
+    private IcePainter icePainter;
 
-    private final IcePainter iceP;
+    private RockPainter rockPainter;
 
-    private final RockPainter rockP;
+    public RockLocationDisplay() {
+        this(null);
+    }
 
     public RockLocationDisplay(final PositionSet rocks, final Zoomer zoom,
             final IcePainter iceP, final RockPainter rockP) {
         super(rocks, zoom);
-        this.iceP = iceP == null ? new IcePainter() : iceP;
-        this.rockP = rockP == null ? new RockPainter() : rockP;
+        this.icePainter = iceP == null ? new IcePainter() : iceP;
+        this.rockPainter = rockP == null ? new RockPainter() : rockP;
     }
 
     public RockLocationDisplay(final Zoomer zoom) {
         this(null, zoom, null, null);
     }
 
+    public IcePainter getIcePainter() {
+        return icePainter;
+    }
+
+    public RockPainter getRockPainter() {
+        return rockPainter;
+    }
+
     protected void paintIceDC(final Graphics2D g2) {
         // background
-        g2.setPaint(iceP.color.backGround);
+        g2.setPaint(icePainter.color.backGround);
         g2.fillRect(0, 0, getWidth(), getHeight());
         g2.transform(wc_mat);
         // Ice
-        iceP.paintIceWC(g2);
+        icePainter.paintIceWC(g2);
     }
 
     protected void paintRockRC(final Graphics2D g, final boolean isDark,
             final int idx) {
-        rockP.paintRockRC(g, isDark, idx);
+        rockPainter.paintRockRC(g, isDark, idx);
+    }
+
+    public void setIcePainter(IcePainter icePainter) {
+        this.icePainter = icePainter;
+    }
+
+    public void setRockPainter(RockPainter rockPainter) {
+        this.rockPainter = rockPainter;
     }
 }

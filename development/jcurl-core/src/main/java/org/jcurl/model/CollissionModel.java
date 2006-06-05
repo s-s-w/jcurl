@@ -48,7 +48,7 @@ public abstract class CollissionModel extends ModelBase {
     private static final Log log = JCLoggerFactory
             .getLogger(CollissionModel.class);
 
-    /** Maximum distance [m] of two rocks to consider them touching */
+    /** Maximum distance [m] of two positions to consider them touching */
     public static final double MaxDistSq = sqr(_Rad + _Rad + HIT_MAX_DIST);
 
     protected static double abs(final double a) {
@@ -113,14 +113,14 @@ public abstract class CollissionModel extends ModelBase {
     }
 
     /**
-     * Iterate over all rocks and call
+     * Iterate over all positions and call
      * {@link CollissionModel#computeWC(Rock, Rock, Rock, Rock, AffineTransform)}
      * for each pair.
      * 
      * @see CollissionModel#computeWC(Rock, Rock, Rock, Rock, AffineTransform)
      * @param pos
      * @param speed
-     * @return bitmask of the changed rocks
+     * @return bitmask of the changed positions
      */
     public int compute(PositionSet pos, SpeedSet speed) {
         if (log.isDebugEnabled())
@@ -133,14 +133,14 @@ public abstract class CollissionModel extends ModelBase {
                     log.debug("Compute hit " + A + "<->" + B);
                 if (computeWC(pos.getRock(A), pos.getRock(B), speed.getRock(A),
                         speed.getRock(B), mat)) {
-                    // mark the rocks' bits hit
+                    // mark the positions' bits hit
                     hits |= (1 << A);
                     hits |= (1 << B);
                 }
             }
         }
         if (log.isDebugEnabled())
-            log.debug("hit rocks: " + Integer.toBinaryString(hits));
+            log.debug("hit positions: " + Integer.toBinaryString(hits));
         return hits;
     }
 

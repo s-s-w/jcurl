@@ -161,7 +161,7 @@ public abstract class SlideCurves extends SlideStrategy {
      * @param pos
      * @param speed
      * @param discontinuous
-     *            bitmask of the discontuous rocks
+     *            bitmask of the discontuous positions
      * @throws FunctionEvaluationException
      */
     public void set(final double t0, final PositionSet pos,

@@ -65,7 +65,7 @@ public abstract class RockLocationDisplayBase extends JComponent implements
 
     /**
      * Scale WC a bit to avoid int rounding errors. This is relevant only for
-     * int based wc drawing operations e.g. fonts. WC objects (rocks etc.)
+     * int based wc drawing operations e.g. fonts. WC objects (positions etc.)
      * remain unaffected by this.
      */
     public static final int SCALE = 1000;
@@ -99,23 +99,26 @@ public abstract class RockLocationDisplayBase extends JComponent implements
 
     private Orientation orient = Orientation.W;
 
-    protected PositionSet rocks;
+    protected PositionSet positions;
 
     protected final AffineTransform wc_mat = new AffineTransform();
 
     private Zoomer zoom;
 
+    public RockLocationDisplayBase() {
+        this(null);
+    }
+
     /**
      * 
-     * @param rocks
+     * @param positions
      *            {@link PositionSet#allHome()}if <code>null</code>
      * @param zoom
      *            {@link Zoomer#HOG2HACK}if <code>null</code>
      */
-    public RockLocationDisplayBase(final PositionSet rocks, final Zoomer zoom) {
-        this.rocks = rocks == null ? PositionSet.allHome() : rocks;
-        this.zoom = zoom == null ? Zoomer.HOUSE2HACK : zoom;
-        this.rocks.addPropertyChangeListener(this);
+    public RockLocationDisplayBase(final PositionSet positions, final Zoomer zoom) {
+        this.setPositions(positions);
+        this.setZoom(zoom);
         this.setOpaque(true);
     }
 
@@ -205,6 +208,10 @@ public abstract class RockLocationDisplayBase extends JComponent implements
         return super.getPreferredSize();
     }
 
+    public PositionSet getPositions() {
+        return positions;
+    }
+
     public Zoomer getZoom() {
         return zoom;
     }
@@ -220,7 +227,7 @@ public abstract class RockLocationDisplayBase extends JComponent implements
         final int w = this.getWidth();
         final int h = this.getHeight();
 
-        // paint WC stuff (ice and rocks)
+        // paint WC stuff (ice and positions)
         if (zoom.hasChanged() || oldWid != w || oldHei != h) {
             // either the wc viewport, fixpoint or dc viewport has changed:
             // re-compute the transformation
@@ -236,7 +243,6 @@ public abstract class RockLocationDisplayBase extends JComponent implements
         }
         g2.drawImage(img, null, 0, 0);
         paintRocksDC(g2);
-
         g2.setTransform(dc_mat);
     }
 
@@ -263,7 +269,7 @@ public abstract class RockLocationDisplayBase extends JComponent implements
             final boolean isDark, final int idx);
 
     /**
-     * Callback to draw the rocks. Sets the transformation wc to dc and
+     * Callback to draw the positions. Sets the transformation wc to dc and
      * delegates to {@link #paintRocksWC(Graphics2D, PositionSet, int)}.
      * 
      * @param g2
@@ -271,28 +277,28 @@ public abstract class RockLocationDisplayBase extends JComponent implements
      */
     protected void paintRocksDC(final Graphics2D g2) {
         g2.transform(wc_mat);
-        // all rocks
-        paintRocksWC(g2, rocks, PositionSet.ALL_MASK);
+        // all positions
+        paintRocksWC(g2, positions, PositionSet.ALL_MASK);
     }
 
     /**
-     * Paint all rocks given by the mask.
+     * Paint all positions given by the mask.
      * 
      * @see #paintRockWC(Graphics2D, Rock, boolean, int)
      * @param g
      *            graphics context
-     * @param rocks
+     * @param positions
      *            locations
      * @param mask
-     *            bit field which rocks to paint. {@link PositionSet#ALL_MASK}
+     *            bit field which positions to paint. {@link PositionSet#ALL_MASK}
      */
-    protected void paintRocksWC(final Graphics2D g, final PositionSet rocks,
+    protected void paintRocksWC(final Graphics2D g, final PositionSet positions,
             int mask) {
         if ((mask & RockSet.ALL_MASK) == 0)
             return;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             if (((mask >> i) & 1) == 1)
-                paintRockWC(g, rocks.getRock(i), (i % 2) == 0, i / 2);
+                paintRockWC(g, positions.getRock(i), (i % 2) == 0, i / 2);
         }
     }
 
@@ -320,15 +326,15 @@ public abstract class RockLocationDisplayBase extends JComponent implements
     }
 
     /**
-     * Property (rocks) changed.
+     * Rocks or zoom changed.
      * 
      * @param evt
-     * @see #setPos(double, PositionSet)
+     * @see #setPositions(PositionSet)
      */
     public void propertyChange(PropertyChangeEvent evt) {
         final Object tmp = evt.getNewValue();
         if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass())) {
-            setPos(0, (PositionSet) tmp);
+            setPositions((PositionSet) tmp);
         }
     }
 
@@ -338,34 +344,52 @@ public abstract class RockLocationDisplayBase extends JComponent implements
      * @see #setPos(double, PositionSet, int)
      * @param time
      *            [sec] unused
-     * @param rocks
-     *            rocks' locations.
+     * @param positions
+     *            positions' locations.
      */
-    public void setPos(final double time, final PositionSet rocks) {
-        setPos(time, rocks, RockSet.ALL_MASK);
+    public void setPos(final double time, final PositionSet positions) {
+        setPos(time, positions, RockSet.ALL_MASK);
     }
 
     /**
-     * Triggers a repaint. If the given <code>rocks</code> reference changed
+     * Triggers a repaint. If the given <code>positions</code> reference changed
      * the listeners are updated.
      * 
      * @param time
      *            [sec] unused
-     * @param rocks
-     *            the rocks' locations
+     * @param positions
+     *            the positions' locations
      * @param discontinuous
      *            bitmask of discontinuous locations
      */
-    public void setPos(final double time, final PositionSet rocks,
+    public void setPos(final double time, final PositionSet positions,
             final int discontinuous) {
-        // this.time = time;
-        if (this.rocks != rocks) {
-            if (this.rocks != null) {
-                this.rocks.removePropertyChangeListener(this);
-            }
-            rocks.addPropertyChangeListener(this);
-        }
-        this.rocks = rocks;
+        setPositions(positions);
+    }
+
+    /**
+     * Triggers a repaint. If the given <code>positions</code> reference changed
+     * the listeners are updated.
+     * 
+     * @param positions
+     */
+    public void setPositions(PositionSet positions) {
+        if (positions == null)
+            positions = PositionSet.allHome();
+        if (this.positions != null)
+            this.positions.removePropertyChangeListener(this);
+        this.positions = positions;
+        this.positions.addPropertyChangeListener(this);
+        this.repaint();
+    }
+
+    public void setZoom(Zoomer zoom) {
+        if (zoom == null)
+            zoom = Zoomer.HOUSE2HACK;
+        if (this.zoom != null)
+            this.zoom.removePropertyChangeListener(this);
+        this.zoom = zoom;
+        this.zoom.addPropertyChangeListener(this);
         this.repaint();
     }
 

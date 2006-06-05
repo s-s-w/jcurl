@@ -109,24 +109,24 @@ public class RockEditDisplay extends RockLocationDisplay {
     private final SpeedSet speeds;
 
     /**
-     * @param rocks
+     * @param positions
      * @param speeds
      * @param zoom
      */
-    public RockEditDisplay(PositionSet rocks, SpeedSet speeds, Zoomer zoom) {
-        this(rocks, speeds, zoom, null, null);
+    public RockEditDisplay(PositionSet positions, SpeedSet speeds, Zoomer zoom) {
+        this(positions, speeds, zoom, null, null);
     }
 
     /**
-     * @param rocks
+     * @param positions
      * @param speeds
      * @param zoom
      * @param iceP
      * @param rockP
      */
-    public RockEditDisplay(PositionSet rocks, SpeedSet speeds, Zoomer zoom,
+    public RockEditDisplay(PositionSet positions, SpeedSet speeds, Zoomer zoom,
             IcePainter iceP, RockPainter rockP) {
-        super(rocks, zoom, iceP, rockP);
+        super(positions, zoom, iceP, rockP);
         this.speeds = speeds;
         this.speeds.addPropertyChangeListener(this);
     }
@@ -139,7 +139,7 @@ public class RockEditDisplay extends RockLocationDisplay {
             if (hot.idx >= 0)
                 return;
             hot.what = HotObject.ROCK;
-            hot.idx = PositionSet.findRockIndexAtPos(rocks, wc);
+            hot.idx = PositionSet.findRockIndexAtPos(positions, wc);
             if (hot.idx >= 0)
                 return;
             hot.what = HotObject.NONE;
@@ -174,7 +174,7 @@ public class RockEditDisplay extends RockLocationDisplay {
     }
 
     private Point2D getSpeedSpotWC(final int idx, final Point2D dst) {
-        return MathVec.add(rocks.getRock(idx), speeds.getRock(idx), dst);
+        return MathVec.add(positions.getRock(idx), speeds.getRock(idx), dst);
     }
 
     public void paintComponent(final Graphics g) {
@@ -189,7 +189,7 @@ public class RockEditDisplay extends RockLocationDisplay {
     protected void paintSpeed(final Graphics2D g2, final int idx) {
         if (idx < 0)
             return;
-        final Point2D cwc = rocks.getRock(idx);
+        final Point2D cwc = positions.getRock(idx);
         final Point2D cdc = this.wc2dc(cwc, null);
         // prepare a direction beam (line) 5 Meters long from cwc
         final Point2D dir_dc;
@@ -261,7 +261,7 @@ public class RockEditDisplay extends RockLocationDisplay {
     }
 
     public void setSpeedSpot(final int idx, final Point2D spot) {
-        MathVec.sub(spot, rocks.getRock(idx), speeds.getRock(idx));
+        MathVec.sub(spot, positions.getRock(idx), speeds.getRock(idx));
         speeds.notifyChange();
     }
 }

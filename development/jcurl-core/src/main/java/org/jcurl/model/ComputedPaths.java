@@ -144,7 +144,7 @@ public class ComputedPaths extends RockSetPaths implements
             }
             maxT = known = hitTime;
             hitPair = collider.compute(getCurrentPos(), getCurrentSpeed());
-            // mark all hit rocks' combinations dirty and compute the new curves
+            // mark all hit positions' combinations dirty and compute the new curves
             for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
                 if ((hitPair & (1 << i)) == 0)
                     continue;

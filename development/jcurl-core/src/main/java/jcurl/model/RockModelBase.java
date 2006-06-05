@@ -25,7 +25,7 @@ import org.jcurl.math.analysis.CurveGhost;
 
 /**
  * Atom for rock (set) data. Combines the two canonical approaches: curve-based
- * (one rock in time) and set based (all rocks at a given time).
+ * (one rock in time) and set based (all positions at a given time).
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$

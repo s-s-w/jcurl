@@ -31,8 +31,8 @@ import org.jcurl.math.helpers.MathVec;
  * A hitter including spin and loss of energy.
  * <p>
  * This hitter gets the transfer of spin and momentum right. The 'loss of
- * energy'-mechanism bases upon a Hookisch elasticity-model for the rocks. Only
- * stillstanding rocks cause a loss of energy. For details see the paper <a
+ * energy'-mechanism bases upon a Hookisch elasticity-model for the positions. Only
+ * stillstanding positions cause a loss of energy. For details see the paper <a
  * href="http://jcurl.berlios.de/curlsci.pdf">Curling Scientific </a>.
  * 
  * @see org.jcurl.model.CollissionSpinLossTest

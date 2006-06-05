@@ -45,16 +45,16 @@ public interface Source {
     public abstract double getMinT();
 
     /**
-     * Get the rocks' positions.
+     * Get the positions' positions.
      * 
-     * @return the rocks' positions
+     * @return the positions' positions
      */
     public abstract PositionSet getPos();
 
     /**
-     * Get the rocks' speeds - optional.
+     * Get the positions' speeds - optional.
      * 
-     * @return the rocks' speeds
+     * @return the positions' speeds
      */
     public abstract SpeedSet getSpeed();
 

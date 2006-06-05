@@ -99,7 +99,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
     }
 
     /**
-     * Compute the time until two rocks hit. Return {@link Long#MAX_VALUE}/1000
+     * Compute the time until two positions hit. Return {@link Long#MAX_VALUE}/1000
      * if never. This implementation assumes straight movement with constant
      * speed. As the real time is almost always bigger, this approach is ok only
      * for iterative methods.
@@ -116,7 +116,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
      *            location of second rock
      * @param bv
      *            speed of second rock
-     * @return [sec] 0 if the rocks "touch", see
+     * @return [sec] 0 if the positions "touch", see
      *         {@link CollissionModel#MaxDistSq}
      */
     protected static double timetilhit(final int a, final Rock ap,
@@ -127,10 +127,10 @@ public abstract class SlideStrategy extends ModelBase implements Source {
         final Point2D v = MathVec.sub(bv, av, new Point2D.Double());
         final double vx = MathVec.scal(x, v);
         if (vx >= 0)
-            // the rocks don't move or separate:
+            // the positions don't move or separate:
             return Long.MAX_VALUE / 1000;
         if (CollissionModel.MaxDistSq >= ap.distanceSq(bp)) {
-            // the rocks already touch
+            // the positions already touch
             if (log.isDebugEnabled())
                 log.debug("Max=" + CollissionModel.MaxDistSq + " current="
                         + ap.distanceSq(bp));
@@ -180,7 +180,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
      * Walk on until the given time. Requires
      * {@link #timetilhit(int, Rock, Rock, int, Rock, Rock)}and
      * {@link #estimateNextHit(PositionSet, SpeedSet)}&nbsp;to return 0 for
-     * touching rocks in motion towards each others.
+     * touching positions in motion towards each others.
      * 
      * @param time
      * @param dt
@@ -236,7 +236,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
     }
 
     /**
-     * Test all combinations of the given rocks for upcoming collissions.
+     * Test all combinations of the given positions for upcoming collissions.
      * <p>
      * There is a little conceptual gap between the space-distance (used by
      * {@link CollissionModel#compute(PositionSet, SpeedSet)}) and the time
@@ -244,12 +244,12 @@ public abstract class SlideStrategy extends ModelBase implements Source {
      * because the collission engine should not need to know about rock
      * propagation and therefore cannot compute the exact time until the hit -
      * the slider on the other hand needs to know the time to propagate the
-     * rocks until the hit.
+     * positions until the hit.
      * </p>
      * <p>
      * This is solved by additionally checking the distance in
      * {@link #timetilhit(int, Rock, Rock, int, Rock, Rock)}&nsbp;and returning
-     * 0 if two rocks are touching in the sense of
+     * 0 if two positions are touching in the sense of
      * {@link CollissionModel#MaxDistSq}.
      * </p>
      * <p>
@@ -259,7 +259,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
      * @see #timetilhit(int, Rock, Rock, int, Rock, Rock)
      * @param pos
      * @param speed
-     * @return seconds until the next hit or 0 if two rocks "touch" (see above
+     * @return seconds until the next hit or 0 if two positions "touch" (see above
      *         and {@link #timetilhit(int, Rock, Rock, int, Rock, Rock)}).
      * @see #timetilhit(int, Rock, Rock, int, Rock, Rock)
      */
@@ -267,7 +267,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
         if (log.isDebugEnabled())
             log.debug("estimateNextHit");
         double t = Long.MAX_VALUE / 1000;
-        // test combination of all rocks:
+        // test combination of all positions:
         for (int a = 0; a < PositionSet.ROCKS_PER_SET; a++) {
             final Rock ap = pos.getRock(a);
             final Rock av = speed.getRock(a);
@@ -395,7 +395,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
      *            positions
      * @param speed
      *            velocities
-     * @return bitmask of the rocks in motion at t1
+     * @return bitmask of the positions in motion at t1
      */
     protected int move(final double t0, final double t1, final PositionSet pos,
             final SpeedSet speed) throws FunctionEvaluationException {
@@ -406,7 +406,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
             final Rock x = pos.getRock(i);
             final Rock v = speed.getRock(i);
             if (move(t0, t1, i, x, v)) {
-                // only check moving rocks.
+                // only check moving positions.
                 if (isOut(x, v)) {
                     Ice.setOut(x, (i % 2) == 0, i / 2);
                     v.setLocation(0, 0, 0);
@@ -441,7 +441,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
      * @param pos
      * @param speed
      * @param discontinuous
-     *            bitmask of the discontinuous rocks
+     *            bitmask of the discontinuous positions
      */
     protected abstract void set(final double t0, final PositionSet pos,
             final SpeedSet speed, final int discontinuous)

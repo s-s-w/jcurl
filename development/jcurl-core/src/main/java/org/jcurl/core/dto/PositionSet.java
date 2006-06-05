@@ -101,10 +101,10 @@ public class PositionSet extends RockSet {
     }
 
     /**
-     * Get the "out" rocks (as bitmask).
+     * Get the "out" positions (as bitmask).
      * 
      * @param a
-     * @return bitmask of the out rocks.
+     * @return bitmask of the out positions.
      */
     public static int getOutRocks(final PositionSet a) {
         final double xmin = Ice.SIDE_2_CENTER + RockProps.DEFAULT.getRadius();
@@ -121,10 +121,10 @@ public class PositionSet extends RockSet {
     }
 
     /**
-     * Get the "shot" rocks (as bitmask).
+     * Get the "shot" positions (as bitmask).
      * 
      * @param a
-     * @return bitmask of the shot rocks.
+     * @return bitmask of the shot positions.
      */
     public static int getShotRocks(final PositionSet a) {
         final int scorer;
@@ -161,10 +161,10 @@ public class PositionSet extends RockSet {
     }
 
     /**
-     * Get the "waiting" rocks (as bitmask).
+     * Get the "waiting" positions (as bitmask).
      * 
      * @param a
-     * @return bitmask of the waiting rocks.
+     * @return bitmask of the waiting positions.
      */
     public static int getWaitRocks(final PositionSet a) {
         final double xmax = Ice.SIDE_2_CENTER + RockProps.DEFAULT.getRadius();

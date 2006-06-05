@@ -23,8 +23,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import org.apache.xml.utils.MutableAttrListImpl;
 import org.jcurl.core.dto.Ice;
 import org.jcurl.core.dto.RockProps;
+import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.swing.JCurlDisplay;
 
@@ -35,7 +37,9 @@ import org.jcurl.core.swing.JCurlDisplay;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:Zoomer.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
-public class Zoomer {
+public class Zoomer extends MutableObject {
+
+    private static final long serialVersionUID = -8692952713937311284L;
 
     private static final float _dia = 2 * RockProps.DEFAULT.getRadius();
 
@@ -205,6 +209,11 @@ public class Zoomer {
      * @return the wc viewport (or fixpoint) has changed
      */
     public boolean hasChanged() {
+        return false;
+    }
+
+    public boolean equals(Object obj) {
+        // TODO Auto-generated method stub
         return false;
     }
 }

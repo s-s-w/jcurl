@@ -19,7 +19,7 @@
 package org.jcurl.core.dto;
 
 /**
- * Properties of a unique set of rocks (size, mass, etc.)
+ * Properties of a unique set of positions (size, mass, etc.)
  * 
  * @see org.jcurl.core.dto.RockProps
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

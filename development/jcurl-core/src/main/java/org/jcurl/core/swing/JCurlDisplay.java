@@ -76,13 +76,13 @@ public class JCurlDisplay extends RockLocationDisplay {
      * 
      * @param time
      *            [sec]
-     * @param rocks
-     *            the rocks' locations
+     * @param positions
+     *            the positions' locations
      * @param discontinuous
      *            bitmask of discontinouos locations
      */
-    public void setPos(final double time, final PositionSet rocks,
+    public void setPos(final double time, final PositionSet positions,
             final int discontinuous) {
-        super.setPos(this.time = time, rocks, discontinuous);
+        super.setPos(this.time = time, positions, discontinuous);
     }
 }

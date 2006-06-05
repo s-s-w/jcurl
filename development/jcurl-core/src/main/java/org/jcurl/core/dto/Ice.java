@@ -66,11 +66,11 @@ public class Ice {
     }
 
     /**
-     * Check all moving rocks if they're still in play
+     * Check all moving positions if they're still in play
      * 
      * @param pos
      * @param speed
-     * @return bitmask of modified (removed) rocks
+     * @return bitmask of modified (removed) positions
      */
     public static final int checkOut(final PositionSet pos,
             final PositionSet speed) {
@@ -120,7 +120,7 @@ public class Ice {
 
     /**
      * Start-lineup. Two rows at each edge of the rink (parallel to
-     * center-line), lead rocks first (at the front), color 0 on the arg, 1
+     * center-line), lead positions first (at the front), color 0 on the arg, 1
      * right. Note: the distance between the rows (0.5 foot) is a little more
      * than a rock's diameter.
      * 
@@ -140,7 +140,7 @@ public class Ice {
 
     /**
      * 'Stop'-lineup. Two rows at each edge of the rink (parallel to back-line),
-     * lead rocks outmost, color 0 on the arg, 1 right. Note: the distance
+     * lead positions outmost, color 0 on the arg, 1 right. Note: the distance
      * between the rows (0.5 foot) is a little more than a rock's diameter.
      * 
      * @param R
