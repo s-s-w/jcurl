@@ -59,4 +59,11 @@ public abstract class Point3D extends Point2D {
     public abstract void setY(double y);
 
     public abstract void setZ(double z);
+
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof Rock))
+            return false;
+        final Rock b = (Rock) obj;
+        return getX() == b.getX() && getY() == b.getY() && getZ() == getZ();
+    }
 }

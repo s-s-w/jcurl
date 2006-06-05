@@ -24,9 +24,20 @@ import org.apache.commons.math.ConvergenceException;
 import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
 import org.apache.commons.math.analysis.NewtonSolver;
+import org.jcurl.core.dto.Rock;
 
 public class DennyCurvesTest extends TestCase {
 
+    public void testStill() throws FunctionEvaluationException,
+    ConvergenceException {
+        final DennyCurves m = new DennyCurves();
+        final PathSegment f = m.compute(1, 2, 3, 4, 0, 0, 0, 1);
+        final Rock r = f.valueWC(0, null);
+        assertEquals("", 2, r.getX(), 1e-9);
+        assertEquals("", 3, r.getY(), 1e-9);
+        assertEquals("", 0, r.getZ(), 1e-9);
+    }
+    
     public void testStraight() throws FunctionEvaluationException,
             ConvergenceException {
         final DennyCurves m = new DennyCurves();

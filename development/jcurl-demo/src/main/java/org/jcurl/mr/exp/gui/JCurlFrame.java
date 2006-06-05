@@ -24,9 +24,14 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 import org.apache.commons.logging.Log;
+import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.swing.RockLocationDisplay;
+import org.jcurl.model.CollissionSpinLoss;
+import org.jcurl.model.ComputedPaths;
+import org.jcurl.model.DennyCurves;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -38,16 +43,27 @@ public class JCurlFrame extends JFrame {
 
     private static final long serialVersionUID = 7094013076400484227L;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException,
+            FunctionEvaluationException {
         JCurlFrame f = new JCurlFrame();
         f.show();
-        //Thread.sleep(2000);
-        //PositionSet.allOut(f.rld.getPositions());
+        Thread.sleep(4000);
+//        // PositionSet.allOut(f.rld.getPositions());
+//
+        f.model.getInitialPos().notifyChange();
+        f.model.getInitialPos().getDark(0).setLocation(0, 10, 0);
+        f.model.getInitialSpeed().getDark(0).setLocation(0, -1, 0);
+        //f.model.recompute();
+//
+        Thread.sleep(2000);
+//        f.model.setCurrentT(2);
     }
 
     private RockLocationDisplay rld;
 
-    public JCurlFrame() {
+    private ComputedPaths model;
+
+    public JCurlFrame() throws FunctionEvaluationException {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
@@ -55,12 +71,19 @@ public class JCurlFrame extends JFrame {
         });
         setTitle(this.getClass().getName());
         setSize(800, 600);
-        
+
+        model = new ComputedPaths();
+//        model.setInitialPos(PositionSet.allHome());
+//        model.setInitialSpeed(new SpeedSet());
+//        model.setCollider(new CollissionSpinLoss());
+//        model.setIce(new DennyCurves());
+//        model.recompute();
+
         rld = new RockLocationDisplay();
         rld.setDoubleBuffered(false);
-        rld.setPositions(null);
+        rld.setPositions(model.getCurrentPos());
         rld.setZoom(null);
-        
+
         getContentPane().add(rld);
     }
 }

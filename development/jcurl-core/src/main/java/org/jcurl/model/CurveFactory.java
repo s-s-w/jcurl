@@ -21,6 +21,7 @@ package org.jcurl.model;
 import org.jcurl.core.dto.Rock;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.helpers.NotImplementedYetException;
+import org.jcurl.math.analysis.Polynome;
 import org.jcurl.math.analysis.R1R1Function;
 
 /**
@@ -32,6 +33,12 @@ import org.jcurl.math.analysis.R1R1Function;
  * @version $Id$
  */
 public abstract class CurveFactory extends MutableObject {
+
+    protected static final R1R1Function[] Zero;
+    static {
+        Zero = new R1R1Function[3];
+        Zero[0] = Zero[1] = Zero[2] = new Polynome(new double[] { 0 });
+    }
 
     private double curl;
 

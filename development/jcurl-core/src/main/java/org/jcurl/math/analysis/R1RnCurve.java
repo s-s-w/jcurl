@@ -80,6 +80,13 @@ public class R1RnCurve {
         return ret;
     }
 
+    /**
+     * Return the raw, untransformed value!
+     * 
+     * @param dim
+     * @param t
+     * @throws FunctionEvaluationException
+     */
     public double value(int dim, double t) throws FunctionEvaluationException {
         return component(dim).value(t);
     }

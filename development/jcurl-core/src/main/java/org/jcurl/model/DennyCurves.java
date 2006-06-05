@@ -115,6 +115,10 @@ public class DennyCurves extends CurveFactory {
 
     R1R1Function[] compute(final double v0Square, final double w0) {
         this.v0 = Math.sqrt(v0Square);
+        if (this.v0 == 0) {
+            this.omega0 = 0;
+            return Zero;
+        }
         this.omega0 = w0;
         final double tau = this.v0 / (mu * g);
 
@@ -131,5 +135,4 @@ public class DennyCurves extends CurveFactory {
     public boolean equals(Object obj) {
         return false;
     }
-
 }

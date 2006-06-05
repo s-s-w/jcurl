@@ -23,8 +23,10 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.apache.commons.logging.Log;
 import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.dto.Rock;
+import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**
  * Several {@link org.jcurl.model.PathSegment}s with discontinuities.
@@ -33,6 +35,7 @@ import org.jcurl.core.dto.Rock;
  * @version $Id$
  */
 public class PathSet implements JCurlCurve {
+    private static final Log log = JCLoggerFactory.getLogger(PathSet.class);
 
     private final SortedMap pieces = new TreeMap();
 

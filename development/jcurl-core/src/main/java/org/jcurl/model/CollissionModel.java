@@ -150,7 +150,7 @@ public abstract class CollissionModel extends ModelBase {
      * @param va
      *            speed of rock a
      * @param vb
-     *            speed of rock b (zero before the hit)
+     *            speed of rock b (Zero before the hit)
      */
     public abstract void computeRC(final Rock va, final Rock vb);
 

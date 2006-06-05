@@ -90,10 +90,10 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     }
 
     /**
-     * Check which rocks are non-zero.
+     * Check which rocks are non-Zero.
      * 
      * @param rocks
-     * @return bitset of the positions being non-zero
+     * @return bitset of the positions being non-Zero
      */
     public static int nonZero(final RockSet rocks) {
         int ret = 0;

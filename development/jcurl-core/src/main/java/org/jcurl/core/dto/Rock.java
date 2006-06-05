@@ -30,9 +30,9 @@ public abstract class Rock extends Point3D implements Cloneable {
     public abstract Object clone();
 
     /**
-     * Convenience method to check if zero or not.
+     * Convenience method to check if Zero or not.
      * 
-     * @return whether x or y are non-zero
+     * @return whether x or y are non-Zero
      */
     public abstract boolean nonZero();
 

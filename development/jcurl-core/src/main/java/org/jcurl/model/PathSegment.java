@@ -62,8 +62,10 @@ public class PathSegment extends R1RnCurve implements JCurlCurve {
                             + c.length);
         this.isRockCoordinates = isRockCoordinates;
         this.rc2wc = new AffineTransform();
-        rc2wc.rotate(-Math.acos((v0.getX() * 0 + v0.getY() * 1)
-                / v0.distance(0, 0)), x0.getX(), x0.getY());
+        final double vabs = v0.distance(0, 0);
+        if (vabs != 0.0)
+            rc2wc.rotate(-Math.acos((v0.getX() * 0 + v0.getY() * 1) / vabs), x0
+                    .getX(), x0.getY());
         rc2wc.translate(x0.getX(), x0.getY());
         this.t0 = t0;
     }

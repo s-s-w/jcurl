@@ -21,6 +21,7 @@ package org.jcurl.model;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.apache.commons.logging.Log;
 import org.apache.commons.math.ConvergenceException;
 import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.analysis.NewtonSolver;
@@ -28,6 +29,7 @@ import org.apache.commons.math.analysis.UnivariateRealSolver;
 import org.jcurl.core.dto.PositionSet;
 import org.jcurl.core.dto.RockSet;
 import org.jcurl.core.dto.SpeedSet;
+import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.math.analysis.DistanceSq;
 
@@ -41,6 +43,9 @@ import org.jcurl.math.analysis.DistanceSq;
  */
 public class ComputedPaths extends RockSetPaths implements
         PropertyChangeListener {
+    private static final Log log = JCLoggerFactory
+            .getLogger(ComputedPaths.class);
+
     private static final double Never = Double.POSITIVE_INFINITY;
 
     private static final double NoSweep = 0.0;
@@ -51,7 +56,7 @@ public class ComputedPaths extends RockSetPaths implements
 
     private CollissionModel collider;
 
-    private PositionSet currentPos = new PositionSet();
+    private PositionSet currentPos = PositionSet.allHome();
 
     private SpeedSet currentSpeed = new SpeedSet();
 
@@ -61,7 +66,7 @@ public class ComputedPaths extends RockSetPaths implements
 
     private CurveFactory ice;
 
-    private PositionSet initialPos = new PositionSet();
+    private PositionSet initialPos = PositionSet.allHome();
 
     private SpeedSet initialSpeed = new SpeedSet();
 
@@ -89,13 +94,11 @@ public class ComputedPaths extends RockSetPaths implements
 
     void clearCurves() {
         known = -1;
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
-            curves[i].clear();
-        pm.reset(Unknown);
     }
 
     /**
-     * Ensure the curvestore has no unprocessed hits until t.
+     * Ensure the curvestore has no unprocessed hits until t. Does NOT compute
+     * {@link #currentPos} and {@link #currentSpeed}.
      * 
      * @throws FunctionEvaluationException
      */
@@ -107,6 +110,7 @@ public class ComputedPaths extends RockSetPaths implements
             known = 0;
             pm.reset(Unknown);
             for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+                curves[i].clear();
                 curves[i].append(known, ice.compute(known, getInitialPos()
                         .getRock(i), getInitialSpeed().getRock(i), NoSweep));
             }
@@ -144,7 +148,8 @@ public class ComputedPaths extends RockSetPaths implements
             }
             maxT = known = hitTime;
             hitPair = collider.compute(getCurrentPos(), getCurrentSpeed());
-            // mark all hit positions' combinations dirty and compute the new curves
+            // mark all hit positions' combinations dirty and compute the new
+            // curves
             for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
                 if ((hitPair & (1 << i)) == 0)
                     continue;
@@ -197,17 +202,18 @@ public class ComputedPaths extends RockSetPaths implements
     }
 
     public void propertyChange(PropertyChangeEvent arg0) {
-        try {
-            recompute();
-        } catch (FunctionEvaluationException e) {
-            throw new RuntimeException(e);
-        }
+        log.info(arg0);
+        // try {
+        // recompute();
+        // } catch (FunctionEvaluationException e) {
+        // throw new RuntimeException(e);
+        // }
     }
 
     /**
      * @throws FunctionEvaluationException
      */
-    protected void recompute() throws FunctionEvaluationException {
+    public void recompute() throws FunctionEvaluationException {
         final double tmp = currentT;
         clearCurves();
         setCurrentT(tmp);
@@ -236,6 +242,13 @@ public class ComputedPaths extends RockSetPaths implements
         this.currentT = computeUntil(currentT);
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             curves[i].value(this.currentT, getCurrentPos().getRock(i));
+            if (log.isDebugEnabled()) {
+                log.debug("c(i=" + i + ",t=" + currentT + ")=" + getCurrentPos().getRock(i));
+                final PathSegment p = curves[i].getCurve(currentT);
+                log.debug("    c_x(t)=" + p.component(0));
+                log.debug("    c_y(t)=" + p.component(1));
+                log.debug("    c_a(t)=" + p.component(2));
+            }
             // TODO compute rock speeds
         }
         propChange.firePropertyChange("currentT", old, this.currentT);
