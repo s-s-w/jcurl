@@ -16,10 +16,10 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.model;
+package org.jcurl.core.dto;
 
 /**
- * A {@link org.jcurl.model.RockSet}&nbsp;with speed semantics.
+ * A {@link org.jcurl.core.dto.RockSet}&nbsp;with speed semantics.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$

@@ -90,11 +90,11 @@ public class DistanceSq implements R1R1Function {
      * <code>2 * (c1 - c2) * (c1' - c2')</code> Feed into maxima:
      * 
      * <pre>
-     *   a(t) := [ ax(t), ay(t) ];
-     *   b(t) := [ bx(t), by(t) ];
-     *   d(t) := (a(t) - b(t)) . (a(t) - b(t));
-     *   diff(d(t), t);
-     *   quit$
+     *    a(t) := [ ax(t), ay(t) ];
+     *    b(t) := [ bx(t), by(t) ];
+     *    d(t) := (a(t) - b(t)) . (a(t) - b(t));
+     *    diff(d(t), t);
+     *    quit$
      * </pre>
      */
     public UnivariateRealFunction derivative() {

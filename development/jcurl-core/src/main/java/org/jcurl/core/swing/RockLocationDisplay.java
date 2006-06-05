@@ -20,10 +20,10 @@ package org.jcurl.core.swing;
 
 import java.awt.Graphics2D;
 
+import org.jcurl.core.dto.PositionSet;
 import org.jcurl.core.gui.IcePainter;
 import org.jcurl.core.gui.RockPainter;
 import org.jcurl.core.gui.Zoomer;
-import org.jcurl.model.PositionSet;
 
 /**
  * A simple display for rock locations. Delegates rock- and ice painting.

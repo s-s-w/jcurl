@@ -26,13 +26,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-
 import org.apache.commons.logging.Log;
 import org.jcurl.core.dto.Ice;
+import org.jcurl.core.dto.RockSet;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.model.RockSet;
 
 /**
  * Read onld config files.

@@ -23,12 +23,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import org.jcurl.core.dto.Ice;
-import org.jcurl.core.gui.Orientation;
-import org.jcurl.core.gui.Zoomer;
-import org.jcurl.core.swing.JCurlDisplay;
-
 import junit.framework.TestCase;
+
+import org.jcurl.core.dto.Ice;
+import org.jcurl.core.swing.JCurlDisplay;
 
 /**
  * JUnit test

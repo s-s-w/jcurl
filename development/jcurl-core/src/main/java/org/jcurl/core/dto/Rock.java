@@ -16,47 +16,35 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.math.helpers;
-
-import java.awt.geom.Point2D;
+package org.jcurl.core.dto;
 
 /**
- * Base class for 3D coordinates.
+ * Base class for rock information (either location or speed). The "Z" component
+ * is the handle angle in radians.
  * 
+ * @see org.jcurl.core.dto.PositionSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class Point3D extends Point2D {
-
-    public abstract double getX();
-
-    public abstract double getY();
-
-    public abstract double getZ();
+public abstract class Rock extends Point3D implements Cloneable {
+    public abstract Object clone();
 
     /**
-     * Sets the location of this Point3D to the specified double coordinates.
+     * Convenience method to check if zero or not.
      * 
-     * @param x
-     *            the coordinates of this Point3D
-     * @param y
-     *            the coordinates of this Point3D
-     * @param z
-     *            (angle) the coordinates of this Point3D
+     * @return whether x or y are non-zero
      */
-    public void setLocation(double x, double y, double z) {
-        this.setX(x);
-        this.setY(y);
-        this.setZ(z);
+    public abstract boolean nonZero();
+
+    public String toString() {
+        final StringBuffer buf = new StringBuffer();
+        buf.append('[');
+        buf.append(this.getX());
+        buf.append(", ");
+        buf.append(this.getY());
+        buf.append(", ");
+        buf.append(this.getZ());
+        buf.append(']');
+        return buf.toString();
     }
-
-    public void setLocation(final Point3D pt) {
-        this.setLocation(pt.getX(), pt.getY(), pt.getZ());
-    }
-
-    public abstract void setX(double x);
-
-    public abstract void setY(double y);
-
-    public abstract void setZ(double z);
 }

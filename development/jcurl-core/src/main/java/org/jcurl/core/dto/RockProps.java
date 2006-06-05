@@ -21,10 +21,10 @@ package org.jcurl.core.dto;
 import org.jcurl.core.helpers.Dim;
 
 /**
- * Rock properties.
+ * Rock properties as size, weight, moment of inertia.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:RockProps.java 331 2006-06-05 14:41:32Z mrohrmoser $
  */
 public class RockProps {
     public static final RockProps DEFAULT;

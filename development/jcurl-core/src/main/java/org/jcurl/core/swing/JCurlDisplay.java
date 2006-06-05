@@ -23,14 +23,14 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import org.jcurl.core.dto.PositionSet;
 import org.jcurl.core.gui.IcePainter;
 import org.jcurl.core.gui.RockPainter;
 import org.jcurl.core.gui.Zoomer;
-import org.jcurl.model.PositionSet;
 
 /**
- * A {@link org.jcurl.core.swing.RockLocationDisplay}with some additional meta data
- * displayed (here: time).
+ * A {@link org.jcurl.core.swing.RockLocationDisplay}with some additional meta
+ * data displayed (here: time).
  * 
  * @see org.jcurl.core.swing.RockLocationDisplay
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

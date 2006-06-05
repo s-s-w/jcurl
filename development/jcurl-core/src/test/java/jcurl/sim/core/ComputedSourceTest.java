@@ -27,9 +27,9 @@ import jcurl.sim.model.SlideStraight;
 import junit.framework.TestCase;
 
 import org.apache.commons.math.FunctionEvaluationException;
+import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.model.CollissionSpin;
-import org.jcurl.model.PositionSet;
-import org.jcurl.model.SpeedSet;
 import org.xml.sax.SAXException;
 
 /**

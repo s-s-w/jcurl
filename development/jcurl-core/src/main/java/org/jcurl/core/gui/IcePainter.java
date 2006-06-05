@@ -27,7 +27,6 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
-
 import org.jcurl.core.dto.Ice;
 import org.jcurl.core.dto.RockProps;
 import org.jcurl.core.helpers.Dim;

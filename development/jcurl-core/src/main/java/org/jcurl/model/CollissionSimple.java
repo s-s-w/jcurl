@@ -18,7 +18,7 @@
  */
 package org.jcurl.model;
 
-import jcurl.sim.model.SlideStraight;
+import org.jcurl.core.dto.Rock;
 
 /**
  * A very simple hit-model using conservation of energy and momentum.

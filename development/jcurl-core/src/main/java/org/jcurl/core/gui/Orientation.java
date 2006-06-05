@@ -24,7 +24,7 @@ import org.jcurl.core.helpers.EnumBase;
  * North, East, South, West.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:Orientation.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
 public class Orientation extends EnumBase {
 

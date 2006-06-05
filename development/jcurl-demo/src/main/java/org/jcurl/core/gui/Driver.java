@@ -25,9 +25,9 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 
+import org.jcurl.core.dto.PositionSet;
 import org.jcurl.core.gui.Zoomer;
 import org.jcurl.core.swing.JCurlDisplay;
-import org.jcurl.model.PositionSet;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

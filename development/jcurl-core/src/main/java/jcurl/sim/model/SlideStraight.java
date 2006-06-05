@@ -24,14 +24,14 @@ import jcurl.sim.core.SlideCurves;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.dto.Ice;
+import org.jcurl.core.dto.Rock;
 import org.jcurl.core.dto.RockProps;
+import org.jcurl.core.dto.RockSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.math.analysis.CurveFkt;
 import org.jcurl.math.analysis.CurveGhost;
 import org.jcurl.math.analysis.Polynome;
-import org.jcurl.math.linalg.MathVec;
-import org.jcurl.model.Rock;
-import org.jcurl.model.RockSet;
+import org.jcurl.math.helpers.MathVec;
 
 /**
  * ComputedSource without curl and with constant acceleration.

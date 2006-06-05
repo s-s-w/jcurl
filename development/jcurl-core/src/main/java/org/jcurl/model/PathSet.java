@@ -24,6 +24,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.apache.commons.math.FunctionEvaluationException;
+import org.jcurl.core.dto.Rock;
 
 /**
  * Several {@link org.jcurl.model.PathSegment}s with discontinuities.

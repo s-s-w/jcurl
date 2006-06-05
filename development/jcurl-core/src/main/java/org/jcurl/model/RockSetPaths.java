@@ -19,6 +19,8 @@
 package org.jcurl.model;
 
 import org.apache.commons.math.FunctionEvaluationException;
+import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.helpers.NotImplementedYetException;
 

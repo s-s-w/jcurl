@@ -19,11 +19,11 @@
 package jcurl.core;
 
 import org.apache.commons.math.FunctionEvaluationException;
-import org.jcurl.model.PositionSet;
-import org.jcurl.model.SpeedSet;
+import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.SpeedSet;
 
 /**
- * Interface for classes providing {@link org.jcurl.model.Rock}location and
+ * Interface for classes providing {@link org.jcurl.core.dto.Rock}location and
  * speed data.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

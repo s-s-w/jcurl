@@ -20,29 +20,11 @@ package org.jcurl.core.swing;
 
 import java.io.File;
 
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileFilter;
-
-public class PngFileChooser extends JFileChooser {
+public class PngFileChooser extends FileChooser {
 
     private static final long serialVersionUID = 400354997568206163L;
 
     public PngFileChooser(File currentFile) {
-        super(currentFile == null ? new File(".")
-                : currentFile.isDirectory() ? currentFile : currentFile
-                        .getParentFile());
-        this.setMultiSelectionEnabled(false);
-        this.setAcceptAllFileFilterUsed(true);
-        this.setFileFilter(new FileFilter() {
-            public boolean accept(final File f) {
-                if (f == null)
-                    return false;
-                return f.isDirectory() || f.getName().endsWith(".png");
-            }
-
-            public String getDescription() {
-                return "Portable Network Graphics (.png)";
-            }
-        });
+        super(currentFile, new String[] { ".png" }, "Portable Network Graphics");
     }
 }

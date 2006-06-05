@@ -20,8 +20,8 @@ package jcurl.model;
 
 import java.util.Iterator;
 
+import org.jcurl.core.dto.PositionSet;
 import org.jcurl.core.helpers.NotImplementedYetException;
-import org.jcurl.model.PositionSet;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

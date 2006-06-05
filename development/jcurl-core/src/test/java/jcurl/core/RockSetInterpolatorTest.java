@@ -22,9 +22,9 @@ import jcurl.sim.model.SlideStraight;
 import junit.framework.TestCase;
 
 import org.apache.commons.math.FunctionEvaluationException;
+import org.jcurl.core.dto.PositionSet;
 import org.jcurl.core.dto.RockSetProps;
-import org.jcurl.model.PositionSet;
-import org.jcurl.model.SpeedSet;
+import org.jcurl.core.dto.SpeedSet;
 
 /**
  * JUnit test for {@link jcurl.core.RockSetInterpolator}.

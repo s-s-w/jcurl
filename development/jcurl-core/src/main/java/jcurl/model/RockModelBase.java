@@ -18,10 +18,10 @@
  */
 package jcurl.model;
 
+import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.math.analysis.CurveGhost;
-import org.jcurl.model.PositionSet;
-import org.jcurl.model.SpeedSet;
 
 /**
  * Atom for rock (set) data. Combines the two canonical approaches: curve-based

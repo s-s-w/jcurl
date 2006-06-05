@@ -25,7 +25,11 @@ import java.awt.geom.Point2D;
 import jcurl.sim.core.ModelBase;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.Rock;
 import org.jcurl.core.dto.RockProps;
+import org.jcurl.core.dto.RockSet;
+import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
 
 /**

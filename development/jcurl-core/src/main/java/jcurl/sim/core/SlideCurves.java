@@ -20,20 +20,19 @@ package jcurl.sim.core;
 
 import java.awt.geom.Point2D;
 
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.math.FunctionEvaluationException;
+import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.Rock;
+import org.jcurl.core.dto.RockSet;
 import org.jcurl.core.dto.RockSetProps;
+import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.math.analysis.CurveCombined;
 import org.jcurl.math.analysis.CurveGhost;
 import org.jcurl.math.analysis.CurveInterval;
 import org.jcurl.math.analysis.Polynome;
-import org.jcurl.math.linalg.MathVec;
-import org.jcurl.model.PositionSet;
-import org.jcurl.model.Rock;
-import org.jcurl.model.RockSet;
-import org.jcurl.model.SpeedSet;
+import org.jcurl.math.helpers.MathVec;
 
 /**
  * Abstract base class for analytic (non-discrete) curl models. Based on rock

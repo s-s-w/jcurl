@@ -20,8 +20,8 @@ package jcurl.sim.model;
 
 import junit.framework.TestCase;
 
+import org.jcurl.core.dto.RockDouble;
 import org.jcurl.math.analysis.CurveGhost;
-import org.jcurl.model.RockDouble;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

@@ -27,18 +27,18 @@ import jcurl.core.Source;
 import org.apache.commons.logging.Log;
 import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.dto.Ice;
+import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.Rock;
 import org.jcurl.core.dto.RockProps;
+import org.jcurl.core.dto.RockSet;
 import org.jcurl.core.dto.RockSetProps;
+import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.math.linalg.MathVec;
+import org.jcurl.math.helpers.MathVec;
 import org.jcurl.model.CollissionModel;
 import org.jcurl.model.CollissionSpin;
-import org.jcurl.model.PositionSet;
-import org.jcurl.model.Rock;
-import org.jcurl.model.RockSet;
-import org.jcurl.model.SpeedSet;
 
 /**
  * Abstract base class for propagation/friction models.

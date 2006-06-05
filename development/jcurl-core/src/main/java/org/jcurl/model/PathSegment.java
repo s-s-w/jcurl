@@ -23,6 +23,8 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
 import org.apache.commons.math.FunctionEvaluationException;
+import org.jcurl.core.dto.Rock;
+import org.jcurl.core.dto.RockDouble;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.math.analysis.R1R1Function;
 import org.jcurl.math.analysis.R1RnCurve;

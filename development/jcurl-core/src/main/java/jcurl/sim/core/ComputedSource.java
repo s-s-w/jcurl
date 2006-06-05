@@ -29,15 +29,15 @@ import jcurl.core.io.SetupIO;
 import jcurl.sim.model.SlideStraight;
 
 import org.apache.commons.math.FunctionEvaluationException;
+import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.RockSet;
 import org.jcurl.core.dto.RockSetProps;
+import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.math.analysis.CurveGhost;
 import org.jcurl.model.CollissionModel;
 import org.jcurl.model.CollissionSpin;
-import org.jcurl.model.PositionSet;
-import org.jcurl.model.RockSet;
-import org.jcurl.model.SpeedSet;
 import org.xml.sax.SAXException;
 
 /**

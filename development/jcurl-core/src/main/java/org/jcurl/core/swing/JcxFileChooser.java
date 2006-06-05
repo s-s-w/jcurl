@@ -20,28 +20,11 @@ package org.jcurl.core.swing;
 
 import java.io.File;
 
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileFilter;
-
-public class JcxFileChooser extends JFileChooser {
+public class JcxFileChooser extends FileChooser {
 
     private static final long serialVersionUID = -1903818463336848079L;
 
     public JcxFileChooser(File currentFile) {
-        super(currentFile == null ? new File(".") : currentFile);
-        this.setMultiSelectionEnabled(false);
-        this.setAcceptAllFileFilterUsed(true);
-        this.setFileFilter(new FileFilter() {
-            public boolean accept(final File f) {
-                if (f == null)
-                    return false;
-                return f.isDirectory() || f.getName().endsWith(".jcx")
-                        || f.getName().endsWith(".jcz");
-            }
-
-            public String getDescription() {
-                return "JCurl Setup Files (.jcx) (.jcz)";
-            }
-        });
+        super(currentFile, new String[] { ".jcx", ".jcz" }, "JCurl Setup Files");
     }
 }

@@ -25,15 +25,15 @@ import java.awt.geom.Point2D;
 import java.beans.PropertyChangeEvent;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.RockSet;
+import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.core.gui.IcePainter;
 import org.jcurl.core.gui.RockPainter;
 import org.jcurl.core.gui.Zoomer;
 import org.jcurl.core.helpers.EnumBase;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.math.linalg.MathVec;
-import org.jcurl.model.PositionSet;
-import org.jcurl.model.RockSet;
-import org.jcurl.model.SpeedSet;
+import org.jcurl.math.helpers.MathVec;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

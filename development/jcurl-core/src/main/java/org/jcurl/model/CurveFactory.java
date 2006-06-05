@@ -18,6 +18,7 @@
  */
 package org.jcurl.model;
 
+import org.jcurl.core.dto.Rock;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.math.analysis.R1R1Function;

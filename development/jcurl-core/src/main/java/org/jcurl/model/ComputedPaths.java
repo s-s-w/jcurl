@@ -21,11 +21,13 @@ package org.jcurl.model;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-
 import org.apache.commons.math.ConvergenceException;
 import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.analysis.NewtonSolver;
 import org.apache.commons.math.analysis.UnivariateRealSolver;
+import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.RockSet;
+import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.math.analysis.DistanceSq;
 

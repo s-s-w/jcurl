@@ -19,15 +19,12 @@
 package org.jcurl.core.dto;
 
 import org.jcurl.core.helpers.Dim;
-import org.jcurl.model.PositionSet;
-import org.jcurl.model.Rock;
-import org.jcurl.model.RockSet;
 
 /**
- * Handle ice properties as friction and curl.
+ * Provide ice dimensions.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:Ice.java 331 2006-06-05 14:41:32Z mrohrmoser $
  */
 public class Ice {
 

@@ -28,11 +28,11 @@ import java.net.URL;
 import jcurl.sim.core.SlideStrategy;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.RockSet;
+import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.model.CollissionModel;
-import org.jcurl.model.PositionSet;
-import org.jcurl.model.RockSet;
-import org.jcurl.model.SpeedSet;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 

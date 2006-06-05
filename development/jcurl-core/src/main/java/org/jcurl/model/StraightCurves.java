@@ -21,7 +21,6 @@ package org.jcurl.model;
 import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.analysis.UnivariateRealFunction;
 import org.jcurl.core.helpers.NotImplementedYetException;
-import org.jcurl.math.analysis.Polynome;
 import org.jcurl.math.analysis.R1R1Function;
 
 /**

@@ -18,13 +18,13 @@
  */
 package jcurl.core;
 
+import org.jcurl.core.dto.Rock;
+import org.jcurl.core.dto.RockFloat;
 import org.jcurl.math.analysis.CSplineInterpolator;
-import org.jcurl.model.Rock;
-import org.jcurl.model.RockFloat;
 
 /**
  * Use cubic splines {@link org.jcurl.math.analysis.CSplineInterpolator}to
- * interpolate one single {@link org.jcurl.model.Rock}'s trajectory based on
+ * interpolate one single {@link org.jcurl.core.dto.Rock}'s trajectory based on
  * discrete data.
  * 
  * @see org.jcurl.math.analysis.CSplineInterpolator

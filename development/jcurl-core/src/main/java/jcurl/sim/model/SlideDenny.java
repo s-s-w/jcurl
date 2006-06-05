@@ -21,12 +21,12 @@ package jcurl.sim.model;
 import jcurl.sim.core.SlideCurves;
 
 import org.jcurl.core.dto.Ice;
+import org.jcurl.core.dto.Rock;
 import org.jcurl.core.dto.RockProps;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.math.analysis.CurveFkt;
 import org.jcurl.math.analysis.CurveGhost;
 import org.jcurl.math.analysis.Polynome;
-import org.jcurl.model.Rock;
 
 /**
  * Mark DennyCurves's curl-model. Motion of a curling rock acc. to "Curling rock

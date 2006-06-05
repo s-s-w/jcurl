@@ -20,6 +20,7 @@ package org.jcurl.model;
 
 import junit.framework.TestCase;
 
+import org.jcurl.core.dto.RockSet;
 
 public class HitTimeMatrixTest extends TestCase {
 

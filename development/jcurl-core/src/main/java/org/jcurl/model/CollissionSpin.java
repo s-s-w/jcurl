@@ -18,7 +18,7 @@
  */
 package org.jcurl.model;
 
-
+import org.jcurl.core.dto.Rock;
 import org.jcurl.core.dto.RockProps;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;

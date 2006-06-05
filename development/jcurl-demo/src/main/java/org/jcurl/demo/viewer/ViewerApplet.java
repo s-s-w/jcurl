@@ -30,12 +30,12 @@ import jcurl.sim.model.SlideStraight;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.math.FunctionEvaluationException;
+import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.core.gui.SimpleKeys;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.swing.JCurlDisplay;
 import org.jcurl.model.CollissionSpin;
-import org.jcurl.model.PositionSet;
-import org.jcurl.model.SpeedSet;
 import org.xml.sax.SAXException;
 
 /**

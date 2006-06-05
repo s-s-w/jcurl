@@ -34,11 +34,10 @@ import javax.swing.JComponent;
 import jcurl.core.TargetDiscrete;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.gui.RockPainter;
+import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.RockSet;
 import org.jcurl.core.gui.RockPainter.ColorSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.model.PositionSet;
-import org.jcurl.model.RockSet;
 
 /**
  * 

@@ -16,14 +16,14 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.model;
+package org.jcurl.core.dto;
 
 import java.io.Serializable;
 
 import org.jcurl.core.helpers.MutableObject;
 
 /**
- * A set of 8 light and 8 dark {@link org.jcurl.model.Rock}s.
+ * A set of 8 light and 8 dark {@link org.jcurl.core.dto.Rock}s.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$

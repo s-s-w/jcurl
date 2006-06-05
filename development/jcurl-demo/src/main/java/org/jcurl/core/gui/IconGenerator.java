@@ -30,8 +30,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import jcurl.core.io.SetupBuilder;
 import jcurl.core.io.SetupSaxDeSer;
 
+import org.jcurl.core.dto.PositionSet;
 import org.jcurl.core.swing.JCurlDisplay;
-import org.jcurl.model.PositionSet;
 import org.xml.sax.SAXException;
 
 /**

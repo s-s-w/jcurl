@@ -22,12 +22,14 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
+import junit.framework.TestCase;
+
 import org.apache.commons.math.FunctionEvaluationException;
+import org.jcurl.core.dto.Rock;
+import org.jcurl.core.dto.RockDouble;
 import org.jcurl.math.analysis.Polynome;
 import org.jcurl.math.analysis.R1R1Function;
 import org.jcurl.math.analysis.R1RnCurve;
-
-import junit.framework.TestCase;
 
 public class PathSegmentTest extends TestCase {
 

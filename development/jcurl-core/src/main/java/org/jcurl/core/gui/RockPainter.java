@@ -25,13 +25,12 @@ import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.geom.Arc2D;
 
-
+import org.jcurl.core.dto.PositionSet;
 import org.jcurl.core.dto.RockProps;
 import org.jcurl.core.swing.JCurlDisplay;
-import org.jcurl.model.PositionSet;
 
 /**
- * Paint a set of rocks.
+ * Paint a single rock at (0,0).
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:RockPainter.java 330 2006-06-05 14:29:14Z mrohrmoser $

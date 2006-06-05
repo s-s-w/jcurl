@@ -26,7 +26,7 @@ import java.awt.geom.Point2D;
  * Simple class to paint graphical objects with custom parameter semantics.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:Painter.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
 public class Painter {
 

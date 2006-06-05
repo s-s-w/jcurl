@@ -21,8 +21,8 @@ package org.jcurl.core.gui;
 import jcurl.core.Source;
 import jcurl.core.TargetDiscrete;
 
-import org.jcurl.model.PositionSet;
-import org.jcurl.model.SpeedSet;
+import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.SpeedSet;
 
 /**
  * Extract locations from a (non-discrete) {@link jcurl.core.Source}and push

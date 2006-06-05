@@ -24,7 +24,6 @@ import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.math.analysis.CurveFkt;
 import org.jcurl.math.analysis.CurveGhost;
 import org.jcurl.math.analysis.Function1D;
-import org.jcurl.math.linalg.MathVec;
 
 /**
  * Enable convenient approximated Java2D drawing of arbitratry curves.
@@ -99,17 +98,17 @@ public abstract class CurveShape {
      * Maxima code:
      * 
      * <pre>
-     *        NEXTLAYERFACTOR(TRUE)$
-     *        DEBUGMODE(TRUE)$ 
-     *         
-     *        pa[0] + k * va[0] = pb[0] + l * vb[0];
-     *        pa[1] + k * va[1] = pb[1] + l * vb[1];
-     *         
-     *        LINSOLVE([%i4, %i5],[k, l]),GLOBALSOLVE:TRUE,BACKSUBST:TRUE$
-     *         
-     *        SCSIMP(PART(%o6,1,2)); 
-     *         
-     *        quit$
+     *         NEXTLAYERFACTOR(TRUE)$
+     *         DEBUGMODE(TRUE)$ 
+     *          
+     *         pa[0] + k * va[0] = pb[0] + l * vb[0];
+     *         pa[1] + k * va[1] = pb[1] + l * vb[1];
+     *          
+     *         LINSOLVE([%i4, %i5],[k, l]),GLOBALSOLVE:TRUE,BACKSUBST:TRUE$
+     *          
+     *         SCSIMP(PART(%o6,1,2)); 
+     *          
+     *         quit$
      * </pre>
      * 
      * @param pa
