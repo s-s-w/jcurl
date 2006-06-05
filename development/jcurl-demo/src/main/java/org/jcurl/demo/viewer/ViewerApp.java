@@ -29,8 +29,6 @@ import javax.swing.JFrame;
 import javax.xml.parsers.ParserConfigurationException;
 
 import jcurl.core.TargetDiscrete;
-import jcurl.core.gui.JCurlDisplay;
-import jcurl.core.gui.SimpleKeys;
 import jcurl.sim.core.ComputedSource;
 import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
@@ -39,6 +37,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.SpeedSet;
+import org.jcurl.core.gui.JCurlDisplay;
+import org.jcurl.core.gui.SimpleKeys;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.xml.sax.SAXException;
 
@@ -47,7 +47,7 @@ import org.xml.sax.SAXException;
  * 
  * @see jcurl.sim.model.SlideStraight
  * @see jcurl.sim.model.CollissionSimple
- * @see jcurl.core.gui.SimpleKeys
+ * @see org.jcurl.core.gui.SimpleKeys
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

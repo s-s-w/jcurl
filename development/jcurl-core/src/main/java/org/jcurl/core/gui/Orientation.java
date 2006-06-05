@@ -16,32 +16,40 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core;
+package org.jcurl.core.gui;
 
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.SpeedSet;
+import org.jcurl.core.helpers.EnumBase;
 
 /**
- * Interface for classes consuming discrete {@link org.jcurl.core.Rock}location
- * data.
+ * North, East, South, West.
  * 
- * @see jcurl.core.RockSetInterpolator
- * @see org.jcurl.core.gui.JCurlDisplay
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface TargetDiscrete extends Target {
+public class Orientation extends EnumBase {
 
-    public void setPos(final double t, final PositionSet rocks);
+    private static final long serialVersionUID = -2356484723388215100L;
+
+    /** North */
+    public static final Orientation N = new Orientation(0, "north");
+
+    /** East */
+    public static final Orientation E = new Orientation(1, "east");
+
+    /** South */
+    public static final Orientation S = new Orientation(2, "south");
+
+    /** West */
+    public static final Orientation W = new Orientation(3, "west");
+
+    public final double angle;
 
     /**
-     * 
-     * @param t
-     * @param rocks
-     * @param discontinuous
-     *            bitmask of discontinuous rocks as returned by
-     *            {@link org.jcurl.model.CollissionModel#compute(PositionSet, SpeedSet)}.
+     * @param state
+     * @param text
      */
-    public void setPos(final double t, final PositionSet rocks,
-            final int discontinuous);
+    private Orientation(int state, String text) {
+        super(state, text);
+        angle = state * Math.PI / 2;
+    }
 }

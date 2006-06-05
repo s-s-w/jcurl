@@ -25,8 +25,6 @@ import java.net.URL;
 import javax.swing.JApplet;
 
 import jcurl.core.TargetDiscrete;
-import jcurl.core.gui.JCurlDisplay;
-import jcurl.core.gui.SimpleKeys;
 import jcurl.sim.core.ComputedSource;
 import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
@@ -35,6 +33,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.math.FunctionEvaluationException;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.SpeedSet;
+import org.jcurl.core.gui.JCurlDisplay;
+import org.jcurl.core.gui.SimpleKeys;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.xml.sax.SAXException;
 

@@ -16,32 +16,27 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core;
+package org.jcurl.core.gui;
 
 import org.jcurl.core.PositionSet;
-import org.jcurl.core.SpeedSet;
 
 /**
- * Interface for classes consuming discrete {@link org.jcurl.core.Rock}location
- * data.
- * 
- * @see jcurl.core.RockSetInterpolator
- * @see org.jcurl.core.gui.JCurlDisplay
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface TargetDiscrete extends Target {
+public class SumShotDisplay extends SumDisplayBase {
 
-    public void setPos(final double t, final PositionSet rocks);
+    private static final long serialVersionUID = -8749102492237360027L;
 
-    /**
-     * 
-     * @param t
-     * @param rocks
-     * @param discontinuous
-     *            bitmask of discontinuous rocks as returned by
-     *            {@link org.jcurl.model.CollissionModel#compute(PositionSet, SpeedSet)}.
-     */
-    public void setPos(final double t, final PositionSet rocks,
-            final int discontinuous);
+    public SumShotDisplay() {
+        super();
+    }
+
+    public SumShotDisplay(final PositionSet model) {
+        super(model);
+    }
+
+    protected int computeMask(final PositionSet rocks) {
+        return PositionSet.getShotRocks(rocks);
+    }
 }

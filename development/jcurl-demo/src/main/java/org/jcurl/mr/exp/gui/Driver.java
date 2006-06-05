@@ -16,32 +16,19 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package jcurl.core;
+package org.jcurl.mr.exp.gui;
 
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.SpeedSet;
+import javax.swing.JFrame;
 
 /**
- * Interface for classes consuming discrete {@link org.jcurl.core.Rock}location
- * data.
- * 
- * @see jcurl.core.RockSetInterpolator
- * @see org.jcurl.core.gui.JCurlDisplay
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface TargetDiscrete extends Target {
+public class Driver {
+    // private static final Log log = JCLoggerFactory.getLogger(Driver.class);
 
-    public void setPos(final double t, final PositionSet rocks);
-
-    /**
-     * 
-     * @param t
-     * @param rocks
-     * @param discontinuous
-     *            bitmask of discontinuous rocks as returned by
-     *            {@link org.jcurl.model.CollissionModel#compute(PositionSet, SpeedSet)}.
-     */
-    public void setPos(final double t, final PositionSet rocks,
-            final int discontinuous);
+    public static void main(String[] args) {
+        JFrame frame = new MenuDemo();
+        frame.show();
+    }
 }
