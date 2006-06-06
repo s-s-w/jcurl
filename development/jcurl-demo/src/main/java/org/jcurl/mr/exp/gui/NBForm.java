@@ -28,24 +28,12 @@ public class NBForm extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
 
-        jLabel1.setText("Hello, world!");
+        setLayout(new java.awt.GridBagLayout());
 
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(143, 143, 143)
-                .add(jLabel1)
-                .addContainerGap(178, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(105, 105, 105)
-                .add(jLabel1)
-                .addContainerGap(180, Short.MAX_VALUE))
-        );
+        jLabel1.setText("Hello, world!");
+        jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        add(jLabel1, new java.awt.GridBagConstraints());
+
     }// </editor-fold>//GEN-END:initComponents
     
     
