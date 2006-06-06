@@ -75,7 +75,7 @@ public class JCurlFrame extends JFrame {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
-        });
+        }); 
         setTitle(this.getClass().getName());
         setSize(1000, 350);
 
