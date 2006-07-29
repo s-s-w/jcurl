@@ -31,7 +31,7 @@ import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
 
 public class ComputedPathsTest extends TestCase {
-
+    
     private static final Log log = JCLoggerFactory
             .getLogger(ComputedPathsTest.class);
 

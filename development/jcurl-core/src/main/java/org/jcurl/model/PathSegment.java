@@ -102,6 +102,8 @@ public class PathSegment extends R1RnCurve implements JCurlCurve {
     }
 
     public R1RnCurve derivative() {
+        // TODO enable (WC) collission testing. Requires WC coordinates and
+        // time!
         log.error("!!!");
         return super.derivative();
     }
@@ -138,6 +140,7 @@ public class PathSegment extends R1RnCurve implements JCurlCurve {
             throw new RuntimeException("Trafo MUST be invertible.", e);
         }
     }
+
     /**
      * @param t
      *            [t0, x[
