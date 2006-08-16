@@ -22,7 +22,7 @@ package org.jcurl.core.dto;
  * A {@link org.jcurl.core.dto.RockSet}&nbsp;with speed semantics.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: SpeedSet.java 332 2006-06-05 15:07:00Z mrohrmoser $
+ * @version $Id$
  */
 public class SpeedSet extends RockSet {
 

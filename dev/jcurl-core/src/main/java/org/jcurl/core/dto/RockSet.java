@@ -26,7 +26,7 @@ import org.jcurl.core.helpers.MutableObject;
  * A set of 8 light and 8 dark {@link org.jcurl.core.dto.Rock}s.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: RockSet.java 335 2006-06-05 18:19:00Z mrohrmoser $
+ * @version $Id$
  */
 public abstract class RockSet extends MutableObject implements Cloneable,
         Serializable {

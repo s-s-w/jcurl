@@ -16,12 +16,12 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.model;
+package org.jcurl.core.curved;
 
+import junit.framework.TestCase;
 
-public interface R1R3Curve extends R1RnCurve {
+public class CurveWorldTest extends TestCase {
+    public void testOk() {
 
-    public abstract Point3D value(double t, Point3D ret);
-
-    public abstract Point3D value(double t, int derivative, Point3D ret);
+    }
 }

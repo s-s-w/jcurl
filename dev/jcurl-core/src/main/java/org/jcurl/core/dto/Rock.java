@@ -18,7 +18,7 @@
  */
 package org.jcurl.core.dto;
 
-import org.jcurl.core.model.Point3D;
+import org.jcurl.core.math.Point3D;
 
 /**
  * Base class for rock information (either location or speed). The "Z" component
@@ -26,7 +26,7 @@ import org.jcurl.core.model.Point3D;
  * 
  * @see org.jcurl.core.dto.PositionSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: Rock.java 335 2006-06-05 18:19:00Z mrohrmoser $
+ * @version $Id$
  */
 public abstract class Rock extends Point3D implements Cloneable {
     public abstract Object clone();

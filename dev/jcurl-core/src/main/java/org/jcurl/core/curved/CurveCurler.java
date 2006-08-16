@@ -16,25 +16,14 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.dto;
+package org.jcurl.core.curved;
 
-import java.awt.geom.PathIterator;
+import org.jcurl.core.dto.Curler;
+import org.jcurl.core.math.Point3D;
 
-/**
- * Base for everything that provides trajectories.
- * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
- */
-public interface Trajectory {
+public interface CurveCurler extends Curler {
 
-    public PositionSet getCurrentPos();
+    public CurveWorld compute(double t0, final Point3D x0, final Point3D v0);
 
-    public SpeedSet getCurrentSpeed();
-
-    public double getCurrentTime();
-
-    public void setCurrentTime(double t);
-
-    public PathIterator[] getPaths();
+    public CurveRock compute(final double v, final double omega);
 }

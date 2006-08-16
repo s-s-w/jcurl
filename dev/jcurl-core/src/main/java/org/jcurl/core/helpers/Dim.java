@@ -28,7 +28,7 @@ import org.jcurl.core.dto.Ice;
  * 
  * @see org.jcurl.core.helpers.DimVal
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: Dim.java 332 2006-06-05 15:07:00Z mrohrmoser $
+ * @version $Id$
  */
 public class Dim extends EnumBase {
 

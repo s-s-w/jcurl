@@ -16,25 +16,14 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.dto;
+package org.jcurl.core.math;
 
-import java.awt.geom.PathIterator;
+public interface Polynome extends R1R1Function {
 
-/**
- * Base for everything that provides trajectories.
- * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
- */
-public interface Trajectory {
+    public abstract String toString();
 
-    public PositionSet getCurrentPos();
+    public abstract double value(double x);
 
-    public SpeedSet getCurrentSpeed();
+    public abstract double value(final double x, final int c);
 
-    public double getCurrentTime();
-
-    public void setCurrentTime(double t);
-
-    public PathIterator[] getPaths();
 }

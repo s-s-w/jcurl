@@ -16,14 +16,14 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.model;
+package org.jcurl.core.math;
 
 /**
  * Convenience wrapper for at least 1x differentiable curves
  * <code>f : R1 -&gt; Rn</code>.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: R1RnCurveBase.java 336 2006-06-05 21:30:35Z mrohrmoser $
+ * @version $Id$
  */
 public class R1RnCurveBase implements R1RnCurve {
 

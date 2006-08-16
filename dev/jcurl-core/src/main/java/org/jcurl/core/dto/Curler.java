@@ -27,5 +27,5 @@ public interface Curler {
     public void setTeeCurl(double teeCurl);
 
     public void setTeeTime(double teeTime);
-    
+
 }

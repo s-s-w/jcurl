@@ -16,14 +16,14 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.model;
+package org.jcurl.core.curved;
 
-public interface Polynome extends R1R1Function {
+import org.jcurl.core.dto.Rock;
+import org.jcurl.core.math.R1RnCurve;
 
-    public abstract String toString();
+public interface CurveRock extends R1RnCurve {
 
-    public abstract double value(double x);
+    public abstract Rock value(double t, int derivative, Rock ret);
 
-    public abstract double value(final double x, final int c);
-
+    public abstract Rock value(double t, Rock ret);
 }

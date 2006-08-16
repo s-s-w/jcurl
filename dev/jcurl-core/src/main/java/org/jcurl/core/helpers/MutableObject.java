@@ -25,7 +25,7 @@ import java.beans.PropertyChangeListener;
  * means to notify others upon propery changes.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: MutableObject.java 230 2006-02-19 12:34:18Z mrohrmoser $
+ * @version $Id$
  * 
  */
 public abstract class MutableObject extends TransferObject {

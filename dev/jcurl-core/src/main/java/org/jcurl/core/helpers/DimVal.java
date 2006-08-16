@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
  * 
  * @see org.jcurl.core.helpers.Dim
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: DimVal.java 238 2006-02-19 16:17:09Z mrohrmoser $
+ * @version $Id$
  */
 public class DimVal {
 

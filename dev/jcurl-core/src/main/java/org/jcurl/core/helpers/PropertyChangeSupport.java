@@ -61,7 +61,7 @@ import org.apache.commons.logging.Log;
  * </p>
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: PropertyChangeSupport.java 295 2006-05-14 11:50:09Z mrohrmoser $
+ * @version $Id$
  * @see java.lang.ref.WeakReference
  * @see java.beans.PropertyChangeSupport
  */

@@ -33,7 +33,7 @@ import org.apache.commons.logging.Log;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: Version.java 295 2006-05-14 11:50:09Z mrohrmoser $
+ * @version $Id$
  */
 public class Version {
 

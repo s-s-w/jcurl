@@ -23,40 +23,49 @@ import java.awt.geom.PathIterator;
 import org.jcurl.core.dto.Collider;
 import org.jcurl.core.dto.Curler;
 import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.RockSet;
 import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.core.dto.TrajectoryComputed;
 
-public class CurvesComputed implements TrajectoryComputed {
-
-    private Curler curler;
+public class CurveTrajectory implements TrajectoryComputed {
 
     private Collider collider;
+
+    private CurveCurler curler;
+
+    private PositionSet currentPos;
+
+    private SpeedSet currentSpeed;
+
+    private double currentTime;
+
+    private final CurveRock[] curves = new CurveRock[RockSet.ROCKS_PER_SET];
 
     private PositionSet initialPos;
 
     private SpeedSet initialSpeed;
+
+    public Collider getCollider() {
+        return collider;
+    }
 
     public Curler getCurler() {
         return curler;
     }
 
     public PositionSet getCurrentPos() {
-        // TODO Auto-generated method stub
-        return null;
+        return currentPos;
     }
 
     public SpeedSet getCurrentSpeed() {
-        // TODO Auto-generated method stub
-        return null;
+        return currentSpeed;
     }
 
     public double getCurrentTime() {
-        // TODO Auto-generated method stub
-        return 0;
+        return currentTime;
     }
 
-    public PathIterator[] getCurves() {
-        // TODO Auto-generated method stub
+    public PathIterator[] getPaths() {
         return null;
     }
 
@@ -68,13 +77,16 @@ public class CurvesComputed implements TrajectoryComputed {
         return initialSpeed;
     }
 
+    public void setCollider(Collider collider) {
+        this.collider = collider;
+    }
+
     public void setCurler(Curler curler) {
-        this.curler = curler;
+        this.curler = (CurveCurler) curler;
     }
 
     public void setCurrentTime(double t) {
-        // TODO Auto-generated method stub
-
+        this.currentTime = t;
     }
 
     public void setInitialPos(PositionSet initialPos) {
@@ -83,14 +95,6 @@ public class CurvesComputed implements TrajectoryComputed {
 
     public void setInitialSpeed(SpeedSet initialSpeed) {
         this.initialSpeed = initialSpeed;
-    }
-
-    public Collider getCollider() {
-        return collider;
-    }
-
-    public void setCollider(Collider collider) {
-        this.collider = collider;
     }
 
 }

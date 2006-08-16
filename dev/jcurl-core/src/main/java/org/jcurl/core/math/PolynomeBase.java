@@ -16,14 +16,14 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.model;
+package org.jcurl.core.math;
 
 /**
  * Polynomes of n-th grade.
  * 
  * @see org.jcurl.math.analysis.PolynomeTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: PolynomeBase.java 322 2006-06-04 21:51:24Z mrohrmoser $
+ * @version $Id$
  */
 public class PolynomeBase implements Polynome {
 
@@ -153,7 +153,7 @@ public class PolynomeBase implements Polynome {
         return ret.toString();
     }
 
-    private final double[] coff ;
+    private final double[] coff;
 
     public PolynomeBase(final double[] params) {
         this.coff = params;
@@ -163,22 +163,28 @@ public class PolynomeBase implements Polynome {
         return coff;
     }
 
-    /* (non-Javadoc)
-     * @see org.jcurl.core.model.Polynome#toString()
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jcurl.core.math.Polynome#toString()
      */
     public String toString() {
         return toString(this.coffs());
     }
 
-    /* (non-Javadoc)
-     * @see org.jcurl.core.model.Polynome#value(double)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jcurl.core.math.Polynome#value(double)
      */
-    public double value(double x) {        
+    public double value(double x) {
         return value(x, 0);
     }
 
-    /* (non-Javadoc)
-     * @see org.jcurl.core.model.Polynome#value(double, int)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.jcurl.core.math.Polynome#value(double, int)
      */
     public double value(final double x, final int c) {
         return evaluate(coffs(), x, c);

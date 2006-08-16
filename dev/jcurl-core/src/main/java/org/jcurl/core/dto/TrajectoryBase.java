@@ -40,7 +40,7 @@ public class TrajectoryBase implements Trajectory {
         return currentTime;
     }
 
-    public PathIterator[] getCurves() {
+    public PathIterator[] getPaths() {
         return new PathIterator[RockSet.ROCKS_PER_SET];
     }
 

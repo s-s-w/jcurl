@@ -30,7 +30,7 @@ import java.util.TreeMap;
  * 
  * @see java.util.TreeMap
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: EnumBase.java 230 2006-02-19 12:34:18Z mrohrmoser $
+ * @version $Id$
  */
 public abstract class EnumBase extends Number implements Comparable,
         Serializable {

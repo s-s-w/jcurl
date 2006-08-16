@@ -39,14 +39,14 @@ import org.xml.sax.SAXParseException;
  * namespace prefix handling - which it should.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: XmlSerializerBase.java 295 2006-05-14 11:50:09Z mrohrmoser $
+ * @version $Id$
  */
 class XmlSerializerBase implements ContentHandler {
     /**
      * Helper class to make xml validation errors catastrophic.
      * 
      * @author mr
-     * @version $Id: XmlSerializerBase.java 295 2006-05-14 11:50:09Z mrohrmoser $
+     * @version $Id$
      */
     public static class ErrHandler implements ErrorHandler {
         private static final Log log = JCLoggerFactory

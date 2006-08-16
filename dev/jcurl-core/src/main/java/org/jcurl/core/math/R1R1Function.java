@@ -16,25 +16,18 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.dto;
-
-import java.awt.geom.PathIterator;
+package org.jcurl.core.math;
 
 /**
- * Base for everything that provides trajectories.
+ * Functions <code>f : R -&gt; R</code>. If it's not differentiable the
+ * derivative shall return <code>null</code>
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface Trajectory {
+public interface R1R1Function {
 
-    public PositionSet getCurrentPos();
+    public abstract double value(double x);
 
-    public SpeedSet getCurrentSpeed();
-
-    public double getCurrentTime();
-
-    public void setCurrentTime(double t);
-
-    public PathIterator[] getPaths();
+    public abstract double value(double x, int derivative);
 }

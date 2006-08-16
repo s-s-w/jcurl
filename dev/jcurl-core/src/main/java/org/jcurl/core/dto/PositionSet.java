@@ -26,7 +26,7 @@ import org.jcurl.core.helpers.Dim;
  * A {@link org.jcurl.core.dto.RockSet}&nbsp;with location semantics.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: PositionSet.java 334 2006-06-05 16:03:34Z mrohrmoser $
+ * @version $Id$
  */
 public class PositionSet extends RockSet {
 

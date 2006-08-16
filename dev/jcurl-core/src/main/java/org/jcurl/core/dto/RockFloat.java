@@ -27,7 +27,7 @@ import java.io.Serializable;
  * @see org.jcurl.core.dto.PositionSet
  * @see org.jcurl.core.dto.RockDouble
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: RockFloat.java 332 2006-06-05 15:07:00Z mrohrmoser $
+ * @version $Id$
  */
 public class RockFloat extends Rock implements Serializable {
 

@@ -29,7 +29,7 @@ import org.jcurl.core.helpers.Dim;
  * 
  * @see org.jcurl.core.dto.PositionSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: PositionSetTest.java 332 2006-06-05 15:07:00Z mrohrmoser $
+ * @version $Id$
  */
 public class PositionSetTest extends TestCase {
 

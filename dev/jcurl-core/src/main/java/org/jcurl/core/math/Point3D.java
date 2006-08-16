@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.model;
+package org.jcurl.core.math;
 
 import java.awt.geom.Point2D;
 
@@ -26,7 +26,7 @@ import org.jcurl.core.dto.Rock;
  * Base class for 3D coordinates.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: Point3D.java 335 2006-06-05 18:19:00Z mrohrmoser $
+ * @version $Id$
  */
 public abstract class Point3D extends Point2D {
 

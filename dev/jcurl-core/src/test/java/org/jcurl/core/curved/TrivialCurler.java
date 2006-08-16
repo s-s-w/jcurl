@@ -16,32 +16,54 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.dto;
+package org.jcurl.core.curved;
 
+import org.jcurl.core.helpers.NotImplementedYetException;
+import org.jcurl.core.math.Point3D;
 
 /**
+ * Constant motion, no curl, no friction.
+ * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class CurlerBase implements Curler {
-    private double teeCurl;
+public class TrivialCurler extends Object implements CurveCurler {
 
-    private double teeTime;
+    public CurveRock compute(final double v, final double omega) {
+        return new CurveRockBase() {
+            protected double value(double t, int derivative, int component) {
+                switch (component) {
+                case 0:
+                    return 0;
+                case 1:
+                    return t * v;
+                case 2:
+                    return t * omega;
+                default:
+                    throw new IllegalArgumentException();
+                }
+            }
+        };
+    }
+
+    public CurveWorld compute(double t0, Point3D x0, Point3D v0) {
+        throw new NotImplementedYetException();
+    }
 
     public double getTeeCurl() {
-        return teeCurl;
+        return 0;
     }
 
     public double getTeeTime() {
-        return teeTime;
+        return Double.POSITIVE_INFINITY;
     }
 
     public void setTeeCurl(double teeCurl) {
-        this.teeCurl = teeCurl;
+        // ignored
     }
 
     public void setTeeTime(double teeTime) {
-        this.teeTime = teeTime;
+        // ignored
     }
 
 }

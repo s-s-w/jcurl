@@ -18,6 +18,12 @@
  */
 package org.jcurl.core.dto;
 
+/**
+ * Aggregates {@link Curler}, {@link Collider}, adds collission detection.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public interface TrajectoryComputed extends Trajectory {
 
     public Curler getCurler();

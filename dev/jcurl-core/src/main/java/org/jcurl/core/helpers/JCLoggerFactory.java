@@ -23,7 +23,7 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: JCLoggerFactory.java 296 2006-05-14 12:50:45Z mrohrmoser $
+ * @version $Id$
  */
 public class JCLoggerFactory {
     public static Log getLogger(final Class clz) {
