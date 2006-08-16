@@ -34,7 +34,7 @@
 	<inceptionYear>2005</inceptionYear>
 	<url>http://www.jcurl.org/</url>
 	<artifactId>jcurl-core</artifactId>
-	<version>0.3.0</version>
+	<version>0.5.0</version>
 	<description>
 		Java library for rock trajectory simulation, game filing,
 		analysis and visualisation
@@ -53,14 +53,14 @@
 	</issueManagement>
 	<scm>
 		<connection>
-			scm:svn:svn://svn.berlios.de/jcurl/branches/0.4/development/jcurl-core
+			scm:svn:svn://svn.berlios.de/jcurl/branches/0.5/dev/jcurl-core
 		</connection>
 		<developerConnection>
-			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/branches/0.4/development/jcurl-core
+			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/branches/0.5/dev/jcurl-core
 		</developerConnection>
 		<tag />
 		<url>
-			http://svn.berlios.de/wsvn/jcurl/branches/0.4/development/jcurl-core
+			http://svn.berlios.de/wsvn/jcurl/branches/0.5/dev/jcurl-core
 		</url>
 	</scm>
 	<developers>
@@ -259,27 +259,22 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.1</version>
 		</dependency>
-		<dependency>
-			<groupId>commons-math</groupId>
-			<artifactId>commons-math</artifactId>
-			<version>1.1</version>
-		</dependency>
 	</dependencies>
 	<distributionManagement>
 		<site>
 			<id>jcurl-website</id>
 			<url>
-				scp://mrohrmoser.de/kunden/homepages/6/d143911421/htdocs/www.jcurl.org/
+				scp://mrohrmoser.de/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/jcurl-core
 			</url>
 		</site>
 		<!-- site>
 			<id>jcurl-ftp</id>
-			<url>ftp://www.jcurl.org/</url>
+			<url>ftp://www.jcurl.org/jcurl-core</url>
 			</site -->
 		<repository>
 			<id>jcurl-repository</id>
 			<url>
-				scp://mrohrmoser.de/kunden/homepages/6/d143911421/htdocs/www.jcurl.org/m2-repo/
+				scp://mrohrmoser.de/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/maven2/repository/
 			</url>
 		</repository>
 	</distributionManagement>
