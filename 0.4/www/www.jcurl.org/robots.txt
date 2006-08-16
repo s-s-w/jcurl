@@ -1,0 +1,9 @@
+# robots.txt zu http://www.jcurl.org/
+# $Id$
+ 
+User-agent: *
+Allow: /index.html
+Allow: /api/
+Disallow: /jar/
+Disallow: /images/
+Disallow: /logs/

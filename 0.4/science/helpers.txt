@@ -1,0 +1,4 @@
+http://etex.sourceforge.net/
+http://www.gnu.org/software/hp2xx/hp2xx.html ftp://ftp.leo.org/pub/comp/os/unix/gnu/hp2xx/hp2xx-3.4.4.tar.gz
+gnuplot
+http://homepage.sunrise.ch/mysunrise/gdm/texcad.htm http://ftp.nux.at/pub/suse/i386/7.3/suse/tex2/
