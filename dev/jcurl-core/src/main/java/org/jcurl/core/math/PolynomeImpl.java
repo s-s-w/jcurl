@@ -163,30 +163,15 @@ public class PolynomeImpl implements Polynome {
         return coff;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.jcurl.core.math.Polynome#toString()
-     */
     public String toString() {
         return toString(this.coffs());
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.jcurl.core.math.Polynome#value(double)
-     */
-    public double value(double x) {
+    public double value(double x) throws MathException {
         return value(x, 0);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.jcurl.core.math.Polynome#value(double, int)
-     */
-    public double value(final double x, final int c) {
+    public double value(final double x, final int c) throws MathException {
         return evaluate(coffs(), x, c);
     }
 }

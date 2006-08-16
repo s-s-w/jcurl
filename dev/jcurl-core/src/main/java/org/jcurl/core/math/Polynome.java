@@ -18,12 +18,14 @@
  */
 package org.jcurl.core.math;
 
+/**
+ * Polynomes of n-th grade.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public interface Polynome extends R1R1Function {
 
     public abstract String toString();
-
-    public abstract double value(double x);
-
-    public abstract double value(final double x, final int c);
 
 }

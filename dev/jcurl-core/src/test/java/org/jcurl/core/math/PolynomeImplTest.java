@@ -20,7 +20,7 @@ package org.jcurl.core.math;
 
 import junit.framework.TestCase;
 
-public class PolynomeBaseTest extends TestCase {
+public class PolynomeImplTest extends TestCase {
 
     public void test010_fak() {
         assertEquals(1, PolynomeImpl.factorial(0, 0));
@@ -37,7 +37,7 @@ public class PolynomeBaseTest extends TestCase {
         assertEquals(1, PolynomeImpl.factorial(0, 0));
     }
 
-    public void test020_value() {
+    public void test020_value() throws MathException {
         final double[] a = { 1.1, 1.2, 1.3, 1.4 };
         Polynome po = new PolynomeImpl(a);
 
@@ -103,8 +103,8 @@ public class PolynomeBaseTest extends TestCase {
 
     }
 
-    public void test030_getPoly() {
-        Polynome po = PolynomeImpl.getPoly(1.0, 2.0, 3.0, 4.0);
+    public void test030_getPoly() throws MathException {
+        R1R1Function po = PolynomeImpl.getPoly(1.0, 2.0, 3.0, 4.0);
         assertEquals("", 2.0, po.value(1.0, 0), 1e-9);
         assertEquals("", 4.0, po.value(1.5, 0), 1e-9);
         assertEquals("", 7.0, po.value(2.0, 0), 1e-9);
@@ -118,9 +118,9 @@ public class PolynomeBaseTest extends TestCase {
         assertEquals("", 4.0, po.value(2.0, 2), 1e-9);
     }
 
-    public void test040_load() {
+    public void test040_load() throws MathException {
         final double[] a = { 1.1, 1.2, 1.3, 1.4 };
-        Polynome po = new PolynomeImpl(a);
+        R1R1Function po = new PolynomeImpl(a);
         final int count = 500000;
         final long start = System.currentTimeMillis();
         for (int i = count - 1; i >= 0; i--)
