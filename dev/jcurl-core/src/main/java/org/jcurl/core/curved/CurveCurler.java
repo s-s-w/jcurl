@@ -18,12 +18,26 @@
  */
 package org.jcurl.core.curved;
 
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+
 import org.jcurl.core.dto.Curler;
-import org.jcurl.core.math.Point3D;
+import org.jcurl.core.dto.Rock;
 
-public interface CurveCurler extends Curler {
+public abstract class CurveCurler implements Curler {
 
-    public CurveWorld compute(double t0, final Point3D x0, final Point3D v0);
+    public CurveTransformed computeWC(double t0, final Rock x0, final Rock v0) {
+        final double v = v0.distance(0, 0);
+        final Point2D v1;
+        if (v == 0)
+            v1 = new Point2D.Double(0, 1);
+        else
+            v1 = new Point2D.Double(v0.getX() / v, v0.getY() / v);
+        final AffineTransform at = new AffineTransform();
+        at.rotate(0);
+        at.translate(x0.getX(), x0.getY());
+        return new CurveTransformed(computeRC(v, v0.getZ()), at, t0);
+    }
 
-    public CurveRock compute(final double v, final double omega);
+    public abstract CurveRock computeRC(final double v, final double omega);
 }

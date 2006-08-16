@@ -23,9 +23,9 @@ package org.jcurl.core.math;
  * 
  * @see org.jcurl.math.analysis.PolynomeTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:PolynomeBase.java 350 2006-08-16 18:41:58Z mrohrmoser $
  */
-public class PolynomeBase implements Polynome {
+public class PolynomeImpl implements Polynome {
 
     private static final long serialVersionUID = -745491227197828208L;
 
@@ -106,7 +106,7 @@ public class PolynomeBase implements Polynome {
      */
     public static final Polynome getPoly(double t0, double x0, double v0,
             double a0) {
-        return new PolynomeBase(getPolyParams(t0, x0, v0, a0));
+        return new PolynomeImpl(getPolyParams(t0, x0, v0, a0));
     }
 
     /**
@@ -155,7 +155,7 @@ public class PolynomeBase implements Polynome {
 
     private final double[] coff;
 
-    public PolynomeBase(final double[] params) {
+    public PolynomeImpl(final double[] params) {
         this.coff = params;
     }
 

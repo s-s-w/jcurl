@@ -16,12 +16,8 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.curved;
+package org.jcurl.core.math;
 
-import junit.framework.TestCase;
+public class FunctionEvaluationException extends MathException {
 
-public class CurveWorldTest extends TestCase {
-    public void testOk() {
-
-    }
 }

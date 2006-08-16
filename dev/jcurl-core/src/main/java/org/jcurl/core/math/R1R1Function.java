@@ -19,15 +19,14 @@
 package org.jcurl.core.math;
 
 /**
- * Functions <code>f : R -&gt; R</code>. If it's not differentiable the
- * derivative shall return <code>null</code>
+ * Functions <code>f : R -&gt; R</code>.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:R1R1Function.java 350 2006-08-16 18:41:58Z mrohrmoser $
  */
 public interface R1R1Function {
 
-    public abstract double value(double x);
+    public abstract double value(double x) throws MathException;
 
-    public abstract double value(double x, int derivative);
+    public abstract double value(double x, int derivative) throws MathException;
 }

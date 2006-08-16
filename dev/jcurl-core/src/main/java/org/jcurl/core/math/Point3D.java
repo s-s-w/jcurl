@@ -20,13 +20,11 @@ package org.jcurl.core.math;
 
 import java.awt.geom.Point2D;
 
-import org.jcurl.core.dto.Rock;
-
 /**
  * Base class for 3D coordinates.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:Point3D.java 350 2006-08-16 18:41:58Z mrohrmoser $
  */
 public abstract class Point3D extends Point2D {
 
@@ -63,9 +61,9 @@ public abstract class Point3D extends Point2D {
     public abstract void setZ(double z);
 
     public boolean equals(Object obj) {
-        if (obj == null || !(obj instanceof Rock))
+        if (obj == null || !(obj instanceof Point3D))
             return false;
-        final Rock b = (Rock) obj;
+        final Point3D b = (Point3D) obj;
         return getX() == b.getX() && getY() == b.getY() && getZ() == getZ();
     }
 }

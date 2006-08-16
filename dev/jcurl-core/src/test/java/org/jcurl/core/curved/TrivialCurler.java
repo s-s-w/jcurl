@@ -18,18 +18,15 @@
  */
 package org.jcurl.core.curved;
 
-import org.jcurl.core.helpers.NotImplementedYetException;
-import org.jcurl.core.math.Point3D;
-
 /**
  * Constant motion, no curl, no friction.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class TrivialCurler extends Object implements CurveCurler {
+public class TrivialCurler extends CurveCurler {
 
-    public CurveRock compute(final double v, final double omega) {
+    public CurveRock computeRC(final double v, final double omega) {
         return new CurveRockBase() {
             protected double value(double t, int derivative, int component) {
                 switch (component) {
@@ -44,10 +41,6 @@ public class TrivialCurler extends Object implements CurveCurler {
                 }
             }
         };
-    }
-
-    public CurveWorld compute(double t0, Point3D x0, Point3D v0) {
-        throw new NotImplementedYetException();
     }
 
     public double getTeeCurl() {

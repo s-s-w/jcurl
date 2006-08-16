@@ -19,17 +19,9 @@
 package org.jcurl.core.math;
 
 /**
- * Functions <code>f : R -&gt; R^n</code>.
- * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface R1RnCurve {
+public abstract class MathException extends Exception {
 
-    public abstract int dimension();
-
-    public abstract double[] value(double t, double[] ret) throws MathException;
-
-    public abstract double[] value(double t, int derivative, double[] ret)
-            throws MathException;
 }

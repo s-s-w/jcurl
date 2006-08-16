@@ -22,6 +22,7 @@ import junit.framework.TestCase;
 
 import org.jcurl.core.dto.Rock;
 import org.jcurl.core.dto.RockDouble;
+import org.jcurl.core.math.MathException;
 import org.jcurl.core.math.Point3D;
 
 public class TrivialCurlerTest extends TestCase {
@@ -34,10 +35,10 @@ public class TrivialCurlerTest extends TestCase {
         assertEquals(txt, z, p.getZ(), delta);
     }
 
-    public void testComputeRaw() {
+    public void testComputeRaw() throws MathException {
         Rock p = new RockDouble();
         final TrivialCurler curl = new TrivialCurler();
-        CurveRock cr = curl.compute(1.5, 0.5);
+        CurveRock cr = curl.computeRC(1.5, 0.5);
         assertEquals(0, 0, 0, cr.value(0, p), 1e-9);
         assertEquals(0, 1.5, 0.5, cr.value(1, p), 1e-9);
         assertEquals(0, 3, 1, cr.value(2, p), 1e-9);

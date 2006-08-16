@@ -16,41 +16,8 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.curved;
+package org.jcurl.core.math;
 
-import java.awt.geom.AffineTransform;
-
-import org.jcurl.core.dto.Rock;
-
-public class CurveWorld implements CurveRock {
-
-    private final CurveRock c;
-
-    private final AffineTransform t;
-
-    public CurveWorld(CurveRock c, AffineTransform t) {
-        this.c = c;
-        this.t = t;
-    }
-
-    public int dimension() {
-        return c.dimension();
-    }
-
-    public double[] value(double t, double[] ret) {
-        return null;
-    }
-
-    public double[] value(double t, int derivative, double[] ret) {
-        return null;
-    }
-
-    public Rock value(double t, int derivative, Rock ret) {
-        return null;
-    }
-
-    public Rock value(double t, Rock ret) {
-        return null;
-    }
+public class DifferentiationException extends MathException {
 
 }

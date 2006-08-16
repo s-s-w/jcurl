@@ -274,7 +274,7 @@
 		<repository>
 			<id>jcurl-repository</id>
 			<url>
-				scp://mrohrmoser.de/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/maven2/repository/
+				scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/maven2/repository
 			</url>
 		</repository>
 	</distributionManagement>
