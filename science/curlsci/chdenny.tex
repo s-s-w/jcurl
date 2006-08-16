@@ -1,0 +1,72 @@
+% $Id$
+\chapter{Ice models}
+\section{The 'Denny' model\label{denny}}
+
+Mark Denny published a model in \cite{denny:98}. It's quite simple and provides
+polynomes of fourth degree to describe the rock's motion along the sheet.
+
+\begin{figure}[htb]
+\begin{center}
+\input{denny.pic}
+\end{center}
+\caption[Denny setup]{The \emph{running band} of radius $R$ is the surface
+    of contact between rock and ice. Here the velocity components, relative to
+    the ice, of a point on the running band are shown. $v$ is the CM velocity,
+    and $w$ is the angular component at radius $R$. The unit vectors $(u_T, u)$
+    coincide with $(u_x,u_y)$ at time $t=0$. In this case the rock is curling
+    in a counterclockwise sense (so angular velocity unit vector $=u_z$).
+    \figlab{denny}}
+\end{figure}
+
+\iftrue
+\begin{figure}[tb]
+\begin{center}
+\input{denny.emt}
+\end{center}
+\caption[Curling rock trajectories]{\figlab{dennytrj}%
+     Approximate curling rock trajectories, calculated from 
+     \eqref{denX}, \eqref{denY} and \eqref{denA}
+     for three values of initial velocity $v_0$. The other parameters are:
+     $\mu           = 0.0127$,
+     $b_\mathrm{LR} = 0.003$,
+     $\epsilon      = 2.63$,
+     $R             = 0.065$.}
+\end{figure}
+\fi
+
+\begin{eqnarray}
+\eqlab{denX}
+x(t) &\approx& - \frac{ b v_0^2 }{ 4 \epsilon R \tau }
+    \left( \frac{ t^3 }{ 3 } - \frac{ t^4 } { 4 \tau } \right) \\
+\eqlab{denY}
+y(t) &\approx& v_0 \left( t - \frac{ t^2 }{ 2\tau } \right) \\
+\eqlab{denW}
+\omega(t) &\approx& \omega_0 \left(1 - \frac{t}{\tau}\right)^{1/\epsilon} \\
+\eqlab{denA}
+\alpha(t) &\approx& \int_0^t \omega(t) \dt = -{{\omega_{0}\,\varepsilon\,\left(\tau\,\left({{\tau-t}\over{\tau}}
+ \right)^{{{1}\over{\varepsilon}}}-t\,\left({{\tau-t}\over{\tau}}
+ \right)^{{{1}\over{\varepsilon}}}-\tau\right)}\over{\varepsilon+1}}
+\end{eqnarray}
+
+\bigskip
+\begin{tabular}{lll}
+$t$		& [s] & time \\
+$x$		& [m] & curl \\
+$y$		& [m] & distance along the track \\
+$b$ 	& [1] & parameter for the curl's magnitude \\
+$\epsilon$	& [1] & parameter $ \frac{ I }{ mR^2 } $\\
+$\tau$	& [s] & total time until $v=0$ \\
+$R$		& [m] & radius of the touching area rock/ice $\approx$ 6.3e-2 \\
+$\mu$	& [1] & friction coefficient rock/ice \\
+$I$		&  & moment of inertia (z-direction) \\
+$g$		& [N/kg] & 9.81 gravitation \\
+\end{tabular}
+\bigskip
+
+The final properties are:
+\begin{eqnarray}
+\eqlab{denTau} 
+\tau    & = &     \frac{ v_0 }{ \mu g } \\
+x(\tau) &\approx& - \frac{ b_\mathrm{LR} }{ 12\epsilon } \frac{y^2(\tau) }{R} \\
+y(\tau) &\approx& \frac{ v_0^2 }{ 2\mu g }
+\end{eqnarray}

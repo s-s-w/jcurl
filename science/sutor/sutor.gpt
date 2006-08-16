@@ -1,0 +1,16 @@
+#!/usr/bin/gnuplot
+
+set title 'Reibungsmodell $F(v)$ nach Uli Sutor (grobe Naeherung)'
+set xlabel '$v \mathrm{[\frac{m}{s}]} $'
+set ylabel '$F \mathrm{[N]} $'
+max(a,b) = (a+b+abs(a-b))/2
+friction(v) = max(-6.2e-3 + 0.007*v, 0.011*v**(-0.78))
+
+plot [x=0.5:5] [5e-5:3e-2] 'sutor.dat' title 'Messung', friction(x) title 'N\"aherung' with lines
+
+# pause(-1) 'Press RETURN to plot to stdout (latex-picture code) and finish...'
+# set terminal latex
+set output
+set terminal emtex
+set title ''
+replot

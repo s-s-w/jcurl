@@ -1,0 +1,56 @@
+/* $Id$
+	
+	/usr/bin/maxima -b $1
+
+	software: http://maxima.sourceforge.net 
+	manual: file:///usr/share/maxima/5.9.1/doc/html/maxima_toc.html
+*/
+/* texput(tau, "\\tau")$ */
+
+/*
+Computing Bezier-Bernstein Spline Control points (x, x+a, x+b, y) from
+a smooth curve and
+- two given points at the beginning and the end (x,y)
+- two given direction vectors at the beginning and the end (v,w)
+- the area 3 * a x b = a x c of the line segments (a,b,c) between the control points
+- the area 3 * b x c = a x b of the line segments (a,b,c) between the control points
+*/
+
+a[0] = k * v[0];
+a[1] = k * v[1];
+
+c[0] = l * w[0];
+c[1] = l * w[1];
+
+x[0] + a[0] + b[0] + c[0] = y[0];
+x[1] + a[1] + b[1] + c[1] = y[1];
+
+3 * (a[0]*b[1] - a[1]*b[0]) = (a[0]*c[1] - a[1]*c[0]);
+3 * (b[0]*c[1] - b[1]*c[0]) = (a[0]*b[1] - a[1]*b[0]);
+
+/*
+Solve a,b
+*/
+ASSUME( k > 0 );
+ASSUME( l > 0 );
+ASSUME( m > 0 );
+ASSUME( n > 0 );
+ASSUME(not((x[0] = y[0]) AND (x[1] = y[1])));
+ASSUME(v[0]*v[0] + v[1]*v[1] > 0);
+ASSUME(w[0]*w[0] + w[1]*w[1] > 0);
+SOLVE(
+	[%o2, %o3, %o4, %o5, %o6, %o7, %o8, %o9],
+	[a[0], a[1], b[0], b[1], c[0], c[1], k, l ]
+),GLOBALSOLVE:FALSE,BACKSUBST:TRUE,LINSOLVE_PARAMS:FALSE,REALONLY:TRUE,DEBUGMODE:TRUE$
+
+
+SCSIMP(PART(%o17,1,1));
+SCSIMP(PART(%o17,1,2));
+SCSIMP(PART(%o17,1,3));
+SCSIMP(PART(%o17,1,4));
+
+
+/* PART(%o14,3); */
+/* SCSIMP(PART(%o14,3)); */
+
+quit$

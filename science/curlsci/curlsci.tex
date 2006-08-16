@@ -1,0 +1,76 @@
+% $Id$
+\documentclass[a4paper,11pt,twoside]{report}
+\usepackage[T1]{fontenc}
+\usepackage{bibeng}
+\usepackage{makeidx}\makeindex
+\usepackage[final]{pictex}
+\usepackage{emlines3}
+
+\usepackage{curling}
+
+\includeonly{chcurl,chdenny}
+%\includeonly{chdenny}
+
+\nonfrenchspacing
+\renewcommand{\baselinestretch}{1.2}
+\jot=1em          % zus"atzlicher Zeilenabstand innerhalb eqnarray
+% \renewcommand{\familydefault}{\sfdefault}
+
+\pagestyle{plain}
+\pagestyle{headings}
+\title{Curling scientific}
+\author{M. Rohrmoser\\{\small jcurl\symbol{64}gmx.net}}
+%\date{March 27th 1998}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\listoffigures
+%\listoftables
+
+\include{chblabla}		%% preface, introduction
+\include{chtogen}		%% generics concerning take-outs
+\include{chloss}		%% model with energy-loss
+\include{chspini}		%% model with spin, try I
+\include{chsploss}		%% model with spin and loss, try I
+%\include{chspinii}		%% model with spin and loss, try II
+%\include{chtoimp}		%% takeout/improvements
+%\include{chsim}			%% takeout/improvements
+\include{chcurl}		%% thoughts about curl
+
+\begin{appendix}
+\include{chphyapp}		%% phys. & math. explanations
+\include{chdenny}		%% Denny ice model
+\include{chsheg}		%% Shegelski ice model
+\include{chmr}		    %% My own considerations
+\end{appendix}
+
+%\addcontentsline{toc}{chapter}{Index}
+%\printindex
+
+ \nocite{brach:92}
+ \nocite{feynmanI:89}
+ \nocite{gammert}
+ \nocite{greinerII:85}
+ \nocite{gross:95}
+ \nocite{hertz:81}
+ \nocite{hills:93}
+ \nocite{hughesI:76}
+ \nocite{hughesII:76}
+ \nocite{lehmann:85}
+ \nocite{meybergI:93}
+ \nocite{van:89}
+ %
+ \nocite{sutor:88}
+ \nocite{denny:98}
+ \nocite{shegelski:96}
+ \nocite{voyenli:85}
+ \nocite{voyenli:86}
+ \nocite{daniels:86}
+ \nocite{johnston:81}
+ %
+ \addcontentsline{toc}{chapter}{\bibname}%
+ \bibliography{sci}%
+ \bibliographystyle{myalpha} % {plain}
+
+\end{document}

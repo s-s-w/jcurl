@@ -1,0 +1,132 @@
+\chapter{Some physical/math. Basics}
+\section{Rotation equations using cross-products}
+
+%\cite[S.~20-5]{feynmanI:89} says (the names are changed to fit our system):
+
+\begin{eqnarray}
+\mbox{velocity:}\quad       \vec{v} &=& \vec{\omega} \times \vec{R} \\
+\mbox{torque:}\quad         \vec{M} &=& \vec{R} \times \vec{F} \\
+\mbox{angular mom.:}\quad   \vec{L} &=& \vec{R} \times \vec{p} = J\vec{\omega} \\
+\mbox{energy:}\quad         E_{Rot} &=& \frac{1}{2} \vec{L} \cdot \vec{\omega} = \frac{|\vec{L}|^2}{2J}
+\end{eqnarray}
+
+
+\section{Force-splitting}
+
+See \figref{kraftzerleg}.
+
+\begin{figure}[htb]
+\setlength{\unitlength}{10mm}
+\begin{center}\large
+\setcoordinatesystem units <\unitlength,\unitlength>
+\mbox{\beginpicture
+\small
+\setplotarea x from -2.5 to 2.5, y from -2.5 to 2.5
+
+\iffinalplot
+\circulararc 360 degrees from -2 1 center at  0 0
+\fi
+
+\put {$\times$} 		     at 0     0   % Sp Marker
+
+\put {\vector(0,-1){2}} 	[Bl] at 2.24  0   % Force at the edge
+\put {\vector(0,1){2}}		[Bl] at 0     0   % Froce in Sp
+\put {\vector(0,-1){2}} 	[Bl] at 0     0   % Opposition-froce
+\put {\vector(1,0){2.24}}	[Bl] at 0     0   % Radius
+\put {$\vec{F}_1$}		[Cl] at 2.24 -1   % Force at the edge
+\put {$\vec{F}_3=\vec{F}_1$}	[Cr] at 0    -1   % Force in Sp
+\put {$\vec{F}_2=-\vec{F}_1$}	[Cr] at 0     1   % Opposition force
+\put {$\vec{ R }$}		[Bc] at 1.1   0   % Radius
+\endpicture}
+\caption[Force-splitting]{\figlab{kraftzerleg}%
+Force-splitting: The force at the edge $ \vec{F}_1 $ can, after adding
+$ \vec{F}_{2,3} $ be split into a central force $ \vec{F}_3 $ and
+a torque-causing force-pair $ \vec{F}_{1,2} $.
+The result is a force $ \vec{F}_2 $ in the center of mass and a
+torque $ \vec{F}_1 \times \vec{R} $. See
+\cite[P.~142f]{greinerII:85}, \cite[P.~34fff]{gross:95}. }
+\end{center}
+\end{figure}
+
+%\clearpage
+\section{Time-distance of two spheres on straight paths}
+
+\begin{figure}[ht]
+\begin{center}
+\input{distance.em}
+\end{center}
+\caption{When do 2 objects hit? The setup.}
+\end{figure}
+
+\iffalse
+
+Definition:
+\begin{eqnarray}
+\vec{v} &:=& \vec{v}_b - \vec{v}_a \\
+\vec{x} &:=& \vec{x}_b - \vec{x}_a
+\end{eqnarray}
+
+Two objects hit, when the distance between their surfaces becomes 0.
+
+Distance:
+\begin{eqnarray}
+d &=& |\vec{x}| - \underbrace{R}_{\makebox[0mm]{\tiny sum of radii}}
+\end{eqnarray}
+
+Speed of approach:
+\begin{eqnarray}
+\vec{v} \parallel \vec{x} &=& - \frac{ \vec{v}\vec{x} }{ |\vec{x}| }
+\end{eqnarray}
+
+Time until hit:
+\begin{eqnarray}
+t &=& \frac{ d }{ \vec{v} \parallel \vec{x} } \\
+  &=& - |\vec{x}| \frac{ |\vec{x}| - R }{ \vec{v}\vec{x} }
+\end{eqnarray}
+
+If $\vec{v}\vec{x} = 0$ the rocks pass each other, for
+$\vec{v}\vec{x} > 0$ they separate.
+
+\else
+
+Having one object's center at $\vec{a}$ with speed $\vec{v}_a$, the other at
+$\vec{b}$ with speed $\vec{v}_b$, we introduce
+%
+\begin{eqnarray}
+\vec{x} := \vec{b}   - \vec{a}   \\
+\vec{v} := \vec{v}_b - \vec{a}_a 
+\end{eqnarray}
+
+Now we need the time until the centers' distance equals the two radii:
+
+\begin{eqnarray}
+|\vec{x} + t \cdot \vec{v} | &=& (r+r) \\
+(\vec{x} + t \cdot \vec{v} ) \cdot (\vec{x} + t \cdot \vec{v} ) &=& (r+r)^2 \\
+\vec{x}\vec{x} + 2 t \vec{v}\vec{x} + t^2 \vec{v}\vec{v} - (r+r)^2 &=& 0 
+\end{eqnarray}
+
+\begin{eqnarray}
+t_{1,2} &=& \frac{ 
+       	-\vec{v}\vec{x} \pm \sqrt{ \left(\vec{v}\vec{x})^2 - 
+	|\vec{v}|^2\cdot(|\vec{x}|^2 - (r+r)^2\right) }
+    }{ 
+	|\vec{v}|^2 
+    }
+\end{eqnarray}
+
+In our case the solution is the smaller (earlier) result:
+
+\begin{eqnarray}
+t &=& \frac{ 
+       	-\vec{v}\vec{x} - \sqrt{ \left(\vec{v}\vec{x})^2 - 
+	|\vec{v}|^2\cdot(|\vec{x}|^2 - (r+r)^2\right) }
+    }{ 
+	|\vec{v}|^2 
+    }
+\end{eqnarray}
+
+If $\vec{v}\vec{x} = 0$ the rocks pass each other (or don't move at all), for
+$\vec{v}\vec{x} > 0$ they separate.
+
+\fi
+
