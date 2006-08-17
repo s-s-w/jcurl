@@ -28,13 +28,15 @@ import java.awt.geom.PathIterator;
  */
 public interface Trajectory {
 
+    public PathIterator computePath(int idx);
+
     public PositionSet getCurrentPos();
 
     public SpeedSet getCurrentSpeed();
 
     public double getCurrentTime();
 
-    public void setCurrentTime(double t);
-
     public PathIterator[] getPaths();
+
+    public void setCurrentTime(double t);
 }

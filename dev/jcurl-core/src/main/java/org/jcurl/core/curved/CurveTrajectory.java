@@ -39,11 +39,16 @@ public class CurveTrajectory implements TrajectoryComputed {
 
     private double currentTime;
 
-    private final CurveRock[] curves = new CurveRock[RockSet.ROCKS_PER_SET];
+    private final CurvePiecewise[] curves = new CurvePiecewise[RockSet.ROCKS_PER_SET];
 
     private PositionSet initialPos;
 
     private SpeedSet initialSpeed;
+
+    public PathIterator computePath(int idx) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
     public Collider getCollider() {
         return collider;
@@ -65,10 +70,6 @@ public class CurveTrajectory implements TrajectoryComputed {
         return currentTime;
     }
 
-    public PathIterator[] getPaths() {
-        return null;
-    }
-
     public PositionSet getInitialPos() {
         return initialPos;
     }
@@ -77,24 +78,44 @@ public class CurveTrajectory implements TrajectoryComputed {
         return initialSpeed;
     }
 
+    public PathIterator[] getPaths() {
+        return null;
+    }
+
+    private void reset() {
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+            curves[i].clear();
+        setCurrentTime(0);
+    }
+
     public void setCollider(Collider collider) {
+        reset();
         this.collider = collider;
     }
 
     public void setCurler(Curler curler) {
+        reset();
         this.curler = (CurveCurler) curler;
     }
 
     public void setCurrentTime(double t) {
+        // TODO detect collissions
+        // TODO compute collissions
+        // TODO compute new trajectories
+        // TODO set currentPos
+        // TODO set currentSpeed
+        // TODO set initialPos
+        // TODO set initialSpeed
         this.currentTime = t;
     }
 
     public void setInitialPos(PositionSet initialPos) {
+        reset();
         this.initialPos = initialPos;
     }
 
     public void setInitialSpeed(SpeedSet initialSpeed) {
+        reset();
         this.initialSpeed = initialSpeed;
     }
-
 }

@@ -28,6 +28,11 @@ public class TrajectoryBase implements Trajectory {
 
     private double currentTime;
 
+    public PathIterator computePath(int idx) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
     public PositionSet getCurrentPos() {
         return currentPos;
     }

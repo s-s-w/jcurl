@@ -30,7 +30,7 @@ import org.jcurl.core.dto.Rock;
 public abstract class CurveCurler implements Curler {
 
     /**
-     * Calls {@linkplain #computeRC(double, double)}} and
+     * Calls {@link #computeRC(double, double)} and
      * {@link CurveTransformed#CurveTransformed(CurveRock, java.awt.geom.Point2D, java.awt.geom.Point2D, double)}.
      * 
      * @param t0

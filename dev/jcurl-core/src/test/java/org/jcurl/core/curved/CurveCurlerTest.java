@@ -21,7 +21,8 @@ package org.jcurl.core.curved;
 import junit.framework.TestCase;
 
 public class CurveCurlerTest extends TestCase {
-    public void testOk() {
-        CurveCurler c = null;
+    public void testComputeRC() {
+        CurveCurler c = new TrivialCurler();
+        CurveRock cv = c.computeRC(1.0, 0.5);
     }
 }

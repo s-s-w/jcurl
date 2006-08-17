@@ -96,6 +96,10 @@ public class CurveTransformed implements CurveRock {
         return 3;
     }
 
+    double getT0() {
+        return t0;
+    }
+
     public double[] value(double t, double[] ret) throws MathException {
         return value(t, 0, ret);
     }
