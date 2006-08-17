@@ -18,26 +18,37 @@
  */
 package org.jcurl.core.curved;
 
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
-
 import org.jcurl.core.dto.Curler;
 import org.jcurl.core.dto.Rock;
 
+/**
+ * Create {@link CurveRock}s for freely running rocks. (No collissions)
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public abstract class CurveCurler implements Curler {
 
+    /**
+     * Calls {@linkplain #computeRC(double, double)}} and
+     * {@link CurveTransformed#CurveTransformed(CurveRock, java.awt.geom.Point2D, java.awt.geom.Point2D, double)}.
+     * 
+     * @param t0
+     * @param x0
+     * @param v0
+     * @return the trajectory in wc
+     */
     public CurveTransformed computeWC(double t0, final Rock x0, final Rock v0) {
-        final double v = v0.distance(0, 0);
-        final Point2D v1;
-        if (v == 0)
-            v1 = new Point2D.Double(0, 1);
-        else
-            v1 = new Point2D.Double(v0.getX() / v, v0.getY() / v);
-        final AffineTransform at = new AffineTransform();
-        at.rotate(0);
-        at.translate(x0.getX(), x0.getY());
-        return new CurveTransformed(computeRC(v, v0.getZ()), at, t0);
+        final CurveRock c = computeRC(v0.distance(0, 0), v0.getZ());
+        return new CurveTransformed(c, x0, v0, t0);
     }
 
+    /**
+     * Create a trajectory in rock-coordinates.
+     * 
+     * @param v
+     * @param omega
+     * @return the trajectory in rc
+     */
     public abstract CurveRock computeRC(final double v, final double omega);
 }

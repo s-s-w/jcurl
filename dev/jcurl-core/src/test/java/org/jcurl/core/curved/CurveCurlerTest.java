@@ -20,27 +20,8 @@ package org.jcurl.core.curved;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.dto.Rock;
-import org.jcurl.core.dto.RockDouble;
-import org.jcurl.core.math.MathException;
-import org.jcurl.core.math.Point3D;
-
-public class TrivialCurlerTest extends TestCase {
-
-    public static void assertEquals(double x, double y, double z, Point3D p,
-            double delta) {
-        final String txt = "";
-        assertEquals(txt, x, p.getX(), delta);
-        assertEquals(txt, y, p.getY(), delta);
-        assertEquals(txt, z, p.getZ(), delta);
-    }
-
-    public void testComputeRC() throws MathException {
-        Rock p = new RockDouble();
-        final TrivialCurler curl = new TrivialCurler();
-        CurveRock cr = curl.computeRC(1.5, 0.5);
-        assertEquals(0, 0, 0, cr.value(0, p), 1e-9);
-        assertEquals(0, 1.5, 0.5, cr.value(1, p), 1e-9);
-        assertEquals(0, 3, 1, cr.value(2, p), 1e-9);
+public class CurveCurlerTest extends TestCase {
+    public void testOk() {
+        CurveCurler c = null;
     }
 }
