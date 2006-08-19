@@ -26,6 +26,7 @@ import org.jcurl.core.dto.PositionSet;
 import org.jcurl.core.dto.RockSet;
 import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.core.dto.TrajectoryComputed;
+import org.jcurl.core.helpers.NotImplementedYetException;
 
 public class CurveTrajectory implements TrajectoryComputed {
 
@@ -46,8 +47,7 @@ public class CurveTrajectory implements TrajectoryComputed {
     private SpeedSet initialSpeed;
 
     public PathIterator computePath(int idx) {
-        // TODO Auto-generated method stub
-        return null;
+        throw new NotImplementedYetException();
     }
 
     public Collider getCollider() {
@@ -79,7 +79,7 @@ public class CurveTrajectory implements TrajectoryComputed {
     }
 
     public PathIterator[] getPaths() {
-        return null;
+        throw new NotImplementedYetException();
     }
 
     private void reset() {
