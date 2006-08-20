@@ -24,7 +24,7 @@ import java.awt.geom.Point2D;
  * Helper class that brings some (2D-)vector artihmetics.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: MathVec.java 332 2006-06-05 15:07:00Z mrohrmoser $
+ * @version $Id$
  */
 public final class MathVec {
 
