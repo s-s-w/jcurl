@@ -31,6 +31,8 @@ import org.jcurl.core.math.R1R1Function;
 import org.jcurl.core.math.R1R1Solver;
 
 /**
+ * Detect collissions and store the paths.
+ * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

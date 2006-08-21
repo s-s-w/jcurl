@@ -26,7 +26,7 @@ import org.jcurl.core.math.MathVec;
 import org.jcurl.core.math.R1R1Function;
 
 /**
- * Function that describes the distance between two n-dimensional curves.
+ * The distance between two {@link CurveRock}s.
  * 
  * Differentiable min. 1x.
  * 

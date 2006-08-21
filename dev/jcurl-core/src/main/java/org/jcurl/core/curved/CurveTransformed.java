@@ -57,7 +57,7 @@ public class CurveTransformed implements CurveRock {
         return at;
     }
 
-    private final CurveRock c;
+    private final CurveRock rc;
 
     private final double[] p = new double[6];
 
@@ -67,14 +67,14 @@ public class CurveTransformed implements CurveRock {
 
     /**
      * 
-     * @param c
+     * @param rc
      * @param t
      *            See {@link #create(Point2D, Point2D)}
      * @param t0
      */
-    public CurveTransformed(CurveRock c, AffineTransform t, double t0) {
+    public CurveTransformed(CurveRock rc, AffineTransform t, double t0) {
         this.t0 = t0;
-        this.c = c;
+        this.rc = rc;
         t.getMatrix(this.p);
         this.rot = Math.atan2(t.getShearY(), t.getScaleY());
     }
@@ -112,7 +112,7 @@ public class CurveTransformed implements CurveRock {
 
     public Rock value(double t, int derivative, Rock ret) throws MathException {
         t -= t0;
-        ret = c.value(t, derivative, ret);
+        ret = rc.value(t, derivative, ret);
         if (derivative < 1) {
             final double x = p[0] * ret.getX() + p[2] * ret.getY() + p[4];
             final double y = p[1] * ret.getX() + p[3] * ret.getY() + p[5];

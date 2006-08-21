@@ -84,10 +84,6 @@ public class CurveTrajectory implements TrajectoryComputed {
         return initialSpeed;
     }
 
-    public PathIterator[] getPaths() {
-        throw new NotImplementedYetException();
-    }
-
     private void reset() {
         stopTime = Double.NaN;
         currentTime = Double.NaN;

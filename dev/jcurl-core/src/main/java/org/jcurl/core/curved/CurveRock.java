@@ -22,6 +22,12 @@ import org.jcurl.core.dto.Rock;
 import org.jcurl.core.math.MathException;
 import org.jcurl.core.math.R1RnCurve;
 
+/**
+ * Trajectory of one Rock, in either rock-coordinates or world-coordinates.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public interface CurveRock extends R1RnCurve {
 
     public abstract Rock value(double t, int derivative, Rock ret)

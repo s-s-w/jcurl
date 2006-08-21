@@ -38,7 +38,5 @@ public interface Trajectory {
 
     public double getCurrentTime();
 
-    public PathIterator[] getPaths();
-
     public void setCurrentTime(double t) throws MathException;
 }

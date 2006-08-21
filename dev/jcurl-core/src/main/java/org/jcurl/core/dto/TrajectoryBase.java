@@ -47,10 +47,6 @@ public class TrajectoryBase implements Trajectory {
         return currentTime;
     }
 
-    public PathIterator[] getPaths() {
-        return new PathIterator[RockSet.ROCKS_PER_SET];
-    }
-
     public void setCurrentTime(double currentTime) throws MathException {
         this.currentTime = currentTime;
     }
