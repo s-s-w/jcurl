@@ -22,4 +22,7 @@ import junit.framework.TestCase;
 
 public class CollissionStoreTest extends TestCase {
 
+    public void testCTor() {
+        CollissionStore c = new CollissionStore();
+    }
 }
