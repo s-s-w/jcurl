@@ -20,6 +20,8 @@ package org.jcurl.core.dto;
 
 import java.awt.geom.PathIterator;
 
+import org.jcurl.core.math.MathException;
+
 public class TrajectoryBase implements Trajectory {
 
     private PositionSet currentPos;
@@ -49,7 +51,7 @@ public class TrajectoryBase implements Trajectory {
         return new PathIterator[RockSet.ROCKS_PER_SET];
     }
 
-    public void setCurrentTime(double currentTime) {
+    public void setCurrentTime(double currentTime) throws MathException {
         this.currentTime = currentTime;
     }
 

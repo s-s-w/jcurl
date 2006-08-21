@@ -20,15 +20,21 @@ package org.jcurl.core.curved;
 
 import java.awt.geom.PathIterator;
 
+import org.jcurl.core.curved.CollissionStore.HitTupel;
 import org.jcurl.core.dto.Collider;
 import org.jcurl.core.dto.Curler;
 import org.jcurl.core.dto.PositionSet;
+import org.jcurl.core.dto.Rock;
+import org.jcurl.core.dto.RockDouble;
 import org.jcurl.core.dto.RockSet;
 import org.jcurl.core.dto.SpeedSet;
 import org.jcurl.core.dto.TrajectoryComputed;
 import org.jcurl.core.helpers.NotImplementedYetException;
+import org.jcurl.core.math.MathException;
 
 public class CurveTrajectory implements TrajectoryComputed {
+
+    private final CollissionStore cs = new CollissionStore();
 
     private Collider collider;
 
@@ -40,7 +46,7 @@ public class CurveTrajectory implements TrajectoryComputed {
 
     private double currentTime;
 
-    private final CurvePiecewise[] curves = new CurvePiecewise[RockSet.ROCKS_PER_SET];
+    private double stopTime;
 
     private PositionSet initialPos;
 
@@ -83,9 +89,9 @@ public class CurveTrajectory implements TrajectoryComputed {
     }
 
     private void reset() {
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
-            curves[i].clear();
-        setCurrentTime(0);
+        stopTime = Double.NaN;
+        currentTime = Double.NaN;
+        cs.clear();
     }
 
     public void setCollider(Collider collider) {
@@ -98,14 +104,42 @@ public class CurveTrajectory implements TrajectoryComputed {
         this.curler = (CurveCurler) curler;
     }
 
-    public void setCurrentTime(double t) {
-        // TODO detect collissions
-        // TODO compute collissions
-        // TODO compute new trajectories
-        // TODO set currentPos
-        // TODO set currentSpeed
-        // TODO set initialPos
-        // TODO set initialSpeed
+    Rock newRock() {
+        return new RockDouble();
+    }
+
+    public void setCurrentTime(double t) throws MathException {
+        if (Double.isNaN(currentTime)) {
+            cs.init(curler, initialPos, initialSpeed);
+            currentTime = 0;
+        }
+        if (t > stopTime)
+            t = stopTime;
+        if (t == currentTime)
+            return;
+        // could aggregate change-bits to minimize currentXXX computations.
+        final int changeMask = RockSet.ALL_MASK;
+        for (double tNow = currentTime; tNow < t;) {
+            final HitTupel n = cs.getNextHit(t);
+            final double tHit = n.getTime();
+            if (tNow > tHit) {
+                final Rock ax = cs.curve(n.a).value(tHit, 0, newRock());
+                final Rock av = cs.curve(n.a).value(tHit, 1, newRock());
+                final Rock bx = cs.curve(n.b).value(tHit, 0, newRock());
+                final Rock bv = cs.curve(n.b).value(tHit, 1, newRock());
+                collider.compute(ax, av, bx, bv);
+                cs.change(curler, tHit, t, n.a, ax, av, n.b, bx, bv);
+                tNow = tHit;
+            } else
+                break;
+        }
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+            // could use change-bits to minimize currentXXX computations.
+            cs.curve(i).value(t, 0, currentPos.getRock(i));
+            cs.curve(i).value(t, 1, currentSpeed.getRock(i));
+        }
+        currentPos.notifyChange();
+        currentSpeed.notifyChange();
         this.currentTime = t;
     }
 

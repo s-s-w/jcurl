@@ -16,16 +16,15 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.dto;
+package org.jcurl.core.curved;
 
-/**
- * Compute the collision of 2 rocks.
- * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
- */
-public interface Collider {
+import junit.framework.TestCase;
 
-    public void compute(final Rock ax, final Rock av, final Rock bx,
-            final Rock bv);
+public class CurveTrajectoryTest extends TestCase {
+
+    public void testNaN() {
+        assertFalse(0 > Double.NaN);
+        assertFalse(0 < Double.NaN);
+        assertFalse(0 == Double.NaN);
+    }
 }

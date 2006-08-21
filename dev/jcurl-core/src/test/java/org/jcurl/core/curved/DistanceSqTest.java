@@ -18,12 +18,12 @@
  */
 package org.jcurl.core.curved;
 
+import junit.framework.TestCase;
+
 import org.jcurl.core.math.MathException;
 import org.jcurl.core.math.Polynome;
 import org.jcurl.core.math.PolynomeImpl;
 import org.jcurl.core.math.R1R1Function;
-
-import junit.framework.TestCase;
 
 public class DistanceSqTest extends TestCase {
 

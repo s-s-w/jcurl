@@ -20,6 +20,8 @@ package org.jcurl.core.dto;
 
 import java.awt.geom.PathIterator;
 
+import org.jcurl.core.math.MathException;
+
 /**
  * Base for everything that provides trajectories.
  * 
@@ -38,5 +40,5 @@ public interface Trajectory {
 
     public PathIterator[] getPaths();
 
-    public void setCurrentTime(double t);
+    public void setCurrentTime(double t) throws MathException;
 }
