@@ -40,7 +40,7 @@ import org.jcurl.core.math.PolynomeImpl;
  * @see jcurl.sim.model.SlideStraightTest
  * @see jcurl.sim.model.SlideDenny
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: SlideStraight.java 332 2006-06-05 15:07:00Z mrohrmoser $
+ * @version $Id$
  */
 public class CurlerStraight extends CurlerCurved {
 
