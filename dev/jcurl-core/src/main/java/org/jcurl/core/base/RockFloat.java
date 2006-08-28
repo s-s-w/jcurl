@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.dto;
+package org.jcurl.core.base;
 
 import java.io.Serializable;
 
@@ -24,29 +24,29 @@ import java.io.Serializable;
  * Either location or speed of a rock. This class is mostly for display and
  * storage means.
  * 
- * @see org.jcurl.core.dto.PositionSet
- * @see org.jcurl.core.dto.RockFloat
+ * @see org.jcurl.core.base.PositionSet
+ * @see org.jcurl.core.base.RockDouble
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class RockDouble extends Rock implements Serializable {
+public class RockFloat extends Rock implements Serializable {
 
-    private static final long serialVersionUID = 2337028316325540776L;
+    private static final long serialVersionUID = 3219049101239057245L;
 
-    private final double[] x = new double[3];
+    private final float[] x = new float[3];
 
-    public RockDouble() {
+    public RockFloat() {
         this(0, 0, 0);
     }
 
-    public RockDouble(double x, double y, double alpha) {
+    public RockFloat(float x, float y, float alpha) {
         this.x[0] = x;
         this.x[1] = y;
         this.x[2] = alpha;
     }
 
     public Object clone() {
-        return new RockDouble(this.x[0], this.x[1], this.x[2]);
+        return new RockFloat(this.x[0], this.x[1], this.x[2]);
     }
 
     public boolean equals(Object obj) {
@@ -69,29 +69,29 @@ public class RockDouble extends Rock implements Serializable {
     }
 
     public boolean nonZero() {
-        return x[0] * x[0] + x[1] * x[1] > 1e-4;
+        return x[0] * x[0] + x[1] * x[1] > 1e-12;
     }
 
     public void setLocation(double x, double y) {
-        this.x[0] = x;
-        this.x[1] = y;
+        this.x[0] = (float) x;
+        this.x[1] = (float) y;
     }
 
     public void setLocation(double x, double y, double z) {
-        this.x[0] = x;
-        this.x[1] = y;
-        this.x[2] = z;
+        this.x[0] = (float) x;
+        this.x[1] = (float) y;
+        this.x[2] = (float) z;
     }
 
     public void setX(double x) {
-        this.x[0] = x;
+        this.x[0] = (float) x;
     }
 
     public void setY(double y) {
-        this.x[1] = y;
+        this.x[1] = (float) y;
     }
 
     public void setZ(double alpha) {
-        this.x[2] = alpha;
+        this.x[2] = (float) alpha;
     }
 }

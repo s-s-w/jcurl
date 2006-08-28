@@ -20,15 +20,15 @@ package org.jcurl.core.curved;
 
 import java.awt.geom.PathIterator;
 
+import org.jcurl.core.base.CollissionModel;
+import org.jcurl.core.base.Curler;
+import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.Rock;
+import org.jcurl.core.base.RockDouble;
+import org.jcurl.core.base.RockSet;
+import org.jcurl.core.base.SpeedSet;
+import org.jcurl.core.base.TrajectoryComputed;
 import org.jcurl.core.curved.CollissionStore.HitTupel;
-import org.jcurl.core.dto.CollissionModel;
-import org.jcurl.core.dto.Curler;
-import org.jcurl.core.dto.PositionSet;
-import org.jcurl.core.dto.Rock;
-import org.jcurl.core.dto.RockDouble;
-import org.jcurl.core.dto.RockSet;
-import org.jcurl.core.dto.SpeedSet;
-import org.jcurl.core.dto.TrajectoryComputed;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.math.MathException;
 

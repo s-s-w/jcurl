@@ -18,7 +18,7 @@
  */
 package org.jcurl.core.curved;
 
-import org.jcurl.core.dto.Rock;
+import org.jcurl.core.base.Rock;
 import org.jcurl.core.math.MathException;
 import org.jcurl.core.math.R1RnCurve;
 

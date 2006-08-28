@@ -16,30 +16,40 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.dto;
+package org.jcurl.core.base;
 
-import org.jcurl.core.dto.Rock;
+import org.jcurl.core.helpers.Dim;
 
 /**
- * A very simple hit-model using conservation of energy and momentum.
- * <p>
- * Compute collissions without bothering about inertia. Only exchanges the
- * speed-components along the hit-direction of the two involved positions. Only
- * conservation of momentum is obeyed, e.g. spin is neglected.
+ * Rock properties as size, weight, moment of inertia.
  * 
- * @see jcurl.sim.model.SlideStraight
- * @see org.jcurl.model.CollissionSimpleTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: CollissionSimple.java 334 2006-06-05 16:03:34Z mrohrmoser $
+ * @version $Id:RockProps.java 331 2006-06-05 14:41:32Z mrohrmoser $
  */
-public class CollissionSimple extends CollissionModel {
-    public void computeRC(final Rock va, final Rock vb) {
-        final double tmp = va.getY();
-        va.setLocation(va.getX(), vb.getY());
-        vb.setLocation(vb.getX(), tmp);
+public class RockProps {
+    public static final RockProps DEFAULT;
+    static {
+        DEFAULT = new RockProps();
+        DEFAULT.mass = 20;
+        DEFAULT.radius = Dim.f2m(0.5);
+        DEFAULT.inertia = 0.186F; // [Kg*m*m]
     }
 
-    public String description() {
-        return "Simple collissions";
+    public float getInertia() {
+        return inertia;
     }
+
+    public float getMass() {
+        return mass;
+    }
+
+    public float getRadius() {
+        return radius;
+    }
+
+    private float inertia;
+
+    private float mass;
+
+    private float radius;
 }

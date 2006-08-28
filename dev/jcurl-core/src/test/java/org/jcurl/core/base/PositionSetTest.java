@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.dto;
+package org.jcurl.core.base;
 
 import java.awt.geom.Point2D;
 
@@ -27,7 +27,7 @@ import org.jcurl.core.helpers.Dim;
 /**
  * JUnit Test
  * 
- * @see org.jcurl.core.dto.PositionSet
+ * @see org.jcurl.core.base.PositionSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

@@ -21,7 +21,7 @@ package org.jcurl.core.helpers;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.jcurl.core.dto.Ice;
+import org.jcurl.core.base.Ice;
 
 /**
  * Various units of measurement incl. conversion.

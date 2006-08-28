@@ -16,12 +16,12 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.dto;
+package org.jcurl.core.base;
 
 /**
  * Properties of a unique set of positions (size, mass, etc.)
  * 
- * @see org.jcurl.core.dto.RockProps
+ * @see org.jcurl.core.base.RockProps
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:RockSetProps.java 331 2006-06-05 14:41:32Z mrohrmoser $
  */

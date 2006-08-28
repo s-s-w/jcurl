@@ -21,7 +21,7 @@ package org.jcurl.core.curved;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
-import org.jcurl.core.dto.Rock;
+import org.jcurl.core.base.Rock;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.math.MathException;
 

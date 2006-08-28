@@ -16,27 +16,16 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.dto;
+package org.jcurl.core.base;
 
-import java.awt.geom.PathIterator;
+public interface Curler {
 
-import org.jcurl.core.math.MathException;
+    public double getTeeCurl();
 
-/**
- * Base for everything that provides trajectories.
- * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
- */
-public interface Trajectory {
+    public double getTeeTime();
 
-    public PathIterator computePath(int idx);
+    public void setTeeCurl(double teeCurl);
 
-    public PositionSet getCurrentPos();
+    public void setTeeTime(double teeTime);
 
-    public SpeedSet getCurrentSpeed();
-
-    public double getCurrentTime();
-
-    public void setCurrentTime(double t) throws MathException;
 }

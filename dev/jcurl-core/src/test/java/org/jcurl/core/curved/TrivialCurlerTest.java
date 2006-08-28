@@ -20,8 +20,8 @@ package org.jcurl.core.curved;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.dto.Rock;
-import org.jcurl.core.dto.RockDouble;
+import org.jcurl.core.base.Rock;
+import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.math.MathException;
 import org.jcurl.core.math.Point3D;
 

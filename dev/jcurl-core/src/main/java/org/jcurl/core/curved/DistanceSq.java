@@ -18,8 +18,8 @@
  */
 package org.jcurl.core.curved;
 
-import org.jcurl.core.dto.Rock;
-import org.jcurl.core.dto.RockProps;
+import org.jcurl.core.base.Rock;
+import org.jcurl.core.base.RockProps;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.math.MathException;
 import org.jcurl.core.math.MathVec;
@@ -111,11 +111,11 @@ public class DistanceSq implements R1R1Function {
      * <code>2 * (c1 - c2) * (c1' - c2')</code> Feed into maxima:
      * 
      * <pre>
-     *             a(t) := [ ax(t), ay(t) ];
-     *             b(t) := [ bx(t), by(t) ];
-     *             d(t) := (a(t) - b(t)) . (a(t) - b(t));
-     *             diff(d(t), t);
-     *             quit$
+     *              a(t) := [ ax(t), ay(t) ];
+     *              b(t) := [ bx(t), by(t) ];
+     *              d(t) := (a(t) - b(t)) . (a(t) - b(t));
+     *              diff(d(t), t);
+     *              quit$
      * </pre>
      */
     double valueC1(double t) throws MathException {

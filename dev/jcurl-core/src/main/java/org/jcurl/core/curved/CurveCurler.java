@@ -18,8 +18,8 @@
  */
 package org.jcurl.core.curved;
 
-import org.jcurl.core.dto.Curler;
-import org.jcurl.core.dto.Rock;
+import org.jcurl.core.base.Curler;
+import org.jcurl.core.base.Rock;
 
 /**
  * Create {@link CurveRock}s for freely running rocks. (No collissions)

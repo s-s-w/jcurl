@@ -16,30 +16,27 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.dto;
+package org.jcurl.core.base;
+
+import java.awt.geom.PathIterator;
+
+import org.jcurl.core.math.MathException;
 
 /**
- * Aggregates {@link Curler}, {@link Collider}, adds collission detection.
+ * Base for everything that provides trajectories.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface TrajectoryComputed extends Trajectory {
+public interface Trajectory {
 
-    public Curler getCurler();
+    public PathIterator computePath(int idx);
 
-    public void setCurler(Curler curler);
+    public PositionSet getCurrentPos();
 
-    public CollissionModel getCollider();
+    public SpeedSet getCurrentSpeed();
 
-    public void setCollider(CollissionModel collider);
+    public double getCurrentTime();
 
-    public PositionSet getInitialPos();
-
-    public SpeedSet getInitialSpeed();
-
-    public void setInitialPos(PositionSet initialPos);
-
-    public void setInitialSpeed(SpeedSet initialSpeed);
-
+    public void setCurrentTime(double t) throws MathException;
 }

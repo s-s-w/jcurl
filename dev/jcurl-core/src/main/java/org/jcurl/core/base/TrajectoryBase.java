@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework 
- * Copyright (C) 2005 M. Rohrmoser
+ * Copyright (C) 2005-2006 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -16,31 +16,39 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.dto;
+package org.jcurl.core.base;
 
-/**
- * A {@link org.jcurl.core.dto.RockSet}&nbsp;with speed semantics.
- * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
- */
-public class SpeedSet extends RockSet {
+import java.awt.geom.PathIterator;
 
-    private static final long serialVersionUID = 7650353293030622027L;
+import org.jcurl.core.math.MathException;
 
-    public SpeedSet() {
-        super();
+public class TrajectoryBase implements Trajectory {
+
+    private PositionSet currentPos;
+
+    private SpeedSet currentSpeed;
+
+    private double currentTime;
+
+    public PathIterator computePath(int idx) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
-    protected SpeedSet(boolean fill) {
-        super(fill);
+    public PositionSet getCurrentPos() {
+        return currentPos;
     }
 
-    public SpeedSet(final RockSet b) {
-        super(b);
+    public SpeedSet getCurrentSpeed() {
+        return currentSpeed;
     }
 
-    public Object clone() {
-        return new SpeedSet(this);
+    public double getCurrentTime() {
+        return currentTime;
     }
+
+    public void setCurrentTime(double currentTime) throws MathException {
+        this.currentTime = currentTime;
+    }
+
 }

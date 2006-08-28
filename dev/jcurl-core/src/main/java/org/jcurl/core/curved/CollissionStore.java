@@ -21,10 +21,10 @@ package org.jcurl.core.curved;
 import java.util.Collections;
 import java.util.LinkedList;
 
-import org.jcurl.core.dto.PositionSet;
-import org.jcurl.core.dto.Rock;
-import org.jcurl.core.dto.RockSet;
-import org.jcurl.core.dto.SpeedSet;
+import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.Rock;
+import org.jcurl.core.base.RockSet;
+import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.math.MathException;
 import org.jcurl.core.math.NewtonSolver;
 import org.jcurl.core.math.R1R1Function;
