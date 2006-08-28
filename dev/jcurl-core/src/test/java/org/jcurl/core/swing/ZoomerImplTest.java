@@ -30,11 +30,11 @@ import org.jcurl.core.base.Ice;
 /**
  * JUnit test
  * 
- * @see org.jcurl.core.gui.Zoomer
+ * @see org.jcurl.core.gui.ZoomerImpl
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:ZoomerTest.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
-public class ZoomerTest extends TestCase {
+public class ZoomerImplTest extends TestCase {
 
     private static void print(String msg, Point2D p) {
         System.out.println(msg + p.toString());
@@ -123,10 +123,10 @@ public class ZoomerTest extends TestCase {
         final Rectangle2D wc = new Rectangle2D.Double(1, 2, 3, 4);
         Rectangle dc = new Rectangle(1, 2, 3, 4);
         final Point2D fix = new Point2D.Double(1, 2);
-        Zoomer zom = new Zoomer("1:1", wc, fix);
+        Zoomer zom = new ZoomerImpl("1:1", wc, fix);
 
         mat.setToIdentity();
-        zom.computeWctoDcTrafo(dc, Orientation.N, false, mat);
+        zom.computeWc2Dc(dc, Orientation.N, false, mat);
         mat.getMatrix(flat);
         assertEquals("", -1.0 / S, flat[0], 1e-9);
         assertEquals("", 0.0 / S, flat[1], 1e-9);
@@ -143,7 +143,7 @@ public class ZoomerTest extends TestCase {
     }
 
     public void test110_ZoomShift() {
-        final double s = 1.0 / JCurlDisplay.SCALE;
+        final double s = 1.0 / RockLocationDisplayBase.SCALE;
         final double[] flat = new double[6];
         final Point2D dst = new Point2D.Double();
         final Point2D src = new Point2D.Double();
@@ -151,10 +151,10 @@ public class ZoomerTest extends TestCase {
         final Rectangle2D wc = new Rectangle2D.Double(1, 2, 3, 4);
         Rectangle dc = new Rectangle(-1, -2, 3, 4);
         final Point2D fix = new Point2D.Double(1, 2);
-        Zoomer zom = new Zoomer("1:1", wc, fix);
+        Zoomer zom = new ZoomerImpl("1:1", wc, fix);
 
         mat.setToIdentity();
-        zom.computeWctoDcTrafo(dc, Orientation.N, false, mat);
+        zom.computeWc2Dc(dc, Orientation.N, false, mat);
         mat.getMatrix(flat);
         assertEquals("", -0.0010, flat[0], 1e-9);
         assertEquals("", 0, flat[1], 1e-9);

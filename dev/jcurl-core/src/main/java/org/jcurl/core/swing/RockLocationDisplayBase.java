@@ -109,7 +109,7 @@ public abstract class RockLocationDisplayBase extends JComponent implements
      * @param positions
      *            {@link PositionSet#allHome()}if <code>null</code>
      * @param zoom
-     *            {@link Zoomer#HOG2HACK}if <code>null</code>
+     *            {@link ZoomerImpl#HOG2HACK}if <code>null</code>
      */
     public RockLocationDisplayBase(final PositionSet positions,
             final Zoomer zoom) {
@@ -224,11 +224,11 @@ public abstract class RockLocationDisplayBase extends JComponent implements
         final int h = this.getHeight();
 
         // paint WC stuff (ice and positions)
-        if (zoom.hasChanged() || oldWid != w || oldHei != h) {
+        if (oldWid != w || oldHei != h) {
             // either the wc viewport, fixpoint or dc viewport has changed:
             // re-compute the transformation
             wc_mat.setToIdentity();
-            zoom.computeWctoDcTrafo(this.getBounds(), orient, true, wc_mat);
+            zoom.computeWc2Dc(this.getBounds(), orient, true, wc_mat);
             oldWid = w;
             oldHei = h;
             // re-build the background image
@@ -382,7 +382,7 @@ public abstract class RockLocationDisplayBase extends JComponent implements
 
     public void setZoom(Zoomer zoom) {
         if (zoom == null)
-            zoom = Zoomer.HOUSE2HACK;
+            zoom = ZoomerImpl.HOUSE2HACK;
         if (this.zoom != null)
             this.zoom.removePropertyChangeListener(this);
         this.zoom = zoom;

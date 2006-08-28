@@ -49,13 +49,6 @@ public class RockDouble extends Rock implements Serializable {
         return new RockDouble(this.x[0], this.x[1], this.x[2]);
     }
 
-    public boolean equals(Object obj) {
-        if (obj == null || !(obj instanceof Rock))
-            return false;
-        final Rock b = (Rock) obj;
-        return getX() == b.getX() && getY() == b.getY() && getZ() == b.getZ();
-    }
-
     public double getX() {
         return x[0];
     }
@@ -66,10 +59,6 @@ public class RockDouble extends Rock implements Serializable {
 
     public double getZ() {
         return x[2];
-    }
-
-    public boolean nonZero() {
-        return x[0] * x[0] + x[1] * x[1] > 1e-4;
     }
 
     public void setLocation(double x, double y) {

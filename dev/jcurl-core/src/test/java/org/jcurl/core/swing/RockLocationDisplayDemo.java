@@ -24,18 +24,21 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 import org.jcurl.core.base.ColliderSimple;
+import org.jcurl.core.curved.CurlerStraight;
 import org.jcurl.core.curved.CurveTrajectory;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: RockLocationDisplayDemo.java 365 2006-08-28 21:01:40Z
+ *          mrohrmoser $
  */
 public class RockLocationDisplayDemo extends JFrame {
 
+    private static final long serialVersionUID = 6821533592009529458L;
+
     public static void main(String[] args) {
         final RockLocationDisplayDemo frame = new RockLocationDisplayDemo();
-        // set up the keyboard handler
-        // display
+        // TODO set up the keyboard handler
         frame.show();
     }
 
@@ -53,7 +56,7 @@ public class RockLocationDisplayDemo extends JFrame {
         setSize(900, 400);
 
         src.setCollider(new ColliderSimple());
-        src.setCurler(null);
+        src.setCurler(new CurlerStraight());
 
         dst = new RockLocationDisplay(src.getCurrentPos(), null, null, null);
         getContentPane().add(dst, "Center");

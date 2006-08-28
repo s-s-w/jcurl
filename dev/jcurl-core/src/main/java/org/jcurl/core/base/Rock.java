@@ -31,12 +31,22 @@ import org.jcurl.core.math.Point3D;
 public abstract class Rock extends Point3D implements Cloneable {
     public abstract Object clone();
 
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof Rock))
+            return false;
+        final Rock b = (Rock) obj;
+        return getX() == b.getX() && getY() == b.getY() && getZ() == b.getZ();
+    }
+
     /**
      * Convenience method to check if Zero or not.
      * 
      * @return whether x or y are non-Zero
      */
-    public abstract boolean nonZero();
+    public boolean nonZero() {
+        final double zero = 1e-9;
+        return Math.abs(getX()) > zero && Math.abs(getY()) > zero;
+    }
 
     public String toString() {
         final StringBuffer buf = new StringBuffer();

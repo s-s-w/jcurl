@@ -88,9 +88,11 @@ public class CollissionStore {
         this.curves = new CurvePiecewise[RockSet.ROCKS_PER_SET];
         this.store = new HitTupel[RockSet.ROCKS_PER_SET * RockSet.ROCKS_PER_SET];
         this.hits = new LinkedList();
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+            curves[i] = new CurvePiecewise();
             for (int j = i - 1; j >= 0; j--)
                 hits.add(store[idx(i, j)] = new HitTupel(i, j));
+        }
     }
 
     private HitTupel cell(int ai, int bi) {
