@@ -38,8 +38,7 @@ public abstract class Collider extends Object {
 
     private static final float HIT_MAX_DIST = 1e-6F;
 
-    private static final Log log = JCLoggerFactory
-            .getLogger(Collider.class);
+    private static final Log log = JCLoggerFactory.getLogger(Collider.class);
 
     /** Maximum distance [m] of two positions to consider them touching */
     public static final double MaxDistSq = sqr(_Rad + _Rad + HIT_MAX_DIST);
@@ -107,8 +106,8 @@ public abstract class Collider extends Object {
 
     /**
      * Iterate over all positions and call
-     * {@link Collider#computeWC(Rock, Rock, Rock, Rock, AffineTransform)}
-     * for each pair.
+     * {@link Collider#computeWC(Rock, Rock, Rock, Rock, AffineTransform)} for
+     * each pair.
      * 
      * @see Collider#computeWC(Rock, Rock, Rock, Rock, AffineTransform)
      * @param pos

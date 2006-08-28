@@ -38,7 +38,7 @@ public class CurveTrajectory implements TrajectoryComputed {
 
     private Collider collider;
 
-    private CurveCurler curler;
+    private CurlerCurved curler;
 
     private PositionSet currentPos;
 
@@ -97,7 +97,7 @@ public class CurveTrajectory implements TrajectoryComputed {
 
     public void setCurler(Curler curler) {
         reset();
-        this.curler = (CurveCurler) curler;
+        this.curler = (CurlerCurved) curler;
     }
 
     Rock newRock() {

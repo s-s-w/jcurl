@@ -101,7 +101,7 @@ public class CollissionStore {
      * compute the two new trajectories and delegate to
      * {@link #change(double, double, int, CurveTransformed, int, CurveTransformed)}.
      * 
-     * @see CurveCurler#computeWC(double, Rock, Rock)
+     * @see CurlerCurved#computeWC(double, Rock, Rock)
      * @param c
      * @param min
      * @param max
@@ -113,9 +113,9 @@ public class CollissionStore {
      * @param vb
      * @throws MathException
      */
-    public void change(final CurveCurler c, final double min, final double max,
-            final int ia, final Rock xa, final Rock va, final int ib,
-            final Rock xb, final Rock vb) throws MathException {
+    public void change(final CurlerCurved c, final double min,
+            final double max, final int ia, final Rock xa, final Rock va,
+            final int ib, final Rock xb, final Rock vb) throws MathException {
         final CurveTransformed ca = c.computeWC(min, xa, va);
         final CurveTransformed cb = c.computeWC(min, xb, vb);
         change(min, max, ia, ca, ib, cb);
@@ -181,7 +181,7 @@ public class CollissionStore {
         return ia + RockSet.ROCKS_PER_COLOR * ib;
     }
 
-    public void init(final CurveCurler c, final PositionSet x, final SpeedSet v)
+    public void init(final CurlerCurved c, final PositionSet x, final SpeedSet v)
             throws MathException {
         for (int ia = RockSet.ROCKS_PER_SET - 1; ia >= 0; ia--) {
             curve(ia).clear();

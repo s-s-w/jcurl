@@ -25,7 +25,7 @@ import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.math.MathException;
 import org.jcurl.core.math.Point3D;
 
-public class TrivialCurlerTest extends TestCase {
+public class CurlerTrivialTest extends TestCase {
 
     public static void assertEquals(double x, double y, double z, Point3D p,
             double delta) {
@@ -37,7 +37,7 @@ public class TrivialCurlerTest extends TestCase {
 
     public void testComputeRC() throws MathException {
         Rock p = new RockDouble();
-        final TrivialCurler curl = new TrivialCurler();
+        final CurlerTrivial curl = new CurlerTrivial();
         CurveRock cr = curl.computeRC(1.5, 0.5);
         assertEquals(0, 0, 0, cr.value(0, p), 1e-9);
         assertEquals(0, 1.5, 0.5, cr.value(1, p), 1e-9);

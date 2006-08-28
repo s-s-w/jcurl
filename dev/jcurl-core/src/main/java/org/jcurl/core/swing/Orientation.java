@@ -16,28 +16,40 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.base;
+package org.jcurl.core.swing;
+
+import org.jcurl.core.helpers.EnumBase;
 
 /**
- * A very simple hit-model using conservation of energy and momentum.
- * <p>
- * Compute collissions without bothering about inertia. Only exchanges the
- * speed-components along the hit-direction of the two involved positions. Only
- * conservation of momentum is obeyed, e.g. spin is neglected.
+ * North, East, South, West.
  * 
- * @see jcurl.sim.model.CurlerStraight
- * @see org.jcurl.model.ColliderSimpleTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:Orientation.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
-public class ColliderSimple extends Collider {
-    public void computeRC(final Rock va, final Rock vb) {
-        final double tmp = va.getY();
-        va.setLocation(va.getX(), vb.getY());
-        vb.setLocation(vb.getX(), tmp);
-    }
+public class Orientation extends EnumBase {
 
-    public String description() {
-        return "Simple collissions";
+    private static final long serialVersionUID = -2356484723388215100L;
+
+    /** North */
+    public static final Orientation N = new Orientation(0, "north");
+
+    /** East */
+    public static final Orientation E = new Orientation(1, "east");
+
+    /** South */
+    public static final Orientation S = new Orientation(2, "south");
+
+    /** West */
+    public static final Orientation W = new Orientation(3, "west");
+
+    public final double angle;
+
+    /**
+     * @param state
+     * @param text
+     */
+    private Orientation(int state, String text) {
+        super(state, text);
+        angle = state * Math.PI / 2;
     }
 }

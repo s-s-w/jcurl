@@ -22,7 +22,7 @@ import junit.framework.TestCase;
 
 public class CurveCurlerTest extends TestCase {
     public void testComputeRC() {
-        CurveCurler c = new TrivialCurler();
+        CurlerCurved c = new CurlerTrivial();
         CurveRock cv = c.computeRC(1.0, 0.5);
     }
 }

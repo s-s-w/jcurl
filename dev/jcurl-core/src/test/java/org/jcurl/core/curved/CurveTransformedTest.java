@@ -41,7 +41,7 @@ public class CurveTransformedTest extends TestCase {
         assertEquals("", 0.0, d[4], 1e-9);
         assertEquals("", 0.0, d[5], 1e-9);
         at.transform(r = new RockDouble(2, 3, 4), r);
-        TrivialCurlerTest.assertEquals(2, 3, 4, r, 1e-9);
+        CurlerTrivialTest.assertEquals(2, 3, 4, r, 1e-9);
 
         at = AffineTransform.getScaleInstance(0.5, 0.75);
         at.getMatrix(d);
@@ -52,7 +52,7 @@ public class CurveTransformedTest extends TestCase {
         assertEquals("", 0.0, d[4], 1e-9);
         assertEquals("", 0.0, d[5], 1e-9);
         at.transform(r = new RockDouble(2, 3, 4), r);
-        TrivialCurlerTest.assertEquals(1, 2.25, 4, r, 1e-9);
+        CurlerTrivialTest.assertEquals(1, 2.25, 4, r, 1e-9);
 
         at = AffineTransform.getTranslateInstance(0.5, 0.75);
         at.getMatrix(d);
@@ -63,7 +63,7 @@ public class CurveTransformedTest extends TestCase {
         assertEquals("", 0.5, d[4], 1e-9);
         assertEquals("", 0.75, d[5], 1e-9);
         at.transform(r = new RockDouble(2, 3, 4), r);
-        TrivialCurlerTest.assertEquals(2.5, 3.75, 4, r, 1e-9);
+        CurlerTrivialTest.assertEquals(2.5, 3.75, 4, r, 1e-9);
     }
 
     public void testAffineTransformRotate() {
@@ -203,12 +203,12 @@ public class CurveTransformedTest extends TestCase {
             }
         }, at, 0);
         ret = cw.value(0, ret);
-        TrivialCurlerTest.assertEquals(0, 0, 0, ret, 1e-9);
+        CurlerTrivialTest.assertEquals(0, 0, 0, ret, 1e-9);
         ret = cw.value(0.5, ret);
-        TrivialCurlerTest.assertEquals(0.75, 0.9375, 0.25, ret, 1e-9);
+        CurlerTrivialTest.assertEquals(0.75, 0.9375, 0.25, ret, 1e-9);
         ret = cw.value(1.0, ret);
-        TrivialCurlerTest.assertEquals(1.5, 1.875, 0.5, ret, 1e-9);
+        CurlerTrivialTest.assertEquals(1.5, 1.875, 0.5, ret, 1e-9);
         ret = cw.value(1.5, ret);
-        TrivialCurlerTest.assertEquals(2.25, 2.8125, 0.75, ret, 1e-9);
+        CurlerTrivialTest.assertEquals(2.25, 2.8125, 0.75, ret, 1e-9);
     }
 }

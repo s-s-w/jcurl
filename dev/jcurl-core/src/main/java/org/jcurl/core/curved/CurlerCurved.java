@@ -27,7 +27,20 @@ import org.jcurl.core.base.Rock;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class CurveCurler implements Curler {
+public abstract class CurlerCurved implements Curler {
+
+    protected static final double sqr(final double a) {
+        return a * a;
+    }
+
+    /**
+     * Create a trajectory in rock-coordinates.
+     * 
+     * @param v
+     * @param omega
+     * @return the trajectory in rc
+     */
+    public abstract CurveRock computeRC(final double v, final double omega);
 
     /**
      * Calls {@link #computeRC(double, double)} and
@@ -42,13 +55,4 @@ public abstract class CurveCurler implements Curler {
         final CurveRock c = computeRC(v0.distance(0, 0), v0.getZ());
         return new CurveTransformed(c, x0, v0, t0);
     }
-
-    /**
-     * Create a trajectory in rock-coordinates.
-     * 
-     * @param v
-     * @param omega
-     * @return the trajectory in rc
-     */
-    public abstract CurveRock computeRC(final double v, final double omega);
 }

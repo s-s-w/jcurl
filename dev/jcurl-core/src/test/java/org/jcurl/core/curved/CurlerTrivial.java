@@ -24,7 +24,7 @@ package org.jcurl.core.curved;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class TrivialCurler extends CurveCurler {
+public class CurlerTrivial extends CurlerCurved {
 
     public CurveRock computeRC(final double v, final double omega) {
         return new CurveRockBase() {
