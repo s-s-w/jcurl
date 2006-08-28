@@ -28,7 +28,7 @@ import org.jcurl.core.math.MathVec;
 /**
  * @see org.jcurl.model.ColliderSimple
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: CollissionSimpleTest.java 332 2006-06-05 15:07:00Z mrohrmoser $
+ * @version $Id$
  */
 public class ColliderSimpleTest extends TestCase {
 

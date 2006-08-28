@@ -28,7 +28,7 @@ package org.jcurl.core.base;
  * @see jcurl.sim.model.SlideStraight
  * @see org.jcurl.model.ColliderSimpleTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: CollissionSimple.java 334 2006-06-05 16:03:34Z mrohrmoser $
+ * @version $Id$
  */
 public class ColliderSimple extends Collider {
     public void computeRC(final Rock va, final Rock vb) {

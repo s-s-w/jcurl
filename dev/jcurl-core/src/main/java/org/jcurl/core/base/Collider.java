@@ -30,7 +30,7 @@ import org.jcurl.core.helpers.JCLoggerFactory;
  * 
  * @see org.jcurl.model.CurveFactory
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: CollissionModel.java 335 2006-06-05 18:19:00Z mrohrmoser $
+ * @version $Id$
  */
 public abstract class Collider extends Object {
 
