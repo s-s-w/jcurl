@@ -20,7 +20,7 @@ package org.jcurl.core.curved;
 
 import java.awt.geom.PathIterator;
 
-import org.jcurl.core.base.CollissionModel;
+import org.jcurl.core.base.Collider;
 import org.jcurl.core.base.Curler;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
@@ -36,7 +36,7 @@ public class CurveTrajectory implements TrajectoryComputed {
 
     private final CollissionStore cs = new CollissionStore();
 
-    private CollissionModel collider;
+    private Collider collider;
 
     private CurveCurler curler;
 
@@ -56,7 +56,7 @@ public class CurveTrajectory implements TrajectoryComputed {
         throw new NotImplementedYetException();
     }
 
-    public CollissionModel getCollider() {
+    public Collider getCollider() {
         return collider;
     }
 
@@ -90,7 +90,7 @@ public class CurveTrajectory implements TrajectoryComputed {
         cs.clear();
     }
 
-    public void setCollider(CollissionModel collider) {
+    public void setCollider(Collider collider) {
         reset();
         this.collider = collider;
     }

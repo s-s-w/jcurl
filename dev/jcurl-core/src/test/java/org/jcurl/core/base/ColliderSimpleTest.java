@@ -26,11 +26,11 @@ import junit.framework.TestCase;
 import org.jcurl.core.math.MathVec;
 
 /**
- * @see org.jcurl.model.CollissionSimple
+ * @see org.jcurl.model.ColliderSimple
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id: CollissionSimpleTest.java 332 2006-06-05 15:07:00Z mrohrmoser $
  */
-public class CollissionSimpleTest extends TestCase {
+public class ColliderSimpleTest extends TestCase {
 
     final PositionSet pos;
 
@@ -44,7 +44,7 @@ public class CollissionSimpleTest extends TestCase {
 
     final Rock bv;
 
-    public CollissionSimpleTest() {
+    public ColliderSimpleTest() {
         pos = PositionSet.allHome();
         speed = new SpeedSet();
         ax = pos.getDark(0);
@@ -58,7 +58,7 @@ public class CollissionSimpleTest extends TestCase {
         PositionSet.allZero(speed);
     }
 
-    private static final CollissionSimple hit = new CollissionSimple();
+    private static final ColliderSimple hit = new ColliderSimple();
 
     public void test005_math() {
         Point2D a = new Point2D.Double(1, 1);
@@ -113,12 +113,12 @@ public class CollissionSimpleTest extends TestCase {
         final double[] flat = new double[6];
         Point2D a = new Point2D.Double(0, 0);
         Point2D b = new Point2D.Double(0, 1);
-        CollissionSimple.getInverseTrafo(a, a, b, mat);
+        ColliderSimple.getInverseTrafo(a, a, b, mat);
         assertTrue(mat.isIdentity());
 
         a = new Point2D.Double(0, -1);
         b = new Point2D.Double(0, 1);
-        CollissionSimple.getInverseTrafo(a, a, b, mat);
+        ColliderSimple.getInverseTrafo(a, a, b, mat);
         mat.getMatrix(flat);
         assertEquals("", 1, flat[0], 1e-9);
         assertEquals("", 0, flat[1], 1e-9);
@@ -129,7 +129,7 @@ public class CollissionSimpleTest extends TestCase {
 
         a = new Point2D.Double(1, 1);
         b = new Point2D.Double(1.1, 1.1);
-        CollissionModel.getInverseTrafo(a, a, b, mat);
+        Collider.getInverseTrafo(a, a, b, mat);
         mat.getMatrix(flat);
         double sq2 = Math.sqrt(2);
         assertEquals("", sq2 / 2, flat[0], 1e-9);

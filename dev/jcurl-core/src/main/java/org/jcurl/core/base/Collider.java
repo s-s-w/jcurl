@@ -32,14 +32,14 @@ import org.jcurl.core.helpers.JCLoggerFactory;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id: CollissionModel.java 335 2006-06-05 18:19:00Z mrohrmoser $
  */
-public abstract class CollissionModel extends Object {
+public abstract class Collider extends Object {
 
     private static final float _Rad = RockProps.DEFAULT.getRadius();
 
     private static final float HIT_MAX_DIST = 1e-6F;
 
     private static final Log log = JCLoggerFactory
-            .getLogger(CollissionModel.class);
+            .getLogger(Collider.class);
 
     /** Maximum distance [m] of two positions to consider them touching */
     public static final double MaxDistSq = sqr(_Rad + _Rad + HIT_MAX_DIST);
@@ -71,13 +71,13 @@ public abstract class CollissionModel extends Object {
         return mat;
     }
 
-    public static CollissionModel newInstance(final Class clz) {
-        final Class parent = CollissionModel.class;
+    public static Collider newInstance(final Class clz) {
+        final Class parent = Collider.class;
         if (!parent.isAssignableFrom(clz))
             throw new IllegalArgumentException("Class [" + clz.getName()
                     + "] is no descendant of [" + parent.getName() + "]");
         try {
-            return (CollissionModel) clz.newInstance();
+            return (Collider) clz.newInstance();
         } catch (InstantiationException e) {
             final IllegalArgumentException ex = new IllegalArgumentException();
             ex.initCause(e);
@@ -107,10 +107,10 @@ public abstract class CollissionModel extends Object {
 
     /**
      * Iterate over all positions and call
-     * {@link CollissionModel#computeWC(Rock, Rock, Rock, Rock, AffineTransform)}
+     * {@link Collider#computeWC(Rock, Rock, Rock, Rock, AffineTransform)}
      * for each pair.
      * 
-     * @see CollissionModel#computeWC(Rock, Rock, Rock, Rock, AffineTransform)
+     * @see Collider#computeWC(Rock, Rock, Rock, Rock, AffineTransform)
      * @param pos
      * @param speed
      * @return bitmask of the changed positions
