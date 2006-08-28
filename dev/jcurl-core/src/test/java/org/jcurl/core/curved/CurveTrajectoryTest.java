@@ -27,4 +27,8 @@ public class CurveTrajectoryTest extends TestCase {
         assertFalse(0 < Double.NaN);
         assertFalse(0 == Double.NaN);
     }
+    
+    public void test020() {
+        CurveTrajectory ct1 = new CurveTrajectory();
+    }
 }

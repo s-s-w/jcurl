@@ -30,9 +30,9 @@ public interface TrajectoryComputed extends Trajectory {
 
     public void setCurler(Curler curler);
 
-    public Collider getCollider();
+    public CollissionModel getCollider();
 
-    public void setCollider(Collider collider);
+    public void setCollider(CollissionModel collider);
 
     public PositionSet getInitialPos();
 

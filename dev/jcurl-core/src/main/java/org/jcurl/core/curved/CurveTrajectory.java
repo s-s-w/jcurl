@@ -21,7 +21,7 @@ package org.jcurl.core.curved;
 import java.awt.geom.PathIterator;
 
 import org.jcurl.core.curved.CollissionStore.HitTupel;
-import org.jcurl.core.dto.Collider;
+import org.jcurl.core.dto.CollissionModel;
 import org.jcurl.core.dto.Curler;
 import org.jcurl.core.dto.PositionSet;
 import org.jcurl.core.dto.Rock;
@@ -36,7 +36,7 @@ public class CurveTrajectory implements TrajectoryComputed {
 
     private final CollissionStore cs = new CollissionStore();
 
-    private Collider collider;
+    private CollissionModel collider;
 
     private CurveCurler curler;
 
@@ -56,7 +56,7 @@ public class CurveTrajectory implements TrajectoryComputed {
         throw new NotImplementedYetException();
     }
 
-    public Collider getCollider() {
+    public CollissionModel getCollider() {
         return collider;
     }
 
@@ -90,7 +90,7 @@ public class CurveTrajectory implements TrajectoryComputed {
         cs.clear();
     }
 
-    public void setCollider(Collider collider) {
+    public void setCollider(CollissionModel collider) {
         reset();
         this.collider = collider;
     }
@@ -123,7 +123,7 @@ public class CurveTrajectory implements TrajectoryComputed {
                 final Rock av = cs.curve(n.a).value(tHit, 1, newRock());
                 final Rock bx = cs.curve(n.b).value(tHit, 0, newRock());
                 final Rock bv = cs.curve(n.b).value(tHit, 1, newRock());
-                collider.compute(ax, av, bx, bv);
+                collider.computeWC(ax, av, bx, bv, null);
                 cs.change(curler, tHit, t, n.a, ax, av, n.b, bx, bv);
                 tNow = tHit;
             } else

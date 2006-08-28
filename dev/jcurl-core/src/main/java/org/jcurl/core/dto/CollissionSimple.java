@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework 
- * Copyright (C) 2005-2006 M. Rohrmoser
+ * Copyright (C) 2005 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -18,14 +18,28 @@
  */
 package org.jcurl.core.dto;
 
-/**
- * Compute the collision of 2 rocks.
- * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
- */
-public interface Collider {
+import org.jcurl.core.dto.Rock;
 
-    public void compute(final Rock ax, final Rock av, final Rock bx,
-            final Rock bv);
+/**
+ * A very simple hit-model using conservation of energy and momentum.
+ * <p>
+ * Compute collissions without bothering about inertia. Only exchanges the
+ * speed-components along the hit-direction of the two involved positions. Only
+ * conservation of momentum is obeyed, e.g. spin is neglected.
+ * 
+ * @see jcurl.sim.model.SlideStraight
+ * @see org.jcurl.model.CollissionSimpleTest
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id: CollissionSimple.java 334 2006-06-05 16:03:34Z mrohrmoser $
+ */
+public class CollissionSimple extends CollissionModel {
+    public void computeRC(final Rock va, final Rock vb) {
+        final double tmp = va.getY();
+        va.setLocation(va.getX(), vb.getY());
+        vb.setLocation(vb.getX(), tmp);
+    }
+
+    public String description() {
+        return "Simple collissions";
+    }
 }
