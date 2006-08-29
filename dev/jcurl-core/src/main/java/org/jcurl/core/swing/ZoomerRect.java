@@ -18,8 +18,9 @@
  */
 package org.jcurl.core.swing;
 
-
 /**
+ * Zoomer for rectangular viewports.
+ * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

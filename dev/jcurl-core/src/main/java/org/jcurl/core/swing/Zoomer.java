@@ -18,9 +18,11 @@
  */
 package org.jcurl.core.swing;
 
-import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 
+import org.apache.commons.logging.Log;
+import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.helpers.MutableObject;
 
 /**
@@ -32,38 +34,25 @@ import org.jcurl.core.helpers.MutableObject;
  */
 public abstract class Zoomer extends MutableObject {
 
-    private AffineTransform wc2dc = new AffineTransform();
+    private static final Log log = JCLoggerFactory.getLogger(Zoomer.class);
 
-    /**
-     * Map the zoomer's wc viewport to the given dc viewport.
-     * 
-     * @param dc
-     * @param orient
-     *            direction of the NEGATIVE y-axis. In Other words: where is the
-     *            skip looking?
-     * @param isLeftHanded
-     *            <code>true</code> if the dc coordinate system is left-handed
-     * @param mat
-     *            Matrix to add the transformation to, usually call yourself a
-     *            {@link AffineTransform#setToIdentity()}&nbsp;before.
-     * @return the transformation
-     */
-    protected abstract AffineTransform computeWc2Dc(final Rectangle dc,
-            final Orientation orient, final boolean isLeftHanded,
-            AffineTransform mat);
+    private AffineTransform wc2Dc = new AffineTransform();
 
     public boolean equals(Object obj) {
         return false;
     }
 
     public AffineTransform getWc2Dc() {
-        return wc2dc;
+        return wc2Dc;
     }
 
     public void setWc2Dc(AffineTransform wc2dc) {
-        if (this.wc2dc.equals(wc2dc))
-            return;
-        propChange.firePropertyChange("wc2dc", this.wc2dc, wc2dc);
-        this.wc2dc = wc2dc;
+        log.debug("");
+        // if (this.wc2dc.equals(wc2dc)) return;
+        propChange.firePropertyChange("wc2Dc", this.wc2Dc.equals(wc2dc) ? null
+                : this.wc2Dc, wc2dc);
+        this.wc2Dc = wc2dc;
     }
+
+    public abstract void setDc(Rectangle2D r);
 }

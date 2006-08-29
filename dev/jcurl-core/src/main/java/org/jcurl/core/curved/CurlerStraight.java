@@ -18,11 +18,9 @@
  */
 package org.jcurl.core.curved;
 
-import org.apache.commons.logging.Log;
 import org.jcurl.core.base.Ice;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.RockSet;
-import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.math.MathException;
 import org.jcurl.core.math.Polynome;
 import org.jcurl.core.math.PolynomeImpl;
@@ -44,8 +42,8 @@ import org.jcurl.core.math.PolynomeImpl;
  */
 public class CurlerStraight extends CurlerCurved {
 
-    private static final Log log = JCLoggerFactory
-            .getLogger(CurlerStraight.class);
+    // private static final Log log =
+    // JCLoggerFactory.getLogger(CurlerStraight.class);
 
     private double accel;
 

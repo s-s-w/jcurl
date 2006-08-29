@@ -52,9 +52,9 @@ public class XmlSimpleWriter extends DefaultHandler {
 
     private static final Logger log = Logger.getLogger(XmlSimpleWriter.class);
 
-    private static final char NEWLINE = '\n';
+    // private static final char NEWLINE = '\n';
 
-    private static final char TABULATOR = '\t';
+    // private static final char TABULATOR = '\t';
 
     private static void checkAttName(final String qName) throws SAXException {
         if (qName == null || "".equals(qName))

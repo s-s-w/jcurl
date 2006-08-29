@@ -144,11 +144,9 @@ public abstract class SolverImpl implements R1R1Solver {
      * 
      */
     public int getIterationCount() {
-        if (resultComputed) {
+        if (resultComputed)
             return iterationCount;
-        } else {
-            throw new IllegalStateException("No result available");
-        }
+        throw new IllegalStateException("No result available");
     }
 
     /**
@@ -177,11 +175,9 @@ public abstract class SolverImpl implements R1R1Solver {
      *             if no root has been computed
      */
     public double getResult() {
-        if (resultComputed) {
+        if (resultComputed)
             return result;
-        } else {
-            throw new IllegalStateException("No result available");
-        }
+        throw new IllegalStateException("No result available");
     }
 
     /**

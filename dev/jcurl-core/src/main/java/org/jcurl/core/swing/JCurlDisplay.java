@@ -33,7 +33,7 @@ import org.jcurl.core.base.PositionSet;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:JCurlDisplay.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
-public class JCurlDisplay extends RockLocationDisplay {
+class JCurlDisplay extends RockLocationDisplay {
 
     private static final long serialVersionUID = -3587954807831602402L;
 

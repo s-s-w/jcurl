@@ -28,31 +28,32 @@ import org.jcurl.core.base.RockProps;
 import org.jcurl.core.helpers.NotImplementedYetException;
 
 /**
- * Smart handler for creating wc to dc transformations.
+ * Zoomer with a fixpoint.
  * 
  * @see org.jcurl.core.swing.JCurlDisplay
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:Zoomer.java 330 2006-06-05 14:29:14Z mrohrmoser $
  */
-public class ZoomerImpl extends ZoomerRect {
+public class ZoomerFixPoint extends ZoomerRect {
     private static final float _dia = 2 * RockProps.DEFAULT.getRadius();
 
-    public static final Zoomer C12 = new ZoomerImpl("Twelve foot circle",
+    public static final Zoomer C12 = new ZoomerFixPoint("Twelve foot circle",
             -Ice.SIDE_2_CENTER, -Ice.SIDE_2_CENTER, 2 * Ice.SIDE_2_CENTER,
             2 * Ice.SIDE_2_CENTER, 0, 0);
 
-    public static final Zoomer HOG2HACK = new ZoomerImpl("Far hog back line",
-            -(Ice.SIDE_2_CENTER + _dia), -(Ice.BACK_2_TEE + Ice.HACK_2_BACK),
+    public static final Zoomer HOG2HACK = new ZoomerFixPoint(
+            "Far hog back line", -(Ice.SIDE_2_CENTER + _dia),
+            -(Ice.BACK_2_TEE + Ice.HACK_2_BACK),
             2 * (Ice.SIDE_2_CENTER + _dia), _dia + Ice.FAR_HOG_2_TEE
                     + Ice.BACK_2_TEE + Ice.HACK_2_BACK, 0,
             -(Ice.BACK_2_TEE + Ice.HACK_2_BACK));
 
-    public static final Zoomer HOUSE = new ZoomerImpl("House",
+    public static final Zoomer HOUSE = new ZoomerFixPoint("House",
             -(Ice.SIDE_2_CENTER + _dia), -(Ice.BACK_2_TEE + _dia),
             2 * (Ice.SIDE_2_CENTER + _dia), 2 * _dia + Ice.HOG_2_TEE
                     + Ice.BACK_2_TEE, 0, -(_dia + Ice.BACK_2_TEE));
 
-    public static final Zoomer HOUSE2HACK = new ZoomerImpl(
+    public static final Zoomer HOUSE2HACK = new ZoomerFixPoint(
             "House until back line", -(Ice.SIDE_2_CENTER + _dia),
             -(Ice.BACK_2_TEE + Ice.HACK_2_BACK),
             2 * (Ice.SIDE_2_CENTER + _dia), _dia + Ice.HOG_2_TEE
@@ -60,8 +61,6 @@ public class ZoomerImpl extends ZoomerRect {
             -(Ice.BACK_2_TEE + Ice.HACK_2_BACK));
 
     private static final long serialVersionUID = -8692952713937311284L;
-
-    private static final boolean uniform = true;
 
     private static final Rectangle2D create(final Point2D tl, final Point2D br) {
         final double tlx;
@@ -81,7 +80,9 @@ public class ZoomerImpl extends ZoomerRect {
 
     private final Point2D fixPoint;
 
-    private final Rectangle2D viewport;
+    private Rectangle2D vpDc = new Rectangle(0, 0, 0, 0);
+
+    private final Rectangle2D vpWc;
 
     /**
      * @see #Zoomer(String, Rectangle2D, Point2D)
@@ -93,7 +94,7 @@ public class ZoomerImpl extends ZoomerRect {
      * @param fixX
      * @param fixY
      */
-    public ZoomerImpl(final String txt, double x0, double y0, double w,
+    public ZoomerFixPoint(final String txt, double x0, double y0, double w,
             double h, final double fixX, final double fixY) {
         this(txt, new Rectangle2D.Double(x0, y0, w, h), new Point2D.Double(
                 fixX, fixY));
@@ -108,7 +109,7 @@ public class ZoomerImpl extends ZoomerRect {
      * @param h
      * @param fixPoint
      */
-    public ZoomerImpl(final String txt, double x0, double y0, double w,
+    public ZoomerFixPoint(final String txt, double x0, double y0, double w,
             double h, final Point2D fixPoint) {
         this(txt, new Rectangle2D.Double(x0, y0, w, h), fixPoint);
     }
@@ -120,14 +121,13 @@ public class ZoomerImpl extends ZoomerRect {
      * @param br
      * @param fixPoint
      */
-    public ZoomerImpl(final String txt, final Point2D tl, final Point2D br,
+    public ZoomerFixPoint(final String txt, final Point2D tl, final Point2D br,
             final Point2D fixPoint) {
         this(txt, create(tl, br), fixPoint);
     }
 
     /**
-     * @see #computeWc2Dc(Rectangle, Orientation, boolean,
-     *      AffineTransform)
+     * @see #computeWc2Dc(Rectangle, Orientation, boolean, AffineTransform)
      * @param txt
      * @param wc
      *            world-coordinate view-port (zoom-area)
@@ -135,40 +135,53 @@ public class ZoomerImpl extends ZoomerRect {
      *            this point's relative position to the wc-viewport is mapped to
      *            the same relative position in the dc-viewport.
      */
-    public ZoomerImpl(final String txt, final Rectangle2D wc,
+    public ZoomerFixPoint(final String txt, final Rectangle2D wc,
             final Point2D fixPoint) {
-        this.viewport = wc;
+        this.vpWc = wc;
         this.fixPoint = fixPoint;
     }
 
-    public AffineTransform computeWc2Dc(final Rectangle dc,
-            final Orientation orient, final boolean isLeftHanded,
-            AffineTransform mat) {
+    /**
+     * Map the zoomer's wc viewport to the given dc viewport.
+     * 
+     * @param dc
+     * @param orient
+     *            direction of the NEGATIVE y-axis. In Other words: where is the
+     *            skip looking?
+     * @param isLeftHanded
+     *            <code>true</code> if the dc coordinate system is left-handed
+     * @param mat
+     *            Matrix to add the transformation to, usually call yourself a
+     *            {@link AffineTransform#setToIdentity()}&nbsp;before.
+     * @return the transformation
+     */
+    AffineTransform computeWc2Dc(final Rectangle2D dc,
+            final Orientation orient, final boolean uniform,
+            final boolean isLeftHanded, AffineTransform mat) {
         if (mat == null)
-            mat = new AffineTransform();
-        else
-            mat.setToIdentity();
+            mat = getWc2Dc();
+        mat.setToIdentity();
         mat.translate(-dc.getX(), -dc.getY());
         final int SCALE = JCurlDisplay.SCALE;
         double sca_x = dc.getWidth();
         double sca_y = dc.getHeight();
         if (Orientation.N.equals(orient)) {
-            sca_x /= viewport.getWidth();
-            sca_y /= viewport.getHeight();
+            sca_x /= vpWc.getWidth();
+            sca_y /= vpWc.getHeight();
             // compute the fixpoint in dc
             final double fpx = dc.getMinX()
-                    + (fixPoint.getX() - viewport.getMinX()) * sca_x;
+                    + (fixPoint.getX() - vpWc.getMinX()) * sca_x;
             final double fpy = dc.getMaxY()
-                    - (fixPoint.getY() - viewport.getMinY()) * sca_y;
+                    - (fixPoint.getY() - vpWc.getMinY()) * sca_y;
             mat.translate(fpx, fpy);
         } else if (Orientation.W.equals(orient)) {
-            sca_x /= viewport.getHeight();
-            sca_y /= viewport.getWidth();
+            sca_x /= vpWc.getHeight();
+            sca_y /= vpWc.getWidth();
             // compute the fixpoint in dc
             final double fpx = dc.getMaxX()
-                    - (fixPoint.getY() - viewport.getMinY()) * sca_x;
+                    - (fixPoint.getY() - vpWc.getMinY()) * sca_x;
             final double fpy = dc.getMinY()
-                    + (fixPoint.getX() - viewport.getMinX()) * sca_y;
+                    + (fixPoint.getX() - vpWc.getMinX()) * sca_y;
             mat.translate(fpx, fpy);
         } else {
             throw new NotImplementedYetException();
@@ -185,5 +198,12 @@ public class ZoomerImpl extends ZoomerRect {
             mat.scale(-1, 1);
         mat.translate(-fixPoint.getX() * SCALE, -fixPoint.getY() * SCALE);
         return mat;
-    }    
+    }
+
+    public void setDc(Rectangle2D r) {
+        if (vpDc.equals(r))
+            return;
+        vpDc = r;
+        setWc2Dc(computeWc2Dc(r, Orientation.W, true, true, this.getWc2Dc()));
+    }
 }

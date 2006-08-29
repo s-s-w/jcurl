@@ -24,6 +24,8 @@ package org.jcurl.core.math;
  */
 public class ConvergenceException extends MathException {
 
+    private static final long serialVersionUID = 6759886436560220627L;
+
     public ConvergenceException(final String s) {
 
     }

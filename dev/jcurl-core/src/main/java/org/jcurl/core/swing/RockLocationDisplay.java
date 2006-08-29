@@ -65,7 +65,7 @@ public class RockLocationDisplay extends RockLocationDisplayBase {
         // background
         g2.setPaint(icePainter.color.backGround);
         g2.fillRect(0, 0, getWidth(), getHeight());
-        g2.transform(wc_mat);
+        g2.transform(zoom.getWc2Dc());
         // Ice
         icePainter.paintIceWC(g2);
     }

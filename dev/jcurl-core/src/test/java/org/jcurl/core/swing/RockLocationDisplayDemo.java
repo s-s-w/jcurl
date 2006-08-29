@@ -20,6 +20,8 @@ package org.jcurl.core.swing;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
@@ -49,6 +51,12 @@ public class RockLocationDisplayDemo extends JFrame {
     public RockLocationDisplayDemo() {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
+                if (false && dst != null)
+                    try {
+                        dst.exportPng(new File("/tmp/jcurl.png"));
+                    } catch (IOException e1) {
+                        throw new RuntimeException(e1);
+                    }
                 System.exit(0);
             }
         });

@@ -20,4 +20,6 @@ package org.jcurl.core.math;
 
 public class DifferentiationException extends MathException {
 
+    private static final long serialVersionUID = 3493077748283024625L;
+
 }

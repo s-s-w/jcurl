@@ -20,4 +20,6 @@ package org.jcurl.core.math;
 
 public class FunctionEvaluationException extends MathException {
 
+    private static final long serialVersionUID = 7269064938155443895L;
+
 }

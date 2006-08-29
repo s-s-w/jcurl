@@ -114,7 +114,7 @@ public class CurveTrajectory implements TrajectoryComputed {
         if (t == currentTime)
             return;
         // could aggregate change-bits to minimize currentXXX computations.
-        final int changeMask = RockSet.ALL_MASK;
+        // final int changeMask = RockSet.ALL_MASK;
         for (double tNow = currentTime; tNow < t;) {
             final HitTupel n = cs.getNextHit(t);
             final double tHit = n.getTime();
