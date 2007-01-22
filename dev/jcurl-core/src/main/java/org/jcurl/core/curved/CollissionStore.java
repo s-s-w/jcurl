@@ -72,7 +72,8 @@ public class CollissionStore {
         }
 
         public void solve(double min, double max) throws MathException {
-            time = solver.solve(min, max, min + solver.getAbsoluteAccuracy());
+            time = solver
+                    .solve(0, min, max, min + solver.getAbsoluteAccuracy());
         }
     }
 
@@ -144,17 +145,6 @@ public class CollissionStore {
         }
     }
 
-    private HitTupel createSolver(int ia, int ib) {
-        R1R1Function distSq = new DistanceSq(curve(ia), curve(ib));
-        final HitTupel ht = cell(ia, ib);
-        ht.solver = new NewtonSolver(distSq);
-        return ht;
-    }
-
-    public CurvePiecewise curve(int i) {
-        return curves[i];
-    }
-
     /**
      * Re-compute all combinations of ia, except with itself and ib
      */
@@ -167,8 +157,45 @@ public class CollissionStore {
         }
     }
 
+    private HitTupel createSolver(int ia, int ib) {
+        R1R1Function distSq = new DistanceSq(curve(ia), curve(ib));
+        final HitTupel ht = cell(ia, ib);
+        ht.solver = new NewtonSolver(distSq);
+        return ht;
+    }
+
+    public CurvePiecewise curve(int i) {
+        return curves[i];
+    }
+
+    private void findCollissionsUntil(double max) throws MathException {
+        if (max <= knownTime)
+            return;
+        for (int ia = RockSet.ROCKS_PER_SET - 1; ia >= 0; ia--)
+            for (int ib = ia - 1; ib >= 0; ib--)
+                cell(ia, ib).solve(knownTime, max);
+        Collections.sort(hits);
+    }
+
+    private void findSpeedRootsUntil(double max) throws MathException {
+        if (max <= knownTime)
+            return;
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+            // TODO find first Speed Root <= max
+        }
+    }
+
+    /**
+     * @see #findSpeedRootsUntil(double)
+     * @see #findCollissionsUntil(double)
+     * @param t
+     * @return the next hit
+     * @throws MathException
+     */
     public HitTupel getNextHit(double t) throws MathException {
-        solveUntil(t);
+        findSpeedRootsUntil(t);
+        findCollissionsUntil(t);
+        knownTime = t;
         return (HitTupel) hits.getFirst();
     }
 
@@ -193,20 +220,6 @@ public class CollissionStore {
             for (int ib = ia - 1; ib >= 0; ib--)
                 createSolver(ia, ib);
         knownTime = Double.NaN;
-    }
-
-    /**
-     * @param max
-     * @throws MathException
-     */
-    private void solveUntil(double max) throws MathException {
-        if (max <= knownTime)
-            return;
-        for (int ia = RockSet.ROCKS_PER_SET - 1; ia >= 0; ia--)
-            for (int ib = ia - 1; ib >= 0; ib--)
-                cell(ia, ib).solve(knownTime, max);
-        knownTime = max;
-        Collections.sort(hits);
     }
 
 }

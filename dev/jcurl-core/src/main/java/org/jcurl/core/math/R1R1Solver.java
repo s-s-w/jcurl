@@ -180,11 +180,12 @@ public interface R1R1Solver {
     /**
      * Solve for a zero root in the given interval. A solver may require that
      * the interval brackets a single zero root.
-     * 
+     * @param derivative TODO
      * @param min
      *            the lower bound for the interval.
      * @param max
      *            the upper bound for the interval.
+     * 
      * @return a value where the function is zero
      * @throws ConvergenceException
      *             if the maximum iteration count is exceeded or the solver
@@ -197,18 +198,19 @@ public interface R1R1Solver {
      *             if min > max or the endpoints do not satisfy the requirements
      *             specified by the solver
      */
-    double solve(double min, double max) throws MathException;
+    double solve(int derivative, double min, double max) throws MathException;
 
     /**
      * Solve for a zero in the given interval, start at startValue. A solver may
      * require that the interval brackets a single zero root.
-     * 
+     * @param derivative TODO
      * @param min
      *            the lower bound for the interval.
      * @param max
      *            the upper bound for the interval.
      * @param startValue
      *            the start value to use
+     * 
      * @return a value where the function is zero
      * @throws ConvergenceException
      *             if the maximum iteration count is exceeded or the solver
@@ -220,7 +222,7 @@ public interface R1R1Solver {
      *             if min > max or the arguments do not satisfy the requirements
      *             specified by the solver
      */
-    double solve(double min, double max, double startValue)
+    double solve(int derivative, double min, double max, double startValue)
             throws MathException;
 
 }

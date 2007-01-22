@@ -49,11 +49,13 @@ public class NewtonSolver extends SolverImpl {
      *            the lower bound for the interval
      * @param max
      *            the upper bound for the interval
+     * 
      * @return the value where the function is zero
      * @throws MathException
      */
-    public double solve(double min, double max) throws MathException {
-        return solve(min, max, SolverImpl.midpoint(min, max));
+    public double solve(int derivative, double min, double max)
+            throws MathException {
+        return solve(derivative, min, max, SolverImpl.midpoint(min, max));
     }
 
     /**
@@ -65,11 +67,12 @@ public class NewtonSolver extends SolverImpl {
      *            the upper bound for the interval (ignored).
      * @param startValue
      *            the start value to use.
+     * 
      * @return the value where the function is zero
      * @throws MathException
      */
-    public double solve(double min, double max, double startValue)
-            throws MathException {
+    public double solve(int derivative, double min, double max,
+            double startValue) throws MathException {
 
         clearResult();
         verifySequence(min, startValue, max);
@@ -79,9 +82,8 @@ public class NewtonSolver extends SolverImpl {
 
         int i = 0;
         while (i < maximalIterationCount) {
-            x1 = x0 - (f.value(x0) / f.value(x0, 1));
+            x1 = x0 - (f.value(x0, derivative) / f.value(x0, derivative + 1));
             if (Math.abs(x1 - x0) <= absoluteAccuracy) {
-
                 setResult(x1, i);
                 return x1;
             }

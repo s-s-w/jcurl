@@ -30,7 +30,7 @@ public class NewtonSolverTest extends TestCase {
         assertEquals("", 0.5, p.value(3.0), 1e-9);
 
         final R1R1Solver s = new NewtonSolver(p);
-        assertEquals("", 2.0, s.solve(-1, 3, -0.99), 1e-9);
+        assertEquals("", 2.0, s.solve(0, -1, 3, -0.99), 1e-9);
     }
 
     public void testParabolic() throws MathException {
@@ -41,6 +41,6 @@ public class NewtonSolverTest extends TestCase {
 
         final R1R1Solver s = new NewtonSolver(p);
         s.setAbsoluteAccuracy(1e-6);
-        assertEquals("", 0.0, s.solve(-1, 3, -0.99), 1e-6);
+        assertEquals("", 0.0, s.solve(0, -1, 3, -0.99), 1e-6);
     }
 }
