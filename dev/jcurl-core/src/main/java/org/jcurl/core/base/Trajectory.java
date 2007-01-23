@@ -23,14 +23,14 @@ import java.awt.geom.PathIterator;
 import org.jcurl.core.math.MathException;
 
 /**
- * Base for everything that provides trajectories.
+ * Base for everything that provides trajectories i.e.&nbsp; moving rocks.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public interface Trajectory {
 
-    public PathIterator computePath(int idx);
+    public PathIterator computePath(int idx) throws MathException;
 
     public PositionSet getCurrentPos();
 

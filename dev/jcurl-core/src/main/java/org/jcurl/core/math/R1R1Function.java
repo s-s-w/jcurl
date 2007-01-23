@@ -24,6 +24,7 @@ import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
  * Functions <code>f : R -&gt; R</code>.
  * 
  * TODO extends DifferentiableUnivariateRealFunction
+ * 
  * @see DifferentiableUnivariateRealFunction
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:R1R1Function.java 350 2006-08-16 18:41:58Z mrohrmoser $

@@ -180,7 +180,9 @@ public interface R1R1Solver {
     /**
      * Solve for a zero root in the given interval. A solver may require that
      * the interval brackets a single zero root.
-     * @param derivative TODO
+     * 
+     * @param derivative
+     *            TODO
      * @param min
      *            the lower bound for the interval.
      * @param max
@@ -203,7 +205,9 @@ public interface R1R1Solver {
     /**
      * Solve for a zero in the given interval, start at startValue. A solver may
      * require that the interval brackets a single zero root.
-     * @param derivative TODO
+     * 
+     * @param derivative
+     *            TODO
      * @param min
      *            the lower bound for the interval.
      * @param max

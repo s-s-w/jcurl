@@ -25,8 +25,7 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 
-import org.jcurl.core.base.ColliderSimple;
-import org.jcurl.core.curved.CurlerStraight;
+import org.jcurl.core.base.Trajectory;
 import org.jcurl.core.curved.CurveTrajectory;
 
 /**
@@ -46,7 +45,7 @@ public class RockLocationDisplayDemo extends JFrame {
 
     private final RockLocationDisplay dst;
 
-    private final CurveTrajectory src = new CurveTrajectory();
+    private final Trajectory src = new CurveTrajectory();
 
     public RockLocationDisplayDemo() {
         addWindowListener(new WindowAdapter() {
@@ -63,8 +62,8 @@ public class RockLocationDisplayDemo extends JFrame {
         setTitle("CurlDemo");
         setSize(900, 400);
 
-        src.setCollider(new ColliderSimple());
-        src.setCurler(new CurlerStraight());
+        // src.setCollider(new ColliderSimple());
+        // src.setCurler(new CurlerStraight());
 
         dst = new RockLocationDisplay(src.getCurrentPos(), null, null, null);
         getContentPane().add(dst, "Center");

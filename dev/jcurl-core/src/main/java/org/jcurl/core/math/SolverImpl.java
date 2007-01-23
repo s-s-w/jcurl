@@ -328,8 +328,8 @@ public abstract class SolverImpl implements R1R1Solver {
             throw new IllegalArgumentException(
                     "Function values at endpoints do not have different signs."
                             + "  Endpoints: [" + lower + "," + upper + "]"
-                            + "  Values: [" + f.at(lower) + ","
-                            + f.at(upper) + "]");
+                            + "  Values: [" + f.at(lower) + "," + f.at(upper)
+                            + "]");
         }
     }
 

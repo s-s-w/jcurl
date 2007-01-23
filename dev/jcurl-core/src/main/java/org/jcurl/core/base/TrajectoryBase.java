@@ -30,7 +30,7 @@ public class TrajectoryBase implements Trajectory {
 
     private double currentTime;
 
-    public PathIterator computePath(int idx) {
+    public PathIterator computePath(int idx) throws MathException {
         // TODO Auto-generated method stub
         return null;
     }

@@ -52,7 +52,7 @@ public class CurveTrajectory implements TrajectoryComputed {
 
     private SpeedSet initialSpeed;
 
-    public PathIterator computePath(int idx) {
+    public PathIterator computePath(int idx) throws MathException {
         throw new NotImplementedYetException();
     }
 

@@ -20,6 +20,7 @@ package org.jcurl.core.math;
 
 /**
  * TODO maybe extend {@link org.apache.commons.math.MathException}
+ * 
  * @see org.apache.commons.math.MathException
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
