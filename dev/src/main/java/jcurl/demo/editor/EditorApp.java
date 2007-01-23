@@ -56,7 +56,7 @@ import jcurl.core.gui.SumWaitDisplay;
 import jcurl.core.gui.Zoomer;
 import jcurl.core.io.SetupIO;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.RockSet;
 import org.jcurl.core.SpeedSet;
@@ -82,8 +82,7 @@ public class EditorApp extends JFrame {
     private static final Cursor Cwait = Cursor
             .getPredefinedCursor(Cursor.WAIT_CURSOR);
 
-    private static final ULogger log = JCLoggerFactory
-            .getLogger(EditorApp.class);
+    private static final Log log = JCLoggerFactory.getLogger(EditorApp.class);
 
     private static final long serialVersionUID = -5330160383513753742L;
 

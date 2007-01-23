@@ -22,7 +22,7 @@ import java.awt.geom.Point2D;
 
 import jcurl.core.dto.RockSetProps;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.Rock;
 import org.jcurl.core.RockSet;
@@ -44,8 +44,7 @@ import org.jcurl.math.Polynome;
  */
 public abstract class SlideCurves extends SlideStrategy {
 
-    private static final ULogger log = JCLoggerFactory
-            .getLogger(SlideCurves.class);
+    private static final Log log = JCLoggerFactory.getLogger(SlideCurves.class);
 
     private static double findThalt(final double t0, final CurveBase cu) {
         final double thx = cu.computeNewtonZero(0, 1, t0);

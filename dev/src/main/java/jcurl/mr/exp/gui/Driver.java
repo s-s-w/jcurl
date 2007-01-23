@@ -25,7 +25,8 @@ import javax.swing.JFrame;
  * @version $Id$
  */
 public class Driver {
-    //private static final ULogger log = JCLoggerFactory.getLogger(Driver.class);
+    // private static final ULogger log =
+    // JCLoggerFactory.getLogger(Driver.class);
 
     public static void main(String[] args) {
         JFrame frame = new MenuDemo();

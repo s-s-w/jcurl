@@ -25,7 +25,7 @@ import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.ModelBase;
 import jcurl.sim.core.SlideStrategy;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.Rock;
 import org.jcurl.core.RockSet;
@@ -61,7 +61,7 @@ public class SetupBuilder {
 
     private static final int Coords = 0;
 
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(SetupBuilder.class);
 
     private static final int Out = 1;

@@ -35,7 +35,7 @@ import jcurl.sim.core.ComputedSource;
 import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
@@ -54,8 +54,7 @@ public class ViewerApp extends JFrame {
 
     private static final long serialVersionUID = -5809346296249873005L;
 
-    private static final ULogger log = JCLoggerFactory
-            .getLogger(ViewerApp.class);
+    private static final Log log = JCLoggerFactory.getLogger(ViewerApp.class);
 
     public static void main(String[] args) throws MalformedURLException,
             ParserConfigurationException, SAXException, IOException {

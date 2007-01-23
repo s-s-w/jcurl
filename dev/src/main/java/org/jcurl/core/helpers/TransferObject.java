@@ -41,7 +41,7 @@ public abstract class TransferObject implements Serializable {
      * @return all properties' values
      */
     public String toString() { // inspired by Hardcore Java (O'reilly, page
-                                // 228)
+        // 228)
         try {
             final BeanInfo info = Introspector.getBeanInfo(this.getClass(),
                     Object.class);

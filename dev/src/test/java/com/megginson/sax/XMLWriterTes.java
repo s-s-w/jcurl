@@ -132,7 +132,7 @@ public class XMLWriterTes extends TestCase {
             final String enc = encodings[encIdx];
             final StringBuffer exp = new StringBuffer();
             final ByteArrayOutputStream outStr = new ByteArrayOutputStream();
-            final XMLWriter dst = null;//new XMLWriter(outStr, enc);
+            final XMLWriter dst = null;// new XMLWriter(outStr, enc);
 
             dst.startDocument();
             dst.startElement(null, "root", null, null);

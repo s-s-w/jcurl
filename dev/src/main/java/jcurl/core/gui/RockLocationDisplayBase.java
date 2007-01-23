@@ -39,7 +39,7 @@ import javax.swing.JComponent;
 
 import jcurl.core.TargetDiscrete;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.Rock;
 import org.jcurl.core.RockSet;
@@ -50,13 +50,14 @@ import org.jcurl.core.helpers.JCLoggerFactory;
  * and provides callbacks for actual drawing.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: RockLocationDisplayBase.java 230 2006-02-19 12:34:18Z
+ *          mrohrmoser $
  */
 public abstract class RockLocationDisplayBase extends JComponent implements
         TargetDiscrete, PropertyChangeListener {
     public static final Map hints = new HashMap();
 
-    private static final ULogger log = JCLoggerFactory
+    private static final Log log = JCLoggerFactory
             .getLogger(RockLocationDisplayBase.class);
 
     /**

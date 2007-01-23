@@ -31,7 +31,7 @@ import jcurl.sim.core.ComputedSource;
 import jcurl.sim.model.CollissionSpin;
 import jcurl.sim.model.SlideStraight;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
@@ -44,7 +44,8 @@ import org.xml.sax.SAXException;
 public class ViewerApplet extends JApplet {
 
     private static final long serialVersionUID = 3098543777055838932L;
-    private static final ULogger log = JCLoggerFactory
+
+    private static final Log log = JCLoggerFactory
             .getLogger(ViewerApplet.class);
 
     public String getAppletInfo() {
@@ -54,7 +55,7 @@ public class ViewerApplet extends JApplet {
     public void init() {
         setFocusable(true);
         // resize(200, 100);
-        //final Container contentPane = getContentPane();
+        // final Container contentPane = getContentPane();
         final JCurlDisplay mp = new JCurlDisplay(null, null, null, null);
         getContentPane().add(mp);
         final TargetDiscrete dst = mp;

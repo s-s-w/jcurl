@@ -28,7 +28,7 @@ import java.net.URL;
 import jcurl.sim.core.CollissionStrategy;
 import jcurl.sim.core.SlideStrategy;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 import org.jcurl.core.PositionSet;
 import org.jcurl.core.RockSet;
 import org.jcurl.core.SpeedSet;
@@ -47,7 +47,7 @@ import org.xml.sax.SAXException;
  */
 public class SetupIO {
 
-    private static final ULogger log = JCLoggerFactory.getLogger(SetupIO.class);
+    private static final Log log = JCLoggerFactory.getLogger(SetupIO.class);
 
     public static void load(final File src, final PositionSet pos,
             final SpeedSet speed, final SlideStrategy slide,

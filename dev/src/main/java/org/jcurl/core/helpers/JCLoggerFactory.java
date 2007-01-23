@@ -18,14 +18,15 @@
  */
 package org.jcurl.core.helpers;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public class JCLoggerFactory {
-    public static ULogger getLogger(final Class clz) {
-        return org.apache.ugli.LoggerFactory.getLogger(clz);
+    public static Log getLogger(final Class clz) {
+        return LogFactory.getLog(clz);
     }
 }
