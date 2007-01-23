@@ -24,17 +24,17 @@ import java.net.URL;
 
 import javax.swing.JApplet;
 
-import jcurl.core.TargetDiscrete;
-import jcurl.core.gui.JCurlDisplay;
-import jcurl.core.gui.SimpleKeys;
-import jcurl.sim.core.ComputedSource;
-import jcurl.sim.model.CollissionSpin;
-import jcurl.sim.model.SlideStraight;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.SpeedSet;
+import org.jcurl.core.base.ComputedSource;
+import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.SpeedSet;
+import org.jcurl.core.base.TargetDiscrete;
 import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.core.model.CollissionSpin;
+import org.jcurl.core.model.SlideStraight;
+import org.jcurl.core.swing.JCurlDisplay;
+import org.jcurl.core.swing.SimpleKeys;
 import org.xml.sax.SAXException;
 
 /**

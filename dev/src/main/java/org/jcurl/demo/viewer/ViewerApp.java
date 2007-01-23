@@ -28,25 +28,25 @@ import java.net.URL;
 import javax.swing.JFrame;
 import javax.xml.parsers.ParserConfigurationException;
 
-import jcurl.core.TargetDiscrete;
-import jcurl.core.gui.JCurlDisplay;
-import jcurl.core.gui.SimpleKeys;
-import jcurl.sim.core.ComputedSource;
-import jcurl.sim.model.CollissionSpin;
-import jcurl.sim.model.SlideStraight;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.PositionSet;
-import org.jcurl.core.SpeedSet;
+import org.jcurl.core.base.ComputedSource;
+import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.SpeedSet;
+import org.jcurl.core.base.TargetDiscrete;
 import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.core.model.CollissionSpin;
+import org.jcurl.core.model.SlideStraight;
+import org.jcurl.core.swing.JCurlDisplay;
+import org.jcurl.core.swing.SimpleKeys;
 import org.xml.sax.SAXException;
 
 /**
  * A simple viewer that brings all together.
  * 
- * @see jcurl.sim.model.SlideStraight
- * @see jcurl.sim.model.CollissionSimple
- * @see jcurl.core.gui.SimpleKeys
+ * @see org.jcurl.core.model.SlideStraight
+ * @see org.jcurl.core.model.CollissionSimple
+ * @see org.jcurl.core.swing.SimpleKeys
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
