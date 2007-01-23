@@ -18,9 +18,12 @@
  */
 package org.jcurl.core.math;
 
+import org.apache.commons.math.analysis.PolynomialFunction;
+
 /**
  * Polynomes of n-th grade.
  * 
+ * @see PolynomialFunction
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

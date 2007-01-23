@@ -50,7 +50,7 @@ public class DistanceSqTest extends TestCase {
                 if (component == 0 && derivative == 0)
                     return t;
                 if (component == 1)
-                    return p.value(t, derivative);
+                    return p.at(t, derivative);
                 return 0;
             }
         };
@@ -59,9 +59,9 @@ public class DistanceSqTest extends TestCase {
     public void testPointStraightLine() throws MathException {
         final R1R1Function d = new DistanceSq(createPoint2D(2, 1),
                 createPoly(new double[] { -1, 0.5 }));
-        assertEquals("", 2.811956073217295, Math.sqrt(d.value(0)), 1e-9);
-        assertEquals("", 1.7768221513994102, Math.sqrt(d.value(1)), 1e-9);
-        assertEquals("", 0.9524163783260075, Math.sqrt(d.value(2)), 1e-9);
-        assertEquals("", 1.075684413619361, Math.sqrt(d.value(3)), 1e-9);
+        assertEquals("", 2.811956073217295, Math.sqrt(d.at(0)), 1e-9);
+        assertEquals("", 1.7768221513994102, Math.sqrt(d.at(1)), 1e-9);
+        assertEquals("", 0.9524163783260075, Math.sqrt(d.at(2)), 1e-9);
+        assertEquals("", 1.075684413619361, Math.sqrt(d.at(3)), 1e-9);
     }
 }

@@ -88,7 +88,7 @@ public class DistanceSq implements R1R1Function {
     /**
      * <code>(c1(t) - c2(t))^2 - (r1 + r2)^2</code>.
      */
-    public double value(double t) throws MathException {
+    public double at(double t) throws MathException {
         Rock a = c1.value(t, (Rock) null);
         Rock b = c2.value(t, (Rock) null);
         MathVec.sub(a, b, a);
@@ -96,12 +96,12 @@ public class DistanceSq implements R1R1Function {
     }
 
     /**
-     * @see #value(double)
+     * @see #at(double)
      * @see #valueC1(double)
      */
-    public double value(double t, int derivative) throws MathException {
+    public double at(double t, int derivative) throws MathException {
         if (derivative == 0)
-            return value(t);
+            return at(t);
         if (derivative == 1)
             return valueC1(t);
         throw new NotImplementedYetException();

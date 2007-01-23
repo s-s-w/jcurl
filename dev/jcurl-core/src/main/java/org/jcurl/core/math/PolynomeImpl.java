@@ -167,11 +167,11 @@ public class PolynomeImpl implements Polynome {
         return toString(this.coffs());
     }
 
-    public double value(double x) throws MathException {
-        return value(x, 0);
+    public double at(double x) throws MathException {
+        return at(x, 0);
     }
 
-    public double value(final double x, final int c) throws MathException {
+    public double at(final double x, final int c) throws MathException {
         return evaluate(coffs(), x, c);
     }
 }

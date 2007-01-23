@@ -62,7 +62,7 @@ public class CurlerStraight extends CurlerCurved {
             protected double value(double t, int derivative, int component)
                     throws MathException {
                 if (component == 0)
-                    return p.value(t, derivative);
+                    return p.at(t, derivative);
                 return 0;
             }
         };

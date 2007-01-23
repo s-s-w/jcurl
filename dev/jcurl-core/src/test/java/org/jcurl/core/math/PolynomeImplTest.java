@@ -44,42 +44,42 @@ public class PolynomeImplTest extends TestCase {
         // C0
         double x = 1.5;
         double y = a[0] + a[1] * x + a[2] * x * x + a[3] * x * x * x;
-        assertEquals("", y, po.value(x, 0), 1e-9);
+        assertEquals("", y, po.at(x, 0), 1e-9);
         x = 2.5;
         y = a[0] + a[1] * x + a[2] * x * x + a[3] * x * x * x;
-        assertEquals("", y, po.value(x, 0), 1e-9);
+        assertEquals("", y, po.at(x, 0), 1e-9);
 
         // C1
         x = 1.5;
         y = 1 * a[1] + 2 * a[2] * x + 3 * a[3] * x * x;
-        assertEquals("", y, po.value(x, 1), 1e-9);
+        assertEquals("", y, po.at(x, 1), 1e-9);
         x = 2.5;
         y = 1 * a[1] + 2 * a[2] * x + 3 * a[3] * x * x;
-        assertEquals("", y, po.value(x, 1), 1e-9);
+        assertEquals("", y, po.at(x, 1), 1e-9);
 
         // C2
         x = 1.5;
         y = 1 * 2 * a[2] + 2 * 3 * a[3] * x;
-        assertEquals("", y, po.value(x, 2), 1e-9);
+        assertEquals("", y, po.at(x, 2), 1e-9);
         x = 2.5;
         y = 1 * 2 * a[2] + 2 * 3 * a[3] * x;
-        assertEquals("", y, po.value(x, 2), 1e-9);
+        assertEquals("", y, po.at(x, 2), 1e-9);
 
         // C3
         x = 1.5;
         y = 1 * 2 * 3 * a[3];
-        assertEquals("", y, po.value(x, 3), 1e-9);
+        assertEquals("", y, po.at(x, 3), 1e-9);
         x = 2.5;
         y = 1 * 2 * 3 * a[3];
-        assertEquals("", y, po.value(x, 3), 1e-9);
+        assertEquals("", y, po.at(x, 3), 1e-9);
 
         // C4
         x = 1.5;
         y = 0;
-        assertEquals("", y, po.value(x, 4), 1e-9);
+        assertEquals("", y, po.at(x, 4), 1e-9);
         x = 2.5;
         y = 0;
-        assertEquals("", y, po.value(x, 4), 1e-9);
+        assertEquals("", y, po.at(x, 4), 1e-9);
     }
 
     public void test029_getPolyParams() {
@@ -105,17 +105,17 @@ public class PolynomeImplTest extends TestCase {
 
     public void test030_getPoly() throws MathException {
         R1R1Function po = PolynomeImpl.getPoly(1.0, 2.0, 3.0, 4.0);
-        assertEquals("", 2.0, po.value(1.0, 0), 1e-9);
-        assertEquals("", 4.0, po.value(1.5, 0), 1e-9);
-        assertEquals("", 7.0, po.value(2.0, 0), 1e-9);
+        assertEquals("", 2.0, po.at(1.0, 0), 1e-9);
+        assertEquals("", 4.0, po.at(1.5, 0), 1e-9);
+        assertEquals("", 7.0, po.at(2.0, 0), 1e-9);
 
-        assertEquals("", 3.0, po.value(1.0, 1), 1e-9);
-        assertEquals("", 5.0, po.value(1.5, 1), 1e-9);
-        assertEquals("", 7.0, po.value(2.0, 1), 1e-9);
+        assertEquals("", 3.0, po.at(1.0, 1), 1e-9);
+        assertEquals("", 5.0, po.at(1.5, 1), 1e-9);
+        assertEquals("", 7.0, po.at(2.0, 1), 1e-9);
 
-        assertEquals("", 4.0, po.value(1.0, 2), 1e-9);
-        assertEquals("", 4.0, po.value(1.5, 2), 1e-9);
-        assertEquals("", 4.0, po.value(2.0, 2), 1e-9);
+        assertEquals("", 4.0, po.at(1.0, 2), 1e-9);
+        assertEquals("", 4.0, po.at(1.5, 2), 1e-9);
+        assertEquals("", 4.0, po.at(2.0, 2), 1e-9);
     }
 
     public void test040_load() throws MathException {
@@ -124,7 +124,7 @@ public class PolynomeImplTest extends TestCase {
         final int count = 500000;
         final long start = System.currentTimeMillis();
         for (int i = count - 1; i >= 0; i--)
-            po.value(1.1, 0);
+            po.at(1.1, 0);
         double cps = count / (1e-3 * (System.currentTimeMillis() - start));
         assertTrue(cps > 1000000);
     }

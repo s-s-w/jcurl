@@ -195,8 +195,8 @@ public abstract class SolverImpl implements R1R1Solver {
      */
     protected boolean isBracketing(double lower, double upper, R1R1Function f)
             throws MathException {
-        double f1 = f.value(lower);
-        double f2 = f.value(upper);
+        double f1 = f.at(lower);
+        double f2 = f.at(upper);
         return ((f1 > 0 && f2 < 0) || (f1 < 0 && f2 > 0));
     }
 
@@ -328,8 +328,8 @@ public abstract class SolverImpl implements R1R1Solver {
             throw new IllegalArgumentException(
                     "Function values at endpoints do not have different signs."
                             + "  Endpoints: [" + lower + "," + upper + "]"
-                            + "  Values: [" + f.value(lower) + ","
-                            + f.value(upper) + "]");
+                            + "  Values: [" + f.at(lower) + ","
+                            + f.at(upper) + "]");
         }
     }
 

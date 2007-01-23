@@ -82,7 +82,7 @@ public class NewtonSolver extends SolverImpl {
 
         int i = 0;
         while (i < maximalIterationCount) {
-            x1 = x0 - (f.value(x0, derivative) / f.value(x0, derivative + 1));
+            x1 = x0 - (f.at(x0, derivative) / f.at(x0, derivative + 1));
             if (Math.abs(x1 - x0) <= absoluteAccuracy) {
                 setResult(x1, i);
                 return x1;
