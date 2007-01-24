@@ -22,12 +22,14 @@ import java.awt.geom.Point2D;
 
 import junit.framework.TestCase;
 
+import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.RockSet;
 import org.jcurl.core.helpers.Dim;
 
 /**
  * JUnit Test
  * 
- * @see org.jcurl.core.PositionSet
+ * @see org.jcurl.core.base.PositionSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

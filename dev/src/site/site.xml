@@ -31,8 +31,8 @@
     </menu>
 
     <menu name="Community">
-      <item name="Forum" href="forum/index.html"/>      
-      <item name="Mailing Lists" href="mail-lists.html"/>
+      <item name="Forum" href="http://developer.berlios.de/forum/?group_id=3203"/>      
+      <!-- item name="Mailing Lists" href="mail-lists.html"/ -->
     </menu>
 
     ${reports}
