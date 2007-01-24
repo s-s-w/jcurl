@@ -65,7 +65,7 @@ public class XmlSerializer extends XmlSimpleWriter {
      * Write a bunch of characters (encoded) to the stream.
      * 
      * @see org.xml.sax.ContentHandler#characters(char[], int, int)
-     * @param ch 
+     * @param ch
      * @throws SAXException
      */
     public void characters(final String ch) throws SAXException {

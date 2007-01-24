@@ -29,7 +29,7 @@ import java.util.Enumeration;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
-import org.apache.ugli.ULogger;
+import org.apache.commons.logging.Log;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -40,7 +40,7 @@ public class Version {
     private static final DateFormat fmt = new SimpleDateFormat(
             "yyyy-MM-dd HH:mm:ss");
 
-    private static final ULogger log = JCLoggerFactory.getLogger(Version.class);
+    private static final Log log = JCLoggerFactory.getLogger(Version.class);
 
     static Version create(final String complete, final String time) {
         if (complete == null)

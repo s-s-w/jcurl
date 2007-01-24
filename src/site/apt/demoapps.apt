@@ -18,3 +18,9 @@
 	
 	  * {{{applet.html} JCurl Viewer Applet}}
 		Requires the Browser Plugin Java 1.4+ and comes with a download of ca. 330K.
+
+ If your browser has problems viewing this applet, visit 
+ {{{http://java.sun.com/products/plugin/1.4/demos/plugin/applets/MoleculeViewer/example1.html} 
+ one of sun's own demos}}. This should initiate the download of the correct 
+ browser plugin.
+ 
