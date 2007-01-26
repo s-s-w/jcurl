@@ -22,16 +22,16 @@ import junit.framework.TestCase;
 
 import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.model.SlideDenny;
-import org.jcurl.math.CurveBase;
+import org.jcurl.math.R1RNFunction;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SlideDennyTest.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class SlideDennyTest extends TestCase {
 
     public void test010() {
         SlideDenny s = new SlideDenny();
-        CurveBase c = s.createCurve(new RockDouble());
+        R1RNFunction c = s.createCurve(new RockDouble());
     }
 }

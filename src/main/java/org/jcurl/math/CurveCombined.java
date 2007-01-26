@@ -28,7 +28,7 @@ import org.jcurl.core.helpers.JCLoggerFactory;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveCombined extends CurveBase {
+public class CurveCombined extends R1RNFunction {
 
     private static final int growth = 120;
 
@@ -71,7 +71,7 @@ public class CurveCombined extends CurveBase {
         }
     }
 
-    private CurveBase[] fkt;
+    private R1RNFunction[] fkt;
 
     private int parts = 0;
 
@@ -83,23 +83,40 @@ public class CurveCombined extends CurveBase {
     public CurveCombined(int dim) {
         super(dim);
         t0 = new double[initialSize];
-        fkt = new CurveBase[initialSize];
+        fkt = new R1RNFunction[initialSize];
     }
 
-    public void add(final double _t0, final CurveBase fkt) {
+    public void add(final double _t0, final R1RNFunction fkt) {
         // re-alloc?
         if (parts == t0.length) {
             final int siz = 1 + parts * growth / 100;
             final double[] t = new double[siz];
             System.arraycopy(t0, 0, t, 0, parts);
             t0 = t;
-            final CurveBase[] c = new CurveBase[siz];
+            final R1RNFunction[] c = new R1RNFunction[siz];
             System.arraycopy(this.fkt, 0, c, 0, parts);
             this.fkt = c;
         }
         // add
         this.t0[parts] = _t0;
         this.fkt[parts++] = fkt;
+    }
+
+    /**
+     * Get the n-th derivative of one dimension.
+     * 
+     * @param dim
+     *            dimension
+     * @param c
+     *            derivative
+     * @param t
+     * @return the value
+     */
+    public double at(int dim, int c, double t) {
+        final int idx = findFktIdx_BS(t);
+        if (false && log.isDebugEnabled())
+            log.debug("t=" + t + " idx=" + idx);
+        return fkt[idx].at(dim, c, t);
     }
 
     public void clear() {
@@ -138,22 +155,5 @@ public class CurveCombined extends CurveBase {
                 return i;
         }
         throw new IllegalArgumentException("t < tmin");
-    }
-
-    /**
-     * Get the n-th derivative of one dimension.
-     * 
-     * @param dim
-     *            dimension
-     * @param c
-     *            derivative
-     * @param t
-     * @return the value
-     */
-    public double getC(int dim, int c, double t) {
-        final int idx = findFktIdx_BS(t);
-        if (false && log.isDebugEnabled())
-            log.debug("t=" + t + " idx=" + idx);
-        return fkt[idx].getC(dim, c, t);
     }
 }

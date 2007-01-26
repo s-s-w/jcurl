@@ -21,10 +21,10 @@ package org.jcurl.core.base;
 import org.jcurl.core.helpers.Dim;
 
 /**
- * Handle ice properties as friction and curl.
+ * Ice dimensions.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:Ice.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class Ice {
 

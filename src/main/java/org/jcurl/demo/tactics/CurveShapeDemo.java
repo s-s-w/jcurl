@@ -30,19 +30,19 @@ import javax.swing.JPanel;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.helpers.Version;
-import org.jcurl.math.CurveBase;
+import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.CurveFkt;
 import org.jcurl.math.CurveShape;
-import org.jcurl.math.Function1D;
+import org.jcurl.math.R1R1Function;
 import org.jcurl.math.Polynome;
 
 /**
- * Demonstrate how to draw a {@link org.jcurl.math.CurveBase}converted to a
+ * Demonstrate how to draw a {@link org.jcurl.math.R1RNFunction}converted to a
  * {@link java.awt.Shape}.
  * 
  * @see org.jcurl.math.CurveShape
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:CurveShapeDemo.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class CurveShapeDemo extends JFrame {
 
@@ -53,9 +53,9 @@ public class CurveShapeDemo extends JFrame {
 
     public static void main(String[] args) {
         log.info("Version: " + Version.find());
-        final CurveBase c;
+        final R1RNFunction c;
         {
-            final Function1D[] f = new Function1D[2];
+            final R1R1Function[] f = new R1R1Function[2];
             final double[] fx = { 200, 150 };
             final double[] fy = { 4, 4, 4, 4, 4 };
             f[0] = new Polynome(fx);
@@ -90,9 +90,9 @@ public class CurveShapeDemo extends JFrame {
         });
     }
 
-    private final CurveBase curve;
+    private final R1RNFunction curve;
 
-    public CurveShapeDemo(final CurveBase c) {
+    public CurveShapeDemo(final R1RNFunction c) {
         this.curve = c;
     }
 }

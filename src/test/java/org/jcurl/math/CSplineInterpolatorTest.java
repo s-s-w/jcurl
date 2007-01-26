@@ -53,36 +53,36 @@ public class CSplineInterpolatorTest extends TestCase {
         ip.add(6, 0);
         ip.add(7, 1);
         ip.add(8, 0);
-        assertEquals("", 0.0, ip.getC(0, 0), 1e-6);
-        assertEquals("", 0.774484, ip.getC(0, 0.5), 1e-6);
-        assertEquals("", 1.0, ip.getC(0, 1), 1e-6);
-        assertEquals("", 0.426546, ip.getC(0, 1.5), 1e-6);
-        assertEquals("", 0.0, ip.getC(0, 2), 1e-6);
-        assertEquals("", 0.519329, ip.getC(0, 2.5), 1e-6);
-        assertEquals("", 1.0, ip.getC(0, 3), 1e-6);
-        assertEquals("", 0.496134, ip.getC(0, 3.5), 1e-6);
-        assertEquals("", 0.0, ip.getC(0, 4), 1e-6);
-        assertEquals("", 0.496134, ip.getC(0, 4.5), 1e-6);
-        assertEquals("", 1.0, ip.getC(0, 5), 1e-6);
-        assertEquals("", 0.519329, ip.getC(0, 5.5), 1e-6);
-        assertEquals("", 0.0, ip.getC(0, 6), 1e-6);
-        assertEquals("", 0.426546, ip.getC(0, 6.5), 1e-6);
-        assertEquals("", 1.0, ip.getC(0, 7), 1e-6);
-        assertEquals("", 0.774484, ip.getC(0, 7.5), 1e-6);
-        assertEquals("", 0.0, ip.getC(0, 8), 1e-6);
+        assertEquals("", 0.0, ip.at(0, 0), 1e-6);
+        assertEquals("", 0.774484, ip.at(0, 0.5), 1e-6);
+        assertEquals("", 1.0, ip.at(0, 1), 1e-6);
+        assertEquals("", 0.426546, ip.at(0, 1.5), 1e-6);
+        assertEquals("", 0.0, ip.at(0, 2), 1e-6);
+        assertEquals("", 0.519329, ip.at(0, 2.5), 1e-6);
+        assertEquals("", 1.0, ip.at(0, 3), 1e-6);
+        assertEquals("", 0.496134, ip.at(0, 3.5), 1e-6);
+        assertEquals("", 0.0, ip.at(0, 4), 1e-6);
+        assertEquals("", 0.496134, ip.at(0, 4.5), 1e-6);
+        assertEquals("", 1.0, ip.at(0, 5), 1e-6);
+        assertEquals("", 0.519329, ip.at(0, 5.5), 1e-6);
+        assertEquals("", 0.0, ip.at(0, 6), 1e-6);
+        assertEquals("", 0.426546, ip.at(0, 6.5), 1e-6);
+        assertEquals("", 1.0, ip.at(0, 7), 1e-6);
+        assertEquals("", 0.774484, ip.at(0, 7.5), 1e-6);
+        assertEquals("", 0.0, ip.at(0, 8), 1e-6);
         try {
-            ip.getC(0, -0.1);
+            ip.at(0, -0.1);
             fail("Too small");
         } catch (ArrayIndexOutOfBoundsException e) {
             ;
         }
         try {
-            ip.getC(0, 8.1);
+            ip.at(0, 8.1);
             fail("Too large");
         } catch (ArrayIndexOutOfBoundsException e) {
             ;
         }
         for (int i = 1000000; i >= 0; i--)
-            ip.getC(0, 2);
+            ip.at(0, 2);
     }
 }

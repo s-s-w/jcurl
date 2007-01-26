@@ -27,7 +27,7 @@ package org.jcurl.math;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CSplineInterpolator extends Function1D {
+public class CSplineInterpolator extends R1R1Function {
 
     private static final int a = 0;
 
@@ -147,6 +147,29 @@ public class CSplineInterpolator extends Function1D {
     }
 
     /**
+     * Convenience wrapper.
+     * 
+     * @see #at(int, int, double)
+     * @see #findSplineIndex(double)
+     * @param C
+     *            n'th derivative (0=value,1=incline,2=acceleration)
+     * @param x
+     *            location
+     * @return value ot the n'th derivative
+     */
+    public double at(final int C, double x) {
+        final int idx = findSplineIndex(x);
+        final double[] spline = _splines[idx];
+        x -= _x[idx];
+        double ret = 0;
+        for (int i = d; i >= C; i--) {
+            ret *= x;
+            ret += spline[i];
+        }
+        return ret;
+    }
+
+    /**
      * Look up the spline index for the given x. Triggers spline computation if
      * not existing yet.
      * 
@@ -169,29 +192,6 @@ public class CSplineInterpolator extends Function1D {
             idx = -2 - idx;
         }
         return idx;
-    }
-
-    /**
-     * Convenience wrapper.
-     * 
-     * @see #getC(int, int, double)
-     * @see #findSplineIndex(double)
-     * @param C
-     *            n'th derivative (0=value,1=incline,2=acceleration)
-     * @param x
-     *            location
-     * @return value ot the n'th derivative
-     */
-    public double getC(final int C, double x) {
-        final int idx = findSplineIndex(x);
-        final double[] spline = _splines[idx];
-        x -= _x[idx];
-        double ret = 0;
-        for (int i = d; i >= C; i--) {
-            ret *= x;
-            ret += spline[i];
-        }
-        return ret;
     }
 
     public double getMaxX() {

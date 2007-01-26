@@ -28,6 +28,38 @@ import java.awt.geom.Point2D;
  */
 public final class MathVec {
 
+    public static double abs(final Point2D a) {
+        return Math.sqrt(scal(a, a));
+    }
+
+    public static Point2D add(final Point2D a, final Point2D b, final Point2D c) {
+        final Point2D ret = ensureInstance(a, c);
+        ret.setLocation(a.getX() + b.getX(), a.getY() + b.getY());
+        return ret;
+    }
+
+    /**
+     * Ensure c isn't <code>null</code>, if so create a new instance of the
+     * type of <code>template</code>.
+     * 
+     * @param template
+     * @param c
+     * @return <code>c</code> or
+     *         <code>template.getClass().newInstance()</code>
+     */
+    public static Point2D ensureInstance(final Point2D template, final Point2D c) {
+        if (c != null)
+            return c;
+        // try {
+        // return (Point2D) template.getClass().newInstance();
+        return (Point2D) template.clone();
+        // } catch (InstantiationException e) {
+        // throw new RuntimeException("Couldn't create a new instance.", e);
+        // } catch (IllegalAccessException e) {
+        // throw new RuntimeException("Couldn't create a new instance.", e);
+        // }
+    }
+
     /**
      * Solve a linear equation of the form a*x=b.
      * <p>
@@ -121,38 +153,6 @@ public final class MathVec {
             x[i] = -s / a[i][i];
         }
         return x;
-    }
-
-    public static double abs(final Point2D a) {
-        return Math.sqrt(scal(a, a));
-    }
-
-    public static Point2D add(final Point2D a, final Point2D b, final Point2D c) {
-        final Point2D ret = ensureInstance(a, c);
-        ret.setLocation(a.getX() + b.getX(), a.getY() + b.getY());
-        return ret;
-    }
-
-    /**
-     * Ensure c isn't <code>null</code>, if so create a new instance of the
-     * type of <code>template</code>.
-     * 
-     * @param template
-     * @param c
-     * @return <code>c</code> or
-     *         <code>template.getClass().newInstance()</code>
-     */
-    public static Point2D ensureInstance(final Point2D template, final Point2D c) {
-        if (c != null)
-            return c;
-        // try {
-        // return (Point2D) template.getClass().newInstance();
-        return (Point2D) template.clone();
-        // } catch (InstantiationException e) {
-        // throw new RuntimeException("Couldn't create a new instance.", e);
-        // } catch (IllegalAccessException e) {
-        // throw new RuntimeException("Couldn't create a new instance.", e);
-        // }
     }
 
     public static double[] mult(final double fact, final double[] a, double[] b) {

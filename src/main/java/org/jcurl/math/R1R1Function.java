@@ -19,15 +19,16 @@
 package org.jcurl.math;
 
 /**
- * A "normal" one-dimensional function. Because this is the same as a
- * 1-dimensional curve it extends {@link org.jcurl.math.CurveBase}.
+ * A one-dimensional function <code>f : R^1 -&gt; R^1</code>. Because this is
+ * the same as a 1-dimensional curve it extends
+ * {@link org.jcurl.math.R1RNFunction}.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class Function1D extends CurveBase {
+public abstract class R1R1Function extends R1RNFunction {
 
-    protected Function1D() {
+    protected R1R1Function() {
         super(1);
     }
 
@@ -39,9 +40,9 @@ public abstract class Function1D extends CurveBase {
      * @param x
      *            x-value
      * @return the c'th derivative at <code>x</code>
-     * @see Function1D#getC(int, int, double)
+     * @see R1R1Function#at(int, int, double)
      */
-    public abstract double getC(int c, double x);
+    public abstract double at(int c, double x);
 
     /**
      * Compute the c'th derivative at <code>x</code>.
@@ -53,20 +54,20 @@ public abstract class Function1D extends CurveBase {
      * @param x
      *            x-value
      * @return the c'th derivative at <code>x</code>
-     * @see Function1D#getC(int, double)
+     * @see R1R1Function#at(int, double)
      * @throws IllegalArgumentException
      *             if <code>dim != 0</code>
      */
-    public double getC(int dim, int c, double x) {
+    public double at(int dim, int c, double x) {
         if (dim != 0)
             throw new IllegalArgumentException("Dimension must be 0");
-        return getC(c, x);
+        return at(c, x);
     }
 
     /**
      * Compute <code>x where f(x) = 0</code> using Newton's algorithm.
      * 
-     * @see CurveBase#computeNewtonZero(int, int, double)
+     * @see R1RNFunction#computeNewtonZero(int, int, double)
      * @param c
      *            c'th derivative
      * @param x

@@ -29,7 +29,7 @@ import org.jcurl.core.base.Source;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.model.SlideStraight;
-import org.jcurl.math.CurveBase;
+import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.Polynome;
 
 /**
@@ -37,7 +37,7 @@ import org.jcurl.math.Polynome;
  * 
  * @see org.jcurl.core.model.SlideStraight
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SlideStraightTest.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class SlideStraightTest extends TestCase {
     private static final Log log = JCLoggerFactory
@@ -63,60 +63,60 @@ public class SlideStraightTest extends TestCase {
     public void test010_createCurve() {
         Rock x0 = new RockDouble(0, 0, 0);
         Rock v0 = new RockDouble(0, 0, 0);
-        CurveBase c = s.createCurve(0, x0, v0);
-        assertEquals("", 0, c.getC(0, 0, 0), 1e-9);
-        assertEquals("", 0, c.getC(1, 0, 0), 1e-9);
-        assertEquals("", 0, c.getC(2, 0, 0), 1e-9);
+        R1RNFunction c = s.createCurve(0, x0, v0);
+        assertEquals("", 0, c.at(0, 0, 0), 1e-9);
+        assertEquals("", 0, c.at(1, 0, 0), 1e-9);
+        assertEquals("", 0, c.at(2, 0, 0), 1e-9);
 
-        assertEquals("", 0, c.getC(0, 1, 0), 1e-9);
-        assertEquals("", 0, c.getC(1, 1, 0), 1e-9);
-        assertEquals("", 0, c.getC(2, 1, 0), 1e-9);
+        assertEquals("", 0, c.at(0, 1, 0), 1e-9);
+        assertEquals("", 0, c.at(1, 1, 0), 1e-9);
+        assertEquals("", 0, c.at(2, 1, 0), 1e-9);
 
-        assertEquals("", 0, c.getC(0, 0, 1), 1e-9);
-        assertEquals("", 0, c.getC(1, 0, 1), 1e-9);
-        assertEquals("", 0, c.getC(2, 0, 1), 1e-9);
+        assertEquals("", 0, c.at(0, 0, 1), 1e-9);
+        assertEquals("", 0, c.at(1, 0, 1), 1e-9);
+        assertEquals("", 0, c.at(2, 0, 1), 1e-9);
 
-        assertEquals("", 0, c.getC(0, 1, 1), 1e-9);
-        assertEquals("", 0, c.getC(1, 1, 1), 1e-9);
-        assertEquals("", 0, c.getC(2, 1, 1), 1e-9);
+        assertEquals("", 0, c.at(0, 1, 1), 1e-9);
+        assertEquals("", 0, c.at(1, 1, 1), 1e-9);
+        assertEquals("", 0, c.at(2, 1, 1), 1e-9);
 
         x0 = new RockDouble(1, 2, 0);
         v0 = new RockDouble(0, 0, 0);
         c = s.createCurve(0, x0, v0);
-        assertEquals("", 1, c.getC(0, 0, 0), 1e-9);
-        assertEquals("", 2, c.getC(1, 0, 0), 1e-9);
-        assertEquals("", 0, c.getC(2, 0, 0), 1e-9);
+        assertEquals("", 1, c.at(0, 0, 0), 1e-9);
+        assertEquals("", 2, c.at(1, 0, 0), 1e-9);
+        assertEquals("", 0, c.at(2, 0, 0), 1e-9);
 
-        assertEquals("", 0, c.getC(0, 1, 0), 1e-9);
-        assertEquals("", 0, c.getC(1, 1, 0), 1e-9);
-        assertEquals("", 0, c.getC(2, 1, 0), 1e-9);
+        assertEquals("", 0, c.at(0, 1, 0), 1e-9);
+        assertEquals("", 0, c.at(1, 1, 0), 1e-9);
+        assertEquals("", 0, c.at(2, 1, 0), 1e-9);
 
-        assertEquals("", 1, c.getC(0, 0, 1), 1e-9);
-        assertEquals("", 2, c.getC(1, 0, 1), 1e-9);
-        assertEquals("", 0, c.getC(2, 0, 1), 1e-9);
+        assertEquals("", 1, c.at(0, 0, 1), 1e-9);
+        assertEquals("", 2, c.at(1, 0, 1), 1e-9);
+        assertEquals("", 0, c.at(2, 0, 1), 1e-9);
 
-        assertEquals("", 0, c.getC(0, 1, 1), 1e-9);
-        assertEquals("", 0, c.getC(1, 1, 1), 1e-9);
-        assertEquals("", 0, c.getC(2, 1, 1), 1e-9);
+        assertEquals("", 0, c.at(0, 1, 1), 1e-9);
+        assertEquals("", 0, c.at(1, 1, 1), 1e-9);
+        assertEquals("", 0, c.at(2, 1, 1), 1e-9);
 
         x0 = new RockDouble(1, 2, 0);
         v0 = new RockDouble(0.1, 0.2, 0);
         c = s.createCurve(0, x0, v0);
-        assertEquals("", 1, c.getC(0, 0, 0), 1e-9);
-        assertEquals("", 2, c.getC(1, 0, 0), 1e-9);
-        assertEquals("", 0, c.getC(2, 0, 0), 1e-9);
+        assertEquals("", 1, c.at(0, 0, 0), 1e-9);
+        assertEquals("", 2, c.at(1, 0, 0), 1e-9);
+        assertEquals("", 0, c.at(2, 0, 0), 1e-9);
 
-        assertEquals("", 0.1, c.getC(0, 1, 0), 1e-9);
-        assertEquals("", 0.2, c.getC(1, 1, 0), 1e-9);
-        assertEquals("", 0, c.getC(2, 1, 0), 1e-9);
+        assertEquals("", 0.1, c.at(0, 1, 0), 1e-9);
+        assertEquals("", 0.2, c.at(1, 1, 0), 1e-9);
+        assertEquals("", 0, c.at(2, 1, 0), 1e-9);
 
         // assertEquals("", 1.07603611502, c.getC(0, 0, 1), 1e-9);
         // assertEquals("", 2.15207223004, c.getC(1, 0, 1), 1e-9);
-        assertEquals("", 0, c.getC(2, 0, 1), 1e-9);
+        assertEquals("", 0, c.at(2, 0, 1), 1e-9);
 
         // assertEquals("", 0.052072230042, c.getC(0, 1, 1), 1e-9);
         // assertEquals("", 0.104144460085, c.getC(1, 1, 1), 1e-9);
-        assertEquals("", 0, c.getC(2, 1, 1), 1e-9);
+        assertEquals("", 0, c.at(2, 1, 1), 1e-9);
     }
 
     private static final double sqr(final double a) {
@@ -147,7 +147,7 @@ public class SlideStraightTest extends TestCase {
         assertEquals("", a, Polynome.poly(2, t0 + dt, par), 1e-9);
 
         dt = 0;
-        CurveBase c = s.createCurve(t0, x0, v0);
+        R1RNFunction c = s.createCurve(t0, x0, v0);
         // untransformed : p(x) = 0.10406485628694145 + 0.11913533326608741*x +
         // -0.0535848758171096*x**2
         // Curve x : p(x) = 0.9316956597747996*x**0 + 0.1020171046257019*x**1 +
@@ -155,18 +155,18 @@ public class SlideStraightTest extends TestCase {
         // Curve y : p(x) = 1.8147494171518157*x**0 + 0.061528351157903664*x**1
         // + -0.027674317649021823*x**2
         // Curve z : p(x) = 0.0*x**0 + 0.0*x**1 + 0.0*x**2
-        assertEquals("", x0.getX(), c.getC(0, 0, t0 + dt), 1e-9);
-        assertEquals("", x0.getY(), c.getC(1, 0, t0 + dt), 1e-9);
-        assertEquals("", x0.getZ(), c.getC(2, 0, t0 + dt), 1e-9);
+        assertEquals("", x0.getX(), c.at(0, 0, t0 + dt), 1e-9);
+        assertEquals("", x0.getY(), c.at(1, 0, t0 + dt), 1e-9);
+        assertEquals("", x0.getZ(), c.at(2, 0, t0 + dt), 1e-9);
 
-        assertEquals("", v0.getX(), c.getC(0, 1, t0 + dt), 1e-9);
-        assertEquals("", v0.getY(), c.getC(1, 1, t0 + dt), 1e-9);
-        assertEquals("", v0.getZ(), c.getC(2, 1, t0 + dt), 1e-9);
+        assertEquals("", v0.getX(), c.at(0, 1, t0 + dt), 1e-9);
+        assertEquals("", v0.getY(), c.at(1, 1, t0 + dt), 1e-9);
+        assertEquals("", v0.getZ(), c.at(2, 1, t0 + dt), 1e-9);
 
         dt = 0.01;
-        assertEquals("", 0.10124035636683068, c.getC(0, 1, t0 + dt), 1e-9);
-        assertEquals("", 0.06105988030874099, c.getC(1, 1, t0 + dt), 1e-9);
-        assertEquals("", v0.getZ(), c.getC(2, 1, t0 + dt), 1e-9);
+        assertEquals("", 0.10124035636683068, c.at(0, 1, t0 + dt), 1e-9);
+        assertEquals("", 0.06105988030874099, c.at(1, 1, t0 + dt), 1e-9);
+        assertEquals("", v0.getZ(), c.at(2, 1, t0 + dt), 1e-9);
     }
 
     public void test100() {

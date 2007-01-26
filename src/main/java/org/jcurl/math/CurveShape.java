@@ -28,28 +28,28 @@ import java.awt.geom.GeneralPath;
  */
 public abstract class CurveShape {
 
-    public static Shape approximate(final CurveBase c, final double[] sections) {
+    private static Shape approximate(final R1R1Function fx, final R1R1Function fy,
+            final double[] sections) {
+        final R1R1Function[] f = { fx, fy };
+        return approximate(new CurveFkt(f), sections);
+    }
+
+    public static Shape approximate(final R1RNFunction c, final double[] sections) {
         // return approximateLinear(c, sections);
         return approximateQuadratic(c, sections);
     }
 
-    private static Shape approximate(final Function1D fx, final Function1D fy,
+    public static Shape approximateLinear(final R1RNFunction c,
             final double[] sections) {
-        final Function1D[] f = { fx, fy };
-        return approximate(new CurveFkt(f), sections);
-    }
-
-    public static Shape approximateLinear(final CurveBase c,
-            final double[] sections) {
-        final double[] x_1 = { c.getC(0, 0, sections[0]),
-                c.getC(1, 0, sections[0]) };
+        final double[] x_1 = { c.at(0, 0, sections[0]),
+                c.at(1, 0, sections[0]) };
         final double[] x_2 = { 0, 0 };
         final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
                 sections.length + 1);
         gp.moveTo((float) x_1[0], (float) x_1[1]);
         for (int i = 1; i < sections.length; i++) {
-            x_2[0] = c.getC(0, 0, sections[i]);
-            x_2[1] = c.getC(1, 0, sections[i]);
+            x_2[0] = c.at(0, 0, sections[i]);
+            x_2[1] = c.at(1, 0, sections[i]);
             gp.lineTo((float) x_2[0], (float) x_2[1]);
             x_1[0] = x_2[0];
             x_1[1] = x_2[1];
@@ -57,12 +57,12 @@ public abstract class CurveShape {
         return gp;
     }
 
-    public static Shape approximateQuadratic(final CurveBase c,
+    public static Shape approximateQuadratic(final R1RNFunction c,
             final double[] sections) {
-        final double[] p0 = { c.getC(0, 0, sections[0]),
-                c.getC(1, 0, sections[0]) };
-        final double[] v0 = { c.getC(0, 1, sections[0]),
-                c.getC(1, 1, sections[0]) };
+        final double[] p0 = { c.at(0, 0, sections[0]),
+                c.at(1, 0, sections[0]) };
+        final double[] v0 = { c.at(0, 1, sections[0]),
+                c.at(1, 1, sections[0]) };
         final double[] p1 = { 0, 0 };
         final double[] v1 = { 0, 0 };
         final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
@@ -72,10 +72,10 @@ public abstract class CurveShape {
         final double tmp_b[] = { 0, 0 };
         final double pc[] = { 0, 0 };
         for (int i = 1; i < sections.length; i++) {
-            p1[0] = c.getC(0, 0, sections[i]);
-            p1[1] = c.getC(1, 0, sections[i]);
-            v1[0] = c.getC(0, 1, sections[i]);
-            v1[1] = c.getC(1, 1, sections[i]);
+            p1[0] = c.at(0, 0, sections[i]);
+            p1[1] = c.at(1, 0, sections[i]);
+            v1[0] = c.at(0, 1, sections[i]);
+            v1[1] = c.at(1, 1, sections[i]);
             computeControlPoint(p0, v0, p1, v1, tmp_a, tmp_b, pc);
             gp.quadTo((float) pc[0], (float) pc[1], (float) p1[0],
                     (float) p1[1]);

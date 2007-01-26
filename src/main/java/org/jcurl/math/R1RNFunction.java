@@ -19,16 +19,16 @@
 package org.jcurl.math;
 
 /**
- * Abstract base class for n-dimensional curves <code>R -&gt; R^n</code>.
+ * Abstract base class for n-dimensional curves <code>f : R^1 -&gt; R^n</code>.
  * 
  * @see org.jcurl.math.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class CurveBase {
+public abstract class R1RNFunction {
     protected final int dim;
 
-    protected CurveBase(final int dim) {
+    protected R1RNFunction(final int dim) {
         this.dim = dim;
     }
 
@@ -43,11 +43,11 @@ public abstract class CurveBase {
      *            return value container
      * @return the c'th derivative at <code>t</code>
      */
-    public double[] getC(int c, double t, double[] ret) {
+    public double[] at(int c, double t, double[] ret) {
         if (ret == null)
             ret = new double[dim];
         for (int i = dim - 1; i >= 0; i--)
-            ret[i] = getC(i, c, t);
+            ret[i] = at(i, c, t);
         return ret;
     }
 
@@ -62,11 +62,11 @@ public abstract class CurveBase {
      *            return value container
      * @return the c'th derivative at <code>t</code>
      */
-    public float[] getC(int c, double t, float[] ret) {
+    public float[] at(int c, double t, float[] ret) {
         if (ret == null)
             ret = new float[dim];
         for (int i = dim - 1; i >= 0; i--)
-            ret[i] = (float) getC(i, c, t);
+            ret[i] = (float) at(i, c, t);
         return ret;
     }
 
@@ -81,22 +81,7 @@ public abstract class CurveBase {
      *            t-value
      * @return the c'th derivative at <code>t</code>
      */
-    public abstract double getC(int dim, int c, double t);
-
-    /**
-     * Compute <code>x where f(x) = 0</code> using Newton's algorithm.
-     * 
-     * @param dim
-     *            dimension (0,1,2,...)
-     * @param c
-     *            c'th derivative
-     * @param x
-     *            start value
-     * @return x for getC(dim, c, x) = 0
-     */
-    public double computeNewtonZero(final int dim, final int c, double x) {
-        return computeNewtonValue(dim, c, 0, x);
-    }
+    public abstract double at(int dim, int c, double t);
 
     /**
      * Compute <code>x where f^c(x) = y</code> using Newton's algorithm.
@@ -115,13 +100,28 @@ public abstract class CurveBase {
             double x) {
         final double eps = 1e-9;
         for (;;) {
-            double dx = getC(dim, c + 1, x);
+            double dx = at(dim, c + 1, x);
             if (dx == 0)
                 return 0;
-            dx = (getC(dim, c, x) - y) / dx;
+            dx = (at(dim, c, x) - y) / dx;
             x -= dx;
             if (Math.abs(dx) < eps)
                 return x;
         }
+    }
+
+    /**
+     * Compute <code>x where f(x) = 0</code> using Newton's algorithm.
+     * 
+     * @param dim
+     *            dimension (0,1,2,...)
+     * @param c
+     *            c'th derivative
+     * @param x
+     *            start value
+     * @return x for getC(dim, c, x) = 0
+     */
+    public double computeNewtonZero(final int dim, final int c, double x) {
+        return computeNewtonValue(dim, c, 0, x);
     }
 }

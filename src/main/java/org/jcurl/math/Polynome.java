@@ -25,7 +25,7 @@ package org.jcurl.math;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class Polynome extends Function1D {
+public class Polynome extends R1R1Function {
     /**
      * Compute <code>a!</code>
      * 
@@ -147,7 +147,7 @@ public class Polynome extends Function1D {
     /**
      * @see #poly(int, double, double[])
      */
-    public double getC(final int c, final double x) {
+    public double at(final int c, final double x) {
         return poly(c, x, params);
     }
 

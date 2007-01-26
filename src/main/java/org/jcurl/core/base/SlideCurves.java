@@ -23,7 +23,7 @@ import java.awt.geom.Point2D;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.math.CurveBase;
+import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.CurveCombined;
 import org.jcurl.math.CurveInterval;
 import org.jcurl.math.MathVec;
@@ -31,17 +31,17 @@ import org.jcurl.math.Polynome;
 
 /**
  * Abstract base class for analytic (non-discrete) curl models. Based on rock
- * trajectories in {@link org.jcurl.math.CurveBase}-form.
+ * trajectories in {@link org.jcurl.math.R1RNFunction}-form.
  * 
- * @see org.jcurl.math.CurveBase
+ * @see org.jcurl.math.R1RNFunction
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SlideCurves.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public abstract class SlideCurves extends SlideStrategy {
 
     private static final Log log = JCLoggerFactory.getLogger(SlideCurves.class);
 
-    private static double findThalt(final double t0, final CurveBase cu) {
+    private static double findThalt(final double t0, final R1RNFunction cu) {
         final double thx = cu.computeNewtonZero(0, 1, t0);
         final double thy = cu.computeNewtonZero(1, 1, t0);
         final double thalt = thx > thy ? thx : thy;
@@ -91,12 +91,12 @@ public abstract class SlideCurves extends SlideStrategy {
      * @param speed
      * @return a 3-dimensional curve (x,y,alpha)
      */
-    protected abstract CurveBase createCurve(double t0, Rock pos, Rock speed);
+    protected abstract R1RNFunction createCurve(double t0, Rock pos, Rock speed);
 
     protected Rock getC(final int c, final double time, final int idx,
             final Rock r) {
-        final CurveBase cu = this.c[idx];
-        r.setLocation(cu.getC(0, c, time), cu.getC(1, c, time), cu.getC(2, c,
+        final R1RNFunction cu = this.c[idx];
+        r.setLocation(cu.at(0, c, time), cu.at(1, c, time), cu.at(2, c,
                 time));
         return r;
     }
@@ -168,7 +168,7 @@ public abstract class SlideCurves extends SlideStrategy {
             if (0 != (discontinuous & (1 << i))) {
                 log.info("compute rock #" + i);
                 // add a new curve to the list
-                final CurveBase cu = createCurve(t0, pos.getRock(i), speed
+                final R1RNFunction cu = createCurve(t0, pos.getRock(i), speed
                         .getRock(i));
                 c[i].add(t0, new CurveInterval(t0, findThalt(t0, cu), cu));
             }
