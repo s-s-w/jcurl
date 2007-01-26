@@ -25,16 +25,16 @@ package org.jcurl.math;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveInterval extends CurveBase {
+public class CurveInterval extends R1RNFunction {
 
-    private final CurveBase curve;
+    private final R1RNFunction curve;
 
     private final double tmax;
 
     private final double tmin;
 
     public CurveInterval(final double tmin, final double tmax,
-            final CurveBase curve) {
+            final R1RNFunction curve) {
         super(curve.dim);
         this.curve = curve;
         this.tmin = tmin;
@@ -50,7 +50,7 @@ public class CurveInterval extends CurveBase {
      *            parameter
      * @return value
      */
-    public double getC(final int dim, int c, double t) {
+    public double at(final int dim, int c, double t) {
         if (t < tmin) {
             if (c > 0)
                 return 0;
@@ -60,6 +60,6 @@ public class CurveInterval extends CurveBase {
                 return 0;
             t = tmax;
         }
-        return curve.getC(dim, c, t);
+        return curve.at(dim, c, t);
     }
 }

@@ -23,7 +23,7 @@ import junit.framework.TestCase;
 /**
  * JUnit Test.
  * 
- * @see org.jcurl.math.CurveBase
+ * @see org.jcurl.math.R1RNFunction
  * @see org.jcurl.math.CurveDom
  * @see org.jcurl.math.CurveCombined
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -37,18 +37,18 @@ public class CurveTest extends TestCase {
 
     public void test010() {
         Polynome po = Polynome.getPoly(1.0, 2.0, 3.0, 4.0);
-        assertEquals("", 2.0, po.getC(0, 1.0), 1e-9);
-        assertEquals("", 4.0, po.getC(0, 1.5), 1e-9);
-        assertEquals("", 7.0, po.getC(0, 2.0), 1e-9);
+        assertEquals("", 2.0, po.at(0, 1.0), 1e-9);
+        assertEquals("", 4.0, po.at(0, 1.5), 1e-9);
+        assertEquals("", 7.0, po.at(0, 2.0), 1e-9);
     }
 
     public void test020_CurveParts() {
         final CurveCombined c = new CurveCombined(1);
         // c.getC(0, 0, 0.1);
         c.add(0, Polynome.getPoly(0.0, 2.0, 3.0, 4.0));
-        c.getC(0, 0, 0.1);
+        c.at(0, 0, 0.1);
         c.add(1, Polynome.getPoly(1.0, 2.0, 3.0, 4.0));
-        c.getC(0, 0, 0.1);
-        c.getC(0, 0, 1.1);
+        c.at(0, 0, 0.1);
+        c.at(0, 0, 1.1);
     }
 }

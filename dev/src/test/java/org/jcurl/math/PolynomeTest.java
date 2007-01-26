@@ -55,42 +55,42 @@ public class PolynomeTest extends TestCase {
         // C0
         double x = 1.5;
         double y = a[0] + a[1] * x + a[2] * x * x + a[3] * x * x * x;
-        assertEquals("", y, po.getC(0, x), 1e-9);
+        assertEquals("", y, po.at(0, x), 1e-9);
         x = 2.5;
         y = a[0] + a[1] * x + a[2] * x * x + a[3] * x * x * x;
-        assertEquals("", y, po.getC(0, x), 1e-9);
+        assertEquals("", y, po.at(0, x), 1e-9);
 
         // C1
         x = 1.5;
         y = 1 * a[1] + 2 * a[2] * x + 3 * a[3] * x * x;
-        assertEquals("", y, po.getC(1, x), 1e-9);
+        assertEquals("", y, po.at(1, x), 1e-9);
         x = 2.5;
         y = 1 * a[1] + 2 * a[2] * x + 3 * a[3] * x * x;
-        assertEquals("", y, po.getC(1, x), 1e-9);
+        assertEquals("", y, po.at(1, x), 1e-9);
 
         // C2
         x = 1.5;
         y = 1 * 2 * a[2] + 2 * 3 * a[3] * x;
-        assertEquals("", y, po.getC(2, x), 1e-9);
+        assertEquals("", y, po.at(2, x), 1e-9);
         x = 2.5;
         y = 1 * 2 * a[2] + 2 * 3 * a[3] * x;
-        assertEquals("", y, po.getC(2, x), 1e-9);
+        assertEquals("", y, po.at(2, x), 1e-9);
 
         // C3
         x = 1.5;
         y = 1 * 2 * 3 * a[3];
-        assertEquals("", y, po.getC(3, x), 1e-9);
+        assertEquals("", y, po.at(3, x), 1e-9);
         x = 2.5;
         y = 1 * 2 * 3 * a[3];
-        assertEquals("", y, po.getC(3, x), 1e-9);
+        assertEquals("", y, po.at(3, x), 1e-9);
 
         // C4
         x = 1.5;
         y = 0;
-        assertEquals("", y, po.getC(4, x), 1e-9);
+        assertEquals("", y, po.at(4, x), 1e-9);
         x = 2.5;
         y = 0;
-        assertEquals("", y, po.getC(4, x), 1e-9);
+        assertEquals("", y, po.at(4, x), 1e-9);
     }
 
     public void test025_Newton() {
@@ -102,14 +102,14 @@ public class PolynomeTest extends TestCase {
         {
             double[] a = { -1, 0, 1 };
             Polynome po = new Polynome(a);
-            assertEquals("", 0, po.getC(0, 1), 1e-6);
+            assertEquals("", 0, po.at(0, 1), 1e-6);
             assertEquals("", 1, po.computeNewtonZero(0, 0.5), 1e-6);
         }
         {
             double[] a = { 0, 1, -0.0535848758171096 };
             Polynome po = new Polynome(a);
-            assertEquals("", 0.0, po.getC(0, 0), 1e-6);
-            assertEquals("", 1.0, po.getC(1, 0), 1e-6);
+            assertEquals("", 0.0, po.at(0, 0), 1e-6);
+            assertEquals("", 1.0, po.at(1, 0), 1e-6);
             assertEquals("", 9.330991112241236, po.computeNewtonZero(1, 0),
                     1e-6);
         }
@@ -136,17 +136,17 @@ public class PolynomeTest extends TestCase {
 
     public void test030_getPoly() {
         Polynome po = Polynome.getPoly(1.0, 2.0, 3.0, 4.0);
-        assertEquals("", 2.0, po.getC(0, 1.0), 1e-9);
-        assertEquals("", 4.0, po.getC(0, 1.5), 1e-9);
-        assertEquals("", 7.0, po.getC(0, 2.0), 1e-9);
+        assertEquals("", 2.0, po.at(0, 1.0), 1e-9);
+        assertEquals("", 4.0, po.at(0, 1.5), 1e-9);
+        assertEquals("", 7.0, po.at(0, 2.0), 1e-9);
 
-        assertEquals("", 3.0, po.getC(1, 1.0), 1e-9);
-        assertEquals("", 5.0, po.getC(1, 1.5), 1e-9);
-        assertEquals("", 7.0, po.getC(1, 2.0), 1e-9);
+        assertEquals("", 3.0, po.at(1, 1.0), 1e-9);
+        assertEquals("", 5.0, po.at(1, 1.5), 1e-9);
+        assertEquals("", 7.0, po.at(1, 2.0), 1e-9);
 
-        assertEquals("", 4.0, po.getC(2, 1.0), 1e-9);
-        assertEquals("", 4.0, po.getC(2, 1.5), 1e-9);
-        assertEquals("", 4.0, po.getC(2, 2.0), 1e-9);
+        assertEquals("", 4.0, po.at(2, 1.0), 1e-9);
+        assertEquals("", 4.0, po.at(2, 1.5), 1e-9);
+        assertEquals("", 4.0, po.at(2, 2.0), 1e-9);
     }
 
     public void test040_load() {
@@ -155,7 +155,7 @@ public class PolynomeTest extends TestCase {
         final int count = 500000;
         final long start = System.currentTimeMillis();
         for (int i = count - 1; i >= 0; i--)
-            po.getC(0, 1.1);
+            po.at(0, 1.1);
         double cps = count / (1e-3 * (System.currentTimeMillis() - start));
         assertTrue(cps > 2000000);
     }

@@ -30,7 +30,7 @@ import org.jcurl.core.io.SetupBuilder;
 import org.jcurl.core.io.SetupIO;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.SlideStraight;
-import org.jcurl.math.CurveBase;
+import org.jcurl.math.R1RNFunction;
 import org.xml.sax.SAXException;
 
 /**
@@ -41,7 +41,7 @@ import org.xml.sax.SAXException;
  * 
  * @see org.jcurl.core.base.ComputedSourceTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:ComputedSource.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class ComputedSource extends MutableObject implements Source {
 
@@ -57,7 +57,7 @@ public class ComputedSource extends MutableObject implements Source {
 
     private final SpeedSet startSpeed = new SpeedSet();
 
-    private CurveBase curveIterator(int idx) {
+    private R1RNFunction curveIterator(int idx) {
         throw new NotImplementedYetException();
     }
 

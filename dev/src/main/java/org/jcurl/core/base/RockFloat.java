@@ -23,12 +23,12 @@ import java.io.Serializable;
 /**
  * Either location or speed of a rock. This class is mostly for display and
  * storage means. The value array is accessible for direct use with e.g.
- * {@link org.jcurl.math.CurveBase#getC(int, double, float[])}.
+ * {@link org.jcurl.math.R1RNFunction#at(int, double, float[])}.
  * 
  * @see org.jcurl.core.base.PositionSet
  * @see org.jcurl.core.base.RockDouble
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:RockFloat.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class RockFloat extends Rock implements Serializable {
 

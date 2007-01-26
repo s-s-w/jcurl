@@ -28,7 +28,7 @@ import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SlideCurves;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.math.CurveBase;
+import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.CurveFkt;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.Polynome;
@@ -46,7 +46,7 @@ import org.jcurl.math.Polynome;
  * @see org.jcurl.core.model.SlideStraightTest
  * @see org.jcurl.core.model.SlideDenny
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SlideStraight.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class SlideStraight extends SlideCurves {
 
@@ -59,7 +59,7 @@ public class SlideStraight extends SlideCurves {
         super();
     }
 
-    protected CurveBase createCurve(final double t0, final Rock x0,
+    protected R1RNFunction createCurve(final double t0, final Rock x0,
             final Rock v0) {
         if (log.isDebugEnabled())
             log.debug("t0=" + t0 + " " + x0 + " " + v0);

@@ -24,7 +24,7 @@ import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.SlideCurves;
 import org.jcurl.core.helpers.NotImplementedYetException;
-import org.jcurl.math.CurveBase;
+import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.CurveFkt;
 import org.jcurl.math.Polynome;
 
@@ -35,7 +35,7 @@ import org.jcurl.math.Polynome;
  * 
  * @see org.jcurl.core.model.SlideStraight
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SlideDenny.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class SlideDenny extends SlideCurves {
 
@@ -58,12 +58,12 @@ public class SlideDenny extends SlideCurves {
         super();
     }
 
-    protected CurveBase createCurve(final double t0, final Rock pos,
+    protected R1RNFunction createCurve(final double t0, final Rock pos,
             final Rock speed) {
         throw new NotImplementedYetException();
     }
 
-    protected CurveBase createCurve(final Rock speed) {
+    protected R1RNFunction createCurve(final Rock speed) {
         final Polynome[] x = new Polynome[3];
         x[0] = new Polynome(new double[] { 0, 1, 2, 3 });
         x[1] = new Polynome(new double[] { 0, 1, 2, 3 });

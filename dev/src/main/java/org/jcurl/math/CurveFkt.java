@@ -20,26 +20,26 @@ package org.jcurl.math;
 
 /**
  * A n-dimensional, continuous curve <code>R -&gt; R^n</code> based on
- * {@link org.jcurl.math.Function1D}s.
+ * {@link org.jcurl.math.R1R1Function}s.
  * 
- * @see org.jcurl.math.Function1D
+ * @see org.jcurl.math.R1R1Function
  * @see org.jcurl.math.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveFkt extends CurveBase {
+public class CurveFkt extends R1RNFunction {
 
-    private final Function1D[] fkt;
+    private final R1R1Function[] fkt;
 
-    public CurveFkt(final Function1D[] fkt) {
+    public CurveFkt(final R1R1Function[] fkt) {
         super(fkt.length);
-        this.fkt = new Function1D[dim];
+        this.fkt = new R1R1Function[dim];
         for (int i = dim - 1; i >= 0; i--) {
             this.fkt[i] = fkt[i];
         }
     }
 
-    public double getC(int dim, int c, double t) {
-        return fkt[dim].getC(0, c, t);
+    public double at(int dim, int c, double t) {
+        return fkt[dim].at(0, c, t);
     }
 }
