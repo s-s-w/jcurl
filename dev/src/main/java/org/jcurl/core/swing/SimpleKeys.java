@@ -24,14 +24,13 @@ import java.awt.event.KeyListener;
 import org.jcurl.core.base.Source;
 import org.jcurl.core.base.TargetDiscrete;
 
-
 /**
  * A first, simple keyboard input class. Uses a
  * {@link org.jcurl.core.swing.RealTimePlayer}to play.
  * 
  * @see org.jcurl.demo.viewer.ViewerApp
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SimpleKeys.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class SimpleKeys implements KeyListener {
 
@@ -49,7 +48,7 @@ public class SimpleKeys implements KeyListener {
         final double t0 = src.getMinT();
         player = new RealTimePlayer(t0, 1.0, src, dst);
         // push the initial state from src to dst
-        dst.setPos(t0, src.getPos());
+        dst.setPos(src.getPos());
     }
 
     public void keyPressed(KeyEvent e) {

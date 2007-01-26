@@ -18,7 +18,6 @@
  */
 package org.jcurl.core.model;
 
-
 import org.jcurl.core.base.CollissionStrategy;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
@@ -32,7 +31,7 @@ import org.jcurl.core.helpers.DimVal;
  * paper <a href="http://jcurl.berlios.de/curlsci.pdf">Curling Scientific </a>.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:CollissionSpin.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class CollissionSpin extends CollissionStrategy {
 

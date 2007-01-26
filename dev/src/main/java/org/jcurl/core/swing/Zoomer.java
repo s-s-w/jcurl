@@ -23,7 +23,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-
 import org.jcurl.core.base.Ice;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.helpers.NotImplementedYetException;
@@ -33,7 +32,7 @@ import org.jcurl.core.helpers.NotImplementedYetException;
  * 
  * @see org.jcurl.core.swing.JCurlDisplay
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:Zoomer.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class Zoomer {
 
@@ -161,7 +160,7 @@ public class Zoomer {
         else
             mat.setToIdentity();
         mat.translate(-dc.getX(), -dc.getY());
-        final int SCALE = JCurlDisplay.SCALE;
+        final int SCALE = WCComponent.SCALE;
         double sca_x = dc.getWidth();
         double sca_y = dc.getHeight();
         if (Orientation.N.equals(orient)) {

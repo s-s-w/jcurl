@@ -20,14 +20,14 @@ package org.jcurl.core.base;
 
 import java.awt.geom.Point2D;
 
-
+import org.jcurl.core.PositionSetTest;
 import org.jcurl.core.helpers.Dim;
 
 /**
  * A {@link org.jcurl.core.base.RockSet}&nbsp;with location semantics.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:PositionSet.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class PositionSet extends RockSet {
 

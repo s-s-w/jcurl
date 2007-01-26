@@ -27,17 +27,16 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
-
 import org.jcurl.core.base.Ice;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.helpers.Dim;
 
 /**
- * Paint the ice (sheet).
+ * Strategy to paint the ice sheet in world coordinates.
  * 
  * @see org.jcurl.core.swing.RockPainter
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:IcePainter.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class IcePainter {
     /** Ice colors */
@@ -131,11 +130,6 @@ public class IcePainter {
 
     public final ColorSet color = new ColorSet();
 
-    /**
-     * 
-     * 
-     * @param g
-     */
     public void paintIceWC(final Graphics2D g) {
         g.setStroke(color.stroke);
         // filled stuff

@@ -18,7 +18,6 @@
  */
 package org.jcurl.core.base;
 
-
 /**
  * Interface for classes providing {@link org.jcurl.core.base.Rock} location and
  * speed data.
@@ -60,7 +59,7 @@ public interface Source {
      * 
      * @return the start time
      */
-    public abstract double getT();
+    public abstract double getTime();
 
     public abstract boolean isDiscrete();
 
@@ -73,5 +72,5 @@ public interface Source {
      * 
      * @param t
      */
-    public abstract void setT(final double t);
+    public abstract void setTime(final double t);
 }

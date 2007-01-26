@@ -24,7 +24,6 @@ import java.net.URL;
 
 import javax.swing.JApplet;
 
-
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.ComputedSource;
 import org.jcurl.core.base.PositionSet;

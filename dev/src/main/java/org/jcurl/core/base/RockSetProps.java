@@ -18,13 +18,12 @@
  */
 package org.jcurl.core.base;
 
-
 /**
  * Properties of a unique set of rocks (size, mass, etc.)
  * 
  * @see org.jcurl.core.base.RockProps
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:RockSetProps.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class RockSetProps {
 

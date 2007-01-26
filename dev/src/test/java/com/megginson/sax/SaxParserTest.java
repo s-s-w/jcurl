@@ -86,10 +86,10 @@ public class SaxParserTest extends TestCase {
                 assertEquals("a b c", arg1);
             }
 
-//            public InputSource resolveEntity(String arg0, String arg1)
-//                    throws SAXException {
-//                return super.resolveEntity(arg0, arg1);
-//            }
+            // public InputSource resolveEntity(String arg0, String arg1)
+            // throws SAXException {
+            // return super.resolveEntity(arg0, arg1);
+            // }
 
             public void setDocumentLocator(Locator arg0) {
                 super.setDocumentLocator(arg0);
@@ -182,10 +182,10 @@ public class SaxParserTest extends TestCase {
                 assertEquals("a b c", arg1);
             }
 
-//            public InputSource resolveEntity(String arg0, String arg1)
-//                    throws SAXException {
-//                return super.resolveEntity(arg0, arg1);
-//            }
+            // public InputSource resolveEntity(String arg0, String arg1)
+            // throws SAXException {
+            // return super.resolveEntity(arg0, arg1);
+            // }
 
             public void setDocumentLocator(Locator arg0) {
                 super.setDocumentLocator(arg0);

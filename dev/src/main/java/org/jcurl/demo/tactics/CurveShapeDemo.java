@@ -30,11 +30,11 @@ import javax.swing.JPanel;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.helpers.Version;
-import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.CurveFkt;
 import org.jcurl.math.CurveShape;
-import org.jcurl.math.R1R1Function;
 import org.jcurl.math.Polynome;
+import org.jcurl.math.R1R1Function;
+import org.jcurl.math.R1RNFunction;
 
 /**
  * Demonstrate how to draw a {@link org.jcurl.math.R1RNFunction}converted to a

@@ -27,8 +27,6 @@ import java.io.Reader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jcurl.core.io.OldConfigReader;
-
 import junit.framework.TestCase;
 
 /**
@@ -36,7 +34,7 @@ import junit.framework.TestCase;
  * 
  * @see org.jcurl.core.io.OldConfigReader
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:OldConfigReaderTest.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class OldConfigReaderTest extends TestCase {
 

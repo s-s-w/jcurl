@@ -23,10 +23,10 @@ import java.text.ParseException;
 import java.util.Map;
 import java.util.TreeMap;
 
+import junit.framework.TestCase;
+
 import org.jcurl.mr.math.Calc0;
 import org.jcurl.mr.math.Calc1;
-
-import junit.framework.TestCase;
 
 /**
  * JUnit Test.

@@ -27,7 +27,6 @@ import java.io.Writer;
 import java.util.Iterator;
 import java.util.zip.GZIPOutputStream;
 
-
 import org.jcurl.core.base.ModelBase;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
@@ -43,7 +42,7 @@ import org.xml.sax.helpers.AttributesImpl;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SetupSaxSer.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class SetupSaxSer {
 

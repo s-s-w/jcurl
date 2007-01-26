@@ -29,15 +29,13 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.core.io.SetupBuilder;
-import org.jcurl.core.io.SetupIO;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.SlideStraight;
 import org.xml.sax.SAXException;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SetupIOTest.java 378 2007-01-24 01:18:35Z mrohrmoser $
  * @see org.jcurl.core.io.SetupIO
  */
 public class SetupIOTest extends TestCase {

@@ -20,12 +20,9 @@ package org.jcurl.core.base;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.SlideStrategy;
-
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SlideStrategyTest.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class SlideStrategyTest extends TestCase {
 

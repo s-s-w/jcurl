@@ -20,14 +20,13 @@ package org.jcurl.core.base;
 
 import java.awt.geom.Point2D;
 
-
 import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.CurveCombined;
 import org.jcurl.math.CurveInterval;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.Polynome;
+import org.jcurl.math.R1RNFunction;
 
 /**
  * Abstract base class for analytic (non-discrete) curl models. Based on rock
@@ -96,8 +95,7 @@ public abstract class SlideCurves extends SlideStrategy {
     protected Rock getC(final int c, final double time, final int idx,
             final Rock r) {
         final R1RNFunction cu = this.c[idx];
-        r.setLocation(cu.at(0, c, time), cu.at(1, c, time), cu.at(2, c,
-                time));
+        r.setLocation(cu.at(0, c, time), cu.at(1, c, time), cu.at(2, c, time));
         return r;
     }
 

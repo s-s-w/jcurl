@@ -25,7 +25,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
-
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.CollissionStrategy;
 import org.jcurl.core.base.PositionSet;
@@ -40,7 +39,7 @@ import org.xml.sax.SAXException;
  * IO Abstraction layer.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SetupIO.java 378 2007-01-24 01:18:35Z mrohrmoser $
  * @see org.jcurl.core.io.SetupSaxSer
  * @see org.jcurl.core.io.SetupSaxDeSer
  * @see org.jcurl.core.io.SetupIOTest

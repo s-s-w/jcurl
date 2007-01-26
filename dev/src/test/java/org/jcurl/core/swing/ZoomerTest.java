@@ -23,19 +23,16 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import org.jcurl.core.base.Ice;
-import org.jcurl.core.swing.JCurlDisplay;
-import org.jcurl.core.swing.Orientation;
-import org.jcurl.core.swing.Zoomer;
-
 import junit.framework.TestCase;
+
+import org.jcurl.core.base.Ice;
 
 /**
  * JUnit test
  * 
  * @see org.jcurl.core.swing.Zoomer
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:ZoomerTest.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class ZoomerTest extends TestCase {
 

@@ -23,15 +23,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 
-
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.swing.RockLocationDisplayBase;
+import org.jcurl.core.swing.WCComponent;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:LocationController.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class LocationController implements MouseMotionListener {
 
@@ -46,7 +46,7 @@ public class LocationController implements MouseMotionListener {
 
     protected final PositionSet locations;
 
-    protected final RockLocationDisplayBase panel;
+    protected final WCComponent panel;
 
     // avoid some instanciations. Cost: thread safety
     protected final Point2D tmpWc = new Point2D.Double();
@@ -62,7 +62,7 @@ public class LocationController implements MouseMotionListener {
     public LocationController(final PositionSet model,
             final RockLocationDisplayBase panel) {
         panel.addMouseMotionListener(this);
-        panel.setPos(0, model);
+        panel.setPos(model);
 
         this.panel = panel;
         this.locations = model;

@@ -20,7 +20,6 @@ package org.jcurl.core.model;
 
 import java.awt.geom.Point2D;
 
-
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.Ice;
 import org.jcurl.core.base.Rock;
@@ -28,17 +27,17 @@ import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SlideCurves;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.CurveFkt;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.Polynome;
+import org.jcurl.math.R1RNFunction;
 
 /**
  * ComputedSource without curl and with constant acceleration.
  * <p>
  * Public access to rock locations and speed via
- * {@link org.jcurl.core.base.SlideCurves#getC(int, double, RockSet)}. The internal
- * computation (including hit-, out- and stillstand check) is via
+ * {@link org.jcurl.core.base.SlideCurves#getC(int, double, RockSet)}. The
+ * internal computation (including hit-, out- and stillstand check) is via
  * {@link org.jcurl.core.base.SlideStrategy#computeUntil(double, double)}.
  * 
  * </p>

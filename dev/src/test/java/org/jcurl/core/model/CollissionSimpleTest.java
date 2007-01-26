@@ -28,13 +28,12 @@ import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.model.CollissionSimple;
 import org.jcurl.math.MathVec;
 
 /**
  * @see org.jcurl.core.model.CollissionSimple
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:CollissionSimpleTest.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class CollissionSimpleTest extends TestCase {
 

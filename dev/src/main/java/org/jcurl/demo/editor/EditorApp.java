@@ -47,7 +47,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.KeyStroke;
 
-
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockSet;
@@ -59,7 +58,6 @@ import org.jcurl.core.swing.AboutDialog;
 import org.jcurl.core.swing.JcxFileChooser;
 import org.jcurl.core.swing.PngFileChooser;
 import org.jcurl.core.swing.RockEditDisplay;
-import org.jcurl.core.swing.RockLocationDisplay;
 import org.jcurl.core.swing.RockLocationDisplayBase;
 import org.jcurl.core.swing.SumShotDisplay;
 import org.jcurl.core.swing.SumWaitDisplay;
@@ -72,7 +70,7 @@ import org.xml.sax.SAXException;
  * @see org.jcurl.core.swing.RockLocationDisplay
  * @see org.jcurl.demo.editor.LocationController
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:EditorApp.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class EditorApp extends JFrame {
 
@@ -159,9 +157,12 @@ public class EditorApp extends JFrame {
                 cmdExit();
             }
         });
-        master = new RockEditDisplay(mod_locations, mod_speeds, null);
-        final RockLocationDisplayBase pnl2 = new RockLocationDisplay(
-                mod_locations, Zoomer.HOG2HACK, null, null);
+        master = new RockEditDisplay();
+        master.setPos(mod_locations);
+        master.setSpeed(mod_speeds);
+        final RockLocationDisplayBase pnl2 = new RockLocationDisplayBase();
+        pnl2.setPos(mod_locations);
+        pnl2.setZoom(Zoomer.HOG2HACK);
 
         final Container con = getContentPane();
 

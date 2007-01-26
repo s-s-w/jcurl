@@ -26,15 +26,15 @@ import java.awt.Graphics2D;
 import org.jcurl.core.base.PositionSet;
 
 /**
- * A {@link org.jcurl.core.swing.RockLocationDisplay}with some additional meta data
- * displayed (here: time).
+ * A {@link org.jcurl.core.swing.RockLocationDisplay}with some additional meta
+ * data displayed (here: time).
  * 
  * @see org.jcurl.core.swing.RockLocationDisplay
  * @see org.jcurl.core.swing.RealTimePlayer
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:JCurlDisplay.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class JCurlDisplay extends RockLocationDisplay {
+public class JCurlDisplay extends RockLocationDisplayBase {
 
     private static final long serialVersionUID = -3587954807831602402L;
 
@@ -48,7 +48,11 @@ public class JCurlDisplay extends RockLocationDisplay {
 
     public JCurlDisplay(final PositionSet rocks, final Zoomer zoom,
             final IcePainter iceP, final RockPainter rockP) {
-        super(rocks, zoom, iceP, rockP);
+        super();
+        setPos(rocks);
+        setZoom(zoom);
+        setIcePainter(iceP);
+        setRockPainter(rockP);
     }
 
     public JCurlDisplay(Zoomer zoom) {
@@ -72,15 +76,14 @@ public class JCurlDisplay extends RockLocationDisplay {
     /**
      * Triggers a repaint.
      * 
-     * @param time
-     *            [sec]
      * @param rocks
      *            the rocks' locations
      * @param discontinuous
      *            bitmask of discontinouos locations
+     * @param time
+     *            [sec]
      */
-    public void setPos(final double time, final PositionSet rocks,
-            final int discontinuous) {
-        super.setPos(this.time = time, rocks, discontinuous);
+    public void setPos(final PositionSet rocks, final int discontinuous) {
+        super.setPos(rocks, discontinuous);
     }
 }

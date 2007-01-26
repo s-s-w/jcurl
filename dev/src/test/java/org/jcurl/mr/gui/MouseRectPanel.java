@@ -31,7 +31,7 @@ import javax.swing.JPanel;
  * Drop, move and erase rectangles on a panel.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:MouseRectPanel.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class MouseRectPanel extends JPanel implements MouseMotionListener {
 

@@ -26,7 +26,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.Ice;
 import org.jcurl.core.base.RockSet;
@@ -40,7 +39,7 @@ import org.jcurl.core.helpers.JCLoggerFactory;
  * @see org.jcurl.core.io.OldConfigReaderTest
  * @see org.jcurl.core.io.SetupBuilder
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:OldConfigReader.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class OldConfigReader {
 

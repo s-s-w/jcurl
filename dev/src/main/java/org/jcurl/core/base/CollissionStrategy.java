@@ -22,7 +22,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
-
 import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.JCLoggerFactory;
 
@@ -31,7 +30,7 @@ import org.jcurl.core.helpers.JCLoggerFactory;
  * 
  * @see org.jcurl.core.base.SlideStrategy
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:CollissionStrategy.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public abstract class CollissionStrategy extends ModelBase {
 

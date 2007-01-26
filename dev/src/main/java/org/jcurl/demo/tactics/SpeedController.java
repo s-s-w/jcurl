@@ -23,7 +23,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
 
-
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.SpeedSet;
@@ -32,7 +31,7 @@ import org.jcurl.core.swing.RockEditDisplay;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SpeedController.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class SpeedController implements MouseMotionListener, MouseListener {
 
@@ -61,7 +60,7 @@ public class SpeedController implements MouseMotionListener, MouseListener {
         this.panel = panel;
         this.panel.addMouseListener(this);
         this.panel.addMouseMotionListener(this);
-        this.panel.setPos(0, this.rocks);
+        this.panel.setPos(this.rocks);
     }
 
     /**

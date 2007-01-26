@@ -22,7 +22,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
-
 import org.jcurl.core.base.CollissionStrategy;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockDouble;
@@ -39,7 +38,7 @@ import org.jcurl.math.MathVec;
  * 
  * @see org.jcurl.core.model.CollissionSpinLossTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:CollissionSpinLoss.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class CollissionSpinLoss extends CollissionStrategy {
 

@@ -25,15 +25,16 @@ import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.geom.Arc2D;
 
-
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockProps;
 
 /**
- * Paint a set of rocks.
+ * Strategy to paint one single rock at (0,0) with the handle pointing along the
+ * negative y-axis. This coordinate system is also called
+ * <em>Rock Coordinates (RC)</em>.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:RockPainter.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class RockPainter {
     /** Rock colors */
