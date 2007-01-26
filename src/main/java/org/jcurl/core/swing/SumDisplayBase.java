@@ -31,7 +31,6 @@ import java.util.Map;
 
 import javax.swing.JComponent;
 
-
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockSet;
@@ -42,7 +41,7 @@ import org.jcurl.core.swing.RockPainter.ColorSet;
 /**
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SumDisplayBase.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public abstract class SumDisplayBase extends JComponent implements
         TargetDiscrete, PropertyChangeListener {
@@ -85,7 +84,7 @@ public abstract class SumDisplayBase extends JComponent implements
     }
 
     public SumDisplayBase(final PositionSet model) {
-        setPos(0, model);
+        setPos(model);
     }
 
     protected abstract int computeMask(final PositionSet rocks);
@@ -139,12 +138,12 @@ public abstract class SumDisplayBase extends JComponent implements
     public void propertyChange(PropertyChangeEvent evt) {
         final Object tmp = evt.getNewValue();
         if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass())) {
-            setPos(0, (PositionSet) tmp);
+            setPos((PositionSet) tmp);
         } else
             log.info(tmp);
     }
 
-    public void setPos(double t, PositionSet rocks) {
+    public void setPos(PositionSet rocks) {
         if (this.model != null && this.model != rocks) {
             this.model.removePropertyChangeListener(this);
         }
@@ -153,8 +152,8 @@ public abstract class SumDisplayBase extends JComponent implements
         showRocks(computeMask(this.model));
     }
 
-    public void setPos(double t, PositionSet rocks, int discontinuous) {
-        setPos(t, rocks);
+    public void setPos(PositionSet rocks, int discontinuous) {
+        setPos(rocks);
     }
 
     public void showRocks(int mask) {

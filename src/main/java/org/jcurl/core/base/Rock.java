@@ -26,7 +26,7 @@ import org.jcurl.math.Point3D;
  * 
  * @see org.jcurl.core.base.PositionSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:Rock.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public abstract class Rock extends Point3D implements Cloneable {
     public abstract Object clone();

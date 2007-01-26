@@ -26,7 +26,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
-
 import org.jcurl.core.base.CollissionStrategy;
 import org.jcurl.core.base.Ice;
 import org.jcurl.core.base.PositionSet;
@@ -37,7 +36,7 @@ import org.jcurl.core.helpers.DimVal;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:Config.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class Config {
 

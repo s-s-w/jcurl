@@ -28,21 +28,21 @@ import java.awt.geom.GeneralPath;
  */
 public abstract class CurveShape {
 
-    private static Shape approximate(final R1R1Function fx, final R1R1Function fy,
-            final double[] sections) {
+    private static Shape approximate(final R1R1Function fx,
+            final R1R1Function fy, final double[] sections) {
         final R1R1Function[] f = { fx, fy };
         return approximate(new CurveFkt(f), sections);
     }
 
-    public static Shape approximate(final R1RNFunction c, final double[] sections) {
+    public static Shape approximate(final R1RNFunction c,
+            final double[] sections) {
         // return approximateLinear(c, sections);
         return approximateQuadratic(c, sections);
     }
 
     public static Shape approximateLinear(final R1RNFunction c,
             final double[] sections) {
-        final double[] x_1 = { c.at(0, 0, sections[0]),
-                c.at(1, 0, sections[0]) };
+        final double[] x_1 = { c.at(0, 0, sections[0]), c.at(1, 0, sections[0]) };
         final double[] x_2 = { 0, 0 };
         final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
                 sections.length + 1);
@@ -59,10 +59,8 @@ public abstract class CurveShape {
 
     public static Shape approximateQuadratic(final R1RNFunction c,
             final double[] sections) {
-        final double[] p0 = { c.at(0, 0, sections[0]),
-                c.at(1, 0, sections[0]) };
-        final double[] v0 = { c.at(0, 1, sections[0]),
-                c.at(1, 1, sections[0]) };
+        final double[] p0 = { c.at(0, 0, sections[0]), c.at(1, 0, sections[0]) };
+        final double[] v0 = { c.at(0, 1, sections[0]), c.at(1, 1, sections[0]) };
         final double[] p1 = { 0, 0 };
         final double[] v1 = { 0, 0 };
         final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
@@ -92,17 +90,17 @@ public abstract class CurveShape {
      * Maxima code:
      * 
      * <pre>
-     *    NEXTLAYERFACTOR(TRUE)$
-     *    DEBUGMODE(TRUE)$ 
-     *     
-     *    pa[0] + k * va[0] = pb[0] + l * vb[0];
-     *    pa[1] + k * va[1] = pb[1] + l * vb[1];
-     *     
-     *    LINSOLVE([%i4, %i5],[k, l]),GLOBALSOLVE:TRUE,BACKSUBST:TRUE$
-     *     
-     *    SCSIMP(PART(%o6,1,2)); 
-     *     
-     *    quit$
+     *     NEXTLAYERFACTOR(TRUE)$
+     *     DEBUGMODE(TRUE)$ 
+     *      
+     *     pa[0] + k * va[0] = pb[0] + l * vb[0];
+     *     pa[1] + k * va[1] = pb[1] + l * vb[1];
+     *      
+     *     LINSOLVE([%i4, %i5],[k, l]),GLOBALSOLVE:TRUE,BACKSUBST:TRUE$
+     *      
+     *     SCSIMP(PART(%o6,1,2)); 
+     *      
+     *     quit$
      * </pre>
      * 
      * @param pa

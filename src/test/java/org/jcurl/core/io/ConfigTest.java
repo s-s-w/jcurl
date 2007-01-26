@@ -22,11 +22,10 @@ import junit.framework.TestCase;
 
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
-import org.jcurl.core.io.Config;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:ConfigTest.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class ConfigTest extends TestCase {
 

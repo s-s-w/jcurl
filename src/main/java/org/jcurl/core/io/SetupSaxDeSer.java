@@ -51,7 +51,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * @see org.jcurl.core.io.SetupSaxDeSerTest
  * @see org.jcurl.core.io.OldConfigReader
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SetupSaxDeSer.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class SetupSaxDeSer extends DefaultHandler {
     private static final class RockIdx {

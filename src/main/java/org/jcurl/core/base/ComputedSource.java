@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.io.SetupBuilder;
@@ -89,8 +88,8 @@ public class ComputedSource extends MutableObject implements Source {
         return slide.getSpeed();
     }
 
-    public double getT() {
-        return slide.getT();
+    public double getTime() {
+        return slide.getTime();
     }
 
     public void init(final PositionSet x, final SpeedSet v,
@@ -112,7 +111,7 @@ public class ComputedSource extends MutableObject implements Source {
         // propChange.firePropertyChange("pos", slide.getPos(), ice.getPos());
         // propChange
         // .firePropertyChange("speed", slide.getSpeed(), ice.getSpeed());
-        setT(minT);
+        setTime(minT);
     }
 
     public boolean isDiscrete() {
@@ -163,8 +162,8 @@ public class ComputedSource extends MutableObject implements Source {
                 .getColl());
     }
 
-    public void setT(double current) {
-        propChange.firePropertyChange("t", this.slide.getT(), current);
-        slide.setT(current);
+    public void setTime(double current) {
+        propChange.firePropertyChange("time", this.slide.getTime(), current);
+        slide.setTime(current);
     }
 }

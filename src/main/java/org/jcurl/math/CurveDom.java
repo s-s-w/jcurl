@@ -27,8 +27,9 @@ import org.jcurl.math.dom.MathDom;
 /**
  * A n-dimensional, continuous curve (R -&gt; R^n) based on a
  * {@link org.jcurl.math.dom.MathDom}.Node. Maybe it's better to add a
- * {@link org.jcurl.math.R1R1Function}based on {@link org.jcurl.math.dom.MathDom}and
- * use {@link org.jcurl.math.CurveFkt}rather than this class.
+ * {@link org.jcurl.math.R1R1Function}based on
+ * {@link org.jcurl.math.dom.MathDom}and use {@link org.jcurl.math.CurveFkt}rather
+ * than this class.
  * 
  * @see org.jcurl.math.dom.MathDom
  * @see org.jcurl.math.CurveTest

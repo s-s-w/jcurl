@@ -29,7 +29,6 @@ import java.util.Iterator;
 
 import javax.swing.JPanel;
 
-
 import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.mr.math.PointList;
@@ -38,7 +37,7 @@ import org.jcurl.mr.math.PointList;
  * Draw lines if the "hot" key is pressed.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:MouseSketchPanel.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class MouseSketchPanel extends JPanel implements KeyListener {
 

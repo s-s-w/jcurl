@@ -28,9 +28,8 @@ import org.jcurl.core.base.RockSetProps;
 import org.jcurl.core.base.Source;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.core.model.SlideStraight;
-import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.Polynome;
+import org.jcurl.math.R1RNFunction;
 
 /**
  * JUnit test.

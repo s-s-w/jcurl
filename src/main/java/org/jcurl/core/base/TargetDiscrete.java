@@ -18,7 +18,6 @@
  */
 package org.jcurl.core.base;
 
-
 /**
  * Interface for classes consuming discrete {@link org.jcurl.core.base.Rock}location
  * data.
@@ -26,20 +25,18 @@ package org.jcurl.core.base;
  * @see org.jcurl.core.base.RockSetInterpolator
  * @see org.jcurl.core.swing.JCurlDisplay
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:TargetDiscrete.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public interface TargetDiscrete extends Target {
 
-    public void setPos(final double t, final PositionSet rocks);
+    public void setPos(final PositionSet rocks);
 
     /**
      * 
-     * @param t
      * @param rocks
      * @param discontinuous
      *            bitmask of discontinuous rocks as returned by
      *            {@link org.jcurl.core.base.CollissionStrategy#compute(PositionSet, SpeedSet)}.
      */
-    public void setPos(final double t, final PositionSet rocks,
-            final int discontinuous);
+    public void setPos(final PositionSet rocks, final int discontinuous);
 }

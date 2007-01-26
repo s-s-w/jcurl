@@ -18,7 +18,6 @@
  */
 package org.jcurl.core.model;
 
-
 import org.jcurl.core.base.CollissionStrategy;
 import org.jcurl.core.base.Rock;
 
@@ -32,7 +31,7 @@ import org.jcurl.core.base.Rock;
  * @see org.jcurl.core.model.SlideStraight
  * @see org.jcurl.core.model.CollissionSimpleTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:CollissionSimple.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class CollissionSimple extends CollissionStrategy {
     public void computeRC(final Rock va, final Rock vb) {

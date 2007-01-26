@@ -55,7 +55,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 
-
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockSet;
@@ -67,7 +66,6 @@ import org.jcurl.core.swing.AboutDialog;
 import org.jcurl.core.swing.JcxFileChooser;
 import org.jcurl.core.swing.PngFileChooser;
 import org.jcurl.core.swing.RockEditDisplay;
-import org.jcurl.core.swing.RockLocationDisplay;
 import org.jcurl.core.swing.RockLocationDisplayBase;
 import org.jcurl.core.swing.SumOutDisplay;
 import org.jcurl.core.swing.SumShotDisplay;
@@ -169,9 +167,12 @@ public class TacticsApp extends JFrame {
                 cmdExit();
             }
         });
-        master = new RockEditDisplay(mod_locations, mod_speeds, null);
-        final RockLocationDisplayBase pnl2 = new RockLocationDisplay(
-                mod_locations, Zoomer.HOG2HACK, null, null);
+        master = new RockEditDisplay();
+        master.setPos(mod_locations);
+        master.setSpeed(mod_speeds);
+        final RockLocationDisplayBase pnl2 = new RockLocationDisplayBase();
+        pnl2.setPos(mod_locations);
+        pnl2.setZoom(Zoomer.HOG2HACK);
 
         final Container con = getContentPane();
         {

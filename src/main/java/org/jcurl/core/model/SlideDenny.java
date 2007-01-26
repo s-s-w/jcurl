@@ -18,15 +18,14 @@
  */
 package org.jcurl.core.model;
 
-
 import org.jcurl.core.base.Ice;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.SlideCurves;
 import org.jcurl.core.helpers.NotImplementedYetException;
-import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.CurveFkt;
 import org.jcurl.math.Polynome;
+import org.jcurl.math.R1RNFunction;
 
 /**
  * Mark Denny's curl-model. Motion of a curling rock acc. to "Curling rock

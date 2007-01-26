@@ -30,7 +30,7 @@ import java.util.ListIterator;
  * Type safe list for {@link java.awt.Point}s.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:PointList.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class PointList implements List {
     public static PointList getLine(final PointList c) {

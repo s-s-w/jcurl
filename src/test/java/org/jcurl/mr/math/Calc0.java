@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:Calc0.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class Calc0 {
 

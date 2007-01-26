@@ -28,7 +28,6 @@ import java.net.URL;
 import javax.swing.JFrame;
 import javax.xml.parsers.ParserConfigurationException;
 
-
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.ComputedSource;
 import org.jcurl.core.base.PositionSet;

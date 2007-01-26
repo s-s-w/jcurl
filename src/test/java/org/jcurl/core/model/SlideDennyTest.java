@@ -21,7 +21,6 @@ package org.jcurl.core.model;
 import junit.framework.TestCase;
 
 import org.jcurl.core.base.RockDouble;
-import org.jcurl.core.model.SlideDenny;
 import org.jcurl.math.R1RNFunction;
 
 /**

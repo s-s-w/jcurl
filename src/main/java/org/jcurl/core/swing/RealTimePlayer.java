@@ -18,20 +18,19 @@
  */
 package org.jcurl.core.swing;
 
-
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Source;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.TargetDiscrete;
 
 /**
- * Extract locations from a (non-discrete) {@link org.jcurl.core.base.Source}and push
- * them into a {@link TargetDiscrete}.
+ * Extract locations from a (non-discrete) {@link org.jcurl.core.base.Source}and
+ * push them into a {@link TargetDiscrete}.
  * 
  * @see org.jcurl.core.base.Source
  * @see org.jcurl.core.base.TargetDiscrete
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:RealTimePlayer.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class RealTimePlayer implements Runnable {
 
@@ -77,11 +76,11 @@ public class RealTimePlayer implements Runnable {
                 final long dt = System.currentTimeMillis() - start;
                 tNow = t0Last + dt * timeScale * 1e-3;
                 // get the position
-                src.setT(tNow);
+                src.setTime(tNow);
                 pos = src.getPos();
                 // push it to the target
                 if (dst != null)
-                    dst.setPos(tNow, pos);
+                    dst.setPos(pos);
                 speed = src.getSpeed();
                 if (0 == PositionSet.nonZero(speed)) {
                     t0Last = t0Start;

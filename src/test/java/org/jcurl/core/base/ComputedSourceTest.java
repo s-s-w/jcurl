@@ -25,9 +25,6 @@ import java.io.UnsupportedEncodingException;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.base.ComputedSource;
-import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.SlideStraight;
 import org.xml.sax.SAXException;
@@ -35,7 +32,7 @@ import org.xml.sax.SAXException;
 /**
  * @see org.jcurl.core.base.ComputedSource
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:ComputedSourceTest.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class ComputedSourceTest extends TestCase {
 
@@ -44,7 +41,7 @@ public class ComputedSourceTest extends TestCase {
         m.init(PositionSet.allHome(), new SpeedSet(), new SlideStraight(),
                 new CollissionSpin());
         assertEquals(0, 0, m.getMinT());
-        assertEquals(0, 0, m.getT());
+        assertEquals(0, 0, m.getTime());
         assertEquals(0, 35, m.getMaxT());
     }
 

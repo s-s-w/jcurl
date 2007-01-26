@@ -22,7 +22,6 @@ import java.awt.geom.Point2D;
 import java.util.Map;
 import java.util.TreeMap;
 
-
 import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
@@ -36,7 +35,7 @@ import org.jcurl.math.MathVec;
  * @see org.jcurl.core.base.SlideStrategyTest
  * @see org.jcurl.core.base.CollissionStrategy
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:SlideStrategy.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public abstract class SlideStrategy extends ModelBase implements Source {
 
@@ -309,19 +308,19 @@ public abstract class SlideStrategy extends ModelBase implements Source {
 
     public final PositionSet getPos() {
         if (log.isDebugEnabled())
-            log.debug("t=" + getT());
-        computeUntil(getT(), dt);
-        return (PositionSet) getC(0, getT(), rocks);
+            log.debug("t=" + getTime());
+        computeUntil(getTime(), dt);
+        return (PositionSet) getC(0, getTime(), rocks);
     }
 
     public final SpeedSet getSpeed() {
         if (log.isDebugEnabled())
-            log.debug("t=" + getT());
-        computeUntil(getT(), dt);
-        return (SpeedSet) getC(1, getT(), speed);
+            log.debug("t=" + getTime());
+        computeUntil(getTime(), dt);
+        return (SpeedSet) getC(1, getTime(), speed);
     }
 
-    public double getT() {
+    public double getTime() {
         return t;
     }
 
@@ -460,7 +459,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
         props.put(D2T_CURL, new DimVal(curl, Dim.METER));
     }
 
-    public void setT(double t) {
+    public void setTime(double t) {
         move(this.t, t, this.rocks, this.speed);
         this.t = t;
     }
