@@ -62,10 +62,9 @@ public class ViewerApp extends JFrame {
             final URL url;
             {
                 URL tmp = ViewerApp.class.getResource("/setup/dat.jcx");
-                if (tmp == null) {
+                if (tmp == null)
                     tmp = new File("./config/jcurl.jar/setup/hammy.jcx")
                             .toURL();
-                }
                 url = tmp;
             }
             log.info("Loading setup [" + url + "]");
@@ -97,7 +96,7 @@ public class ViewerApp extends JFrame {
             }
         });
         setTitle("CurlDemo");
-        setSize(900, 400);
+        this.setSize(900, 400);
 
         final JCurlDisplay mp = new JCurlDisplay();
         mp.setPos(src.getPos());

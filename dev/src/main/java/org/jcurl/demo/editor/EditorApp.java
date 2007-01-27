@@ -100,7 +100,7 @@ public class EditorApp extends JFrame {
             private Method m = null;
 
             public void actionPerformed(final ActionEvent evt) {
-                if (m == null) {
+                if (m == null)
                     try {
                         m = executor.getClass().getMethod(action, null);
                     } catch (Exception e) {
@@ -113,7 +113,6 @@ public class EditorApp extends JFrame {
                             throw new RuntimeException(e1);
                         }
                     }
-                }
                 try {
                     m.invoke(executor, null);
                 } catch (IllegalAccessException e) {
@@ -154,7 +153,7 @@ public class EditorApp extends JFrame {
     public EditorApp() {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                cmdExit();
+                EditorApp.this.cmdExit();
             }
         });
         master = new RockEditDisplay();
@@ -178,9 +177,9 @@ public class EditorApp extends JFrame {
             b0.add(new JSlider(0, 100, 0));
             final Box b2 = Box.createHorizontalBox();
             b2.add(Box.createHorizontalGlue());
-            b2.add(bStart = newButton("Start", this, "cmdRunStart"));
-            b2.add(bPause = newButton("Pause", this, "cmdRunPause"));
-            b2.add(bStop = newButton("Stop", this, "cmdRunStop"));
+            b2.add(bStart = this.newButton("Start", this, "cmdRunStart"));
+            b2.add(bPause = this.newButton("Pause", this, "cmdRunPause"));
+            b2.add(bStop = this.newButton("Stop", this, "cmdRunStop"));
             b2.add(Box.createHorizontalGlue());
             b0.add(b2);
             con.add(b0, "South");
@@ -189,7 +188,7 @@ public class EditorApp extends JFrame {
 
         setJMenuBar(createMenu());
         refreshTitle();
-        setSize(900, 400);
+        this.setSize(900, 400);
 
         new SpeedController(mod_locations, mod_speeds, master);
         new LocationController(mod_locations, pnl2);
@@ -233,10 +232,10 @@ public class EditorApp extends JFrame {
         if (JFileChooser.APPROVE_OPTION == fc.showSaveDialog(this)) {
             final File dst = fc.getSelectedFile();
             try {
-                setCursor(Cwait);
+                this.setCursor(Cwait);
                 master.exportPng(dst);
             } finally {
-                setCursor(Cdefault);
+                this.setCursor(Cdefault);
             }
         }
     }
@@ -245,7 +244,7 @@ public class EditorApp extends JFrame {
         if (!discardUnsavedChanges())
             return;
         try {
-            setCursor(Cwait);
+            this.setCursor(Cwait);
             // initial state
             final PositionSet pos = PositionSet.allOut();
             pos.getDark(0).setLocation(0, 5, 0);
@@ -259,7 +258,7 @@ public class EditorApp extends JFrame {
             RockSet.allZero(mod_speeds);
             lastSaved = System.currentTimeMillis();
         } finally {
-            setCursor(Cdefault);
+            this.setCursor(Cdefault);
         }
     }
 
@@ -304,10 +303,9 @@ public class EditorApp extends JFrame {
     }
 
     void cmdSave() throws SAXException, IOException {
-        if (getCurrentFile() == null) {
+        if (getCurrentFile() == null)
             if (!chooseSaveFile(new File(".")))
                 return;
-        }
         save(getCurrentFile());
     }
 
@@ -327,33 +325,35 @@ public class EditorApp extends JFrame {
         {
             final JMenu menu = bar.add(new JMenu("File"));
             menu.setMnemonic('F');
-            menu.add(newMI("New", null, 'N', -1, this, "cmdNew"));
-            menu.add(newMI("Open", null, 'O', KeyEvent.VK_O, this, "cmdOpen"));
+            menu.add(this.newMI("New", null, 'N', -1, this, "cmdNew"));
+            menu.add(this.newMI("Open", null, 'O', KeyEvent.VK_O, this,
+                    "cmdOpen"));
             menu.addSeparator();
-            menu.add(newMI("Export Png", null, 'P', KeyEvent.VK_E, this,
+            menu.add(this.newMI("Export Png", null, 'P', KeyEvent.VK_E, this,
                     "cmdExportPng"));
             menu.addSeparator();
-            menu.add(newMI("Save", null, 'S', KeyEvent.VK_S, this, "cmdSave"));
-            menu.add(newMI("Save As", null, 'A', -1, this, "cmdSaveAs"));
+            menu.add(this.newMI("Save", null, 'S', KeyEvent.VK_S, this,
+                    "cmdSave"));
+            menu.add(this.newMI("Save As", null, 'A', -1, this, "cmdSaveAs"));
             menu.addSeparator();
-            menu.add(newMI("Exit", null, 'x', -1, this, "cmdExit"));
+            menu.add(this.newMI("Exit", null, 'x', -1, this, "cmdExit"));
         }
         {
             final JMenu menu = bar.add(new JMenu("View"));
             menu.setMnemonic('V');
-            menu.add(newMI("Zoom", null, 'z', -1, this, "cmdZoom"));
+            menu.add(this.newMI("Zoom", null, 'z', -1, this, "cmdZoom"));
         }
         {
             final JMenu menu = bar.add(new JMenu("Play"));
             menu.setMnemonic('P');
-            menu.add(newMI('a', -1, bStart.getAction()));
-            menu.add(newMI('P', -1, bPause.getAction()));
-            menu.add(newMI('o', -1, bStop.getAction()));
+            menu.add(this.newMI('a', -1, bStart.getAction()));
+            menu.add(this.newMI('P', -1, bPause.getAction()));
+            menu.add(this.newMI('o', -1, bStop.getAction()));
         }
         {
             final JMenu menu = bar.add(new JMenu("Help"));
             menu.setMnemonic('H');
-            menu.add(newMI("About", null, 'a', -1, this, "cmdAbout"));
+            menu.add(this.newMI("About", null, 'a', -1, this, "cmdAbout"));
         }
         return bar;
     }
@@ -384,7 +384,7 @@ public class EditorApp extends JFrame {
         final File f = new File(args[0]);
         if (!f.exists())
             return;
-        load(f, mod_locations);
+        this.load(f, mod_locations);
     }
 
     private JButton newButton(final Action action) {
@@ -398,7 +398,7 @@ public class EditorApp extends JFrame {
 
     private JButton newButton(final String name, final Object executor,
             final String action) {
-        return newButton(createAction(name, null, executor, action));
+        return this.newButton(createAction(name, null, executor, action));
     }
 
     private JMenuItem newMI(final char mnemonic, final int ctrlAccel,
@@ -414,8 +414,8 @@ public class EditorApp extends JFrame {
     private JMenuItem newMI(final String name, final Icon icon,
             final char mnemonic, final int ctrlAccel, final Object executor,
             final String action) {
-        return newMI(mnemonic, ctrlAccel, createAction(name, icon, executor,
-                action));
+        return this.newMI(mnemonic, ctrlAccel, createAction(name, icon,
+                executor, action));
     }
 
     private void refreshTitle() {

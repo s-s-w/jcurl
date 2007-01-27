@@ -19,6 +19,7 @@
 package org.jcurl.mr.gui;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
@@ -32,7 +33,7 @@ import javax.swing.KeyStroke;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:MenuDemo.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class MenuDemo extends JFrame {
 
@@ -53,7 +54,7 @@ public class MenuDemo extends JFrame {
 
         public void setVisible(boolean b) {
             if (!b)
-                this.getOwner().requestFocus();
+                getOwner().requestFocus();
             super.setVisible(b);
         }
     }
@@ -113,10 +114,10 @@ public class MenuDemo extends JFrame {
             });
             about.setMnemonic('A');
             about.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
-                    KeyEvent.CTRL_MASK));
+                    InputEvent.CTRL_MASK));
             help.add(about);
             menu.add(help);
         }
-        this.setJMenuBar(menu);
+        setJMenuBar(menu);
     }
 }

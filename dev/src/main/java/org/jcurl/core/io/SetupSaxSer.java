@@ -203,7 +203,7 @@ public class SetupSaxSer {
                 "http://jcurl.berlios.de/schema/setup/2005/1.0");
         xml.startElement(NS, null, "jcurl", atts);
         xml.startElement(NS, null, "setup", null);
-        internal(pos);
+        this.internal(pos);
         xml.endElement(NS, null, "setup");
         xml.endElement(NS, null, "jcurl");
         xml.endDocument();
@@ -219,16 +219,16 @@ public class SetupSaxSer {
         xml.startElement(NS, null, "jcurl", atts);
         xml.startElement(NS, null, "setup", null);
         if (slide != null)
-            internal(slide.getColl());
-        internal(slide);
-        internal(pos);
-        internal(speed);
+            this.internal(slide.getColl());
+        this.internal(slide);
+        this.internal(pos);
+        this.internal(speed);
         xml.endElement(NS, null, "setup");
         xml.endElement(NS, null, "jcurl");
         xml.endDocument();
     }
 
     public void write(final SetupBuilder setup) throws SAXException {
-        write(setup.getPos(), setup.getSpeed(), setup.getSlide());
+        this.write(setup.getPos(), setup.getSpeed(), setup.getSlide());
     }
 }

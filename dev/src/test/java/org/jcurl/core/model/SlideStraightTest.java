@@ -24,6 +24,7 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockDouble;
+import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.RockSetProps;
 import org.jcurl.core.base.Source;
 import org.jcurl.core.base.SpeedSet;
@@ -54,7 +55,7 @@ public class SlideStraightTest extends TestCase {
         pos.getDark(0).setLocation(0, 5, 0);
         pos.getLight(0).setLocation(0.2, 2.5);
         pos.getLight(1).setLocation(1.0, 1.5);
-        PositionSet.allZero(speed);
+        RockSet.allZero(speed);
         speed.getDark(0).setLocation(0, -1.0, 0.75);
         s.reset(pos, speed, RockSetProps.DEFAULT);
     }

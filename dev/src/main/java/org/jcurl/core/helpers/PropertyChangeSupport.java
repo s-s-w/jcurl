@@ -107,9 +107,8 @@ public class PropertyChangeSupport {
         try {
             final BeanInfo info = Introspector.getBeanInfo(producer.getClass());
             final PropertyDescriptor[] props = info.getPropertyDescriptors();
-            for (int idx = 0; idx < props.length; idx++) {
+            for (int idx = 0; idx < props.length; idx++)
                 listenerMap.put(props[idx].getName(), new WeakHashSet());
-            }
             listenerMap.put(ALL_PROPERTIES, new WeakHashSet());
             this.producer = producer;
         } catch (IntrospectionException ex) {
@@ -169,9 +168,8 @@ public class PropertyChangeSupport {
         {
             final Object a = event.getOldValue();
             final Object b = event.getNewValue();
-            if ((a != null && a.equals(b)) || (a == null && b == null)) {
+            if (a != null && a.equals(b) || a == null && b == null)
                 return;
-            }
         }
         // if (event.getOldValue() == null) {
         // if (event.getOldValue() == null) {
@@ -188,10 +186,8 @@ public class PropertyChangeSupport {
                     .get(ALL_PROPERTIES));
             targets.addAll((Set) listenerMap.get(event.getPropertyName()));
             // Fire events at the listeners.
-            for (Iterator iter = targets.iterator(); iter.hasNext();) {
+            for (Iterator iter = targets.iterator(); iter.hasNext();)
                 ((PropertyChangeListener) iter.next()).propertyChange(event);
-            }
-            // Release the strong set so that the weak refs take over again.
         }
     }
 
@@ -209,7 +205,7 @@ public class PropertyChangeSupport {
             final boolean neo) {
         PropertyChangeEvent event = new PropertyChangeEvent(producer, property,
                 new Boolean(old), new Boolean(neo));
-        firePropertyChange(event);
+        this.firePropertyChange(event);
     }
 
     /**
@@ -226,7 +222,7 @@ public class PropertyChangeSupport {
             final double neo) {
         PropertyChangeEvent event = new PropertyChangeEvent(producer, property,
                 new Double(old), new Double(neo));
-        firePropertyChange(event);
+        this.firePropertyChange(event);
     }
 
     /**
@@ -243,7 +239,7 @@ public class PropertyChangeSupport {
             final int neo) {
         PropertyChangeEvent event = new PropertyChangeEvent(producer, property,
                 new Integer(old), new Integer(neo));
-        firePropertyChange(event);
+        this.firePropertyChange(event);
     }
 
     /**
@@ -260,7 +256,7 @@ public class PropertyChangeSupport {
             final Object neo) {
         final PropertyChangeEvent event = new PropertyChangeEvent(producer,
                 property, old, neo);
-        firePropertyChange(event);
+        this.firePropertyChange(event);
     }
 
     /**
@@ -275,9 +271,8 @@ public class PropertyChangeSupport {
         PropertyChangeListener[] pcls = new PropertyChangeListener[0];
         synchronized (listenerMap) {
             for (Iterator iter = listenerMap.values().iterator(); iter
-                    .hasNext();) {
+                    .hasNext();)
                 all.addAll((Set) iter.next());
-            }
         }
         return (PropertyChangeListener[]) all.toArray(pcls);
     }
@@ -311,7 +306,7 @@ public class PropertyChangeSupport {
     public boolean hasListeners(final String property) {
         validateNamedProperty(property);
         synchronized (listenerMap) {
-            return (!((Set) listenerMap.get(property)).isEmpty());
+            return !((Set) listenerMap.get(property)).isEmpty();
         }
     }
 
@@ -357,9 +352,8 @@ public class PropertyChangeSupport {
      */
     private void validateNamedProperty(final String property) {
         if (!listenerMap.containsKey(property)) {
-            if (log.isDebugEnabled()) {
+            if (log.isDebugEnabled())
                 log.debug("Key Set: " + listenerMap.keySet());
-            }
             throw new IllegalArgumentException("The property '" + property
                     + "' is not a valid property of " + producer.getClass()
                     + ". Valid values = " + listenerMap.keySet().toString());

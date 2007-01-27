@@ -16,14 +16,12 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core;
+package org.jcurl.core.base;
 
 import java.awt.geom.Point2D;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.RockSet;
 import org.jcurl.core.helpers.Dim;
 
 /**
@@ -36,8 +34,8 @@ import org.jcurl.core.helpers.Dim;
 public class PositionSetTest extends TestCase {
 
     public void test010_CountBits() {
-        assertEquals(8, PositionSet.countBits(RockSet.DARK_MASK));
-        assertEquals(8, PositionSet.countBits(RockSet.LIGHT_MASK));
+        assertEquals(8, RockSet.countBits(RockSet.DARK_MASK));
+        assertEquals(8, RockSet.countBits(RockSet.LIGHT_MASK));
     }
 
     public void test010_getShotRocks() {

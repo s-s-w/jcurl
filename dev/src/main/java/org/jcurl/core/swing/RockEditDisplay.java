@@ -58,7 +58,7 @@ public class RockEditDisplay extends PositionDisplay {
 
         private HotObject(int state, String text, Cursor cs) {
             super(state, text);
-            this.cursor = cs;
+            cursor = cs;
         }
 
         private HotObject(int state, String text, int cs) {
@@ -118,12 +118,12 @@ public class RockEditDisplay extends PositionDisplay {
     public RockEditDisplay() {
         super();
         initialize();
-        this.speed = new SpeedSet();
-        this.speed.addPropertyChangeListener(this);
+        speed = new SpeedSet();
+        speed.addPropertyChangeListener(this);
     }
 
     public void findHotDc(final Point2D dc, final HotStuff hot) {
-        final Point2D wc = this.dc2wc(dc, null);
+        final Point2D wc = dc2wc(dc, null);
         try {
             hot.what = HotObject.SPEED;
             hot.idx = findHotSpeed(wc, dc);
@@ -135,7 +135,7 @@ public class RockEditDisplay extends PositionDisplay {
                 return;
             hot.what = HotObject.NONE;
         } finally {
-            this.setCursor(hot.what.cursor);
+            setCursor(hot.what.cursor);
         }
     }
 
@@ -143,7 +143,7 @@ public class RockEditDisplay extends PositionDisplay {
         Point2D tmp = new Point2D.Float();
         final double RR = hotRadiusDC * hotRadiusDC;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            if (((1 << i) & selectedMask) == 0)
+            if ((1 << i & selectedMask) == 0)
                 continue;
             tmp = getSpeedSpotWC(i, tmp);
             wc2dc(tmp, tmp);
@@ -171,17 +171,16 @@ public class RockEditDisplay extends PositionDisplay {
     public void paintComponent(final Graphics g) {
         final Graphics2D g2 = (Graphics2D) g;
         super.paintComponent(g2);
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            if ((selectedMask & (1 << i)) != 0)
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+            if ((selectedMask & 1 << i) != 0)
                 paintSpeed(g2, i);
-        }
     }
 
     protected void paintSpeed(final Graphics2D g2, final int idx) {
         if (idx < 0)
             return;
         final Point2D cwc = getPos().getRock(idx);
-        final Point2D cdc = this.wc2dc(cwc, null);
+        final Point2D cdc = wc2dc(cwc, null);
         // prepare a direction beam (line) 5 Meters long from cwc
         final Point2D dir_dc;
         final Point2D normwc;
@@ -195,7 +194,7 @@ public class RockEditDisplay extends PositionDisplay {
                 normwc = MathVec.mult(1.0 / vwc_abs, norm, null);
             norm = MathVec.mult(5, normwc, null);
             MathVec.add(cwc, norm, norm);
-            this.wc2dc(norm, norm);
+            wc2dc(norm, norm);
             dir_dc = norm;
         }
         // prepare a perpendicular line for the "strength"
@@ -211,14 +210,14 @@ public class RockEditDisplay extends PositionDisplay {
             abs1_dc = MathVec.add(spotWc, abs2_dc, null);
             MathVec.mult(-1, abs2_dc, abs2_dc);
             MathVec.add(spotWc, abs2_dc, abs2_dc);
-            this.wc2dc(abs1_dc, abs1_dc);
-            this.wc2dc(abs2_dc, abs2_dc);
+            wc2dc(abs1_dc, abs1_dc);
+            wc2dc(abs2_dc, abs2_dc);
         }
 
         lineDC(g2, cdc, dir_dc);
         lineDC(g2, abs1_dc, abs2_dc);
         // circle at the hot "spot" for changing speed
-        circleDC(g2, this.wc2dc(spotWc, null), hotRadiusDC);
+        circleDC(g2, wc2dc(spotWc, null), hotRadiusDC);
     }
 
     /**
@@ -230,7 +229,7 @@ public class RockEditDisplay extends PositionDisplay {
     public void propertyChange(PropertyChangeEvent evt) {
         final Object tmp = evt.getNewValue();
         if (SpeedSet.class.isAssignableFrom(tmp.getClass()))
-            repaint();
+            this.repaint();
         else
             super.propertyChange(evt);
     }
@@ -239,7 +238,7 @@ public class RockEditDisplay extends PositionDisplay {
         if (this.focus == focus)
             return;
         this.focus = focus & 0xF;
-        repaint();
+        this.repaint();
     }
 
     public void setSelectedMask(int selectedMask) {
@@ -248,7 +247,7 @@ public class RockEditDisplay extends PositionDisplay {
         this.selectedMask = selectedMask & 0xFFFF;
         if (log.isDebugEnabled())
             log.debug("selectedMask=" + this.selectedMask);
-        repaint();
+        this.repaint();
     }
 
     public void setSpeedSpot(final int idx, final Point2D spot) {

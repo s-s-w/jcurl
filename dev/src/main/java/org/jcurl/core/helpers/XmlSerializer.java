@@ -58,7 +58,7 @@ public class XmlSerializer extends XmlSimpleWriter {
      * @throws SAXException
      */
     public void characters(final char[] ch) throws SAXException {
-        characters(ch, 0, ch.length);
+        this.characters(ch, 0, ch.length);
     }
 
     /**
@@ -69,7 +69,7 @@ public class XmlSerializer extends XmlSimpleWriter {
      * @throws SAXException
      */
     public void characters(final String ch) throws SAXException {
-        characters(ch.toCharArray());
+        this.characters(ch.toCharArray());
     }
 
 }

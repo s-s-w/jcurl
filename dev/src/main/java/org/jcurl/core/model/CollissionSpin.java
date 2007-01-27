@@ -47,8 +47,6 @@ public class CollissionSpin extends CollissionStrategy {
 
     private double mu;
 
-    private double U;
-
     public CollissionSpin() {
         setLoss(0);
         setFricRockRock(0.5);
@@ -57,7 +55,7 @@ public class CollissionSpin extends CollissionStrategy {
     public void computeRC(final Rock va, final Rock vb) {
         final double Veff = va.getX() + R * va.getZ()
                 - (vb.getX() + R * vb.getZ());
-        double X = -Veff / (2 * ((1 / m) + R * R / J));
+        double X = -Veff / (2 * (1 / m + R * R / J));
         final double dVy = vb.getY() - va.getY();
         final double dPabs = m * abs(dVy);
         if (abs(X) > mu * dPabs)
@@ -74,10 +72,6 @@ public class CollissionSpin extends CollissionStrategy {
 
     public String description() {
         return "Collissions with spin";
-    }
-
-    private double getLoss() {
-        return U;
     }
 
     /**
@@ -99,7 +93,6 @@ public class CollissionSpin extends CollissionStrategy {
      *            [Joule] the value
      */
     public void setLoss(final double v) {
-        U = v / m;
         props.put(LOSS, new DimVal(v, Dim.JOULE));
     }
 }

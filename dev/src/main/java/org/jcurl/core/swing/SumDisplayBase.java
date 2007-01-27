@@ -84,7 +84,7 @@ public abstract class SumDisplayBase extends JComponent implements
     }
 
     public SumDisplayBase(final PositionSet model) {
-        setPos(model);
+        this.setPos(model);
     }
 
     protected abstract int computeMask(final PositionSet rocks);
@@ -118,15 +118,14 @@ public abstract class SumDisplayBase extends JComponent implements
     }
 
     protected void paintRock(final Graphics2D g2, int idx8, boolean isDark) {
-        final float r = 0.35F * this.getWidth();
+        final float r = 0.35F * getWidth();
         // vertical display:
-        float cx = 0.5F * this.getWidth();
-        float cy = this.getHeight() / RockSet.ROCKS_PER_SET;
-        if (isDark) {
+        float cx = 0.5F * getWidth();
+        float cy = getHeight() / RockSet.ROCKS_PER_SET;
+        if (isDark)
             cy *= idx8 + 0.5F;
-        } else {
+        else
             cy *= RockSet.ROCKS_PER_SET - (idx8 + 0.5F);
-        }
         g2.setPaint(isDark ? colors.dark : colors.light);
         g2.fillArc((int) (cx - r), (int) (cy - r), (int) (2 * r),
                 (int) (2 * r), 0, 360);
@@ -137,23 +136,22 @@ public abstract class SumDisplayBase extends JComponent implements
 
     public void propertyChange(PropertyChangeEvent evt) {
         final Object tmp = evt.getNewValue();
-        if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass())) {
-            setPos((PositionSet) tmp);
-        } else
+        if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass()))
+            this.setPos((PositionSet) tmp);
+        else
             log.info(tmp);
     }
 
     public void setPos(PositionSet rocks) {
-        if (this.model != null && this.model != rocks) {
-            this.model.removePropertyChangeListener(this);
-        }
+        if (model != null && model != rocks)
+            model.removePropertyChangeListener(this);
         rocks.addPropertyChangeListener(this);
-        this.model = rocks;
-        showRocks(computeMask(this.model));
+        model = rocks;
+        showRocks(computeMask(model));
     }
 
     public void setPos(PositionSet rocks, int discontinuous) {
-        setPos(rocks);
+        this.setPos(rocks);
     }
 
     public void showRocks(int mask) {
@@ -162,6 +160,6 @@ public abstract class SumDisplayBase extends JComponent implements
         recentMask = mask;
         if (log.isDebugEnabled())
             log.debug("mask " + recentMask);
-        repaint();
+        this.repaint();
     }
 }

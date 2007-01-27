@@ -31,9 +31,9 @@ public class PngFileChooser extends JFileChooser {
         super(currentFile == null ? new File(".")
                 : currentFile.isDirectory() ? currentFile : currentFile
                         .getParentFile());
-        this.setMultiSelectionEnabled(false);
-        this.setAcceptAllFileFilterUsed(true);
-        this.setFileFilter(new FileFilter() {
+        setMultiSelectionEnabled(false);
+        setAcceptAllFileFilterUsed(true);
+        setFileFilter(new FileFilter() {
             public boolean accept(final File f) {
                 if (f == null)
                     return false;

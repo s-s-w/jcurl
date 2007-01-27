@@ -18,7 +18,6 @@
  */
 package org.jcurl.mr.math;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -51,7 +50,7 @@ public class PointList implements List {
     }
 
     public void add(int index, Object element) {
-        dat.add(index, (Point) element);
+        dat.add(index, element);
     }
 
     /**
@@ -62,15 +61,15 @@ public class PointList implements List {
      * @return <code>true</code>
      */
     public boolean add(Object o) {
-        return dat.add((Point) o);
+        return dat.add(o);
     }
 
     public boolean addAll(Collection c) {
-        return dat.addAll((PointList) c);
+        return dat.addAll(c);
     }
 
     public boolean addAll(int index, Collection c) {
-        return dat.addAll(index, (PointList) c);
+        return dat.addAll(index, c);
     }
 
     public void clear() {

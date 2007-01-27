@@ -50,8 +50,8 @@ public abstract class RockSet extends MutableObject implements Cloneable,
 
     public static RockSet copy(final RockSet src, final RockSet dst) {
         for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
-            dst.dark[i] = (Rock) (src.dark[i].clone());
-            dst.light[i] = (Rock) (src.light[i].clone());
+            dst.dark[i] = (Rock) src.dark[i].clone();
+            dst.light[i] = (Rock) src.light[i].clone();
         }
         dst.notifyChange();
         return dst;
@@ -59,10 +59,9 @@ public abstract class RockSet extends MutableObject implements Cloneable,
 
     public static int countBits(int a) {
         int ret = 0;
-        for (; a != 0; a >>= 1) {
+        for (; a != 0; a >>= 1)
             if ((a & 1) == 1)
                 ret++;
-        }
         return ret;
     }
 
@@ -74,7 +73,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
      * @return if the given rock's bit is set
      */
     public static boolean isSet(int mask, int index16) {
-        return 1 == (1 & (mask >> index16));
+        return 1 == (1 & mask >> index16);
     }
 
     /**
@@ -97,10 +96,9 @@ public abstract class RockSet extends MutableObject implements Cloneable,
      */
     public static int nonZero(final RockSet rocks) {
         int ret = 0;
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             if (rocks.getRock(i).nonZero())
                 ret |= 1 << i;
-        }
         return ret;
     }
 
@@ -131,12 +129,11 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     }
 
     protected RockSet(boolean fill) {
-        if (fill) {
+        if (fill)
             for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
                 dark[i] = new RockFloat();
                 light[i] = new RockFloat();
             }
-        }
     }
 
     /**

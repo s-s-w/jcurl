@@ -86,7 +86,7 @@ public class Calc0 {
 
     private double expr(boolean get) throws IOException {
         double left = term(get);
-        for (;;) {
+        for (;;)
             switch (curr_tok) {
             case PLUS:
                 left += term(true);
@@ -97,15 +97,14 @@ public class Calc0 {
             default:
                 return left;
             }
-        }
     }
 
     private int get_token() throws IOException {
         int ch = 0;
-        do {
+        do
             if (-1 == (ch = cin.read()))
                 return curr_tok = END;
-        } while (ch != '\n' && Character.isWhitespace((char) ch));
+        while (ch != '\n' && Character.isWhitespace((char) ch));
         switch (ch) {
         case 0:
             return curr_tok = END;
@@ -121,9 +120,8 @@ public class Calc0 {
         case '\n':
             return curr_tok = END;
         default:
-            if (parse(ch)) {
+            if (parse(ch))
                 return curr_tok;
-            }
             error("bad token");
             return curr_tok = END;
         }
@@ -151,7 +149,7 @@ public class Calc0 {
             final String s = string_value.toString();
             final Matcher mat = floatPat.matcher(s);
             if (mat.matches()) {
-                this.number_value = Double.parseDouble(s);
+                number_value = Double.parseDouble(s);
                 curr_tok = NUMBER;
             } else
                 curr_tok = NAME;
@@ -171,9 +169,8 @@ public class Calc0 {
         case NAME:
             final String p = string_value.toString();
             double v2 = getNameVal(p);
-            if (get_token() == ASSIGN) {
+            if (get_token() == ASSIGN)
                 setNameVal(p, expr(true));
-            }
             return v2;
         case MINUS:
             return -prim(true);
@@ -194,7 +191,7 @@ public class Calc0 {
 
     double term(boolean get) throws IOException {
         double left = prim(get);
-        for (;;) {
+        for (;;)
             switch (curr_tok) {
             case MUL:
                 left *= prim(true);
@@ -205,6 +202,5 @@ public class Calc0 {
             default:
                 return left;
             }
-        }
     }
 }

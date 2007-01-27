@@ -45,8 +45,7 @@ public class Painter {
         float height = 2 * Math.abs(b.y - a.y);
         float tlx = a.x - width / 2;
         float tly = a.y - height / 2;
-        g.drawArc((int) (tlx), (int) (tly), (int) (width), (int) (height), 0,
-                360);
+        g.drawArc((int) tlx, (int) tly, (int) width, (int) height, 0, 360);
     }
 
     static void circleDC(final Graphics g, final Point2D c, final double r) {

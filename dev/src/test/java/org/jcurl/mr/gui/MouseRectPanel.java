@@ -51,17 +51,16 @@ public class MouseRectPanel extends JPanel implements MouseMotionListener {
         addMouseListener(new MouseAdapter() {
 
             public void mouseClicked(MouseEvent evt) {
-                if (evt.getClickCount() >= 2) {
-                    remove(current);
-                }
+                if (evt.getClickCount() >= 2)
+                    MouseRectPanel.this.remove(current);
             }
 
             public void mousePressed(MouseEvent evt) {
                 int x = evt.getX();
                 int y = evt.getY();
-                current = find(x, y);
+                current = MouseRectPanel.this.find(x, y);
                 if (current < 0) // not inside a square
-                    add(x, y);
+                    MouseRectPanel.this.add(x, y);
             }
         });
         addMouseMotionListener(this);
@@ -72,7 +71,7 @@ public class MouseRectPanel extends JPanel implements MouseMotionListener {
             squares[nsquares] = new Point(x, y);
             current = nsquares;
             nsquares++;
-            repaint();
+            this.repaint();
         }
     }
 
@@ -82,7 +81,7 @@ public class MouseRectPanel extends JPanel implements MouseMotionListener {
     }
 
     public int find(int x, int y) {
-        for (int i = 0; i < nsquares; i++) {
+        for (int i = 0; i < nsquares; i++)
             if (squares[i].x - SQUARELENGTH / 2 <= x
                     && x <= squares[i].x + SQUARELENGTH / 2
                     && squares[i].y - SQUARELENGTH / 2 <= y
@@ -90,7 +89,6 @@ public class MouseRectPanel extends JPanel implements MouseMotionListener {
 
             )
                 return i;
-        }
         return -1;
     }
 
@@ -119,9 +117,8 @@ public class MouseRectPanel extends JPanel implements MouseMotionListener {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (int i = 0; i < nsquares; i++) {
+        for (int i = 0; i < nsquares; i++)
             draw(g, i);
-        }
     }
 
     public void remove(int n) {
@@ -131,6 +128,6 @@ public class MouseRectPanel extends JPanel implements MouseMotionListener {
         squares[n] = squares[nsquares];
         if (current == n)
             current = -1;
-        repaint();
+        this.repaint();
     }
 }

@@ -75,16 +75,15 @@ public class Ice {
     public static final int checkOut(final PositionSet pos,
             final PositionSet speed) {
         int ret = 0;
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             if (speed.getRock(i).nonZero()) {
                 final Rock r = pos.getRock(i);
                 if (r.getX() > outX || r.getX() < -outX || r.getY() < -outY) {
-                    setOut(r, (i % 2) == 0, i / 2);
+                    setOut(r, i % 2 == 0, i / 2);
                     speed.getRock(i).setLocation(0, 0, 0);
                     ret |= 1 << i;
                 }
             }
-        }
         return ret;
     }
 
@@ -97,10 +96,9 @@ public class Ice {
      * @return true/false
      */
     public static boolean ingame(final Rock x) {
-        return -x.getY() < (BACK_2_TEE + rad)
-                && x.getY() < (FAR_HOG_2_TEE - rad)
-                && x.getX() < (SIDE_2_CENTER - rad)
-                && -x.getX() < (SIDE_2_CENTER - rad);
+        return -x.getY() < BACK_2_TEE + rad && x.getY() < FAR_HOG_2_TEE - rad
+                && x.getX() < SIDE_2_CENTER - rad
+                && -x.getX() < SIDE_2_CENTER - rad;
     }
 
     /**
@@ -112,10 +110,9 @@ public class Ice {
      * @return <code>true/false</code>
      */
     public static boolean ingamePlus(final Rock x) {
-        return -x.getY() < (BACK_2_TEE + rad)
-                && x.getY() < (FAR_HACK_2_TEE + rad)
-                && x.getX() < (SIDE_2_CENTER - rad)
-                && -x.getX() < (SIDE_2_CENTER - rad);
+        return -x.getY() < BACK_2_TEE + rad && x.getY() < FAR_HACK_2_TEE + rad
+                && x.getX() < SIDE_2_CENTER - rad
+                && -x.getX() < SIDE_2_CENTER - rad;
     }
 
     /**
@@ -151,7 +148,7 @@ public class Ice {
      *            index
      */
     public static void setOut(final Rock R, final boolean isDark, final int i) {
-        R.setLocation((isDark ? -1 : 1) * Dim.f2m(2.5 + 1.2 * (i / 2)), Dim
-                .f2m((i % 2) == 0 ? -8 : -9.2), 0);
+        R.setLocation((isDark ? -1 : 1) * Dim.f2m(2.5 + 1.2 * i / 2), Dim
+                .f2m(i % 2 == 0 ? -8 : -9.2), 0);
     }
 }

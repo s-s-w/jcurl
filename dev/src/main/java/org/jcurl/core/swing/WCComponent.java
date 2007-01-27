@@ -94,7 +94,7 @@ public abstract class WCComponent extends JComponent {
                     RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             g2.addRenderingHints(hints);
         }
-        this.paintComponent(g2);
+        paintComponent(g2);
         g2.dispose();
         if (!dst.getName().endsWith(".png"))
             dst = new File(dst.getName() + ".png");
@@ -112,8 +112,8 @@ public abstract class WCComponent extends JComponent {
      * @return was the transformation changed?
      */
     protected boolean resized() {
-        final int w = this.getWidth();
-        final int h = this.getHeight();
+        final int w = getWidth();
+        final int h = getHeight();
         if (getZoom().hasChanged() || oldWid != w || oldHei != h) {
             getZoom()
                     .computeWctoDcTrafo(this.getBounds(), orient, true, wc_mat);

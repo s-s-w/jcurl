@@ -48,12 +48,12 @@ public class MainFrame extends JFrame {
             }
         });
         setTitle("FirstFrame");
-        setSize(600, 600);
+        this.setSize(600, 600);
         Container contentPane = getContentPane();
         // contentPane.add(new KeySketchPanel());
         // contentPane.add(new MouseRectPanel());
         final MouseSketchPanel mp = new MouseSketchPanel(' ');
-        this.curve = mp.getCurve();
+        curve = mp.getCurve();
         contentPane.add(mp);
     }
 }

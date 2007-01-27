@@ -98,7 +98,7 @@ public class CurveCombined extends R1RNFunction {
             this.fkt = c;
         }
         // add
-        this.t0[parts] = _t0;
+        t0[parts] = _t0;
         this.fkt[parts++] = fkt;
     }
 
@@ -139,21 +139,5 @@ public class CurveCombined extends R1RNFunction {
         if (idx == -1)
             return parts - 1;
         return -2 - idx;
-    }
-
-    /**
-     * Linear search.
-     * 
-     * @param t
-     * @return the curve index
-     */
-    private int findFktIdx_LS(double t) {
-        for (int i = 0; i <= parts; i++) {
-            if (i == parts)
-                return i - 1;
-            if (t >= t0[i])
-                return i;
-        }
-        throw new IllegalArgumentException("t < tmin");
     }
 }

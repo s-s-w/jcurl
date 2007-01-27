@@ -29,9 +29,9 @@ public class JcxFileChooser extends JFileChooser {
 
     public JcxFileChooser(File currentFile) {
         super(currentFile == null ? new File(".") : currentFile);
-        this.setMultiSelectionEnabled(false);
-        this.setAcceptAllFileFilterUsed(true);
-        this.setFileFilter(new FileFilter() {
+        setMultiSelectionEnabled(false);
+        setAcceptAllFileFilterUsed(true);
+        setFileFilter(new FileFilter() {
             public boolean accept(final File f) {
                 if (f == null)
                     return false;

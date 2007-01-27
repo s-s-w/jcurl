@@ -34,9 +34,8 @@ public class CurveFkt extends R1RNFunction {
     public CurveFkt(final R1R1Function[] fkt) {
         super(fkt.length);
         this.fkt = new R1R1Function[dim];
-        for (int i = dim - 1; i >= 0; i--) {
+        for (int i = dim - 1; i >= 0; i--)
             this.fkt[i] = fkt[i];
-        }
     }
 
     public double at(int dim, int c, double t) {

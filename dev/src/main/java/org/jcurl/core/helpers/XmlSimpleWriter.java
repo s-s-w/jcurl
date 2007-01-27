@@ -52,10 +52,6 @@ public class XmlSimpleWriter extends DefaultHandler {
 
     private static final Logger log = Logger.getLogger(XmlSimpleWriter.class);
 
-    private static final char NEWLINE = '\n';
-
-    private static final char TABULATOR = '\t';
-
     private static void checkAttName(final String qName) throws SAXException {
         if (qName == null || "".equals(qName))
             throw new SAXException("empty element name not allowed!");
@@ -109,9 +105,8 @@ public class XmlSimpleWriter extends DefaultHandler {
     public static void writeEncoded(final String src, final Writer target)
             throws SAXException {
         final int len = src.length();
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++)
             writeEncoded(src.charAt(i), target);
-        }
     }
 
     private static final void writePlain(final char s, final Writer target)
@@ -156,7 +151,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      */
     public XmlSimpleWriter(final OutputStream dst, final String encoding,
             final boolean indent) throws UnsupportedEncodingException {
-        this.target = new OutputStreamWriter(dst, encoding);
+        target = new OutputStreamWriter(dst, encoding);
         this.encoding = encoding;
     }
 
@@ -167,7 +162,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      */
     public XmlSimpleWriter(final Writer target) {
         this.target = target;
-        this.encoding = null;
+        encoding = null;
     }
 
     /**
@@ -244,7 +239,7 @@ public class XmlSimpleWriter extends DefaultHandler {
     }
 
     public Writer getWriter() {
-        return this.target;
+        return target;
     }
 
     /**
@@ -301,9 +296,8 @@ public class XmlSimpleWriter extends DefaultHandler {
     public void startDocument() throws SAXException {
         elemStack.clear();
         String data = "version=\"1.0\"";
-        if (encoding != null) {
+        if (encoding != null)
             data += " encoding=\"" + encoding + "\"";
-        }
         processingInstruction("xml", data);
     }
 
@@ -329,9 +323,8 @@ public class XmlSimpleWriter extends DefaultHandler {
                 writePlain(pendingPrefixStart, target);
             }
             writePlain("=\"", target);
-            if (pendingUriStart != null) {
+            if (pendingUriStart != null)
                 writeEncoded(pendingUriStart, target);
-            }
             writePlain("\"", target);
             pendingPrefixStart = pendingUriStart = null;
         }
@@ -346,11 +339,11 @@ public class XmlSimpleWriter extends DefaultHandler {
                 if (name == null && atts.getLocalName(i) != null)
                     name = atts.getLocalName(i);
                 checkAttName(name);
-                if (val == null) {
+                if (val == null)
                     log.warn("Attribute [" + getCurrentXPath(elemStack) + "/"
                             + qName + "/@" + name
                             + "] is skipped because it has the value null");
-                } else {
+                else {
                     writePlain(' ', target);
                     writePlain(name, target);
                     writePlain("=\"", target);

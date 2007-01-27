@@ -286,12 +286,11 @@ public class SetupSaxDeSer extends DefaultHandler {
                     final String key = atts.getValue("name");
                     final String val = atts.getValue("val");
                     final String dim = atts.getValue("dim");
-                    if (dim != null) {
+                    if (dim != null)
                         modelProps.put(key, new DimVal(Double.parseDouble(val),
                                 Dim.find(dim)));
-                    } else {
+                    else
                         modelProps.put(key, val);
-                    }
                 } else if ("rock".equals(elem))
                     currRock = new RockIdx(atts);
                 else

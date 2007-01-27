@@ -184,8 +184,8 @@ public class Dim extends EnumBase {
     protected Dim(final String txt, final Dim base, final double factor) {
         super(_idx++, txt);
         _names.put(txt, this);
-        this.BaseDim = base == null ? this : base;
-        this.Factor = factor;
+        BaseDim = base == null ? this : base;
+        Factor = factor;
     }
 
     public boolean isAngle() {

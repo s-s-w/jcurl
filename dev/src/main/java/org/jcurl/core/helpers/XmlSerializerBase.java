@@ -86,14 +86,14 @@ class XmlSerializerBase implements ContentHandler {
 
     public XmlSerializerBase(final OutputStream stream, final String encoding,
             final boolean indent) throws UnsupportedEncodingException {
-        this.target = new OutputStreamWriter(stream, encoding);
+        target = new OutputStreamWriter(stream, encoding);
         this.encoding = encoding;
         this.indent = indent;
     }
 
     public XmlSerializerBase(final Writer target, final boolean indent) {
         this.target = target;
-        this.encoding = null;
+        encoding = null;
         this.indent = indent;
     }
 
@@ -105,7 +105,7 @@ class XmlSerializerBase implements ContentHandler {
     public void characters(final char[] ch, final int start, final int length)
             throws SAXException {
         for (int i = start; i < start + length; i++)
-            writeEncoded(ch[i]);
+            this.writeEncoded(ch[i]);
     }
 
     /**
@@ -136,15 +136,15 @@ class XmlSerializerBase implements ContentHandler {
         if (!recent.equals(qName))
             throw new SAXException("Cannot write non-wellformed stuff.");
         if (indent) {
-            writePlain(NEWLINE);
+            this.writePlain(NEWLINE);
             for (int i = currentElement.size(); i > 0; i--)
-                writePlain(TABULATOR);
+                this.writePlain(TABULATOR);
         }
-        writePlain("</");
-        writePlain(qName);
-        writePlain(">");
+        this.writePlain("</");
+        this.writePlain(qName);
+        this.writePlain(">");
         if (indent)
-            writePlain(NEWLINE);
+            this.writePlain(NEWLINE);
     }
 
     /**
@@ -179,17 +179,17 @@ class XmlSerializerBase implements ContentHandler {
     public void processingInstruction(String target, String data)
             throws SAXException {
         if (indent) {
-            writePlain(NEWLINE);
+            this.writePlain(NEWLINE);
             for (int i = currentElement.size(); i > 0; i--)
-                writePlain(TABULATOR);
+                this.writePlain(TABULATOR);
         }
-        writePlain("<?");
-        writePlain(target);
+        this.writePlain("<?");
+        this.writePlain(target);
         if (data != null) {
-            writePlain(' ');
-            writePlain(data);
+            this.writePlain(' ');
+            this.writePlain(data);
         }
-        writePlain("?>");
+        this.writePlain("?>");
     }
 
     /**
@@ -219,9 +219,8 @@ class XmlSerializerBase implements ContentHandler {
     public void startDocument() throws SAXException {
         currentElement.clear();
         String data = "version=\"1.0\"";
-        if (encoding != null) {
+        if (encoding != null)
             data += " encoding=\"" + encoding + "\"";
-        }
         processingInstruction("xml", data);
     }
 
@@ -235,24 +234,23 @@ class XmlSerializerBase implements ContentHandler {
     public void startElement(String namespaceURI, String localName,
             String qName, Attributes atts) throws SAXException {
         if (indent) {
-            writePlain(NEWLINE);
+            this.writePlain(NEWLINE);
             for (int i = currentElement.size(); i > 0; i--)
-                writePlain(TABULATOR);
+                this.writePlain(TABULATOR);
         }
-        writePlain("<");
-        writePlain(qName);
+        this.writePlain("<");
+        this.writePlain(qName);
         // handle namespace changes
         if (pendingPrefixStart != null || pendingUriStart != null) {
-            writePlain(" xmlns");
+            this.writePlain(" xmlns");
             if (pendingPrefixStart != null) {
-                writePlain(':');
-                writePlain(pendingPrefixStart);
+                this.writePlain(':');
+                this.writePlain(pendingPrefixStart);
             }
-            writePlain("=\"");
-            if (pendingUriStart != null) {
-                writeEncoded(pendingUriStart);
-            }
-            writePlain("\"");
+            this.writePlain("=\"");
+            if (pendingUriStart != null)
+                this.writeEncoded(pendingUriStart);
+            this.writePlain("\"");
             pendingPrefixStart = pendingUriStart = null;
         }
         // TODO keep track of changing namespace prefixes
@@ -261,14 +259,14 @@ class XmlSerializerBase implements ContentHandler {
         if (atts != null) {
             int len = atts.getLength();
             for (int i = 0; i < len; i++) {
-                writePlain(" ");
-                writePlain(atts.getQName(i));
-                writePlain("=\"");
-                writeEncoded(atts.getValue(i));
-                writePlain("\"");
+                this.writePlain(" ");
+                this.writePlain(atts.getQName(i));
+                this.writePlain("=\"");
+                this.writeEncoded(atts.getValue(i));
+                this.writePlain("\"");
             }
         }
-        writePlain(">");
+        this.writePlain(">");
         currentElement.push(qName);
     }
 
@@ -290,31 +288,30 @@ class XmlSerializerBase implements ContentHandler {
     private void writeEncoded(final char ch) throws SAXException {
         switch (ch) {
         case '&':
-            writePlain("&amp;");
+            this.writePlain("&amp;");
             break;
         case '<':
-            writePlain("&lt;");
+            this.writePlain("&lt;");
             break;
         case '>':
-            writePlain("&gt;");
+            this.writePlain("&gt;");
             break;
         case '"':
-            writePlain("&quot;");
+            this.writePlain("&quot;");
             break;
         case '\'':
-            writePlain("&apos;");
+            this.writePlain("&apos;");
             break;
         default:
-            writePlain(ch);
+            this.writePlain(ch);
             break;
         }
     }
 
     private void writeEncoded(final String s) throws SAXException {
         final int len = s.length();
-        for (int i = 0; i < len; i++) {
-            writeEncoded(s.charAt(i));
-        }
+        for (int i = 0; i < len; i++)
+            this.writeEncoded(s.charAt(i));
     }
 
     private void writePlain(final char s) throws SAXException {

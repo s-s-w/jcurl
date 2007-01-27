@@ -27,6 +27,7 @@ import org.jcurl.core.base.CollissionStrategy;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
+import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.math.MathVec;
 
@@ -60,7 +61,7 @@ public class CollissionSimpleTest extends TestCase {
 
     public void setUp() {
         PositionSet.allHome(pos);
-        PositionSet.allZero(speed);
+        RockSet.allZero(speed);
     }
 
     private static final CollissionSimple hit = new CollissionSimple();
@@ -122,12 +123,12 @@ public class CollissionSimpleTest extends TestCase {
         final double[] flat = new double[6];
         Point2D a = new Point2D.Double(0, 0);
         Point2D b = new Point2D.Double(0, 1);
-        CollissionSimple.getInverseTrafo(a, a, b, mat);
+        CollissionStrategy.getInverseTrafo(a, a, b, mat);
         assertTrue(mat.isIdentity());
 
         a = new Point2D.Double(0, -1);
         b = new Point2D.Double(0, 1);
-        CollissionSimple.getInverseTrafo(a, a, b, mat);
+        CollissionStrategy.getInverseTrafo(a, a, b, mat);
         mat.getMatrix(flat);
         assertEquals("", 1, flat[0], 1e-9);
         assertEquals("", 0, flat[1], 1e-9);

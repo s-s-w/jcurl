@@ -134,7 +134,7 @@ public class Zoomer {
      *            the same relative position in the dc-viewport.
      */
     public Zoomer(final String txt, final Rectangle2D wc, final Point2D fixPoint) {
-        this.viewport = wc;
+        viewport = wc;
         this.fixPoint = fixPoint;
     }
 
@@ -181,9 +181,8 @@ public class Zoomer {
             final double fpy = dc.getMinY()
                     + (fixPoint.getX() - viewport.getMinX()) * sca_y;
             mat.translate(fpx, fpy);
-        } else {
+        } else
             throw new NotImplementedYetException();
-        }
 
         if (uniform)
             if (sca_x > sca_y)

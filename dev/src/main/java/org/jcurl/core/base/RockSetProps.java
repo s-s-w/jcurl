@@ -36,9 +36,9 @@ public class RockSetProps {
         }
     }
 
-    private final RockProps[] dark = new RockProps[PositionSet.ROCKS_PER_COLOR];
+    private final RockProps[] dark = new RockProps[RockSet.ROCKS_PER_COLOR];
 
-    private final RockProps[] light = new RockProps[PositionSet.ROCKS_PER_COLOR];
+    private final RockProps[] light = new RockProps[RockSet.ROCKS_PER_COLOR];
 
     public RockSetProps() {
         for (int i = dark.length - 1; i >= 0; i--) {

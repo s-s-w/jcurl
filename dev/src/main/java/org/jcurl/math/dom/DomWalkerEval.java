@@ -61,14 +61,14 @@ public class DomWalkerEval extends DomWalker {
     public void walk(MathDom.BinaryOp n) {
         v = 0;
         final double l;
-        if (n.op == '=') {
+        if (n.op == '=')
             l = 0;
-        } else {
-            walk(n.left);
+        else {
+            this.walk(n.left);
             l = v;
             v = 0;
         }
-        walk(n.right);
+        this.walk(n.right);
         final double r = v;
         switch (n.op) {
         case '=':
@@ -97,11 +97,11 @@ public class DomWalkerEval extends DomWalker {
     }
 
     public void walk(MathDom.Block n) {
-        walk(n.arg);
+        this.walk(n.arg);
     }
 
     public void walk(MathDom.Function n) {
-        walk(n.arg);
+        this.walk(n.arg);
         final String fkt = n.name;
         if ("sin".equals(fkt))
             v = Math.sin(v);
@@ -126,7 +126,7 @@ public class DomWalkerEval extends DomWalker {
     }
 
     public void walk(MathDom.UnaryOp n) {
-        walk(n.arg);
+        this.walk(n.arg);
         switch (n.op) {
         case '-':
             v = -v;

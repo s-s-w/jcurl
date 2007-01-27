@@ -19,6 +19,7 @@
 package org.jcurl.demo.tactics;
 
 import java.awt.Cursor;
+import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Point2D;
@@ -65,10 +66,10 @@ public class LocationController implements MouseMotionListener {
         panel.setPos(model);
 
         this.panel = panel;
-        this.locations = model;
+        locations = model;
         // this.model.addPropertyChangeListener(this);
-        this.CursorDefault = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
-        this.CursorIn = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
+        CursorDefault = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
+        CursorIn = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
     }
 
     /**
@@ -102,14 +103,14 @@ public class LocationController implements MouseMotionListener {
             log.debug("no hot rock");
             return;
         }
-        if (e.getModifiersEx() == MouseEvent.BUTTON1_DOWN_MASK) {
+        if (e.getModifiersEx() == InputEvent.BUTTON1_DOWN_MASK) {
             // move a rock
             final Point2D wc = getWc(e, tmpWc);
             int idx = PositionSet.findRockIndexTouchingRockAtPos(locations, wc,
                     hotRockIdx);
-            if (idx >= 0) {
+            if (idx >= 0)
                 log.debug("new position blocked");
-            } else {
+            else {
                 locations.getRock(hotRockIdx).setLocation(wc);
                 locations.notifyChange();
                 log.debug("relocated");
