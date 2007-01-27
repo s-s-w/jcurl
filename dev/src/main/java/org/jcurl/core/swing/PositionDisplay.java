@@ -43,12 +43,12 @@ import org.jcurl.core.base.TargetDiscrete;
  * @version $Id: RockLocationDisplayBase.java 230 2006-02-19 12:34:18Z
  *          mrohrmoser $
  */
-public class RockLocationDisplayBase extends WCComponent implements
-        TargetDiscrete, PropertyChangeListener {
+public class PositionDisplay extends WCComponent implements TargetDiscrete,
+        PropertyChangeListener {
 
     private static final long serialVersionUID = -2680676530327406261L;
 
-    public static final Map hints = new HashMap(); 
+    private static final Map hints = new HashMap(); // @jve:decl-index=0:
 
     static {
         // hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION,
@@ -71,25 +71,15 @@ public class RockLocationDisplayBase extends WCComponent implements
         // RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
     }
 
-    private IcePainter icePainter;
+    private IcePainter icePainter = null;
 
     private BufferedImage img = null;
 
-    private PositionSet pos;
+    private PositionSet pos = null;
 
-    private RockPainter rockPainter;
+    private RockPainter rockPainter = null;
 
-    /**
-     * 
-     * @param rocks
-     *            {@link PositionSet#allHome()}if <code>null</code>
-     * @param zoom
-     *            {@link Zoomer#HOG2HACK}if <code>null</code>
-     */
-    public RockLocationDisplayBase() {
-        this.setRockPainter(new RockPainter());
-        this.setIcePainter(new IcePainter());
-        this.setPos(PositionSet.allHome());
+    public PositionDisplay() {
         initialize();
     }
 
@@ -121,12 +111,13 @@ public class RockLocationDisplayBase extends WCComponent implements
         return pos;
     }
 
-    /**
-     * This method initializes this
-     * 
-     */
     private void initialize() {
-        this.setSize(new Dimension(453, 129));
+        this.setSize(new Dimension(566, 139));
+        this.setOpaque(true);
+        this.setRockPainter(new RockPainter());
+        this.setIcePainter(new IcePainter());
+        this.setPos(PositionSet.allOut());
+        this.setZoom(Zoomer.HOUSE2HACK);
     }
 
     /**
@@ -143,10 +134,10 @@ public class RockLocationDisplayBase extends WCComponent implements
         final Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHints(hints);
 
-        final AffineTransform dc_mat = g2.getTransform();
+        final AffineTransform backup = g2.getTransform();
 
         // paint WC stuff (ice and rocks)
-        if (resized()) {
+        if (resized() || img == null) {
             // re-build the background image
             img = new BufferedImage(getWidth(), getHeight(),
                     BufferedImage.TYPE_INT_ARGB);
@@ -158,7 +149,7 @@ public class RockLocationDisplayBase extends WCComponent implements
         g2.drawImage(img, null, 0, 0);
         paintRocksDC(g2);
 
-        g2.setTransform(dc_mat);
+        g2.setTransform(backup);
     }
 
     /**
@@ -317,4 +308,4 @@ public class RockLocationDisplayBase extends WCComponent implements
         this.rockPainter = rockPainter;
         this.repaint();
     }
-}  //  @jve:decl-index=0:visual-constraint="10,10"
+} // @jve:decl-index=0:visual-constraint="10,10"

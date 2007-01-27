@@ -26,7 +26,7 @@ import java.awt.geom.Point2D;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.core.swing.RockLocationDisplayBase;
+import org.jcurl.core.swing.PositionDisplay;
 import org.jcurl.core.swing.WCComponent;
 
 /**
@@ -60,7 +60,7 @@ public class LocationController implements MouseMotionListener {
      *            {@link org.jcurl.core.base.RockSet#notifyChange()}.
      */
     public LocationController(final PositionSet model,
-            final RockLocationDisplayBase panel) {
+            final PositionDisplay panel) {
         panel.addMouseMotionListener(this);
         panel.setPos(model);
 

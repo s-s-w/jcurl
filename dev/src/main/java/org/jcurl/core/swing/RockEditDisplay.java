@@ -19,6 +19,7 @@
 package org.jcurl.core.swing;
 
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
@@ -36,7 +37,7 @@ import org.jcurl.math.MathVec;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:RockEditDisplay.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class RockEditDisplay extends RockLocationDisplayBase {
+public class RockEditDisplay extends PositionDisplay {
 
     private static final long serialVersionUID = 8273672905059423985L;
 
@@ -78,6 +79,15 @@ public class RockEditDisplay extends RockLocationDisplayBase {
     private static final Log log = JCLoggerFactory
             .getLogger(RockEditDisplay.class);
 
+    /**
+     * This method initializes this
+     * 
+     */
+    private void initialize() {
+        this.setSize(new Dimension(570, 140));
+
+    }
+
     protected static void circleDC(final Graphics2D g, final Point2D center,
             final int radius) {
         final int cx = (int) center.getX();
@@ -107,6 +117,7 @@ public class RockEditDisplay extends RockLocationDisplayBase {
 
     public RockEditDisplay() {
         super();
+        initialize();
         this.speed = new SpeedSet();
         this.speed.addPropertyChangeListener(this);
     }
@@ -214,7 +225,7 @@ public class RockEditDisplay extends RockLocationDisplayBase {
      * Property (speed) changed.
      * 
      * @param evt
-     * @see RockLocationDisplayBase#propertyChange(PropertyChangeEvent)
+     * @see PositionDisplay#propertyChange(PropertyChangeEvent)
      */
     public void propertyChange(PropertyChangeEvent evt) {
         final Object tmp = evt.getNewValue();
@@ -252,4 +263,4 @@ public class RockEditDisplay extends RockLocationDisplayBase {
     public void setSpeed(SpeedSet speed) {
         this.speed = speed;
     }
-}
+} // @jve:decl-index=0:visual-constraint="10,10"

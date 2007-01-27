@@ -67,7 +67,9 @@ public class IconGenerator {
         final BufferedImage img = new BufferedImage(1024, 768,
                 BufferedImage.TYPE_INT_RGB);
         final Graphics g = img.getGraphics();
-        final JCurlDisplay jp = new JCurlDisplay(loc, zoom, null, null);
+        final JCurlDisplay jp = new JCurlDisplay();
+        jp.setPos(loc);
+        jp.setZoom(zoom);
         jp.setSize(img.getWidth(), img.getHeight());
         jp.paintComponent(g);
         g.dispose();
