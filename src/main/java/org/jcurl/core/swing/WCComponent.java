@@ -49,12 +49,7 @@ public abstract class WCComponent extends JComponent {
 
     protected final AffineTransform wc_mat = new AffineTransform();
 
-    private Zoomer zoom;
-
-    public WCComponent() {
-        this.setZoom(Zoomer.HOUSE2HACK);
-        this.setOpaque(true);
-    }
+    private Zoomer zoom = null;
 
     /**
      * Convert display to world-coordinates.
@@ -120,10 +115,10 @@ public abstract class WCComponent extends JComponent {
         final int w = this.getWidth();
         final int h = this.getHeight();
         if (getZoom().hasChanged() || oldWid != w || oldHei != h) {
-            oldWid = w;
-            oldHei = h;
             getZoom()
                     .computeWctoDcTrafo(this.getBounds(), orient, true, wc_mat);
+            oldWid = w;
+            oldHei = h;
             return true;
         }
         return false;

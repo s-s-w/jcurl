@@ -57,8 +57,8 @@ import org.jcurl.core.io.SetupIO;
 import org.jcurl.core.swing.AboutDialog;
 import org.jcurl.core.swing.JcxFileChooser;
 import org.jcurl.core.swing.PngFileChooser;
+import org.jcurl.core.swing.PositionDisplay;
 import org.jcurl.core.swing.RockEditDisplay;
-import org.jcurl.core.swing.RockLocationDisplayBase;
 import org.jcurl.core.swing.SumShotDisplay;
 import org.jcurl.core.swing.SumWaitDisplay;
 import org.jcurl.core.swing.Zoomer;
@@ -67,7 +67,7 @@ import org.xml.sax.SAXException;
 /**
  * A simple editor that brings all together.
  * 
- * @see org.jcurl.core.swing.RockLocationDisplay
+ * @see org.jcurl.core.swing.PositionDisplay
  * @see org.jcurl.demo.editor.LocationController
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:EditorApp.java 378 2007-01-24 01:18:35Z mrohrmoser $
@@ -160,7 +160,7 @@ public class EditorApp extends JFrame {
         master = new RockEditDisplay();
         master.setPos(mod_locations);
         master.setSpeed(mod_speeds);
-        final RockLocationDisplayBase pnl2 = new RockLocationDisplayBase();
+        final PositionDisplay pnl2 = new PositionDisplay();
         pnl2.setPos(mod_locations);
         pnl2.setZoom(Zoomer.HOG2HACK);
 

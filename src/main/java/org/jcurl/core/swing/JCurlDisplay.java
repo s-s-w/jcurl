@@ -19,22 +19,21 @@
 package org.jcurl.core.swing;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import org.jcurl.core.base.PositionSet;
-
 /**
- * A {@link org.jcurl.core.swing.RockLocationDisplay}with some additional meta
- * data displayed (here: time).
+ * A {@link org.jcurl.core.swing.PositionDisplay}with some additional meta data
+ * displayed (here: time).
  * 
- * @see org.jcurl.core.swing.RockLocationDisplay
+ * @see org.jcurl.core.swing.PositionDisplay
  * @see org.jcurl.core.swing.RealTimePlayer
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:JCurlDisplay.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class JCurlDisplay extends RockLocationDisplayBase {
+public class JCurlDisplay extends PositionDisplay {
 
     private static final long serialVersionUID = -3587954807831602402L;
 
@@ -46,17 +45,21 @@ public class JCurlDisplay extends RockLocationDisplayBase {
 
     private double time = 0;
 
-    public JCurlDisplay(final PositionSet rocks, final Zoomer zoom,
-            final IcePainter iceP, final RockPainter rockP) {
+    /**
+     * This method initializes
+     * 
+     */
+    public JCurlDisplay() {
         super();
-        setPos(rocks);
-        setZoom(zoom);
-        setIcePainter(iceP);
-        setRockPainter(rockP);
+        initialize();
     }
 
-    public JCurlDisplay(Zoomer zoom) {
-        this(null, zoom, null, null);
+    /**
+     * This method initializes this
+     * 
+     */
+    private void initialize() {
+        this.setSize(new Dimension(607, 148));
     }
 
     public void paintComponent(final Graphics g) {
@@ -70,20 +73,5 @@ public class JCurlDisplay extends RockLocationDisplayBase {
         g2.setColor(timeC);
         g2.drawString(Double.toString(time), this.getWidth() - 70 + 10,
                 3 * 20 / 4);
-
     }
-
-    /**
-     * Triggers a repaint.
-     * 
-     * @param rocks
-     *            the rocks' locations
-     * @param discontinuous
-     *            bitmask of discontinouos locations
-     * @param time
-     *            [sec]
-     */
-    public void setPos(final PositionSet rocks, final int discontinuous) {
-        super.setPos(rocks, discontinuous);
-    }
-}
+} // @jve:decl-index=0:visual-constraint="10,10"

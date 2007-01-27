@@ -99,7 +99,8 @@ public class ViewerApp extends JFrame {
         setTitle("CurlDemo");
         setSize(900, 400);
 
-        final JCurlDisplay mp = new JCurlDisplay(src.getPos(), null, null, null);
+        final JCurlDisplay mp = new JCurlDisplay();
+        mp.setPos(src.getPos());
         getContentPane().add(mp, "Center");
         // getContentPane().add(new SumShotDisplay(), "East");
         // getContentPane().add(new SumWaitDisplay(), "West");

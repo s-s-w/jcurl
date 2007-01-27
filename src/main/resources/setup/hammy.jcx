@@ -2,12 +2,12 @@
 <!-- $Id$ -->
 <jcurl xmlns="http://jcurl.berlios.de/schema/setup/2005/1.0">
   <setup>
-    <model engine="jcurl.sim.model.CollissionSpin">
+    <model engine="org.jcurl.core.model.CollissionSpin">
       <description>Collissions with spin</description>
       <param name="friction rock-rock" val="0.5"/>
       <param name="loss" val="0.5" dim="m"/>
     </model>
-    <model engine="jcurl.sim.model.SlideStraight">
+    <model engine="org.jcurl.core.model.SlideStraight">
       <description>Straight movement</description>
       <param name="curl" val="0.0" dim="m"/>
       <param name="drawtotee" val="24.0" dim="sht"/>
