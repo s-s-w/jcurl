@@ -76,9 +76,8 @@ public class CSplineInterpolator extends R1R1Function {
             s = out[i][d];
             r = s / out[i][b];
         }
-        for (int i = N - 1; i > 0; i--) {
+        for (int i = N - 1; i > 0; i--)
             out[i][c] = (out[i][d] * out[i + 1][c] - out[i][c]) / out[i][b];
-        }
         for (int i = 0; i < N; ++i) {
             s = out[i][d];
             r = out[i + 1][c] - out[i][c];
@@ -130,15 +129,13 @@ public class CSplineInterpolator extends R1R1Function {
      */
     public void add(final double x, final double y) {
         if (points == _x.length) {
-            {
-                // resize _x and _y
-                double[] tmp = new double[1 + (int) (points / arrayFill)];
-                System.arraycopy(_x, 0, tmp, 0, points);
-                _x = tmp;
-                tmp = new double[_x.length];
-                System.arraycopy(_y, 0, tmp, 0, points);
-                _y = tmp;
-            }
+            // resize _x and _y
+            double[] tmp = new double[1 + (int) (points / arrayFill)];
+            System.arraycopy(_x, 0, tmp, 0, points);
+            _x = tmp;
+            tmp = new double[_x.length];
+            System.arraycopy(_y, 0, tmp, 0, points);
+            _y = tmp;
         }
         _splines = null; // enforce re-computation
         _x[points] = x;
@@ -180,10 +177,9 @@ public class CSplineInterpolator extends R1R1Function {
     private int findSplineIndex(final double x) {
         if (x < _x[0] || x > _x[points - 1])
             return -1;
-        if (_splines == null) {
+        if (_splines == null)
             // compute the c3 values
             _splines = computeSplines(points, _x, _y);
-        }
         // find the correct index
         int idx = CurveCombined.binarySearch(_x, x, 0, points - 1);
         if (idx < 0) {
@@ -206,7 +202,7 @@ public class CSplineInterpolator extends R1R1Function {
      * Discard the buffered points and splines.
      */
     public void reset() {
-        this.points = 0;
-        this._splines = null;
+        points = 0;
+        _splines = null;
     }
 }

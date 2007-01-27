@@ -65,13 +65,13 @@ public class KeySketchPanel extends JPanel implements KeyListener {
         else
             d = 1;
         if (keyCode == KeyEvent.VK_LEFT)
-            add(-d, 0);
+            this.add(-d, 0);
         else if (keyCode == KeyEvent.VK_RIGHT)
-            add(d, 0);
+            this.add(d, 0);
         else if (keyCode == KeyEvent.VK_UP)
-            add(0, -d);
+            this.add(0, -d);
         else if (keyCode == KeyEvent.VK_DOWN)
-            add(0, d);
+            this.add(0, d);
 
     }
 
@@ -87,12 +87,12 @@ public class KeySketchPanel extends JPanel implements KeyListener {
         } else
             d = 1;
         if (keyChar == 'h')
-            add(-d, 0);
+            this.add(-d, 0);
         else if (keyChar == 'l')
-            add(d, 0);
+            this.add(d, 0);
         else if (keyChar == 'k')
-            add(0, -d);
+            this.add(0, -d);
         else if (keyChar == 'j')
-            add(0, d);
+            this.add(0, d);
     }
 }

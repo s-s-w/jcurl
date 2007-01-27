@@ -111,8 +111,8 @@ public abstract class SlideCurves extends SlideStrategy {
      * @return the c'th derivative of x,y,alpha
      */
     protected RockSet getC(final int c, final double time, RockSet rocks) {
-        for (int i = PositionSet.ROCKS_PER_SET - 1; i >= 0; i--)
-            getC(c, time, i, rocks.getRock(i));
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+            this.getC(c, time, i, rocks.getRock(i));
         return rocks;
     }
 
@@ -129,14 +129,14 @@ public abstract class SlideCurves extends SlideStrategy {
     }
 
     protected boolean move(double t0, double t1, int idx, Rock pos, Rock speed) {
-        getC(0, t1, idx, pos);
-        getC(1, t1, idx, speed);
+        this.getC(0, t1, idx, pos);
+        this.getC(1, t1, idx, speed);
         return speed.getX() != 0 || speed.getY() != 0;
     }
 
     public final void reset(final PositionSet startPos,
             final SpeedSet startSpeed, final RockSetProps props) {
-        for (int i = PositionSet.ROCKS_PER_SET - 1; i >= 0; i--)
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             c[i] = new CurveCombined(3);
         super.reset(startPos, startSpeed, props);
     }
@@ -162,14 +162,13 @@ public abstract class SlideCurves extends SlideStrategy {
             tmin = t0;
         tmax = t0;
 
-        for (int i = PositionSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            if (0 != (discontinuous & (1 << i))) {
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+            if (0 != (discontinuous & 1 << i)) {
                 log.info("compute rock #" + i);
                 // add a new curve to the list
                 final R1RNFunction cu = createCurve(t0, pos.getRock(i), speed
                         .getRock(i));
                 c[i].add(t0, new CurveInterval(t0, findThalt(t0, cu), cu));
             }
-        }
     }
 }

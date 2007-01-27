@@ -68,7 +68,7 @@ public abstract class MathDom {
 
         public Integer(final int val) {
             super(val);
-            this.ival = val;
+            ival = val;
         }
     }
 

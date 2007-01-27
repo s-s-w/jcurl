@@ -124,26 +124,23 @@ public final class MathVec {
             det *= a[k][k];
             for (int i = k + 1; i < n; i++) {
                 a[i][k] /= a[k][k];
-                for (int j = k + 1; j < n; j++) {
+                for (int j = k + 1; j < n; j++)
                     a[i][j] -= a[i][k] * a[k][j];
-                }
             }
         }
         det *= a[n - 1][n - 1];
         // Vorwärtseinsetzen
-        for (int k = 0; k < n - 1; k++) {
+        for (int k = 0; k < n - 1; k++)
             if (p[k] != k) {
                 final double h = b[k];
                 b[k] = b[p[k]];
                 b[p[k]] = h;
             }
-        }
         final double[] c = new double[n];
         for (int i = 0; i < n; i++) {
             c[i] = b[i];
-            for (int j = 0; j < i - 1; j++) {
+            for (int j = 0; j < i - 1; j++)
                 c[i] -= a[i][j] * c[j];
-            }
         }
         // Rückwärtseinsetzen
         for (int i = n - 1; i >= 0; i--) {

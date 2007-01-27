@@ -76,10 +76,10 @@ public class CurveDom extends R1RNFunction {
         super(c0.length);
         p.put(param, t);
         de = new DomWalkerEval(p);
-        this.c = new MathDom.Node[2][dim];
+        c = new MathDom.Node[2][dim];
         for (int i = dim - 1; i >= 0; i--) {
-            this.c[0][i] = c0[i];
-            this.c[1][i] = c1[i];
+            c[0][i] = c0[i];
+            c[1][i] = c1[i];
         }
     }
 

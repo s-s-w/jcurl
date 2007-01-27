@@ -180,15 +180,15 @@ public class SetupBuilder {
     }
 
     public PositionSet getPos() {
-        return this.pos;
+        return pos;
     }
 
     public SlideStrategy getSlide() {
-        return this.slideStrat;
+        return slideStrat;
     }
 
     public SpeedSet getSpeed() {
-        return this.speed;
+        return speed;
     }
 
     void setAngle(final int idx, final DimVal val) {

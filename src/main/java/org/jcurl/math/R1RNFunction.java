@@ -47,7 +47,7 @@ public abstract class R1RNFunction {
         if (ret == null)
             ret = new double[dim];
         for (int i = dim - 1; i >= 0; i--)
-            ret[i] = at(i, c, t);
+            ret[i] = this.at(i, c, t);
         return ret;
     }
 
@@ -66,7 +66,7 @@ public abstract class R1RNFunction {
         if (ret == null)
             ret = new float[dim];
         for (int i = dim - 1; i >= 0; i--)
-            ret[i] = (float) at(i, c, t);
+            ret[i] = (float) this.at(i, c, t);
         return ret;
     }
 
@@ -100,10 +100,10 @@ public abstract class R1RNFunction {
             double x) {
         final double eps = 1e-9;
         for (;;) {
-            double dx = at(dim, c + 1, x);
+            double dx = this.at(dim, c + 1, x);
             if (dx == 0)
                 return 0;
-            dx = (at(dim, c, x) - y) / dx;
+            dx = (this.at(dim, c, x) - y) / dx;
             x -= dx;
             if (Math.abs(dx) < eps)
                 return x;

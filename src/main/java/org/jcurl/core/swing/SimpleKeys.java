@@ -34,17 +34,11 @@ import org.jcurl.core.base.TargetDiscrete;
  */
 public class SimpleKeys implements KeyListener {
 
-    private final Source src;
-
-    private final TargetDiscrete dst;
-
     private final RealTimePlayer player;
 
     private Thread worker = null;
 
     public SimpleKeys(final Source src, final TargetDiscrete dst) {
-        this.src = src;
-        this.dst = dst;
         final double t0 = src.getMinT();
         player = new RealTimePlayer(t0, 1.0, src, dst);
         // push the initial state from src to dst

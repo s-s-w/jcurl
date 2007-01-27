@@ -18,6 +18,7 @@
  */
 package org.jcurl.demo.tactics;
 
+import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -55,12 +56,12 @@ public class SpeedController implements MouseMotionListener, MouseListener {
      */
     public SpeedController(PositionSet locations, SpeedSet speeds,
             RockEditDisplay panel) {
-        this.rocks = locations;
+        rocks = locations;
         // this.speeds = speeds;
         this.panel = panel;
         this.panel.addMouseListener(this);
         this.panel.addMouseMotionListener(this);
-        this.panel.setPos(this.rocks);
+        this.panel.setPos(rocks);
     }
 
     /**
@@ -96,15 +97,15 @@ public class SpeedController implements MouseMotionListener, MouseListener {
     }
 
     public void mouseDragged(MouseEvent e) {
-        if (e.getModifiersEx() == MouseEvent.BUTTON1_DOWN_MASK) {
+        if (e.getModifiersEx() == InputEvent.BUTTON1_DOWN_MASK) {
             if (RockEditDisplay.HotObject.ROCK.equals(hot.what)) {
                 // move a rock
                 final Point2D wc = getWc(e, tmp);
                 int idx = PositionSet.findRockIndexTouchingRockAtPos(rocks, wc,
                         hot.idx);
-                if (idx >= 0) {
+                if (idx >= 0)
                     log.debug("new position blocked");
-                } else {
+                else {
                     rocks.getRock(hot.idx).setLocation(wc);
                     rocks.notifyChange();
                     log.debug("relocated");

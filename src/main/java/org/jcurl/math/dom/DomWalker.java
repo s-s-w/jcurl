@@ -39,17 +39,17 @@ public abstract class DomWalker {
 
     public void walk(MathDom.Node n) {
         if (n instanceof MathDom.BinaryOp)
-            walk((MathDom.BinaryOp) n);
+            this.walk((MathDom.BinaryOp) n);
         else if (n instanceof MathDom.Block)
-            walk((MathDom.Block) n);
+            this.walk((MathDom.Block) n);
         else if (n instanceof MathDom.Function)
-            walk((MathDom.Function) n);
+            this.walk((MathDom.Function) n);
         else if (n instanceof MathDom.Literal)
-            walk((MathDom.Literal) n);
+            this.walk((MathDom.Literal) n);
         else if (n instanceof MathDom.Parameter)
-            walk((MathDom.Parameter) n);
+            this.walk((MathDom.Parameter) n);
         else if (n instanceof MathDom.UnaryOp)
-            walk((MathDom.UnaryOp) n);
+            this.walk((MathDom.UnaryOp) n);
         else
             throw new IllegalStateException("Unknown node type ["
                     + n.getClass().getName() + "]");

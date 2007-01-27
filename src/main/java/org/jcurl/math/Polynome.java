@@ -152,6 +152,6 @@ public class Polynome extends R1R1Function {
     }
 
     public String toString() {
-        return toString(this.params);
+        return toString(params);
     }
 }

@@ -47,7 +47,7 @@ public class RockFloat extends Rock implements Serializable {
     }
 
     public Object clone() {
-        return new RockFloat(this.x[0], this.x[1], this.x[2]);
+        return new RockFloat(x[0], x[1], x[2]);
     }
 
     public boolean equals(Object obj) {
@@ -89,10 +89,10 @@ public class RockFloat extends Rock implements Serializable {
     }
 
     public void setY(double y) {
-        this.x[1] = (float) y;
+        x[1] = (float) y;
     }
 
     public void setZ(double alpha) {
-        this.x[2] = (float) alpha;
+        x[2] = (float) alpha;
     }
 }

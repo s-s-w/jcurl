@@ -52,20 +52,20 @@ public class DomWalkerInfix extends DomWalker {
     }
 
     public void walk(MathDom.BinaryOp n) {
-        walk(n.left);
+        this.walk(n.left);
         b.append(' ').append(n.op).append(' ');
-        walk(n.right);
+        this.walk(n.right);
     }
 
     public void walk(MathDom.Block n) {
         b.append('(');
-        walk(n.arg);
+        this.walk(n.arg);
         b.append(')');
     }
 
     public void walk(MathDom.Function n) {
         b.append(n.name).append('(');
-        walk(n.arg);
+        this.walk(n.arg);
         b.append(')');
     }
 
@@ -79,6 +79,6 @@ public class DomWalkerInfix extends DomWalker {
 
     public void walk(MathDom.UnaryOp n) {
         b.append(n.op);
-        walk(n.arg);
+        this.walk(n.arg);
     }
 }

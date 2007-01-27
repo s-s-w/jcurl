@@ -29,7 +29,6 @@ import org.jcurl.core.io.SetupBuilder;
 import org.jcurl.core.io.SetupIO;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.SlideStraight;
-import org.jcurl.math.R1RNFunction;
 import org.xml.sax.SAXException;
 
 /**
@@ -55,10 +54,6 @@ public class ComputedSource extends MutableObject implements Source {
     private final PositionSet startPos = PositionSet.allHome();
 
     private final SpeedSet startSpeed = new SpeedSet();
-
-    private R1RNFunction curveIterator(int idx) {
-        throw new NotImplementedYetException();
-    }
 
     public boolean equals(Object obj) {
         return false;
@@ -97,17 +92,17 @@ public class ComputedSource extends MutableObject implements Source {
         minT = 0;
         maxT = 35;
         if (coll != null) {
-            propChange.firePropertyChange("coll", this.slide.getColl(), coll);
-            this.slide.setColl(coll);
+            propChange.firePropertyChange("coll", slide.getColl(), coll);
+            slide.setColl(coll);
         }
         if (ice != null) {
-            propChange.firePropertyChange("slide", this.slide, ice);
-            this.slide = ice;
-            this.slide.setColl(getColl());
+            propChange.firePropertyChange("slide", slide, ice);
+            slide = ice;
+            slide.setColl(getColl());
         }
         RockSet.copy(x, startPos);
         RockSet.copy(v, startSpeed);
-        this.slide.reset(x, v, RockSetProps.DEFAULT);
+        slide.reset(x, v, RockSetProps.DEFAULT);
         // propChange.firePropertyChange("pos", slide.getPos(), ice.getPos());
         // propChange
         // .firePropertyChange("speed", slide.getSpeed(), ice.getSpeed());
@@ -136,8 +131,7 @@ public class ComputedSource extends MutableObject implements Source {
     public void loadStart(final InputStream in) throws SAXException,
             IOException {
         final SetupBuilder sb = SetupIO.load(in);
-        this.init(sb.getPos(), sb.getSpeed(), sb.getSlide(),
-                new CollissionSpin());
+        init(sb.getPos(), sb.getSpeed(), sb.getSlide(), new CollissionSpin());
     }
 
     /**
@@ -158,12 +152,11 @@ public class ComputedSource extends MutableObject implements Source {
      * @throws SAXException
      */
     public void saveStart(final OutputStream out) throws SAXException {
-        SetupIO.save(out, this.startPos, this.startSpeed, this.getSlide(), this
-                .getColl());
+        SetupIO.save(out, startPos, startSpeed, getSlide(), getColl());
     }
 
     public void setTime(double current) {
-        propChange.firePropertyChange("time", this.slide.getTime(), current);
+        propChange.firePropertyChange("time", slide.getTime(), current);
         slide.setTime(current);
     }
 }

@@ -33,7 +33,7 @@ import org.jcurl.core.helpers.Version;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:AboutDialog.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class AboutDialog extends JDialog {
 
@@ -65,10 +65,10 @@ public class AboutDialog extends JDialog {
         getContentPane().add(p2, "South");
         ok.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                setVisible(false);
+                AboutDialog.this.setVisible(false);
             }
         });
-        setSize(250, 150);
+        this.setSize(250, 150);
     }
 
 }

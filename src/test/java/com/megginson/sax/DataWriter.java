@@ -59,13 +59,13 @@ import org.xml.sax.XMLReader;
  * </p>
  * 
  * <pre>
- *     &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
- *    
- *     &lt;Person&gt;
- *       &lt;name&gt;Jane Smith&lt;/name&gt;
- *       &lt;date-of-birth&gt;1965-05-23&lt;/date-of-birth&gt;
- *       &lt;citizenship&gt;US&lt;/citizenship&gt;
- *     &lt;/Person&gt;
+ *      &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *     
+ *      &lt;Person&gt;
+ *        &lt;name&gt;Jane Smith&lt;/name&gt;
+ *        &lt;date-of-birth&gt;1965-05-23&lt;/date-of-birth&gt;
+ *        &lt;citizenship&gt;US&lt;/citizenship&gt;
+ *      &lt;/Person&gt;
  * </pre>
  * 
  * <p>
@@ -211,9 +211,8 @@ class DataWriter extends XMLWriter {
             Attributes atts) throws SAXException {
         stateStack.push(SEEN_ELEMENT);
         state = SEEN_NOTHING;
-        if (depth > 0) {
+        if (depth > 0)
             super.characters("\n");
-        }
         doIndent();
         super.startElement(uri, localName, qName, atts);
         depth++;
@@ -284,9 +283,8 @@ class DataWriter extends XMLWriter {
     public void emptyElement(String uri, String localName, String qName,
             Attributes atts) throws SAXException {
         state = SEEN_ELEMENT;
-        if (depth > 0) {
+        if (depth > 0)
             super.characters("\n");
-        }
         doIndent();
         super.emptyElement(uri, localName, qName, atts);
     }
@@ -326,10 +324,9 @@ class DataWriter extends XMLWriter {
         if (indentStep > 0 && depth > 0) {
             int n = indentStep * depth;
             char ch[] = new char[n];
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
                 ch[i] = ' ';
-            }
-            characters(ch, 0, n);
+            this.characters(ch, 0, n);
         }
     }
 

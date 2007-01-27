@@ -83,7 +83,7 @@ public abstract class EnumBase extends Number implements Comparable,
         if (state == null)
             return null;
         Map values = (Map) types.get(type);
-        if (values == null) {
+        if (values == null)
             try {
                 // ensure the class "type" is initialized...
                 Class.forName(type.getName());
@@ -91,7 +91,6 @@ public abstract class EnumBase extends Number implements Comparable,
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException("Couldn't load class [" + type + "]");
             }
-        }
         if (values != null) {
             final EnumBase ret = (EnumBase) values.get(state);
             if (ret != null)
@@ -108,14 +107,13 @@ public abstract class EnumBase extends Number implements Comparable,
     protected EnumBase(final int state, final String text) {
         this.state = new Integer(state);
         this.text = text;
-        final Class clazz = this.getClass();
+        final Class clazz = getClass();
         // register the value.
         Map values = (Map) types.get(clazz);
-        if (values == null) {
+        if (values == null)
             synchronized (types) {
                 types.put(clazz, values = new TreeMap());
             }
-        }
         synchronized (values) {
             if (values.containsKey(this.state))
                 throw new IllegalArgumentException("Duplicate enum ["
@@ -126,7 +124,7 @@ public abstract class EnumBase extends Number implements Comparable,
 
     public int compareTo(Object o) {
         final EnumBase b = (EnumBase) o;
-        return this.state.compareTo(b.state);
+        return state.compareTo(b.state);
     }
 
     /**
@@ -137,9 +135,9 @@ public abstract class EnumBase extends Number implements Comparable,
     }
 
     public boolean equals(final Object o) {
-        if (o == null || !this.getClass().equals(o.getClass()))
+        if (o == null || !getClass().equals(o.getClass()))
             return false;
-        return this.state.equals(((EnumBase) o).state);
+        return state.equals(((EnumBase) o).state);
     }
 
     /**
@@ -190,6 +188,6 @@ public abstract class EnumBase extends Number implements Comparable,
     }
 
     public String toString() {
-        return this.text;
+        return text;
     }
 }

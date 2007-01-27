@@ -71,10 +71,9 @@ public class CollissionSpinLoss extends CollissionStrategy {
                 || tmp > RADIUS + RADIUS + HIT_MAX_DIST)
             return false;
         boolean f;
-        if (true == (va.nonZero() ^ vb.nonZero())) {
+        if (true == (va.nonZero() ^ vb.nonZero()))
             if (false != (f = vb.nonZero()))
                 tmp = -tmp;
-        }
 
         // get the coordinate-system:
         final Point2D eY = MathVec.mult(1 / tmp, r, null);
@@ -167,9 +166,9 @@ public class CollissionSpinLoss extends CollissionStrategy {
         sint1 = FHdivOmega / (MASS * va.getY() * MathVec.abs(dv));
         if (sint1 > 1.0)
             sint1 = 1.0;
-        assert (0.0 <= sint1);
+        assert 0.0 <= sint1;
 
-        if (1.0 - sqr(cost0) < sqr(sint1) || (cost0 == 0.0 && sint1 == 1.0)) {
+        if (1.0 - sqr(cost0) < sqr(sint1) || cost0 == 0.0 && sint1 == 1.0) {
             // surface speed becomes 0 before the friction is killed:
             // => our force points in || direction only, but the loss of
             // momentum
@@ -185,9 +184,8 @@ public class CollissionSpinLoss extends CollissionStrategy {
             dv.setLocation(-sgn(Veff) * mu * va.getY() * fabs(cost0 - 1.0), va
                     .getY()
                     * (sqrt(1.0 - sqr(sint1)) - 1.0));
-        } else {
+        } else
             MathVec.mult(va.getY() * (sqrt(1.0 - sqr(sint1)) - 1.0), dv, dv);
-        }
         assert sgn(dv.getX()) == -sgn(Veff);
         assert dv.getY() <= 0.0;
 

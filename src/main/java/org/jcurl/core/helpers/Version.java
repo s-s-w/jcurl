@@ -85,9 +85,8 @@ public class Version {
         }
         log.info("Manifest not found in");
         for (Enumeration enu = clz.getResources("META-INF/MANIFEST.MF"); enu
-                .hasMoreElements();) {
+                .hasMoreElements();)
             log.info("url=" + enu.nextElement());
-        }
         return new Manifest(new File("config/jcurl.jar/"
                 + "META-INF/MANIFEST.MF").toURL().openStream());
     }
@@ -98,7 +97,7 @@ public class Version {
 
     Version(final int[] parts, final Date build) {
         this.parts = parts;
-        this.time = build.getTime();
+        time = build.getTime();
     }
 
     public int getBuild() {

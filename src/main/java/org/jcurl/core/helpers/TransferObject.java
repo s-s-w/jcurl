@@ -43,7 +43,7 @@ public abstract class TransferObject implements Serializable {
     public String toString() { // inspired by Hardcore Java (O'reilly, page
         // 228)
         try {
-            final BeanInfo info = Introspector.getBeanInfo(this.getClass(),
+            final BeanInfo info = Introspector.getBeanInfo(getClass(),
                     Object.class);
             final PropertyDescriptor[] props = info.getPropertyDescriptors();
             final StringBuffer buf = new StringBuffer(500);
@@ -53,9 +53,8 @@ public abstract class TransferObject implements Serializable {
             buf.append(hashCode());
             buf.append("={");
             for (int idx = 0; idx < props.length; idx++) {
-                if (idx != 0) {
+                if (idx != 0)
                     buf.append(", ");
-                }
                 buf.append(props[idx].getName());
                 buf.append("=");
                 if (props[idx].getReadMethod() != null) {
@@ -71,9 +70,8 @@ public abstract class TransferObject implements Serializable {
                             if (element instanceof TransferObject) {
                                 buf.append("@");
                                 buf.append(element.hashCode());
-                            } else {
+                            } else
                                 buf.append(element.toString());
-                            }
                         }
                         buf.append("}");
                     } else if (value instanceof Map) {
@@ -87,14 +85,12 @@ public abstract class TransferObject implements Serializable {
                             if (element instanceof TransferObject) {
                                 buf.append("@");
                                 buf.append(element.hashCode());
-                            } else {
+                            } else
                                 buf.append(element.toString());
-                            }
                         }
                         buf.append("}");
-                    } else {
+                    } else
                         buf.append(value);
-                    }
                 }
             }
             buf.append("}");

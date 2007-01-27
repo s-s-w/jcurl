@@ -24,7 +24,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.geom.Point2D;
 import java.util.Iterator;
 
 import javax.swing.JPanel;
@@ -61,13 +60,6 @@ public class MouseSketchPanel extends JPanel implements KeyListener {
         g.drawArc(x - rx, y - ry, 2 * rx, 2 * ry, 0, 360);
     }
 
-    private static void circle(Graphics g, Point2D c, int r) {
-        final int x = (int) c.getX();
-        final int y = (int) c.getY();
-        final int d = 2 * r;
-        g.drawArc(x - r, y - r, d, d, 0, 360);
-    }
-
     private static final Log log = JCLoggerFactory
             .getLogger(MouseSketchPanel.class);
 
@@ -102,7 +94,7 @@ public class MouseSketchPanel extends JPanel implements KeyListener {
         addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseMoved(MouseEvent e) {
                 if (isHot)
-                    lineTo(e.getPoint());
+                    MouseSketchPanel.this.lineTo(e.getPoint());
             }
         });
         addKeyListener(this);
@@ -123,8 +115,8 @@ public class MouseSketchPanel extends JPanel implements KeyListener {
         }
         switch (e.getKeyCode()) {
         case KeyEvent.VK_ESCAPE:
-            this.current = null;
-            this.curve.clear();
+            current = null;
+            curve.clear();
             this.repaint();
             break;
         case KeyEvent.VK_F1:

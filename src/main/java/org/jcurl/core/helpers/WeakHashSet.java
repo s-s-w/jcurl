@@ -123,17 +123,15 @@ public class WeakHashSet extends AbstractSet implements Set {
      *             If the user tries to add null to the set.
      */
     public boolean add(final Object o) {
-        if (o == null) {
+        if (o == null)
             throw new NullPointerException();
-        }
         return backingStore.put(o, DUMMY) == null;
     }
 
     public boolean addAll(final Collection c) {
         boolean changed = false;
-        for (Iterator iter = c.iterator(); iter.hasNext();) {
-            changed = (changed | (backingStore.put(iter.next(), DUMMY) != DUMMY));
-        }
+        for (Iterator iter = c.iterator(); iter.hasNext();)
+            changed = changed | backingStore.put(iter.next(), DUMMY) != DUMMY;
         return changed;
     }
 

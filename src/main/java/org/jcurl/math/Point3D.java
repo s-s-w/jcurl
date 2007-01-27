@@ -45,9 +45,9 @@ public abstract class Point3D extends Point2D {
      *            (angle) the coordinates of this Point3D
      */
     public void setLocation(double x, double y, double z) {
-        this.setX(x);
-        this.setY(y);
-        this.setZ(z);
+        setX(x);
+        setY(y);
+        setZ(z);
     }
 
     public void setLocation(final Point3D pt) {

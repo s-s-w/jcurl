@@ -58,7 +58,7 @@ public class DimVal {
     public final double val;
 
     public DimVal(double value, final Dim dim) {
-        this.val = value;
+        val = value;
         this.dim = dim;
     }
 
@@ -66,19 +66,19 @@ public class DimVal {
         if (o == null || !(o instanceof DimVal))
             return false;
         final DimVal b = (DimVal) o;
-        if (!this.dim.equals(b.dim))
+        if (!dim.equals(b.dim))
             return false;
-        if (this.val == b.val)
+        if (val == b.val)
             return true;
         return false;
     }
 
     public DimVal to(final Dim dst) {
-        if (this.dim.BaseDim.intValue() != dst.BaseDim.intValue())
+        if (dim.BaseDim.intValue() != dst.BaseDim.intValue())
             throw new IllegalArgumentException("Units are not convertible ("
-                    + this.dim.toString() + "->" + dst.toString() + ")");
+                    + dim.toString() + "->" + dst.toString() + ")");
         // this -> si -> dst
-        return new DimVal(this.val * (this.dim.Factor / dst.Factor), dst);
+        return new DimVal(val * dim.Factor / dst.Factor, dst);
     }
 
     public String toString() {

@@ -19,6 +19,7 @@
 package org.jcurl.core.swing;
 
 import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.Source;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.TargetDiscrete;
@@ -50,8 +51,8 @@ public class RealTimePlayer implements Runnable {
 
     public RealTimePlayer(final double t0, final double scale,
             final Source src, final TargetDiscrete dst) {
-        this.t0Start = t0Last = tNow = t0;
-        this.timeScale = scale;
+        t0Start = t0Last = tNow = t0;
+        timeScale = scale;
         this.src = src;
         this.dst = dst;
     }
@@ -82,7 +83,7 @@ public class RealTimePlayer implements Runnable {
                 if (dst != null)
                     dst.setPos(pos);
                 speed = src.getSpeed();
-                if (0 == PositionSet.nonZero(speed)) {
+                if (0 == RockSet.nonZero(speed)) {
                     t0Last = t0Start;
                     break;
                 }

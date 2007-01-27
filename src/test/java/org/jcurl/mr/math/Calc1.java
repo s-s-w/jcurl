@@ -138,7 +138,7 @@ public class Calc1 {
 
     private double expr(boolean get) throws IOException {
         double left = term(get);
-        for (;;) {
+        for (;;)
             switch (curr_tok) {
             case PLUS:
             case MINUS:
@@ -147,15 +147,14 @@ public class Calc1 {
             default:
                 return left;
             }
-        }
     }
 
     private int get_token() throws IOException {
         int ch = 0;
-        do {
+        do
             if (-1 == (ch = cin.read()))
                 return curr_tok = END;
-        } while (ch != '\n' && Character.isWhitespace((char) ch));
+        while (ch != '\n' && Character.isWhitespace((char) ch));
         switch (ch) {
         case 0:
             return curr_tok = END;
@@ -171,9 +170,8 @@ public class Calc1 {
         case '\n':
             return curr_tok = END;
         default:
-            if (parse(ch)) {
+            if (parse(ch))
                 return curr_tok;
-            }
             error("bad token");
             return curr_tok = END;
         }
@@ -197,7 +195,7 @@ public class Calc1 {
             final String s = string_value.toString();
             final Matcher mat = floatPat.matcher(s);
             if (mat.matches()) {
-                this.number_value = Double.parseDouble(s);
+                number_value = Double.parseDouble(s);
                 curr_tok = NUMBER;
             } else
                 curr_tok = NAME;
@@ -243,7 +241,7 @@ public class Calc1 {
 
     double term(boolean get) throws IOException {
         double left = prim(get);
-        for (;;) {
+        for (;;)
             switch (curr_tok) {
             case MUL:
             case DIV:
@@ -252,6 +250,5 @@ public class Calc1 {
             default:
                 return left;
             }
-        }
     }
 }

@@ -41,11 +41,11 @@ public abstract class Rock extends Point3D implements Cloneable {
     public String toString() {
         final StringBuffer buf = new StringBuffer();
         buf.append('[');
-        buf.append(this.getX());
+        buf.append(getX());
         buf.append(", ");
-        buf.append(this.getY());
+        buf.append(getY());
         buf.append(", ");
-        buf.append(this.getZ());
+        buf.append(getZ());
         buf.append(']');
         return buf.toString();
     }

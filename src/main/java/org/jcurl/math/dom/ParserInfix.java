@@ -113,7 +113,7 @@ class ParserInfix {
 
     private MathDom.Node expr(boolean get) throws IOException, ParseException {
         MathDom.Node left = term(get);
-        for (;;) {
+        for (;;)
             switch (curr_tok) {
             case PLUS:
             case MINUS:
@@ -122,7 +122,6 @@ class ParserInfix {
             default:
                 return left;
             }
-        }
     }
 
     private int get_token() throws IOException, ParseException {
@@ -146,9 +145,8 @@ class ParserInfix {
         case '=':
             return curr_tok = ch;
         default:
-            if (parseNameOrLiteral(ch)) {
+            if (parseNameOrLiteral(ch))
                 return curr_tok;
-            }
             throw new ParseException("bad token", pos);
         }
     }
@@ -182,7 +180,7 @@ class ParserInfix {
             final String s = string_value.toString();
             final Matcher mat = floatPat.matcher(s);
             if (mat.matches()) {
-                this.number_value = Double.parseDouble(s);
+                number_value = Double.parseDouble(s);
                 curr_tok = NUMBER;
             } else
                 curr_tok = NAME;
@@ -228,7 +226,7 @@ class ParserInfix {
 
     private MathDom.Node term(boolean get) throws IOException, ParseException {
         MathDom.Node left = prim(get);
-        for (;;) {
+        for (;;)
             switch (curr_tok) {
             case MUL:
             case DIV:
@@ -237,6 +235,5 @@ class ParserInfix {
             default:
                 return left;
             }
-        }
     }
 }

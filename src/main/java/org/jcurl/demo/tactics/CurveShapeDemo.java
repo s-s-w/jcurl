@@ -75,9 +75,9 @@ public class CurveShapeDemo extends JFrame {
                     BasicStroke.JOIN_ROUND, 0);
 
             public void paintComponent(Graphics g) {
-                this.setBackground(new Color(255, 255, 255));
+                setBackground(new Color(255, 255, 255));
                 super.paintComponent(g);
-                this.setBackground(new Color(255, 255, 255));
+                setBackground(new Color(255, 255, 255));
                 final Graphics2D g2 = (Graphics2D) g;
                 g2.scale(0.75, 0.75);
                 g2.setPaint(new Color(0, 0, 255));
@@ -93,6 +93,6 @@ public class CurveShapeDemo extends JFrame {
     private final R1RNFunction curve;
 
     public CurveShapeDemo(final R1RNFunction c) {
-        this.curve = c;
+        curve = c;
     }
 }

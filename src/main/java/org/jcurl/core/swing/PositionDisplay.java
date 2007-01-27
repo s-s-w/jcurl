@@ -113,11 +113,11 @@ public class PositionDisplay extends WCComponent implements TargetDiscrete,
 
     private void initialize() {
         this.setSize(new Dimension(566, 139));
-        this.setOpaque(true);
-        this.setRockPainter(new RockPainter());
-        this.setIcePainter(new IcePainter());
+        setOpaque(true);
+        setRockPainter(new RockPainter());
+        setIcePainter(new IcePainter());
         this.setPos(PositionSet.allOut());
-        this.setZoom(Zoomer.HOUSE2HACK);
+        setZoom(Zoomer.HOUSE2HACK);
     }
 
     /**
@@ -197,7 +197,7 @@ public class PositionDisplay extends WCComponent implements TargetDiscrete,
     protected void paintRocksDC(final Graphics2D g2) {
         g2.transform(wc_mat);
         // all rocks
-        paintRocksWC(g2, pos, PositionSet.ALL_MASK);
+        paintRocksWC(g2, pos, RockSet.ALL_MASK);
     }
 
     /**
@@ -215,10 +215,9 @@ public class PositionDisplay extends WCComponent implements TargetDiscrete,
             int mask) {
         if ((mask & RockSet.ALL_MASK) == 0)
             return;
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            if (((mask >> i) & 1) == 1)
-                paintRockWC(g, rocks.getRock(i), (i % 2) == 0, i / 2);
-        }
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+            if ((mask >> i & 1) == 1)
+                paintRockWC(g, rocks.getRock(i), i % 2 == 0, i / 2);
     }
 
     /**
@@ -252,9 +251,8 @@ public class PositionDisplay extends WCComponent implements TargetDiscrete,
      */
     public void propertyChange(PropertyChangeEvent evt) {
         final Object tmp = evt.getNewValue();
-        if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass())) {
-            setPos((PositionSet) tmp);
-        }
+        if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass()))
+            this.setPos((PositionSet) tmp);
     }
 
     /**
@@ -276,7 +274,7 @@ public class PositionDisplay extends WCComponent implements TargetDiscrete,
      * @see #setPos(PositionSet, int)
      */
     public void setPos(final PositionSet rocks) {
-        setPos(rocks, RockSet.ALL_MASK);
+        this.setPos(rocks, RockSet.ALL_MASK);
     }
 
     /**
@@ -289,13 +287,12 @@ public class PositionDisplay extends WCComponent implements TargetDiscrete,
      *            bitmask of discontinuous locations
      */
     public void setPos(final PositionSet rocks, final int discontinuous) {
-        if (this.pos != rocks) {
-            if (this.pos != null) {
-                this.pos.removePropertyChangeListener(this);
-            }
+        if (pos != rocks) {
+            if (pos != null)
+                pos.removePropertyChangeListener(this);
             rocks.addPropertyChangeListener(this);
         }
-        this.pos = rocks;
+        pos = rocks;
         this.repaint();
     }
 

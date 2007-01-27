@@ -67,11 +67,10 @@ public class JCurlDisplay extends PositionDisplay {
         final Graphics2D g2 = (Graphics2D) g;
         // paint additional DC stuff
         g2.setColor(timeB);
-        g2.fillRect(this.getWidth() - 70, 0, 70, 20);
+        g2.fillRect(getWidth() - 70, 0, 70, 20);
         // g2.fillRect(0, 0, w, 20);
         g2.setFont(timeF);
         g2.setColor(timeC);
-        g2.drawString(Double.toString(time), this.getWidth() - 70 + 10,
-                3 * 20 / 4);
+        g2.drawString(Double.toString(time), getWidth() - 70 + 10, 3 * 20 / 4);
     }
 } // @jve:decl-index=0:visual-constraint="10,10"

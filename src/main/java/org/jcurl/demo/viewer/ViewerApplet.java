@@ -91,6 +91,6 @@ public class ViewerApplet extends JApplet {
             throw new RuntimeException(e);
         }
         // set up the keyboard handler
-        this.addKeyListener(new SimpleKeys(src, dst));
+        addKeyListener(new SimpleKeys(src, dst));
     }
 }

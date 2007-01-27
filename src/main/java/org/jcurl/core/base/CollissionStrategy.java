@@ -121,18 +121,17 @@ public abstract class CollissionStrategy extends ModelBase {
             log.debug("compute()");
         int hits = 0;
         final AffineTransform mat = new AffineTransform();
-        for (int B = 0; B < RockSet.ROCKS_PER_SET; B++) {
+        for (int B = 0; B < RockSet.ROCKS_PER_SET; B++)
             for (int A = 0; A < B; A++) {
                 if (log.isDebugEnabled())
                     log.debug("Compute hit " + A + "<->" + B);
                 if (computeWC(pos.getRock(A), pos.getRock(B), speed.getRock(A),
                         speed.getRock(B), mat)) {
                     // mark the rocks' bits hit
-                    hits |= (1 << A);
-                    hits |= (1 << B);
+                    hits |= 1 << A;
+                    hits |= 1 << B;
                 }
             }
-        }
         if (log.isDebugEnabled())
             log.debug("hit rocks: " + Integer.toBinaryString(hits));
         return hits;

@@ -127,9 +127,9 @@ public class OldConfigReader {
                     ret.setFrom(ret, isDark, no, tok, readToken(in));
             } else if ("to".equals(tok)) {
                 tok = readToken(in);
-                if ("OUT".equals(tok)) {
+                if ("OUT".equals(tok))
                     ret.setOut(ret, isDark, no);
-                } else
+                else
                     ret.setTo(ret, isDark, no, tok, readToken(in));
             } else if ("speed".equals(tok))
                 ret.setSpeed(ret, isDark, no, readToken(in));
@@ -210,14 +210,13 @@ public class OldConfigReader {
                     log.debug("token=[" + s + "]");
                     return s;
                 }
-                if ('\n' == (char) ch || '\r' == (char) ch) {
+                if ('\n' == (char) ch || '\r' == (char) ch)
                     if (s.length() == 0)
                         state = pre;
                     else {
                         log.debug("token=[" + s + "]");
                         return s;
                     }
-                }
                 break;
             }
         }

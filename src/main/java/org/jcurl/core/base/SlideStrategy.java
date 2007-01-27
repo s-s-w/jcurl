@@ -84,7 +84,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
     }
 
     protected static double sqr(final double a) {
-        return (a * a);
+        return a * a;
     }
 
     /**
@@ -187,7 +187,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
                 // slowly approach the hit
                 approach: for (;;) {
                     // check the next hit
-                    double dtNextHit = this.estimateNextHit(maxPos, maxSpeed);
+                    double dtNextHit = estimateNextHit(maxPos, maxSpeed);
                     if (log.isDebugEnabled())
                         log.debug("tmax=" + tmax + " dtNextHit=" + dtNextHit);
                     if (dtNextHit == 0)
@@ -199,7 +199,8 @@ public abstract class SlideStrategy extends ModelBase implements Source {
                     if (dt < dtNextHit)
                         break checkHit;
                     // move til hit
-                    int mov = move(tmax, tmax + dtNextHit, maxPos, maxSpeed);
+                    int mov = this.move(tmax, tmax + dtNextHit, maxPos,
+                            maxSpeed);
                     if (mov != rocksInMotion)
                         set(tmax + dtNextHit, maxPos, maxSpeed, mov
                                 ^ rocksInMotion);
@@ -213,7 +214,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
                 rocksInMotion |= hit;
             }
             // move on
-            final int mov = move(tmax, tmax + dt, maxPos, maxSpeed);
+            final int mov = this.move(tmax, tmax + dt, maxPos, maxSpeed);
             if (mov != rocksInMotion)
                 set(tmax + dt, maxPos, maxSpeed, mov ^ rocksInMotion);
             else
@@ -255,7 +256,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
             log.debug("estimateNextHit");
         double t = Long.MAX_VALUE / 1000;
         // test combination of all rocks:
-        for (int a = 0; a < PositionSet.ROCKS_PER_SET; a++) {
+        for (int a = 0; a < RockSet.ROCKS_PER_SET; a++) {
             final Rock ap = pos.getRock(a);
             final Rock av = speed.getRock(a);
             for (int b = 0; b < a; b++) {
@@ -393,19 +394,18 @@ public abstract class SlideStrategy extends ModelBase implements Source {
         if (log.isDebugEnabled())
             log.debug("t0=" + t0 + " t1=" + t1);
         int ret = 0;
-        for (int i = PositionSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             final Rock x = pos.getRock(i);
             final Rock v = speed.getRock(i);
-            if (move(t0, t1, i, x, v)) {
+            if (this.move(t0, t1, i, x, v))
                 // only check moving rocks.
                 if (isOut(x, v)) {
-                    Ice.setOut(x, (i % 2) == 0, i / 2);
+                    Ice.setOut(x, i % 2 == 0, i / 2);
                     v.setLocation(0, 0, 0);
                 } else
                     ret |= 1 << i;
-            }
         }
-        this.rocks.notifyChange();
+        rocks.notifyChange();
         this.speed.notifyChange();
         return ret;
     }
@@ -415,9 +415,9 @@ public abstract class SlideStrategy extends ModelBase implements Source {
         tmin = tmax = T0;
         RockSet.copy(startPos, maxPos);
         RockSet.copy(startSpeed, maxSpeed);
-        set(0, startPos, startSpeed, PositionSet.ALL_MASK);
+        set(0, startPos, startSpeed, RockSet.ALL_MASK);
         rocksInMotion = 0;
-        for (int i = PositionSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             final Rock v = startSpeed.getRock(i);
             if (v.getX() != 0 || v.getY() != 0)
                 rocksInMotion |= 1 << i;
@@ -460,7 +460,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
     }
 
     public void setTime(double t) {
-        move(this.t, t, this.rocks, this.speed);
+        this.move(this.t, t, rocks, speed);
         this.t = t;
     }
 }

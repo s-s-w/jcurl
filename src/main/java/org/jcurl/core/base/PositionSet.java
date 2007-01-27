@@ -20,7 +20,6 @@ package org.jcurl.core.base;
 
 import java.awt.geom.Point2D;
 
-import org.jcurl.core.PositionSetTest;
 import org.jcurl.core.helpers.Dim;
 
 /**
@@ -77,10 +76,9 @@ public class PositionSet extends RockSet {
      */
     public static int findRockIndexAtPos(final PositionSet rocks,
             final Point2D pos) {
-        for (int i = ROCKS_PER_SET - 1; i >= 0; i--) {
+        for (int i = ROCKS_PER_SET - 1; i >= 0; i--)
             if (rocks.getRock(i).distanceSq(pos) <= RR)
                 return i;
-        }
         return -1;
     }
 
