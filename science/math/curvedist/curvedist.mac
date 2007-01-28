@@ -1,0 +1,16 @@
+/* $Id: denny.mac 197 2005-12-11 22:37:32Z mrohrmoser $
+	
+	/usr/bin/maxima -b $1
+
+	software: http://maxima.sourceforge.net 
+	manual: file:///usr/share/maxima/5.9.1/doc/html/maxima_toc.html
+*/
+NEXTLAYERFACTOR(TRUE)$
+/* DEBUGMODE(TRUE)$ */
+/* texput(tau, "\\tau")$ */
+
+a(t) := [ ax(t), ay(t) ];
+b(t) := [ bx(t), by(t) ];
+d(t) := (a(t) - b(t)) . (a(t) - b(t));
+diff(d(t), t);
+quit$
