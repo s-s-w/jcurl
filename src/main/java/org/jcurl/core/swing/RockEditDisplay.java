@@ -168,9 +168,9 @@ public class RockEditDisplay extends PositionDisplay {
         return MathVec.add(getPos().getRock(idx), speed.getRock(idx), dst);
     }
 
-    public void paintComponent(final Graphics g) {
+    public void paint(final Graphics g) {
         final Graphics2D g2 = (Graphics2D) g;
-        super.paintComponent(g2);
+        super.paint(g2);
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             if ((selectedMask & 1 << i) != 0)
                 paintSpeed(g2, i);

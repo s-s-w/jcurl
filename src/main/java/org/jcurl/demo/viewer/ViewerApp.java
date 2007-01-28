@@ -18,8 +18,7 @@
  */
 package org.jcurl.demo.viewer;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -32,7 +31,6 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.base.ComputedSource;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.base.TargetDiscrete;
 import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.SlideStraight;
@@ -54,6 +52,33 @@ public class ViewerApp extends JFrame {
     private static final long serialVersionUID = -5809346296249873005L;
 
     private static final Log log = JCLoggerFactory.getLogger(ViewerApp.class);
+
+    /**
+     * This method initializes this
+     * 
+     */
+    private void initialize() {
+        this.setSize(new Dimension(900, 400));
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                System.exit(0);
+            }
+        });
+        this.setTitle("CurlDemo");
+    }
+
+    /**
+     * This method initializes jCurlDisplay
+     * 
+     * @return org.jcurl.core.swing.JCurlDisplay
+     */
+    private JCurlDisplay getJCurlDisplay() {
+        if (jCurlDisplay == null) {
+            jCurlDisplay = new JCurlDisplay();
+            jCurlDisplay.setSize(new Dimension(519, 123));
+        }
+        return jCurlDisplay;
+    }
 
     public static void main(String[] args) throws MalformedURLException,
             ParserConfigurationException, SAXException, IOException {
@@ -82,27 +107,20 @@ public class ViewerApp extends JFrame {
         }
         final ViewerApp frame = new ViewerApp(src);
         // set up the keyboard handler
-        frame.addKeyListener(new SimpleKeys(src, frame.dst));
+        frame.addKeyListener(new SimpleKeys(src, frame.jCurlDisplay));
         // display
         frame.show();
     }
 
-    private final TargetDiscrete dst;
+    private JCurlDisplay jCurlDisplay = null; // @jve:decl-index=0:visual-constraint="25,38"
 
     public ViewerApp(ComputedSource src) {
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-        setTitle("CurlDemo");
-        this.setSize(900, 400);
-
         final JCurlDisplay mp = new JCurlDisplay();
         mp.setPos(src.getPos());
         getContentPane().add(mp, "Center");
         // getContentPane().add(new SumShotDisplay(), "East");
         // getContentPane().add(new SumWaitDisplay(), "West");
-        dst = mp;
+        jCurlDisplay = mp;
+        initialize();
     }
-}
+} // @jve:decl-index=0:visual-constraint="10,10"

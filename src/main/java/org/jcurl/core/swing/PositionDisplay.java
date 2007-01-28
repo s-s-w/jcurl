@@ -33,7 +33,6 @@ import java.util.Map;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.TargetDiscrete;
 
 /**
  * Base for rock location displays. Does all the coordinate transformation math
@@ -43,7 +42,7 @@ import org.jcurl.core.base.TargetDiscrete;
  * @version $Id: RockLocationDisplayBase.java 230 2006-02-19 12:34:18Z
  *          mrohrmoser $
  */
-public class PositionDisplay extends WCComponent implements TargetDiscrete,
+public class PositionDisplay extends WCComponent implements
         PropertyChangeListener {
 
     private static final long serialVersionUID = -2680676530327406261L;
@@ -71,7 +70,7 @@ public class PositionDisplay extends WCComponent implements TargetDiscrete,
         // RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
     }
 
-    private IcePainter icePainter = null;
+    private IcePainter icePainter = null; // @jve:decl-index=0:
 
     private BufferedImage img = null;
 
@@ -112,8 +111,8 @@ public class PositionDisplay extends WCComponent implements TargetDiscrete,
     }
 
     private void initialize() {
-        this.setSize(new Dimension(566, 139));
-        setOpaque(true);
+        this.setSize(new Dimension(600, 120));
+        // setOpaque(true);
         setRockPainter(new RockPainter());
         setIcePainter(new IcePainter());
         this.setPos(PositionSet.allOut());
@@ -129,8 +128,8 @@ public class PositionDisplay extends WCComponent implements TargetDiscrete,
         return rockPainter;
     }
 
-    public void paintComponent(final Graphics g) {
-        super.paintComponent(g);
+    public void paint(final Graphics g) {
+        super.paint(g);
         final Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHints(hints);
 

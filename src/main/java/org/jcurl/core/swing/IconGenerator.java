@@ -71,7 +71,7 @@ public class IconGenerator {
         jp.setPos(loc);
         jp.setZoom(zoom);
         jp.setSize(img.getWidth(), img.getHeight());
-        jp.paintComponent(g);
+        jp.paint(g);
         g.dispose();
         ImageIO.write(img, "png", dst);
     }
