@@ -28,7 +28,7 @@ import java.awt.geom.Point2D;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:Painter.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class Painter {
+class Painter {
 
     static void rectDC(final Graphics g, final Point2D.Float a,
             final Point2D.Float b) {
