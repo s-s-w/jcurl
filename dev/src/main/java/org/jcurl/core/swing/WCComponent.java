@@ -18,6 +18,7 @@
  */
 package org.jcurl.core.swing;
 
+import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
@@ -30,9 +31,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
-import javax.swing.JComponent;
 
-public abstract class WCComponent extends JComponent {
+public abstract class WCComponent extends Component {
 
     /**
      * Scale WC a bit to avoid int rounding errors. This is relevant only for
@@ -94,7 +94,7 @@ public abstract class WCComponent extends JComponent {
                     RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             g2.addRenderingHints(hints);
         }
-        paintComponent(g2);
+        paint(g2);
         g2.dispose();
         if (!dst.getName().endsWith(".png"))
             dst = new File(dst.getName() + ".png");

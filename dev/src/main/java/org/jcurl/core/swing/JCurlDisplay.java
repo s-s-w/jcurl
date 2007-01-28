@@ -24,6 +24,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import org.jcurl.core.base.TargetDiscrete;
+
 /**
  * A {@link org.jcurl.core.swing.PositionDisplay}with some additional meta data
  * displayed (here: time).
@@ -33,7 +35,7 @@ import java.awt.Graphics2D;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:JCurlDisplay.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class JCurlDisplay extends PositionDisplay {
+public class JCurlDisplay extends PositionDisplay implements TargetDiscrete {
 
     private static final long serialVersionUID = -3587954807831602402L;
 
@@ -62,8 +64,8 @@ public class JCurlDisplay extends PositionDisplay {
         this.setSize(new Dimension(607, 148));
     }
 
-    public void paintComponent(final Graphics g) {
-        super.paintComponent(g);
+    public void paint(final Graphics g) {
+        super.paint(g);
         final Graphics2D g2 = (Graphics2D) g;
         // paint additional DC stuff
         g2.setColor(timeB);
