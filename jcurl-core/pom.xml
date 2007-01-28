@@ -29,11 +29,11 @@
 		</profile>
 		</profiles -->
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jcurl.maven</groupId>
+	<groupId>org.jcurl</groupId>
 	<name>JCurl Curling Framework</name>
 	<inceptionYear>2005</inceptionYear>
 	<url>http://www.jcurl.org/</url>
-	<artifactId>jcurl</artifactId>
+	<artifactId>jcurl-core</artifactId>
 	<version>0.6.0</version>
 	<description>
 		Java library and sample applications for rock trajectory
@@ -53,13 +53,13 @@
 	</issueManagement>
 	<scm>
 		<connection>
-			scm:svn:svn://svn.berlios.de/jcurl/trunk/dev
+			scm:svn:svn://svn.berlios.de/jcurl/trunk/jcurl-core
 		</connection>
 		<developerConnection>
-			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/dev
+			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/jcurl-core
 		</developerConnection>
 		<tag />
-		<url>http://svn.berlios.de/wsvn/jcurl</url>
+		<url>http://svn.berlios.de/wsvn/jcurl/trunk/jcurl-core</url>
 	</scm>
 	<developers>
 		<developer>
@@ -220,7 +220,7 @@
 		<site>
 			<id>jcurl-website</id>
 			<url>
-				scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/jcurl-0.6.0
+				scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/jcurl-core-0.6.0
 			</url>
 		</site>
 		<repository>
