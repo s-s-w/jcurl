@@ -1,4 +1,5 @@
 \documentclass[titlepage,11pt]{article}
+\usepackage{pslatex}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
 
@@ -34,11 +35,12 @@
 
 \newcommand{\myfrac}[2]{\ensuremath{ \,{}^{#1}\!/_{#2} }}
 
+\newcommand{\img}[1]{\includegraphics{#1}}
+
 \newcommand{\pict}[4]{%
 \begin{figure}[htp]%
-    \begin{center}%
-	{#4}%
-    \end{center}%
+    \centering%
+	{#4}
     \def\boxX{#3}\ifx\boxX\empty
 	\caption{\label{#1} #2}%
     \else
@@ -47,17 +49,8 @@
 \end{figure}%
 }
 
-\newcommand{\picfile}[4]{%
-\begin{figure}[htp]%
-    \centering%
-	\includegraphics{#4}
-    \def\boxX{#3}\ifx\boxX\empty
-	\caption{\label{#1} #2}%
-    \else
-	\caption[#3]{\label{#1} #2}%
-    \fi
-\end{figure}
-}
+\newcommand{\picfile}[4]{\pict{#1}{#2}{#3}{\img{#4}}}
+
 \newcommand{\picb}[5]{%
     \def\BoXx{#4}
     \ifx\BoXx\empty
@@ -72,6 +65,7 @@
 \newcommand{\prtfloats}{\clearpage}
 
 \begin{document}
+\DeclareGraphicsExtensions{.eps}
 \maketitle
 \listoffigures
 \section{Introduction}
@@ -153,12 +147,12 @@ Touching spot A/B is on line with centre of A, B, C.}{Area of Overlap}{fig03.eps
 
 \pict{fig-4}{Common Areas of Overlap}{}{%
 \begin{minipage}{.8\textwidth}
-\hspace*{\fill}\input{fig04a.eps}
-\hspace*{\fill}\input{fig04b.eps}
-\hspace*{\fill}\input{fig04c.eps}
+\hspace*{\fill}\img{fig04a.eps}
+\hspace*{\fill}\img{fig04b.eps}
+\hspace*{\fill}\img{fig04c.eps}
 \hspace*{\fill}\\[1.5em]
-\hspace*{\fill}\input{fig04d.eps}
-\hspace*{\fill}\input{fig04e.eps}
+\hspace*{\fill}\img{fig04d.eps}
+\hspace*{\fill}\img{fig04e.eps}
 \hspace*{\fill}
 \end{minipage}}
 
@@ -184,7 +178,7 @@ with rock C. This will prove why the shot was possible.
 \item You need a 3 ender
 \item C, D are your rocks
 \item Where will A go on a full or \myfrac{3}{4} hit?
-\end{itemize}}{\input{fig06.eps}}
+\end{itemize}}{\img{fig06.eps}}
 
 \picfile{fig-7}{\emph{The} Triple Scotland vs Canada, 1992 world mens
 		semi final.}{\emph{The} Triple}{fig07.eps}
@@ -205,14 +199,14 @@ shot. Similarly, the in turn in figure \ref{fig-9}\ is the better shot.
 \item Out turn the best here
 \item Ice curls a lot
 \end{itemize}
-}{\input{fig08.eps}}
+}{\img{fig08.eps}}
 
 \picb{fig-9}{Turn decisions}{}{%
 \begin{itemize}
 \item In turn the best here
 \item Ice curls a lot
 \end{itemize}
-}{\input{fig09.eps}}
+}{\img{fig09.eps}}
 
 
 This \emph{area of overlap} is the most important factor in determining which
@@ -228,7 +222,7 @@ make the double. You can not make a fixed rule that a $ 30^\circ $ double for
 example is always a half hit on the first rock.
 
 \picb{fig-10}{Doubles}{}{Area of overlap decreases as rocks on the same
-angle get closer together.}{\input{fig10.eps}}
+angle get closer together.}{\img{fig10.eps}}
 
 \prtfloats
 
@@ -244,7 +238,7 @@ play.
 		&\approx& \displaystyle\frac{ 5.5'' \cdot 11'' }{ l } \\[1em]
 		&=& \displaystyle\frac{ 60.5 }{ l } \\
 \end{array}\end{math}
-}{\input{fig11.eps}}
+}{\img{fig11.eps}}
 
 \iffalse
 From the formula in the introduction $(a/d = r/L)$
@@ -272,7 +266,7 @@ relative size drawing of the accuracy required at the three distances.
       &=& 5.5 \cdot 11 / 240 \\[1.5em]
       &=& 0.25"
 \end{array}\end{math}
-}{\input{fig12.eps}}
+}{\img{fig12.eps}}
 
 \picb{fig-13}{Accuracy --- 10 foot raise}{}{%
 \begin{math}\begin{array}[t]{lll}
@@ -282,7 +276,7 @@ relative size drawing of the accuracy required at the three distances.
       &=& 5.5 \cdot 11 / 120 \\[1.5em]
       &=& 0.50"
 \end{array}\end{math}
-}{\input{fig13.eps}}
+}{\img{fig13.eps}}
 
 \picb{fig-14}{Accuracy --- 5 foot raise}{}{%
 \begin{math}\begin{array}[t]{lll}
@@ -292,7 +286,7 @@ relative size drawing of the accuracy required at the three distances.
       &=& 5.5 \cdot 11 / 60 \\[1.5em]
       &=& 1"
 \end{array}\end{math}
-}{\input{fig14.eps}}
+}{\img{fig14.eps}}
 
 \picfile{fig-15}{Accuracy --- in relation to diameter}{}{fig15.eps}
 
@@ -336,7 +330,7 @@ Remember our assumptions on broken in ice with no debri under any of the rocks
 \item B, raise one rock
 \item C, raise two rocks
 \end{itemize}
-}{\input{fig16.eps}}
+}{\img{fig16.eps}}
 
 
 Figure \ref{fig-17}\ shows the other way momentum is lost. When raising rocks at an angle
@@ -373,14 +367,14 @@ have practiced it and no other shots are available. Figures \ref{fig-19}\ and
 \item A half hit on the right side of B will cause C to hit D
 \item The drag effect disappears after B and C are one half inch apart
 \end{itemize}
-}{\input{fig19.eps}}
+}{\img{fig19.eps}}
 
 \picb{fig-20}{Drag Effect}{}{%
 \begin{itemize}
 \item A \myfrac{3}{4} hit on the right side of B will cause C to hit D
 \item Paths 1, 2 or 3 or any in-between are possible depending on where it is hit
 \end{itemize}
-}{\input{fig20.eps}}
+}{\img{fig20.eps}}
 
 
 Figure \ref{fig-21}\ shows a set up which many curlers believe is an \emph{"automatic"} in
@@ -409,7 +403,7 @@ in many clubs.
 \item A very fine hit on C causes A to take path 1
 \item Slightly fuller hits on C progress A's position to 5
 \end{itemize}
-}{\input{fig22.eps}}
+}{\img{fig22.eps}}
 
 \picb{fig-23}{Splitting rocks}{}{%
 \begin{itemize}
@@ -417,7 +411,7 @@ in many clubs.
 \item Fine hitting C first results in path 1
 \item Fine hitting B first results in path 2
 \end{itemize}
-}{\input{fig23.eps}}
+}{\img{fig23.eps}}
 
 \picb{fig-24}{Splitting through a port}{}{%
 \begin{itemize}
@@ -425,7 +419,7 @@ in many clubs.
       plastic handle).
 \item B, C must be hit simultaneously.
 \end{itemize}
-}{\input{fig24.eps}}
+}{\img{fig24.eps}}
 
 
 Figure \ref{fig-25}\ shows two different double situations. D, E is a \emph{"natural"}
@@ -444,7 +438,7 @@ as a \emph{"natural"} double.
       half hit on the centre line side of B makes it as easy as a natural
       double.
 \end{itemize}
-}{\input{fig25.eps}}
+}{\img{fig25.eps}}
 
 \prtfloats
 
