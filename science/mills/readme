@@ -1,14 +1,14 @@
 Marcus Rohrmoser, 25.10.1997:
 
 Die Dateien
- acad.dwg	     Schablonendatei fr Curlingzeichnungen
-		     Bl”cke:
+ acad.dwg	     Schablonendatei fÃ¼r Curlingzeichnungen
+		     BlÃ¶cke:
 		     house     House von Backline zur Hogline (teilschraffiert)
 		     houseo    House von Backline zur Hogline (unschraffiert)
-		     bighouse  House von Hackline etwas ber Hogline
+		     bighouse  House von Hackline etwas Ã¼ber Hogline
 		     rockl     ein heller Stein
 		     rockd     ein dunkler Stein
-		     rock      ein Kreis in Steingr”áe
+		     rock      ein Kreis in SteingrÃ¶ÃŸe
  size*.dwg	     Zeichnung 1 (Acad Quellen)
  fig*.dwg	     Zeichnung * (Acad Quellen)
  *.hp		     Zeichnung * (Acad Ausgabe -> HPGL-Format)
@@ -17,6 +17,5 @@ Die Dateien
  *.bat		     Dos-Makro-Script
 
 sind Blockdefinitionen zur Verwendung in ACAD-Zeichnungen. Die verwendeten
-L„ngen beziehen sich auf Meter.
+LÃ¤ngen beziehen sich auf Meter.
 
-
