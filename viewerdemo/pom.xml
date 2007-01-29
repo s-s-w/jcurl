@@ -26,22 +26,22 @@
 				<configuration>
 					<dependencies>
 						<excludes>
-							<exclude>commons-lang:commons-lang</exclude>
+							<exclude>avalon-framework:avalon-framework</exclude>
+							<exclude>log4j:log4j</exclude>
+							<exclude>logkit:logkit</exclude>
+							<exclude>javax.servlet:servlet-api</exclude>
 						</excludes>
 					</dependencies>
 					<jnlp>
 						<!-- we play with the resource path and template relative path to test MOJO-391 -->
-						<inputTemplateResourcePath>
+						<!-- inputTemplateResourcePath>
 							${project.basedir}/src/
-						</inputTemplateResourcePath>
-						<inputTemplate>
-							jnlp/viewerdemo.jnlp
-						</inputTemplate>
+						</inputTemplateResourcePath -->
+						<!--  inputTemplate>viewerdemo.jnlp</inputTemplate -->
 						<resources>
 							${project.basedir}/src/jnlp/resources
 						</resources>
-						<outputFile>viewerdemo.jnlp</outputFile>
-						<!--  mainClass>org.apache.commons.cli.BasicParser</mainClass -->
+						<outputFile>launch.jnlp</outputFile>
 						<mainClass>
 							org.jcurl.demo.viewer.ViewerApp
 						</mainClass>
@@ -53,15 +53,15 @@
 						<keypass>m2m2m2</keypass>
 						<storepass>m2m2m2</storepass>
 						<!--sigfile>m2m2m2</sigfile-->
-						<alias>alias</alias>
-						<validity>180</validity>
+						<alias>mrohrmoser</alias>
+						<validity>30</validity>
 
-						<dnameCn>www.example.com</dnameCn>
+						<dnameCn>M. Rohrmoser (http://www.mrohrmoser.de))</dnameCn>
 						<dnameOu>None</dnameOu>
-						<dnameO>ExampleOrg</dnameO>
-						<dnameL>Seattle</dnameL>
-						<dnameSt>Washington</dnameSt>
-						<dnameC>US</dnameC>
+						<dnameO>M. Rohrmoser</dnameO>
+						<dnameL>Munich</dnameL>
+						<dnameSt></dnameSt>
+						<dnameC>Germany</dnameC>
 						<verify>true</verify>
 					</sign>
 					<keystore>
@@ -76,8 +76,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.jcurl</groupId>
-			<artifactId>jcurl-core</artifactId>
-			<version>0.6.0</version>
+			<artifactId>jcurl-demo</artifactId>
+			<version>0.7.0</version>
 		</dependency>
 	</dependencies>
 </project>

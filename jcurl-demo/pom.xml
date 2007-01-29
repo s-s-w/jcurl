@@ -1,42 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-	<!-- profiles>
-		<profile>
-		<repositories>
-		<repository>
-		<id>Maven Snapshots</id>
-		<url>http://snapshots.maven.codehaus.org/maven2/</url>
-		<snapshots>
-		<enabled>true</enabled>
-		</snapshots>
-		<releases>
-		<enabled>false</enabled>
-		</releases>
-		</repository>
-		</repositories>
-		<pluginRepositories>
-		<pluginRepository>
-		<id>Maven Snapshots</id>
-		<url>http://snapshots.maven.codehaus.org/maven2/</url>
-		<snapshots>
-		<enabled>true</enabled>
-		</snapshots>
-		<releases>
-		<enabled>false</enabled>
-		</releases>
-		</pluginRepository>
-		</pluginRepositories>
-		</profile>
-		</profiles -->
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jcurl</groupId>
 	<name>JCurl Curling Framework</name>
 	<inceptionYear>2005</inceptionYear>
 	<url>http://www.jcurl.org/</url>
-	<artifactId>jcurl-core</artifactId>
-	<version>0.6.0</version>
+	<artifactId>jcurl-demo</artifactId>
+	<version>0.7.0</version>
 	<description>
-		Java library and sample applications for rock trajectory
+		Java sample applications for rock trajectory
 		simulation, game filing, analysis and visualisation
 	</description>
 	<licenses>
@@ -53,13 +25,13 @@
 	</issueManagement>
 	<scm>
 		<connection>
-			scm:svn:svn://svn.berlios.de/jcurl/trunk/jcurl-core
+			scm:svn:svn://svn.berlios.de/jcurl/trunk/jcurl-demo
 		</connection>
 		<developerConnection>
-			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/jcurl-core
+			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/jcurl-demo
 		</developerConnection>
 		<tag />
-		<url>http://svn.berlios.de/wsvn/jcurl/trunk/jcurl-core</url>
+		<url>http://svn.berlios.de/wsvn/jcurl/trunk/jcurl-demo</url>
 	</scm>
 	<developers>
 		<developer>
@@ -205,6 +177,11 @@
 	</reporting>
 	<dependencies>
 		<dependency>
+			<groupId>org.jcurl</groupId>
+			<artifactId>jcurl-core</artifactId>
+			<version>0.7.0</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>3.8.1</version>
@@ -220,7 +197,7 @@
 		<site>
 			<id>jcurl-website</id>
 			<url>
-				scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/jcurl-core-0.6.0
+				scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/jcurl-demo-0.7.0
 			</url>
 		</site>
 		<repository>
