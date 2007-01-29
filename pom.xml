@@ -34,7 +34,7 @@
 	<inceptionYear>2005</inceptionYear>
 	<url>http://www.jcurl.org/</url>
 	<artifactId>jcurl-core</artifactId>
-	<version>0.6.0</version>
+	<version>0.7.0</version>
 	<description>
 		Java library and sample applications for rock trajectory
 		simulation, game filing, analysis and visualisation
@@ -220,7 +220,7 @@
 		<site>
 			<id>jcurl-website</id>
 			<url>
-				scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/jcurl-core-0.6.0
+				scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/jcurl-core-0.7.0
 			</url>
 		</site>
 		<repository>
