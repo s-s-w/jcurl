@@ -1,4 +1,9 @@
 <!-- Test project which creates and signs a jar artifact -->
+<!-- you'll need the maven-webstart plugin:
+	$ svn co  https://svn.codehaus.org/mojo/tags/webstart-maven-plugin-parent-1.0-alpha-1 webstart-maven-plugin
+	$ cd webstart-maven-plugin
+	$ mvn install
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
