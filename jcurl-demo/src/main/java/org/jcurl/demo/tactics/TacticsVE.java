@@ -57,7 +57,7 @@ public class TacticsVE {
             jCurlDisplay.setName("Ice");
             jCurlDisplay
                     .setFont(new Font("Bitstream Vera Sans", Font.PLAIN, 12));
-            jCurlDisplay.setMinimumSize(new Dimension(100, 50));
+            //jCurlDisplay.setMinimumSize(new Dimension(100, 50));
         }
         return jCurlDisplay;
     }

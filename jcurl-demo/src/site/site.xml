@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Maven">
   <bannerLeft>
-    <name>JCurl</name>
+    <name>JCurl Demo Applications</name>
     <src>images/jcurl-banner-left.png</src>
     <href>http://www.jcurl.org/</href>
   </bannerLeft>
@@ -17,17 +17,9 @@
       <item name="Maven 2" href="http://maven.apache.org/maven2/"/>
     </links -->
 
-    <menu name="JCurl">
+    <menu name="JCurl Demo Applications">
       <item name="Introduction" href="index.html"/>
       <item name="Demo Applications" href="demoapps.html"/>
-      <item name="Scientific Resources" href="science/index.html"/>
-      
-      <!-- item name="Release Notes" href="release-notes.html" />
-      <item name="General Information" href="about.html"/>
-      <item name="For Maven 1.0 Users" href="maven1.html"/>
-      <item name="Road Map" href="roadmap.html" / -->
-      
-      <item name="Todos" href="todos.html" />
     </menu>
 
     <menu name="Community">
