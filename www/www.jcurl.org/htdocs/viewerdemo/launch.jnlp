@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id: viewerdemo.jnlp 213 2005-12-30 17:42:01Z mrohrmoser $ -->
+<jnlp
+  spec="1.0+"
+  codebase="http://www.jcurl.org/viewerdemo"
+  href="launch.jnlp">
+  <information>
+    <title>JCurl Viewer Demo 0.7.0</title>
+    <vendor>M. Rohrmoser</vendor>
+    <homepage href="http://www.jcurl.org/index.html"/>
+    <description>JCurl Viewer Demo Application</description>
+    <description kind="short">A demo of the capabilities of the JCurl Curling Framework.</description>
+    <icon href="images/jcurl-icon.gif" kind="default"/>
+    <offline-allowed/>
+  </information>
+  <update check="timeout" policy="always"/>
+  <security>
+    <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.4+"/>
+    
+<jar href="commons-logging-1.1.jar"/>
+<jar href="jcurl-core-0.7.0.jar"/>
+<jar href="jcurl-demo-0.7.0.jar" main="true"/>
+
+  </resources>
+  <application-desc main-class="org.jcurl.demo.viewer.ViewerApp"/>
+</jnlp> 
