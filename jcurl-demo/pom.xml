@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<!-- profiles>
+		<profile>
+		<repositories>
+		<repository>
+		<id>Maven Snapshots</id>
+		<url>http://snapshots.maven.codehaus.org/maven2/</url>
+		<snapshots>
+		<enabled>true</enabled>
+		</snapshots>
+		<releases>
+		<enabled>false</enabled>
+		</releases>
+		</repository>
+		</repositories>
+		<pluginRepositories>
+		<pluginRepository>
+		<id>Maven Snapshots</id>
+		<url>http://snapshots.maven.codehaus.org/maven2/</url>
+		<snapshots>
+		<enabled>true</enabled>
+		</snapshots>
+		<releases>
+		<enabled>false</enabled>
+		</releases>
+		</pluginRepository>
+		</pluginRepositories>
+		</profile>
+		</profiles -->
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jcurl</groupId>
+	<name>JCurl Curling Framework</name>
+	<inceptionYear>2005</inceptionYear>
+	<url>http://www.jcurl.org/</url>
+	<artifactId>jcurl-core</artifactId>
+	<version>0.6.0</version>
+	<description>
+		Java library and sample applications for rock trajectory
+		simulation, game filing, analysis and visualisation
+	</description>
+	<licenses>
+		<license>
+			<name>GNU GENERAL PUBLIC LICENSE</name>
+			<url>http://www.gnu.org/licenses/gpl.html</url>
+			<distribution>manual</distribution>
+			<comments />
+		</license>
+	</licenses>
+	<issueManagement>
+		<system>Bugzilla</system>
+		<url>http://developer.berlios.de/bugs/?group_id=3203</url>
+	</issueManagement>
+	<scm>
+		<connection>
+			scm:svn:svn://svn.berlios.de/jcurl/trunk/jcurl-core
+		</connection>
+		<developerConnection>
+			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/jcurl-core
+		</developerConnection>
+		<tag />
+		<url>http://svn.berlios.de/wsvn/jcurl/trunk/jcurl-core</url>
+	</scm>
+	<developers>
+		<developer>
+			<id>mrohrmoser</id>
+			<name>M. Rohrmoser</name>
+			<email>jcurl@gmx.net</email>
+			<roles>
+				<role>Admin</role>
+				<role>Developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+	<mailingLists>
+		<mailingList>
+			<name>JCurl Announce</name>
+			<subscribe>
+				http://lists.berlios.de/mailman/listinfo/jcurl-announce
+			</subscribe>
+			<unsubscribe>
+				http://lists.berlios.de/mailman/listinfo/jcurl-announce
+			</unsubscribe>
+			<post>jcurl-announce@lists.berlios.de</post>
+			<archive>
+				http://lists.berlios.de/pipermail/jcurl-announce/
+			</archive>
+		</mailingList>
+		<mailingList>
+			<name>JCurl Dev</name>
+			<subscribe>
+				http://lists.berlios.de/mailman/listinfo/jcurl-dev
+			</subscribe>
+			<unsubscribe>
+				http://lists.berlios.de/mailman/listinfo/jcurl-dev
+			</unsubscribe>
+			<post>jcurl-dev@lists.berlios.de</post>
+			<archive>
+				http://lists.berlios.de/pipermail/jcurl-dev/
+			</archive>
+		</mailingList>
+	</mailingLists>
+	<organization>
+		<name>jcurl.org</name>
+		<url>http://www.jcurl.org</url>
+	</organization>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<verbose>true</verbose>
+					<fork>true</fork>
+					<compilerVersion>1.5</compilerVersion>
+					<source>1.4</source>
+					<target>1.4</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<!-- http://maven.apache.org/plugins/maven-javadoc-plugin/javadoc-mojo.html -->
+					<source>1.4</source>
+				</configuration>
+			</plugin>
+			<!-- plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>changelog-maven-plugin</artifactId>
+				</plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>**/SaxParserTest.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>surefire-report-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jxr-maven-plugin</artifactId>
+				<version>2.0-beta-1</version>
+			</plugin>
+			<!-- plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>changelog-maven-plugin</artifactId>
+				<version>2.0-beta-1</version>
+				</plugin -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>surefire-report-maven-plugin</artifactId>
+			</plugin>
+			<!-- plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jdepend-maven-plugin</artifactId>
+				<version>2.0-beta-1-SNAPSHOT</version>
+				</plugin -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>taglist-maven-plugin</artifactId>
+				<version>2.0-beta-1</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<!-- http://maven.apache.org/plugins/maven-javadoc-plugin/javadoc-mojo.html -->
+					<source>1.4</source>
+					<links>
+						<!-- link>http://java.sun.com/javase/6/docs/api/</link -->
+						<link>
+							http://java.sun.com/j2se/1.4.2/docs/api/
+						</link>
+						<!-- link>
+							http://www.junit.org/junit/javadoc/3.8.1/
+							</link -->
+						<link>
+							http://jakarta.apache.org/commons/logging/commons-logging-1.1/apidocs/
+						</link>
+						<link>
+							http://jakarta.apache.org/commons/math/api-1.1/
+						</link>
+					</links>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>
+					maven-project-info-reports-plugin
+				</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</reporting>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1</version>
+		</dependency>
+	</dependencies>
+	<distributionManagement>
+		<site>
+			<id>jcurl-website</id>
+			<url>
+				scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/jcurl-core-0.6.0
+			</url>
+		</site>
+		<repository>
+			<id>jcurl-repository</id>
+			<url>
+				scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/repository/
+			</url>
+		</repository>
+	</distributionManagement>
+</project>
