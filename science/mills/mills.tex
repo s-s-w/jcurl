@@ -1,0 +1,459 @@
+\documentclass[titlepage,11pt]{article}
+\usepackage[T1]{fontenc}
+
+\author{Canadian Curling Association\\
+	Level 4 Research Project\\
+	Ron Mills}
+\date{September 1992}
+\title{Planning Takeouts and Raises}
+
+\newlength\leftcolumnwid % width of picture left column
+\leftcolumnwid = \textwidth
+\advance\leftcolumnwid by -\columnsep
+\advance\leftcolumnwid by -75mm
+
+\newlength\picwidth
+%\picwidth=\textwidth\advance\picwidth by 3cm
+\picwidth=\textwidth
+
+\parindent=0mm
+\parskip=1em
+\renewcommand{\baselinestretch}{1.2}
+
+\setcounter{topnumber}{5}
+\setcounter{bottomnumber}{5}
+\setcounter{totalnumber}{10}
+\renewcommand{\topfraction}{0.75}
+\renewcommand{\bottomfraction}{0.75}
+\renewcommand{\textfraction}{0.25}
+\renewcommand{\floatpagefraction}{0.75}
+\floatsep=1.5\parskip
+\textfloatsep=1.5\parskip
+\intextsep=1.5\parskip
+
+\newcommand{\myfrac}[2]{\ensuremath{ \,{}^{#1}\!/_{#2} }}
+
+\newcommand{\pict}[4]{%
+\begin{figure}[htp]%
+    \begin{center}%
+	{#4}%
+    \end{center}%
+    \def\boxX{#3}\ifx\boxX\empty
+	\caption{\label{#1} #2}%
+    \else
+	\caption[#3]{\label{#1} #2}%
+    \fi
+\end{figure}%
+}
+\newcommand{\picfile}[4]{%
+    \pict{#1}{#2}{#3}{\input{#4}}%
+}
+\newcommand{\picb}[5]{%
+    \def\BoXx{#4}
+    \ifx\BoXx\empty
+	\pict{#1}{#2}{#3}{#5}
+    \else
+	\pict{#1}{#2}{#3}{\makebox[0mm]{\makebox[\picwidth]{%
+	\begin{minipage}{\leftcolumnwid}\sloppy
+	#4%
+	\end{minipage}\hspace{\columnsep}\raisebox{-.5\totalheight}{#5}}}}%
+    \fi
+}
+\newcommand{\prtfloats}{\clearpage}
+
+\begin{document}
+\maketitle
+\listoffigures
+\section{Introduction}
+
+The purpose of this presentation is to give curlers and coaches a better
+understanding of the principles involved in the selection and execution of shots
+when other rocks are involved in take-outs and raises. This knowledge will
+become more important when more rocks come into play as a result of any rule
+changes.
+
+\section{Dimensions and Geometry}
+
+Figure \ref{size}\ reviews the dimensions of the house area used in this project.
+
+A curling rock must have a maximum circumference of 36", giving a maximum
+diameter of $ 36 / \pi = 11.5" $ $(\rm C = \pi D )$.
+
+Rocks at curling clubs locally were in the 10.5" to 10.75" range (can navigate
+smaller ports!). Rocks in this study were $ 10 \myfrac{5}{8}" $ in diameter.
+
+\picb{formula}{Formulae}{}{%
+  \begin{math}\begin{array}[t]{lll}
+   \displaystyle \frac{a}{d} &=& \displaystyle\frac{r}{l} \\[1.5em]
+   \displaystyle a &=& \displaystyle\frac{r \cdot d}{l}
+  \end{array}\end{math}%
+}{%
+ \unitlength=1mm
+ \begin{picture}(20,35)%(0,16)
+ \put(-10,0){\line(1,0){20}}
+ \put(-10,0){\line(1,2){16}}
+ \put( 10,0){\line(-1,2){16}}
+ \put( -6,32){\line(1,0){12}}
+ \put(	0,0){\line(0,1){32}}
+ \put(	0,33){\makebox(0,0)[cb]{a}}
+ \put(	1,29){\makebox(0,0)[lc]{r}}
+ \put(	1, 7){\makebox(0,0)[lc]{l}}
+ \put(	1,-1){\makebox(0,0)[ct]{d}}
+ \end{picture}%
+}
+
+\picfile{size}{Dimensions}{}{size.pic}
+
+\subsection*{Assumptions}
+
+\begin{itemize}
+\item The striking band of the rocks are free from pitting and chips.
+\item The ice surface is free of debri.
+\item The ice is broken in over all areas and is 13--14 seconds hog to hog for a
+      tee weight draw (23-24 seconds hog to tee).
+\end{itemize}
+
+\subsection*{Formulae}
+
+The formula in figure \ref{formula}\ will be used later in this presentation.
+
+\prtfloats
+
+\section{Proper angles}
+
+Many curlers judge angles by instinct with varying degrees of success. Judging
+angles does not come naturally and is learned by experience. A common mistake is
+shown in figure \ref{fig-2}. Rock B is to be raised onto rock C and rock A is the thrown
+rock. "$\times$" is the proper spot to hit since it is a direct line between the
+centres of rocks B and C. If an attempt is made to hit mark $\times$ with the centre of
+the thrown rock, then rock B will be too full since the contact point is wrong.
+
+\picfile{fig-2}{A Common Mistake}{}{fig02.pic}
+
+\subsection*{Line up the centres}
+
+The proper way to play the shot is shown in figure \ref{fig-3}. Visualize the thrown rock
+A touching rock B at spot "$\times$" so that the three centres are lined up, then
+visualize an \emph{area of overlap} between the thrown rock and rock B. The skip
+and vice skip can then call the line properly. Figure \ref{fig-4}\ shows five common areas
+of overlap that curlers should become familiar with.
+
+\picfile{fig-3}{Rock A coming from above hitting B, B moves on to position C.
+Touching spot A/B is on line with centre of A, B, C.}{Area of Overlap}{fig03.pic}
+
+\pict{fig-4}{Common Areas of Overlap}{}{%
+\begin{minipage}{.8\textwidth}
+\hspace*{\fill}\input{fig04a.pic}
+\hspace*{\fill}\input{fig04b.pic}
+\hspace*{\fill}\input{fig04c.pic}
+\hspace*{\fill}\\[1.5em]
+\hspace*{\fill}\input{fig04d.pic}
+\hspace*{\fill}\input{fig04e.pic}
+\hspace*{\fill}
+\end{minipage}}
+
+\subsection*{The "T" principle}
+
+When playing a horizontal double as in figure \ref{fig-5}, the $\times$ point
+to hit rock B is determined by visualizing the letter "T" as shown, then
+visualize the thrown rock in position A to then determine the area of overlap
+to make the shot.
+
+\picfile{fig-5}{The T-priciple}{}{fig05.pic}
+
+This "T" principle is very important and can be used in many crucial situations.
+An example is shown in figure \ref{fig-6}. Figure \ref{fig-7}\ is Scotland's famous triple against
+the Canadian men's team at the 1992 World Championship (Hammy McMillan vs Vic
+Peters). The spot to hit rock A can be determined by using the "T" rule starting
+with rock C. This will prove why the shot was possible.
+
+\picb{fig-6}{T-priciple in action}{}{%
+\begin{itemize}
+\item Last rock on last end
+\item A, B are opposition rocks
+\item You need a 3 ender
+\item C, D are your rocks
+\item Where will A go on a full or \myfrac{3}{4} hit?
+\end{itemize}}{\input{fig06.pic}}
+
+\picfile{fig-7}{\emph{The} Triple Scotland vs Canada, 1992 world mens
+		semi final.}{\emph{The} Triple}{fig07.pic}
+
+\clearpage
+
+\subsection*{Turn selection}
+
+Figures \ref{fig-8}\ and \ref{fig-9}\ demonstrate the options of playing an in turn or an out turn
+double on rocks B and C assuming the ice curls quite a bit. \textbf{Regardless of
+which turn to play you must hit rock B at exactly the same spot.} The out turn
+in figure \ref{fig-8}\ gives you a larger area of overlap and thus is the better percentage
+shot. Similarly, the in turn in figure \ref{fig-9}\ is the better shot.
+
+
+\picb{fig-8}{Turn decisions}{}{%
+\begin{itemize}
+\item Out turn the best here
+\item Ice curls a lot
+\end{itemize}
+}{\input{fig08.pic}}
+
+\picb{fig-9}{Turn decisions}{}{%
+\begin{itemize}
+\item In turn the best here
+\item Ice curls a lot
+\end{itemize}
+}{\input{fig09.pic}}
+
+
+This \emph{area of overlap} is the most important factor in determining which
+turn to play. Many curlers believe the out turn in figure \ref{fig-8}\ causes the shooter
+to \emph{"jump"} across at a bigger angle than an in turn. I believe this effect
+to be very minimal with a normal rotation. The major consideration should be
+the larger area of overlap in the different turns. On straight ice either turn
+can be used.
+
+Another interesting fact is shown in figure \ref{fig-10}. Rocks A and B are both on the
+same angle from rock C, but rock B has a smaller \emph{area of overlap} than A to
+make the double. You can not make a fixed rule that a $ 30^\circ $ double for
+example is always a half hit on the first rock.
+
+\picb{fig-10}{Doubles}{}{Area of overlap decreases as rocks on the same
+angle get closer together.}{\input{fig10.pic}}
+
+\prtfloats
+
+\section{Accuracy required for raises}
+
+Figure \ref{fig-11}\ shows two rocks a distance "L" apart. Assume rock B will be raised
+onto rock C with at least half hit on rock C. This will ensure C is removed from
+play.
+
+\picb{fig-11}{Accuracy}{}{%
+\begin{math}\begin{array}[t]{lll}
+\displaystyle a &=& \displaystyle\frac{ r \cdot d }{ l } \\[1em]
+		&\approx& \displaystyle\frac{ 5.5'' \cdot 11'' }{ l } \\[1em]
+		&=& \displaystyle\frac{ 60.5 }{ l } \\
+\end{array}\end{math}
+}{\input{fig11.pic}}
+
+\iffalse
+From the formula in the introduction $(a/d = r/L)$
+
+$ a = r \times \frac{ d }{ L } $ where $ r $ = radius = 5.5" and $ d $ =
+diameter = 11".
+
+Thus $ a = \frac{60.5"}{L} $ when $ L $ = distance apart.
+
+In figure \ref{fig-12}\ the rocks are 20 feet apart, thus $ a = \frac{60.5}{240} = 0.25"$
+
+In figure \ref{fig-13}\ the rocks are 10 feet apart, thus $ a = \frac{60.5}{120} = 0.5"$
+
+In figure \ref{fig-14}\ the rocks are  5 feet apart, thus $ a = \frac{60.5}{ 60} = 1.0"$
+
+Figure \ref{fig-15}\ is an %actual
+relative size drawing of the accuracy required at the three distances.
+\fi
+
+\picb{fig-12}{Accuracy --- 20 foot raise}{}{%
+\begin{math}\begin{array}[t]{lll}
+    a &=& \mbox{area to hit} \\[1.5em]
+%      &=& \mbox{radius} \cdot \mbox{diameter} / \mbox{length} \\[1.5em]
+      &\approx& \mbox{radius} \cdot \frac{\mbox{diameter}}{\mbox{length}} \\[1.5em]
+      &=& 5.5 \cdot 11 / 240 \\[1.5em]
+      &=& 0.25"
+\end{array}\end{math}
+}{\input{fig12.pic}}
+
+\picb{fig-13}{Accuracy --- 10 foot raise}{}{%
+\begin{math}\begin{array}[t]{lll}
+    a &=& \mbox{area to hit} \\[1.5em]
+%      &=& \mbox{radius} \cdot \mbox{diameter} / \mbox{length} \\[1.5em]
+      &\approx& \mbox{radius} \cdot \frac{\mbox{diameter}}{\mbox{length}} \\[1.5em]
+      &=& 5.5 \cdot 11 / 120 \\[1.5em]
+      &=& 0.50"
+\end{array}\end{math}
+}{\input{fig13.pic}}
+
+\picb{fig-14}{Accuracy --- 5 foot raise}{}{%
+\begin{math}\begin{array}[t]{lll}
+    a &=& \mbox{area to hit} \\[1.5em]
+%      &=& \mbox{radius} \cdot \mbox{diameter} / \mbox{length} \\[1.5em]
+      &\approx& \mbox{radius} \cdot \frac{\mbox{diameter}}{\mbox{length}} \\[1.5em]
+      &=& 5.5 \cdot 11 / 60 \\[1.5em]
+      &=& 1"
+\end{array}\end{math}
+}{\input{fig14.pic}}
+
+\picfile{fig-15}{Accuracy --- in relation to diameter}{}{fig15.pic}
+
+\subsection*{Propabilities}
+
+The odds of making the raises above depend on
+\begin{enumerate}
+\item The distance apart
+\item The skill level of your team
+\begin{itemize}
+    \item reading ice
+    \item sweeping
+    \item throwing
+    \item calling line
+\end{itemize}
+\item Ice conditions
+\end{enumerate}
+
+For example, on the 20" raise you have to be accurate to within \myfrac{1}{4}".
+If your team is only accurate to with 11" (ie.\ a half hit on either side), then
+the odds of making this shot are about 1 in 44 since there are 44 --
+\myfrac{1}{4} inches in 11 inches. A highly skilled team may be accurate within
+2" and thus have a 1 in 8 chance of making a 20" raise.
+
+\prtfloats
+
+\section{Loss of momentum}
+
+When a thrown rock strikes another rock there is a slight loss of momentum when
+struck full on. This is of no consequences in take outs, but is important in
+tap back raises. After many test trails, the pattern in figure \ref{fig-16}\ emerged. The
+general rule is that a diameter of one rock is lost for each rock raised.
+Remember our assumptions on broken in ice with no debri under any of the rocks
+(watch out for straw).
+
+\picb{fig-16}{Loss of momentum}{}{%
+\begin{itemize}
+\item same weight on three draws
+\item A, B, C are the outcome
+\item A, no raise
+\item B, raise one rock
+\item C, raise two rocks
+\end{itemize}
+}{\input{fig16.pic}}
+
+
+Figure \ref{fig-17}\ shows the other way momentum is lost. When raising rocks at an angle
+you need more weight. The smaller the area of overlap, the more weight you need.
+Path C shows the weight required to raise rock A onto the button. Distance C is
+about the sum of distances A and B.
+
+\picfile{fig-17}{Angle draw raises. Distance $ C \approx A + B $.}{Angle draw raises}{fig17.pic}
+
+This principle can be useful on "free" draws that are heavy but are going to hit
+one of your rocks in the house. An alert sweeping call would be to get a
+\myfrac{1}{2} hit to save both rocks.
+
+\prtfloats
+
+\section{The \emph{"Drag"} Effect}
+
+An interesting phenomenon occurs when playing raise take outs on rocks that are
+touching (frozen together). Figure \ref{fig-18}\ shows this effect. Rocks B and C are
+touching. Rock A is the thrown rock and is a half hit on B. C should go along
+the normal path but in this case C is \emph{"dragged"} by B slightly towards B's
+path. \textbf{This drag effect disappears only after B and C are more than
+\myfrac{1}{2}" apart}.
+
+\picfile{fig-18}{The \emph{"Drag"} Effect}{}{fig18.pic}
+
+You can use this principle to your advantage but ist should be used only if you
+have practiced it and no other shots are available. Figures \ref{fig-19}\ and
+\ref{fig-20}\ show two examples.
+
+\picb{fig-19}{Drag Effect}{}{%
+\begin{itemize}
+\item B and C are lined up to just miss D
+\item A half hit on the right side of B will cause C to hit D
+\item The drag effect disappears after B and C are one half inch apart
+\end{itemize}
+}{\input{fig19.pic}}
+
+\picb{fig-20}{Drag Effect}{}{%
+\begin{itemize}
+\item A \myfrac{3}{4} hit on the right side of B will cause C to hit D
+\item Paths 1, 2 or 3 or any in-between are possible depending on where it is hit
+\end{itemize}
+}{\input{fig20.pic}}
+
+
+Figure \ref{fig-21}\ shows a set up which many curlers believe is an \emph{"automatic"} in
+that you can hit B anywhere. You must hit B in spot $\times$ to avoid
+the \emph{"drag"} effect.
+
+\picfile{fig-21}{Avoid the Drag Effect. Hit B at the position $\times$,
+the same as if C wasn't there.}{Avoid the Drag Effect}{fig21.pic}
+
+\prtfloats
+
+\section{Ports}
+
+Figure \ref{fig-22}\ to \ref{fig-24}\ show the path the thrown rock takes when comingg through ports
+and wicking on one or both of the rocks. In figure \ref{fig-22}\ there is a small port
+between rocks B and C (1 or 2 inches to spare to each side). In figure \ref{fig-23}\ the
+port is slightly narrower than one rock. Figure \ref{fig-24}\ demonstrates the
+follow-through effect if simultaneously striking B and C when the port is
+narrowe than one rock. With $10\myfrac{3}{4}$" diameter rocks a port size down to
+8" can be navigated. This is exactly the width of the plastic handle covers used
+in many clubs.
+
+\picb{fig-22}{Splitting rocks}{}{%
+\begin{itemize}
+\item B and C are 13 to 15 inches apart. Fine hit C first, glancing off B
+\item A very fine hit on C causes A to take path 1
+\item Slightly fuller hits on C progress A's position to 5
+\end{itemize}
+}{\input{fig22.pic}}
+
+\picb{fig-23}{Splitting rocks}{}{%
+\begin{itemize}
+\item B and C are about 10 inches apart
+\item Fine hitting C first results in path 1
+\item Fine hitting B first results in path 2
+\end{itemize}
+}{\input{fig23.pic}}
+
+\picb{fig-24}{Splitting through a port}{}{%
+\begin{itemize}
+\item Port sizes of less than 8 inches cannot be navigated. (Width of
+      plastic handle).
+\item B, C must be hit simultaneously.
+\end{itemize}
+}{\input{fig24.pic}}
+
+
+Figure \ref{fig-25}\ shows two different double situations. D, E is a \emph{"natural"}
+double, in that a half hit on D is required. B, C is a very difficult double
+unless played properly. A half hit on the centre line side of B makes it as easy
+as a \emph{"natural"} double.
+
+
+\picb{fig-25}{Natural doubles}{}{%
+\begin{itemize}
+\item Defined as two rocks situated so that a half hit on the first one hits
+      the second one directly.
+\item D and E are a natural double.
+\item Characteristics: You cannot roll across the face of E.
+\item B, C are an extremely tough double if you attempt to split them. A
+      half hit on the centre line side of B makes it as easy as a natural
+      double.
+\end{itemize}
+}{\input{fig25.pic}}
+
+\prtfloats
+
+\section{Practice routines}
+
+All of the principles shown here should be set up in practices. Rocks can be
+delivered (pushed) from the nearest hog line to save time.
+
+A very good off season routine would be to have the team practice various shots
+on a pool table. Specially:
+\begin{itemize}
+\item learning about proper area of overlap (full, three quarter, half, one
+      quarter hits)
+\item learning to visualize the "T" rule for doubles
+\item learning about the drag effect
+\end{itemize}
+
+A more realistic environment can be set up on a pool table by making a scale
+drawing of the house area out to hog line on a sheet of paper. The scale is 5.5
+to 1 since a billiard ball is 2 inches in diameter vs 11 inches for a rock.
+
+\end{document}
