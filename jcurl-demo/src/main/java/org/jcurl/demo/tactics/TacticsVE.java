@@ -113,7 +113,7 @@ public class TacticsVE {
 
     private JPanel aboutContentPane = null;
 
-    private JDialog aboutDialog = null; // @jve:decl-index=0:visual-constraint="459,238"
+    private JDialog aboutDialog = null;  //  @jve:decl-index=0:visual-constraint="537,163"
 
     private JMenuItem aboutMenuItem = null;
 
