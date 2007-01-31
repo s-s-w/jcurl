@@ -24,12 +24,75 @@ public class TacticsNB extends javax.swing.JFrame {
      */
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
+        javax.swing.JMenuItem aboutMenuItem;
+        javax.swing.JMenuItem exitMenuItem;
+        javax.swing.JMenuItem exportPngMenuItem;
+        javax.swing.JMenu fileMenu;
+        javax.swing.JMenu helpMenu;
+        javax.swing.JMenuBar jMenuBar1;
+        javax.swing.JSeparator jSeparator1;
+        javax.swing.JSeparator jSeparator2;
+        javax.swing.JMenuItem loadMenuItem;
+        javax.swing.JMenuItem newMenuItem;
         org.jcurl.core.swing.PositionDisplay rocksPosDisplay;
+        javax.swing.JMenuItem saveAsMenuItem;
+        javax.swing.JMenuItem saveMenuItem;
 
         rocksPosDisplay = new org.jcurl.core.swing.PositionDisplay();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        newMenuItem = new javax.swing.JMenuItem();
+        loadMenuItem = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JSeparator();
+        saveMenuItem = new javax.swing.JMenuItem();
+        saveAsMenuItem = new javax.swing.JMenuItem();
+        exportPngMenuItem = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JSeparator();
+        exitMenuItem = new javax.swing.JMenuItem();
+        helpMenu = new javax.swing.JMenu();
+        aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         rocksPosDisplay.setName("The Rocks");
+
+        fileMenu.setText("File");
+        newMenuItem.setText("New");
+        fileMenu.add(newMenuItem);
+
+        loadMenuItem.setText("Load");
+        loadMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadMenuItemActionPerformed(evt);
+            }
+        });
+
+        fileMenu.add(loadMenuItem);
+
+        fileMenu.add(jSeparator2);
+
+        saveMenuItem.setText("Save");
+        fileMenu.add(saveMenuItem);
+
+        saveAsMenuItem.setText("Save As");
+        fileMenu.add(saveAsMenuItem);
+
+        exportPngMenuItem.setText("Export as Png");
+        fileMenu.add(exportPngMenuItem);
+
+        fileMenu.add(jSeparator1);
+
+        exitMenuItem.setText("Exit");
+        fileMenu.add(exitMenuItem);
+
+        jMenuBar1.add(fileMenu);
+
+        helpMenu.setText("Help");
+        aboutMenuItem.setText("About");
+        helpMenu.add(aboutMenuItem);
+
+        jMenuBar1.add(helpMenu);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -41,10 +104,14 @@ public class TacticsNB extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rocksPosDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+            .addComponent(rocksPosDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
         );
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void loadMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadMenuItemActionPerformed
+// TODO add your handling code here:
+    }//GEN-LAST:event_loadMenuItemActionPerformed
     
     /**
      * @param args the command line arguments
