@@ -17,320 +17,6 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Container class="javax.swing.JPanel" name="controlPanel">
-      <Properties>
-        <Property name="opaque" type="boolean" value="false"/>
-      </Properties>
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="170" max="32767" attributes="0"/>
-              <Component id="controlTabbedPane1" min="-2" pref="170" max="-2" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="179" max="32767" attributes="0"/>
-              <Component id="controlTabbedPane1" min="-2" pref="179" max="-2" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Container class="javax.swing.JTabbedPane" name="controlTabbedPane1">
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
-          <SubComponents>
-            <Container class="javax.swing.JPanel" name="rockTab1">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="66" green="cc" red="ff" type="rgb"/>
-                </Property>
-                <Property name="name" type="java.lang.String" value="Rock"/>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="Rock" toolTip="Broom Position (meters)">
-                    <Property name="tabTitle" type="java.lang.String" value="Rock"/>
-                    <Property name="tabToolTip" type="java.lang.String" value="Broom Position (meters)"/>
-                  </JTabbedPaneConstraints>
-                </Constraint>
-              </Constraints>
-
-              <Layout>
-                <DimensionLayout dim="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="broomPanel1" max="32767" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="timePanel1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-                <DimensionLayout dim="1">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="timePanel1" alignment="0" max="32767" attributes="0"/>
-                      <Component id="broomPanel1" alignment="0" max="32767" attributes="0"/>
-                  </Group>
-                </DimensionLayout>
-              </Layout>
-              <SubComponents>
-                <Container class="javax.swing.JPanel" name="broomPanel1">
-                  <Properties>
-                    <Property name="opaque" type="boolean" value="false"/>
-                  </Properties>
-
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="broomLabel1" alignment="0" pref="98" max="32767" attributes="0"/>
-                          <Component id="broomText1" alignment="0" pref="98" max="32767" attributes="0"/>
-                          <Component id="broomSlider1" alignment="1" pref="98" max="32767" attributes="0"/>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="broomLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="broomSlider1" pref="106" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="broomText1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
-                  <SubComponents>
-                    <Component class="javax.swing.JLabel" name="broomLabel1">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="Broom"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JSlider" name="broomSlider1">
-                      <Properties>
-                        <Property name="majorTickSpacing" type="int" value="1000"/>
-                        <Property name="maximum" type="int" value="2000"/>
-                        <Property name="minimum" type="int" value="-2000"/>
-                        <Property name="minorTickSpacing" type="int" value="100"/>
-                        <Property name="orientation" type="int" value="1"/>
-                        <Property name="paintLabels" type="boolean" value="true"/>
-                        <Property name="paintTicks" type="boolean" value="true"/>
-                        <Property name="opaque" type="boolean" value="false"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="broomText1">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="jTextField1"/>
-                      </Properties>
-                    </Component>
-                  </SubComponents>
-                </Container>
-                <Container class="javax.swing.JPanel" name="timePanel1">
-                  <Properties>
-                    <Property name="opaque" type="boolean" value="false"/>
-                  </Properties>
-
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="splitText1" alignment="0" pref="61" max="32767" attributes="0"/>
-                          <Component id="splitSlider1" alignment="0" max="32767" attributes="0"/>
-                          <Component id="splitLabel1" alignment="0" pref="61" max="32767" attributes="0"/>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="splitLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                              <Component id="splitSlider1" pref="105" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="splitText1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
-                  <SubComponents>
-                    <Component class="javax.swing.JLabel" name="splitLabel1">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="SplitTime"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JSlider" name="splitSlider1">
-                      <Properties>
-                        <Property name="majorTickSpacing" type="int" value="1000"/>
-                        <Property name="maximum" type="int" value="2500"/>
-                        <Property name="minimum" type="int" value="500"/>
-                        <Property name="minorTickSpacing" type="int" value="100"/>
-                        <Property name="orientation" type="int" value="1"/>
-                        <Property name="paintLabels" type="boolean" value="true"/>
-                        <Property name="paintTicks" type="boolean" value="true"/>
-                        <Property name="value" type="int" value="1200"/>
-                        <Property name="opaque" type="boolean" value="false"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="splitText1">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="jTextField1"/>
-                      </Properties>
-                    </Component>
-                  </SubComponents>
-                </Container>
-              </SubComponents>
-            </Container>
-            <Container class="javax.swing.JPanel" name="iceTab1">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="cc" red="99" type="rgb"/>
-                </Property>
-                <Property name="doubleBuffered" type="boolean" value="false"/>
-                <Property name="name" type="java.lang.String" value="Rock"/>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="Ice">
-                    <Property name="tabTitle" type="java.lang.String" value="Ice"/>
-                  </JTabbedPaneConstraints>
-                </Constraint>
-              </Constraints>
-
-              <Layout>
-                <DimensionLayout dim="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="curlPanel1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="34" max="32767" attributes="0"/>
-                          <Component id="drawToTeePanel1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-                <DimensionLayout dim="1">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="curlPanel1" alignment="0" max="32767" attributes="0"/>
-                      <Component id="drawToTeePanel1" alignment="0" max="32767" attributes="0"/>
-                  </Group>
-                </DimensionLayout>
-              </Layout>
-              <SubComponents>
-                <Container class="javax.swing.JPanel" name="curlPanel1">
-                  <Properties>
-                    <Property name="doubleBuffered" type="boolean" value="false"/>
-                    <Property name="opaque" type="boolean" value="false"/>
-                  </Properties>
-
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="curlLabel1" alignment="0" pref="61" max="32767" attributes="0"/>
-                          <Component id="curlText1" alignment="0" pref="61" max="32767" attributes="0"/>
-                          <Component id="curlSlider1" alignment="1" max="32767" attributes="0"/>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="curlLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="curlSlider1" pref="106" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="curlText1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
-                  <SubComponents>
-                    <Component class="javax.swing.JLabel" name="curlLabel1">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="Curl"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JSlider" name="curlSlider1">
-                      <Properties>
-                        <Property name="majorTickSpacing" type="int" value="1000"/>
-                        <Property name="maximum" type="int" value="5000"/>
-                        <Property name="minorTickSpacing" type="int" value="100"/>
-                        <Property name="orientation" type="int" value="1"/>
-                        <Property name="paintLabels" type="boolean" value="true"/>
-                        <Property name="paintTicks" type="boolean" value="true"/>
-                        <Property name="value" type="int" value="1500"/>
-                        <Property name="opaque" type="boolean" value="false"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="curlText1">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="jTextField1"/>
-                      </Properties>
-                    </Component>
-                  </SubComponents>
-                </Container>
-                <Container class="javax.swing.JPanel" name="drawToTeePanel1">
-                  <Properties>
-                    <Property name="doubleBuffered" type="boolean" value="false"/>
-                    <Property name="opaque" type="boolean" value="false"/>
-                  </Properties>
-
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="drawToTeeLabel1" alignment="0" pref="70" max="32767" attributes="0"/>
-                          <Component id="drawToTeeSlider1" alignment="0" pref="70" max="32767" attributes="0"/>
-                          <Component id="drawToTeeText1" alignment="0" pref="70" max="32767" attributes="0"/>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="drawToTeeLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                              <Component id="drawToTeeSlider1" pref="105" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="drawToTeeText1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
-                  <SubComponents>
-                    <Component class="javax.swing.JLabel" name="drawToTeeLabel1">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="DrawToTee"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[70, 15]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[70, 15]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JSlider" name="drawToTeeSlider1">
-                      <Properties>
-                        <Property name="majorTickSpacing" type="int" value="5000"/>
-                        <Property name="maximum" type="int" value="30000"/>
-                        <Property name="minimum" type="int" value="15000"/>
-                        <Property name="minorTickSpacing" type="int" value="1000"/>
-                        <Property name="orientation" type="int" value="1"/>
-                        <Property name="paintLabels" type="boolean" value="true"/>
-                        <Property name="paintTicks" type="boolean" value="true"/>
-                        <Property name="value" type="int" value="23000"/>
-                        <Property name="opaque" type="boolean" value="false"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="drawToTeeText1">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="jTextField1"/>
-                      </Properties>
-                    </Component>
-                  </SubComponents>
-                </Container>
-              </SubComponents>
-            </Container>
-          </SubComponents>
-        </Container>
-      </SubComponents>
-    </Container>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="fileMenu">
@@ -398,6 +84,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="JCurl Tactics Demo"/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[350, 300]"/>
     </Property>
@@ -548,6 +235,9 @@
                         <Property name="orientation" type="int" value="1"/>
                         <Property name="paintLabels" type="boolean" value="true"/>
                         <Property name="paintTicks" type="boolean" value="true"/>
+                        <Property name="value" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="getBroomInt()" type="code"/>
+                        </Property>
                         <Property name="opaque" type="boolean" value="false"/>
                       </Properties>
                     </Component>
@@ -599,7 +289,9 @@
                         <Property name="orientation" type="int" value="1"/>
                         <Property name="paintLabels" type="boolean" value="true"/>
                         <Property name="paintTicks" type="boolean" value="true"/>
-                        <Property name="value" type="int" value="1200"/>
+                        <Property name="value" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="getSplitTimeInt()" type="code"/>
+                        </Property>
                         <Property name="opaque" type="boolean" value="false"/>
                       </Properties>
                     </Component>
@@ -687,7 +379,9 @@
                         <Property name="orientation" type="int" value="1"/>
                         <Property name="paintLabels" type="boolean" value="true"/>
                         <Property name="paintTicks" type="boolean" value="true"/>
-                        <Property name="value" type="int" value="1500"/>
+                        <Property name="value" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="getCurlInt()" type="code"/>
+                        </Property>
                         <Property name="opaque" type="boolean" value="false"/>
                       </Properties>
                     </Component>
@@ -746,7 +440,9 @@
                         <Property name="orientation" type="int" value="1"/>
                         <Property name="paintLabels" type="boolean" value="true"/>
                         <Property name="paintTicks" type="boolean" value="true"/>
-                        <Property name="value" type="int" value="23000"/>
+                        <Property name="value" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                          <Connection code="getDrawToTeeInt()" type="code"/>
+                        </Property>
                         <Property name="opaque" type="boolean" value="false"/>
                       </Properties>
                     </Component>

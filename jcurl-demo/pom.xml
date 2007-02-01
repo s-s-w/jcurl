@@ -163,7 +163,7 @@
                                 <manifest>
                                     <addClasspath>true</addClasspath>
                                     <classpathPrefix>lib</classpathPrefix>
-                                    <mainClass></mainClass>
+                                    <mainClass>org.jcurl.demo.tactics.TacticsNB</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>
