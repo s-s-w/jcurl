@@ -6,6 +6,8 @@
 
 package org.jcurl.demo.tactics;
 
+import org.jcurl.core.swing.Zoomer;
+
 /**
  *
  * @author  m
@@ -24,21 +26,105 @@ public class TacticsNB extends javax.swing.JFrame {
      */
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
+        javax.swing.JDialog aboutDialog;
         javax.swing.JMenuItem aboutMenuItem;
+        javax.swing.JLabel broomLabel;
+        javax.swing.JLabel broomLabel1;
+        javax.swing.JPanel broomPanel;
+        javax.swing.JPanel broomPanel1;
+        javax.swing.JSlider broomSlider;
+        javax.swing.JSlider broomSlider1;
+        javax.swing.JTextField broomText;
+        javax.swing.JTextField broomText1;
+        javax.swing.JPanel completePanel;
+        javax.swing.JPanel controlPanel;
+        javax.swing.JTabbedPane controlTabbedPane;
+        javax.swing.JTabbedPane controlTabbedPane1;
+        javax.swing.JLabel curlLabel;
+        javax.swing.JLabel curlLabel1;
+        javax.swing.JPanel curlPanel;
+        javax.swing.JPanel curlPanel1;
+        javax.swing.JSlider curlSlider;
+        javax.swing.JSlider curlSlider1;
+        javax.swing.JTextField curlText;
+        javax.swing.JTextField curlText1;
+        javax.swing.JLabel drawToTeeLabel;
+        javax.swing.JLabel drawToTeeLabel1;
+        javax.swing.JPanel drawToTeePanel;
+        javax.swing.JPanel drawToTeePanel1;
+        javax.swing.JSlider drawToTeeSlider;
+        javax.swing.JSlider drawToTeeSlider1;
+        javax.swing.JTextField drawToTeeText;
+        javax.swing.JTextField drawToTeeText1;
         javax.swing.JMenuItem exitMenuItem;
         javax.swing.JMenuItem exportPngMenuItem;
         javax.swing.JMenu fileMenu;
         javax.swing.JMenu helpMenu;
+        javax.swing.JPanel iceTab;
+        javax.swing.JPanel iceTab1;
         javax.swing.JMenuBar jMenuBar1;
         javax.swing.JSeparator jSeparator1;
         javax.swing.JSeparator jSeparator2;
         javax.swing.JMenuItem loadMenuItem;
         javax.swing.JMenuItem newMenuItem;
-        org.jcurl.core.swing.PositionDisplay rocksPosDisplay;
+        org.jcurl.core.swing.PositionDisplay overviewDisplay;
+        javax.swing.JPanel rockTab;
+        javax.swing.JPanel rockTab1;
+        org.jcurl.core.swing.PositionDisplay rocksEditDisplay;
         javax.swing.JMenuItem saveAsMenuItem;
         javax.swing.JMenuItem saveMenuItem;
+        javax.swing.JLabel splitLabel;
+        javax.swing.JLabel splitLabel1;
+        javax.swing.JSlider splitSlider;
+        javax.swing.JSlider splitSlider1;
+        javax.swing.JTextField splitText;
+        javax.swing.JTextField splitText1;
+        javax.swing.JPanel timePanel;
+        javax.swing.JPanel timePanel1;
 
-        rocksPosDisplay = new org.jcurl.core.swing.PositionDisplay();
+        aboutDialog = new javax.swing.JDialog();
+        controlPanel = new javax.swing.JPanel();
+        controlTabbedPane1 = new javax.swing.JTabbedPane();
+        rockTab1 = new javax.swing.JPanel();
+        broomPanel1 = new javax.swing.JPanel();
+        broomLabel1 = new javax.swing.JLabel();
+        broomSlider1 = new javax.swing.JSlider();
+        broomText1 = new javax.swing.JTextField();
+        timePanel1 = new javax.swing.JPanel();
+        splitLabel1 = new javax.swing.JLabel();
+        splitSlider1 = new javax.swing.JSlider();
+        splitText1 = new javax.swing.JTextField();
+        iceTab1 = new javax.swing.JPanel();
+        curlPanel1 = new javax.swing.JPanel();
+        curlLabel1 = new javax.swing.JLabel();
+        curlSlider1 = new javax.swing.JSlider();
+        curlText1 = new javax.swing.JTextField();
+        drawToTeePanel1 = new javax.swing.JPanel();
+        drawToTeeLabel1 = new javax.swing.JLabel();
+        drawToTeeSlider1 = new javax.swing.JSlider();
+        drawToTeeText1 = new javax.swing.JTextField();
+        completePanel = new javax.swing.JPanel();
+        rocksEditDisplay = new org.jcurl.core.swing.PositionDisplay();
+        controlTabbedPane = new javax.swing.JTabbedPane();
+        rockTab = new javax.swing.JPanel();
+        broomPanel = new javax.swing.JPanel();
+        broomLabel = new javax.swing.JLabel();
+        broomSlider = new javax.swing.JSlider();
+        broomText = new javax.swing.JTextField();
+        timePanel = new javax.swing.JPanel();
+        splitLabel = new javax.swing.JLabel();
+        splitSlider = new javax.swing.JSlider();
+        splitText = new javax.swing.JTextField();
+        iceTab = new javax.swing.JPanel();
+        curlPanel = new javax.swing.JPanel();
+        curlLabel = new javax.swing.JLabel();
+        curlSlider = new javax.swing.JSlider();
+        curlText = new javax.swing.JTextField();
+        drawToTeePanel = new javax.swing.JPanel();
+        drawToTeeLabel = new javax.swing.JLabel();
+        drawToTeeSlider = new javax.swing.JSlider();
+        drawToTeeText = new javax.swing.JTextField();
+        overviewDisplay = new org.jcurl.core.swing.PositionDisplay();
         jMenuBar1 = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         newMenuItem = new javax.swing.JMenuItem();
@@ -52,8 +138,408 @@ public class TacticsNB extends javax.swing.JFrame {
         helpMenu = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
 
+        javax.swing.GroupLayout aboutDialogLayout = new javax.swing.GroupLayout(aboutDialog.getContentPane());
+        aboutDialog.getContentPane().setLayout(aboutDialogLayout);
+        aboutDialogLayout.setHorizontalGroup(
+            aboutDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 264, Short.MAX_VALUE)
+        );
+        aboutDialogLayout.setVerticalGroup(
+            aboutDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 169, Short.MAX_VALUE)
+        );
+        controlPanel.setOpaque(false);
+        rockTab1.setBackground(new java.awt.Color(255, 204, 102));
+        rockTab1.setName("Rock");
+        broomPanel1.setOpaque(false);
+        broomLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        broomLabel1.setText("Broom");
+
+        broomSlider1.setMajorTickSpacing(1000);
+        broomSlider1.setMaximum(2000);
+        broomSlider1.setMinimum(-2000);
+        broomSlider1.setMinorTickSpacing(100);
+        broomSlider1.setOrientation(javax.swing.JSlider.VERTICAL);
+        broomSlider1.setPaintLabels(true);
+        broomSlider1.setPaintTicks(true);
+        broomSlider1.setOpaque(false);
+
+        broomText1.setText("jTextField1");
+
+        javax.swing.GroupLayout broomPanel1Layout = new javax.swing.GroupLayout(broomPanel1);
+        broomPanel1.setLayout(broomPanel1Layout);
+        broomPanel1Layout.setHorizontalGroup(
+            broomPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(broomLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+            .addComponent(broomText1, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+            .addComponent(broomSlider1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE)
+        );
+        broomPanel1Layout.setVerticalGroup(
+            broomPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, broomPanel1Layout.createSequentialGroup()
+                .addComponent(broomLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(broomSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(broomText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        timePanel1.setOpaque(false);
+        splitLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        splitLabel1.setText("SplitTime");
+
+        splitSlider1.setMajorTickSpacing(1000);
+        splitSlider1.setMaximum(2500);
+        splitSlider1.setMinimum(500);
+        splitSlider1.setMinorTickSpacing(100);
+        splitSlider1.setOrientation(javax.swing.JSlider.VERTICAL);
+        splitSlider1.setPaintLabels(true);
+        splitSlider1.setPaintTicks(true);
+        splitSlider1.setValue(1200);
+        splitSlider1.setOpaque(false);
+
+        splitText1.setText("jTextField1");
+
+        javax.swing.GroupLayout timePanel1Layout = new javax.swing.GroupLayout(timePanel1);
+        timePanel1.setLayout(timePanel1Layout);
+        timePanel1Layout.setHorizontalGroup(
+            timePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(splitText1, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+            .addComponent(splitSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(splitLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+        );
+        timePanel1Layout.setVerticalGroup(
+            timePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(timePanel1Layout.createSequentialGroup()
+                .addComponent(splitLabel1)
+                .addGap(7, 7, 7)
+                .addComponent(splitSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(splitText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout rockTab1Layout = new javax.swing.GroupLayout(rockTab1);
+        rockTab1.setLayout(rockTab1Layout);
+        rockTab1Layout.setHorizontalGroup(
+            rockTab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rockTab1Layout.createSequentialGroup()
+                .addComponent(broomPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(timePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        rockTab1Layout.setVerticalGroup(
+            rockTab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(timePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(broomPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        controlTabbedPane1.addTab("Rock", null, rockTab1, "Broom Position (meters)");
+
+        iceTab1.setBackground(new java.awt.Color(153, 204, 255));
+        iceTab1.setDoubleBuffered(false);
+        iceTab1.setName("Rock");
+        curlPanel1.setDoubleBuffered(false);
+        curlPanel1.setOpaque(false);
+        curlLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        curlLabel1.setText("Curl");
+
+        curlSlider1.setMajorTickSpacing(1000);
+        curlSlider1.setMaximum(5000);
+        curlSlider1.setMinorTickSpacing(100);
+        curlSlider1.setOrientation(javax.swing.JSlider.VERTICAL);
+        curlSlider1.setPaintLabels(true);
+        curlSlider1.setPaintTicks(true);
+        curlSlider1.setValue(1500);
+        curlSlider1.setOpaque(false);
+
+        curlText1.setText("jTextField1");
+
+        javax.swing.GroupLayout curlPanel1Layout = new javax.swing.GroupLayout(curlPanel1);
+        curlPanel1.setLayout(curlPanel1Layout);
+        curlPanel1Layout.setHorizontalGroup(
+            curlPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(curlLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+            .addComponent(curlText1, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+            .addComponent(curlSlider1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        curlPanel1Layout.setVerticalGroup(
+            curlPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, curlPanel1Layout.createSequentialGroup()
+                .addComponent(curlLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(curlSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(curlText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        drawToTeePanel1.setDoubleBuffered(false);
+        drawToTeePanel1.setOpaque(false);
+        drawToTeeLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        drawToTeeLabel1.setText("DrawToTee");
+        drawToTeeLabel1.setMaximumSize(new java.awt.Dimension(70, 15));
+        drawToTeeLabel1.setMinimumSize(new java.awt.Dimension(70, 15));
+
+        drawToTeeSlider1.setMajorTickSpacing(5000);
+        drawToTeeSlider1.setMaximum(30000);
+        drawToTeeSlider1.setMinimum(15000);
+        drawToTeeSlider1.setMinorTickSpacing(1000);
+        drawToTeeSlider1.setOrientation(javax.swing.JSlider.VERTICAL);
+        drawToTeeSlider1.setPaintLabels(true);
+        drawToTeeSlider1.setPaintTicks(true);
+        drawToTeeSlider1.setValue(23000);
+        drawToTeeSlider1.setOpaque(false);
+
+        drawToTeeText1.setText("jTextField1");
+
+        javax.swing.GroupLayout drawToTeePanel1Layout = new javax.swing.GroupLayout(drawToTeePanel1);
+        drawToTeePanel1.setLayout(drawToTeePanel1Layout);
+        drawToTeePanel1Layout.setHorizontalGroup(
+            drawToTeePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(drawToTeeLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+            .addComponent(drawToTeeSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+            .addComponent(drawToTeeText1, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+        );
+        drawToTeePanel1Layout.setVerticalGroup(
+            drawToTeePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(drawToTeePanel1Layout.createSequentialGroup()
+                .addComponent(drawToTeeLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(drawToTeeSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(drawToTeeText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout iceTab1Layout = new javax.swing.GroupLayout(iceTab1);
+        iceTab1.setLayout(iceTab1Layout);
+        iceTab1Layout.setHorizontalGroup(
+            iceTab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(iceTab1Layout.createSequentialGroup()
+                .addComponent(curlPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(drawToTeePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        iceTab1Layout.setVerticalGroup(
+            iceTab1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(curlPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(drawToTeePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        controlTabbedPane1.addTab("Ice", iceTab1);
+
+        javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
+        controlPanel.setLayout(controlPanelLayout);
+        controlPanelLayout.setHorizontalGroup(
+            controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 170, Short.MAX_VALUE)
+            .addComponent(controlTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        controlPanelLayout.setVerticalGroup(
+            controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 179, Short.MAX_VALUE)
+            .addComponent(controlTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        rocksPosDisplay.setName("The Rocks");
+        setMinimumSize(new java.awt.Dimension(350, 300));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
+
+        completePanel.setBackground(new java.awt.Color(255, 255, 204));
+        completePanel.setMinimumSize(new java.awt.Dimension(300, 150));
+        rocksEditDisplay.setName("The Rocks");
+
+        rockTab.setBackground(new java.awt.Color(255, 204, 102));
+        rockTab.setName("Rock");
+        broomPanel.setOpaque(false);
+        broomLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        broomLabel.setText("Broom");
+
+        broomSlider.setMajorTickSpacing(1000);
+        broomSlider.setMaximum(2000);
+        broomSlider.setMinimum(-2000);
+        broomSlider.setMinorTickSpacing(100);
+        broomSlider.setOrientation(javax.swing.JSlider.VERTICAL);
+        broomSlider.setPaintLabels(true);
+        broomSlider.setPaintTicks(true);
+        broomSlider.setOpaque(false);
+
+        broomText.setText("jTextField1");
+
+        javax.swing.GroupLayout broomPanelLayout = new javax.swing.GroupLayout(broomPanel);
+        broomPanel.setLayout(broomPanelLayout);
+        broomPanelLayout.setHorizontalGroup(
+            broomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(broomLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+            .addComponent(broomText, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+            .addComponent(broomSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
+        );
+        broomPanelLayout.setVerticalGroup(
+            broomPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, broomPanelLayout.createSequentialGroup()
+                .addComponent(broomLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(broomSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(broomText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        timePanel.setOpaque(false);
+        splitLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        splitLabel.setText("SplitTime");
+
+        splitSlider.setMajorTickSpacing(1000);
+        splitSlider.setMaximum(2500);
+        splitSlider.setMinimum(500);
+        splitSlider.setMinorTickSpacing(100);
+        splitSlider.setOrientation(javax.swing.JSlider.VERTICAL);
+        splitSlider.setPaintLabels(true);
+        splitSlider.setPaintTicks(true);
+        splitSlider.setValue(1200);
+        splitSlider.setOpaque(false);
+
+        splitText.setText("jTextField1");
+
+        javax.swing.GroupLayout timePanelLayout = new javax.swing.GroupLayout(timePanel);
+        timePanel.setLayout(timePanelLayout);
+        timePanelLayout.setHorizontalGroup(
+            timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(splitText, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+            .addComponent(splitSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+            .addComponent(splitLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
+        );
+        timePanelLayout.setVerticalGroup(
+            timePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(timePanelLayout.createSequentialGroup()
+                .addComponent(splitLabel)
+                .addGap(7, 7, 7)
+                .addComponent(splitSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(splitText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout rockTabLayout = new javax.swing.GroupLayout(rockTab);
+        rockTab.setLayout(rockTabLayout);
+        rockTabLayout.setHorizontalGroup(
+            rockTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rockTabLayout.createSequentialGroup()
+                .addComponent(broomPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(timePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        rockTabLayout.setVerticalGroup(
+            rockTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(timePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(broomPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        controlTabbedPane.addTab("Rock", null, rockTab, "Broom Position (meters)");
+
+        iceTab.setBackground(new java.awt.Color(153, 204, 255));
+        iceTab.setDoubleBuffered(false);
+        iceTab.setName("Rock");
+        curlPanel.setDoubleBuffered(false);
+        curlPanel.setOpaque(false);
+        curlLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        curlLabel.setText("Curl");
+
+        curlSlider.setMajorTickSpacing(1000);
+        curlSlider.setMaximum(5000);
+        curlSlider.setMinorTickSpacing(100);
+        curlSlider.setOrientation(javax.swing.JSlider.VERTICAL);
+        curlSlider.setPaintLabels(true);
+        curlSlider.setPaintTicks(true);
+        curlSlider.setValue(1500);
+        curlSlider.setOpaque(false);
+
+        curlText.setText("jTextField1");
+
+        javax.swing.GroupLayout curlPanelLayout = new javax.swing.GroupLayout(curlPanel);
+        curlPanel.setLayout(curlPanelLayout);
+        curlPanelLayout.setHorizontalGroup(
+            curlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(curlLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+            .addComponent(curlText, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+            .addComponent(curlSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+        );
+        curlPanelLayout.setVerticalGroup(
+            curlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, curlPanelLayout.createSequentialGroup()
+                .addComponent(curlLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(curlSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(curlText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        drawToTeePanel.setDoubleBuffered(false);
+        drawToTeePanel.setOpaque(false);
+        drawToTeeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        drawToTeeLabel.setText("DrawToTee");
+        drawToTeeLabel.setMaximumSize(new java.awt.Dimension(70, 15));
+        drawToTeeLabel.setMinimumSize(new java.awt.Dimension(70, 15));
+
+        drawToTeeSlider.setMajorTickSpacing(5000);
+        drawToTeeSlider.setMaximum(30000);
+        drawToTeeSlider.setMinimum(15000);
+        drawToTeeSlider.setMinorTickSpacing(1000);
+        drawToTeeSlider.setOrientation(javax.swing.JSlider.VERTICAL);
+        drawToTeeSlider.setPaintLabels(true);
+        drawToTeeSlider.setPaintTicks(true);
+        drawToTeeSlider.setValue(23000);
+        drawToTeeSlider.setOpaque(false);
+
+        drawToTeeText.setText("jTextField1");
+
+        javax.swing.GroupLayout drawToTeePanelLayout = new javax.swing.GroupLayout(drawToTeePanel);
+        drawToTeePanel.setLayout(drawToTeePanelLayout);
+        drawToTeePanelLayout.setHorizontalGroup(
+            drawToTeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(drawToTeeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+            .addComponent(drawToTeeSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+            .addComponent(drawToTeeText, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE)
+        );
+        drawToTeePanelLayout.setVerticalGroup(
+            drawToTeePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(drawToTeePanelLayout.createSequentialGroup()
+                .addComponent(drawToTeeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(drawToTeeSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(drawToTeeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout iceTabLayout = new javax.swing.GroupLayout(iceTab);
+        iceTab.setLayout(iceTabLayout);
+        iceTabLayout.setHorizontalGroup(
+            iceTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(iceTabLayout.createSequentialGroup()
+                .addComponent(curlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(drawToTeePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        iceTabLayout.setVerticalGroup(
+            iceTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(curlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(drawToTeePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        controlTabbedPane.addTab("Ice", iceTab);
+
+        javax.swing.GroupLayout completePanelLayout = new javax.swing.GroupLayout(completePanel);
+        completePanel.setLayout(completePanelLayout);
+        completePanelLayout.setHorizontalGroup(
+            completePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, completePanelLayout.createSequentialGroup()
+                .addComponent(rocksEditDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 149, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(controlTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        completePanelLayout.setVerticalGroup(
+            completePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(rocksEditDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+            .addComponent(controlTabbedPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+        );
+
+        overviewDisplay.setZoom(Zoomer.HOG2HACK);
 
         fileMenu.setText("File");
         newMenuItem.setText("New");
@@ -82,11 +568,18 @@ public class TacticsNB extends javax.swing.JFrame {
         fileMenu.add(jSeparator1);
 
         exitMenuItem.setText("Exit");
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitMenuItemActionPerformed(evt);
+            }
+        });
+
         fileMenu.add(exitMenuItem);
 
         jMenuBar1.add(fileMenu);
 
         helpMenu.setText("Help");
+        helpMenu.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         aboutMenuItem.setText("About");
         helpMenu.add(aboutMenuItem);
 
@@ -98,16 +591,26 @@ public class TacticsNB extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(rocksPosDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 358, Short.MAX_VALUE)
-                .addContainerGap(98, Short.MAX_VALUE))
+            .addComponent(overviewDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 329, Short.MAX_VALUE)
+            .addComponent(completePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rocksPosDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(completePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(2, 2, 2)
+                .addComponent(overviewDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitMenuItemActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        System.exit(0);
+    }//GEN-LAST:event_formWindowClosed
 
     private void loadMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadMenuItemActionPerformed
 // TODO add your handling code here:
