@@ -120,7 +120,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="overviewDisplay" alignment="0" pref="329" max="32767" attributes="0"/>
+          <Component id="overviewDisplay" alignment="0" pref="318" max="32767" attributes="0"/>
           <Component id="completePanel" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
@@ -149,7 +149,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <Component id="rocksEditDisplay" pref="149" max="32767" attributes="0"/>
+                  <Component id="rocksEditDisplay" pref="138" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="controlTabbedPane" min="-2" pref="170" max="-2" attributes="0"/>
               </Group>
@@ -157,8 +157,8 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="rocksEditDisplay" alignment="0" pref="179" max="32767" attributes="0"/>
-              <Component id="controlTabbedPane" alignment="1" pref="179" max="32767" attributes="0"/>
+              <Component id="rocksEditDisplay" alignment="0" pref="166" max="32767" attributes="0"/>
+              <Component id="controlTabbedPane" alignment="1" pref="166" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -224,7 +224,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="broomLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="broomSlider" pref="106" max="32767" attributes="0"/>
+                              <Component id="broomSlider" pref="93" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="broomText" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -278,7 +278,7 @@
                           <Group type="102" attributes="0">
                               <Component id="splitLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                              <Component id="splitSlider" pref="105" max="32767" attributes="0"/>
+                              <Component id="splitSlider" pref="92" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="splitText" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -369,7 +369,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="curlLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="curlSlider" pref="106" max="32767" attributes="0"/>
+                              <Component id="curlSlider" pref="93" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="curlText" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -423,7 +423,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="drawToTeeLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                              <Component id="drawToTeeSlider" pref="105" max="32767" attributes="0"/>
+                              <Component id="drawToTeeSlider" pref="92" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="drawToTeeText" min="-2" max="-2" attributes="0"/>
                           </Group>
