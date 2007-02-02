@@ -190,6 +190,11 @@
     </profiles>
 	<dependencies>
 		<dependency>
+			<groupId>net.java.dev.swing-layout</groupId>
+			<artifactId>swing-layout</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
 			<groupId>org.jcurl</groupId>
 			<artifactId>jcurl-core</artifactId>
 			<version>0.7.0</version>
