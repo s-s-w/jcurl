@@ -147,7 +147,6 @@ public class TacticsNB extends javax.swing.JFrame {
         broomSlider.setOrientation(javax.swing.JSlider.VERTICAL);
         broomSlider.setPaintLabels(true);
         broomSlider.setPaintTicks(true);
-        broomSlider.setValue(getBroomInt());
         broomSlider.setOpaque(false);
 
         broomText.setText("jTextField1");
@@ -181,7 +180,6 @@ public class TacticsNB extends javax.swing.JFrame {
         splitSlider.setOrientation(javax.swing.JSlider.VERTICAL);
         splitSlider.setPaintLabels(true);
         splitSlider.setPaintTicks(true);
-        splitSlider.setValue(getSplitTimeInt());
         splitSlider.setOpaque(false);
 
         splitText.setText("jTextField1");
@@ -234,7 +232,6 @@ public class TacticsNB extends javax.swing.JFrame {
         curlSlider.setOrientation(javax.swing.JSlider.VERTICAL);
         curlSlider.setPaintLabels(true);
         curlSlider.setPaintTicks(true);
-        curlSlider.setValue(getCurlInt());
         curlSlider.setOpaque(false);
 
         curlText.setText("jTextField1");
@@ -271,7 +268,6 @@ public class TacticsNB extends javax.swing.JFrame {
         drawToTeeSlider.setOrientation(javax.swing.JSlider.VERTICAL);
         drawToTeeSlider.setPaintLabels(true);
         drawToTeeSlider.setPaintTicks(true);
-        drawToTeeSlider.setValue(getDrawToTeeInt());
         drawToTeeSlider.setOpaque(false);
 
         drawToTeeText.setText("jTextField1");
