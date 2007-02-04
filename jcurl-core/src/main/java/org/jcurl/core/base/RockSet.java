@@ -49,12 +49,11 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     }
 
     public static RockSet copy(final RockSet src, final RockSet dst) {
-        for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
-            dst.dark[i] = (Rock) src.dark[i].clone();
-            dst.light[i] = (Rock) src.light[i].clone();
-        }
-        dst.notifyChange();
-        return dst;
+        // for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
+        // dst.dark[i] = (Rock) src.dark[i].clone();
+        // dst.light[i] = (Rock) src.light[i].clone();
+        // }
+        return dst.setLocation(src);
     }
 
     public static int countBits(int a) {
@@ -64,7 +63,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
                 ret++;
         return ret;
     }
-
+    
     /**
      * Check if a bit is set
      * 
@@ -183,5 +182,12 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     public void notifyChange() {
         propChange.firePropertyChange("rock", null, this);
         lastChanged = System.currentTimeMillis();
+    }
+
+    public RockSet setLocation(final RockSet src) {
+        for (int i = ROCKS_PER_SET - 1; i >= 0; i--)
+            this.getRock(i).setLocation(src.getRock(i));
+        this.notifyChange();
+        return this;
     }
 }

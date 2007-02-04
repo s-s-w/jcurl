@@ -175,4 +175,8 @@ public final class MathVec {
         ret.setLocation(a.getX() - b.getX(), a.getY() - b.getY());
         return ret;
     }
+
+    public static final double sqr(final double a) {
+        return a * a;
+    }
 }
