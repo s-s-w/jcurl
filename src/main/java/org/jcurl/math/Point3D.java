@@ -28,6 +28,25 @@ import java.awt.geom.Point2D;
  */
 public abstract class Point3D extends Point2D {
 
+    private double distanceSq(final Point3D b) {
+        return MathVec.sqr(this.getX() - b.getX())
+                + MathVec.sqr(this.getY() - b.getY())
+                + MathVec.sqr(this.getZ() - b.getZ());
+    }
+
+    public boolean equals(final Object b) {
+        if (b == null || !(b instanceof Point3D))
+            return false;
+        return equals((Point3D) b);
+    }
+
+    public boolean equals(final Point3D b) {
+        if (b == null)
+            return false;
+        return this.getX() == b.getX() && this.getY() == b.getY()
+                && this.getZ() == b.getZ();
+    }
+
     public abstract double getX();
 
     public abstract double getY();
