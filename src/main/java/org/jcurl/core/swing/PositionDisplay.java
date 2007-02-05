@@ -45,9 +45,9 @@ import org.jcurl.core.base.RockSet;
 public class PositionDisplay extends WCComponent implements
         PropertyChangeListener {
 
-    private static final long serialVersionUID = -2680676530327406261L;
-
     private static final Map hints = new HashMap(); // @jve:decl-index=0:
+
+    private static final long serialVersionUID = -2680676530327406261L;
 
     static {
         // hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION,
@@ -110,15 +110,6 @@ public class PositionDisplay extends WCComponent implements
         return pos;
     }
 
-    private void initialize() {
-        this.setSize(new Dimension(600, 120));
-        // setOpaque(true);
-        setRockPainter(new RockPainter());
-        setIcePainter(new IcePainter());
-        this.setPos(PositionSet.allOut());
-        setZoom(Zoomer.HOUSE2HACK);
-    }
-
     /**
      * Used e.g.&nbsp;by {@link #paintRockRC(Graphics2D, boolean, int)}
      * 
@@ -128,24 +119,40 @@ public class PositionDisplay extends WCComponent implements
         return rockPainter;
     }
 
+    private void initialize() {
+        this.setSize(new Dimension(600, 120));
+        // setOpaque(true);
+        setRockPainter(new RockPainter());
+        setIcePainter(new IcePainter());
+        this.setPos(PositionSet.allOut());
+        setZoom(Zoomer.HOUSE2HACK);
+    }
+
     public void paint(final Graphics g) {
         super.paint(g);
         final Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHints(hints);
+        paint2(g2, true);
+    }
 
+    void paint2(final Graphics2D g2, final boolean useBuffer) {
         final AffineTransform backup = g2.getTransform();
-
-        // paint WC stuff (ice and rocks)
-        if (resized() || img == null) {
-            // re-build the background image
-            img = new BufferedImage(getWidth(), getHeight(),
-                    BufferedImage.TYPE_INT_ARGB);
-            final Graphics2D gi = (Graphics2D) img.getGraphics();
-            gi.setRenderingHints(hints);
-            paintIceDC(gi);
+        if (useBuffer) {
+            // paint WC stuff (ice and rocks)
+            if (resized() || img == null) {
+                // re-build the background image
+                img = new BufferedImage(getWidth(), getHeight(),
+                        BufferedImage.TYPE_INT_ARGB);
+                final Graphics2D gi = (Graphics2D) img.getGraphics();
+                gi.setRenderingHints(hints);
+                paintIceDC(gi);
+            }
+            g2.drawImage(img, null, 0, 0);
+        } else {
+            paintIceDC(g2);
+            g2.setTransform(backup);
         }
 
-        g2.drawImage(img, null, 0, 0);
         paintRocksDC(g2);
 
         g2.setTransform(backup);
