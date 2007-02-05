@@ -27,6 +27,10 @@ public class JcxFileChooser extends JFileChooser {
 
     private static final long serialVersionUID = -1903818463336848079L;
 
+    public JcxFileChooser() {
+        this(null);
+    }
+
     public JcxFileChooser(File currentFile) {
         super(currentFile == null ? new File(".") : currentFile);
         setMultiSelectionEnabled(false);
