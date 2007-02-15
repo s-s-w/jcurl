@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jcurl.demo</groupId>
-	<artifactId>webstart-demo</artifactId>
+	<artifactId>webstart</artifactId>
 	<packaging>pom</packaging>
 	<version>0.1</version>
 	<name>JCurl Webstart Demos</name>
@@ -23,13 +23,13 @@
 	</issueManagement>
 	<scm>
 		<connection>
-			scm:svn:svn://svn.berlios.de/jcurl/trunk/jcurl-demo
+			scm:svn:svn://svn.berlios.de/jcurl/trunk/${pom.artifactId}
 		</connection>
 		<developerConnection>
-			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/jcurl-demo
+			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/${pom.artifactId}
 		</developerConnection>
 		<tag />
-		<url>http://svn.berlios.de/wsvn/jcurl/trunk/jcurl-demo</url>
+		<url>http://svn.berlios.de/wsvn/jcurl/trunk/${pom.artifactId}</url>
 	</scm>
 	<developers>
 		<developer>
@@ -75,7 +75,6 @@
 		<name>jcurl.org</name>
 		<url>http://www.jcurl.org</url>
 	</organization>
-
 	<modules>
 		<module>viewer</module>
 	</modules>

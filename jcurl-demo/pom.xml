@@ -19,9 +19,14 @@
 		<url>http://developer.berlios.de/bugs/?group_id=3203</url>
 	</issueManagement>
 	<scm>
-		<connection>scm:svn:svn://svn.berlios.de/jcurl/trunk/jcurl-demo</connection>
-		<developerConnection>scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/jcurl-demo</developerConnection>
-		<url>http://svn.berlios.de/wsvn/jcurl/trunk/jcurl-demo</url>
+		<connection>
+			scm:svn:svn://svn.berlios.de/jcurl/trunk/${pom.artifactId}
+		</connection>
+		<developerConnection>
+			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/${pom.artifactId}
+		</developerConnection>
+		<tag />
+		<url>http://svn.berlios.de/wsvn/jcurl/trunk/${pom.artifactId}</url>
 	</scm>
 	<developers>
 		<developer>
@@ -214,11 +219,15 @@
 	<distributionManagement>
 		<site>
 			<id>jcurl-website</id>
-			<url>scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/jcurl-demo-0.7.0</url>
+			<url>
+				scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/site/${pom.artifactId}/${pom.version}
+			</url>
 		</site>
 		<repository>
 			<id>jcurl-repository</id>
-			<url>scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/repository/</url>
+			<url>
+				scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/repo
+			</url>
 		</repository>
 	</distributionManagement>
 </project>
