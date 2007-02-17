@@ -45,7 +45,7 @@ public class ComputedSourceTest extends TestCase {
         assertEquals(0, 35, m.getMaxT());
     }
 
-    public void test100_save() throws SAXException,
+    public void _test100_save() throws SAXException,
             UnsupportedEncodingException {
         final ComputedSource m = new ComputedSource();
         m.init(PositionSet.allHome(), new SpeedSet(), new SlideStraight(),
@@ -60,7 +60,7 @@ public class ComputedSourceTest extends TestCase {
                 new String(data, "UTF-8"));
     }
 
-    public void test110_save_load() throws SAXException, IOException {
+    public void _test110_save_load() throws SAXException, IOException {
         final ComputedSource m0 = new ComputedSource();
         m0.init(PositionSet.allHome(), new SpeedSet(), new SlideStraight(),
                 new CollissionSpin());
