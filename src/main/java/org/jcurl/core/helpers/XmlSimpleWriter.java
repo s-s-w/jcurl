@@ -27,7 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -50,7 +50,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class XmlSimpleWriter extends DefaultHandler {
 
-    private static final Logger log = Logger.getLogger(XmlSimpleWriter.class);
+    private static final Log log = JCLoggerFactory.getLogger(XmlSimpleWriter.class);
 
     private static void checkAttName(final String qName) throws SAXException {
         if (qName == null || "".equals(qName))

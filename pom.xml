@@ -99,7 +99,6 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<excludes>
@@ -153,13 +152,11 @@
 				<artifactId>taglist-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>
 					maven-project-info-reports-plugin
 				</artifactId>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
 			</plugin>
 		</plugins>
@@ -170,19 +167,29 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.1</version>
 			<exclusions>
-		        	<exclusion>
+				<exclusion>
 					<groupId>avalon-framework</groupId>
 					<artifactId>avalon-framework</artifactId>
-			        </exclusion>
-		        	<exclusion>
+				</exclusion>
+				<exclusion>
 					<groupId>javax.servlet</groupId>
 					<artifactId>servlet-api</artifactId>
-			        </exclusion>
-		        	<exclusion>
+				</exclusion>
+				<exclusion>
 					<groupId>logkit</groupId>
 					<artifactId>logkit</artifactId>
-			        </exclusion>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>java3d</groupId>
@@ -193,7 +200,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>3.8.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
