@@ -43,10 +43,6 @@ import org.jcurl.mr.math.Calc1;
  */
 public class MathDomTest extends TestCase {
 
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(MathDomTest.class);
-    }
-
     public void test010_0() throws IOException {
         Calc0 c = new Calc0(" 2 * 4 +3 ");
         assertEquals("", 11, c.compute(), 1e-9);
@@ -107,7 +103,7 @@ public class MathDomTest extends TestCase {
         assertEquals("", 2, DomWalkerEval.eval(n, p), 1e-9);
     }
 
-    public void test050_Loop() throws ParseException {
+    public void _test050_Loop() throws ParseException {
         // parsing
         int loop = 100000;
         long start = System.currentTimeMillis();
