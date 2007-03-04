@@ -63,7 +63,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
                 ret++;
         return ret;
     }
-    
+
     /**
      * Check if a bit is set
      * 

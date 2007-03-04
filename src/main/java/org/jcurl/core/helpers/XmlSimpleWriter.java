@@ -50,7 +50,8 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class XmlSimpleWriter extends DefaultHandler {
 
-    private static final Log log = JCLoggerFactory.getLogger(XmlSimpleWriter.class);
+    private static final Log log = JCLoggerFactory
+            .getLogger(XmlSimpleWriter.class);
 
     private static void checkAttName(final String qName) throws SAXException {
         if (qName == null || "".equals(qName))
@@ -66,8 +67,9 @@ public class XmlSimpleWriter extends DefaultHandler {
      * @param qName
      * @throws SAXException
      */
-    private static void checkQName(final String qName) throws SAXException {
-        if (qName == null || "".equals(qName))
+    private static void checkQName(final CharSequence qName)
+            throws SAXException {
+        if (qName == null || qName.length() == 0)
             throw new SAXException("empty element name not allowed!");
     }
 
@@ -102,7 +104,7 @@ public class XmlSimpleWriter extends DefaultHandler {
         }
     }
 
-    public static void writeEncoded(final String src, final Writer target)
+    public static void writeEncoded(final CharSequence src, final Writer target)
             throws SAXException {
         final int len = src.length();
         for (int i = 0; i < len; i++)

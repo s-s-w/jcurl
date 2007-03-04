@@ -27,7 +27,6 @@ import junit.framework.TestCase;
 import org.apache.batik.dom.GenericDOMImplementation;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.svggen.SVGGraphics2DIOException;
-import org.jcurl.core.swing.PositionDisplay;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
@@ -39,11 +38,12 @@ public class BatikDemoTest extends TestCase {
         final DOMImplementation domImpl = GenericDOMImplementation
                 .getDOMImplementation();
         // Create an instance of org.w3c.dom.Document.
-        final Document document = domImpl.createDocument("http://www.w3.org/2000/svg", "svg", null);
+        final Document document = domImpl.createDocument(
+                "http://www.w3.org/2000/svg", "svg", null);
 
         // Create an instance of the SVG Generator.
         final SVGGraphics2D g2 = new SVGGraphics2D(document);
-        //g2.scale(-1, 1);
+        // g2.scale(-1, 1);
 
         // Ask the test to render into the SVG Graphics2D implementation.
         PositionDisplay test = new PositionDisplay();
