@@ -21,8 +21,6 @@ package org.jcurl.core.helpers;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.jcurl.core.base.Ice;
-
 /**
  * Various units of measurement incl. conversion.
  * 
@@ -103,8 +101,8 @@ public class Dim extends EnumBase {
         MILLISEC = new Dim("ms", SECOND, 1e-3);
         MINUTE = new Dim("min", SECOND, 60);
         NANOSEC = new Dim("ns", SECOND, 1e-9);
-        SEC_HOG_HOG = new Dim("shh", METER_PER_SEC, 1.0 / Ice.HOG_2_HOG);
-        SEC_HOG_TEE = new Dim("sht", METER_PER_SEC, 1.0 / Ice.HOG_2_TEE);
+        SEC_HOG_HOG = new Dim("shh", METER_PER_SEC, 1.0 / f2m(72.0));
+        SEC_HOG_TEE = new Dim("sht", METER_PER_SEC, 1.0 / f2m(21.0));
         thh = new Dim("thh", null, 1.0);
         tht = new Dim("tht", null, 1.0);
     }

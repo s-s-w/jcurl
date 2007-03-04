@@ -26,7 +26,6 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.helpers.JCLoggerFactory;
-import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.math.MathVec;
 
 /**
@@ -158,7 +157,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
     protected double tmin = -1;
 
     public SlideStrategy() {
-        setColl(new CollissionSpin());
+        //setColl(new CollissionSpin());
         final Map tmp = new TreeMap();
         tmp.put(D2T_TIME, new DimVal(25, Dim.SEC_HOG_TEE));
         tmp.put(D2T_CURL, new DimVal(1, Dim.METER));
