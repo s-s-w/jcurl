@@ -169,7 +169,7 @@ public class SlideStraightTest extends TestCase {
         assertEquals("", 0.06105988030874099, c.at(1, 1, t0 + dt), 1e-9);
         assertEquals("", v0.getZ(), c.at(2, 1, t0 + dt), 1e-9);
     }
-    
+
     public void _test100() {
         // TODO reaktivate this test
         double t = 0;

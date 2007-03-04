@@ -33,6 +33,18 @@ public abstract class R1R1Function extends R1RNFunction {
     }
 
     /**
+     * Compute the value <code>x</code>.
+     * 
+     * @param x
+     *            x-value
+     * @return the value at <code>x</code>
+     * @see R1R1Function#at(int, double)
+     */
+    public double at(double x) {
+        return at(0, x);
+    }
+
+    /**
      * Compute the c'th derivative at <code>x</code>.
      * 
      * @param c

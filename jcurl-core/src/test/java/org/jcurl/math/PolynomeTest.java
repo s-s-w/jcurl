@@ -29,10 +29,6 @@ import junit.framework.TestCase;
  */
 public class PolynomeTest extends TestCase {
 
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(PolynomeTest.class);
-    }
-
     public void test010_fak() {
         assertEquals(1, Polynome.fak(0, 0));
         assertEquals(1, Polynome.fak(1, 1));
