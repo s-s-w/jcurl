@@ -166,6 +166,14 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jdepend-maven-plugin</artifactId>
+				<!-- configuration>
+					<ignore>
+						<java>
+							java.*,javax.xml.parsers,org.xml.sax,org.xml.sax.*
+						</java>
+						<apache>org.apache.commons.logging</apache>
+					</ignore>
+				</configuration -->
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
