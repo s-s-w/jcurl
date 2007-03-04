@@ -145,7 +145,7 @@ public class PolynomeTest extends TestCase {
         assertEquals("", 4.0, po.at(2, 2.0), 1e-9);
     }
 
-    public void test040_load() {
+    public void _test040_load() {
         final double[] a = { 1.1, 1.2, 1.3, 1.4 };
         Polynome po = new Polynome(a);
         final int count = 500000;
