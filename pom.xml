@@ -166,7 +166,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jdepend-maven-plugin</artifactId>
-				<!-- configuration>
+				<!-- Siehe http://clarkware.com/software/JDepend.html#customize configuration>
 					<ignore>
 						<java>
 							java.*,javax.xml.parsers,org.xml.sax,org.xml.sax.*
