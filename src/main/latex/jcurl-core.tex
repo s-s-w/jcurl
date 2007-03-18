@@ -2,6 +2,7 @@
 \documentclass[a4paper,11pt,twoside]{report}
 \usepackage{pslatex}
 \usepackage[T1]{fontenc}
+\usepackage{hyperref}
 %\usepackage{bibeng}
 \usepackage{makeidx}\makeindex
 %\usepackage[final]{pictex}
@@ -9,8 +10,7 @@
 
 %\usepackage{curling}
 
-%\includeonly{chcurl,chdenny}
-%\includeonly{chdenny}
+\includeonly{cu-straight,literature}
 
 \nonfrenchspacing
 \renewcommand{\baselinestretch}{1.2}
@@ -30,8 +30,9 @@
 %\listoftables
 
 \include{preface}
-\chapter{Curl models}
+\chapter{Curl Models}
 \input{cu-straight}
+\input{cu-denny}
 
 \begin{appendix}
 \end{appendix}
@@ -39,28 +40,5 @@
 %\addcontentsline{toc}{chapter}{Index}
 %\printindex
 
- \nocite{brach:92}
- \nocite{feynmanI:89}
- \nocite{gummert:86}
- \nocite{greinerII:85}
- \nocite{gross:95}
- \nocite{hertz:81}
- \nocite{hills:93}
- \nocite{hughesI:76}
- \nocite{hughesII:76}
- \nocite{lehmann:85}
- \nocite{meybergI:93}
- \nocite{van:89}
- %
- \nocite{sutor:88}
- \nocite{denny:98}
- \nocite{shegelski:96}
- \nocite{voyenli:85}
- \nocite{voyenli:86}
- \nocite{daniels:86}
- \nocite{johnston:81}
- %
- \addcontentsline{toc}{chapter}{\bibname}%
- \bibliography{jcurl-core}\bibliographystyle{alpha}
-
+\include{literature}
 \end{document}
