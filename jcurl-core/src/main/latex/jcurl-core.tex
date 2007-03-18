@@ -1,0 +1,66 @@
+% $Id: curlsci.tex 441 2007-02-05 22:53:27Z mrohrmoser $
+\documentclass[a4paper,11pt,twoside]{report}
+\usepackage{pslatex}
+\usepackage[T1]{fontenc}
+%\usepackage{bibeng}
+\usepackage{makeidx}\makeindex
+%\usepackage[final]{pictex}
+%\usepackage{emlines3}
+
+%\usepackage{curling}
+
+%\includeonly{chcurl,chdenny}
+%\includeonly{chdenny}
+
+\nonfrenchspacing
+\renewcommand{\baselinestretch}{1.2}
+\jot=1em          % zus"atzlicher Zeilenabstand innerhalb eqnarray
+% \renewcommand{\familydefault}{\sfdefault}
+
+\pagestyle{plain}
+\pagestyle{headings}
+\title{jcurl-core}
+\author{M. Rohrmoser\\{\small jcurl\symbol{64}gmx.net}}
+%\date{March 27th 1998}
+
+\begin{document}
+\maketitle
+\tableofcontents
+%\listoffigures
+%\listoftables
+
+\include{preface}
+\chapter{Curl models}
+\input{cu-straight}
+
+\begin{appendix}
+\end{appendix}
+
+%\addcontentsline{toc}{chapter}{Index}
+%\printindex
+
+ \nocite{brach:92}
+ \nocite{feynmanI:89}
+ \nocite{gummert:86}
+ \nocite{greinerII:85}
+ \nocite{gross:95}
+ \nocite{hertz:81}
+ \nocite{hills:93}
+ \nocite{hughesI:76}
+ \nocite{hughesII:76}
+ \nocite{lehmann:85}
+ \nocite{meybergI:93}
+ \nocite{van:89}
+ %
+ \nocite{sutor:88}
+ \nocite{denny:98}
+ \nocite{shegelski:96}
+ \nocite{voyenli:85}
+ \nocite{voyenli:86}
+ \nocite{daniels:86}
+ \nocite{johnston:81}
+ %
+ \addcontentsline{toc}{chapter}{\bibname}%
+ \bibliography{jcurl-core}\bibliographystyle{alpha}
+
+\end{document}
