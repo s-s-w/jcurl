@@ -1,0 +1,28 @@
+\section{No Curl, Constant Friction}
+This is not a realistic curl model but rather a baseline for the development and
+implementation of realistic ones.
+\subsection{Equation of motion}
+A constant (coulombish) friction 
+\begin{eqnarray}
+F &=& \beta m
+\end{eqnarray}
+leads to rock coordinates (with constant rotation)
+\begin{eqnarray}
+x(t) &=& x_0 \\
+y(t) &=& y_0 + v_0t - \frac{1}{2}\beta t^2 \\
+\alpha(t) &=& \alpha_0 + \omega_0 t
+\end{eqnarray}
+
+\subsection{Ice friction from draw-to-tee time}
+For a draw-to-tee we have -- with distance Hog-to-Tee $Y$ and draw-to-tee time 
+$T$ --
+\begin{eqnarray}
+y(T) &=& Y \\
+\dot y(T) &=& 0
+\end{eqnarray}
+an thus
+\begin{eqnarray}
+\beta &=& 2 \frac {Y}{T^2}
+\end{eqnarray}
+
+\subsection{Initial speed from split time}
