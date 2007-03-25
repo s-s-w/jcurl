@@ -24,6 +24,7 @@ import java.awt.geom.Point2D;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.math.MathVec;
 
 /**
  * Abstract base class for collission models.
@@ -90,15 +91,11 @@ public abstract class CollissionStrategy extends ModelBase {
     }
 
     protected static byte sgn(final double a) {
-        if (a < 0)
-            return -1;
-        if (a > 0)
-            return 1;
-        return 0;
+        return MathVec.sgn(a);
     }
 
     protected static final double sqr(final double a) {
-        return a * a;
+        return MathVec.sqr(a);
     }
 
     protected static double sqrt(final double a) {

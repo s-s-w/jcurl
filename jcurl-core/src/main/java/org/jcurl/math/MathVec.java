@@ -27,7 +27,6 @@ import java.awt.geom.Point2D;
  * @version $Id$
  */
 public final class MathVec {
-
     public static double abs(final Point2D a) {
         return Math.sqrt(scal(a, a));
     }
@@ -170,13 +169,24 @@ public final class MathVec {
         return a.getX() * b.getX() + a.getY() * b.getY();
     }
 
+    public static byte sgn(final double a) {
+        if (a < 0)
+            return -1;
+        if (a > 0)
+            return 1;
+        return 0;
+    }
+
+    public static final double sqr(final double a) {
+        return a * a;
+    }
+
     public static Point2D sub(final Point2D a, final Point2D b, final Point2D c) {
         final Point2D ret = ensureInstance(a, c);
         ret.setLocation(a.getX() - b.getX(), a.getY() - b.getY());
         return ret;
     }
 
-    public static final double sqr(final double a) {
-        return a * a;
+    private MathVec() {
     }
 }

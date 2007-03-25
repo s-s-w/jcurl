@@ -26,29 +26,33 @@ import org.jcurl.core.helpers.Dim;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:Ice.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class Ice {
+public final class Ice {
+
+    /** Distance from Back-line to Hog. 21+6 feet (converted to meter) */
+    public static final float BACK_2_HOG = Dim.f2m(21 + 6);
 
     /** Distance from Tee to Back-line. 6 feet (converted to meter) */
-    public static final float BACK_2_TEE = Dim.f2m(6.0);
+    public static final float BACK_2_TEE = Dim.f2m(6);
 
-    /** Distance from Tee to Hack. 21+72+21+6 feet (converted to meter) */
-    public static final float FAR_HACK_2_TEE = Dim
-            .f2m(21.0 + 72.0 + 21.0 + 12.0);
+    /** Distance from Tee to Hack. 6+6+21+72+21 feet (converted to meter) */
+    public static final float FAR_HACK_2_TEE = Dim.f2m(6 + 6 + 21 + 72 + 21);
+    /** Distance from Hack to Hog. 6+6+21 feet (converted to meter) */
+    public static final float HACK_2_HOG = Dim.f2m(6 + 6 + 21 );
 
     /**
      * Distance from Tee to Hog (on player's end). 21+72 feet (converted to
      * meter)
      */
-    public static final float FAR_HOG_2_TEE = Dim.f2m(21.0 + 72.0);
+    public static final float FAR_HOG_2_TEE = Dim.f2m(21 + 72);
 
     /** Distance from Hack to Back-line. 6 feet (converted to meter) */
-    public static final float HACK_2_BACK = Dim.f2m(6.0);
+    public static final float HACK_2_BACK = Dim.f2m(6);
 
     /** Distance from far Hog-line to near Hog-line. 72 feet (converted to meter) */
-    public static final float HOG_2_HOG = Dim.f2m(72.0);
+    public static final float HOG_2_HOG = Dim.f2m(72);
 
     /** Distance from Tee to Hog (near the house). 21 feet (converted to meter) */
-    public static final float HOG_2_TEE = Dim.f2m(21.0);
+    public static final float HOG_2_TEE = Dim.f2m(21);
 
     private static final double outX;
 
@@ -57,7 +61,7 @@ public class Ice {
     private static final float rad;
 
     /** Distance from Center-line to edge. 6+1 feet (converted to meter) */
-    public static final float SIDE_2_CENTER = Dim.f2m(7.0);
+    public static final float SIDE_2_CENTER = Dim.f2m(7);
 
     static {
         rad = Dim.f2m(0.5);
@@ -150,5 +154,8 @@ public class Ice {
     public static void setOut(final Rock R, final boolean isDark, final int i) {
         R.setLocation((isDark ? -1 : 1) * Dim.f2m(2.5 + 1.2 * i / 2), Dim
                 .f2m(i % 2 == 0 ? -8 : -9.2), 0);
+    }
+
+    private Ice() {
     }
 }
