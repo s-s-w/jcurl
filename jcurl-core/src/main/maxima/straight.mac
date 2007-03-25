@@ -23,7 +23,6 @@ x(t) := 0$
 print("Spin")$
 omega(t) := omega[0]$
 alpha(t) := alpha[0] + integrate(omega(t),t,0,t)$
-expand(alpha(t));
 
 print("The Equations of motion:")$
 print("x(t):=", expand(x(t)))$
@@ -40,7 +39,7 @@ inpart(%,1,2);
 subst(v0 = %, v(ts));
 
 /* print("Plot v0(ts) for 23s draw-to-tee")$ */
-subst(beta = %o22, %)$
+subst(beta = %o21, %)$
 subst(y0 = 0, %)$
 subst(BACK2HOG = f2m(27.0), %)$
 subst(HOG2TEE = f2m(21.0 + 72.0), %)$
