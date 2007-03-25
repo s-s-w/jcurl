@@ -5,19 +5,13 @@ In Progress
 
 	* Design rework
 
-	* No-curl Ice model with Coulomb friction (as a baseline for other curl models)
+	* Collission computing without spin (as a baseline for other collission models)
 
 Next
-
-	* Collission computing without spin (as a baseline for other collission models)
 
 	* Analytic collission detection
 
 	* transformed (WC) trajectories
-
-	* Ice friction from Draw-to-Tee time
-
-	* Initial speed from Split-Time (+Broom?)
 
 	* Denny curl model
 
@@ -36,6 +30,12 @@ Postponed
 	* Realistic collission model including loss of energy
 
 Finished
+
+	* Ice friction from Draw-to-Tee time
+
+	* Initial speed from Split-Time (+Broom?)
+
+	* No-curl Ice model with constant friction (as a baseline for other curl models)
 
 	* Save game situations
 
