@@ -36,8 +36,9 @@ public final class Ice {
 
     /** Distance from Tee to Hack. 6+6+21+72+21 feet (converted to meter) */
     public static final float FAR_HACK_2_TEE = Dim.f2m(6 + 6 + 21 + 72 + 21);
+
     /** Distance from Hack to Hog. 6+6+21 feet (converted to meter) */
-    public static final float HACK_2_HOG = Dim.f2m(6 + 6 + 21 );
+    public static final float HACK_2_HOG = Dim.f2m(6 + 6 + 21);
 
     /**
      * Distance from Tee to Hog (on player's end). 21+72 feet (converted to

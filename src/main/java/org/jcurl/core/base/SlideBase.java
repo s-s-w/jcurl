@@ -18,6 +18,6 @@
  */
 package org.jcurl.core.base;
 
-public abstract class SlideBase {
+abstract class SlideBase implements Strategy, Factory {
 
 }

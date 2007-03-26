@@ -33,14 +33,13 @@ import org.jcurl.math.MathVec;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CollissionStrategy.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public abstract class CollissionStrategy extends ModelBase {
+public abstract class Collider extends ModelBase implements Strategy {
 
     private static final float _Rad = RockProps.DEFAULT.getRadius();
 
     private static final float HIT_MAX_DIST = 1e-6F;
 
-    private static final Log log = JCLoggerFactory
-            .getLogger(CollissionStrategy.class);
+    private static final Log log = JCLoggerFactory.getLogger(Collider.class);
 
     /** Maximum distance [m] of two rocks to consider them touching */
     public static final double MaxDistSq = sqr(_Rad + _Rad + HIT_MAX_DIST);
@@ -72,13 +71,13 @@ public abstract class CollissionStrategy extends ModelBase {
         return mat;
     }
 
-    public static CollissionStrategy newInstance(final Class clz) {
-        final Class parent = CollissionStrategy.class;
+    public static Collider newInstance(final Class clz) {
+        final Class parent = Collider.class;
         if (!parent.isAssignableFrom(clz))
             throw new IllegalArgumentException("Class [" + clz.getName()
                     + "] is no descendant of [" + parent.getName() + "]");
         try {
-            return (CollissionStrategy) clz.newInstance();
+            return (Collider) clz.newInstance();
         } catch (InstantiationException e) {
             final IllegalArgumentException ex = new IllegalArgumentException();
             ex.initCause(e);
@@ -104,11 +103,10 @@ public abstract class CollissionStrategy extends ModelBase {
 
     /**
      * Iterate over all rocks and call
-     * {@link CollissionStrategy#computeWC(Rock, Rock, Rock, Rock, AffineTransform)}
-     * for each pair.
+     * {@link Collider#computeWC(Rock, Rock, Rock, Rock, AffineTransform)} for
+     * each pair.
      * 
-     * @see CollissionStrategy#computeWC(Rock, Rock, Rock, Rock,
-     *      AffineTransform)
+     * @see Collider#computeWC(Rock, Rock, Rock, Rock, AffineTransform)
      * @param pos
      * @param speed
      * @return bitmask of the changed rocks

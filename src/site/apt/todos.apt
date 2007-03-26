@@ -5,19 +5,17 @@ In Progress
 
 	* Design rework
 
-	* Collission computing without spin (as a baseline for other collission models)
-
-Next
-
 	* Analytic collission detection
 
 	* transformed (WC) trajectories
 
+	* Curve store
+
+Next
+
 	* Denny curl model
 
 	* PathIterator to display trajectories
-
-	* Curve store
 
 	* Sophisticated editing UI
 	
@@ -30,6 +28,8 @@ Postponed
 	* Realistic collission model including loss of energy
 
 Finished
+
+	* Collission computing without spin (as a baseline for other collission models)
 
 	* Ice friction from Draw-to-Tee time
 

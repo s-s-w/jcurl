@@ -18,37 +18,13 @@
  */
 package org.jcurl.core.base;
 
-import org.jcurl.math.R1RNFunction;
-
 /**
- * Find Collissions of two curves.
+ * Marker Interface for <a
+ * href="http://en.wikipedia.org/wiki/Strategy_pattern">Strategies</a>.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class CollissionDetector implements Strategy {
+public interface Strategy {
 
-    public static class NoCollission extends Exception {
-
-        private static final long serialVersionUID = -8458724406611218446L;
-
-    }
-
-    /**
-     * Find the smallest <code>t</code> with
-     * <code>t0 &lt;= t &lt;= tmax</code> when the two spheres <code>ra</code>
-     * moving along <code>fa</code> and <code>rb</code> moving along
-     * <code>fb</code> touch.
-     * 
-     * @param t0
-     * @param tmax
-     * @param fa
-     * @param ra
-     * @param fb
-     * @param rb
-     * @throws NoCollission
-     *             they don't collide in the given interval.
-     */
-    public abstract double compute(double t0, double tmax, R1RNFunction fa,
-            double ra, R1RNFunction fb, double rb) throws NoCollission;
 }

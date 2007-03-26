@@ -18,7 +18,7 @@
  */
 package org.jcurl.core.model;
 
-import org.jcurl.core.base.CollissionStrategy;
+import org.jcurl.core.base.Collider;
 import org.jcurl.core.base.Rock;
 
 /**
@@ -33,7 +33,7 @@ import org.jcurl.core.base.Rock;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CollissionSimple.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class CollissionSimple extends CollissionStrategy {
+public class CollissionSimple extends Collider {
     public void computeRC(final Rock va, final Rock vb) {
         final double tmp = va.getY();
         va.setLocation(va.getX(), vb.getY());
