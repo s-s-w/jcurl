@@ -21,6 +21,7 @@ package org.jcurl.core.base;
 import java.io.Serializable;
 
 import org.jcurl.core.helpers.MutableObject;
+import org.jcurl.math.MathVec;
 
 /**
  * A set of 8 light and 8 dark {@link org.jcurl.core.base.Rock}s.
@@ -49,10 +50,6 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     }
 
     public static RockSet copy(final RockSet src, final RockSet dst) {
-        // for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
-        // dst.dark[i] = (Rock) src.dark[i].clone();
-        // dst.light[i] = (Rock) src.light[i].clone();
-        // }
         return dst.setLocation(src);
     }
 
@@ -102,7 +99,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     }
 
     protected static double sqr(final double a) {
-        return a * a;
+        return MathVec.sqr(a);
     }
 
     /**
@@ -149,6 +146,9 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     public abstract Object clone();
 
     public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        // TODO getClass http://www.angelikalanger.com/Articles/JavaSpektrum/02.Equals-Part2/02.Equals2.html
         if (obj == null || !(obj instanceof RockSet))
             return false;
         final RockSet b = (RockSet) obj;
@@ -174,9 +174,21 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     }
 
     public Rock getRock(int i) {
-        if (i % 2 == 0)
-            return dark[i / 2];
-        return light[i / 2];
+        return (i % 2 == 0) ? dark[i / 2] : light[i / 2];
+    }
+
+    public int hashCode() {
+        // http://www.angelikalanger.com/Articles/JavaSpektrum/03.HashCode/03.HashCode.html
+        // TODO hashcode N = hashcode N-1 * multiplikator + feldwert N
+        int hash = 17;
+        final int fact = 59;
+        for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
+            hash *= fact;
+            hash += dark[i].hashCode();
+            hash *= fact;
+            hash += light[i].hashCode();
+        }
+        return hash;
     }
 
     public void notifyChange() {

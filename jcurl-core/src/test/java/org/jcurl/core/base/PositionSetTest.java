@@ -33,24 +33,19 @@ import org.jcurl.core.helpers.Dim;
  */
 public class PositionSetTest extends TestCase {
 
-    public void test010_CountBits() {
-        assertEquals(8, RockSet.countBits(RockSet.DARK_MASK));
-        assertEquals(8, RockSet.countBits(RockSet.LIGHT_MASK));
-    }
-
-    public void test010_getShotRocks() {
-        PositionSet a = new PositionSet();
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
-            a.getRock(i).setLocation(0, i * 0.5);
-        assertEquals(1, PositionSet.getShotRocks(a));
-    }
-
-    public void test020_findRockAtPos() {
+    public void testFindRockAtPos() {
         PositionSet a = PositionSet.allHome();
         a.getRock(1).setLocation(0, 0);
         assertEquals(1, PositionSet.findRockIndexAtPos(a, new Point2D.Float(0,
                 0)));
         assertEquals(1, PositionSet.findRockIndexAtPos(a, new Point2D.Float(Dim
                 .f2m(0.4), 0)));
+    }
+
+    public void testGetShotRocks() {
+        PositionSet a = new PositionSet();
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+            a.getRock(i).setLocation(0, i * 0.5);
+        assertEquals(1, PositionSet.getShotRocks(a));
     }
 }

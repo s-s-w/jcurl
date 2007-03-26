@@ -73,6 +73,20 @@ public class DimVal {
         return false;
     }
 
+    public int hashCode() {
+        // http://www.angelikalanger.com/Articles/JavaSpektrum/03.HashCode/03.HashCode.html
+        // hashcode N = hashcode N-1 * multiplikator + feldwert N
+        int hash = 17;
+        final int fact = 59;
+        hash *= fact;
+        hash += dim.hashCode();
+        hash *= fact;
+        final long tmp = ((val == 0.0) ? 0L : java.lang.Double
+                .doubleToLongBits(val));
+        hash += (int) (tmp ^ (tmp >>> 32));
+        return hash;
+    }
+
     public DimVal to(final Dim dst) {
         if (dim.BaseDim.intValue() != dst.BaseDim.intValue())
             throw new IllegalArgumentException("Units are not convertible ("

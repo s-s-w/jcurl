@@ -176,7 +176,7 @@ public final class MathVec {
         return 0;
     }
 
-    public static final double sqr(final double a) {
+    public static double sqr(final double a) {
         return a * a;
     }
 

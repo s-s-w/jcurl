@@ -21,8 +21,6 @@ package org.jcurl.math.dom;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.jcurl.math.CurveFkt;
-import org.jcurl.math.R1R1Function;
 import org.jcurl.math.R1RNFunction;
 
 /**
