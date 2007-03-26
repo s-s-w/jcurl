@@ -48,7 +48,6 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * Just do XML parsing and hand values to {@link org.jcurl.core.io.SetupBuilder}.
  * 
- * @see org.jcurl.core.io.SetupSaxDeSerTest
  * @see org.jcurl.core.io.OldConfigReader
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:SetupSaxDeSer.java 378 2007-01-24 01:18:35Z mrohrmoser $

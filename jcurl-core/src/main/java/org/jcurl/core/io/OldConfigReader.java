@@ -36,7 +36,6 @@ import org.jcurl.core.helpers.JCLoggerFactory;
 /**
  * Read onld config files.
  * 
- * @see org.jcurl.core.io.OldConfigReaderTest
  * @see org.jcurl.core.io.SetupBuilder
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:OldConfigReader.java 378 2007-01-24 01:18:35Z mrohrmoser $

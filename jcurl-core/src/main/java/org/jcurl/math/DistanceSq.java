@@ -84,6 +84,9 @@ public class DistanceSq extends R1R1Function {
 
     /**
      * <code>(c1(t) - c2(t))^2 - (r1 + r2)^2</code>.
+     * 
+     * @param t
+     * @return the value
      */
     public double at(double t) {
         Rock a = c1.at(t, (Rock) null);
@@ -93,6 +96,9 @@ public class DistanceSq extends R1R1Function {
     }
 
     /**
+     * @param derivative
+     * @param t
+     * @return the value
      * @see #at(double)
      * @see #valueC1(double)
      */
@@ -108,11 +114,11 @@ public class DistanceSq extends R1R1Function {
      * <code>2 * (c1 - c2) * (c1' - c2')</code> Feed into maxima:
      * 
      * <pre>
-     *  a(t) := [ ax(t), ay(t) ];
-     *  b(t) := [ bx(t), by(t) ];
-     *  d(t) := (a(t) - b(t)) . (a(t) - b(t));
-     *  diff(d(t), t);
-     *  quit$
+     *   a(t) := [ ax(t), ay(t) ];
+     *   b(t) := [ bx(t), by(t) ];
+     *   d(t) := (a(t) - b(t)) . (a(t) - b(t));
+     *   diff(d(t), t);
+     *   quit$
      * </pre>
      */
     double valueC1(double t) {

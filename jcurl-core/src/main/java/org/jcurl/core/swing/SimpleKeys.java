@@ -28,7 +28,6 @@ import org.jcurl.core.base.TargetDiscrete;
  * A first, simple keyboard input class. Uses a
  * {@link org.jcurl.core.swing.RealTimePlayer}to play.
  * 
- * @see org.jcurl.demo.viewer.ViewerApp
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:SimpleKeys.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */

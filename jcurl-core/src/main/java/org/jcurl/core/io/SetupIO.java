@@ -42,7 +42,6 @@ import org.xml.sax.SAXException;
  * @version $Id:SetupIO.java 378 2007-01-24 01:18:35Z mrohrmoser $
  * @see org.jcurl.core.io.SetupSaxSer
  * @see org.jcurl.core.io.SetupSaxDeSer
- * @see org.jcurl.core.io.SetupIOTest
  */
 public class SetupIO {
 

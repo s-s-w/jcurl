@@ -45,6 +45,7 @@ public class NewtonSolver extends SolverImpl {
     /**
      * Find a zero near the midpoint of <code>min</code> and <code>max</code>.
      * 
+     * @param derivative
      * @param min
      *            the lower bound for the interval
      * @param max
@@ -61,6 +62,7 @@ public class NewtonSolver extends SolverImpl {
     /**
      * Find a zero near the value <code>startValue</code>.
      * 
+     * @param derivative
      * @param min
      *            the lower bound for the interval (ignored).
      * @param max

@@ -171,7 +171,7 @@ public class SlideStraightTest extends TestCase {
     }
 
     public void _test100() {
-        // TODO reaktivate this test
+        // TODO reactivate this test
         double t = 0;
         assertEquals("", 2.26999338899, t = s.estimateNextHit(pos, speed), 1e-6);
         s.getPos();
@@ -190,7 +190,7 @@ public class SlideStraightTest extends TestCase {
     }
 
     public void _test110() {
-        // TODO reaktivate this test
+        // TODO reactivate this test
         final PositionSet pos = PositionSet.allOut();
         pos.getDark(0).setLocation(0, 5, 0);
         pos.getLight(0).setLocation(0.2, 2.5);

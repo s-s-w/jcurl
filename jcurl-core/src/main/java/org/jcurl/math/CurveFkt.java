@@ -23,7 +23,6 @@ package org.jcurl.math;
  * {@link org.jcurl.math.R1R1Function}s.
  * 
  * @see org.jcurl.math.R1R1Function
- * @see org.jcurl.math.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

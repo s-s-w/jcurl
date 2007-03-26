@@ -113,7 +113,6 @@ public abstract class CurveShape {
      *            control point coordinates
      * @return coordinates of the control point (stored in x)
      * @see MathVec#gauss(double[][], double[], double[])
-     * @see CurveShapeTest#test020_computeControlPoint()
      */
     static double[] computeControlPoint(final double[] pa, final double[] va,
             final double[] pb, final double[] vb, final double[][] tmp_matrix,
@@ -141,7 +140,6 @@ public abstract class CurveShape {
      * @param max
      * @param sections
      * @return filled <code>sections</code> array.
-     * @see CurveShapeTest#test010_sections()
      */
     public static double[] sections(final double min, final double max,
             final double[] sections) {

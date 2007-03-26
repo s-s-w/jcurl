@@ -46,6 +46,7 @@ public abstract class CollissionDetector implements Strategy {
      * @param ra
      * @param fb
      * @param rb
+     * @return time of next collission
      * @throws NoCollission
      *             they don't collide in the given interval.
      */

@@ -32,7 +32,6 @@ import org.jcurl.math.dom.MathDom;
  * than this class.
  * 
  * @see org.jcurl.math.dom.MathDom
- * @see org.jcurl.math.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

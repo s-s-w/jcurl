@@ -226,6 +226,8 @@ public class XmlSimpleWriter extends DefaultHandler {
 
     /**
      * Make errors catastrophic and throw the given Exception
+     * @param e 
+     * @throws SAXParseException
      */
     public void error(final SAXParseException e) throws SAXParseException {
         log.error("parse exception", e);
@@ -234,6 +236,8 @@ public class XmlSimpleWriter extends DefaultHandler {
 
     /**
      * Make errors catastrophic and throw the given Exception
+     * @param e 
+     * @throws SAXParseException 
      */
     public void fatalError(final SAXParseException e) throws SAXParseException {
         log.error("parse exception", e);
@@ -381,6 +385,7 @@ public class XmlSimpleWriter extends DefaultHandler {
 
     /**
      * Do nothing.
+     * @param e 
      */
     public void warning(final SAXParseException e) {
         log.debug("parse exception", e);

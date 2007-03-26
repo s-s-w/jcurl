@@ -24,7 +24,6 @@ import org.jcurl.core.helpers.JCLoggerFactory;
 /**
  * Combined curve.
  * 
- * @see org.jcurl.math.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

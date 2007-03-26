@@ -105,6 +105,9 @@
 						<exclude>**/OldConfigReaderTest.java</exclude>
 						<exclude>**/SetupIOTest.java</exclude>
 						<exclude>**/SetupSaxDeSerTest.java</exclude>
+						<exclude>
+							org/jcurl/core/swing/BatikDemoTest.java
+						</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
@@ -212,6 +215,13 @@
 							http://jakarta.apache.org/commons/math/api-1.1/
 						</link>
 					</links>
+					<tags>
+						<tag>
+							<name>todo</name>
+							<placement>a</placement>
+							<head>To Do:</head>
+						</tag>
+					</tags>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -229,6 +239,16 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>taglist-maven-plugin</artifactId>
+				<configuration>
+					<tags>
+						<tag>TUNE</tag>
+						<tag>TODO</tag>
+						<tag>FIXME</tag>
+						<tag>@tune</tag>
+						<tag>@todo</tag>
+						<tag>@deprecated</tag>
+					</tags>
+				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>
@@ -244,7 +264,7 @@
 			</plugin>
 			<!-- plugin>
 				<artifactId>maven-emma-plugin</artifactId>
-			</plugin -->
+				</plugin -->
 		</plugins>
 	</reporting>
 	<distributionManagement>

@@ -36,7 +36,6 @@ import org.jcurl.math.MathVec;
  * stillstanding rocks cause a loss of energy. For details see the paper <a
  * href="http://jcurl.berlios.de/curlsci.pdf">Curling Scientific </a>.
  * 
- * @see org.jcurl.core.model.CollissionSpinLossTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CollissionSpinLoss.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
