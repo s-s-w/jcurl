@@ -42,7 +42,7 @@ public class SlideNoCurl extends SlideBase implements Strategy, Factory {
     /**
      * Computes the internal ice friction coefficient as:
      * <p>
-     * <code>beta = {@link Ice.FAR_HOG_2_TEE} / drawToTeeTime^2</code>
+     * <code>beta = {@link Ice#FAR_HOG_2_TEE} / drawToTeeTime^2</code>
      * </p>
      * 
      * @param drawToTeeTime
@@ -131,7 +131,7 @@ public class SlideNoCurl extends SlideBase implements Strategy, Factory {
      * Compute the (absolute) speed at the hog line for a rock released with
      * given split-time.
      * <p>
-     * <code>v_0 = {@link Ice.BACK_2_HOG} / t_S - beta t_S</code>
+     * <code>v_0 = {@link Ice#BACK_2_HOG} / t_S - beta t_S</code>
      * </p>
      * 
      * @param splitTime
@@ -170,7 +170,7 @@ public class SlideNoCurl extends SlideBase implements Strategy, Factory {
         final double dx = (0 - broomX) * Ice.HACK_2_HOG
                 / (Ice.FAR_HACK_2_TEE - broomY);
         ret.translate(dx, Ice.FAR_HOG_2_TEE);
-        // AVOIDTRIG
+        // TUNE avoid trigonometry
         ret.rotate(Math.atan2(dx, Ice.HACK_2_HOG) + Math.PI);
         return ret;
     }

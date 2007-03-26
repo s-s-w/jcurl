@@ -21,7 +21,6 @@ package org.jcurl.math;
 /**
  * Abstract base class for n-dimensional curves <code>f : R^1 -&gt; R^n</code>.
  * 
- * @see org.jcurl.math.CurveTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

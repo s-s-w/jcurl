@@ -29,7 +29,6 @@ import org.jcurl.core.base.Rock;
  * conservation of momentum is obeyed, e.g. spin is neglected.
  * 
  * @see org.jcurl.core.model.SlideStraight
- * @see org.jcurl.core.model.CollissionSimpleTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CollissionSimple.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */

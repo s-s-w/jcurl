@@ -22,7 +22,6 @@ package org.jcurl.core.base;
  * Interface for classes consuming discrete {@link org.jcurl.core.base.Rock}location
  * data.
  * 
- * @see org.jcurl.core.base.RockSetInterpolator
  * @see org.jcurl.core.swing.JCurlDisplay
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:TargetDiscrete.java 378 2007-01-24 01:18:35Z mrohrmoser $

@@ -66,7 +66,6 @@ public final class MathVec {
      * S.22f.
      * </p>
      * 
-     * @see MathVecTest#test010_gauss()
      * @param a
      *            coefficient matrix. Attention! All fields a[i][j] are
      *            overwritten!

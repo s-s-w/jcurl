@@ -69,7 +69,6 @@ public class PositionSet extends RockSet {
     }
 
     /**
-     * @see PositionSetTest#test020_findRockAtPos()
      * @param rocks
      * @param pos
      * @return <code>-1</code> if none
@@ -105,7 +104,6 @@ public class PositionSet extends RockSet {
      * 
      * @param a
      * @return bitmask of the out rocks.
-     * @see PositionSetTest#test010_getShotRocks()
      */
     public static int getOutRocks(final PositionSet a) {
         final double xmin = Ice.SIDE_2_CENTER + RockProps.DEFAULT.getRadius();
@@ -126,7 +124,6 @@ public class PositionSet extends RockSet {
      * 
      * @param a
      * @return bitmask of the shot rocks.
-     * @see PositionSetTest#test010_getShotRocks()
      */
     public static int getShotRocks(final PositionSet a) {
         final int scorer;
@@ -167,7 +164,6 @@ public class PositionSet extends RockSet {
      * 
      * @param a
      * @return bitmask of the waiting rocks.
-     * @see PositionSetTest#test010_getShotRocks()
      */
     public static int getWaitRocks(final PositionSet a) {
         final double xmax = Ice.SIDE_2_CENTER + RockProps.DEFAULT.getRadius();

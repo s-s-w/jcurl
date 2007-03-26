@@ -21,7 +21,6 @@ package org.jcurl.math;
 /**
  * Polynomes of n-th grade.
  * 
- * @see org.jcurl.math.PolynomeTest
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -145,6 +144,9 @@ public class Polynome extends R1R1Function {
     }
 
     /**
+     * @param c 
+     * @param x 
+     * @return the value
      * @see #poly(int, double, double[])
      */
     public double at(final int c, final double x) {

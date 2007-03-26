@@ -31,7 +31,6 @@ import org.jcurl.math.MathVec;
 /**
  * Abstract base class for propagation/friction models.
  * 
- * @see org.jcurl.core.base.SlideStrategyTest
  * @see org.jcurl.core.base.Collider
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:SlideStrategy.java 378 2007-01-24 01:18:35Z mrohrmoser $

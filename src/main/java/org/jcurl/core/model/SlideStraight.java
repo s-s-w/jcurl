@@ -42,7 +42,6 @@ import org.jcurl.math.R1RNFunction;
  * 
  * </p>
  * 
- * @see org.jcurl.core.model.SlideStraightTest
  * @see org.jcurl.core.model.SlideDenny
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:SlideStraight.java 378 2007-01-24 01:18:35Z mrohrmoser $
