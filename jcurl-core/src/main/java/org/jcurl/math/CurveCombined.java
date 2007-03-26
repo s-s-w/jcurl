@@ -19,7 +19,7 @@
 package org.jcurl.math;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.core.log.JCLoggerFactory;
 
 /**
  * Combined curve.

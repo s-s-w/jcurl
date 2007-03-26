@@ -30,6 +30,7 @@ import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.log.JCLoggerFactory;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

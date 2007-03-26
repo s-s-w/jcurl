@@ -21,8 +21,6 @@ package org.jcurl.core.base;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
-import org.jcurl.math.CurveRock;
-import org.jcurl.math.CurveRockAnalytic;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.Polynome;
 

@@ -28,7 +28,7 @@ import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.RockSetProps;
 import org.jcurl.core.base.Source;
 import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.Polynome;
 import org.jcurl.math.R1RNFunction;

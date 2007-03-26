@@ -26,6 +26,7 @@ import java.io.Writer;
 import java.util.Stack;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.log.JCLoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
@@ -72,11 +73,11 @@ class XmlSerializerBase implements ContentHandler {
 
     private static final char TABULATOR = '\t';
 
+    private final Stack currentElement = new Stack();
+
     private final String encoding;
 
     private final boolean indent;
-
-    private final Stack currentElement = new Stack();
 
     private String pendingPrefixStart = null;
 

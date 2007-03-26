@@ -25,7 +25,7 @@ package org.jcurl.math;
  * @version $Id$
  */
 public abstract class R1RNFunction {
-    protected final int dim;
+    public final int dim;
 
     protected R1RNFunction(final int dim) {
         this.dim = dim;

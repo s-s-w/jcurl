@@ -16,15 +16,15 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.math;
+package org.jcurl.core.base;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.base.Rock;
-import org.jcurl.core.base.RockDouble;
+import org.apache.commons.math.MathException;
+import org.jcurl.math.Point3D;
 
 public class CurveTransformedTest extends TestCase {
 

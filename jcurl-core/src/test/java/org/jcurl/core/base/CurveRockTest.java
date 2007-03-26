@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005-2007 M. Rohrmoser
+ * Copyright (C) 2005-2006 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -16,29 +16,12 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.math;
+package org.jcurl.core.base;
 
-public class CurveRockAnalytic extends CurveRockBase {
+import junit.framework.TestCase;
 
-    private final R1RNFunction f;
+public class CurveRockTest extends TestCase {
+    public void testOk() {
 
-    public CurveRockAnalytic(final R1R1Function x, final R1R1Function y,
-            final R1R1Function a) {
-        this(new R1R1Function[] { x, y, a });
     }
-
-    public CurveRockAnalytic(final R1R1Function[] x) {
-        this(new CurveFkt(x));
-    }
-
-    public CurveRockAnalytic(final R1RNFunction f) {
-        if (f.dim != 3)
-            throw new IllegalArgumentException("Function must be 3-dimensional");
-        this.f = f;
-    }
-
-    public double at(int dim, int c, double t) {
-        return f.at(dim, c, t);
-    }
-
 }

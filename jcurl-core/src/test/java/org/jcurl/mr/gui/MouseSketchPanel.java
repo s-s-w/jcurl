@@ -29,7 +29,7 @@ import java.util.Iterator;
 import javax.swing.JPanel;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.mr.math.PointList;
 
 /**

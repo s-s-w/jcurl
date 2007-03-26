@@ -25,7 +25,7 @@ import java.util.TreeMap;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
-import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.MathVec;
 
 /**

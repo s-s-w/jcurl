@@ -31,7 +31,7 @@ import org.jcurl.core.base.Ice;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
-import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.core.log.JCLoggerFactory;
 
 /**
  * Read onld config files.
