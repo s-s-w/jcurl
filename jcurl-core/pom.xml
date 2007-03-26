@@ -242,6 +242,9 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jdepend-maven-plugin</artifactId>
 			</plugin>
+			<!-- plugin>
+				<artifactId>maven-emma-plugin</artifactId>
+			</plugin -->
 		</plugins>
 	</reporting>
 	<distributionManagement>

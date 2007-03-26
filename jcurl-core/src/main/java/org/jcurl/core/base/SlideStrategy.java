@@ -32,11 +32,12 @@ import org.jcurl.math.MathVec;
  * Abstract base class for propagation/friction models.
  * 
  * @see org.jcurl.core.base.SlideStrategyTest
- * @see org.jcurl.core.base.CollissionStrategy
+ * @see org.jcurl.core.base.Collider
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:SlideStrategy.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public abstract class SlideStrategy extends ModelBase implements Source {
+public abstract class SlideStrategy extends ModelBase implements Source,
+        Strategy, Factory {
 
     public static final String D2T_CURL = "curl";
 
@@ -104,8 +105,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
      *            location of second rock
      * @param bv
      *            speed of second rock
-     * @return [sec] 0 if the rocks "touch", see
-     *         {@link CollissionStrategy#MaxDistSq}
+     * @return [sec] 0 if the rocks "touch", see {@link Collider#MaxDistSq}
      */
     protected static double timetilhit(final int a, final Rock ap,
             final Rock av, final int b, final Rock bp, final Rock bv) {
@@ -117,10 +117,10 @@ public abstract class SlideStrategy extends ModelBase implements Source {
         if (vx >= 0)
             // the rocks don't move or separate:
             return Long.MAX_VALUE / 1000;
-        if (CollissionStrategy.MaxDistSq >= ap.distanceSq(bp)) {
+        if (Collider.MaxDistSq >= ap.distanceSq(bp)) {
             // the rocks already touch
             if (log.isDebugEnabled())
-                log.debug("Max=" + CollissionStrategy.MaxDistSq + " current="
+                log.debug("Max=" + Collider.MaxDistSq + " current="
                         + ap.distanceSq(bp));
             return 0;
         }
@@ -134,7 +134,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
         return timetilhit(a, ap, av, b, bp, bv);
     }
 
-    private CollissionStrategy coll;
+    private Collider coll;
 
     protected double dt = 0.050;
 
@@ -157,7 +157,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
     protected double tmin = -1;
 
     public SlideStrategy() {
-        //setColl(new CollissionSpin());
+        // setColl(new CollissionSpin());
         final Map tmp = new TreeMap();
         tmp.put(D2T_TIME, new DimVal(25, Dim.SEC_HOG_TEE));
         tmp.put(D2T_CURL, new DimVal(1, Dim.METER));
@@ -226,18 +226,16 @@ public abstract class SlideStrategy extends ModelBase implements Source {
      * Test all combinations of the given rocks for upcoming collissions.
      * <p>
      * There is a little conceptual gap between the space-distance (used by
-     * {@link CollissionStrategy#compute(PositionSet, SpeedSet)}) and the time
-     * distance used here and in {@link #computeUntil(double, double)}. This is
-     * because the collission engine should not need to know about rock
-     * propagation and therefore cannot compute the exact time until the hit -
-     * the slider on the other hand needs to know the time to propagate the
-     * rocks until the hit.
+     * {@link Collider#compute(PositionSet, SpeedSet)}) and the time distance
+     * used here and in {@link #computeUntil(double, double)}. This is because
+     * the collission engine should not need to know about rock propagation and
+     * therefore cannot compute the exact time until the hit - the slider on the
+     * other hand needs to know the time to propagate the rocks until the hit.
      * </p>
      * <p>
      * This is solved by additionally checking the distance in
      * {@link #timetilhit(int, Rock, Rock, int, Rock, Rock)}&nsbp;and returning
-     * 0 if two rocks are touching in the sense of
-     * {@link CollissionStrategy#MaxDistSq}.
+     * 0 if two rocks are touching in the sense of {@link Collider#MaxDistSq}.
      * </p>
      * <p>
      * So the propagation should continue until 0 is returned here.
@@ -271,7 +269,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
 
     protected abstract RockSet getC(int c, double time, RockSet rocks);
 
-    public CollissionStrategy getColl() {
+    public Collider getColl() {
         return coll;
     }
 
@@ -436,7 +434,7 @@ public abstract class SlideStrategy extends ModelBase implements Source {
     protected abstract void set(final double t0, final PositionSet pos,
             final SpeedSet speed, final int discontinuous);
 
-    public void setColl(CollissionStrategy coll) {
+    public void setColl(Collider coll) {
         if (coll == null) {
             if (this.coll == null)
                 throw new IllegalArgumentException(

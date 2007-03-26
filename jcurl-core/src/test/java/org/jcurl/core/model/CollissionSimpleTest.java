@@ -23,7 +23,7 @@ import java.awt.geom.Point2D;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.base.CollissionStrategy;
+import org.jcurl.core.base.Collider;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
@@ -123,12 +123,12 @@ public class CollissionSimpleTest extends TestCase {
         final double[] flat = new double[6];
         Point2D a = new Point2D.Double(0, 0);
         Point2D b = new Point2D.Double(0, 1);
-        CollissionStrategy.getInverseTrafo(a, a, b, mat);
+        Collider.getInverseTrafo(a, a, b, mat);
         assertTrue(mat.isIdentity());
 
         a = new Point2D.Double(0, -1);
         b = new Point2D.Double(0, 1);
-        CollissionStrategy.getInverseTrafo(a, a, b, mat);
+        Collider.getInverseTrafo(a, a, b, mat);
         mat.getMatrix(flat);
         assertEquals("", 1, flat[0], 1e-9);
         assertEquals("", 0, flat[1], 1e-9);
@@ -139,7 +139,7 @@ public class CollissionSimpleTest extends TestCase {
 
         a = new Point2D.Double(1, 1);
         b = new Point2D.Double(1.1, 1.1);
-        CollissionStrategy.getInverseTrafo(a, a, b, mat);
+        Collider.getInverseTrafo(a, a, b, mat);
         mat.getMatrix(flat);
         double sq2 = Math.sqrt(2);
         assertEquals("", sq2 / 2, flat[0], 1e-9);

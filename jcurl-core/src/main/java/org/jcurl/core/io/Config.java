@@ -26,7 +26,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
-import org.jcurl.core.base.CollissionStrategy;
+import org.jcurl.core.base.Collider;
 import org.jcurl.core.base.Ice;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockSetProps;
@@ -67,7 +67,7 @@ public class Config {
 
     }
 
-    public CollissionStrategy getHitter() {
+    public Collider getHitter() {
         return null;
     }
 

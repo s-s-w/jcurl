@@ -33,7 +33,7 @@ import org.jcurl.math.Polynome;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SlideNoCurl extends SlideBase {
+public class SlideNoCurl extends SlideBase implements Strategy, Factory {
 
     final double beta;
 
