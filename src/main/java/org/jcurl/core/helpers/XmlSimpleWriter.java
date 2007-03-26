@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Stack;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.log.JCLoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;

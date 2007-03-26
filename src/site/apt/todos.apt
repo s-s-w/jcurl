@@ -3,19 +3,21 @@
 
 In Progress
 
-	* Design rework
-
 	* Analytic collission detection
 
 	* transformed (WC) trajectories
 
 	* Curve store
 
+	* Design rework
+
 Next
 
-	* Denny curl model
+	* Package structure rework
 
 	* PathIterator to display trajectories
+
+	* Denny curl model
 
 	* Sophisticated editing UI
 	

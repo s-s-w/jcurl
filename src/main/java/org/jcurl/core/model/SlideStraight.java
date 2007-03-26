@@ -26,7 +26,7 @@ import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SlideCurves;
-import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.CurveFkt;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.Polynome;

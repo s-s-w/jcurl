@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005-2006 M. Rohrmoser
+ * Copyright (C) 2005-2007 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -16,25 +16,33 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.math;
+package org.jcurl.core.base;
 
-import org.jcurl.core.base.Rock;
+import org.jcurl.math.CurveFkt;
+import org.jcurl.math.R1R1Function;
+import org.jcurl.math.R1RNFunction;
 
-/**
- * Trajectory of one Rock, in either rock-coordinates or world-coordinates.
- * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: CurveRock.java 361 2006-08-28 20:21:07Z mrohrmoser $
- */
-public abstract class CurveRock extends R1RNFunction {
+public class CurveRockAnalytic extends CurveRockBase {
 
-    protected CurveRock() {
-        super(3);
+    private final R1RNFunction f;
+
+    public CurveRockAnalytic(final R1R1Function x, final R1R1Function y,
+            final R1R1Function a) {
+        this(new R1R1Function[] { x, y, a });
     }
 
-    public abstract int dimension();
+    public CurveRockAnalytic(final R1R1Function[] x) {
+        this(new CurveFkt(x));
+    }
 
-    public abstract Rock at(int derivative, double t, Rock ret);
+    public CurveRockAnalytic(final R1RNFunction f) {
+        if (f.dim != 3)
+            throw new IllegalArgumentException("Function must be 3-dimensional");
+        this.f = f;
+    }
 
-    public abstract Rock at(double t, Rock ret);
+    public double at(int dim, int c, double t) {
+        return f.at(dim, c, t);
+    }
+
 }

@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.log.JCLoggerFactory;
 
 /**
  * Implements a beans like property change support utility that stores the

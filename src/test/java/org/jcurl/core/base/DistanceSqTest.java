@@ -16,9 +16,13 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.math;
+package org.jcurl.core.base;
 
 import junit.framework.TestCase;
+
+import org.apache.commons.math.MathException;
+import org.jcurl.math.Polynome;
+import org.jcurl.math.R1R1Function;
 
 public class DistanceSqTest extends TestCase {
 

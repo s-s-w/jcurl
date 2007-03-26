@@ -21,7 +21,7 @@ package org.jcurl.core.base;
 import java.awt.geom.Point2D;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.CurveCombined;
 import org.jcurl.math.CurveInterval;
 import org.jcurl.math.MathVec;

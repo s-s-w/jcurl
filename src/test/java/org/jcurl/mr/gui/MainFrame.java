@@ -25,7 +25,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.mr.math.PointList;
 
 /**
