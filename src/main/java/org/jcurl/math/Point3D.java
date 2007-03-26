@@ -35,12 +35,17 @@ public abstract class Point3D extends Point2D {
     }
 
     public boolean equals(final Object b) {
+        if (this == b)
+            return true;
+        // TODO getClass http://www.angelikalanger.com/Articles/JavaSpektrum/02.Equals-Part2/02.Equals2.html
         if (b == null || !(b instanceof Point3D))
             return false;
         return equals((Point3D) b);
     }
 
     public boolean equals(final Point3D b) {
+        if (this == b)
+            return true;
         if (b == null)
             return false;
         return this.getX() == b.getX() && this.getY() == b.getY()
@@ -52,6 +57,8 @@ public abstract class Point3D extends Point2D {
     public abstract double getY();
 
     public abstract double getZ();
+
+    public abstract int hashCode();
 
     /**
      * Sets the location of this Point3D to the specified double coordinates.

@@ -144,8 +144,8 @@ public class Polynome extends R1R1Function {
     }
 
     /**
-     * @param c 
-     * @param x 
+     * @param c
+     * @param x
      * @return the value
      * @see #poly(int, double, double[])
      */

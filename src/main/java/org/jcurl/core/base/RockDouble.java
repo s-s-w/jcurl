@@ -50,13 +50,6 @@ public class RockDouble extends Rock implements Serializable {
         return new RockDouble(x[0], x[1], x[2]);
     }
 
-    public boolean equals(Object obj) {
-        if (obj == null || !(obj instanceof Rock))
-            return false;
-        final Rock b = (Rock) obj;
-        return getX() == b.getX() && getY() == b.getY() && getZ() == b.getZ();
-    }
-
     public double getX() {
         return x[0];
     }
@@ -67,6 +60,20 @@ public class RockDouble extends Rock implements Serializable {
 
     public double getZ() {
         return x[2];
+    }
+
+    public int hashCode() {
+        // http://www.angelikalanger.com/Articles/JavaSpektrum/03.HashCode/03.HashCode.html
+        // hashcode N = hashcode N-1 * multiplikator + feldwert N
+        int hash = 17;
+        final int fact = 59;
+        for (int i = 0; i < 3; i++) {
+            hash *= fact;
+            final long tmp = ((x[0] == 0.0) ? 0L : java.lang.Double
+                    .doubleToLongBits(x[0]));
+            hash += (int) (tmp ^ (tmp >>> 32));
+        }
+        return hash;
     }
 
     public boolean nonZero() {

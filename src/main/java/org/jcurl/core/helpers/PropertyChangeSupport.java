@@ -204,7 +204,7 @@ public class PropertyChangeSupport {
     public void firePropertyChange(final String property, final boolean old,
             final boolean neo) {
         PropertyChangeEvent event = new PropertyChangeEvent(producer, property,
-                new Boolean(old), new Boolean(neo));
+                Boolean.valueOf(old), Boolean.valueOf(neo));
         this.firePropertyChange(event);
     }
 

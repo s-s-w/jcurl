@@ -37,9 +37,6 @@ public final class Ice {
     /** Distance from Tee to Hack. 6+6+21+72+21 feet (converted to meter) */
     public static final float FAR_HACK_2_TEE = Dim.f2m(6 + 6 + 21 + 72 + 21);
 
-    /** Distance from Hack to Hog. 6+6+21 feet (converted to meter) */
-    public static final float HACK_2_HOG = Dim.f2m(6 + 6 + 21);
-
     /**
      * Distance from Tee to Hog (on player's end). 21+72 feet (converted to
      * meter)
@@ -48,6 +45,9 @@ public final class Ice {
 
     /** Distance from Hack to Back-line. 6 feet (converted to meter) */
     public static final float HACK_2_BACK = Dim.f2m(6);
+
+    /** Distance from Hack to Hog. 6+6+21 feet (converted to meter) */
+    public static final float HACK_2_HOG = Dim.f2m(6 + 6 + 21);
 
     /** Distance from far Hog-line to near Hog-line. 72 feet (converted to meter) */
     public static final float HOG_2_HOG = Dim.f2m(72);
@@ -77,8 +77,7 @@ public final class Ice {
      * @param speed
      * @return bitmask of modified (removed) rocks
      */
-    public static final int checkOut(final PositionSet pos,
-            final PositionSet speed) {
+    public static int checkOut(final PositionSet pos, final PositionSet speed) {
         int ret = 0;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             if (speed.getRock(i).nonZero()) {

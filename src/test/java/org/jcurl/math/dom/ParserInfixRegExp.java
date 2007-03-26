@@ -50,7 +50,7 @@ import java.util.regex.Pattern;
  * @see org.jcurl.math.dom.MathDom
  * @see org.jcurl.math.dom.ParserInfix
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:ParserInfixRegExp.java 473 2007-03-26 12:24:21Z mrohrmoser $
  */
 class ParserInfixRegExp {
 

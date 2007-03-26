@@ -22,7 +22,7 @@ package org.jcurl.math.dom;
  * Convert the expression to postfix (reverse polish) notation.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:DomWalkerPostfix.java 473 2007-03-26 12:24:21Z mrohrmoser $
  */
 public class DomWalkerPostfix extends DomWalker {
 

@@ -68,6 +68,12 @@ public abstract class MutableObject extends TransferObject {
      */
     public abstract boolean equals(Object obj);
 
+    protected void fire(final String property) {
+
+    }
+
+    public abstract int hashCode();
+
     /**
      * @see java.lang.Object#hashCode()
      */
@@ -95,9 +101,5 @@ public abstract class MutableObject extends TransferObject {
     public void removePropertyChangeListener(final String property,
             final PropertyChangeListener listener) {
         propChange.removePropertyChangeListener(property, listener);
-    }
-
-    protected void fire(final String property) {
-
     }
 }

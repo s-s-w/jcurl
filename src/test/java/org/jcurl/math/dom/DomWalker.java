@@ -23,7 +23,7 @@ package org.jcurl.math.dom;
  * 
  * @see org.jcurl.math.dom.MathDom
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:DomWalker.java 473 2007-03-26 12:24:21Z mrohrmoser $
  */
 public abstract class DomWalker {
 

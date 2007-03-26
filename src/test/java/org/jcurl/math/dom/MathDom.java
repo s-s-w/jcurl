@@ -25,7 +25,7 @@ package org.jcurl.math.dom;
  * @see org.jcurl.math.dom.ParserInfix
  * @see org.jcurl.math.dom.DomWalker
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:MathDom.java 473 2007-03-26 12:24:21Z mrohrmoser $
  */
 public abstract class MathDom {
 
