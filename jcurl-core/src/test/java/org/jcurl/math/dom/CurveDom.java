@@ -16,13 +16,14 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.math;
+package org.jcurl.math.dom;
 
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.jcurl.math.dom.DomWalkerEval;
-import org.jcurl.math.dom.MathDom;
+import org.jcurl.math.CurveFkt;
+import org.jcurl.math.R1R1Function;
+import org.jcurl.math.R1RNFunction;
 
 /**
  * A n-dimensional, continuous curve (R -&gt; R^n) based on a
