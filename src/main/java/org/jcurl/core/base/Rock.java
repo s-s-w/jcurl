@@ -31,7 +31,7 @@ import org.jcurl.math.Point3D;
 public abstract class Rock extends Point3D implements Cloneable {
     public abstract Object clone();
 
-    public final boolean equals(Object obj) {
+    public final boolean equals(final Object obj) {
         if (obj == null || !(obj instanceof Rock))
             return false;
         return super.equals((Rock) obj);

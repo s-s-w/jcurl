@@ -162,14 +162,14 @@ public class Dim extends EnumBase {
     }
 
     static double toSecHogHog(final DimVal v) {
-        double ret = v.val;
+        final double ret = v.val;
         if (SEC_HOG_HOG.equals(v.dim))
             return ret;
         throw new IllegalArgumentException("Not convertible");
     }
 
     static double toSecHogTee(final DimVal v) {
-        double ret = v.val;
+        final double ret = v.val;
         if (SEC_HOG_TEE.equals(v.dim))
             return ret;
         throw new IllegalArgumentException("Not convertible");

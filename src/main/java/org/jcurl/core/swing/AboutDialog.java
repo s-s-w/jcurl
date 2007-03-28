@@ -43,10 +43,10 @@ public class AboutDialog extends JDialog {
      * @param owner
      * @throws java.awt.HeadlessException
      */
-    public AboutDialog(Frame owner) throws HeadlessException {
+    public AboutDialog(final Frame owner) throws HeadlessException {
         super(owner, "About", true);
         setResizable(false);
-        Box b = Box.createVerticalBox();
+        final Box b = Box.createVerticalBox();
         b.add(Box.createGlue());
         b.add(new JLabel(owner.getClass().getName()));
         b.add(new JLabel("by M. Rohrmoser"));
@@ -59,12 +59,12 @@ public class AboutDialog extends JDialog {
         }
         getContentPane().add(b, "Center");
 
-        JPanel p2 = new JPanel();
-        JButton ok = new JButton("OK");
+        final JPanel p2 = new JPanel();
+        final JButton ok = new JButton("OK");
         p2.add(ok);
         getContentPane().add(p2, "South");
         ok.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
+            public void actionPerformed(final ActionEvent evt) {
                 AboutDialog.this.setVisible(false);
             }
         });

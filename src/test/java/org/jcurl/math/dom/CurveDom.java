@@ -85,7 +85,7 @@ public class CurveDom extends R1RNFunction {
         this(x, null, param); // TODO compute and store the derivatives
     }
 
-    public double at(int dim, int c, double t) {
+    public double at(final int dim, final int c, final double t) {
         if (c == 0) {
             this.t.v = t;
             de.reset();

@@ -28,20 +28,6 @@ import junit.framework.TestCase;
  */
 public class CSplineInterpolatorTest extends TestCase {
 
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(CSplineInterpolatorTest.class);
-    }
-
-    public void test005_binarySearch() {
-        double[] a = { 0, 1, 2, 3, 4 };
-        assertEquals("", 0, CurveCombined.binarySearch(a, 0, 0, a.length - 1));
-        assertEquals("", 1, CurveCombined.binarySearch(a, 1, 0, a.length - 1));
-        assertEquals("", 4, CurveCombined.binarySearch(a, 4, 0, a.length - 1));
-        assertEquals("", -1, CurveCombined.binarySearch(a, 1, 2, a.length - 1));
-        assertEquals("", -2, CurveCombined
-                .binarySearch(a, 0.5, 0, a.length - 1));
-    }
-
     public void test010() {
         final CSplineInterpolator ip = new CSplineInterpolator();
         ip.add(0, 0);
@@ -73,16 +59,26 @@ public class CSplineInterpolatorTest extends TestCase {
         try {
             ip.at(0, -0.1);
             fail("Too small");
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (final ArrayIndexOutOfBoundsException e) {
             ;
         }
         try {
             ip.at(0, 8.1);
             fail("Too large");
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (final ArrayIndexOutOfBoundsException e) {
             ;
         }
         for (int i = 1000000; i >= 0; i--)
             ip.at(0, 2);
+    }
+
+    public void testBinarySearch() {
+        final double[] a = { 0, 1, 2, 3, 4 };
+        assertEquals("", 0, CurveCombined.binarySearch(a, 0, 0, a.length - 1));
+        assertEquals("", 1, CurveCombined.binarySearch(a, 1, 0, a.length - 1));
+        assertEquals("", 4, CurveCombined.binarySearch(a, 4, 0, a.length - 1));
+        assertEquals("", -1, CurveCombined.binarySearch(a, 1, 2, a.length - 1));
+        assertEquals("", -2, CurveCombined
+                .binarySearch(a, 0.5, 0, a.length - 1));
     }
 }

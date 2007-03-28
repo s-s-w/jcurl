@@ -38,8 +38,8 @@ import org.xml.sax.SAXException;
  */
 public class IconGenerator {
 
-    public static void main(String[] args) throws ParserConfigurationException,
-            SAXException, IOException {
+    public static void main(final String[] args)
+            throws ParserConfigurationException, SAXException, IOException {
         // Load an initial setup
         final URL url;
         {

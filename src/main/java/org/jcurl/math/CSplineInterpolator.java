@@ -88,16 +88,16 @@ public class CSplineInterpolator extends R1R1Function {
         return out;
     }
 
+    private int points = 0;
+
     /**
      * Spline coefficients or null.
      */
-    private double[][] _splines = null;
+    private double[][] splines = null;
 
-    private double[] _x;
+    private double[] x;
 
-    private double[] _y;
-
-    private int points = 0;
+    private double[] y;
 
     /**
      * Create a new spline interpolator with an initial capacity of 100 points.
@@ -114,8 +114,8 @@ public class CSplineInterpolator extends R1R1Function {
      * @param capacity
      */
     public CSplineInterpolator(final int capacity) {
-        _x = new double[capacity];
-        _y = new double[capacity];
+        x = new double[capacity];
+        y = new double[capacity];
     }
 
     /**
@@ -127,18 +127,18 @@ public class CSplineInterpolator extends R1R1Function {
      * @param y
      */
     public void add(final double x, final double y) {
-        if (points == _x.length) {
+        if (points == this.x.length) {
             // resize _x and _y
             double[] tmp = new double[1 + (int) (points / arrayFill)];
-            System.arraycopy(_x, 0, tmp, 0, points);
-            _x = tmp;
-            tmp = new double[_x.length];
-            System.arraycopy(_y, 0, tmp, 0, points);
-            _y = tmp;
+            System.arraycopy(this.x, 0, tmp, 0, points);
+            this.x = tmp;
+            tmp = new double[this.x.length];
+            System.arraycopy(this.y, 0, tmp, 0, points);
+            this.y = tmp;
         }
-        _splines = null; // enforce re-computation
-        _x[points] = x;
-        _y[points] = y;
+        splines = null; // enforce re-computation
+        this.x[points] = x;
+        this.y[points] = y;
         points++;
     }
 
@@ -155,8 +155,8 @@ public class CSplineInterpolator extends R1R1Function {
      */
     public double at(final int C, double x) {
         final int idx = findSplineIndex(x);
-        final double[] spline = _splines[idx];
-        x -= _x[idx];
+        final double[] spline = splines[idx];
+        x -= this.x[idx];
         double ret = 0;
         for (int i = d; i >= C; i--) {
             ret *= x;
@@ -174,13 +174,13 @@ public class CSplineInterpolator extends R1R1Function {
      * @return -1 for "x outside range"
      */
     private int findSplineIndex(final double x) {
-        if (x < _x[0] || x > _x[points - 1])
+        if (x < this.x[0] || x > this.x[points - 1])
             return -1;
-        if (_splines == null)
+        if (splines == null)
             // compute the c3 values
-            _splines = computeSplines(points, _x, _y);
+            splines = computeSplines(points, this.x, y);
         // find the correct index
-        int idx = CurveCombined.binarySearch(_x, x, 0, points - 1);
+        int idx = CurveCombined.binarySearch(this.x, x, 0, points - 1);
         if (idx < 0) {
             if (idx == -1)
                 return -1;
@@ -190,11 +190,11 @@ public class CSplineInterpolator extends R1R1Function {
     }
 
     public double getMaxX() {
-        return _x[points - 1];
+        return x[points - 1];
     }
 
     public double getMinX() {
-        return _x[0];
+        return x[0];
     }
 
     /**
@@ -202,6 +202,6 @@ public class CSplineInterpolator extends R1R1Function {
      */
     public void reset() {
         points = 0;
-        _splines = null;
+        splines = null;
     }
 }

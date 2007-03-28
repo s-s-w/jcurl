@@ -40,7 +40,7 @@ public class RockDouble extends Rock implements Serializable {
         this(0, 0, 0);
     }
 
-    public RockDouble(double x, double y, double alpha) {
+    public RockDouble(final double x, final double y, final double alpha) {
         this.x[0] = x;
         this.x[1] = y;
         this.x[2] = alpha;
@@ -69,9 +69,9 @@ public class RockDouble extends Rock implements Serializable {
         final int fact = 59;
         for (int i = 0; i < 3; i++) {
             hash *= fact;
-            final long tmp = ((x[0] == 0.0) ? 0L : java.lang.Double
-                    .doubleToLongBits(x[0]));
-            hash += (int) (tmp ^ (tmp >>> 32));
+            final long tmp = x[0] == 0.0 ? 0L : java.lang.Double
+                    .doubleToLongBits(x[0]);
+            hash += (int) (tmp ^ tmp >>> 32);
         }
         return hash;
     }
@@ -80,26 +80,26 @@ public class RockDouble extends Rock implements Serializable {
         return x[0] * x[0] + x[1] * x[1] > 1e-4;
     }
 
-    public void setLocation(double x, double y) {
+    public void setLocation(final double x, final double y) {
         this.x[0] = x;
         this.x[1] = y;
     }
 
-    public void setLocation(double x, double y, double z) {
+    public void setLocation(final double x, final double y, final double z) {
         this.x[0] = x;
         this.x[1] = y;
         this.x[2] = z;
     }
 
-    public void setX(double x) {
+    public void setX(final double x) {
         this.x[0] = x;
     }
 
-    public void setY(double y) {
+    public void setY(final double y) {
         x[1] = y;
     }
 
-    public void setZ(double alpha) {
+    public void setZ(final double alpha) {
         x[2] = alpha;
     }
 }

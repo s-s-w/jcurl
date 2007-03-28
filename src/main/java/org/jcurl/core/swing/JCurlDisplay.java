@@ -45,7 +45,7 @@ public class JCurlDisplay extends PositionDisplay implements TargetDiscrete {
 
     private static final Font timeF = new Font("SansSerif", Font.PLAIN, 10);
 
-    private double time = 0;
+    private final double time = 0;
 
     /**
      * This method initializes

@@ -22,13 +22,13 @@ import junit.framework.TestCase;
 
 public class JepTest extends TestCase {
     public void test010() {
-        JEP p = new JEP();
+        final JEP p = new JEP();
         p.addStandardFunctions();
         p.parseExpression("1+sin(x)");
         p.getValue();
         assertTrue(p.hasError());
         assertEquals("Unrecognized symbol \"x\"\n", p.getErrorInfo());
-        Node n = p.getTopNode();
+        final Node n = p.getTopNode();
         assertNotNull(n);
     }
 }

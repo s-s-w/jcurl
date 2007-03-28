@@ -40,7 +40,7 @@ public class RockFloat extends Rock implements Serializable {
         this(0, 0, 0);
     }
 
-    public RockFloat(float x, float y, float alpha) {
+    public RockFloat(final float x, final float y, final float alpha) {
         this.x[0] = x;
         this.x[1] = y;
         this.x[2] = alpha;
@@ -69,7 +69,7 @@ public class RockFloat extends Rock implements Serializable {
         final int fact = 59;
         for (int i = 0; i < 3; i++) {
             hash *= fact;
-            hash += ((x[0] == 0.0) ? 0 : java.lang.Float.floatToIntBits(x[0]));
+            hash += x[0] == 0.0 ? 0 : java.lang.Float.floatToIntBits(x[0]);
         }
         return hash;
     }
@@ -78,26 +78,26 @@ public class RockFloat extends Rock implements Serializable {
         return x[0] * x[0] + x[1] * x[1] > 1e-12;
     }
 
-    public void setLocation(double x, double y) {
+    public void setLocation(final double x, final double y) {
         this.x[0] = (float) x;
         this.x[1] = (float) y;
     }
 
-    public void setLocation(double x, double y, double z) {
+    public void setLocation(final double x, final double y, final double z) {
         this.x[0] = (float) x;
         this.x[1] = (float) y;
         this.x[2] = (float) z;
     }
 
-    public void setX(double x) {
+    public void setX(final double x) {
         this.x[0] = (float) x;
     }
 
-    public void setY(double y) {
+    public void setY(final double y) {
         x[1] = (float) y;
     }
 
-    public void setZ(double alpha) {
+    public void setZ(final double alpha) {
         x[2] = (float) alpha;
     }
 }

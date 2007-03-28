@@ -46,7 +46,7 @@ public class XMLWriterTes extends TestCase {
     }
 
     private static StringBuffer xmlEncode(final String s,
-            final StringBuffer buf0, boolean isatt) {
+            final StringBuffer buf0, final boolean isatt) {
         final StringBuffer buf = buf0 != null ? buf0 : new StringBuffer(s
                 .length() * 2);
         final int len = s.length();
@@ -166,7 +166,7 @@ public class XMLWriterTes extends TestCase {
         atts = new AttributesImpl();
         atts.addAttribute(null, "att1", null, null, "Attribute 1" + UGLY);
         dst.startElement(null, "sub1", null, atts);
-        String txt = UGLY;
+        final String txt = UGLY;
         dst.characters(txt.toCharArray(), 0, txt.length());
         dst.endElement(null, "sub1", null);
 
@@ -204,14 +204,14 @@ public class XMLWriterTes extends TestCase {
     }
 
     public void test015_NonWellFormed() throws SAXException {
-        XMLWriter dst = new XMLWriter(new StringWriter());
+        final XMLWriter dst = new XMLWriter(new StringWriter());
 
         dst.startDocument();
         dst.startElement(null, null, "root", null);
         try {
             dst.endDocument();
             fail("Exception expected");
-        } catch (SAXException e) {
+        } catch (final SAXException e) {
         }
 
         dst.startDocument();
@@ -219,7 +219,7 @@ public class XMLWriterTes extends TestCase {
         try {
             dst.endElement(null, null, "other");
             fail("Exception expected");
-        } catch (SAXException e) {
+        } catch (final SAXException e) {
         }
 
         dst.startDocument();
@@ -230,7 +230,7 @@ public class XMLWriterTes extends TestCase {
         try {
             dst.endElement(null, null, "other");
             fail("Exception expected");
-        } catch (SAXException e) {
+        } catch (final SAXException e) {
         }
     }
 

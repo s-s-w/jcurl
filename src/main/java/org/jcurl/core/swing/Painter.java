@@ -34,17 +34,17 @@ class Painter {
             final Point2D.Float b) {
         final float x = a.x < b.x ? a.x : b.x;
         final float y = a.y < b.y ? a.y : b.y;
-        float width = Math.abs(b.x - a.x);
-        float height = Math.abs(b.y - a.y);
+        final float width = Math.abs(b.x - a.x);
+        final float height = Math.abs(b.y - a.y);
         g.drawRect((int) x, (int) y, (int) width, (int) height);
     }
 
     static void circleDC(final Graphics g, final Point2D.Float a,
             final Point2D.Float b) {
-        float width = 2 * Math.abs(b.x - a.x);
-        float height = 2 * Math.abs(b.y - a.y);
-        float tlx = a.x - width / 2;
-        float tly = a.y - height / 2;
+        final float width = 2 * Math.abs(b.x - a.x);
+        final float height = 2 * Math.abs(b.y - a.y);
+        final float tlx = a.x - width / 2;
+        final float tly = a.y - height / 2;
         g.drawArc((int) tlx, (int) tly, (int) width, (int) height, 0, 360);
     }
 

@@ -59,15 +59,15 @@ public abstract class SlideStrategy extends ModelBase implements Source,
                     + "] is no descendant of [" + parent.getName() + "]");
         try {
             return (SlideStrategy) clz.newInstance();
-        } catch (InstantiationException e) {
+        } catch (final InstantiationException e) {
             final IllegalArgumentException ex = new IllegalArgumentException();
             ex.initCause(e);
             throw ex;
-        } catch (IllegalAccessException e) {
+        } catch (final IllegalAccessException e) {
             final IllegalArgumentException ex = new IllegalArgumentException();
             ex.initCause(e);
             throw ex;
-        } catch (SecurityException e) {
+        } catch (final SecurityException e) {
             final IllegalArgumentException ex = new IllegalArgumentException();
             ex.initCause(e);
             throw ex;
@@ -197,7 +197,7 @@ public abstract class SlideStrategy extends ModelBase implements Source,
                     if (dt < dtNextHit)
                         break checkHit;
                     // move til hit
-                    int mov = this.move(tmax, tmax + dtNextHit, maxPos,
+                    final int mov = this.move(tmax, tmax + dtNextHit, maxPos,
                             maxSpeed);
                     if (mov != rocksInMotion)
                         set(tmax + dtNextHit, maxPos, maxSpeed, mov
@@ -406,8 +406,8 @@ public abstract class SlideStrategy extends ModelBase implements Source,
         return ret;
     }
 
-    public void reset(PositionSet startPos, SpeedSet startSpeed,
-            RockSetProps props) {
+    public void reset(final PositionSet startPos, final SpeedSet startSpeed,
+            final RockSetProps props) {
         tmin = tmax = T0;
         RockSet.copy(startPos, maxPos);
         RockSet.copy(startSpeed, maxSpeed);
@@ -433,7 +433,7 @@ public abstract class SlideStrategy extends ModelBase implements Source,
     protected abstract void set(final double t0, final PositionSet pos,
             final SpeedSet speed, final int discontinuous);
 
-    public void setColl(Collider coll) {
+    public void setColl(final Collider coll) {
         if (coll == null) {
             if (this.coll == null)
                 throw new IllegalArgumentException(
@@ -455,7 +455,7 @@ public abstract class SlideStrategy extends ModelBase implements Source,
         props.put(D2T_CURL, new DimVal(curl, Dim.METER));
     }
 
-    public void setTime(double t) {
+    public void setTime(final double t) {
         this.move(this.t, t, rocks, speed);
         this.t = t;
     }

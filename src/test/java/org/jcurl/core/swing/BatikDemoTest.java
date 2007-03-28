@@ -46,7 +46,7 @@ public class BatikDemoTest extends TestCase {
         // g2.scale(-1, 1);
 
         // Ask the test to render into the SVG Graphics2D implementation.
-        PositionDisplay test = new PositionDisplay();
+        final PositionDisplay test = new PositionDisplay();
         test.setBounds(0, 0, 100, 100);
         test.paint2(g2, false);
 

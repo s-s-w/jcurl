@@ -160,7 +160,7 @@ public class SetupBuilder {
                             + rocks[i].speedFlag);
                 }
             }
-        } catch (RuntimeException e) {
+        } catch (final RuntimeException e) {
             log.error("", e);
             throw e;
         }

@@ -63,7 +63,7 @@ public abstract class WCComponent extends Component {
             wc = wc_mat.inverseTransform(dc, wc);
             wc.setLocation(wc.getX() / SCALE, wc.getY() / SCALE);
             return wc;
-        } catch (NoninvertibleTransformException e) {
+        } catch (final NoninvertibleTransformException e) {
             throw new RuntimeException("Why uninvertible?", e);
         }
     }
@@ -124,7 +124,7 @@ public abstract class WCComponent extends Component {
         return false;
     }
 
-    public void setZoom(Zoomer zoom) {
+    public void setZoom(final Zoomer zoom) {
         this.zoom = zoom;
         this.repaint();
     }

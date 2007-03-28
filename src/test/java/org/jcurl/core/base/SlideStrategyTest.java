@@ -27,13 +27,13 @@ import junit.framework.TestCase;
 public class SlideStrategyTest extends TestCase {
 
     public void test005_nextHit() {
-        PositionSet pos = PositionSet.allHome();
+        final PositionSet pos = PositionSet.allHome();
         pos.getDark(0).setLocation(0, 5);
         pos.getLight(0).setLocation(0.2, 4.0);
-        PositionSet speed = new PositionSet();
+        final PositionSet speed = new PositionSet();
         speed.getDark(0).setLocation(0, -1);
 
-        double dt = SlideStrategy.tst_timetilhit(0, pos.getDark(0), speed
+        final double dt = SlideStrategy.tst_timetilhit(0, pos.getDark(0), speed
                 .getDark(0), 8, pos.getLight(0), speed.getLight(0));
         assertEquals("", 0.7699933889987538, dt, 1e-9);
     }

@@ -89,12 +89,12 @@ public class RealTimePlayer implements Runnable {
                 }
                 try {
                     Thread.sleep(timeSleep);
-                } catch (InterruptedException e) {
+                } catch (final InterruptedException e) {
                     t0Last = tNow;
                     break;
                 }
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             System.err.println(e.toString());
             e.printStackTrace(System.err);
         }
@@ -104,7 +104,7 @@ public class RealTimePlayer implements Runnable {
      * @param timeScale
      *            The timeScale to set.
      */
-    public void setTimeScale(double timeScale) {
+    public void setTimeScale(final double timeScale) {
         t0Last = tNow;
         this.timeScale = timeScale;
     }

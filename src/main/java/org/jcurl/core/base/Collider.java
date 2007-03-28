@@ -78,11 +78,11 @@ public abstract class Collider extends ModelBase implements Strategy {
                     + "] is no descendant of [" + parent.getName() + "]");
         try {
             return (Collider) clz.newInstance();
-        } catch (InstantiationException e) {
+        } catch (final InstantiationException e) {
             final IllegalArgumentException ex = new IllegalArgumentException();
             ex.initCause(e);
             throw ex;
-        } catch (IllegalAccessException e) {
+        } catch (final IllegalAccessException e) {
             final IllegalArgumentException ex = new IllegalArgumentException();
             ex.initCause(e);
             throw ex;
@@ -111,7 +111,7 @@ public abstract class Collider extends ModelBase implements Strategy {
      * @param speed
      * @return bitmask of the changed rocks
      */
-    public int compute(PositionSet pos, SpeedSet speed) {
+    public int compute(final PositionSet pos, final SpeedSet speed) {
         if (log.isDebugEnabled())
             log.debug("compute()");
         int hits = 0;
@@ -172,7 +172,7 @@ public abstract class Collider extends ModelBase implements Strategy {
         try { // transform
             mat.inverseTransform(va, _va);
             mat.inverseTransform(vb, _vb);
-        } catch (NoninvertibleTransformException e) {
+        } catch (final NoninvertibleTransformException e) {
             throw new RuntimeException("Matrix must be invertible", e);
         }
         // check speed of approach

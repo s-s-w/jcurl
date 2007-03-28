@@ -44,7 +44,7 @@ public class SimpleKeys implements KeyListener {
         dst.setPos(src.getPos());
     }
 
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(final KeyEvent e) {
         switch (e.getKeyCode()) {
         case KeyEvent.VK_SPACE:
             if (worker == null || !worker.isAlive()) {
@@ -64,11 +64,11 @@ public class SimpleKeys implements KeyListener {
         }
     }
 
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(final KeyEvent e) {
         ; // nop
     }
 
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped(final KeyEvent e) {
         ; // nop
     }
 }

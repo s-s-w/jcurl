@@ -30,7 +30,7 @@ import org.jcurl.math.R1RNFunction;
 public class SlideDennyTest extends TestCase {
 
     public void test010() {
-        SlideDenny s = new SlideDenny();
-        R1RNFunction c = s.createCurve(new RockDouble());
+        final SlideDenny s = new SlideDenny();
+        final R1RNFunction c = s.createCurve(new RockDouble());
     }
 }

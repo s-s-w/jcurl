@@ -21,15 +21,13 @@ package org.jcurl.core.base;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
-import junit.framework.TestCase;
-
 import org.apache.commons.math.MathException;
 import org.jcurl.math.Point3D;
 
-public class CurveTransformedTest extends TestCase {
+public class CurveTransformedTest extends TestBase {
 
-    public static void assertEquals(double x, double y, double z, Point3D p,
-            double delta) {
+    public static void assertEquals(final double x, final double y,
+            final double z, final Point3D p, final double delta) {
         final String txt = "";
         assertEquals(txt, x, p.getX(), delta);
         assertEquals(txt, y, p.getY(), delta);
@@ -39,7 +37,7 @@ public class CurveTransformedTest extends TestCase {
     public void testAffineTransformMemoryLayout() {
         Rock r = new RockDouble(1, 2, 3);
         AffineTransform at = new AffineTransform();
-        double[] d = new double[6];
+        final double[] d = new double[6];
         at.getMatrix(d);
         assertEquals("", 1.0, d[0], 1e-9);
         assertEquals("", 0.0, d[1], 1e-9);
@@ -76,8 +74,8 @@ public class CurveTransformedTest extends TestCase {
     public void testAffineTransformRotate() {
         final Rock v0 = new RockDouble(1, 1.5, 0.3);
         final double[] d = { v0.getY(), -v0.getX(), v0.getX(), v0.getY(), 0, 0 };
-        AffineTransform at = new AffineTransform(d);
-        double v = v0.distance(0, 0);
+        final AffineTransform at = new AffineTransform(d);
+        final double v = v0.distance(0, 0);
         at.scale(1 / v, 1 / v);
         assertEquals(AffineTransform.TYPE_GENERAL_ROTATION, at.getType());
         assertEquals("", 1.0, at.getDeterminant(), 1e-9);
@@ -115,17 +113,17 @@ public class CurveTransformedTest extends TestCase {
         final double v = v0_wc.distance(0, 0);
         final double[] d = { v0_wc.getY(), -v0_wc.getX(), v0_wc.getX(),
                 v0_wc.getY(), 0, 0 };
-        AffineTransform at = new AffineTransform(d);
+        final AffineTransform at = new AffineTransform(d);
         at.scale(1 / v, 1 / v);
         assertEquals(AffineTransform.TYPE_GENERAL_ROTATION
                 + AffineTransform.TYPE_UNIFORM_SCALE, at.getType());
-        assertEquals("", 1.0, at.getDeterminant(), 1e-9);
-        assertEquals("", 0.9028605188239303, at.getScaleX(), 1e-9);
-        assertEquals("", at.getScaleX(), at.getScaleY(), 1e-9);
-        assertEquals("", 0.42993358039234775, at.getShearX(), 1e-9);
-        assertEquals("", -at.getShearX(), at.getShearY(), 1e-9);
-        assertEquals("", 0, at.getTranslateX(), 1e-9);
-        assertEquals("", 0, at.getTranslateY(), 1e-9);
+        assertEquals(1.0, at.getDeterminant());
+        assertEquals(0.9028605188239303, at.getScaleX());
+        assertEquals(at.getScaleX(), at.getScaleY());
+        assertEquals(0.42993358039234775, at.getShearX());
+        assertEquals(-at.getShearX(), at.getShearY());
+        assertEquals(0, at.getTranslateX());
+        assertEquals(0, at.getTranslateY());
         Point2D p = null;
         p = at.transform(new Point2D.Double(5, 1.3), null);
         assertEquals("Point2D.Double[5.073216248629703, -0.9759492274906292]",
@@ -136,13 +134,13 @@ public class CurveTransformedTest extends TestCase {
         assertEquals(AffineTransform.TYPE_GENERAL_ROTATION
                 + AffineTransform.TYPE_TRANSLATION
                 + AffineTransform.TYPE_UNIFORM_SCALE, at.getType());
-        assertEquals("", 1.0, at.getDeterminant(), 1e-9);
-        assertEquals("", 0.9028605188239303, at.getScaleX(), 1e-9);
-        assertEquals("", at.getScaleX(), at.getScaleY(), 1e-9);
-        assertEquals("", 0.42993358039234775, at.getShearX(), 1e-9);
-        assertEquals("", -at.getShearX(), at.getShearY(), 1e-9);
-        assertEquals("", p0_wc.getX(), at.getTranslateX(), 1e-9);
-        assertEquals("", p0_wc.getY(), at.getTranslateY(), 1e-9);
+        assertEquals(1.0, at.getDeterminant());
+        assertEquals(0.9028605188239303, at.getScaleX());
+        assertEquals(at.getScaleX(), at.getScaleY());
+        assertEquals(0.42993358039234775, at.getShearX());
+        assertEquals(-at.getShearX(), at.getShearY());
+        assertEquals(p0_wc.getX(), at.getTranslateX());
+        assertEquals(p0_wc.getY(), at.getTranslateY());
 
         p = at.transform(new Point2D.Double(5, 1.3), null);
         assertEquals("Point2D.Double[8.073216248629702, 2.524050772509371]", p
@@ -154,48 +152,49 @@ public class CurveTransformedTest extends TestCase {
      * with positive y axis along wc(2,4.2) into World Coordinates (wc). Uses a
      * Point rc(5,1.3) = wc(8,2.5).
      * 
-     * @see CurveTransformed#create(Point2D, Point2D)
+     * @see CurveTransformed#createRc2Wc(AffineTransform, Point2D, Point2D)
      */
-    public void testCreate() {
+    public void testCreateRc2Wc() {
         final Point2D p0_wc = new Point2D.Double(3, 3.5);
         final Rock v0_wc = new RockDouble(2, 4.2, 0.3);
-        AffineTransform at = CurveTransformed.create(p0_wc, v0_wc);
+        final AffineTransform at = CurveTransformed.createRc2Wc(null, p0_wc,
+                v0_wc);
         assertEquals(AffineTransform.TYPE_GENERAL_ROTATION
                 + AffineTransform.TYPE_TRANSLATION, at.getType());
-        assertEquals("", 1.0, at.getDeterminant(), 1e-9);
-        assertEquals("", 0.9028605188239303, at.getScaleX(), 1e-9);
-        assertEquals("", at.getScaleX(), at.getScaleY(), 1e-9);
-        assertEquals("", 0.42993358039234775, at.getShearX(), 1e-9);
-        assertEquals("", -at.getShearX(), at.getShearY(), 1e-9);
-        assertEquals("", p0_wc.getX(), at.getTranslateX(), 1e-9);
-        assertEquals("", p0_wc.getY(), at.getTranslateY(), 1e-9);
+        assertEquals(1.0, at.getDeterminant());
+        assertEquals(0.9028605188239303, at.getScaleX());
+        assertEquals(at.getScaleX(), at.getScaleY());
+        assertEquals(0.42993358039234775, at.getShearX());
+        assertEquals(-at.getShearX(), at.getShearY());
+        assertEquals(p0_wc.getX(), at.getTranslateX());
+        assertEquals(p0_wc.getY(), at.getTranslateY());
 
-        Point2D rc = new Point2D.Double(5, 1.3);
-        Point2D wc = at.transform(rc, null);
+        final Point2D rc = new Point2D.Double(5, 1.3);
+        final Point2D wc = at.transform(rc, null);
         assertEquals("Point2D.Double[8.073216248629704, 2.524050772509371]", wc
                 .toString());
 
         // angle in rc:
         double ang = Math.atan2(rc.getY(), rc.getX());
-        assertEquals("", 14.574216198038739, ang * 180 / Math.PI, 1e-9);
+        assertEquals(14.574216198038739, rad2deg(ang));
 
         // wc rotation:
         ang = Math.atan2(at.getShearY(), at.getScaleY());
-        assertEquals("", -25.463345061871614, ang * 180 / Math.PI, 1e-9);
+        assertEquals(-25.463345061871614, rad2deg(ang));
         final double[] d = new double[6];
         at.getMatrix(d);
         ang = Math.atan2(-d[2], d[3]);
-        assertEquals("", -25.463345061871614, ang * 180 / Math.PI, 1e-9);
+        assertEquals(-25.463345061871614, rad2deg(ang));
 
         // angle in wc:
         ang = Math.atan2(wc.getY(), wc.getX());
-        assertEquals("", 17.36159358309492, ang * 180 / Math.PI, 1e-9);
+        assertEquals(17.36159358309492, rad2deg(ang));
     }
 
     public void testValueC0() throws MathException {
         Rock ret = null;
-        AffineTransform at = AffineTransform.getScaleInstance(0.75, 1.25);
-        CurveTransformed cw = new CurveTransformed(new CurveRockBase() {
+        final AffineTransform at = AffineTransform.getScaleInstance(0.75, 1.25);
+        final CurveTransformed cw = new CurveTransformed(new CurveRockBase() {
             public double at(int component, int derivative, double t) {
                 switch (component) {
                 case 0:

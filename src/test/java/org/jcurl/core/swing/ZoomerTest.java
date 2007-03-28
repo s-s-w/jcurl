@@ -36,7 +36,7 @@ import org.jcurl.core.base.Ice;
  */
 public class ZoomerTest extends TestCase {
 
-    private static void print(String msg, Point2D p) {
+    private static void print(final String msg, final Point2D p) {
         System.out.println(msg + p.toString());
     }
 
@@ -49,7 +49,7 @@ public class ZoomerTest extends TestCase {
         final float h = ch.y - cb.y;
         final float sca = width / h;
 
-        AffineTransform mat = new AffineTransform();
+        final AffineTransform mat = new AffineTransform();
         mat.translate(width / 2, height / 2);
         mat.scale(sca, sca);
         mat.rotate(Math.PI / 2);
@@ -77,7 +77,7 @@ public class ZoomerTest extends TestCase {
         final float h = ch.y - cb.y;
         final float sca = width / h;
 
-        AffineTransform mat = new AffineTransform();
+        final AffineTransform mat = new AffineTransform();
         mat.translate(0, (cb.y + ch.y) / 2);
         mat.scale(sca, sca);
         // mat.rotate(Math.PI / 2);
@@ -98,9 +98,9 @@ public class ZoomerTest extends TestCase {
     }
 
     public void test090_FixP() {
-        double w0 = 1;
-        double w = 3;
-        double wf = 2;
+        final double w0 = 1;
+        final double w = 3;
+        final double wf = 2;
         double d0 = 10;
         double d = 30;
         double df = d0 + (wf - w0) * d / w;
@@ -121,9 +121,9 @@ public class ZoomerTest extends TestCase {
         final Point2D src = new Point2D.Double();
         final AffineTransform mat = new AffineTransform();
         final Rectangle2D wc = new Rectangle2D.Double(1, 2, 3, 4);
-        Rectangle dc = new Rectangle(1, 2, 3, 4);
+        final Rectangle dc = new Rectangle(1, 2, 3, 4);
         final Point2D fix = new Point2D.Double(1, 2);
-        Zoomer zom = new Zoomer("1:1", wc, fix);
+        final Zoomer zom = new Zoomer("1:1", wc, fix);
 
         mat.setToIdentity();
         zom.computeWctoDcTrafo(dc, Orientation.N, false, mat);
@@ -148,9 +148,9 @@ public class ZoomerTest extends TestCase {
         final Point2D src = new Point2D.Double();
         final AffineTransform mat = new AffineTransform();
         final Rectangle2D wc = new Rectangle2D.Double(1, 2, 3, 4);
-        Rectangle dc = new Rectangle(-1, -2, 3, 4);
+        final Rectangle dc = new Rectangle(-1, -2, 3, 4);
         final Point2D fix = new Point2D.Double(1, 2);
-        Zoomer zom = new Zoomer("1:1", wc, fix);
+        final Zoomer zom = new Zoomer("1:1", wc, fix);
 
         mat.setToIdentity();
         zom.computeWctoDcTrafo(dc, Orientation.N, false, mat);

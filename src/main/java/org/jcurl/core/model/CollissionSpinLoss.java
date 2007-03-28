@@ -62,9 +62,10 @@ public class CollissionSpinLoss extends Collider {
         setFricRockRock(0);
     }
 
-    public boolean compute(Rock xa, Rock xb, Rock va, Rock vb) {
+    public boolean compute(final Rock xa, final Rock xb, final Rock va,
+            final Rock vb) {
         // vector from a's center to b's:
-        Point2D r = MathVec.sub(xb, xa, null);
+        final Point2D r = MathVec.sub(xb, xa, null);
         double tmp = MathVec.abs(r);
         if (!(va.nonZero() || vb.nonZero())
                 || tmp > RADIUS + RADIUS + HIT_MAX_DIST)
@@ -104,13 +105,13 @@ public class CollissionSpinLoss extends Collider {
             // Va[1] = eX[1] * va[0] + eY[1] * va[1];
             mat.inverseTransform(_va, va);
             mat.inverseTransform(_vb, vb);
-        } catch (NoninvertibleTransformException e) {
+        } catch (final NoninvertibleTransformException e) {
             throw new RuntimeException("matrix MUST be invertible.", e);
         }
         return true;
     }
 
-    public void computeRC(Rock va, Rock vb) {
+    public void computeRC(final Rock va, final Rock vb) {
         // TODO Auto-generated method stub
 
     }
@@ -144,7 +145,7 @@ public class CollissionSpinLoss extends Collider {
         U = v / MASS;
     }
 
-    void singleLoss(Point2D va, Point2D vb, double[] w) {
+    void singleLoss(final Point2D va, final Point2D vb, final double[] w) {
         final double I = 2.0 * (1.0 / MASS + sqr(RADIUS) / INERTIA);
         final double FHdivOmega = Math.sqrt(2.0 * MASS * Loss());
 
@@ -158,7 +159,7 @@ public class CollissionSpinLoss extends Collider {
             cost0 = 0.0;
         assert cost0 <= 1.0;
 
-        Point2D dv = new Point2D.Double(sgn(Veff) * mu, 1.0);
+        final Point2D dv = new Point2D.Double(sgn(Veff) * mu, 1.0);
         // sint1 is the time when the Hook-force equals the friction.
         double sint1;
 
@@ -194,7 +195,7 @@ public class CollissionSpinLoss extends Collider {
         return;
     }
 
-    void singleNoLoss(Point2D va, Point2D vb, double[] w) {
+    void singleNoLoss(final Point2D va, final Point2D vb, final double[] w) {
         final double Veff = -vb.getX() - RADIUS * w[1] + va.getX() - RADIUS
                 * w[0];
         final double I = 2.0 * (1.0 / MASS + sqr(RADIUS) / INERTIA);

@@ -131,12 +131,12 @@ public class Calc1 {
         return expr(false);
     }
 
-    private double error(String s) {
+    private double error(final String s) {
         System.err.println(s);
         return 1;
     }
 
-    private double expr(boolean get) throws IOException {
+    private double expr(final boolean get) throws IOException {
         double left = term(get);
         for (;;)
             switch (curr_tok) {
@@ -204,7 +204,7 @@ public class Calc1 {
         return false;
     }
 
-    private double prim(boolean get) throws IOException {
+    private double prim(final boolean get) throws IOException {
         if (get)
             get_token();
         switch (curr_tok) {
@@ -219,7 +219,7 @@ public class Calc1 {
             case ASSIGN:
                 return w.assign(p, expr(true));
             case LP:
-                double v3 = w.function(p, expr(true));
+                final double v3 = w.function(p, expr(true));
                 if (curr_tok != RP)
                     return error(") expected");
                 get_token();
@@ -239,7 +239,7 @@ public class Calc1 {
         }
     }
 
-    double term(boolean get) throws IOException {
+    double term(final boolean get) throws IOException {
         double left = prim(get);
         for (;;)
             switch (curr_tok) {

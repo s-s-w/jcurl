@@ -28,8 +28,8 @@ public class Driver {
     // private static final ULogger log =
     // JCLoggerFactory.getLogger(Driver.class);
 
-    public static void main(String[] args) {
-        JFrame frame = new MenuDemo();
+    public static void main(final String[] args) {
+        final JFrame frame = new MenuDemo();
         frame.show();
     }
 }

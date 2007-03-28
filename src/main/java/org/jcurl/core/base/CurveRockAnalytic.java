@@ -41,7 +41,7 @@ public class CurveRockAnalytic extends CurveRockBase {
         this.f = f;
     }
 
-    public double at(int dim, int c, double t) {
+    public double at(final int dim, final int c, final double t) {
         return f.at(dim, c, t);
     }
 

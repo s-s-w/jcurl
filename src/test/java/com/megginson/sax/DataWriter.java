@@ -59,13 +59,13 @@ import org.xml.sax.XMLReader;
  * </p>
  * 
  * <pre>
- *          &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
- *         
- *          &lt;Person&gt;
- *            &lt;name&gt;Jane Smith&lt;/name&gt;
- *            &lt;date-of-birth&gt;1965-05-23&lt;/date-of-birth&gt;
- *            &lt;citizenship&gt;US&lt;/citizenship&gt;
- *          &lt;/Person&gt;
+ *           &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *          
+ *           &lt;Person&gt;
+ *             &lt;name&gt;Jane Smith&lt;/name&gt;
+ *             &lt;date-of-birth&gt;1965-05-23&lt;/date-of-birth&gt;
+ *             &lt;citizenship&gt;US&lt;/citizenship&gt;
+ *           &lt;/Person&gt;
  * </pre>
  * 
  * <p>
@@ -100,7 +100,7 @@ class DataWriter extends XMLWriter {
      * @param xmlreader
      *            The parent in the filter chain.
      */
-    public DataWriter(XMLReader xmlreader) {
+    public DataWriter(final XMLReader xmlreader) {
         super(xmlreader);
     }
 
@@ -110,7 +110,7 @@ class DataWriter extends XMLWriter {
      * @param writer
      *            The character stream where the XML document will be written.
      */
-    public DataWriter(Writer writer) {
+    public DataWriter(final Writer writer) {
         super(writer);
     }
 
@@ -125,7 +125,7 @@ class DataWriter extends XMLWriter {
      * @param writer
      *            The character stream where the XML document will be written.
      */
-    public DataWriter(XMLReader xmlreader, Writer writer) {
+    public DataWriter(final XMLReader xmlreader, final Writer writer) {
         super(xmlreader, writer);
     }
 
@@ -156,7 +156,7 @@ class DataWriter extends XMLWriter {
      *            The new indent step (0 or less for no indentation).
      * @see #getIndentStep
      */
-    public void setIndentStep(int indentStep) {
+    public void setIndentStep(final int indentStep) {
         this.indentStep = indentStep;
     }
 
@@ -207,8 +207,8 @@ class DataWriter extends XMLWriter {
      *                further down the chain raises an exception.
      * @see XMLWriter#startElement(String, String, String, Attributes)
      */
-    public void startElement(String uri, String localName, String qName,
-            Attributes atts) throws SAXException {
+    public void startElement(final String uri, final String localName,
+            final String qName, final Attributes atts) throws SAXException {
         stateStack.push(SEEN_ELEMENT);
         state = SEEN_NOTHING;
         if (depth > 0)
@@ -243,8 +243,8 @@ class DataWriter extends XMLWriter {
      *                further down the chain raises an exception.
      * @see XMLWriter#endElement(String, String, String)
      */
-    public void endElement(String uri, String localName, String qName)
-            throws SAXException {
+    public void endElement(final String uri, final String localName,
+            final String qName) throws SAXException {
         depth--;
         if (state == SEEN_ELEMENT) {
             super.characters("\n");
@@ -280,8 +280,8 @@ class DataWriter extends XMLWriter {
      *                further down the chain raises an exception.
      * @see XMLWriter#emptyElement(String, String, String, Attributes)
      */
-    public void emptyElement(String uri, String localName, String qName,
-            Attributes atts) throws SAXException {
+    public void emptyElement(final String uri, final String localName,
+            final String qName, final Attributes atts) throws SAXException {
         state = SEEN_ELEMENT;
         if (depth > 0)
             super.characters("\n");
@@ -303,7 +303,7 @@ class DataWriter extends XMLWriter {
      *                filter further down the chain raises an exception.
      * @see XMLWriter#characters(char[], int, int)
      */
-    public void characters(char ch[], int start, int length)
+    public void characters(final char ch[], final int start, final int length)
             throws SAXException {
         state = SEEN_DATA;
         super.characters(ch, start, length);
@@ -322,8 +322,8 @@ class DataWriter extends XMLWriter {
      */
     private void doIndent() throws SAXException {
         if (indentStep > 0 && depth > 0) {
-            int n = indentStep * depth;
-            char ch[] = new char[n];
+            final int n = indentStep * depth;
+            final char ch[] = new char[n];
             for (int i = 0; i < n; i++)
                 ch[i] = ' ';
             this.characters(ch, 0, n);

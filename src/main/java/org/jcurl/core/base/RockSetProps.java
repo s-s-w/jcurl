@@ -47,11 +47,11 @@ public class RockSetProps {
         }
     }
 
-    public RockProps getDark(int i) {
+    public RockProps getDark(final int i) {
         return dark[i];
     }
 
-    public RockProps getLight(int i) {
+    public RockProps getLight(final int i) {
         return light[i];
     }
 }

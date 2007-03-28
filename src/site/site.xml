@@ -3,7 +3,7 @@
   <bannerLeft>
     <name>JCurl</name>
     <src>images/jcurl-banner-left.png</src>
-    <href>http://www.jcurl.org/</href>
+    <href>http://www.jcurl.org/index.html</href>
   </bannerLeft>
   <bannerRight>
     <name>Berlios</name>
@@ -21,6 +21,7 @@
       <item name="Introduction" href="index.html"/>
       <item name="Demo Applications" href="demoapps.html"/>
       <item name="Scientific Resources" href="science/index.html"/>
+      <item name="Links" href="links.html"/>
       
       <!-- item name="Release Notes" href="release-notes.html" />
       <item name="General Information" href="about.html"/>

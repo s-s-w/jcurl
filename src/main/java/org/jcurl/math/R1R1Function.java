@@ -40,7 +40,7 @@ public abstract class R1R1Function extends R1RNFunction {
      * @return the value at <code>x</code>
      * @see R1R1Function#at(int, double)
      */
-    public double at(double x) {
+    public double at(final double x) {
         return at(0, x);
     }
 
@@ -70,7 +70,7 @@ public abstract class R1R1Function extends R1RNFunction {
      * @throws IllegalArgumentException
      *             if <code>dim != 0</code>
      */
-    public double at(int dim, int c, double x) {
+    public double at(final int dim, final int c, final double x) {
         if (dim != 0)
             throw new IllegalArgumentException("Dimension must be 0");
         return this.at(c, x);
@@ -86,7 +86,7 @@ public abstract class R1R1Function extends R1RNFunction {
      *            start value
      * @return x for getC(c, x) = 0
      */
-    public double computeNewtonZero(final int c, double x) {
+    public double computeNewtonZero(final int c, final double x) {
         return this.computeNewtonZero(0, c, x);
     }
 

@@ -43,7 +43,7 @@ public class DomWalkerPostfix extends DomWalker {
         this(new StringBuffer());
     }
 
-    public DomWalkerPostfix(StringBuffer b) {
+    public DomWalkerPostfix(final StringBuffer b) {
         buf = b;
     }
 
@@ -51,7 +51,7 @@ public class DomWalkerPostfix extends DomWalker {
         buf.setLength(0);
     }
 
-    public void walk(MathDom.BinaryOp n) {
+    public void walk(final MathDom.BinaryOp n) {
         buf.append(' ');
         buf.append(n.op).append(' ');
         this.walk(n.left);
@@ -59,24 +59,24 @@ public class DomWalkerPostfix extends DomWalker {
         this.walk(n.right);
     }
 
-    public void walk(MathDom.Block n) {
+    public void walk(final MathDom.Block n) {
         this.walk(n.arg);
     }
 
-    public void walk(MathDom.Function n) {
+    public void walk(final MathDom.Function n) {
         buf.append(n.name).append(' ');
         this.walk(n.arg);
     }
 
-    public void walk(MathDom.Literal n) {
+    public void walk(final MathDom.Literal n) {
         buf.append(n.val);
     }
 
-    public void walk(MathDom.Parameter n) {
+    public void walk(final MathDom.Parameter n) {
         buf.append(n.name);
     }
 
-    public void walk(MathDom.UnaryOp n) {
+    public void walk(final MathDom.UnaryOp n) {
         buf.append(n.op);
         this.walk(n.arg);
     }

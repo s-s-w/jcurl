@@ -37,16 +37,16 @@ public class FunctionBridgeTest extends TestCase {
 
             private final R1R1Function root;
 
-            public Curl2Jakarta(R1R1Function f, int diff) {
-                this.root = f;
+            public Curl2Jakarta(final R1R1Function f, final int diff) {
+                root = f;
                 this.diff = diff;
             }
 
-            public double at(double x) {
+            public double at(final double x) {
                 return root.at(diff, x);
             }
 
-            public double at(int derivative, double x) {
+            public double at(final int derivative, final double x) {
                 return root.at(diff + derivative, x);
             }
 
@@ -54,11 +54,11 @@ public class FunctionBridgeTest extends TestCase {
                 return new Curl2Jakarta(root, diff + 1);
             }
 
-            public double value(double x)
+            public double value(final double x)
                     throws org.apache.commons.math.FunctionEvaluationException {
                 try {
                     return root.at(diff, x);
-                } catch (RuntimeException e) {
+                } catch (final RuntimeException e) {
                     final org.apache.commons.math.FunctionEvaluationException fe = new org.apache.commons.math.FunctionEvaluationException(
                             x, e.getMessage());
                     fe.initCause(e);
@@ -72,20 +72,20 @@ public class FunctionBridgeTest extends TestCase {
 
             private Jakarta2Curl deriv = null;
 
-            public Jakarta2Curl(UnivariateRealFunction f) {
-                this.base = f;
+            public Jakarta2Curl(final UnivariateRealFunction f) {
+                base = f;
             }
 
-            public double at(double x) {
+            public double at(final double x) {
                 try {
                     return base.value(x);
-                } catch (org.apache.commons.math.MathException e) {
+                } catch (final org.apache.commons.math.MathException e) {
                     // new org.jcurl.core.math.FunctionEvaluationException();
                     throw new RuntimeException(e);
                 }
             }
 
-            public double at(int derivative, double x) {
+            public double at(final int derivative, final double x) {
                 if (derivative < 0)
                     // TODO throw new DifferentiationException();
                     throw new RuntimeException();
@@ -108,13 +108,13 @@ public class FunctionBridgeTest extends TestCase {
                 return deriv;
             }
 
-            public double value(double x)
+            public double value(final double x)
                     throws org.apache.commons.math.FunctionEvaluationException {
                 return base.value(x);
             }
         }
 
-        public static FunctionBridge newInstance(Object o) {
+        public static FunctionBridge newInstance(final Object o) {
             if (o instanceof FunctionBridge)
                 return (FunctionBridge) o;
             if (o instanceof R1R1Function)
@@ -137,9 +137,8 @@ public class FunctionBridgeTest extends TestCase {
             assertEquals(b0.at(x), b0.value(x), 1e-9);
             assertEquals(b1.at(x), b1.value(x), 1e-9);
             assertEquals(b0.at(x), b1.at(x), 1e-9);
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 100; i++)
                 assertEquals(b0.at(i, x), b1.at(i, x), 1e-9);
-            }
         }
     }
 }

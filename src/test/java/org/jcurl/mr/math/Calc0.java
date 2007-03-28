@@ -79,12 +79,12 @@ public class Calc0 {
         return expr(false);
     }
 
-    private double error(String s) {
+    private double error(final String s) {
         System.err.println(s);
         return 1;
     }
 
-    private double expr(boolean get) throws IOException {
+    private double expr(final boolean get) throws IOException {
         double left = term(get);
         for (;;)
             switch (curr_tok) {
@@ -158,7 +158,7 @@ public class Calc0 {
         return false;
     }
 
-    private double prim(boolean get) throws IOException {
+    private double prim(final boolean get) throws IOException {
         if (get)
             get_token();
         switch (curr_tok) {
@@ -168,7 +168,7 @@ public class Calc0 {
             return v;
         case NAME:
             final String p = string_value.toString();
-            double v2 = getNameVal(p);
+            final double v2 = getNameVal(p);
             if (get_token() == ASSIGN)
                 setNameVal(p, expr(true));
             return v2;
@@ -189,7 +189,7 @@ public class Calc0 {
         ;
     }
 
-    double term(boolean get) throws IOException {
+    double term(final boolean get) throws IOException {
         double left = prim(get);
         for (;;)
             switch (curr_tok) {

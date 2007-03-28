@@ -49,21 +49,8 @@ public class SlideNoCurl extends SlideBase implements Strategy, Factory {
     public SlideNoCurl(final double drawToTeeTime, final double drawToTeeCurl) {
         if (drawToTeeCurl != 0)
             throw new IllegalArgumentException("Curl must be zero!");
-        this.beta = Ice.FAR_HOG_2_TEE / MathVec.sqr(drawToTeeTime);
-        this.drawToTeeV0 = 2 * Ice.FAR_HOG_2_TEE / drawToTeeTime;
-    }
-
-    /**
-     * Delegates to {@link #computeRcPoly(double, double, double)}.
-     * 
-     * @param alpha0
-     * @param v0
-     * @param omega0
-     * @return The trajectory in rock coordinates.
-     */
-    private CurveRock computeRc(final double alpha0, final double v0,
-            final double omega0) {
-        return new CurveRockAnalytic(computeRcPoly(alpha0, v0, omega0));
+        beta = Ice.FAR_HOG_2_TEE / MathVec.sqr(drawToTeeTime);
+        drawToTeeV0 = 2 * Ice.FAR_HOG_2_TEE / drawToTeeTime;
     }
 
     /**
@@ -80,10 +67,14 @@ public class SlideNoCurl extends SlideBase implements Strategy, Factory {
      * @param vy
      *            (world coordinates)
      * @return the transformation matrix
+     * @see CurveTransformed#createRc2Wc(AffineTransform, double, double,
+     *      double, double)
+     * @deprecated Use
+     *             {@link CurveTransformed#createRc2Wc(AffineTransform, double, double, double, double)}
      */
-    public AffineTransform computeRc2Wc(AffineTransform ret, final double x0,
-            final double y0, final double vx, final double vy) {
-        throw new UnsupportedOperationException();
+    public AffineTransform computeRc2Wc(final AffineTransform ret,
+            final double x0, final double y0, final double vx, final double vy) {
+        return CurveTransformed.createRc2Wc(ret, x0, y0, vx, vy);
     }
 
     /**
@@ -96,11 +87,13 @@ public class SlideNoCurl extends SlideBase implements Strategy, Factory {
      * @param v
      *            (world coordinates)
      * @return the transformation matrix
-     * @see #computeRc2Wc(AffineTransform, double, double, double, double)
+     * @see CurveTransformed#createRc2Wc(AffineTransform, Point2D, Point2D)
+     * @deprecated Use
+     *             {@link CurveTransformed#createRc2Wc(AffineTransform, Point2D, Point2D)}
      */
-    public AffineTransform computeRc2Wc(AffineTransform ret, final Point2D x,
-            final Point2D v) {
-        return computeRc2Wc(ret, x.getX(), x.getY(), v.getX(), v.getY());
+    public AffineTransform computeRc2Wc(final AffineTransform ret,
+            final Point2D x, final Point2D v) {
+        return CurveTransformed.createRc2Wc(ret, x, v);
     }
 
     /**

@@ -126,14 +126,16 @@ public class SlideStraightTest extends TestCase {
 
     public void test020_createCurve() {
         log.debug("start");
-        double t0 = 2.894295921183459;
+        final double t0 = 2.894295921183459;
         double dt = 0;
-        Rock x0 = new RockDouble(0.8425835967063904, 1.7610043287277222, 0.0);
-        Rock v0 = new RockDouble(0.1020171046257019, 0.06152835115790367, 0.0);
+        final Rock x0 = new RockDouble(0.8425835967063904, 1.7610043287277222,
+                0.0);
+        final Rock v0 = new RockDouble(0.1020171046257019, 0.06152835115790367,
+                0.0);
 
-        double v = Math.sqrt(sqr(v0.getX()) + sqr(v0.getY()));
-        double a = s.getAccel();
-        double[] par = Polynome.getPolyParams(t0, 0, v, a);
+        final double v = Math.sqrt(sqr(v0.getX()) + sqr(v0.getY()));
+        final double a = s.getAccel();
+        final double[] par = Polynome.getPolyParams(t0, 0, v, a);
         log.info("raw : " + Polynome.toString(par));
 
         assertEquals("", 0, Polynome.poly(0, t0 + dt, par), 1e-9);
@@ -148,7 +150,7 @@ public class SlideStraightTest extends TestCase {
         assertEquals("", a, Polynome.poly(2, t0 + dt, par), 1e-9);
 
         dt = 0;
-        R1RNFunction c = s.createCurve(t0, x0, v0);
+        final R1RNFunction c = s.createCurve(t0, x0, v0);
         // untransformed : p(x) = 0.10406485628694145 + 0.11913533326608741*x +
         // -0.0535848758171096*x**2
         // Curve x : p(x) = 0.9316956597747996*x**0 + 0.1020171046257019*x**1 +

@@ -94,7 +94,7 @@ class ParserInfix {
     public static MathDom.Node parse(final String cin) throws ParseException {
         try {
             return parse(new StringReader(cin));
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new RuntimeException("Couldn't read from string.", e);
         }
     }
@@ -111,7 +111,8 @@ class ParserInfix {
         this.cin = cin;
     }
 
-    private MathDom.Node expr(boolean get) throws IOException, ParseException {
+    private MathDom.Node expr(final boolean get) throws IOException,
+            ParseException {
         MathDom.Node left = term(get);
         for (;;)
             switch (curr_tok) {
@@ -189,7 +190,8 @@ class ParserInfix {
         return false;
     }
 
-    private MathDom.Node prim(boolean get) throws IOException, ParseException {
+    private MathDom.Node prim(final boolean get) throws IOException,
+            ParseException {
         if (get)
             get_token();
         switch (curr_tok) {
@@ -204,7 +206,7 @@ class ParserInfix {
                 return new MathDom.BinaryOp((char) curr_tok,
                         new MathDom.Parameter(p), expr(true));
             case LP:
-                MathDom.Node v3 = new MathDom.Function(p, expr(true));
+                final MathDom.Node v3 = new MathDom.Function(p, expr(true));
                 if (curr_tok != RP)
                     throw new ParseException(") expected", pos);
                 get_token();
@@ -224,7 +226,8 @@ class ParserInfix {
         }
     }
 
-    private MathDom.Node term(boolean get) throws IOException, ParseException {
+    private MathDom.Node term(final boolean get) throws IOException,
+            ParseException {
         MathDom.Node left = prim(get);
         for (;;)
             switch (curr_tok) {

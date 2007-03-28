@@ -112,7 +112,7 @@ public class PropertyChangeSupport {
                 listenerMap.put(props[idx].getName(), new WeakHashSet());
             listenerMap.put(ALL_PROPERTIES, new WeakHashSet());
             this.producer = producer;
-        } catch (IntrospectionException ex) {
+        } catch (final IntrospectionException ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -187,7 +187,7 @@ public class PropertyChangeSupport {
                     .get(ALL_PROPERTIES));
             targets.addAll((Set) listenerMap.get(event.getPropertyName()));
             // Fire events at the listeners.
-            for (Iterator iter = targets.iterator(); iter.hasNext();)
+            for (final Iterator iter = targets.iterator(); iter.hasNext();)
                 ((PropertyChangeListener) iter.next()).propertyChange(event);
         }
     }
@@ -204,8 +204,8 @@ public class PropertyChangeSupport {
      */
     public void firePropertyChange(final String property, final boolean old,
             final boolean neo) {
-        PropertyChangeEvent event = new PropertyChangeEvent(producer, property,
-                Boolean.valueOf(old), Boolean.valueOf(neo));
+        final PropertyChangeEvent event = new PropertyChangeEvent(producer,
+                property, Boolean.valueOf(old), Boolean.valueOf(neo));
         this.firePropertyChange(event);
     }
 
@@ -221,8 +221,8 @@ public class PropertyChangeSupport {
      */
     public void firePropertyChange(final String property, final double old,
             final double neo) {
-        PropertyChangeEvent event = new PropertyChangeEvent(producer, property,
-                new Double(old), new Double(neo));
+        final PropertyChangeEvent event = new PropertyChangeEvent(producer,
+                property, new Double(old), new Double(neo));
         this.firePropertyChange(event);
     }
 
@@ -238,8 +238,8 @@ public class PropertyChangeSupport {
      */
     public void firePropertyChange(final String property, final int old,
             final int neo) {
-        PropertyChangeEvent event = new PropertyChangeEvent(producer, property,
-                new Integer(old), new Integer(neo));
+        final PropertyChangeEvent event = new PropertyChangeEvent(producer,
+                property, new Integer(old), new Integer(neo));
         this.firePropertyChange(event);
     }
 
@@ -269,9 +269,9 @@ public class PropertyChangeSupport {
      */
     public PropertyChangeListener[] getPropertyChangeListeners() {
         final Set all = new WeakHashSet();
-        PropertyChangeListener[] pcls = new PropertyChangeListener[0];
+        final PropertyChangeListener[] pcls = new PropertyChangeListener[0];
         synchronized (listenerMap) {
-            for (Iterator iter = listenerMap.values().iterator(); iter
+            for (final Iterator iter = listenerMap.values().iterator(); iter
                     .hasNext();)
                 all.addAll((Set) iter.next());
         }
@@ -289,7 +289,7 @@ public class PropertyChangeSupport {
     public PropertyChangeListener[] getPropertyChangeListeners(
             final String property) {
         validateNamedProperty(property);
-        PropertyChangeListener[] pcls = new PropertyChangeListener[0];
+        final PropertyChangeListener[] pcls = new PropertyChangeListener[0];
         Set namedListeners = null;
         synchronized (listenerMap) {
             namedListeners = new HashSet((Set) listenerMap.get(property));

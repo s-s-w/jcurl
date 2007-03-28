@@ -32,7 +32,7 @@ public class SpeedSet extends RockSet {
         super();
     }
 
-    protected SpeedSet(boolean fill) {
+    protected SpeedSet(final boolean fill) {
         super(fill);
     }
 

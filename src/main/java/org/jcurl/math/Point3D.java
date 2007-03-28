@@ -29,15 +29,15 @@ import java.awt.geom.Point2D;
 public abstract class Point3D extends Point2D {
 
     public double distanceSq(final Point3D b) {
-        return MathVec.sqr(this.getX() - b.getX())
-                + MathVec.sqr(this.getY() - b.getY())
-                + MathVec.sqr(this.getZ() - b.getZ());
+        return MathVec.sqr(getX() - b.getX()) + MathVec.sqr(getY() - b.getY())
+                + MathVec.sqr(getZ() - b.getZ());
     }
 
     public boolean equals(final Object b) {
         if (this == b)
             return true;
-        // TODO getClass http://www.angelikalanger.com/Articles/JavaSpektrum/02.Equals-Part2/02.Equals2.html
+        // TODO getClass
+        // http://www.angelikalanger.com/Articles/JavaSpektrum/02.Equals-Part2/02.Equals2.html
         if (b == null || !(b instanceof Point3D))
             return false;
         return equals((Point3D) b);
@@ -48,8 +48,7 @@ public abstract class Point3D extends Point2D {
             return true;
         if (b == null)
             return false;
-        return this.getX() == b.getX() && this.getY() == b.getY()
-                && this.getZ() == b.getZ();
+        return getX() == b.getX() && getY() == b.getY() && getZ() == b.getZ();
     }
 
     public abstract double getX();
@@ -70,7 +69,7 @@ public abstract class Point3D extends Point2D {
      * @param z
      *            (angle) the coordinates of this Point3D
      */
-    public void setLocation(double x, double y, double z) {
+    public void setLocation(final double x, final double y, final double z) {
         setX(x);
         setY(y);
         setZ(z);

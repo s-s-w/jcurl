@@ -91,7 +91,7 @@ public class MathDomTest extends TestCase {
     }
 
     public void test040_Param() throws ParseException {
-        Map p = new TreeMap();
+        final Map p = new TreeMap();
         MathDom.Node n = ParserInfix.parse("sqrt2=sqrt(2)");
         assertEquals("sqrt2 = sqrt(2.0)", DomWalkerInfix.toString(n));
         assertEquals(" = sqrt2 sqrt 2.0", DomWalkerPostfix.toString(n));

@@ -46,7 +46,7 @@ public class CurveCombined extends R1RNFunction {
      * @param max
      * @return found index
      */
-    static int binarySearch(double[] a, final double key, int min, int max) {
+    static int binarySearch(final double[] a, final double key, int min, int max) {
         for (;;) {
             if (key == a[min])
                 return min;
@@ -79,25 +79,25 @@ public class CurveCombined extends R1RNFunction {
     /**
      * @param dim
      */
-    public CurveCombined(int dim) {
+    public CurveCombined(final int dim) {
         super(dim);
         t0 = new double[initialSize];
         fkt = new R1RNFunction[initialSize];
     }
 
-    public void add(final double _t0, final R1RNFunction fkt) {
+    public void add(final double t0, final R1RNFunction fkt) {
         // re-alloc?
-        if (parts == t0.length) {
+        if (parts == this.t0.length) {
             final int siz = 1 + parts * growth / 100;
             final double[] t = new double[siz];
-            System.arraycopy(t0, 0, t, 0, parts);
-            t0 = t;
+            System.arraycopy(this.t0, 0, t, 0, parts);
+            this.t0 = t;
             final R1RNFunction[] c = new R1RNFunction[siz];
             System.arraycopy(this.fkt, 0, c, 0, parts);
             this.fkt = c;
         }
         // add
-        t0[parts] = _t0;
+        this.t0[parts] = t0;
         this.fkt[parts++] = fkt;
     }
 
@@ -111,7 +111,7 @@ public class CurveCombined extends R1RNFunction {
      * @param t
      * @return the value
      */
-    public double at(int dim, int c, double t) {
+    public double at(final int dim, final int c, final double t) {
         final int idx = findFktIdx_BS(t);
         if (false && log.isDebugEnabled())
             log.debug("t=" + t + " idx=" + idx);
@@ -128,11 +128,11 @@ public class CurveCombined extends R1RNFunction {
      * @param t
      * @return the curve index
      */
-    private int findFktIdx_BS(double t) {
+    private int findFktIdx_BS(final double t) {
         if (t < t0[0])
             throw new IllegalArgumentException("t < tmin");
         // find the correct index
-        int idx = CurveCombined.binarySearch(t0, t, 0, parts - 1);
+        final int idx = CurveCombined.binarySearch(t0, t, 0, parts - 1);
         if (idx >= 0)
             return idx;
         if (idx == -1)

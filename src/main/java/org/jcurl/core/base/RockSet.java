@@ -68,7 +68,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
      * @param index16
      * @return if the given rock's bit is set
      */
-    public static boolean isSet(int mask, int index16) {
+    public static boolean isSet(final int mask, final int index16) {
         return 1 == (1 & mask >> index16);
     }
 
@@ -80,7 +80,8 @@ public abstract class RockSet extends MutableObject implements Cloneable,
      * @param isDark
      * @return if the given rock's bit is set
      */
-    public static boolean isSet(int mask, int index8, boolean isDark) {
+    public static boolean isSet(final int mask, final int index8,
+            final boolean isDark) {
         return isSet(mask, toIdx16(isDark, index8));
     }
 
@@ -124,7 +125,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
         this(true);
     }
 
-    protected RockSet(boolean fill) {
+    protected RockSet(final boolean fill) {
         if (fill)
             for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
                 dark[i] = new RockFloat();
@@ -145,10 +146,11 @@ public abstract class RockSet extends MutableObject implements Cloneable,
 
     public abstract Object clone();
 
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj)
             return true;
-        // TODO getClass http://www.angelikalanger.com/Articles/JavaSpektrum/02.Equals-Part2/02.Equals2.html
+        // TODO getClass
+        // http://www.angelikalanger.com/Articles/JavaSpektrum/02.Equals-Part2/02.Equals2.html
         if (obj == null || !(obj instanceof RockSet))
             return false;
         final RockSet b = (RockSet) obj;
@@ -161,7 +163,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
         return true;
     }
 
-    public Rock getDark(int i) {
+    public Rock getDark(final int i) {
         return dark[i];
     }
 
@@ -169,12 +171,12 @@ public abstract class RockSet extends MutableObject implements Cloneable,
         return lastChanged;
     }
 
-    public Rock getLight(int i) {
+    public Rock getLight(final int i) {
         return light[i];
     }
 
-    public Rock getRock(int i) {
-        return (i % 2 == 0) ? dark[i / 2] : light[i / 2];
+    public Rock getRock(final int i) {
+        return i % 2 == 0 ? dark[i / 2] : light[i / 2];
     }
 
     public int hashCode() {
@@ -198,8 +200,8 @@ public abstract class RockSet extends MutableObject implements Cloneable,
 
     public RockSet setLocation(final RockSet src) {
         for (int i = ROCKS_PER_SET - 1; i >= 0; i--)
-            this.getRock(i).setLocation(src.getRock(i));
-        this.notifyChange();
+            getRock(i).setLocation(src.getRock(i));
+        notifyChange();
         return this;
     }
 }

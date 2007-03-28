@@ -37,8 +37,8 @@ public class XmlSerializer extends XmlSimpleWriter {
      * @param indent
      * @throws UnsupportedEncodingException
      */
-    public XmlSerializer(OutputStream stream, String encoding, boolean indent)
-            throws UnsupportedEncodingException {
+    public XmlSerializer(final OutputStream stream, final String encoding,
+            final boolean indent) throws UnsupportedEncodingException {
         super(new OutputStreamWriter(stream, encoding));
     }
 
@@ -46,7 +46,7 @@ public class XmlSerializer extends XmlSimpleWriter {
      * @param target
      * @param indent
      */
-    public XmlSerializer(Writer target, boolean indent) {
+    public XmlSerializer(final Writer target, final boolean indent) {
         super(target);
     }
 

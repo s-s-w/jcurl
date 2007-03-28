@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005 M. Rohrmoser
+ * Copyright (C) 2005-2007 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -16,27 +16,19 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.helpers;
+package org.jcurl.core.base;
 
 import junit.framework.TestCase;
 
-/**
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
- */
-public class DimValTest extends TestCase {
+public abstract class TestBase extends TestCase {
 
-    public static void main(final String[] args) {
-        junit.textui.TestRunner.run(DimValTest.class);
+    protected void assertEquals(final double expected, final double found) {
+        final double precision = 1e-9;
+        assertEquals("expected:<" + expected + "> +/-:<" + precision
+                + "> but was:<" + found + ">", expected, found, precision);
     }
 
-    public void test010_Convert() {
-        final DimVal in = new DimVal(12, Dim.INCH);
-        final DimVal ft = new DimVal(1, Dim.FOOT);
-        final DimVal m = new DimVal(0.3048, Dim.METER);
-
-        assertEquals(m, m.to(Dim.METER));
-        assertEquals(m, in.to(Dim.METER));
-        assertEquals(m, ft.to(Dim.METER));
+    protected double rad2deg(final double rad) {
+        return 180 * rad / Math.PI;
     }
 }

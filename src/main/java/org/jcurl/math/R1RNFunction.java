@@ -42,7 +42,7 @@ public abstract class R1RNFunction {
      *            return value container
      * @return the c'th derivative at <code>t</code>
      */
-    public double[] at(int c, double t, double[] ret) {
+    public double[] at(final int c, final double t, double[] ret) {
         if (ret == null)
             ret = new double[dim];
         for (int i = dim - 1; i >= 0; i--)
@@ -61,7 +61,7 @@ public abstract class R1RNFunction {
      *            return value container
      * @return the c'th derivative at <code>t</code>
      */
-    public float[] at(int c, double t, float[] ret) {
+    public float[] at(final int c, final double t, float[] ret) {
         if (ret == null)
             ret = new float[dim];
         for (int i = dim - 1; i >= 0; i--)
@@ -95,8 +95,8 @@ public abstract class R1RNFunction {
      *            start value
      * @return x for getC(dim, c, x) = y
      */
-    public double computeNewtonValue(final int dim, final int c, double y,
-            double x) {
+    public double computeNewtonValue(final int dim, final int c,
+            final double y, double x) {
         final double eps = 1e-9;
         for (;;) {
             double dx = this.at(dim, c + 1, x);
@@ -120,7 +120,7 @@ public abstract class R1RNFunction {
      *            start value
      * @return x for getC(dim, c, x) = 0
      */
-    public double computeNewtonZero(final int dim, final int c, double x) {
+    public double computeNewtonZero(final int dim, final int c, final double x) {
         return computeNewtonValue(dim, c, 0, x);
     }
 }

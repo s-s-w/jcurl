@@ -48,7 +48,7 @@ public class Orientation extends EnumBase {
      * @param state
      * @param text
      */
-    private Orientation(int state, String text) {
+    private Orientation(final int state, final String text) {
         super(state, text);
         angle = state * Math.PI / 2;
     }
