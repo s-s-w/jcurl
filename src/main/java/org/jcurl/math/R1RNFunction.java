@@ -34,6 +34,8 @@ public abstract class R1RNFunction {
     /**
      * Compute the c'th derivative of all dimensions at <code>t</code>.
      * 
+     * Default implementation via iteration over {@link #at(int, int, double)}.
+     * 
      * @param c
      *            derivative (0=location, 1:speed, ...)
      * @param t

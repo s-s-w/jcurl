@@ -187,7 +187,7 @@ public class RockEditDisplay extends PositionDisplay {
         final double vwc_abs;
         {
             Point2D norm = speed.getRock(idx);
-            vwc_abs = MathVec.abs(norm);
+            vwc_abs = MathVec.abs2D(norm);
             if (vwc_abs == 0.0)
                 normwc = new Point2D.Double(0, -1);
             else

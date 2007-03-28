@@ -62,7 +62,7 @@ public class SlideStraight extends SlideCurves {
         if (log.isDebugEnabled())
             log.debug("t0=" + t0 + " " + x0 + " " + v0);
         // get direction of movement
-        final double vabs = MathVec.abs(v0);
+        final double vabs = MathVec.abs2D(v0);
         final double[] p1;
         final Point2D v0_1;
         if (vabs > 0) {

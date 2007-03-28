@@ -27,8 +27,8 @@ import java.awt.geom.Point2D;
  * @version $Id$
  */
 public final class MathVec {
-    public static double abs(final Point2D a) {
-        return Math.sqrt(scal(a, a));
+    public static double abs2D(final Point2D a) {
+        return a.distance(0, 0);
     }
 
     public static Point2D add(final Point2D a, final Point2D b, final Point2D c) {
