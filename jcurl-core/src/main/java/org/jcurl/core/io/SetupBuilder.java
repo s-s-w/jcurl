@@ -147,7 +147,7 @@ public class SetupBuilder {
                     MathVec.sub(v, x, v);
                     MathVec.mult(slideStrat.getInitialSpeed(x.getY(),
                             rocks[i].speed.val)
-                            / MathVec.abs(v), v, v);
+                            / MathVec.abs2D(v), v, v);
                     break;
                 case Coords:
                     if (rocks[i].vx != null)

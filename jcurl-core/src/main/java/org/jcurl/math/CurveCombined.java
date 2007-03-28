@@ -101,21 +101,23 @@ public class CurveCombined extends R1RNFunction {
         this.fkt[parts++] = fkt;
     }
 
+    public double at(final int dim, final int c, final double t) {
+        return fkt[findFktIdx_BS(t)].at(dim, c, t);
+    }
+
     /**
-     * Get the n-th derivative of one dimension.
+     * Get the n-th derivative of all dimensions.
      * 
-     * @param dim
-     *            dimension
      * @param c
      *            derivative
      * @param t
+     * @param ret
+     *            <code>null</code> creates a new instance
      * @return the value
+     * @see R1RNFunction#at(int, double, double[])
      */
-    public double at(final int dim, final int c, final double t) {
-        final int idx = findFktIdx_BS(t);
-        if (false && log.isDebugEnabled())
-            log.debug("t=" + t + " idx=" + idx);
-        return fkt[idx].at(dim, c, t);
+    public double[] at(final int c, final double t, double[] ret) {
+        return fkt[findFktIdx_BS(t)].at(c, t, ret);
     }
 
     public void clear() {

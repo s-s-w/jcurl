@@ -21,8 +21,6 @@ package org.jcurl.core.base;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
-import org.jcurl.core.helpers.NotImplementedYetException;
-
 /**
  * Decorator to apply an rc -&gt; wc {@link AffineTransform} and a time-shift.
  * 
@@ -65,10 +63,10 @@ public class CurveTransformed extends CurveRockBase {
     }
 
     /**
-     * Create the transformation from a Rock Coordinates (rc) System at p0_wc
-     * with positive y axis along v0_wc into World Coordinates (wc).
+     * Delegate to {@link #createRc2Wc(AffineTransform, double, double, double, double)}
      * 
      * @param ret
+     *            <code>null</code> creates a new one.
      * @param p0_wc
      * @param v0_wc
      * @return trafo rc -&gt; wc
@@ -116,9 +114,25 @@ public class CurveTransformed extends CurveRockBase {
         this(c, createRc2Wc(null, x0_wc, v0_wc), t0);
     }
 
-    public double[] at(final int derivative, double t, final double[] ret) {
+    public double[] at(final int derivative, double t, double[] ret) {
         t -= t0;
-        throw new NotImplementedYetException();
+        ret = rc.at(derivative, t, ret);
+        final double x;
+        final double y;
+        final double z;
+        if (derivative < 1) {
+            x = p[0] * ret[0] + p[2] * ret[1] + p[4];
+            y = p[1] * ret[0] + p[3] * ret[1] + p[5];
+            z = ret[2] + rot;
+        } else {
+            x = p[0] * ret[0] + p[2] * ret[1];
+            y = p[1] * ret[0] + p[3] * ret[1];
+            z = ret[2];
+        }
+        ret[0] = x;
+        ret[1] = y;
+        ret[2] = z;
+        return ret;
     }
 
     public Rock at(final int derivative, double t, Rock ret) {

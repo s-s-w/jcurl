@@ -66,7 +66,7 @@ public class CollissionSpinLoss extends Collider {
             final Rock vb) {
         // vector from a's center to b's:
         final Point2D r = MathVec.sub(xb, xa, null);
-        double tmp = MathVec.abs(r);
+        double tmp = MathVec.abs2D(r);
         if (!(va.nonZero() || vb.nonZero())
                 || tmp > RADIUS + RADIUS + HIT_MAX_DIST)
             return false;
@@ -163,7 +163,7 @@ public class CollissionSpinLoss extends Collider {
         // sint1 is the time when the Hook-force equals the friction.
         double sint1;
 
-        sint1 = FHdivOmega / (MASS * va.getY() * MathVec.abs(dv));
+        sint1 = FHdivOmega / (MASS * va.getY() * MathVec.abs2D(dv));
         if (sint1 > 1.0)
             sint1 = 1.0;
         assert 0.0 <= sint1;
@@ -175,7 +175,7 @@ public class CollissionSpinLoss extends Collider {
             // does not!
             dv.setLocation(0, 1);
 
-            sint1 = FHdivOmega / (MASS * va.getY() * MathVec.abs(dv));
+            sint1 = FHdivOmega / (MASS * va.getY() * MathVec.abs2D(dv));
             if (sint1 > 1.0)
                 sint1 = 1.0;
             assert 0.0 <= sint1;

@@ -118,6 +118,11 @@ public class SlideNoCurl extends SlideBase implements Strategy, Factory {
         return ret;
     }
 
+    public CurveRock computeRc(final Rock x0, final Rock v0) {
+        return new CurveRockAnalytic(computeRcPoly(x0.getZ(), MathVec.abs2D(v0),
+                v0.getZ()));
+    }
+
     /**
      * Compute the (absolute) speed at the hog line for a rock released with
      * given split-time.
