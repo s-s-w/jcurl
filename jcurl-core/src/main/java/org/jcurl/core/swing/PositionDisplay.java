@@ -82,23 +82,24 @@ public class PositionDisplay extends WCComponent implements
         initialize();
     }
 
-    public Component add(Component comp) {
+    public Component add(final Component comp) {
         throw new UnsupportedOperationException("Not allowed.");
     }
 
-    public Component add(Component comp, int index) {
+    public Component add(final Component comp, final int index) {
         throw new UnsupportedOperationException("Not allowed.");
     }
 
-    public void add(Component comp, Object constraints) {
+    public void add(final Component comp, final Object constraints) {
         throw new UnsupportedOperationException("Not allowed.");
     }
 
-    public void add(Component comp, Object constraints, int index) {
+    public void add(final Component comp, final Object constraints,
+            final int index) {
         throw new UnsupportedOperationException("Not allowed.");
     }
 
-    public Component add(String name, Component comp) {
+    public Component add(final String name, final Component comp) {
         throw new UnsupportedOperationException("Not allowed.");
     }
 
@@ -218,7 +219,7 @@ public class PositionDisplay extends WCComponent implements
      *            bit field which rocks to paint. {@link PositionSet#ALL_MASK}
      */
     protected void paintRocksWC(final Graphics2D g, final PositionSet rocks,
-            int mask) {
+            final int mask) {
         if ((mask & RockSet.ALL_MASK) == 0)
             return;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
@@ -255,7 +256,7 @@ public class PositionDisplay extends WCComponent implements
      * @param evt
      * @see #setPos(PositionSet)
      */
-    public void propertyChange(PropertyChangeEvent evt) {
+    public void propertyChange(final PropertyChangeEvent evt) {
         final Object tmp = evt.getNewValue();
         if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass()))
             this.setPos((PositionSet) tmp);
@@ -267,7 +268,7 @@ public class PositionDisplay extends WCComponent implements
      * @param icePainter
      *            the new painter
      */
-    public void setIcePainter(IcePainter icePainter) {
+    public void setIcePainter(final IcePainter icePainter) {
         this.icePainter = icePainter;
         this.repaint();
     }
@@ -307,7 +308,7 @@ public class PositionDisplay extends WCComponent implements
      * 
      * @param rockPainter
      */
-    public void setRockPainter(RockPainter rockPainter) {
+    public void setRockPainter(final RockPainter rockPainter) {
         this.rockPainter = rockPainter;
         this.repaint();
     }

@@ -42,14 +42,14 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
         addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(final WindowEvent e) {
                 log.info("Points collected: " + curve.size());
                 System.exit(0);
             }
         });
         setTitle("FirstFrame");
         this.setSize(600, 600);
-        Container contentPane = getContentPane();
+        final Container contentPane = getContentPane();
         // contentPane.add(new KeySketchPanel());
         // contentPane.add(new MouseRectPanel());
         final MouseSketchPanel mp = new MouseSketchPanel(' ');

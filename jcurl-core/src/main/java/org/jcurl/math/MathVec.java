@@ -103,7 +103,7 @@ public final class MathVec {
                 double s = 0;
                 for (int j = k; j < n; j++)
                     s += Math.abs(a[i][j]);
-                double q = Math.abs(a[i][k]) / s;
+                final double q = Math.abs(a[i][k]) / s;
                 if (q > max) {
                     max = q;
                     p[k] = i;

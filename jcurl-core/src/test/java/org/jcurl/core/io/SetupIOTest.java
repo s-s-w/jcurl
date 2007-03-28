@@ -64,7 +64,7 @@ public class SetupIOTest extends TestCase {
         final byte[] data = bout.toByteArray();
         assertEquals(2808, data.length);
 
-        SetupBuilder sb = SetupIO.load(new ByteArrayInputStream(data));
+        final SetupBuilder sb = SetupIO.load(new ByteArrayInputStream(data));
         assertEquals(SlideStraight.class, sb.getSlide().getClass());
         assertEquals(CollissionSpin.class, sb.getSlide().getColl().getClass());
         assertEquals(PositionSet.class, sb.getPos().getClass());

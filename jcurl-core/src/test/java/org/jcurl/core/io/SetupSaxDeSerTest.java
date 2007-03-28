@@ -52,12 +52,12 @@ public class SetupSaxDeSerTest extends TestCase {
     static {
         try {
             baseUrl = base.toURL();
-        } catch (MalformedURLException e) {
+        } catch (final MalformedURLException e) {
             throw new RuntimeException("This MUST be a valid url!", e);
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         junit.textui.TestRunner.run(SetupSaxDeSerTest.class);
     }
 

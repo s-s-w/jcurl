@@ -76,7 +76,7 @@ public class XmlSimpleWriter extends DefaultHandler {
 
     public static String getCurrentXPath(final List elemStack) {
         final StringBuffer buf = new StringBuffer();
-        for (Iterator it = elemStack.iterator(); it.hasNext();)
+        for (final Iterator it = elemStack.iterator(); it.hasNext();)
             buf.append('/').append((String) it.next());
         return buf.toString();
     }
@@ -116,7 +116,7 @@ public class XmlSimpleWriter extends DefaultHandler {
             throws SAXException {
         try {
             target.write(s);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new SAXException(e);
         }
     }
@@ -125,7 +125,7 @@ public class XmlSimpleWriter extends DefaultHandler {
             throws SAXException {
         try {
             target.write(src);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new SAXException(e);
         }
     }
@@ -189,7 +189,7 @@ public class XmlSimpleWriter extends DefaultHandler {
             throw new SAXException("Unclosed elements pending.");
         try {
             target.flush();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new SAXException("Error flushing xml writer.", e);
         }
     }
@@ -201,8 +201,8 @@ public class XmlSimpleWriter extends DefaultHandler {
      * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
      *      java.lang.String, java.lang.String)
      */
-    public void endElement(String namespaceURI, String localName, String qName)
-            throws SAXException {
+    public void endElement(final String namespaceURI, final String localName,
+            String qName) throws SAXException {
         final String recent = (String) elemStack.pop();
         if (qName == null && localName != null)
             qName = localName;
@@ -219,7 +219,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * 
      * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String)
      */
-    public void endPrefixMapping(String prefix) throws SAXException {
+    public void endPrefixMapping(final String prefix) throws SAXException {
         // TODO keep track of current mappings
         // TODO allow multiple changes at once
         ;
@@ -256,8 +256,8 @@ public class XmlSimpleWriter extends DefaultHandler {
      * 
      * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int)
      */
-    public void ignorableWhitespace(char[] ch, int start, int length)
-            throws SAXException {
+    public void ignorableWhitespace(final char[] ch, final int start,
+            final int length) throws SAXException {
         characters(ch, start, length);
     }
 
@@ -267,7 +267,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String,
      *      java.lang.String)
      */
-    public void processingInstruction(String target, String data)
+    public void processingInstruction(final String target, final String data)
             throws SAXException {
         writePlain("<?", this.target);
         writePlain(target, this.target);
@@ -292,7 +292,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * 
      * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String)
      */
-    public void skippedEntity(String name) throws SAXException {
+    public void skippedEntity(final String name) throws SAXException {
         throw new UnsupportedOperationException("Not supported.");
     }
 
@@ -317,8 +317,8 @@ public class XmlSimpleWriter extends DefaultHandler {
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
      *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
-    public void startElement(String namespaceURI, String localName,
-            String qName, Attributes atts) throws SAXException {
+    public void startElement(final String namespaceURI, final String localName,
+            String qName, final Attributes atts) throws SAXException {
         if (qName == null && localName != null)
             qName = localName;
         checkQName(qName);
@@ -341,7 +341,7 @@ public class XmlSimpleWriter extends DefaultHandler {
         // TODO handle attribute namespaces right
 
         if (atts != null) {
-            int len = atts.getLength();
+            final int len = atts.getLength();
             for (int i = 0; i < len; i++) {
                 final String val = atts.getValue(i);
                 String name = atts.getQName(i);
@@ -371,7 +371,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String,
      *      java.lang.String)
      */
-    public void startPrefixMapping(String prefix, String uri)
+    public void startPrefixMapping(final String prefix, final String uri)
             throws SAXException {
         if ("xml".equals(prefix)
                 && "http://www.w3.org/XML/1998/namespace".equals(uri))

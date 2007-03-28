@@ -46,7 +46,7 @@ public class DomWalkerEval extends DomWalker {
         this(null);
     }
 
-    public DomWalkerEval(Map params) {
+    public DomWalkerEval(final Map params) {
         this.params = params;
     }
 
@@ -58,7 +58,7 @@ public class DomWalkerEval extends DomWalker {
         v = 0;
     }
 
-    public void walk(MathDom.BinaryOp n) {
+    public void walk(final MathDom.BinaryOp n) {
         v = 0;
         final double l;
         if (n.op == '=')
@@ -96,11 +96,11 @@ public class DomWalkerEval extends DomWalker {
         }
     }
 
-    public void walk(MathDom.Block n) {
+    public void walk(final MathDom.Block n) {
         this.walk(n.arg);
     }
 
-    public void walk(MathDom.Function n) {
+    public void walk(final MathDom.Function n) {
         this.walk(n.arg);
         final String fkt = n.name;
         if ("sin".equals(fkt))
@@ -113,11 +113,11 @@ public class DomWalkerEval extends DomWalker {
             throw new IllegalArgumentException("Unknown function [" + fkt + "]");
     }
 
-    public void walk(MathDom.Literal n) {
+    public void walk(final MathDom.Literal n) {
         v = n.val;
     }
 
-    public void walk(MathDom.Parameter n) {
+    public void walk(final MathDom.Parameter n) {
         final Object t = params.get(n.name);
         if (t == null || !(t instanceof Number))
             throw new IllegalArgumentException("Parameter [" + n.name
@@ -125,7 +125,7 @@ public class DomWalkerEval extends DomWalker {
         v = ((Double) t).doubleValue();
     }
 
-    public void walk(MathDom.UnaryOp n) {
+    public void walk(final MathDom.UnaryOp n) {
         this.walk(n.arg);
         switch (n.op) {
         case '-':

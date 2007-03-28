@@ -247,7 +247,7 @@ public class XmlSimpleWriterTest extends TestCase {
         atts = new AttributesImpl();
         atts.addAttribute(null, null, "att1", null, "Attribute 1" + UGLY);
         dst.startElement(null, null, "sub1", atts);
-        String txt = UGLY;
+        final String txt = UGLY;
         dst.characters(txt.toCharArray(), 0, txt.length());
         dst.endElement(null, null, "sub1");
 
@@ -285,14 +285,14 @@ public class XmlSimpleWriterTest extends TestCase {
     }
 
     public void test015_NonWellFormed() throws SAXException {
-        XmlSimpleWriter dst = new XmlSimpleWriter(new StringWriter());
+        final XmlSimpleWriter dst = new XmlSimpleWriter(new StringWriter());
 
         dst.startDocument();
         dst.startElement(null, null, "root", null);
         try {
             dst.endDocument();
             fail("Exception expected");
-        } catch (SAXException e) {
+        } catch (final SAXException e) {
         }
 
         dst.startDocument();
@@ -300,7 +300,7 @@ public class XmlSimpleWriterTest extends TestCase {
         try {
             dst.endElement(null, null, "other");
             fail("Exception expected");
-        } catch (SAXException e) {
+        } catch (final SAXException e) {
         }
 
         dst.startDocument();
@@ -311,7 +311,7 @@ public class XmlSimpleWriterTest extends TestCase {
         try {
             dst.endElement(null, null, "other");
             fail("Exception expected");
-        } catch (SAXException e) {
+        } catch (final SAXException e) {
         }
     }
 

@@ -110,7 +110,7 @@ public abstract class SlideCurves extends SlideStrategy {
      * @param rocks
      * @return the c'th derivative of x,y,alpha
      */
-    protected RockSet getC(final int c, final double time, RockSet rocks) {
+    protected RockSet getC(final int c, final double time, final RockSet rocks) {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             this.getC(c, time, i, rocks.getRock(i));
         return rocks;
@@ -128,7 +128,8 @@ public abstract class SlideCurves extends SlideStrategy {
         return true;
     }
 
-    protected boolean move(double t0, double t1, int idx, Rock pos, Rock speed) {
+    protected boolean move(final double t0, final double t1, final int idx,
+            final Rock pos, final Rock speed) {
         this.getC(0, t1, idx, pos);
         this.getC(1, t1, idx, speed);
         return speed.getX() != 0 || speed.getY() != 0;

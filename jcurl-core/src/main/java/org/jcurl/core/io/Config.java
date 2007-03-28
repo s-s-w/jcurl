@@ -40,7 +40,7 @@ import org.jcurl.core.helpers.DimVal;
  */
 public class Config {
 
-    static DimVal getDim(String token) {
+    static DimVal getDim(final String token) {
         if ("HACK".equals(token))
             return new DimVal(Ice.FAR_HACK_2_TEE, Dim.METER);
         if ("FHOG".equals(token))

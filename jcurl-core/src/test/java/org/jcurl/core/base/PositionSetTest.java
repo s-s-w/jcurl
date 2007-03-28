@@ -34,7 +34,7 @@ import org.jcurl.core.helpers.Dim;
 public class PositionSetTest extends TestCase {
 
     public void testFindRockAtPos() {
-        PositionSet a = PositionSet.allHome();
+        final PositionSet a = PositionSet.allHome();
         a.getRock(1).setLocation(0, 0);
         assertEquals(1, PositionSet.findRockIndexAtPos(a, new Point2D.Float(0,
                 0)));
@@ -43,7 +43,7 @@ public class PositionSetTest extends TestCase {
     }
 
     public void testGetShotRocks() {
-        PositionSet a = new PositionSet();
+        final PositionSet a = new PositionSet();
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             a.getRock(i).setLocation(0, i * 0.5);
         assertEquals(1, PositionSet.getShotRocks(a));

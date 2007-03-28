@@ -47,7 +47,7 @@ public class MouseSketchPanel extends JPanel implements KeyListener {
      * 
      * @see javax.swing.JComponent#printComponent(java.awt.Graphics)
      */
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         g.drawLine(100, 110, 100, 90);
         g.drawLine(110, 100, 90, 100);
@@ -56,7 +56,8 @@ public class MouseSketchPanel extends JPanel implements KeyListener {
         g.drawArc(100, 100, -20, -20, 0, 360);
     }
 
-    private static void circle(Graphics g, int x, int y, int rx, int ry) {
+    private static void circle(final Graphics g, final int x, final int y,
+            final int rx, final int ry) {
         g.drawArc(x - rx, y - ry, 2 * rx, 2 * ry, 0, 360);
     }
 
@@ -92,7 +93,7 @@ public class MouseSketchPanel extends JPanel implements KeyListener {
     public MouseSketchPanel(final char hotKey) {
         this.hotKey = hotKey;
         addMouseMotionListener(new MouseMotionAdapter() {
-            public void mouseMoved(MouseEvent e) {
+            public void mouseMoved(final MouseEvent e) {
                 if (isHot)
                     MouseSketchPanel.this.lineTo(e.getPoint());
             }
@@ -108,7 +109,7 @@ public class MouseSketchPanel extends JPanel implements KeyListener {
         return true;
     }
 
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(final KeyEvent e) {
         if (e.getKeyChar() == hotKey) {
             log.debug("HotKey pressed");
             isHot = true;
@@ -127,14 +128,14 @@ public class MouseSketchPanel extends JPanel implements KeyListener {
         }
     }
 
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(final KeyEvent e) {
         if (e.getKeyChar() == hotKey) {
             log.debug("HotKey released");
             isHot = false;
         }
     }
 
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped(final KeyEvent e) {
     }
 
     private void lineTo(final Point p) {

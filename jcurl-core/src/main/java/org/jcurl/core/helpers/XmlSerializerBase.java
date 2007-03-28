@@ -119,7 +119,7 @@ class XmlSerializerBase implements ContentHandler {
             throw new SAXException("Unclosed elements pending.");
         try {
             target.close();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new SAXException(e);
         }
     }
@@ -131,8 +131,8 @@ class XmlSerializerBase implements ContentHandler {
      * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
      *      java.lang.String, java.lang.String)
      */
-    public void endElement(String namespaceURI, String localName, String qName)
-            throws SAXException {
+    public void endElement(final String namespaceURI, final String localName,
+            final String qName) throws SAXException {
         final String recent = (String) currentElement.pop();
         if (!recent.equals(qName))
             throw new SAXException("Cannot write non-wellformed stuff.");
@@ -154,7 +154,7 @@ class XmlSerializerBase implements ContentHandler {
      * 
      * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String)
      */
-    public void endPrefixMapping(String prefix) throws SAXException {
+    public void endPrefixMapping(final String prefix) throws SAXException {
         // TODO keep track of current mappings
         // TODO allow multiple changes at once
         ;
@@ -165,8 +165,8 @@ class XmlSerializerBase implements ContentHandler {
      * 
      * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int)
      */
-    public void ignorableWhitespace(char[] ch, int start, int length)
-            throws SAXException {
+    public void ignorableWhitespace(final char[] ch, final int start,
+            final int length) throws SAXException {
         if (!indent)
             characters(ch, start, length);
     }
@@ -177,7 +177,7 @@ class XmlSerializerBase implements ContentHandler {
      * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String,
      *      java.lang.String)
      */
-    public void processingInstruction(String target, String data)
+    public void processingInstruction(final String target, final String data)
             throws SAXException {
         if (indent) {
             this.writePlain(NEWLINE);
@@ -198,7 +198,7 @@ class XmlSerializerBase implements ContentHandler {
      * 
      * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator)
      */
-    public void setDocumentLocator(Locator locator) {
+    public void setDocumentLocator(final Locator locator) {
         throw new UnsupportedOperationException("Not implemented.");
     }
 
@@ -207,7 +207,7 @@ class XmlSerializerBase implements ContentHandler {
      * 
      * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String)
      */
-    public void skippedEntity(String name) throws SAXException {
+    public void skippedEntity(final String name) throws SAXException {
         throw new UnsupportedOperationException("Not implemented.");
     }
 
@@ -232,8 +232,8 @@ class XmlSerializerBase implements ContentHandler {
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
      *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
-    public void startElement(String namespaceURI, String localName,
-            String qName, Attributes atts) throws SAXException {
+    public void startElement(final String namespaceURI, final String localName,
+            final String qName, final Attributes atts) throws SAXException {
         if (indent) {
             this.writePlain(NEWLINE);
             for (int i = currentElement.size(); i > 0; i--)
@@ -258,7 +258,7 @@ class XmlSerializerBase implements ContentHandler {
         // TODO handle attribute namespaces right
 
         if (atts != null) {
-            int len = atts.getLength();
+            final int len = atts.getLength();
             for (int i = 0; i < len; i++) {
                 this.writePlain(" ");
                 this.writePlain(atts.getQName(i));
@@ -277,7 +277,7 @@ class XmlSerializerBase implements ContentHandler {
      * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String,
      *      java.lang.String)
      */
-    public void startPrefixMapping(String prefix, String uri)
+    public void startPrefixMapping(final String prefix, final String uri)
             throws SAXException {
         if (prefix != null)
             throw new UnsupportedOperationException("Not implemented yet.");
@@ -318,7 +318,7 @@ class XmlSerializerBase implements ContentHandler {
     private void writePlain(final char s) throws SAXException {
         try {
             target.write(s);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new SAXException(e);
         }
     }
@@ -326,7 +326,7 @@ class XmlSerializerBase implements ContentHandler {
     private void writePlain(final String s) throws SAXException {
         try {
             target.write(s);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new SAXException(e);
         }
     }

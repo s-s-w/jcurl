@@ -31,7 +31,7 @@ public class JcxFileChooser extends JFileChooser {
         this(null);
     }
 
-    public JcxFileChooser(File currentFile) {
+    public JcxFileChooser(final File currentFile) {
         super(currentFile == null ? new File(".") : currentFile);
         setMultiSelectionEnabled(false);
         setAcceptAllFileFilterUsed(true);

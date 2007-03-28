@@ -41,7 +41,7 @@ public class OldConfigReaderTest extends TestCase {
     private static final File base = new File(
             "/home/m/eclipse/berlios/jcurl/old");
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         junit.textui.TestRunner.run(OldConfigReaderTest.class);
     }
 
@@ -68,7 +68,7 @@ public class OldConfigReaderTest extends TestCase {
             try {
                 final Matcher m = pat.matcher(pathname.getCanonicalPath());
                 return m.matches();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 return false;
             }
         }
@@ -81,7 +81,8 @@ public class OldConfigReaderTest extends TestCase {
     }
 
     public void test040_load() throws FileNotFoundException, IOException {
-        OldConfigReader r = OldConfigReader.parse(new File(base, "hammy.ini"));
+        final OldConfigReader r = OldConfigReader.parse(new File(base,
+                "hammy.ini"));
         assertNotNull(r);
         assertNotNull(r.setup);
     }

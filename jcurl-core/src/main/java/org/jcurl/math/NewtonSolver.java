@@ -38,7 +38,7 @@ public class NewtonSolver extends SolverImpl {
      * @param f
      *            function to solve.
      */
-    public NewtonSolver(R1R1Function f) {
+    public NewtonSolver(final R1R1Function f) {
         super(f, 100, 1E-6);
     }
 
@@ -54,7 +54,7 @@ public class NewtonSolver extends SolverImpl {
      * @return the value where the function is zero
      * @throws MathException
      */
-    public double solve(int derivative, double min, double max)
+    public double solve(final int derivative, final double min, final double max)
             throws MathException {
         return solve(derivative, min, max, SolverImpl.midpoint(min, max));
     }
@@ -73,8 +73,8 @@ public class NewtonSolver extends SolverImpl {
      * @return the value where the function is zero
      * @throws MathException
      */
-    public double solve(int derivative, double min, double max,
-            double startValue) throws MathException {
+    public double solve(final int derivative, final double min,
+            final double max, final double startValue) throws MathException {
 
         clearResult();
         verifySequence(min, startValue, max);
@@ -84,7 +84,7 @@ public class NewtonSolver extends SolverImpl {
 
         int i = 0;
         while (i < maximalIterationCount) {
-            x1 = x0 - (f.at(derivative, x0) / f.at(derivative + 1, x0));
+            x1 = x0 - f.at(derivative, x0) / f.at(derivative + 1, x0);
             if (Math.abs(x1 - x0) <= absoluteAccuracy) {
                 setResult(x1, i);
                 return x1;

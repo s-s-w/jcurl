@@ -162,7 +162,7 @@ public class OldConfigReader {
         char sep = '-';
         int state = pre;
         for (;;) {
-            int ch = read.read();
+            final int ch = read.read();
             switch (state) {
             case pre:
                 if (ch == -1) {
@@ -223,7 +223,7 @@ public class OldConfigReader {
 
     public final SetupBuilder setup = new SetupBuilder();
 
-    private void setAngle(final boolean isDark, int no, final String a) {
+    private void setAngle(final boolean isDark, final int no, final String a) {
         final DimVal angle = parseDim(a);
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + angle);
         setup.setAngle(RockSet.toIdx16(isDark, no), angle);
@@ -244,7 +244,7 @@ public class OldConfigReader {
     }
 
     private void setFrom(final OldConfigReader ret, final boolean isDark,
-            int no, final String x, final String y) {
+            final int no, final String x, final String y) {
         final DimVal _x = parseDim(x);
         final DimVal _y;
         if ("NHOG".equals(y))
@@ -269,33 +269,34 @@ public class OldConfigReader {
         log.debug(a);
     }
 
-    private void setOut(final OldConfigReader ret, final boolean isDark, int no) {
+    private void setOut(final OldConfigReader ret, final boolean isDark,
+            final int no) {
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + "");
         setup.setPosOut(RockSet.toIdx16(isDark, no));
     }
 
     private void setRelease(final OldConfigReader ret, final boolean isDark,
-            int no) {
+            final int no) {
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + "");
         setup.setPosRelease(RockSet.toIdx16(isDark, no));
     }
 
     private void setSpeed(final OldConfigReader ret, final boolean isDark,
-            int no, final String v) {
+            final int no, final String v) {
         final DimVal _v = parseDim(v);
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + _v);
         setup.setSpeed(RockSet.toIdx16(isDark, no), _v);
     }
 
     private void setSpin(final OldConfigReader ret, final boolean isDark,
-            int no, final String v) {
+            final int no, final String v) {
         final DimVal _v = parseDim(v);
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + _v);
         setup.setSpin(RockSet.toIdx16(isDark, no), _v);
     }
 
-    private void setTo(final OldConfigReader ret, final boolean isDark, int no,
-            final String x, final String y) {
+    private void setTo(final OldConfigReader ret, final boolean isDark,
+            final int no, final String x, final String y) {
         final DimVal _x = parseDim(x);
         final DimVal _y = parseDim(y);
         log

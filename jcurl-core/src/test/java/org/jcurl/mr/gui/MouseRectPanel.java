@@ -45,19 +45,19 @@ public class MouseRectPanel extends JPanel implements MouseMotionListener {
 
     private int nsquares = 0;
 
-    private Point[] squares = new Point[MAXNSQUARES];
+    private final Point[] squares = new Point[MAXNSQUARES];
 
     public MouseRectPanel() {
         addMouseListener(new MouseAdapter() {
 
-            public void mouseClicked(MouseEvent evt) {
+            public void mouseClicked(final MouseEvent evt) {
                 if (evt.getClickCount() >= 2)
                     MouseRectPanel.this.remove(current);
             }
 
-            public void mousePressed(MouseEvent evt) {
-                int x = evt.getX();
-                int y = evt.getY();
+            public void mousePressed(final MouseEvent evt) {
+                final int x = evt.getX();
+                final int y = evt.getY();
                 current = MouseRectPanel.this.find(x, y);
                 if (current < 0) // not inside a square
                     MouseRectPanel.this.add(x, y);
@@ -66,7 +66,7 @@ public class MouseRectPanel extends JPanel implements MouseMotionListener {
         addMouseMotionListener(this);
     }
 
-    public void add(int x, int y) {
+    public void add(final int x, final int y) {
         if (nsquares < MAXNSQUARES) {
             squares[nsquares] = new Point(x, y);
             current = nsquares;
@@ -75,12 +75,12 @@ public class MouseRectPanel extends JPanel implements MouseMotionListener {
         }
     }
 
-    public void draw(Graphics g, int i) {
+    public void draw(final Graphics g, final int i) {
         g.drawRect(squares[i].x - SQUARELENGTH / 2, squares[i].y - SQUARELENGTH
                 / 2, SQUARELENGTH, SQUARELENGTH);
     }
 
-    public int find(int x, int y) {
+    public int find(final int x, final int y) {
         for (int i = 0; i < nsquares; i++)
             if (squares[i].x - SQUARELENGTH / 2 <= x
                     && x <= squares[i].x + SQUARELENGTH / 2
@@ -92,11 +92,11 @@ public class MouseRectPanel extends JPanel implements MouseMotionListener {
         return -1;
     }
 
-    public void mouseDragged(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
+    public void mouseDragged(final MouseEvent e) {
+        final int x = e.getX();
+        final int y = e.getY();
         if (current >= 0) {
-            Graphics g = getGraphics();
+            final Graphics g = getGraphics();
             g.setXORMode(getBackground());
             draw(g, current);
             squares[current].x = x;
@@ -106,22 +106,22 @@ public class MouseRectPanel extends JPanel implements MouseMotionListener {
         }
     }
 
-    public void mouseMoved(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
+    public void mouseMoved(final MouseEvent e) {
+        final int x = e.getX();
+        final int y = e.getY();
         if (find(x, y) >= 0)
             setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
         else
             setCursor(Cursor.getDefaultCursor());
     }
 
-    public void paintComponent(Graphics g) {
+    public void paintComponent(final Graphics g) {
         super.paintComponent(g);
         for (int i = 0; i < nsquares; i++)
             draw(g, i);
     }
 
-    public void remove(int n) {
+    public void remove(final int n) {
         if (n < 0 || n >= nsquares)
             return;
         nsquares--;

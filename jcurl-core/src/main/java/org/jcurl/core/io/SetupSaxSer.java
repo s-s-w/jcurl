@@ -48,21 +48,21 @@ public class SetupSaxSer {
 
     private static final String NS = "http://www.jcurl.org/schemas/2006/basic";
 
-    private static ContentHandler getCH(File dst) throws IOException {
+    private static ContentHandler getCH(final File dst) throws IOException {
         OutputStream o = new FileOutputStream(dst, false);
         if (dst.getName().endsWith("z"))
             o = new GZIPOutputStream(o);
         try {
             return new XmlSerializer(o, "UTF-8", false);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static ContentHandler getCH(OutputStream dst) {
+    private static ContentHandler getCH(final OutputStream dst) {
         try {
             return new XmlSerializer(dst, "UTF-8", false);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
     }
@@ -114,9 +114,9 @@ public class SetupSaxSer {
         xml.startElement(NS, null, "description", null);
         characters(xml, model.description());
         xml.endElement(NS, null, "description");
-        for (Iterator it = model.properties(); it.hasNext();) {
+        for (final Iterator it = model.properties(); it.hasNext();) {
             final String key = (String) it.next();
-            Object val = model.getProp(key);
+            final Object val = model.getProp(key);
             final AttributesImpl atts = new AttributesImpl();
             atts.addAttribute(NS, null, "name", null, key);
             if (val instanceof DimVal) {
@@ -160,9 +160,9 @@ public class SetupSaxSer {
      * @param isDark
      * @throws SAXException
      */
-    void internalLoc(final Rock r, int i, final boolean isDark)
+    void internalLoc(final Rock r, final int i, final boolean isDark)
             throws SAXException {
-        AttributesImpl atts = new AttributesImpl();
+        final AttributesImpl atts = new AttributesImpl();
         atts.addAttribute(NS, null, "color", null, isDark ? "dark" : "light");
         atts.addAttribute(NS, null, "no", null, Integer.toString(1 + i));
         xml.startElement(NS, null, "rock", atts);
@@ -180,11 +180,11 @@ public class SetupSaxSer {
      * @param isDark
      * @throws SAXException
      */
-    void internalSpeed(final Rock r, int i, final boolean isDark)
+    void internalSpeed(final Rock r, final int i, final boolean isDark)
             throws SAXException {
         if (!r.nonZero())
             return;
-        AttributesImpl atts = new AttributesImpl();
+        final AttributesImpl atts = new AttributesImpl();
         atts.addAttribute(NS, null, "color", null, isDark ? "dark" : "light");
         atts.addAttribute(NS, null, "no", null, Integer.toString(1 + i));
         xml.startElement(NS, null, "rock", atts);
@@ -198,7 +198,7 @@ public class SetupSaxSer {
 
     public void write(final PositionSet pos) throws SAXException {
         xml.startDocument();
-        AttributesImpl atts = new AttributesImpl();
+        final AttributesImpl atts = new AttributesImpl();
         atts.addAttribute(NS, null, "xmlns", null,
                 "http://jcurl.berlios.de/schema/setup/2005/1.0");
         xml.startElement(NS, null, "jcurl", atts);
@@ -213,7 +213,7 @@ public class SetupSaxSer {
             final SlideStrategy slide) throws SAXException {
         xml.startDocument();
         xml.startPrefixMapping(null, NS);
-        AttributesImpl atts = new AttributesImpl();
+        final AttributesImpl atts = new AttributesImpl();
         atts.addAttribute(NS, null, "xmlns", null,
                 "http://jcurl.berlios.de/schema/setup/2005/1.0");
         xml.startElement(NS, null, "jcurl", atts);

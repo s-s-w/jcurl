@@ -64,9 +64,9 @@ public abstract class TransferObject implements Serializable {
                         buf.append(value.hashCode());
                     } else if (value instanceof Collection) {
                         buf.append("{");
-                        for (Iterator iter = ((Collection) value).iterator(); iter
-                                .hasNext();) {
-                            Object element = iter.next();
+                        for (final Iterator iter = ((Collection) value)
+                                .iterator(); iter.hasNext();) {
+                            final Object element = iter.next();
                             if (element instanceof TransferObject) {
                                 buf.append("@");
                                 buf.append(element.hashCode());
@@ -76,11 +76,11 @@ public abstract class TransferObject implements Serializable {
                         buf.append("}");
                     } else if (value instanceof Map) {
                         buf.append("{");
-                        Map map = (Map) value;
-                        for (Iterator iter = map.keySet().iterator(); iter
+                        final Map map = (Map) value;
+                        for (final Iterator iter = map.keySet().iterator(); iter
                                 .hasNext();) {
-                            Object key = iter.next();
-                            Object element = map.get(key);
+                            final Object key = iter.next();
+                            final Object element = map.get(key);
                             buf.append(key.toString() + "=");
                             if (element instanceof TransferObject) {
                                 buf.append("@");
@@ -95,7 +95,7 @@ public abstract class TransferObject implements Serializable {
             }
             buf.append("}");
             return buf.toString();
-        } catch (Exception ex) {
+        } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }
     }

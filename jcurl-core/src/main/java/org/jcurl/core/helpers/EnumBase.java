@@ -88,7 +88,7 @@ public abstract class EnumBase extends Number implements Comparable,
                 // ensure the class "type" is initialized...
                 Class.forName(type.getName());
                 values = (Map) types.get(type);
-            } catch (ClassNotFoundException e) {
+            } catch (final ClassNotFoundException e) {
                 throw new RuntimeException("Couldn't load class [" + type + "]");
             }
         if (values != null) {
@@ -122,7 +122,7 @@ public abstract class EnumBase extends Number implements Comparable,
         }
     }
 
-    public int compareTo(Object o) {
+    public int compareTo(final Object o) {
         final EnumBase b = (EnumBase) o;
         return state.compareTo(b.state);
     }

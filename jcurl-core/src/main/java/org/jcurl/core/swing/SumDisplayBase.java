@@ -102,7 +102,7 @@ public abstract class SumDisplayBase extends JComponent implements
         return getMinimumSize();
     }
 
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         final Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHints(hints);
@@ -117,10 +117,11 @@ public abstract class SumDisplayBase extends JComponent implements
         }
     }
 
-    protected void paintRock(final Graphics2D g2, int idx8, boolean isDark) {
+    protected void paintRock(final Graphics2D g2, final int idx8,
+            final boolean isDark) {
         final float r = 0.35F * getWidth();
         // vertical display:
-        float cx = 0.5F * getWidth();
+        final float cx = 0.5F * getWidth();
         float cy = getHeight() / RockSet.ROCKS_PER_SET;
         if (isDark)
             cy *= idx8 + 0.5F;
@@ -134,7 +135,7 @@ public abstract class SumDisplayBase extends JComponent implements
                 (int) (2 * r), 0, 360);
     }
 
-    public void propertyChange(PropertyChangeEvent evt) {
+    public void propertyChange(final PropertyChangeEvent evt) {
         final Object tmp = evt.getNewValue();
         if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass()))
             this.setPos((PositionSet) tmp);
@@ -142,7 +143,7 @@ public abstract class SumDisplayBase extends JComponent implements
             log.info(tmp);
     }
 
-    public void setPos(PositionSet rocks) {
+    public void setPos(final PositionSet rocks) {
         if (model != null && model != rocks)
             model.removePropertyChangeListener(this);
         rocks.addPropertyChangeListener(this);
@@ -150,11 +151,11 @@ public abstract class SumDisplayBase extends JComponent implements
         showRocks(computeMask(model));
     }
 
-    public void setPos(PositionSet rocks, int discontinuous) {
+    public void setPos(final PositionSet rocks, final int discontinuous) {
         this.setPos(rocks);
     }
 
-    public void showRocks(int mask) {
+    public void showRocks(final int mask) {
         if (mask == recentMask)
             return;
         recentMask = mask;

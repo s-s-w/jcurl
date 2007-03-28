@@ -37,7 +37,7 @@ public abstract class SolverImpl implements R1R1Solver {
      *            second value.
      * @return the midpoint.
      */
-    public static double midpoint(double a, double b) {
+    public static double midpoint(final double a, final double b) {
         return (a + b) * .5;
     }
 
@@ -90,31 +90,31 @@ public abstract class SolverImpl implements R1R1Solver {
      * @throws IllegalArgumentException
      *             if f is null or the defaultAbsoluteAccuracy is not valid
      */
-    protected SolverImpl(R1R1Function f, int defaultMaximalIterationCount,
-            double defaultAbsoluteAccuracy) {
+    protected SolverImpl(final R1R1Function f,
+            final int defaultMaximalIterationCount,
+            final double defaultAbsoluteAccuracy) {
 
         super();
 
-        if (f == null) {
+        if (f == null)
             throw new IllegalArgumentException("function can not be null.");
-        }
 
         this.f = f;
         this.defaultAbsoluteAccuracy = defaultAbsoluteAccuracy;
-        this.defaultRelativeAccuracy = 1E-14;
-        this.defaultFunctionValueAccuracy = 1E-15;
-        this.absoluteAccuracy = defaultAbsoluteAccuracy;
-        this.relativeAccuracy = defaultRelativeAccuracy;
-        this.functionValueAccuracy = defaultFunctionValueAccuracy;
+        defaultRelativeAccuracy = 1E-14;
+        defaultFunctionValueAccuracy = 1E-15;
+        absoluteAccuracy = defaultAbsoluteAccuracy;
+        relativeAccuracy = defaultRelativeAccuracy;
+        functionValueAccuracy = defaultFunctionValueAccuracy;
         this.defaultMaximalIterationCount = defaultMaximalIterationCount;
-        this.maximalIterationCount = defaultMaximalIterationCount;
+        maximalIterationCount = defaultMaximalIterationCount;
     }
 
     /**
      * Convenience function for implementations.
      */
     protected final void clearResult() {
-        this.resultComputed = false;
+        resultComputed = false;
     }
 
     /**
@@ -193,11 +193,11 @@ public abstract class SolverImpl implements R1R1Solver {
      * @throws FunctionEvaluationException
      *             if an error occurs evaluating the function at the endpoints
      */
-    protected boolean isBracketing(double lower, double upper, R1R1Function f)
-            throws MathException {
-        double f1 = f.at(lower);
-        double f2 = f.at(upper);
-        return ((f1 > 0 && f2 < 0) || (f1 < 0 && f2 > 0));
+    protected boolean isBracketing(final double lower, final double upper,
+            final R1R1Function f) throws MathException {
+        final double f1 = f.at(lower);
+        final double f2 = f.at(upper);
+        return f1 > 0 && f2 < 0 || f1 < 0 && f2 > 0;
     }
 
     /**
@@ -211,8 +211,9 @@ public abstract class SolverImpl implements R1R1Solver {
      *            third number
      * @return true if the arguments form an increasing sequence
      */
-    protected boolean isSequence(double start, double mid, double end) {
-        return (start < mid) && (mid < end);
+    protected boolean isSequence(final double start, final double mid,
+            final double end) {
+        return start < mid && mid < end;
     }
 
     /**
@@ -252,7 +253,7 @@ public abstract class SolverImpl implements R1R1Solver {
      *             if the accuracy can't be achieved by the solver or is
      *             otherwise deemed unreasonable.
      */
-    public void setAbsoluteAccuracy(double accuracy) {
+    public void setAbsoluteAccuracy(final double accuracy) {
         absoluteAccuracy = accuracy;
     }
 
@@ -265,7 +266,7 @@ public abstract class SolverImpl implements R1R1Solver {
      *             if the accuracy can't be achieved by the solver or is
      *             otherwise deemed unreasonable.
      */
-    public void setFunctionValueAccuracy(double accuracy) {
+    public void setFunctionValueAccuracy(final double accuracy) {
         functionValueAccuracy = accuracy;
     }
 
@@ -275,7 +276,7 @@ public abstract class SolverImpl implements R1R1Solver {
      * @param count
      *            maximum number of iterations
      */
-    public void setMaximalIterationCount(int count) {
+    public void setMaximalIterationCount(final int count) {
         maximalIterationCount = count;
     }
 
@@ -288,7 +289,7 @@ public abstract class SolverImpl implements R1R1Solver {
      *             if the accuracy can't be achieved by the solver or is
      *             otherwise deemed unreasonable.
      */
-    public void setRelativeAccuracy(double accuracy) {
+    public void setRelativeAccuracy(final double accuracy) {
         relativeAccuracy = accuracy;
     }
 
@@ -300,10 +301,10 @@ public abstract class SolverImpl implements R1R1Solver {
      * @param iterationCount
      *            the iteration count to set
      */
-    protected final void setResult(double result, int iterationCount) {
+    protected final void setResult(final double result, final int iterationCount) {
         this.result = result;
         this.iterationCount = iterationCount;
-        this.resultComputed = true;
+        resultComputed = true;
     }
 
     /**
@@ -320,17 +321,16 @@ public abstract class SolverImpl implements R1R1Solver {
      * @throws FunctionEvaluationException
      *             if an error occurs evaluating the function at the endpoints
      */
-    protected void verifyBracketing(double lower, double upper, R1R1Function f)
-            throws MathException {
+    protected void verifyBracketing(final double lower, final double upper,
+            final R1R1Function f) throws MathException {
 
         verifyInterval(lower, upper);
-        if (!isBracketing(lower, upper, f)) {
+        if (!isBracketing(lower, upper, f))
             throw new IllegalArgumentException(
                     "Function values at endpoints do not have different signs."
                             + "  Endpoints: [" + lower + "," + upper + "]"
                             + "  Values: [" + f.at(lower) + "," + f.at(upper)
                             + "]");
-        }
     }
 
     /**
@@ -343,12 +343,11 @@ public abstract class SolverImpl implements R1R1Solver {
      *            upper endpoint
      * @throws IllegalArgumentException
      */
-    protected void verifyInterval(double lower, double upper) {
-        if (lower >= upper) {
+    protected void verifyInterval(final double lower, final double upper) {
+        if (lower >= upper)
             throw new IllegalArgumentException(
                     "Endpoints do not specify an interval: [" + lower + ","
                             + upper + "]");
-        }
     }
 
     /**
@@ -363,11 +362,11 @@ public abstract class SolverImpl implements R1R1Solver {
      *            upper endpoint
      * @throws IllegalArgumentException
      */
-    protected void verifySequence(double lower, double initial, double upper) {
-        if (!isSequence(lower, initial, upper)) {
+    protected void verifySequence(final double lower, final double initial,
+            final double upper) {
+        if (!isSequence(lower, initial, upper))
             throw new IllegalArgumentException(
                     "Invalid interval, initial value parameters:  lower="
                             + lower + " initial=" + initial + " upper=" + upper);
-        }
     }
 }

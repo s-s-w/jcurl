@@ -45,7 +45,7 @@ public class DistanceSq extends R1R1Function {
      * @param c1
      * @param c2
      */
-    public DistanceSq(CurveRock c1, CurveRock c2) {
+    public DistanceSq(final CurveRock c1, final CurveRock c2) {
         this(c1, c2, RockProps.DEFAULT.getRadius());
     }
 
@@ -58,7 +58,7 @@ public class DistanceSq extends R1R1Function {
      * @param c2
      * @param r
      */
-    DistanceSq(CurveRock c1, CurveRock c2, double r) {
+    DistanceSq(final CurveRock c1, final CurveRock c2, final double r) {
         this(c1, r, c2, r);
     }
 
@@ -72,7 +72,8 @@ public class DistanceSq extends R1R1Function {
      * @param c2
      * @param r2
      */
-    DistanceSq(CurveRock c1, double r1, CurveRock c2, double r2) {
+    DistanceSq(final CurveRock c1, final double r1, final CurveRock c2,
+            final double r2) {
         if (c1.dimension() != c2.dimension())
             throw new IllegalArgumentException("Dimension mismatch: "
                     + c1.dimension() + "!=" + c2.dimension());
@@ -88,9 +89,9 @@ public class DistanceSq extends R1R1Function {
      * @param t
      * @return the value
      */
-    public double at(double t) {
-        Rock a = c1.at(t, (Rock) null);
-        Rock b = c2.at(t, (Rock) null);
+    public double at(final double t) {
+        final Rock a = c1.at(t, (Rock) null);
+        final Rock b = c2.at(t, (Rock) null);
         MathVec.sub(a, b, a);
         return a.distanceSq(0, 0) - r2;
     }
@@ -102,7 +103,7 @@ public class DistanceSq extends R1R1Function {
      * @see #at(double)
      * @see #valueC1(double)
      */
-    public double at(int derivative, double t) {
+    public double at(final int derivative, final double t) {
         if (derivative == 0)
             return at(t);
         if (derivative == 1)
@@ -114,18 +115,18 @@ public class DistanceSq extends R1R1Function {
      * <code>2 * (c1 - c2) * (c1' - c2')</code> Feed into maxima:
      * 
      * <pre>
-     *    a(t) := [ ax(t), ay(t) ];
-     *    b(t) := [ bx(t), by(t) ];
-     *    d(t) := (a(t) - b(t)) . (a(t) - b(t));
-     *    diff(d(t), t);
-     *    quit$
+     *     a(t) := [ ax(t), ay(t) ];
+     *     b(t) := [ bx(t), by(t) ];
+     *     d(t) := (a(t) - b(t)) . (a(t) - b(t));
+     *     diff(d(t), t);
+     *     quit$
      * </pre>
      */
-    double valueC1(double t) {
-        Rock a = c1.at(t, (Rock) null);
-        Rock b = c2.at(t, (Rock) null);
-        Rock da = c1.at(1, t, (Rock) null);
-        Rock db = c2.at(1, t, (Rock) null);
+    double valueC1(final double t) {
+        final Rock a = c1.at(t, (Rock) null);
+        final Rock b = c2.at(t, (Rock) null);
+        final Rock da = c1.at(1, t, (Rock) null);
+        final Rock db = c2.at(1, t, (Rock) null);
         double ret = 0.0;
         ret += (a.getX() - b.getX()) * (da.getX() - db.getX());
         ret += (a.getY() - b.getY()) * (da.getY() - db.getY());

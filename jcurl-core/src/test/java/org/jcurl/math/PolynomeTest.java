@@ -46,7 +46,7 @@ public class PolynomeTest extends TestCase {
 
     public void test020_getC() {
         final double[] a = { 1.1, 1.2, 1.3, 1.4 };
-        Polynome po = new Polynome(a);
+        final Polynome po = new Polynome(a);
 
         // C0
         double x = 1.5;
@@ -91,19 +91,19 @@ public class PolynomeTest extends TestCase {
 
     public void test025_Newton() {
         {
-            double[] a = { -1, 1 };
-            Polynome po = new Polynome(a);
+            final double[] a = { -1, 1 };
+            final Polynome po = new Polynome(a);
             assertEquals("", 1, po.computeNewtonZero(0, 0.5), 1e-6);
         }
         {
-            double[] a = { -1, 0, 1 };
-            Polynome po = new Polynome(a);
+            final double[] a = { -1, 0, 1 };
+            final Polynome po = new Polynome(a);
             assertEquals("", 0, po.at(0, 1), 1e-6);
             assertEquals("", 1, po.computeNewtonZero(0, 0.5), 1e-6);
         }
         {
-            double[] a = { 0, 1, -0.0535848758171096 };
-            Polynome po = new Polynome(a);
+            final double[] a = { 0, 1, -0.0535848758171096 };
+            final Polynome po = new Polynome(a);
             assertEquals("", 0.0, po.at(0, 0), 1e-6);
             assertEquals("", 1.0, po.at(1, 0), 1e-6);
             assertEquals("", 9.330991112241236, po.computeNewtonZero(1, 0),
@@ -112,12 +112,12 @@ public class PolynomeTest extends TestCase {
     }
 
     public void test029_getPolyParams() {
-        double t0 = 2.894295921183459;
+        final double t0 = 2.894295921183459;
         double dt = 0;
 
-        double v = 0.11913533326608741;
-        double a = -0.1071697516342192;
-        double[] par = Polynome.getPolyParams(t0, 0, v, a);
+        final double v = 0.11913533326608741;
+        final double a = -0.1071697516342192;
+        final double[] par = Polynome.getPolyParams(t0, 0, v, a);
 
         assertEquals("", 0, Polynome.poly(0, t0 + dt, par), 1e-9);
         assertEquals("", v, Polynome.poly(1, t0 + dt, par), 1e-9);
@@ -131,7 +131,7 @@ public class PolynomeTest extends TestCase {
     }
 
     public void test030_getPoly() {
-        Polynome po = Polynome.getPoly(1.0, 2.0, 3.0, 4.0);
+        final Polynome po = Polynome.getPoly(1.0, 2.0, 3.0, 4.0);
         assertEquals("", 2.0, po.at(0, 1.0), 1e-9);
         assertEquals("", 4.0, po.at(0, 1.5), 1e-9);
         assertEquals("", 7.0, po.at(0, 2.0), 1e-9);
@@ -147,12 +147,13 @@ public class PolynomeTest extends TestCase {
 
     public void _test040_load() {
         final double[] a = { 1.1, 1.2, 1.3, 1.4 };
-        Polynome po = new Polynome(a);
+        final Polynome po = new Polynome(a);
         final int count = 500000;
         final long start = System.currentTimeMillis();
         for (int i = count - 1; i >= 0; i--)
             po.at(0, 1.1);
-        double cps = count / (1e-3 * (System.currentTimeMillis() - start));
+        final double cps = count
+                / (1e-3 * (System.currentTimeMillis() - start));
         assertTrue(cps > 2000000);
     }
 }

@@ -35,18 +35,18 @@ public class KeySketchPanel extends JPanel implements KeyListener {
 
     private static final long serialVersionUID = -3879989219730493694L;
 
-    private Point end = new Point(0, 0);
+    private final Point end = new Point(0, 0);
 
-    private Point start = new Point(0, 0);
+    private final Point start = new Point(0, 0);
 
     public KeySketchPanel() {
         addKeyListener(this);
     }
 
-    public void add(int dx, int dy) {
+    public void add(final int dx, final int dy) {
         end.x += dx;
         end.y += dy;
-        Graphics g = getGraphics();
+        final Graphics g = getGraphics();
         g.drawLine(start.x, start.y, end.x, end.y);
         g.dispose();
         start.x = end.x;
@@ -57,8 +57,8 @@ public class KeySketchPanel extends JPanel implements KeyListener {
         return true;
     }
 
-    public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
+    public void keyPressed(final KeyEvent e) {
+        final int keyCode = e.getKeyCode();
         int d;
         if (e.isShiftDown())
             d = 5;
@@ -75,10 +75,10 @@ public class KeySketchPanel extends JPanel implements KeyListener {
 
     }
 
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(final KeyEvent e) {
     }
 
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped(final KeyEvent e) {
         char keyChar = e.getKeyChar();
         int d;
         if (Character.isUpperCase(keyChar)) {

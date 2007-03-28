@@ -42,7 +42,7 @@ public class Polynome extends R1R1Function {
      * @param low
      * @return high! / low!
      */
-    static long fak(final int high, int low) {
+    static long fak(final int high, final int low) {
         if (high < 2)
             return 1;
         long ret = 1;
@@ -66,8 +66,8 @@ public class Polynome extends R1R1Function {
      * @return the resulting polynome
      * @see #getPolyParams(double, double, double, double)
      */
-    public static final Polynome getPoly(double t0, double x0, double v0,
-            double a0) {
+    public static final Polynome getPoly(final double t0, final double x0,
+            final double v0, final double a0) {
         return new Polynome(getPolyParams(t0, x0, v0, a0));
     }
 
@@ -85,8 +85,8 @@ public class Polynome extends R1R1Function {
      *            constant acceleration
      * @return the resulting polynome's parameters
      */
-    public static final double[] getPolyParams(double t0, double x0, double v0,
-            double a0) {
+    public static final double[] getPolyParams(final double t0,
+            final double x0, final double v0, final double a0) {
         final double[] p = { x0 - v0 * t0 + 0.5 * a0 * t0 * t0, v0 - a0 * t0,
                 0.5 * a0 };
         return p;

@@ -59,7 +59,7 @@ public class MenuDemo extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         JFrame.setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);
 

@@ -43,7 +43,7 @@ public class DimVal {
             final String dim = mat.group(4);
             try {
                 return new DimVal(Double.parseDouble(val), Dim.find(dim));
-            } catch (RuntimeException e) {
+            } catch (final RuntimeException e) {
                 final IllegalArgumentException a = new IllegalArgumentException(
                         "Not a dimension: [" + txt + "]");
                 a.initCause(e);
@@ -57,7 +57,7 @@ public class DimVal {
 
     public final double val;
 
-    public DimVal(double value, final Dim dim) {
+    public DimVal(final double value, final Dim dim) {
         val = value;
         this.dim = dim;
     }
@@ -81,9 +81,9 @@ public class DimVal {
         hash *= fact;
         hash += dim.hashCode();
         hash *= fact;
-        final long tmp = ((val == 0.0) ? 0L : java.lang.Double
-                .doubleToLongBits(val));
-        hash += (int) (tmp ^ (tmp >>> 32));
+        final long tmp = val == 0.0 ? 0L : java.lang.Double
+                .doubleToLongBits(val);
+        hash += (int) (tmp ^ tmp >>> 32);
         return hash;
     }
 

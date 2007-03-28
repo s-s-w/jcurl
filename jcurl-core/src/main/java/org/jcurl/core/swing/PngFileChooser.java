@@ -27,7 +27,7 @@ public class PngFileChooser extends JFileChooser {
 
     private static final long serialVersionUID = 400354997568206163L;
 
-    public PngFileChooser(File currentFile) {
+    public PngFileChooser(final File currentFile) {
         super(currentFile == null ? new File(".")
                 : currentFile.isDirectory() ? currentFile : currentFile
                         .getParentFile());

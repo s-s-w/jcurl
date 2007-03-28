@@ -40,7 +40,7 @@ public class ConvertOld2New {
 
     private static class IniFilter implements FileFilter {
 
-        public boolean accept(File pathname) {
+        public boolean accept(final File pathname) {
             return pathname.getName().endsWith(".ini");
         }
     }
@@ -52,7 +52,7 @@ public class ConvertOld2New {
         ser.write(old.setup);
     }
 
-    public static void main(String[] args) throws FileNotFoundException,
+    public static void main(final String[] args) throws FileNotFoundException,
             IOException, SAXException {
         for (int i = args.length - 1; i >= 0; i--) {
             final File f = new File(args[i]);

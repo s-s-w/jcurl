@@ -103,7 +103,7 @@ public class SetupSaxDeSer extends DefaultHandler {
             if (log.isDebugEnabled())
                 log.debug(sp.getClass().getName());
             return sp;
-        } catch (ParserConfigurationException e) {
+        } catch (final ParserConfigurationException e) {
             throw new RuntimeException(e);
         }
     }
@@ -157,7 +157,7 @@ public class SetupSaxDeSer extends DefaultHandler {
         this.setup = setup;
     }
 
-    public void characters(char[] ch, int start, int length)
+    public void characters(final char[] ch, final int start, final int length)
             throws SAXException {
         buf.append(ch, start, length);
     }
@@ -166,8 +166,8 @@ public class SetupSaxDeSer extends DefaultHandler {
         log.debug("-");
     }
 
-    public void endElement(String uri, String localName, String qName)
-            throws SAXException {
+    public void endElement(final String uri, final String localName,
+            final String qName) throws SAXException {
         final String elem = qName;
         elems.pop();
         final String txt = buf.toString().trim();
@@ -188,11 +188,11 @@ public class SetupSaxDeSer extends DefaultHandler {
             if ("model".equals(elem))
                 try {
                     setup.addModel(modelClass, modelProps);
-                } catch (InstantiationException e) {
+                } catch (final InstantiationException e) {
                     log.warn("error in [" + elems + "]", e);
                     error(new SAXParseException("error in [" + elems + "]",
                             locator, e));
-                } catch (IllegalAccessException e) {
+                } catch (final IllegalAccessException e) {
                     log.warn("error in [" + elems + "]", e);
                     error(new SAXParseException("error in [" + elems + "]",
                             locator, e));
@@ -209,25 +209,25 @@ public class SetupSaxDeSer extends DefaultHandler {
         }
     }
 
-    public void endPrefixMapping(String prefix) throws SAXException {
+    public void endPrefixMapping(final String prefix) throws SAXException {
         log.debug(prefix);
     }
 
-    public void error(SAXParseException e) throws SAXException {
+    public void error(final SAXParseException e) throws SAXException {
         throw e;
     }
 
-    public void fatalError(SAXParseException e) throws SAXException {
+    public void fatalError(final SAXParseException e) throws SAXException {
         throw e;
     }
 
-    public void processingInstruction(String target, String data)
+    public void processingInstruction(final String target, final String data)
             throws SAXException {
         if (log.isDebugEnabled())
             log.debug(target + " " + data);
     }
 
-    public void setDocumentLocator(Locator locator) {
+    public void setDocumentLocator(final Locator locator) {
         this.locator = locator;
     }
 
@@ -235,8 +235,8 @@ public class SetupSaxDeSer extends DefaultHandler {
         log.debug("-");
     }
 
-    public void startElement(String uri, String localName, String qName,
-            Attributes atts) throws SAXException {
+    public void startElement(final String uri, final String localName,
+            final String qName, final Attributes atts) throws SAXException {
         // log.debug("[" + localName + "] [" + qName + "] [" + uri + "]");
         final String elem = qName;
         final String parent = elems.size() > 0 ? (String) elems.peek() : null;
@@ -353,16 +353,16 @@ public class SetupSaxDeSer extends DefaultHandler {
             }
             error(new SAXParseException("unexpected element [" + elem + "]",
                     locator));
-        } catch (RuntimeException e) {
+        } catch (final RuntimeException e) {
             log.warn("error in [" + elems + "]", e);
             error(new SAXParseException("error in [" + elems + "]", locator, e));
-        } catch (ClassNotFoundException e) {
+        } catch (final ClassNotFoundException e) {
             log.warn("error in [" + elems + "]", e);
             error(new SAXParseException("error in [" + elems + "]", locator, e));
         }
     }
 
-    public void startPrefixMapping(String prefix, String uri)
+    public void startPrefixMapping(final String prefix, final String uri)
             throws SAXException {
         log.debug("xmlns:" + prefix + "=" + uri);
     }

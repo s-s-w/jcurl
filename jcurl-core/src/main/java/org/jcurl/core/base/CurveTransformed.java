@@ -35,50 +35,75 @@ public class CurveTransformed extends CurveRockBase {
      * Create the transformation from a Rock Coordinates (rc) System at p0_wc
      * with positive y axis along v0_wc into World Coordinates (wc).
      * 
+     * @param ret
+     *            <code>null</code> creates a new one.
+     * @param x0
+     *            (world coordinates)
+     * @param y0
+     *            (world coordinates)
+     * @param vx
+     *            (world coordinates)
+     * @param vy
+     *            (world coordinates)
+     * @return trafo rc -&gt; wc
+     */
+    public static AffineTransform createRc2Wc(AffineTransform ret,
+            final double x0, final double y0, final double vx, final double vy) {
+        if (ret == null)
+            ret = new AffineTransform();
+        else
+            ret.setToIdentity();
+        final double v = Math.sqrt(vx * vx + vy * vy);
+        if (v != 0.0) {
+            final double x = vx / v;
+            final double y = vy / v;
+            ret.setTransform(y, -x, x, y, 0, 0);
+        }
+        // TUNE save one Matrix Instanciation?
+        ret.preConcatenate(AffineTransform.getTranslateInstance(x0, y0));
+        return ret;
+    }
+
+    /**
+     * Create the transformation from a Rock Coordinates (rc) System at p0_wc
+     * with positive y axis along v0_wc into World Coordinates (wc).
+     * 
+     * @param ret
      * @param p0_wc
      * @param v0_wc
      * @return trafo rc -&gt; wc
      */
-    static AffineTransform create(final Point2D p0_wc, final Point2D v0_wc) {
-        final double v = v0_wc.distance(0, 0);
-        final AffineTransform at;
-        if (v == 0) {
-            at = new AffineTransform();
-        } else {
-            final double x = v0_wc.getX() / v;
-            final double y = v0_wc.getY() / v;
-            final double[] d = { y, -x, x, y, 0, 0 };
-            at = new AffineTransform(d);
-        }
-        at.preConcatenate(AffineTransform.getTranslateInstance(p0_wc.getX(),
-                p0_wc.getY()));
-        return at;
+    public static AffineTransform createRc2Wc(final AffineTransform ret,
+            final Point2D p0_wc, final Point2D v0_wc) {
+        return createRc2Wc(ret, p0_wc.getX(), p0_wc.getY(), v0_wc.getX(), v0_wc
+                .getY());
     }
 
     private final double[] p = new double[6];
 
-    private final CurveRock rc;
+    final CurveRock rc;
 
-    private final double rot;
+    final double rot;
 
-    private final double t0;
+    final double t0;
 
     /**
      * 
      * @param rc
      * @param t
-     *            See {@link #create(Point2D, Point2D)}
+     *            See {@link #createRc2Wc(AffineTransform, Point2D, Point2D)}
      * @param t0
      */
-    public CurveTransformed(CurveRock rc, AffineTransform t, double t0) {
+    public CurveTransformed(final CurveRock rc, final AffineTransform t,
+            final double t0) {
         this.t0 = t0;
         this.rc = rc;
-        t.getMatrix(this.p);
-        this.rot = Math.atan2(t.getShearY(), t.getScaleY());
+        t.getMatrix(p);
+        rot = Math.atan2(t.getShearY(), t.getScaleY());
     }
 
     /**
-     * See {@link #create(Point2D, Point2D)} and
+     * See {@link #createRc2Wc(AffineTransform, Point2D, Point2D)} and
      * {@link #CurveTransformed(CurveRock, AffineTransform, double)}
      * 
      * @param c
@@ -86,20 +111,17 @@ public class CurveTransformed extends CurveRockBase {
      * @param v0_wc
      * @param t0
      */
-    public CurveTransformed(CurveRock c, Point2D x0_wc, Point2D v0_wc, double t0) {
-        this(c, create(x0_wc, v0_wc), t0);
+    public CurveTransformed(final CurveRock c, final Point2D x0_wc,
+            final Point2D v0_wc, final double t0) {
+        this(c, createRc2Wc(null, x0_wc, v0_wc), t0);
     }
 
-    double getT0() {
-        return t0;
-    }
-
-    public double[] at(int derivative, double t, double[] ret) {
+    public double[] at(final int derivative, double t, final double[] ret) {
         t -= t0;
         throw new NotImplementedYetException();
     }
 
-    public Rock at(int derivative, double t, Rock ret) {
+    public Rock at(final int derivative, double t, Rock ret) {
         t -= t0;
         ret = rc.at(derivative, t, ret);
         if (derivative < 1) {
@@ -115,7 +137,11 @@ public class CurveTransformed extends CurveRockBase {
         return ret;
     }
 
-    public double at(int component, int derivative, double t) {
+    public double at(final int component, final int derivative, final double t) {
         throw new UnsupportedOperationException("Not supported.");
+    }
+
+    double getT0() {
+        return t0;
     }
 }

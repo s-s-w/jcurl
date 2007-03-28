@@ -56,12 +56,12 @@ public class RockEditDisplay extends PositionDisplay {
 
         public final Cursor cursor;
 
-        private HotObject(int state, String text, Cursor cs) {
+        private HotObject(final int state, final String text, final Cursor cs) {
             super(state, text);
             cursor = cs;
         }
 
-        private HotObject(int state, String text, int cs) {
+        private HotObject(final int state, final String text, final int cs) {
             this(state, text, Cursor.getPredefinedCursor(cs));
         }
     }
@@ -226,7 +226,7 @@ public class RockEditDisplay extends PositionDisplay {
      * @param evt
      * @see PositionDisplay#propertyChange(PropertyChangeEvent)
      */
-    public void propertyChange(PropertyChangeEvent evt) {
+    public void propertyChange(final PropertyChangeEvent evt) {
         final Object tmp = evt.getNewValue();
         if (SpeedSet.class.isAssignableFrom(tmp.getClass()))
             this.repaint();
@@ -234,14 +234,14 @@ public class RockEditDisplay extends PositionDisplay {
             super.propertyChange(evt);
     }
 
-    public void setFocus(int focus) {
+    public void setFocus(final int focus) {
         if (this.focus == focus)
             return;
         this.focus = focus & 0xF;
         this.repaint();
     }
 
-    public void setSelectedMask(int selectedMask) {
+    public void setSelectedMask(final int selectedMask) {
         if (this.selectedMask == selectedMask)
             return;
         this.selectedMask = selectedMask & 0xFFFF;
@@ -259,7 +259,7 @@ public class RockEditDisplay extends PositionDisplay {
         return speed;
     }
 
-    public void setSpeed(SpeedSet speed) {
+    public void setSpeed(final SpeedSet speed) {
         this.speed = speed;
     }
 } // @jve:decl-index=0:visual-constraint="10,10"

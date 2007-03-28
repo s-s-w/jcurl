@@ -91,8 +91,8 @@ public class Zoomer {
      * @param fixX
      * @param fixY
      */
-    public Zoomer(final String txt, double x0, double y0, double w, double h,
-            final double fixX, final double fixY) {
+    public Zoomer(final String txt, final double x0, final double y0,
+            final double w, final double h, final double fixX, final double fixY) {
         this(txt, new Rectangle2D.Double(x0, y0, w, h), new Point2D.Double(
                 fixX, fixY));
     }
@@ -106,8 +106,8 @@ public class Zoomer {
      * @param h
      * @param fixPoint
      */
-    public Zoomer(final String txt, double x0, double y0, double w, double h,
-            final Point2D fixPoint) {
+    public Zoomer(final String txt, final double x0, final double y0,
+            final double w, final double h, final Point2D fixPoint) {
         this(txt, new Rectangle2D.Double(x0, y0, w, h), fixPoint);
     }
 

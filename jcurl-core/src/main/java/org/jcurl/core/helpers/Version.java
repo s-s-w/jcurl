@@ -52,7 +52,7 @@ public class Version {
             parts[i] = Integer.parseInt(tmp[i]);
         try {
             return new Version(parts, fmt.parse(time));
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             return new Version(parts, null);
         }
     }
@@ -71,21 +71,21 @@ public class Version {
             final Attributes main = mf.getMainAttributes();
             return create(main.getValue("Bundle-Version"), main
                     .getValue("Built-Time"));
-        } catch (Exception e) {
+        } catch (final Exception e) {
             return null;
         }
     }
 
     static final Manifest findManifest(final ClassLoader clz,
             final String marker) throws IOException {
-        for (Enumeration enu = clz.getResources("META-INF/MANIFEST.MF"); enu
+        for (final Enumeration enu = clz.getResources("META-INF/MANIFEST.MF"); enu
                 .hasMoreElements();) {
             final URL url = (URL) enu.nextElement();
             if (url.getPath().indexOf(marker) >= 0)
                 return new Manifest(url.openStream());
         }
         log.info("Manifest not found in");
-        for (Enumeration enu = clz.getResources("META-INF/MANIFEST.MF"); enu
+        for (final Enumeration enu = clz.getResources("META-INF/MANIFEST.MF"); enu
                 .hasMoreElements();)
             log.info("url=" + enu.nextElement());
         return new Manifest(new File("config/jcurl.jar/"

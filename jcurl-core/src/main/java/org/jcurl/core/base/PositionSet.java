@@ -89,7 +89,7 @@ public class PositionSet extends RockSet {
      * @return <code>-1</code> if none
      */
     public static int findRockIndexTouchingRockAtPos(final PositionSet rocks,
-            final Point2D pos, int myself) {
+            final Point2D pos, final int myself) {
         for (int i = ROCKS_PER_SET - 1; i >= 0; i--) {
             if (i == myself)
                 continue;
@@ -152,7 +152,7 @@ public class PositionSet extends RockSet {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             if (i % 2 != scorer)
                 continue;
-            double distSq = a.getRock(i).distanceSq(0, 0);
+            final double distSq = a.getRock(i).distanceSq(0, 0);
             if (distSq <= scoreDistSq)
                 ret |= 1 << i;
         }
@@ -183,7 +183,7 @@ public class PositionSet extends RockSet {
         super();
     }
 
-    protected PositionSet(boolean fill) {
+    protected PositionSet(final boolean fill) {
         super(fill);
     }
 

@@ -66,16 +66,16 @@ public class CollissionSimpleTest extends TestCase {
 
     private static final CollissionSimple hit = new CollissionSimple();
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         junit.textui.TestRunner.run(CollissionSimpleTest.class);
     }
 
     public void test005_math() {
-        Point2D a = new Point2D.Double(1, 1);
-        Point2D b = new Point2D.Double(0.3, 0);
+        final Point2D a = new Point2D.Double(1, 1);
+        final Point2D b = new Point2D.Double(0.3, 0);
 
-        double scal = MathVec.scal(a, b);
-        double bb = MathVec.scal(b, b);
+        final double scal = MathVec.scal(a, b);
+        final double bb = MathVec.scal(b, b);
 
         MathVec.mult(scal / bb, b, b);
         assertEquals("", 1, b.getX(), 1e-6);
@@ -87,7 +87,7 @@ public class CollissionSimpleTest extends TestCase {
         bx.setLocation(0, 0);
         av.setLocation(0, 1);
 
-        int ret = hit.compute(pos, speed);
+        final int ret = hit.compute(pos, speed);
         assertEquals(3, ret);
         assertEquals("a.v.x", 0.0, av.getX(), 1e-6);
         assertEquals("a.v.y", 0.0, av.getY(), 1e-6);
@@ -105,7 +105,7 @@ public class CollissionSimpleTest extends TestCase {
         bx.setLocation(0, 0);
         av.setLocation(1, 1);
 
-        int ret = hit.compute(pos, speed);
+        final int ret = hit.compute(pos, speed);
         assertEquals(3, ret);
         assertEquals("a.v.x", 1.0, av.getX(), 1e-6);
         assertEquals("a.v.y", 0.0, av.getY(), 1e-6);

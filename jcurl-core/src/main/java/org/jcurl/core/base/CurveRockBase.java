@@ -18,18 +18,17 @@
  */
 package org.jcurl.core.base;
 
-
 public abstract class CurveRockBase extends CurveRock {
 
     public int dimension() {
         return 3;
     }
 
-    public double[] at(double t, double[] ret) {
+    public double[] at(final double t, final double[] ret) {
         return at(0, t, ret);
     }
 
-    public double[] at(int derivative, double t, double[] ret) {
+    public double[] at(final int derivative, final double t, double[] ret) {
         if (ret == null)
             ret = new double[dimension()];
         for (int i = ret.length - 1; i >= 0; i--)
@@ -37,7 +36,7 @@ public abstract class CurveRockBase extends CurveRock {
         return ret;
     }
 
-    public Rock at(int derivative, double t, Rock ret) {
+    public Rock at(final int derivative, final double t, Rock ret) {
         if (ret == null)
             ret = new RockDouble();
         ret.setLocation(at(0, derivative, t), at(1, derivative, t), at(2,
@@ -45,7 +44,7 @@ public abstract class CurveRockBase extends CurveRock {
         return ret;
     }
 
-    public Rock at(double t, Rock ret) {
+    public Rock at(final double t, final Rock ret) {
         return at(0, t, ret);
     }
 }

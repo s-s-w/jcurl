@@ -50,7 +50,7 @@ public class CurveInterval extends R1RNFunction {
      *            parameter
      * @return value
      */
-    public double at(final int dim, int c, double t) {
+    public double at(final int dim, final int c, double t) {
         if (t < tmin) {
             if (c > 0)
                 return 0;

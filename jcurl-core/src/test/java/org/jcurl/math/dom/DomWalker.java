@@ -37,7 +37,7 @@ public abstract class DomWalker {
 
     public abstract void walk(MathDom.Literal n);
 
-    public void walk(MathDom.Node n) {
+    public void walk(final MathDom.Node n) {
         if (n instanceof MathDom.BinaryOp)
             this.walk((MathDom.BinaryOp) n);
         else if (n instanceof MathDom.Block)

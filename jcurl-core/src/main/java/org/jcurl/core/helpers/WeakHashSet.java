@@ -130,7 +130,7 @@ public class WeakHashSet extends AbstractSet implements Set {
 
     public boolean addAll(final Collection c) {
         boolean changed = false;
-        for (Iterator iter = c.iterator(); iter.hasNext();)
+        for (final Iterator iter = c.iterator(); iter.hasNext();)
             changed = changed | backingStore.put(iter.next(), DUMMY) != DUMMY;
         return changed;
     }

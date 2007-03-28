@@ -14,9 +14,9 @@ import org.xml.sax.helpers.XMLReaderFactory;
  * Simple test harness for XMLWriter.
  */
 public class TestXMLWriter {
-    public static void main(String args[]) throws Exception // yech!
+    public static void main(final String args[]) throws Exception // yech!
     {
-        XMLWriter w = new XMLWriter(XMLReaderFactory.createXMLReader());
+        final XMLWriter w = new XMLWriter(XMLReaderFactory.createXMLReader());
 
         if (args.length == 0) {
             System.err

@@ -27,7 +27,7 @@ import junit.framework.TestCase;
 public class MathVecTest extends TestCase {
 
     public void test001() {
-        int[][] a = { { 1, 2, 3 }, { 4, 5, 6 } };
+        final int[][] a = { { 1, 2, 3 }, { 4, 5, 6 } };
         assertEquals(2, a.length);
         assertEquals(3, a[0].length);
 

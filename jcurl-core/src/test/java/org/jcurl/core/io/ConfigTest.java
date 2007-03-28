@@ -29,12 +29,12 @@ import org.jcurl.core.helpers.DimVal;
  */
 public class ConfigTest extends TestCase {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         junit.textui.TestRunner.run(ConfigTest.class);
     }
 
     public void test010_ToDim() {
-        DimVal dim = Config.getDim("-1.4e-3m/s");
+        final DimVal dim = Config.getDim("-1.4e-3m/s");
         assertEquals(Dim.METER_PER_SEC, dim.dim);
         // assertEquals(-1.4e-3, dim.value);
     }

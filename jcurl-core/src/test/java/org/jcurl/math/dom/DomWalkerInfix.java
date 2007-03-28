@@ -43,7 +43,7 @@ public class DomWalkerInfix extends DomWalker {
         this(new StringBuffer());
     }
 
-    public DomWalkerInfix(StringBuffer b) {
+    public DomWalkerInfix(final StringBuffer b) {
         this.b = b;
     }
 
@@ -51,33 +51,33 @@ public class DomWalkerInfix extends DomWalker {
         b.setLength(0);
     }
 
-    public void walk(MathDom.BinaryOp n) {
+    public void walk(final MathDom.BinaryOp n) {
         this.walk(n.left);
         b.append(' ').append(n.op).append(' ');
         this.walk(n.right);
     }
 
-    public void walk(MathDom.Block n) {
+    public void walk(final MathDom.Block n) {
         b.append('(');
         this.walk(n.arg);
         b.append(')');
     }
 
-    public void walk(MathDom.Function n) {
+    public void walk(final MathDom.Function n) {
         b.append(n.name).append('(');
         this.walk(n.arg);
         b.append(')');
     }
 
-    public void walk(MathDom.Literal n) {
+    public void walk(final MathDom.Literal n) {
         b.append(n.val);
     }
 
-    public void walk(MathDom.Parameter n) {
+    public void walk(final MathDom.Parameter n) {
         b.append(n.name);
     }
 
-    public void walk(MathDom.UnaryOp n) {
+    public void walk(final MathDom.UnaryOp n) {
         b.append(n.op);
         this.walk(n.arg);
     }

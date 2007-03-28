@@ -2,8 +2,8 @@ package com.megginson.sax;
 
 public class TestDataWriter {
 
-    public static void main(String args[]) throws Exception {
-        DataWriter w = new DataWriter();
+    public static void main(final String args[]) throws Exception {
+        final DataWriter w = new DataWriter();
 
         w.setIndentStep(2);
         w.startDocument();

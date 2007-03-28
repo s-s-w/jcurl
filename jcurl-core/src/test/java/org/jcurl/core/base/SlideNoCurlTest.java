@@ -21,18 +21,10 @@ package org.jcurl.core.base;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
-import junit.framework.TestCase;
-
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.math.Polynome;
 
-public class SlideNoCurlTest extends TestCase {
-
-    protected void assertEquals(double expected, double found) {
-        final double precision = 1e-9;
-        assertEquals("expected:<" + expected + "> +/-:<" + precision
-                + "> but was:<" + found + ">", expected, found, precision);
-    }
+public class SlideNoCurlTest extends TestBase {
 
     public void testBeta() {
         assertEquals(0.0980844266686885, new SlideNoCurl(17, 0).beta);
