@@ -47,6 +47,14 @@ public class PositionDisplay extends WCComponent implements
 
     private static final Map hints = new HashMap(); // @jve:decl-index=0:
 
+    // TODO move to WCComponent
+    private static final AffineTransform postScale = AffineTransform
+            .getScaleInstance(1.0 / WCComponent.SCALE, 1.0 / WCComponent.SCALE);
+
+    // TODO move to WCComponent
+    private static final AffineTransform preScale = AffineTransform
+            .getScaleInstance(WCComponent.SCALE, WCComponent.SCALE);
+
     private static final long serialVersionUID = -2680676530327406261L;
 
     static {
@@ -240,9 +248,16 @@ public class PositionDisplay extends WCComponent implements
     protected void paintRockWC(final Graphics2D g, final Rock rock,
             final boolean isDark, final int idx) {
         final AffineTransform t = g.getTransform();
-        g.translate(WCComponent.SCALE * rock.getX(), WCComponent.SCALE
-                * rock.getY());
-        g.rotate(Math.PI + rock.getZ());
+        if (false) {
+            g.translate(WCComponent.SCALE * rock.getX(), WCComponent.SCALE
+                    * rock.getY());
+            g.rotate(Math.PI + rock.getZ());
+        } else {
+            g.transform(preScale);
+            g.transform(rock.getTrafo());
+            g.transform(postScale);
+        }
+
         // make the right-handed coordinate system left handed again (for
         // un-flipped text display)
         g.scale(-1, 1);

@@ -30,7 +30,7 @@ import java.io.Serializable;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:RockFloat.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class RockFloat extends Rock implements Serializable {
+class RockFloat extends Rock implements Serializable {
 
     private static final long serialVersionUID = 3219049101239057245L;
 
@@ -44,6 +44,7 @@ public class RockFloat extends Rock implements Serializable {
         this.x[0] = x;
         this.x[1] = y;
         this.x[2] = alpha;
+        dirty = true;
     }
 
     public Object clone() {
@@ -81,23 +82,28 @@ public class RockFloat extends Rock implements Serializable {
     public void setLocation(final double x, final double y) {
         this.x[0] = (float) x;
         this.x[1] = (float) y;
+        dirty = true;
     }
 
     public void setLocation(final double x, final double y, final double z) {
         this.x[0] = (float) x;
         this.x[1] = (float) y;
         this.x[2] = (float) z;
+        dirty = true;
     }
 
     public void setX(final double x) {
         this.x[0] = (float) x;
+        dirty = true;
     }
 
     public void setY(final double y) {
         x[1] = (float) y;
+        dirty = true;
     }
 
     public void setZ(final double alpha) {
         x[2] = (float) alpha;
+        dirty = true;
     }
 }

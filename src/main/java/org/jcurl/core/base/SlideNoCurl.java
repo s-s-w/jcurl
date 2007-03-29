@@ -134,7 +134,7 @@ public class SlideNoCurl extends SlideBase implements Strategy, Factory {
      * @return the hog speed.
      */
     public double computeV0(final double splitTime) {
-        return -(Ice.BACK_2_HOG / splitTime - beta * splitTime);
+        return Ice.BACK_2_HOG / splitTime - beta * splitTime;
     }
 
     public double getDrawToTeeCurl() {

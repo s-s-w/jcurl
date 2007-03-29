@@ -18,7 +18,6 @@
  */
 package org.jcurl.core.base;
 
-import org.jcurl.math.R1RNFunction;
 
 /**
  * Find Collissions of two curves.
@@ -50,6 +49,6 @@ public abstract class CollissionDetector implements Strategy {
      * @throws NoCollission
      *             they don't collide in the given interval.
      */
-    public abstract double compute(double t0, double tmax, R1RNFunction fa,
-            double ra, R1RNFunction fb, double rb) throws NoCollission;
+    public abstract double compute(double t0, double tmax, CurveRock fa,
+            double ra, CurveRock fb, double rb) throws NoCollission;
 }

@@ -30,7 +30,7 @@ public class PositionDisplayTest extends TestShowBase {
                 new TimeRunnable() {
                     public void run(final double t) throws InterruptedException {
                         p.notifyChange();
-                        Thread.sleep(1000 / 25);
+                        Thread.sleep(4);
                     }
                 });
         if (show)

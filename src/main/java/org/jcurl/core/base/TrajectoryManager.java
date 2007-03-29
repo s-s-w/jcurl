@@ -27,6 +27,8 @@ import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.log.JCLoggerFactory;
 
 /**
+ * Bring it all together and trigger computation.
+ * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -41,6 +43,8 @@ public class TrajectoryManager extends MutableObject implements
     private Collider collider = null;
 
     private CollissionDetector collissionDetector = null;
+
+    //private final CollissionStore collissionStore = new CollissionStore();
 
     private final PositionSet currentPos = new PositionSet();
 
@@ -74,8 +78,7 @@ public class TrajectoryManager extends MutableObject implements
             if (v.distanceSq(0, 0) == 0)
                 wc = CurveRock.still(x);
             else
-                // FIXME add stop detection! Either here or at the slider
-                // itself!
+                // FIXME add stop detection! Either here or in each slider?
                 wc = new CurveTransformed(slider.computeRc(x, v),
                         CurveTransformed.createRc2Wc(new AffineTransform(), x,
                                 v), t0);

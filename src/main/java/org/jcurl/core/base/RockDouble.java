@@ -40,10 +40,20 @@ public class RockDouble extends Rock implements Serializable {
         this(0, 0, 0);
     }
 
+    public void setLocation(final double[] pt) {
+        if (pt.length != 3)
+            throw new IllegalArgumentException();
+        if (pt[0] == x[0] && pt[1] == x[1] && pt[2] == x[2])
+            return;
+        System.arraycopy(pt, 0, x, 0, 3);
+        dirty = true;
+    }
+
     public RockDouble(final double x, final double y, final double alpha) {
         this.x[0] = x;
         this.x[1] = y;
         this.x[2] = alpha;
+        dirty = true;
     }
 
     public Object clone() {
@@ -81,25 +91,40 @@ public class RockDouble extends Rock implements Serializable {
     }
 
     public void setLocation(final double x, final double y) {
+        if (x == this.x[0] && y == this.x[1])
+            return;
         this.x[0] = x;
         this.x[1] = y;
+        dirty = true;
     }
 
     public void setLocation(final double x, final double y, final double z) {
+        if (x == this.x[0] && y == this.x[1] && z == this.x[2])
+            return;
         this.x[0] = x;
         this.x[1] = y;
         this.x[2] = z;
+        dirty = true;
     }
 
     public void setX(final double x) {
+        if (x == this.x[0])
+            return;
         this.x[0] = x;
+        dirty = true;
     }
 
     public void setY(final double y) {
+        if (y == this.x[1])
+            return;
         x[1] = y;
+        dirty = true;
     }
 
     public void setZ(final double alpha) {
+        if (alpha == this.x[2])
+            return;
         x[2] = alpha;
+        dirty = true;
     }
 }
