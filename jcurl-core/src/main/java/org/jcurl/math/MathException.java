@@ -25,6 +25,6 @@ package org.jcurl.math;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id: MathException.java 370 2007-01-23 03:04:05Z mrohrmoser $
  */
-abstract class MathException extends Exception {
+public abstract class MathException extends Exception {
 
 }

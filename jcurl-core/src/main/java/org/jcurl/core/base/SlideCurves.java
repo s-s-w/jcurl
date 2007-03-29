@@ -41,8 +41,8 @@ public abstract class SlideCurves extends SlideStrategy {
     private static final Log log = JCLoggerFactory.getLogger(SlideCurves.class);
 
     private static double findThalt(final double t0, final R1RNFunction cu) {
-        final double thx = cu.computeNewtonZero(0, 1, t0);
-        final double thy = cu.computeNewtonZero(1, 1, t0);
+        final double thx = cu.computeNewtonZero(0, 1, t0, Double.MAX_VALUE);
+        final double thy = cu.computeNewtonZero(1, 1, t0, Double.MAX_VALUE);
         final double thalt = thx > thy ? thx : thy;
         if (log.isDebugEnabled())
             log.debug("thalt=" + thalt);

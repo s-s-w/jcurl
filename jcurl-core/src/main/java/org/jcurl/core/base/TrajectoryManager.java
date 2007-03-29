@@ -44,7 +44,7 @@ public class TrajectoryManager extends MutableObject implements
 
     private CollissionDetector collissionDetector = null;
 
-    //private final CollissionStore collissionStore = new CollissionStore();
+    // private final CollissionStore collissionStore = new CollissionStore();
 
     private final PositionSet currentPos = new PositionSet();
 
@@ -152,7 +152,7 @@ public class TrajectoryManager extends MutableObject implements
     }
 
     public void setCurrentTime(final double currentTime) {
-        log.info(Double.toString(currentTime));
+        // log.info(Double.toString(currentTime));
         if (init) {
             if (this.currentTime == currentTime)
                 return;

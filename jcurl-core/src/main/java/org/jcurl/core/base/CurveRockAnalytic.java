@@ -31,6 +31,10 @@ public class CurveRockAnalytic extends CurveRockBase {
         this(new R1R1Function[] { x, y, a });
     }
 
+    public String toString() {
+        return f.toString();
+    }
+
     public CurveRockAnalytic(final R1R1Function[] x) {
         this(new CurveFkt(x));
     }

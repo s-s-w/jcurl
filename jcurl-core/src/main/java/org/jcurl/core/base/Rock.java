@@ -20,6 +20,7 @@ package org.jcurl.core.base;
 
 import java.awt.geom.AffineTransform;
 
+import org.jcurl.math.MathVec;
 import org.jcurl.math.Point3D;
 
 /**
@@ -32,11 +33,21 @@ import org.jcurl.math.Point3D;
  */
 public abstract class Rock extends Point3D implements Cloneable {
 
-    protected transient AffineTransform trafo;
-
     protected transient boolean dirty = true;
 
+    protected transient AffineTransform trafo;
+
     public abstract Object clone();
+
+    /**
+     * Override super to ignore {@link #getZ()}.
+     * 
+     * @param b
+     * @return the distance square.
+     */
+    public double distanceSq(final Rock b) {
+        return MathVec.sqr(getX() - b.getX()) + MathVec.sqr(getY() - b.getY());
+    }
 
     public final boolean equals(final Object obj) {
         if (obj == null || !(obj instanceof Rock))

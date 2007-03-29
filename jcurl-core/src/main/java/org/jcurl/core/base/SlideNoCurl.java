@@ -44,13 +44,19 @@ public class SlideNoCurl extends SlideBase implements Strategy, Factory {
      * </p>
      * 
      * @param drawToTeeTime
+     *            may be {@link Double#POSITIVE_INFINITY}.
      * @param drawToTeeCurl
+     *            MUST be 0
      */
     public SlideNoCurl(final double drawToTeeTime, final double drawToTeeCurl) {
         if (drawToTeeCurl != 0)
             throw new IllegalArgumentException("Curl must be zero!");
-        beta = Ice.FAR_HOG_2_TEE / MathVec.sqr(drawToTeeTime);
-        drawToTeeV0 = 2 * Ice.FAR_HOG_2_TEE / drawToTeeTime;
+        if (Double.isInfinite(drawToTeeTime) && drawToTeeTime > 0)
+            beta = drawToTeeV0 = 0;
+        else {
+            beta = Ice.FAR_HOG_2_TEE / MathVec.sqr(drawToTeeTime);
+            drawToTeeV0 = 2 * Ice.FAR_HOG_2_TEE / drawToTeeTime;
+        }
     }
 
     /**

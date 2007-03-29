@@ -89,7 +89,7 @@ public class PolynomeTest extends TestCase {
         assertEquals("", y, po.at(4, x), 1e-9);
     }
 
-    public void test025_Newton() {
+    public void testNewtonZero() {
         {
             final double[] a = { -1, 1 };
             final Polynome po = new Polynome(a);
