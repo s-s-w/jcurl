@@ -128,8 +128,8 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     protected RockSet(final boolean fill) {
         if (fill)
             for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
-                dark[i] = new RockFloat();
-                light[i] = new RockFloat();
+                dark[i] = new RockDouble();
+                light[i] = new RockDouble();
             }
     }
 

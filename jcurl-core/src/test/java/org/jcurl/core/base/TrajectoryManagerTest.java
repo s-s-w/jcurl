@@ -23,7 +23,6 @@ import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CollissionSimple;
 import org.jcurl.core.swing.Zoomer;
-import org.jcurl.math.R1RNFunction;
 
 public class TrajectoryManagerTest extends TestShowBase {
 
@@ -35,8 +34,8 @@ public class TrajectoryManagerTest extends TestShowBase {
         te.setCollider(new CollissionSimple());
         te.setCollissionDetector(new CollissionDetector() {
             public double compute(final double t0, final double tmax,
-                    final R1RNFunction fa, final double ra,
-                    final R1RNFunction fb, final double rb) throws NoCollission {
+                    final CurveRock fa, final double ra,
+                    final CurveRock fb, final double rb) throws NoCollission {
                 throw new NotImplementedYetException();
             }
         });
@@ -45,13 +44,13 @@ public class TrajectoryManagerTest extends TestShowBase {
         te.getInitialPos().getDark(0).setLocation(0, Ice.HOG_2_TEE, Math.PI);
         te.setInitialSpeed(new SpeedSet());
         te.getInitialSpeed().getDark(0).setLocation(0,
-                te.getSlider().computeV0(9), Math.PI / 2);
+                -te.getSlider().computeV0(9), Math.PI / 2);
 
         showPositionDisplay(te.getCurrentPos(), Zoomer.HOUSE, 5000,
                 new TimeRunnable() {
                     public void run(final double t) throws InterruptedException {
                         te.setCurrentTime(t);
-                        Thread.sleep(10);
+                        Thread.sleep(20);
                     }
                 });
         // FIXME Test is not ok yet!

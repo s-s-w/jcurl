@@ -34,9 +34,9 @@ public abstract class TestShowBase extends TestBase {
     private static final Log log = JCLoggerFactory
             .getLogger(TestShowBase.class);
 
-    protected final boolean show;
+    private static final boolean showGui;
 
-    public TestShowBase() {
+    static {
         final StackTraceElement[] se = new RuntimeException().getStackTrace();
         boolean inEclipse = false;
         for (int i = se.length - 1; i >= 0; i--)
@@ -44,8 +44,10 @@ public abstract class TestShowBase extends TestBase {
                 inEclipse = true;
                 break;
             }
-        show = inEclipse;
+        showGui = inEclipse;
     }
+
+    protected final boolean show = showGui;
 
     public int showPositionDisplay(final PositionSet p, final Zoomer zoom,
             final long millis, final TimeRunnable r) {
