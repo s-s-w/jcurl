@@ -16,32 +16,25 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.base;
+package org.jcurl.core.swing;
 
-import org.jcurl.math.CurveCombined;
-import org.jcurl.math.R1RNFunction;
+import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.TestShowBase;
 
-public class CurveStore {
+public class PositionDisplayTest extends TestShowBase {
 
-    private static final byte DIM = 3;
-
-    private final CurveCombined[] curve;
-
-    public CurveStore(final int dim) {
-        curve = new CurveCombined[dim];
-        for (int i = curve.length - 1; i >= 0; i--)
-            curve[i] = new CurveCombined(DIM);
-    }
-
-    public void add(final int i, final double t, final R1RNFunction f) {
-        curve[i].add(t, f);
-    }
-
-    public R1RNFunction getCurve(final int i) {
-        return curve[i];
-    }
-
-    public void reset(final int i) {
-        curve[i].clear();
+    public void testThroughPut() {
+        final int dt = 5000;
+        final PositionSet p = PositionSet.allHome();
+        final int frames = showPositionDisplay(p, Zoomer.HOG2HACK, dt,
+                new TimeRunnable() {
+                    public void run(final double t) throws InterruptedException {
+                        p.notifyChange();
+                        Thread.sleep(1000 / 25);
+                    }
+                });
+        if (show)
+            System.out.println(getClass().getName() + " frequency: " + frames
+                    / (double) dt + " frames per second");
     }
 }

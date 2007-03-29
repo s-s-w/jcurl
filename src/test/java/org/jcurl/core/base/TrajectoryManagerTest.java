@@ -22,6 +22,7 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CollissionSimple;
+import org.jcurl.core.swing.Zoomer;
 import org.jcurl.math.R1RNFunction;
 
 public class TrajectoryManagerTest extends TestShowBase {
@@ -29,33 +30,30 @@ public class TrajectoryManagerTest extends TestShowBase {
     private static final Log log = JCLoggerFactory
             .getLogger(TrajectoryManagerTest.class);
 
-    public TrajectoryManagerTest() {
-        super(5000);
-    }
-
     public void test1() throws InterruptedException {
         final TrajectoryManager te = new TrajectoryManager();
         te.setCollider(new CollissionSimple());
         te.setCollissionDetector(new CollissionDetector() {
-            public double compute(double t0, double tmax, R1RNFunction fa,
-                    double ra, R1RNFunction fb, double rb) throws NoCollission {
+            public double compute(final double t0, final double tmax,
+                    final R1RNFunction fa, final double ra,
+                    final R1RNFunction fb, final double rb) throws NoCollission {
                 throw new NotImplementedYetException();
             }
         });
         te.setSlider(new SlideNoCurl(23, 0));
         te.setInitialPos(PositionSet.allHome());
-        te.getInitialPos().getDark(0)
-                .setLocation(0, Ice.FAR_HOG_2_TEE, Math.PI);
+        te.getInitialPos().getDark(0).setLocation(0, Ice.HOG_2_TEE, Math.PI);
         te.setInitialSpeed(new SpeedSet());
         te.getInitialSpeed().getDark(0).setLocation(0,
-                te.getSlider().computeV0(3), 0.2);
+                te.getSlider().computeV0(9), Math.PI / 2);
 
-        doShowPositionDisplay(te.getCurrentPos(), new TimeRunnable() {
-            public void run(double t) throws InterruptedException {
-                te.setCurrentTime(t);
-                Thread.sleep(10);
-            }
-        });
+        showPositionDisplay(te.getCurrentPos(), Zoomer.HOUSE, 5000,
+                new TimeRunnable() {
+                    public void run(final double t) throws InterruptedException {
+                        te.setCurrentTime(t);
+                        Thread.sleep(10);
+                    }
+                });
         // FIXME Test is not ok yet!
     }
 }

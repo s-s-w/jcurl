@@ -70,9 +70,15 @@ public class TrajectoryManager extends MutableObject implements
             curveStore.reset(i);
             final Rock x = initialPos.getRock(i);
             final Rock v = initialSpeed.getRock(i);
-            final CurveRock rc = slider.computeRc(x, v);
-            final CurveRock wc = new CurveTransformed(rc, CurveTransformed
-                    .createRc2Wc(new AffineTransform(), x, v), t0);
+            final CurveRock wc;
+            if (v.distanceSq(0, 0) == 0)
+                wc = CurveRock.still(x);
+            else
+                // FIXME add stop detection! Either here or at the slider
+                // itself!
+                wc = new CurveTransformed(slider.computeRc(x, v),
+                        CurveTransformed.createRc2Wc(new AffineTransform(), x,
+                                v), t0);
             curveStore.add(i, t0, wc);
         }
         // TODO initial collission detection:

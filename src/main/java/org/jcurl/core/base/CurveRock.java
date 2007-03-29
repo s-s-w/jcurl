@@ -28,13 +28,49 @@ import org.jcurl.math.R1RNFunction;
  */
 public abstract class CurveRock extends R1RNFunction {
 
+    public static CurveRock still(final double x, final double y, final double a) {
+        return new CurveRock() {
+            public Rock at(final double t, final Rock ret) {
+                return at(0, t, ret);
+            }
+
+            public Rock at(final int derivative, final double t, final Rock ret) {
+                ret.setLocation(at(0, 0, t), at(1, 0, t), at(2, 0, t));
+                return ret;
+            }
+
+            public double at(final int dim, final int c, final double t) {
+                if (c > 0)
+                    return 0;
+                switch (dim) {
+                case 0:
+                    return x;
+                case 1:
+                    return y;
+                case 2:
+                    return a;
+                default:
+                    throw new RuntimeException();
+                }
+            }
+
+            public int dimension() {
+                return 3;
+            }
+        };
+    }
+
+    public static CurveRock still(final Rock x) {
+        return still(x.getX(), x.getY(), x.getZ());
+    }
+
     protected CurveRock() {
         super(3);
     }
 
-    public abstract int dimension();
+    public abstract Rock at(double t, Rock ret);
 
     public abstract Rock at(int derivative, double t, Rock ret);
 
-    public abstract Rock at(double t, Rock ret);
+    public abstract int dimension();
 }

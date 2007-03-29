@@ -22,11 +22,12 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import org.apache.commons.math.MathException;
+import org.jcurl.core.swing.Zoomer;
 import org.jcurl.math.Point3D;
 
-public class CurveTransformedTest extends TestBase {
+public class CurveTransformedTest extends TestShowBase {
 
-    public static void assertEquals(final double x, final double y,
+    private static void assertEquals(final double x, final double y,
             final double z, final Point3D p, final double delta) {
         final String txt = "";
         assertEquals(txt, x, p.getX(), delta);
@@ -216,5 +217,56 @@ public class CurveTransformedTest extends TestBase {
         assertEquals(1.5, 1.875, 0.5, ret, 1e-9);
         ret = cw.at(1.5, ret);
         assertEquals(2.25, 2.8125, 0.75, ret, 1e-9);
+    }
+
+    public void testStill() {
+        final PositionSet p = PositionSet.allOut();
+        final CurveTransformed[] c = new CurveTransformed[6];
+        final AffineTransform[] m = new AffineTransform[c.length];
+        int k = -1;
+        // Plain & straight
+        m[++k] = new AffineTransform();
+        c[k] = new CurveTransformed(CurveRock.still(0.25, 1, 0), m[k], 0);
+        m[++k] = new AffineTransform();
+        m[k].translate(0.5, 1);
+        c[k] = new CurveTransformed(CurveRock.still(0, 0, 0), m[k], 0);
+
+        // Plain & looking left
+        m[++k] = new AffineTransform();
+        c[k] = new CurveTransformed(CurveRock.still(0.25, 1.5, 0.25 * Math.PI),
+                m[k], 0);
+        m[++k] = new AffineTransform();
+        m[k].translate(0.5, 1.5);
+        m[k].rotate(0.25 * Math.PI);
+        c[k] = new CurveTransformed(CurveRock.still(0, 0, 0), m[k], 0);
+
+        // createRc2Wc & looking left
+        m[++k] = new AffineTransform();
+        c[k] = new CurveTransformed(CurveRock.still(0.25, 2, 0.25 * Math.PI),
+                m[k], 0);
+        m[++k] = CurveTransformed.createRc2Wc(null, new Point2D.Double(0.5, 2),
+                new Point2D.Double(-1, 1));
+        c[k] = new CurveTransformed(CurveRock.still(0, 0, 0), m[k], 0);
+
+        final double[] tmp = { 0, 0, 0 };
+        for (int i = c.length - 1; i >= 0; i--)
+            p.getRock(i).setLocation(c[i].at(0, 0, tmp));
+        // Check if "sibling" rocks look alike:
+        showPositionDisplay(p, Zoomer.C12, 5000, new TimeRunnable() {
+            public void run(final double t) throws InterruptedException {
+                p.notifyChange();
+                Thread.sleep(1500);
+            }
+        });
+
+        assertEquals(0.25, 1, 0, p.getRock(0), 1e-6);
+        assertEquals(0.5, 1, 0, p.getRock(1), 1e-6);
+
+        assertEquals(0.25, 1.5, 0.25 * Math.PI, p.getRock(2), 1e-6);
+        assertEquals(0.5, 1.5, 0.25 * Math.PI, p.getRock(3), 1e-6);
+
+        assertEquals(0.25, 2, 0.25 * Math.PI, p.getRock(4), 1e-6);
+        assertEquals(0.5, 2, 0.25 * Math.PI, p.getRock(5), 1e-6);
+
     }
 }

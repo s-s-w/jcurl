@@ -63,7 +63,8 @@ public class CurveTransformed extends CurveRockBase {
     }
 
     /**
-     * Delegate to {@link #createRc2Wc(AffineTransform, double, double, double, double)}
+     * Delegate to
+     * {@link #createRc2Wc(AffineTransform, double, double, double, double)}
      * 
      * @param ret
      *            <code>null</code> creates a new one.

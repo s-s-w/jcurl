@@ -18,11 +18,15 @@
  */
 package org.jcurl.core.base;
 
+import java.awt.geom.AffineTransform;
+
 import org.jcurl.math.Point3D;
 
 /**
  * Base class for rock information (either location or speed). The "Z" component
  * is the handle angle in radians.
+ * 
+ * TUNE Maybe add a transient {@link AffineTransform} representation?
  * 
  * @see org.jcurl.core.base.PositionSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
