@@ -35,7 +35,8 @@ public class SlideNoCurlTest extends TestShowBase {
 
     public void testComputeV0() {
         SlideNoCurl s = new SlideNoCurl(17, 0);
-        for(int i = 1; i <= 6; i++) System.out.println(s.computeV0(i));
+        for (int i = 1; i <= 6; i++)
+            System.out.println(s.computeV0(i));
         assertEquals(8.131515526029066, s.computeV0(1));
         assertEquals(3.9186311230115, s.computeV0(2));
         assertEquals(2.448946704226519, s.computeV0(3));
@@ -164,9 +165,5 @@ public class SlideNoCurlTest extends TestShowBase {
         m.transform(x, x);
         assertEquals(-0.3849601560620878, x.getX() - 0.5);
         assertEquals(-0.026195362711519, x.getY() - Ice.FAR_HOG_2_TEE + 1);
-    }
-
-    public void testVisual() {
-
     }
 }

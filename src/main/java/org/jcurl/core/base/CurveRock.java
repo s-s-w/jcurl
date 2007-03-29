@@ -35,7 +35,8 @@ public abstract class CurveRock extends R1RNFunction {
             }
 
             public Rock at(final int derivative, final double t, final Rock ret) {
-                ret.setLocation(at(0, 0, t), at(1, 0, t), at(2, 0, t));
+                ret.setLocation(at(0, derivative, t), at(1, derivative, t), at(
+                        2, derivative, t));
                 return ret;
             }
 
@@ -56,6 +57,16 @@ public abstract class CurveRock extends R1RNFunction {
 
             public int dimension() {
                 return 3;
+            }
+
+            public String toString() {
+                final StringBuffer buf = new StringBuffer();
+                buf.append('[');
+                buf.append(x).append(", ");
+                buf.append(y).append(", ");
+                buf.append(a);
+                buf.append(']');
+                return buf.toString();
             }
         };
     }

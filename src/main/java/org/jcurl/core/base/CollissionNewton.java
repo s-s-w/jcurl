@@ -16,16 +16,23 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.model;
+package org.jcurl.core.base;
 
-import org.jcurl.core.base.CollissionDetector;
-import org.jcurl.core.base.CurveRock;
+import org.jcurl.math.R1RNFunction;
 
-public class IterativeCollissionDetector extends CollissionDetector {
+/**
+ * Uses
+ * {@link R1RNFunction#computeNewtonValue(int, int, double, double, double)} on
+ * {@link DistanceSq} to find the next collission.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
+public class CollissionNewton extends CollissionDetector {
 
     public double compute(final double t0, final double tmax,
-            final CurveRock fa, final CurveRock fb, final double rb) {
-        throw new UnsupportedOperationException("Not implemented.");
+            final CurveRock fa, final CurveRock fb, final double distSq) {
+        return new DistanceSq(fa, fb, 0).computeNewtonValue(0, 0, distSq, t0,
+                tmax);
     }
-
 }

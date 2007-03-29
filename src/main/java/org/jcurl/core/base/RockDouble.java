@@ -115,14 +115,14 @@ public class RockDouble extends Rock implements Serializable {
     }
 
     public void setY(final double y) {
-        if (y == this.x[1])
+        if (y == x[1])
             return;
         x[1] = y;
         dirty = true;
     }
 
     public void setZ(final double alpha) {
-        if (alpha == this.x[2])
+        if (alpha == x[2])
             return;
         x[2] = alpha;
         dirty = true;

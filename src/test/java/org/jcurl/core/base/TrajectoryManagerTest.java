@@ -34,8 +34,7 @@ public class TrajectoryManagerTest extends TestShowBase {
         te.setCollider(new CollissionSimple());
         te.setCollissionDetector(new CollissionDetector() {
             public double compute(final double t0, final double tmax,
-                    final CurveRock fa, final double ra,
-                    final CurveRock fb, final double rb) throws NoCollission {
+                    final CurveRock fa, final CurveRock fb, final double rb) {
                 throw new NotImplementedYetException();
             }
         });
@@ -46,6 +45,16 @@ public class TrajectoryManagerTest extends TestShowBase {
         te.getInitialSpeed().getDark(0).setLocation(0,
                 -te.getSlider().computeV0(9), Math.PI / 2);
 
+        // Raw throughput:
+        final int loops = 10000;
+        final long t0 = System.currentTimeMillis();
+        for (int i = loops; i > 0; i--)
+            te.setCurrentTime(1e-3 * i);
+        log.info(loops + " computations took "
+                + (System.currentTimeMillis() - t0) + " millis, i.e. " + loops
+                * 1000 / (System.currentTimeMillis() - t0) + " per second.");
+
+        // with Display:
         showPositionDisplay(te.getCurrentPos(), Zoomer.HOUSE, 5000,
                 new TimeRunnable() {
                     public void run(final double t) throws InterruptedException {

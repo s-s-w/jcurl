@@ -40,4 +40,15 @@ public class CurveFkt extends R1RNFunction {
     public double at(final int dim, final int c, final double t) {
         return fkt[dim].at(0, c, t);
     }
+
+    public String toString() {
+        final StringBuffer buf = new StringBuffer();
+        buf.append('[');
+        for (int i = 0; i < dim; i++)
+            buf.append(fkt[i]).append(", ");
+        if (dim > 0)
+            buf.setLength(buf.length() - 2);
+        buf.append(']');
+        return buf.toString();
+    }
 }
