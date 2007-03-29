@@ -75,8 +75,8 @@ public abstract class Point3D extends Point2D {
         setZ(z);
     }
 
-    public void setLocation(final double [] pt) {
-        if(pt.length != 3)
+    public void setLocation(final double[] pt) {
+        if (pt.length != 3)
             throw new IllegalArgumentException();
         this.setLocation(pt[0], pt[1], pt[2]);
     }

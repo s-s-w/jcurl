@@ -116,7 +116,7 @@ public class CurveCombined extends R1RNFunction {
      * @return the value
      * @see R1RNFunction#at(int, double, double[])
      */
-    public double[] at(final int c, final double t, double[] ret) {
+    public double[] at(final int c, final double t, final double[] ret) {
         return fkt[findFktIdx_BS(t)].at(c, t, ret);
     }
 

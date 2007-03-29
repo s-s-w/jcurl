@@ -22,9 +22,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.swing.Zoomer;
 import org.jcurl.math.Polynome;
 
-public class SlideNoCurlTest extends TestBase {
+public class SlideNoCurlTest extends TestShowBase {
 
     public void testBeta() {
         assertEquals(0.0980844266686885, new SlideNoCurl(17, 0).beta);
@@ -68,6 +69,7 @@ public class SlideNoCurlTest extends TestBase {
     public void testComputeRcPoly() {
         SlideNoCurl s = new SlideNoCurl(17, 0);
         Polynome[] p = s.computeRcPoly(Math.PI, 2, 0.2);
+        showTrajectory(p, Zoomer.HOUSE, 5000, 40);
         assertEquals(0, p[0].at(0));
         assertEquals(0, p[1].at(0));
         assertEquals(Math.PI, p[2].at(0));
@@ -99,6 +101,18 @@ public class SlideNoCurlTest extends TestBase {
         assertEquals(0, p[0].at(23));
         assertEquals(40.65360069274902, p[1].at(23));
         assertEquals(7.741592653589794, p[2].at(23));
+    }
+
+    void showTrajectory(final Polynome[] p, final Zoomer zoom,
+            final int millis, final int dt) {
+        final PositionSet pos = PositionSet.allHome();
+        showPositionDisplay(pos, zoom, millis, new TimeRunnable() {
+            public void run(final double t) throws InterruptedException {
+                pos.getRock(0).setLocation(p[0].at(t), p[1].at(t), p[2].at(t));
+                pos.notifyChange();
+                Thread.sleep(dt);
+            }
+        });
     }
 
     public void testReleaseRc2Wc() {
@@ -150,5 +164,9 @@ public class SlideNoCurlTest extends TestBase {
         m.transform(x, x);
         assertEquals(-0.3849601560620878, x.getX() - 0.5);
         assertEquals(-0.026195362711519, x.getY() - Ice.FAR_HOG_2_TEE + 1);
+    }
+
+    public void testVisual() {
+
     }
 }

@@ -31,9 +31,12 @@ public abstract class TestShowBase extends TestBase {
         public void run(double t) throws InterruptedException;
     }
 
-    protected final int show;
+    private static final Log log = JCLoggerFactory
+            .getLogger(TestShowBase.class);
 
-    public TestShowBase(final int millis) {
+    protected final boolean show;
+
+    public TestShowBase() {
         final StackTraceElement[] se = new RuntimeException().getStackTrace();
         boolean inEclipse = false;
         for (int i = se.length - 1; i >= 0; i--)
@@ -41,37 +44,34 @@ public abstract class TestShowBase extends TestBase {
                 inEclipse = true;
                 break;
             }
-        show = inEclipse ? millis : -1;
+        show = inEclipse;
     }
 
-    public void doShowPositionDisplay(final PositionSet p, final TimeRunnable r) {
-        if (show > 0) {
-            final JFrame frame = new JFrame();
-            frame.setBounds(0, 0, 800, 600);
-            frame.setTitle(getClass().getName());
-            final PositionDisplay display = new PositionDisplay();
-            display.setZoom(Zoomer.HOG2HACK);
-            display.setPos(p);
-            frame.getContentPane().add(display);
-            frame.show();
+    public int showPositionDisplay(final PositionSet p, final Zoomer zoom,
+            final long millis, final TimeRunnable r) {
+        if (!show)
+            return -1;
+        final JFrame frame = new JFrame();
+        frame.setBounds(0, 0, 800, 600);
+        frame.setTitle(getClass().getName());
+        final PositionDisplay display = new PositionDisplay();
+        display.setZoom(zoom);
+        display.setPos(p);
+        frame.getContentPane().add(display);
+        frame.show();
 
-            final long t0 = System.currentTimeMillis();
-            long loop = 0;
-            try {
-                while (System.currentTimeMillis() - t0 < show) {
-                    r.run(1e-3 * (System.currentTimeMillis() - t0));
-                    loop++;
-                }
-            } catch (final InterruptedException e) {
-                ;
+        final long t0 = System.currentTimeMillis();
+        int loop = 0;
+        try {
+            while (System.currentTimeMillis() - t0 < millis) {
+                r.run(1e-3 * (System.currentTimeMillis() - t0));
+                loop++;
             }
-            log.info("Loops of " + r.getClass().getName() + ".run(double t): "
-                    + loop);
-            frame.hide();
+        } catch (final InterruptedException e) {
+            log.warn("Oops", e);
         }
+        frame.hide();
+        return loop;
     }
-
-    private static final Log log = JCLoggerFactory
-            .getLogger(TestShowBase.class);
 
 }
