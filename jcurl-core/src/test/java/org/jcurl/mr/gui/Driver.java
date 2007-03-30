@@ -30,6 +30,6 @@ public class Driver {
 
     public static void main(final String[] args) {
         final JFrame frame = new MenuDemo();
-        frame.show();
+        frame.setVisible(true);
     }
 }

@@ -60,7 +60,7 @@ public abstract class TestShowBase extends TestBase {
         display.setZoom(zoom);
         display.setPos(p);
         frame.getContentPane().add(display);
-        frame.show();
+        frame.setVisible(true);
 
         final long t0 = System.currentTimeMillis();
         int loop = 0;
@@ -72,7 +72,7 @@ public abstract class TestShowBase extends TestBase {
         } catch (final InterruptedException e) {
             log.warn("Oops", e);
         }
-        frame.hide();
+        frame.setVisible(false);
         return loop;
     }
 

@@ -20,7 +20,6 @@ package org.jcurl.core.base;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.apache.commons.logging.Log;
@@ -48,11 +47,13 @@ class CollissionStore {
             this.b = (byte) (b & 0xFF);
         }
 
+        @Override
         public boolean equals(final Object obj) {
             final Tupel b = (Tupel) obj;
             return a == b.a && this.b == b.b;
         }
 
+        @Override
         public int hashCode() {
             // http://www.angelikalanger.com/Articles/JavaSpektrum/03.HashCode/03.HashCode.html
             // hashcode N = hashcode N-1 * multiplikator + feldwert N
@@ -69,17 +70,18 @@ class CollissionStore {
             return hash;
         }
 
+        @Override
         public String toString() {
             return new StringBuffer().append(a).append("->").append(b).append(
                     " ").append(t).toString();
         }
     }
 
-    public static class TupelComp implements Comparator {
+    public static class TupelComp implements Comparator<Tupel> {
 
-        public int compare(final Object arg0, final Object arg1) {
-            final Tupel a = (Tupel) arg0;
-            final Tupel b = (Tupel) arg1;
+        public int compare(final Tupel arg0, final Tupel arg1) {
+            final Tupel a = arg0;
+            final Tupel b = arg1;
             if (a.t < b.t || !Double.isNaN(a.t) && Double.isNaN(b.t))
                 return -1;
             if (a.t > b.t || Double.isNaN(a.t) && !Double.isNaN(b.t))
@@ -96,12 +98,12 @@ class CollissionStore {
         }
     }
 
-    private static final Comparator comp = new TupelComp();
+    private static final Comparator<Tupel> comp = new TupelComp();
 
     private static final Log log = JCLoggerFactory
             .getLogger(CollissionStore.class);
 
-    final LinkedList m = new LinkedList();
+    final LinkedList<Tupel> m = new LinkedList<Tupel>();
 
     /**
      * @param t
@@ -125,7 +127,7 @@ class CollissionStore {
     }
 
     public Tupel first() {
-        return (Tupel) m.getFirst();
+        return m.getFirst();
     }
 
     /**
@@ -142,8 +144,8 @@ class CollissionStore {
             a = b;
             b = tmp;
         }
-        for (final Iterator it = m.iterator(); it.hasNext();) {
-            final Tupel f = (Tupel) it.next();
+        for (final Object element : m) {
+            final Tupel f = (Tupel) element;
             if (f.a == a && f.b == b) {
                 f.t = t;
                 if (log.isDebugEnabled())

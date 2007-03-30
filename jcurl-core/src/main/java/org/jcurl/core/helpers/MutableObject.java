@@ -66,12 +66,14 @@ public abstract class MutableObject extends TransferObject {
     /**
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public abstract boolean equals(Object obj);
 
     protected void fire(final String property) {
 
     }
 
+    @Override
     public abstract int hashCode();
 
     /**

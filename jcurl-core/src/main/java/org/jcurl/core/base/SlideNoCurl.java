@@ -78,6 +78,7 @@ public class SlideNoCurl extends SlideBase implements Strategy, Factory {
      * @deprecated Use
      *             {@link CurveTransformed#createRc2Wc(AffineTransform, double, double, double, double)}
      */
+    @Deprecated
     public AffineTransform computeRc2Wc(final AffineTransform ret,
             final double x0, final double y0, final double vx, final double vy) {
         return CurveTransformed.createRc2Wc(ret, x0, y0, vx, vy);
@@ -97,6 +98,7 @@ public class SlideNoCurl extends SlideBase implements Strategy, Factory {
      * @deprecated Use
      *             {@link CurveTransformed#createRc2Wc(AffineTransform, Point2D, Point2D)}
      */
+    @Deprecated
     public AffineTransform computeRc2Wc(final AffineTransform ret,
             final Point2D x, final Point2D v) {
         return CurveTransformed.createRc2Wc(ret, x, v);

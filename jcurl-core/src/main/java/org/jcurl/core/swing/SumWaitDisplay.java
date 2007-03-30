@@ -36,6 +36,7 @@ public class SumWaitDisplay extends SumDisplayBase {
         super(model);
     }
 
+    @Override
     protected int computeMask(final PositionSet rocks) {
         return PositionSet.getWaitRocks(rocks);
     }

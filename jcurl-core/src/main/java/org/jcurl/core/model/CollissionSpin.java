@@ -52,6 +52,7 @@ public class CollissionSpin extends Collider {
         setFricRockRock(0.5);
     }
 
+    @Override
     public void computeRC(final Rock va, final Rock vb) {
         final double Veff = va.getX() + R * va.getZ()
                 - (vb.getX() + R * vb.getZ());
@@ -70,6 +71,7 @@ public class CollissionSpin extends Collider {
         vb.setZ(vb.getZ() + dW);
     }
 
+    @Override
     public String description() {
         return "Collissions with spin";
     }

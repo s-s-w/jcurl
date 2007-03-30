@@ -57,10 +57,14 @@ public abstract class R1RNFunction {
         return a <= x && x <= b;
     }
 
-    public final int dim;
+    private final int dim;
 
     protected R1RNFunction(final int dim) {
         this.dim = dim;
+    }
+
+    public final int dim() {
+        return dim;
     }
 
     /**

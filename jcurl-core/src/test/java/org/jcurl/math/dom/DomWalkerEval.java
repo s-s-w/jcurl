@@ -54,10 +54,12 @@ public class DomWalkerEval extends DomWalker {
         return v;
     }
 
+    @Override
     public void reset() {
         v = 0;
     }
 
+    @Override
     public void walk(final MathDom.BinaryOp n) {
         v = 0;
         final double l;
@@ -96,10 +98,12 @@ public class DomWalkerEval extends DomWalker {
         }
     }
 
+    @Override
     public void walk(final MathDom.Block n) {
         this.walk(n.arg);
     }
 
+    @Override
     public void walk(final MathDom.Function n) {
         this.walk(n.arg);
         final String fkt = n.name;
@@ -113,10 +117,12 @@ public class DomWalkerEval extends DomWalker {
             throw new IllegalArgumentException("Unknown function [" + fkt + "]");
     }
 
+    @Override
     public void walk(final MathDom.Literal n) {
         v = n.val;
     }
 
+    @Override
     public void walk(final MathDom.Parameter n) {
         final Object t = params.get(n.name);
         if (t == null || !(t instanceof Number))
@@ -125,6 +131,7 @@ public class DomWalkerEval extends DomWalker {
         v = ((Double) t).doubleValue();
     }
 
+    @Override
     public void walk(final MathDom.UnaryOp n) {
         this.walk(n.arg);
         switch (n.op) {

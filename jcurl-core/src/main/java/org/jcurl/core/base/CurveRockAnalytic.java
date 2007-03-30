@@ -37,6 +37,7 @@ public class CurveRockAnalytic extends CurveRock {
         this(new R1R1Function[] { x, y, a });
     }
 
+    @Override
     public String toString() {
         return f.toString();
     }
@@ -46,11 +47,12 @@ public class CurveRockAnalytic extends CurveRock {
     }
 
     public CurveRockAnalytic(final R1RNFunction f) {
-        if (f.dim != 3)
+        if (f.dim() != 3)
             throw new IllegalArgumentException("Function must be 3-dimensional");
         this.f = f;
     }
 
+    @Override
     public double at(final int dim, final int c, final double t) {
         return f.at(dim, c, t);
     }

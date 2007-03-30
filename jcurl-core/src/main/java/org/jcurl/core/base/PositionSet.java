@@ -191,6 +191,7 @@ public class PositionSet extends RockSet {
         super(b);
     }
 
+    @Override
     public Object clone() {
         return new PositionSet(this);
     }

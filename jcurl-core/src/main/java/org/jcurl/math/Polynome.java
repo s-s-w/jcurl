@@ -149,10 +149,12 @@ public class Polynome extends R1R1Function {
      * @return the value
      * @see #poly(int, double, double[])
      */
+    @Override
     public double at(final int c, final double x) {
         return poly(c, x, params);
     }
 
+    @Override
     public String toString() {
         return toString(params);
     }

@@ -47,6 +47,7 @@ public class MouseSketchPanel extends JPanel implements KeyListener {
      * 
      * @see javax.swing.JComponent#printComponent(java.awt.Graphics)
      */
+    @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         g.drawLine(100, 110, 100, 90);
@@ -93,6 +94,7 @@ public class MouseSketchPanel extends JPanel implements KeyListener {
     public MouseSketchPanel(final char hotKey) {
         this.hotKey = hotKey;
         addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
             public void mouseMoved(final MouseEvent e) {
                 if (isHot)
                     MouseSketchPanel.this.lineTo(e.getPoint());
@@ -105,6 +107,7 @@ public class MouseSketchPanel extends JPanel implements KeyListener {
         return curve;
     }
 
+    @Override
     public boolean isFocusTraversable() {
         return true;
     }

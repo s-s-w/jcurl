@@ -57,6 +57,7 @@ public class SlideStraight extends SlideCurves {
         super();
     }
 
+    @Override
     protected R1RNFunction createCurve(final double t0, final Rock x0,
             final Rock v0) {
         if (log.isDebugEnabled())
@@ -89,6 +90,7 @@ public class SlideStraight extends SlideCurves {
         return new CurveFkt(p);
     }
 
+    @Override
     public String description() {
         return "Straight movement";
     }
@@ -97,6 +99,7 @@ public class SlideStraight extends SlideCurves {
         return accel;
     }
 
+    @Override
     public double getInitialSpeed(final double y0, final double Trun) {
         final double HF = Ice.FAR_HOG_2_TEE;
         final double HN = Ice.HOG_2_TEE;
@@ -104,6 +107,7 @@ public class SlideStraight extends SlideCurves {
                 + sqr(Trun * accel / 2 - (HN - HF) / Trun));
     }
 
+    @Override
     public double getMu() {
         return 2.0 * accel / RockProps.DEFAULT.getMass();
     }
@@ -115,6 +119,7 @@ public class SlideStraight extends SlideCurves {
      * @param curl
      *            unused
      */
+    @Override
     public void setDraw2Tee(final double time, final double curl) {
         super.setDraw2Tee(time, curl);
         accel = -2.0 * Ice.FAR_HOG_2_TEE / sqr(time);

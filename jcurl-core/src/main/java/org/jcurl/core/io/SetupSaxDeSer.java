@@ -157,15 +157,18 @@ public class SetupSaxDeSer extends DefaultHandler {
         this.setup = setup;
     }
 
+    @Override
     public void characters(final char[] ch, final int start, final int length)
             throws SAXException {
         buf.append(ch, start, length);
     }
 
+    @Override
     public void endDocument() throws SAXException {
         log.debug("-");
     }
 
+    @Override
     public void endElement(final String uri, final String localName,
             final String qName) throws SAXException {
         final String elem = qName;
@@ -209,32 +212,39 @@ public class SetupSaxDeSer extends DefaultHandler {
         }
     }
 
+    @Override
     public void endPrefixMapping(final String prefix) throws SAXException {
         log.debug(prefix);
     }
 
+    @Override
     public void error(final SAXParseException e) throws SAXException {
         throw e;
     }
 
+    @Override
     public void fatalError(final SAXParseException e) throws SAXException {
         throw e;
     }
 
+    @Override
     public void processingInstruction(final String target, final String data)
             throws SAXException {
         if (log.isDebugEnabled())
             log.debug(target + " " + data);
     }
 
+    @Override
     public void setDocumentLocator(final Locator locator) {
         this.locator = locator;
     }
 
+    @Override
     public void startDocument() throws SAXException {
         log.debug("-");
     }
 
+    @Override
     public void startElement(final String uri, final String localName,
             final String qName, final Attributes atts) throws SAXException {
         // log.debug("[" + localName + "] [" + qName + "] [" + uri + "]");
@@ -362,6 +372,7 @@ public class SetupSaxDeSer extends DefaultHandler {
         }
     }
 
+    @Override
     public void startPrefixMapping(final String prefix, final String uri)
             throws SAXException {
         log.debug("xmlns:" + prefix + "=" + uri);

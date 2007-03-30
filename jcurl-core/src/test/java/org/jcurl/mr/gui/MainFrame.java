@@ -42,6 +42,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
         addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(final WindowEvent e) {
                 log.info("Points collected: " + curve.size());
                 System.exit(0);

@@ -84,6 +84,7 @@ public class PointList implements List {
         return dat.containsAll(c);
     }
 
+    @Override
     public boolean equals(final Object obj) {
         return dat.equals(obj);
     }
@@ -92,6 +93,7 @@ public class PointList implements List {
         return dat.get(index);
     }
 
+    @Override
     public int hashCode() {
         return dat.hashCode();
     }
@@ -160,6 +162,7 @@ public class PointList implements List {
         return dat.toArray(a);
     }
 
+    @Override
     public String toString() {
         return dat.toString();
     }

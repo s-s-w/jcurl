@@ -52,6 +52,7 @@ public class MenuDemo extends JFrame {
             pack();
         }
 
+        @Override
         public void setVisible(boolean b) {
             if (!b)
                 getOwner().requestFocus();

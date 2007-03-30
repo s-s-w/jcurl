@@ -18,10 +18,10 @@
  */
 package org.jcurl.core.helpers;
 
+import java.beans.PropertyChangeListener;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.WeakHashMap;
 
 /**
@@ -56,13 +56,13 @@ import java.util.WeakHashMap;
  * @see java.util.WeakHashMap
  * @see java.lang.ref.WeakReference
  */
-public class WeakHashSet extends AbstractSet implements Set {
+public class WeakHashSet extends AbstractSet<PropertyChangeListener> {
 
     /** Dummy value used as a value object. */
     private static final Object DUMMY = new String("DUMMY");
 
     /** Holds the backing store. */
-    private WeakHashMap backingStore = new WeakHashMap();
+    private WeakHashMap<PropertyChangeListener, Object> backingStore = new WeakHashMap<PropertyChangeListener, Object>();
 
     /**
      * Constructs a new empty WeakHashSet with default values passed the the
@@ -71,7 +71,7 @@ public class WeakHashSet extends AbstractSet implements Set {
      * @see java.util.WeakHashMap#WeakHashMap()
      */
     public WeakHashSet() {
-        backingStore = new WeakHashMap();
+        backingStore = new WeakHashMap<PropertyChangeListener, Object>();
     }
 
     /**
@@ -83,8 +83,8 @@ public class WeakHashSet extends AbstractSet implements Set {
      *            collection to use
      * @see WeakHashMap#WeakHashMap(java.util.Map)
      */
-    public WeakHashSet(final Collection c) {
-        backingStore = new WeakHashMap(Math
+    public WeakHashSet(final Collection<? extends PropertyChangeListener> c) {
+        backingStore = new WeakHashMap<PropertyChangeListener, Object>(Math
                 .max((int) (c.size() / .75f) + 1, 16));
         addAll(c);
     }
@@ -98,7 +98,8 @@ public class WeakHashSet extends AbstractSet implements Set {
      * @see java.util.WeakHashMap#WeakHashMap(int)
      */
     public WeakHashSet(final int initialCapacity) {
-        backingStore = new WeakHashMap(initialCapacity);
+        backingStore = new WeakHashMap<PropertyChangeListener, Object>(
+                initialCapacity);
     }
 
     /**
@@ -112,7 +113,8 @@ public class WeakHashSet extends AbstractSet implements Set {
      * @see java.util.WeakHashMap#WeakHashMap(int, float)
      */
     public WeakHashSet(final int initialCapacity, final float loadFactor) {
-        backingStore = new WeakHashMap(initialCapacity, loadFactor);
+        backingStore = new WeakHashMap<PropertyChangeListener, Object>(
+                initialCapacity, loadFactor);
     }
 
     /**
@@ -122,35 +124,43 @@ public class WeakHashSet extends AbstractSet implements Set {
      * @throws NullPointerException
      *             If the user tries to add null to the set.
      */
-    public boolean add(final Object o) {
+    @Override
+    public boolean add(final PropertyChangeListener o) {
         if (o == null)
             throw new NullPointerException();
         return backingStore.put(o, DUMMY) == null;
     }
 
-    public boolean addAll(final Collection c) {
+    @Override
+    public boolean addAll(final Collection<? extends PropertyChangeListener> c) {
         boolean changed = false;
-        for (final Iterator iter = c.iterator(); iter.hasNext();)
-            changed = changed | backingStore.put(iter.next(), DUMMY) != DUMMY;
+        for (final PropertyChangeListener propertyChangeListener : c)
+            changed = changed
+                    | backingStore.put(propertyChangeListener, DUMMY) != DUMMY;
         return changed;
     }
 
+    @Override
     public void clear() {
         backingStore.clear();
     }
 
+    @Override
     protected Object clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
     }
 
+    @Override
     public boolean contains(final Object o) {
         return backingStore.containsKey(o);
     }
 
+    @Override
     public boolean containsAll(final Collection c) {
         return backingStore.keySet().containsAll(c);
     }
 
+    @Override
     public boolean equals(final Object o) {
         return backingStore.equals(o);
     }
@@ -167,10 +177,12 @@ public class WeakHashSet extends AbstractSet implements Set {
      * 
      * @return The hashcode for this object.
      */
+    @Override
     public int hashCode() {
         return backingStore.keySet().hashCode();
     }
 
+    @Override
     public boolean isEmpty() {
         return backingStore.keySet().isEmpty();
     }
@@ -194,34 +206,42 @@ public class WeakHashSet extends AbstractSet implements Set {
      * 
      * @return The iterator.
      */
-    public Iterator iterator() {
+    @Override
+    public Iterator<PropertyChangeListener> iterator() {
         return backingStore.keySet().iterator();
     }
 
+    @Override
     public boolean remove(final Object o) {
         return backingStore.keySet().remove(o);
     }
 
+    @Override
     public boolean removeAll(final Collection c) {
         return backingStore.keySet().removeAll(c);
     }
 
+    @Override
     public boolean retainAll(final Collection c) {
         return backingStore.keySet().retainAll(c);
     }
 
+    @Override
     public int size() {
         return backingStore.keySet().size();
     }
 
+    @Override
     public Object[] toArray() {
         return backingStore.keySet().toArray();
     }
 
-    public Object[] toArray(final Object[] a) {
+    @Override
+    public <T> T[] toArray(final T[] a) {
         return backingStore.keySet().toArray(a);
     }
 
+    @Override
     public String toString() {
         return backingStore.keySet().toString();
     }

@@ -24,8 +24,8 @@ public class TestXMLWriter {
             System.exit(1);
         }
 
-        for (int i = 0; i < args.length; i++)
-            w.parse(new InputSource(new FileReader(args[i])));
+        for (final String element : args)
+            w.parse(new InputSource(new FileReader(element)));
     }
 }
 

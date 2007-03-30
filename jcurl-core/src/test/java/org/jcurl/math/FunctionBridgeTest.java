@@ -42,10 +42,12 @@ public class FunctionBridgeTest extends TestCase {
                 this.diff = diff;
             }
 
+            @Override
             public double at(final double x) {
                 return root.at(diff, x);
             }
 
+            @Override
             public double at(final int derivative, final double x) {
                 return root.at(diff + derivative, x);
             }
@@ -76,6 +78,7 @@ public class FunctionBridgeTest extends TestCase {
                 base = f;
             }
 
+            @Override
             public double at(final double x) {
                 try {
                     return base.value(x);
@@ -85,6 +88,7 @@ public class FunctionBridgeTest extends TestCase {
                 }
             }
 
+            @Override
             public double at(final int derivative, final double x) {
                 if (derivative < 0)
                     // TODO throw new DifferentiationException();

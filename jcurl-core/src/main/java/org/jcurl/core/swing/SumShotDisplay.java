@@ -36,6 +36,7 @@ public class SumShotDisplay extends SumDisplayBase {
         super(model);
     }
 
+    @Override
     protected int computeMask(final PositionSet rocks) {
         return PositionSet.getShotRocks(rocks);
     }

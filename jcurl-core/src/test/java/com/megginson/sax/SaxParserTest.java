@@ -44,42 +44,51 @@ public class SaxParserTest extends TestCase {
         final SAXParser p = spf.newSAXParser();
         final DefaultHandler h = new DefaultHandler() {
 
+            @Override
             public void characters(char[] arg0, int arg1, int arg2)
                     throws SAXException {
                 super.characters(arg0, arg1, arg2);
             }
 
+            @Override
             public void endDocument() throws SAXException {
                 super.endDocument();
             }
 
+            @Override
             public void endElement(String arg0, String arg1, String arg2)
                     throws SAXException {
                 super.endElement(arg0, arg1, arg2);
             }
 
+            @Override
             public void endPrefixMapping(String arg0) throws SAXException {
                 super.endPrefixMapping(arg0);
             }
 
+            @Override
             public void error(SAXParseException arg0) throws SAXException {
                 super.error(arg0);
             }
 
+            @Override
             public void fatalError(SAXParseException arg0) throws SAXException {
                 super.fatalError(arg0);
             }
 
+            @Override
             public void ignorableWhitespace(char[] arg0, int arg1, int arg2)
                     throws SAXException {
                 super.ignorableWhitespace(arg0, arg1, arg2);
             }
 
+            @Override
             public void notationDecl(String arg0, String arg1, String arg2)
                     throws SAXException {
                 super.notationDecl(arg0, arg1, arg2);
             }
 
+            @Override
             public void processingInstruction(String arg0, String arg1)
                     throws SAXException {
                 assertEquals("pi", arg0);
@@ -91,33 +100,40 @@ public class SaxParserTest extends TestCase {
             // return super.resolveEntity(arg0, arg1);
             // }
 
+            @Override
             public void setDocumentLocator(Locator arg0) {
                 super.setDocumentLocator(arg0);
             }
 
+            @Override
             public void skippedEntity(String arg0) throws SAXException {
                 super.skippedEntity(arg0);
             }
 
+            @Override
             public void startDocument() throws SAXException {
                 super.startDocument();
             }
 
+            @Override
             public void startElement(String arg0, String arg1, String arg2,
                     Attributes arg3) throws SAXException {
                 super.startElement(arg0, arg1, arg2, arg3);
             }
 
+            @Override
             public void startPrefixMapping(String arg0, String arg1)
                     throws SAXException {
                 super.startPrefixMapping(arg0, arg1);
             }
 
+            @Override
             public void unparsedEntityDecl(String arg0, String arg1,
                     String arg2, String arg3) throws SAXException {
                 super.unparsedEntityDecl(arg0, arg1, arg2, arg3);
             }
 
+            @Override
             public void warning(SAXParseException arg0) throws SAXException {
                 super.warning(arg0);
             }
@@ -140,42 +156,51 @@ public class SaxParserTest extends TestCase {
         final SAXParser p = spf.newSAXParser();
         final DefaultHandler h = new DefaultHandler() {
 
+            @Override
             public void characters(char[] arg0, int arg1, int arg2)
                     throws SAXException {
                 super.characters(arg0, arg1, arg2);
             }
 
+            @Override
             public void endDocument() throws SAXException {
                 super.endDocument();
             }
 
+            @Override
             public void endElement(String arg0, String arg1, String arg2)
                     throws SAXException {
                 super.endElement(arg0, arg1, arg2);
             }
 
+            @Override
             public void endPrefixMapping(String arg0) throws SAXException {
                 super.endPrefixMapping(arg0);
             }
 
+            @Override
             public void error(SAXParseException arg0) throws SAXException {
                 super.error(arg0);
             }
 
+            @Override
             public void fatalError(SAXParseException arg0) throws SAXException {
                 super.fatalError(arg0);
             }
 
+            @Override
             public void ignorableWhitespace(char[] arg0, int arg1, int arg2)
                     throws SAXException {
                 super.ignorableWhitespace(arg0, arg1, arg2);
             }
 
+            @Override
             public void notationDecl(String arg0, String arg1, String arg2)
                     throws SAXException {
                 super.notationDecl(arg0, arg1, arg2);
             }
 
+            @Override
             public void processingInstruction(String arg0, String arg1)
                     throws SAXException {
                 assertEquals("pi", arg0);
@@ -187,33 +212,40 @@ public class SaxParserTest extends TestCase {
             // return super.resolveEntity(arg0, arg1);
             // }
 
+            @Override
             public void setDocumentLocator(Locator arg0) {
                 super.setDocumentLocator(arg0);
             }
 
+            @Override
             public void skippedEntity(String arg0) throws SAXException {
                 super.skippedEntity(arg0);
             }
 
+            @Override
             public void startDocument() throws SAXException {
                 super.startDocument();
             }
 
+            @Override
             public void startElement(String arg0, String arg1, String arg2,
                     Attributes arg3) throws SAXException {
                 super.startElement(arg0, arg1, arg2, arg3);
             }
 
+            @Override
             public void startPrefixMapping(String arg0, String arg1)
                     throws SAXException {
                 super.startPrefixMapping(arg0, arg1);
             }
 
+            @Override
             public void unparsedEntityDecl(String arg0, String arg1,
                     String arg2, String arg3) throws SAXException {
                 super.unparsedEntityDecl(arg0, arg1, arg2, arg3);
             }
 
+            @Override
             public void warning(SAXParseException arg0) throws SAXException {
                 super.warning(arg0);
             }

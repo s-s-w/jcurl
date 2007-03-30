@@ -40,28 +40,29 @@ public class CollissionStoreTest extends TestCase {
     }
 
     public void testSortedSet() {
-        final SortedSet s = new TreeSet(new CollissionStore.TupelComp());
+        final SortedSet<CollissionStore.Tupel> s = new TreeSet<CollissionStore.Tupel>(
+                new CollissionStore.TupelComp());
         s.add(new CollissionStore.Tupel(2, 3, 4));
         s.add(new CollissionStore.Tupel(1, 1, 2));
         assertEquals(2, s.size());
-        assertEquals(2, ((CollissionStore.Tupel) s.first()).a);
+        assertEquals(2, (s.first()).a);
 
         assertTrue(s.remove(s.first()));
         assertTrue(s.add(new CollissionStore.Tupel(Double.NaN, 1, 2)));
         // assertFalse(s.add(new CollissionStore.Tupel(Double.NaN, 1, 2)));
         assertEquals(2, s.size());
-        assertEquals(4, ((CollissionStore.Tupel) s.first()).a, 1e-9);
+        assertEquals(4, (s.first()).a, 1e-9);
     }
 
     public void testSortedList() {
-        final Comparator co = new CollissionStore.TupelComp();
-        final LinkedList s = new LinkedList();
+        final Comparator<CollissionStore.Tupel> co = new CollissionStore.TupelComp();
+        final LinkedList<CollissionStore.Tupel> s = new LinkedList<CollissionStore.Tupel>();
 
         s.add(new CollissionStore.Tupel(2, 3, 4));
         s.add(new CollissionStore.Tupel(1, 1, 2));
         assertEquals(2, s.size());
         Collections.sort(s, co);
-        assertEquals(2, ((CollissionStore.Tupel) s.getFirst()).a);
+        assertEquals(2, (s.getFirst()).a);
 
         final CollissionStore.Tupel o = new CollissionStore.Tupel(Double.NaN,
                 1, 2);
@@ -70,7 +71,7 @@ public class CollissionStoreTest extends TestCase {
         Collections.sort(s, co);
 
         assertEquals(2, s.size());
-        assertEquals(4, ((CollissionStore.Tupel) s.getFirst()).a);
+        assertEquals(4, (s.getFirst()).a);
     }
 
     public void testTupel() {
@@ -81,7 +82,8 @@ public class CollissionStoreTest extends TestCase {
         assertEquals(2, a[0].a);
         assertEquals(4, a[1].a);
 
-        final SortedMap m = new TreeMap(new CollissionStore.TupelComp());
+        final SortedMap<CollissionStore.Tupel, CollissionStore.Tupel> m = new TreeMap<CollissionStore.Tupel, CollissionStore.Tupel>(
+                new CollissionStore.TupelComp());
         m.put(a[1], a[1]);
         m.put(a[0], a[0]);
         m.put(a[1], a[1]);

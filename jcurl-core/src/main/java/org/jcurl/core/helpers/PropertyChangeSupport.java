@@ -26,7 +26,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyDescriptor;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -90,7 +89,7 @@ public class PropertyChangeSupport {
      * <tt>ALL_PROPERTIES</tt>
      */
 
-    private final Map listenerMap = new HashMap();
+    private final Map<String, Set<PropertyChangeListener>> listenerMap = new HashMap<String, Set<PropertyChangeListener>>();
 
     /** Stores the producer of the events. */
     private final Object producer;
@@ -107,9 +106,9 @@ public class PropertyChangeSupport {
     public PropertyChangeSupport(final Object producer) {
         try {
             final BeanInfo info = Introspector.getBeanInfo(producer.getClass());
-            final PropertyDescriptor[] props = info.getPropertyDescriptors();
-            for (int idx = 0; idx < props.length; idx++)
-                listenerMap.put(props[idx].getName(), new WeakHashSet());
+            for (final PropertyDescriptor element : info
+                    .getPropertyDescriptors())
+                listenerMap.put(element.getName(), new WeakHashSet());
             listenerMap.put(ALL_PROPERTIES, new WeakHashSet());
             this.producer = producer;
         } catch (final IntrospectionException ex) {
@@ -126,7 +125,7 @@ public class PropertyChangeSupport {
      */
     public void addPropertyChangeListener(final PropertyChangeListener pcl) {
         synchronized (listenerMap) {
-            ((WeakHashSet) listenerMap.get(ALL_PROPERTIES)).add(pcl);
+            listenerMap.get(ALL_PROPERTIES).add(pcl);
         }
     }
 
@@ -142,7 +141,7 @@ public class PropertyChangeSupport {
             final PropertyChangeListener pcl) {
         validateNamedProperty(property);
         synchronized (listenerMap) {
-            ((WeakHashSet) listenerMap.get(property)).add(pcl);
+            listenerMap.get(property).add(pcl);
         }
     }
 
@@ -183,12 +182,11 @@ public class PropertyChangeSupport {
         synchronized (listenerMap) {
             // First gets the list of listeners and stores them in strong
             // references by copying them into a new set.
-            final Set targets = new HashSet((Set) listenerMap
-                    .get(ALL_PROPERTIES));
-            targets.addAll((Set) listenerMap.get(event.getPropertyName()));
-            // Fire events at the listeners.
-            for (final Iterator iter = targets.iterator(); iter.hasNext();)
-                ((PropertyChangeListener) iter.next()).propertyChange(event);
+            final Set<PropertyChangeListener> targets = new HashSet<PropertyChangeListener>(
+                    listenerMap.get(ALL_PROPERTIES));
+            targets.addAll(listenerMap.get(event.getPropertyName()));
+            for (final PropertyChangeListener element : targets)
+                (element).propertyChange(event);
         }
     }
 
@@ -268,14 +266,15 @@ public class PropertyChangeSupport {
      * @return An array of all listeners.
      */
     public PropertyChangeListener[] getPropertyChangeListeners() {
-        final Set all = new WeakHashSet();
-        final PropertyChangeListener[] pcls = new PropertyChangeListener[0];
+        final Set<PropertyChangeListener> all = new WeakHashSet();
         synchronized (listenerMap) {
-            for (final Iterator iter = listenerMap.values().iterator(); iter
-                    .hasNext();)
-                all.addAll((Set) iter.next());
+            for (final Set<PropertyChangeListener> element : listenerMap
+                    .values())
+                all.addAll(element);
         }
-        return (PropertyChangeListener[]) all.toArray(pcls);
+        final PropertyChangeListener[] pcls = new PropertyChangeListener[all
+                .size()];
+        return all.toArray(pcls);
     }
 
     /**
@@ -289,12 +288,14 @@ public class PropertyChangeSupport {
     public PropertyChangeListener[] getPropertyChangeListeners(
             final String property) {
         validateNamedProperty(property);
-        final PropertyChangeListener[] pcls = new PropertyChangeListener[0];
-        Set namedListeners = null;
+        final Set<PropertyChangeListener> namedListeners;
         synchronized (listenerMap) {
-            namedListeners = new HashSet((Set) listenerMap.get(property));
+            namedListeners = new HashSet<PropertyChangeListener>(listenerMap
+                    .get(property));
         }
-        return (PropertyChangeListener[]) namedListeners.toArray(pcls);
+        final PropertyChangeListener[] pcls = new PropertyChangeListener[namedListeners
+                .size()];
+        return namedListeners.toArray(pcls);
     }
 
     /**
@@ -307,7 +308,7 @@ public class PropertyChangeSupport {
     public boolean hasListeners(final String property) {
         validateNamedProperty(property);
         synchronized (listenerMap) {
-            return !((Set) listenerMap.get(property)).isEmpty();
+            return !listenerMap.get(property).isEmpty();
         }
     }
 
@@ -320,7 +321,7 @@ public class PropertyChangeSupport {
      */
     public void removePropertyChangeListener(final PropertyChangeListener pcl) {
         synchronized (listenerMap) {
-            ((WeakHashSet) listenerMap.get(ALL_PROPERTIES)).remove(pcl);
+            listenerMap.get(ALL_PROPERTIES).remove(pcl);
         }
     }
 
@@ -336,7 +337,7 @@ public class PropertyChangeSupport {
             final PropertyChangeListener pcl) {
         validateNamedProperty(property);
         synchronized (listenerMap) {
-            ((WeakHashSet) listenerMap.get(property)).remove(pcl);
+            listenerMap.get(property).remove(pcl);
         }
     }
 

@@ -173,6 +173,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * 
      * @see org.xml.sax.ContentHandler#characters(char[], int, int)
      */
+    @Override
     public void characters(final char[] ch, final int start, final int length)
             throws SAXException {
         for (int i = start; i < start + length; i++)
@@ -184,6 +185,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * 
      * @see org.xml.sax.ContentHandler#endDocument()
      */
+    @Override
     public void endDocument() throws SAXException {
         if (elemStack.size() != 0)
             throw new SAXException("Unclosed elements pending.");
@@ -201,6 +203,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
      *      java.lang.String, java.lang.String)
      */
+    @Override
     public void endElement(final String namespaceURI, final String localName,
             String qName) throws SAXException {
         final String recent = (String) elemStack.pop();
@@ -219,6 +222,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * 
      * @see org.xml.sax.ContentHandler#endPrefixMapping(java.lang.String)
      */
+    @Override
     public void endPrefixMapping(final String prefix) throws SAXException {
         // TODO keep track of current mappings
         // TODO allow multiple changes at once
@@ -231,6 +235,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * @param e
      * @throws SAXParseException
      */
+    @Override
     public void error(final SAXParseException e) throws SAXParseException {
         log.error("parse exception", e);
         throw e;
@@ -242,6 +247,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * @param e
      * @throws SAXParseException
      */
+    @Override
     public void fatalError(final SAXParseException e) throws SAXParseException {
         log.error("parse exception", e);
         throw e;
@@ -256,6 +262,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * 
      * @see org.xml.sax.ContentHandler#ignorableWhitespace(char[], int, int)
      */
+    @Override
     public void ignorableWhitespace(final char[] ch, final int start,
             final int length) throws SAXException {
         characters(ch, start, length);
@@ -267,6 +274,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * @see org.xml.sax.ContentHandler#processingInstruction(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void processingInstruction(final String target, final String data)
             throws SAXException {
         writePlain("<?", this.target);
@@ -283,6 +291,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * 
      * @see org.xml.sax.ContentHandler#setDocumentLocator(org.xml.sax.Locator)
      */
+    @Override
     public void setDocumentLocator(final Locator locator) {
         ;// this.locator = locator;
     }
@@ -292,6 +301,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * 
      * @see org.xml.sax.ContentHandler#skippedEntity(java.lang.String)
      */
+    @Override
     public void skippedEntity(final String name) throws SAXException {
         throw new UnsupportedOperationException("Not supported.");
     }
@@ -302,6 +312,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * 
      * @see org.xml.sax.ContentHandler#startDocument()
      */
+    @Override
     public void startDocument() throws SAXException {
         elemStack.clear();
         String data = "version=\"1.0\"";
@@ -317,6 +328,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
      *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
+    @Override
     public void startElement(final String namespaceURI, final String localName,
             String qName, final Attributes atts) throws SAXException {
         if (qName == null && localName != null)
@@ -371,6 +383,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * @see org.xml.sax.ContentHandler#startPrefixMapping(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void startPrefixMapping(final String prefix, final String uri)
             throws SAXException {
         if ("xml".equals(prefix)
@@ -391,6 +404,7 @@ public class XmlSimpleWriter extends DefaultHandler {
      * 
      * @param e
      */
+    @Override
     public void warning(final SAXParseException e) {
         log.debug("parse exception", e);
     }

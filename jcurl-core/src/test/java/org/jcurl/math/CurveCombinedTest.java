@@ -16,17 +16,23 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.model;
+package org.jcurl.math;
 
-import org.jcurl.core.base.CollissionDetector;
-import org.jcurl.math.R1RNFunction;
+import java.util.Map.Entry;
 
-public class IterativeCollissionDetector extends CollissionDetector {
+import junit.framework.TestCase;
 
-    @Override
-    public double compute(final double t0, final double tmax,
-            final R1RNFunction fa, final R1RNFunction fb, final double rb) {
-        throw new UnsupportedOperationException("Not implemented.");
+public class CurveCombinedTest extends TestCase {
+    public void testIterator() {
+        final CurveCombined cc = new CurveCombined(1);
+        cc.add(0, new Polynome(new double[] { 0 }));
+        cc.add(1, new Polynome(new double[] { 1 }));
+        cc.add(2, new Polynome(new double[] { 2 }));
+
+        int i = 0;
+        for (final Entry<Double, R1RNFunction> element : cc) {
+            System.out.println(element);
+            i++;
+        }
     }
-
 }

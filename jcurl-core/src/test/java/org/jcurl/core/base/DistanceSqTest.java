@@ -27,6 +27,7 @@ public class DistanceSqTest extends TestBase {
 
     static CurveRock createPoint2D(final double x, final double y) {
         return new CurveRock() {
+            @Override
             public double at(final int component, final int derivative,
                     final double t) {
                 if (derivative == 0) {
@@ -44,6 +45,7 @@ public class DistanceSqTest extends TestBase {
         return new CurveRock() {
             private final Polynome p = new Polynome(c);
 
+            @Override
             public double at(final int component, final int derivative,
                     final double t) {
                 if (component == 0 && derivative == 0)

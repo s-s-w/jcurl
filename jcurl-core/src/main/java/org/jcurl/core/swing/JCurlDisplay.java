@@ -64,6 +64,7 @@ public class JCurlDisplay extends PositionDisplay implements TargetDiscrete {
         this.setSize(new Dimension(607, 148));
     }
 
+    @Override
     public void paint(final Graphics g) {
         super.paint(g);
         final Graphics2D g2 = (Graphics2D) g;

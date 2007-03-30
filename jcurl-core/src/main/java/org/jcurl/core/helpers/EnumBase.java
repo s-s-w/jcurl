@@ -36,9 +36,9 @@ public abstract class EnumBase extends Number implements Comparable,
         Serializable {
 
     /** Simple comparator based on the hash-value. */
-    private static class HashCodeComp implements Comparator {
+    private static class HashCodeComp implements Comparator<Class> {
 
-        public int compare(final Object o1, final Object o2) {
+        public int compare(final Class o1, final Class o2) {
             if (o1 == null && o2 == null)
                 return 0;
             if (o1 == null)
@@ -55,20 +55,8 @@ public abstract class EnumBase extends Number implements Comparable,
         }
     }
 
-    private static final Map types = new TreeMap(new HashCodeComp());
-
-    /**
-     * Generic lookup.
-     * 
-     * @param type
-     * @param state
-     * @return the constant object
-     * @throws IllegalArgumentException
-     *             if the given state wasn't found.
-     */
-    public static EnumBase lookup(final Class type, final int state) {
-        return lookup(type, new Integer(state));
-    }
+    private static final Map<Class, Map<Integer, EnumBase>> types = new TreeMap<Class, Map<Integer, EnumBase>>(
+            new HashCodeComp());
 
     /**
      * Generic lookup.
@@ -82,17 +70,17 @@ public abstract class EnumBase extends Number implements Comparable,
     public static EnumBase lookup(final Class type, final Integer state) {
         if (state == null)
             return null;
-        Map values = (Map) types.get(type);
+        Map<Integer, EnumBase> values = types.get(type);
         if (values == null)
             try {
                 // ensure the class "type" is initialized...
                 Class.forName(type.getName());
-                values = (Map) types.get(type);
+                values = types.get(type);
             } catch (final ClassNotFoundException e) {
                 throw new RuntimeException("Couldn't load class [" + type + "]");
             }
         if (values != null) {
-            final EnumBase ret = (EnumBase) values.get(state);
+            final EnumBase ret = values.get(state);
             if (ret != null)
                 return ret;
         }
@@ -109,10 +97,10 @@ public abstract class EnumBase extends Number implements Comparable,
         this.text = text;
         final Class clazz = getClass();
         // register the value.
-        Map values = (Map) types.get(clazz);
+        Map<Integer, EnumBase> values = types.get(clazz);
         if (values == null)
             synchronized (types) {
-                types.put(clazz, values = new TreeMap());
+                types.put(clazz, values = new TreeMap<Integer, EnumBase>());
             }
         synchronized (values) {
             if (values.containsKey(this.state))
@@ -130,10 +118,12 @@ public abstract class EnumBase extends Number implements Comparable,
     /**
      * @see java.lang.Number#doubleValue()
      */
+    @Override
     public double doubleValue() {
         return intValue();
     }
 
+    @Override
     public boolean equals(final Object o) {
         if (o == null || !getClass().equals(o.getClass()))
             return false;
@@ -143,6 +133,7 @@ public abstract class EnumBase extends Number implements Comparable,
     /**
      * @see java.lang.Number#floatValue()
      */
+    @Override
     public float floatValue() {
         return intValue();
     }
@@ -155,6 +146,7 @@ public abstract class EnumBase extends Number implements Comparable,
      * 
      * @see java.lang.Object#hashCode()
      */
+    @Override
     public int hashCode() {
         return state.hashCode();
     }
@@ -162,6 +154,7 @@ public abstract class EnumBase extends Number implements Comparable,
     /**
      * @see java.lang.Number#intValue()
      */
+    @Override
     public int intValue() {
         return state.intValue();
     }
@@ -169,6 +162,7 @@ public abstract class EnumBase extends Number implements Comparable,
     /**
      * @see java.lang.Number#longValue()
      */
+    @Override
     public long longValue() {
         return intValue();
     }
@@ -187,6 +181,7 @@ public abstract class EnumBase extends Number implements Comparable,
         return lookup(getClass(), getState());
     }
 
+    @Override
     public String toString() {
         return text;
     }
