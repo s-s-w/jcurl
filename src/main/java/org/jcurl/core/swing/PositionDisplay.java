@@ -137,6 +137,7 @@ public class PositionDisplay extends WCComponent implements
         setZoom(Zoomer.HOUSE2HACK);
     }
 
+    @Override
     public void paint(final Graphics g) {
         super.paint(g);
         final Graphics2D g2 = (Graphics2D) g;

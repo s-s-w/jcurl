@@ -34,7 +34,7 @@ public class Dim extends EnumBase {
 
     private static int _idx = 0;
 
-    private static final Map _names = new TreeMap();
+    private static final Map<String, Dim> _names = new TreeMap<String, Dim>();
 
     public static final Dim DEG_PER_SEC;
 
@@ -114,7 +114,7 @@ public class Dim extends EnumBase {
     public static final Dim find(final String txt) {
         if (txt == null)
             return null;
-        final Dim ret = (Dim) _names.get(txt);
+        final Dim ret = _names.get(txt);
         if (ret == null)
             throw new IllegalArgumentException("Unknown dimension [" + txt
                     + "]");

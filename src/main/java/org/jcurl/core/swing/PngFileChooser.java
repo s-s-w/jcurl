@@ -34,12 +34,14 @@ public class PngFileChooser extends JFileChooser {
         setMultiSelectionEnabled(false);
         setAcceptAllFileFilterUsed(true);
         setFileFilter(new FileFilter() {
+            @Override
             public boolean accept(final File f) {
                 if (f == null)
                     return false;
                 return f.isDirectory() || f.getName().endsWith(".png");
             }
 
+            @Override
             public String getDescription() {
                 return "Portable Network Graphics (.png)";
             }

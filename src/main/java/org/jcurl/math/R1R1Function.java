@@ -70,6 +70,7 @@ public abstract class R1R1Function extends R1RNFunction {
      * @throws IllegalArgumentException
      *             if <code>dim != 0</code>
      */
+    @Override
     public double at(final int dim, final int c, final double x) {
         if (dim != 0)
             throw new IllegalArgumentException("Dimension must be 0");

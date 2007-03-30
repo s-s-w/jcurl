@@ -59,13 +59,13 @@ import org.xml.sax.XMLReader;
  * </p>
  * 
  * <pre>
- *               &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
- *              
- *               &lt;Person&gt;
- *                 &lt;name&gt;Jane Smith&lt;/name&gt;
- *                 &lt;date-of-birth&gt;1965-05-23&lt;/date-of-birth&gt;
- *                 &lt;citizenship&gt;US&lt;/citizenship&gt;
- *               &lt;/Person&gt;
+ *                &lt;?xml version=&quot;1.0&quot; standalone=&quot;yes&quot;?&gt;
+ *               
+ *                &lt;Person&gt;
+ *                  &lt;name&gt;Jane Smith&lt;/name&gt;
+ *                  &lt;date-of-birth&gt;1965-05-23&lt;/date-of-birth&gt;
+ *                  &lt;citizenship&gt;US&lt;/citizenship&gt;
+ *                &lt;/Person&gt;
  * </pre>
  * 
  * <p>
@@ -174,6 +174,7 @@ class DataWriter extends XMLWriter {
      * 
      * @see com.megginson.sax.XMLWriter#reset
      */
+    @Override
     public void reset() {
         depth = 0;
         state = SEEN_NOTHING;
@@ -207,6 +208,7 @@ class DataWriter extends XMLWriter {
      *                further down the chain raises an exception.
      * @see XMLWriter#startElement(String, String, String, Attributes)
      */
+    @Override
     public void startElement(final String uri, final String localName,
             final String qName, final Attributes atts) throws SAXException {
         stateStack.push(SEEN_ELEMENT);
@@ -243,6 +245,7 @@ class DataWriter extends XMLWriter {
      *                further down the chain raises an exception.
      * @see XMLWriter#endElement(String, String, String)
      */
+    @Override
     public void endElement(final String uri, final String localName,
             final String qName) throws SAXException {
         depth--;
@@ -280,6 +283,7 @@ class DataWriter extends XMLWriter {
      *                further down the chain raises an exception.
      * @see XMLWriter#emptyElement(String, String, String, Attributes)
      */
+    @Override
     public void emptyElement(final String uri, final String localName,
             final String qName, final Attributes atts) throws SAXException {
         state = SEEN_ELEMENT;
@@ -303,6 +307,7 @@ class DataWriter extends XMLWriter {
      *                filter further down the chain raises an exception.
      * @see XMLWriter#characters(char[], int, int)
      */
+    @Override
     public void characters(final char ch[], final int start, final int length)
             throws SAXException {
         state = SEEN_DATA;

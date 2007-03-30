@@ -323,6 +323,7 @@ public abstract class SlideStrategy extends ModelBase implements Source,
         return t;
     }
 
+    @Override
     public void init(final Map props) {
         props.clear();
         props.putAll(props);

@@ -33,6 +33,7 @@ public abstract class Point3D extends Point2D {
                 + MathVec.sqr(getZ() - b.getZ());
     }
 
+    @Override
     public boolean equals(final Object b) {
         if (this == b)
             return true;
@@ -51,12 +52,15 @@ public abstract class Point3D extends Point2D {
         return getX() == b.getX() && getY() == b.getY() && getZ() == b.getZ();
     }
 
+    @Override
     public abstract double getX();
 
+    @Override
     public abstract double getY();
 
     public abstract double getZ();
 
+    @Override
     public abstract int hashCode();
 
     /**

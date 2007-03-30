@@ -25,6 +25,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Base class for all value Objects. Provides a generic toString.
@@ -40,6 +41,7 @@ public abstract class TransferObject implements Serializable {
      * 
      * @return all properties' values
      */
+    @Override
     public String toString() { // inspired by Hardcore Java (O'reilly, page
         // 228)
         try {
@@ -58,35 +60,31 @@ public abstract class TransferObject implements Serializable {
                 buf.append(props[idx].getName());
                 buf.append("=");
                 if (props[idx].getReadMethod() != null) {
-                    value = props[idx].getReadMethod().invoke(this, null);
+                    value = props[idx].getReadMethod().invoke(this,
+                            (Object[]) null);
                     if (value instanceof TransferObject) {
                         buf.append("@");
                         buf.append(value.hashCode());
                     } else if (value instanceof Collection) {
                         buf.append("{");
-                        for (final Iterator iter = ((Collection) value)
-                                .iterator(); iter.hasNext();) {
-                            final Object element = iter.next();
+                        for (final Object element : (Collection) value)
                             if (element instanceof TransferObject) {
                                 buf.append("@");
                                 buf.append(element.hashCode());
                             } else
                                 buf.append(element.toString());
-                        }
                         buf.append("}");
                     } else if (value instanceof Map) {
                         buf.append("{");
-                        final Map map = (Map) value;
-                        for (final Iterator iter = map.keySet().iterator(); iter
-                                .hasNext();) {
-                            final Object key = iter.next();
-                            final Object element = map.get(key);
-                            buf.append(key.toString() + "=");
-                            if (element instanceof TransferObject) {
+                        for (final Iterator it = ((Map) value).entrySet()
+                                .iterator(); it.hasNext();) {
+                            final Entry element = (Entry) it.next();
+                            buf.append(element.getKey() + "=");
+                            if (element.getValue() instanceof TransferObject) {
                                 buf.append("@");
-                                buf.append(element.hashCode());
+                                buf.append(element.getValue().hashCode());
                             } else
-                                buf.append(element.toString());
+                                buf.append(element.getValue().toString());
                         }
                         buf.append("}");
                     } else

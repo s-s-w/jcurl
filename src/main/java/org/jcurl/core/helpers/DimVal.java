@@ -62,6 +62,7 @@ public class DimVal {
         this.dim = dim;
     }
 
+    @Override
     public boolean equals(final Object o) {
         if (o == null || !(o instanceof DimVal))
             return false;
@@ -73,6 +74,7 @@ public class DimVal {
         return false;
     }
 
+    @Override
     public int hashCode() {
         // http://www.angelikalanger.com/Articles/JavaSpektrum/03.HashCode/03.HashCode.html
         // hashcode N = hashcode N-1 * multiplikator + feldwert N
@@ -95,6 +97,7 @@ public class DimVal {
         return new DimVal(val * dim.Factor / dst.Factor, dst);
     }
 
+    @Override
     public String toString() {
         if (dim == null)
             return Double.toString(val);

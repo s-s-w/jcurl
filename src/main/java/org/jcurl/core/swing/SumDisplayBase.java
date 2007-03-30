@@ -89,19 +89,23 @@ public abstract class SumDisplayBase extends JComponent implements
 
     protected abstract int computeMask(final PositionSet rocks);
 
+    @Override
     public Dimension getMaximumSize() {
         return super.getMaximumSize();
     }
 
+    @Override
     public Dimension getMinimumSize() {
         final int d = 10;
         return new Dimension(d, d);
     }
 
+    @Override
     public Dimension getPreferredSize() {
         return getMinimumSize();
     }
 
+    @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         final Graphics2D g2 = (Graphics2D) g;

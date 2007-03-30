@@ -43,18 +43,22 @@ public class CurveDom extends R1RNFunction {
 
         public double v;
 
+        @Override
         public double doubleValue() {
             return v;
         }
 
+        @Override
         public float floatValue() {
             return (float) v;
         }
 
+        @Override
         public int intValue() {
             return (int) v;
         }
 
+        @Override
         public long longValue() {
             return (long) v;
         }
@@ -74,8 +78,8 @@ public class CurveDom extends R1RNFunction {
         super(c0.length);
         p.put(param, t);
         de = new DomWalkerEval(p);
-        c = new MathDom.Node[2][dim];
-        for (int i = dim - 1; i >= 0; i--) {
+        c = new MathDom.Node[2][dim()];
+        for (int i = dim() - 1; i >= 0; i--) {
             c[0][i] = c0[i];
             c[1][i] = c1[i];
         }
@@ -85,6 +89,7 @@ public class CurveDom extends R1RNFunction {
         this(x, null, param); // TODO compute and store the derivatives
     }
 
+    @Override
     public double at(final int dim, final int c, final double t) {
         if (c == 0) {
             this.t.v = t;

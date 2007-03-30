@@ -57,6 +57,7 @@ public class SlideDenny extends SlideCurves {
         super();
     }
 
+    @Override
     protected R1RNFunction createCurve(final double t0, final Rock pos,
             final Rock speed) {
         throw new NotImplementedYetException();
@@ -70,6 +71,7 @@ public class SlideDenny extends SlideCurves {
         return new CurveFkt(x);
     }
 
+    @Override
     public String description() {
         return "Mark Denny's curl model";
     }
@@ -83,6 +85,7 @@ public class SlideDenny extends SlideCurves {
      *            from Hog to Hog. see ./doc/eiszeit.tex for details.
      * @return [meter/sec]
      */
+    @Override
     public double getInitialSpeed(final double y, final double t) {
         double tmp;
 
@@ -99,10 +102,12 @@ public class SlideDenny extends SlideCurves {
         return tmp;
     }
 
+    @Override
     public double getMu() {
         return _mu;
     }
 
+    @Override
     public void setDraw2Tee(final double T, final double X) {
         super.setDraw2Tee(T, X);
         draw_time = T;

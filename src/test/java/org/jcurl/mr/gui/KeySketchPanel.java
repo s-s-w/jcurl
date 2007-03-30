@@ -53,6 +53,7 @@ public class KeySketchPanel extends JPanel implements KeyListener {
         start.y = end.y;
     }
 
+    @Override
     public boolean isFocusTraversable() {
         return true;
     }

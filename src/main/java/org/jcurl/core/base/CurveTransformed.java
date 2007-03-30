@@ -115,6 +115,7 @@ public class CurveTransformed extends CurveRock {
         this(c, createRc2Wc(null, x0_wc, v0_wc), t0);
     }
 
+    @Override
     public double[] at(final int derivative, double t, double[] ret) {
         t -= t0;
         ret = rc.at(derivative, t, ret);
@@ -136,6 +137,7 @@ public class CurveTransformed extends CurveRock {
         return ret;
     }
 
+    @Override
     public Rock at(final int derivative, double t, Rock ret) {
         t -= t0;
         ret = rc.at(derivative, t, ret);
@@ -152,6 +154,7 @@ public class CurveTransformed extends CurveRock {
         return ret;
     }
 
+    @Override
     public double at(final int component, final int derivative, final double t) {
         throw new UnsupportedOperationException("Not supported.");
     }
@@ -160,11 +163,12 @@ public class CurveTransformed extends CurveRock {
         return t0;
     }
 
+    @Override
     public String toString() {
         final StringBuffer b = new StringBuffer();
         b.append("[");
-        for (int i = 0; i < p.length; i++)
-            b.append(p[i]).append(", ");
+        for (final double element : p)
+            b.append(element).append(", ");
         b.setLength(b.length() - 2);
         b.append("] ");
         b.append(rc.toString());

@@ -153,6 +153,7 @@ public class CSplineInterpolator extends R1R1Function {
      *            location
      * @return value ot the n'th derivative
      */
+    @Override
     public double at(final int C, double x) {
         final int idx = findSplineIndex(x);
         final double[] spline = splines[idx];

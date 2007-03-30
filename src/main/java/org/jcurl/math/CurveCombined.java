@@ -18,16 +18,50 @@
  */
 package org.jcurl.math;
 
+import java.util.Iterator;
+import java.util.SortedMap;
+import java.util.Map.Entry;
+
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
 
 /**
- * Combined curve.
+ * Combined curve. Becomes more and more similar to {@link SortedMap} with some
+ * restrictions and additions.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveCombined extends R1RNFunction {
+public class CurveCombined extends R1RNFunction implements
+        Iterable<Entry<Double, R1RNFunction>> {
+
+    private class CCEntry implements Entry<Double, R1RNFunction> {
+
+        private final int i;
+
+        public CCEntry(final int i) {
+            this.i = i;
+        }
+
+        public Double getKey() {
+            return t0[i];
+        }
+
+        public R1RNFunction getValue() {
+            return fkt[i];
+        }
+
+        public R1RNFunction setValue(final R1RNFunction value) {
+            throw new UnsupportedOperationException();
+            // try {return v;} finally {v = value;}
+        }
+
+        @Override
+        public String toString() {
+            return new StringBuffer().append("[").append(getKey())
+                    .append(" : ").append(getValue()).append("]").toString();
+        }
+    }
 
     private static final int growth = 120;
 
@@ -86,6 +120,8 @@ public class CurveCombined extends R1RNFunction {
     }
 
     public void add(final double t0, final R1RNFunction fkt) {
+        if (fkt.dim() != dim())
+            throw new IllegalArgumentException();
         // re-alloc?
         if (parts == this.t0.length) {
             final int siz = 1 + parts * growth / 100;
@@ -101,10 +137,6 @@ public class CurveCombined extends R1RNFunction {
         this.fkt[parts++] = fkt;
     }
 
-    public double at(final int dim, final int c, final double t) {
-        return fkt[findFktIdx_BS(t)].at(dim, c, t);
-    }
-
     /**
      * Get the n-th derivative of all dimensions.
      * 
@@ -116,8 +148,14 @@ public class CurveCombined extends R1RNFunction {
      * @return the value
      * @see R1RNFunction#at(int, double, double[])
      */
+    @Override
     public double[] at(final int c, final double t, final double[] ret) {
         return fkt[findFktIdx_BS(t)].at(c, t, ret);
+    }
+
+    @Override
+    public double at(final int dim, final int c, final double t) {
+        return fkt[findFktIdx_BS(t)].at(dim, c, t);
     }
 
     public void clear() {
@@ -140,5 +178,23 @@ public class CurveCombined extends R1RNFunction {
         if (idx == -1)
             return parts - 1;
         return -2 - idx;
+    }
+
+    public Iterator<Entry<Double, R1RNFunction>> iterator() {
+        return new Iterator<Entry<Double, R1RNFunction>>() {
+            int current = 0;
+
+            public boolean hasNext() {
+                return current < parts;
+            }
+
+            public Entry<Double, R1RNFunction> next() {
+                return new CCEntry(current++);
+            }
+
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 }

@@ -27,11 +27,13 @@ import org.jcurl.math.R1RNFunction;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id: CurveRock.java 361 2006-08-28 20:21:07Z mrohrmoser $
  */
+@Deprecated
 public abstract class CurveRock extends R1RNFunction {
 
     public static CurveRock still(final double x, final double y, final double a) {
         return new CurveRock() {
 
+            @Override
             public double at(final int dim, final int c, final double t) {
                 if (c > 0)
                     return 0;
@@ -47,6 +49,7 @@ public abstract class CurveRock extends R1RNFunction {
                 }
             }
 
+            @Override
             public String toString() {
                 final StringBuffer buf = new StringBuffer();
                 buf.append('[');

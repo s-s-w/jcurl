@@ -36,6 +36,7 @@ public class JcxFileChooser extends JFileChooser {
         setMultiSelectionEnabled(false);
         setAcceptAllFileFilterUsed(true);
         setFileFilter(new FileFilter() {
+            @Override
             public boolean accept(final File f) {
                 if (f == null)
                     return false;
@@ -43,6 +44,7 @@ public class JcxFileChooser extends JFileChooser {
                         || f.getName().endsWith(".jcz");
             }
 
+            @Override
             public String getDescription() {
                 return "JCurl Setup Files (.jcx) (.jcz)";
             }

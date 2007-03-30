@@ -3,21 +3,17 @@
 
 In Progress
 
-	* Analytic collission detection
-
-	* transformed (WC) trajectories
-
-	* Curve store
-
-	* Design rework
-
-Next
-
 	* Package structure rework
 
 	* PathIterator to display trajectories
 
 	* Denny curl model
+
+	* Design rework
+
+Next
+
+	* Make PositionDisplay fast
 
 	* Sophisticated editing UI
 	
@@ -30,6 +26,12 @@ Postponed
 	* Realistic collission model including loss of energy
 
 Finished
+
+	* Analytic collission detection
+
+	* transformed (WC) trajectories
+
+	* Curve store
 
 	* Collission computing without spin (as a baseline for other collission models)
 

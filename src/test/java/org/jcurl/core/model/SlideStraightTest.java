@@ -50,6 +50,7 @@ public class SlideStraightTest extends TestCase {
 
     private final SpeedSet speed = new SpeedSet();
 
+    @Override
     public void setUp() {
         // initial state
         PositionSet.allOut(pos);

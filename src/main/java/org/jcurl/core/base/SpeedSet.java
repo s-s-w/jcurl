@@ -40,6 +40,7 @@ public class SpeedSet extends RockSet {
         super(b);
     }
 
+    @Override
     public Object clone() {
         return new SpeedSet(this);
     }

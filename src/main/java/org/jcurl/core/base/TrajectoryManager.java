@@ -174,6 +174,7 @@ public class TrajectoryManager extends MutableObject implements
         }
     }
 
+    @Override
     public boolean equals(final Object obj) {
         return false;
     }
@@ -214,6 +215,7 @@ public class TrajectoryManager extends MutableObject implements
         return slider;
     }
 
+    @Override
     public int hashCode() {
         return 0;
     }

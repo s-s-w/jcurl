@@ -110,6 +110,7 @@ public abstract class SlideCurves extends SlideStrategy {
      * @param rocks
      * @return the c'th derivative of x,y,alpha
      */
+    @Override
     protected RockSet getC(final int c, final double time, final RockSet rocks) {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             this.getC(c, time, i, rocks.getRock(i));
@@ -128,6 +129,7 @@ public abstract class SlideCurves extends SlideStrategy {
         return true;
     }
 
+    @Override
     protected boolean move(final double t0, final double t1, final int idx,
             final Rock pos, final Rock speed) {
         this.getC(0, t1, idx, pos);
@@ -135,6 +137,7 @@ public abstract class SlideCurves extends SlideStrategy {
         return speed.getX() != 0 || speed.getY() != 0;
     }
 
+    @Override
     public final void reset(final PositionSet startPos,
             final SpeedSet startSpeed, final RockSetProps props) {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
@@ -152,6 +155,7 @@ public abstract class SlideCurves extends SlideStrategy {
      * @param discontinuous
      *            bitmask of the discontuous rocks
      */
+    @Override
     public void set(final double t0, final PositionSet pos,
             final SpeedSet speed, final int discontinuous) {
         if (log.isDebugEnabled())

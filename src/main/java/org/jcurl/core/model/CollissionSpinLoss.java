@@ -111,11 +111,13 @@ public class CollissionSpinLoss extends Collider {
         return true;
     }
 
+    @Override
     public void computeRC(final Rock va, final Rock vb) {
         // TODO Auto-generated method stub
 
     }
 
+    @Override
     public String description() {
         return "Collissions with spin and loss of energy";
     }

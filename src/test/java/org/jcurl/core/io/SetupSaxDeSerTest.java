@@ -49,6 +49,7 @@ public class SetupSaxDeSerTest extends TestCase {
 
     private static final Log log = JCLoggerFactory
             .getLogger(SetupSaxDeSerTest.class);
+
     static {
         try {
             baseUrl = base.toURL();

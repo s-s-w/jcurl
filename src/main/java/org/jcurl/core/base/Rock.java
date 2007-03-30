@@ -37,6 +37,7 @@ public abstract class Rock extends Point3D implements Cloneable {
 
     protected transient AffineTransform trafo;
 
+    @Override
     public abstract Object clone();
 
     /**
@@ -49,6 +50,7 @@ public abstract class Rock extends Point3D implements Cloneable {
         return MathVec.sqr(getX() - b.getX()) + MathVec.sqr(getY() - b.getY());
     }
 
+    @Override
     public final boolean equals(final Object obj) {
         if (obj == null || !(obj instanceof Rock))
             return false;
@@ -68,6 +70,7 @@ public abstract class Rock extends Point3D implements Cloneable {
         return trafo;
     }
 
+    @Override
     public abstract int hashCode();
 
     /**
@@ -94,6 +97,7 @@ public abstract class Rock extends Point3D implements Cloneable {
         dirty = false;
     }
 
+    @Override
     public String toString() {
         final StringBuffer buf = new StringBuffer();
         buf.append('[');

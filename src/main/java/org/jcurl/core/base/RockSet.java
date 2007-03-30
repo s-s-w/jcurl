@@ -19,6 +19,8 @@
 package org.jcurl.core.base;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.math.MathVec;
@@ -29,8 +31,8 @@ import org.jcurl.math.MathVec;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:RockSet.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public abstract class RockSet extends MutableObject implements Cloneable,
-        Serializable {
+public abstract class RockSet extends MutableObject implements Iterable,
+        Cloneable, Serializable {
 
     public static final int ALL_MASK = 0xFFFF;
 
@@ -144,8 +146,10 @@ public abstract class RockSet extends MutableObject implements Cloneable,
         copy(b, this);
     }
 
+    @Override
     public abstract Object clone();
 
+    @Override
     public boolean equals(final Object obj) {
         if (this == obj)
             return true;
@@ -179,6 +183,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
         return i % 2 == 0 ? dark[i / 2] : light[i / 2];
     }
 
+    @Override
     public int hashCode() {
         // http://www.angelikalanger.com/Articles/JavaSpektrum/03.HashCode/03.HashCode.html
         // hashcode N = hashcode N-1 * multiplikator + feldwert N
@@ -191,6 +196,102 @@ public abstract class RockSet extends MutableObject implements Cloneable,
             hash += light[i].hashCode();
         }
         return hash;
+    }
+
+    /**
+     * Iterator over this {@link RockSet}.
+     * <p>
+     * Doesn't return {@link Entry} - which could be very convenient - to save
+     * instanciations in inner loops.
+     * </p>
+     * 
+     * @return {@link Integer} rather than {@link Rock} as the latter doesn't
+     *         know it's own index or color.
+     */
+    public Iterator iterator() {
+        return itIdx();
+    }
+
+    public Iterator<Integer> itIdx() {
+        return new Iterator<Integer>() {
+            int current = 0;
+
+            public boolean hasNext() {
+                return current < RockSet.ROCKS_PER_SET;
+            }
+
+            public Integer next() {
+                return current++;
+            }
+
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
+    }
+
+    private class REntry implements Entry<Integer, Rock> {
+
+        private final int i;
+
+        public REntry(final int i) {
+            this.i = i;
+        }
+
+        public Integer getKey() {
+            return i;
+        }
+
+        public Rock getValue() {
+            return getRock(i);
+        }
+
+        public Rock setValue(final Rock value) {
+            getValue().setLocation(value);
+            return getValue();
+        }
+
+        @Override
+        public String toString() {
+            return new StringBuffer().append("[").append(getKey())
+                    .append(" : ").append(getValue()).append("]").toString();
+        }
+    }
+
+    public Iterator<Entry<Integer, Rock>> itEntries() {
+        return new Iterator<Entry<Integer, Rock>>() {
+            int current = 0;
+
+            public boolean hasNext() {
+                return current < RockSet.ROCKS_PER_SET;
+            }
+
+            public Entry<Integer, Rock> next() {
+                return new REntry(current++);
+            }
+
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
+    }
+
+    public Iterator<Rock> itRocks() {
+        return new Iterator<Rock>() {
+            int current = 0;
+
+            public boolean hasNext() {
+                return current < RockSet.ROCKS_PER_SET;
+            }
+
+            public Rock next() {
+                return getRock(current++);
+            }
+
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 
     public void notifyChange() {

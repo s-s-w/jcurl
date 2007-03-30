@@ -40,6 +40,7 @@ public class RockDouble extends Rock implements Serializable {
         this(0, 0, 0);
     }
 
+    @Override
     public void setLocation(final double[] pt) {
         if (pt.length != 3)
             throw new IllegalArgumentException();
@@ -56,22 +57,27 @@ public class RockDouble extends Rock implements Serializable {
         dirty = true;
     }
 
+    @Override
     public Object clone() {
         return new RockDouble(x[0], x[1], x[2]);
     }
 
+    @Override
     public double getX() {
         return x[0];
     }
 
+    @Override
     public double getY() {
         return x[1];
     }
 
+    @Override
     public double getZ() {
         return x[2];
     }
 
+    @Override
     public int hashCode() {
         // http://www.angelikalanger.com/Articles/JavaSpektrum/03.HashCode/03.HashCode.html
         // hashcode N = hashcode N-1 * multiplikator + feldwert N
@@ -86,10 +92,12 @@ public class RockDouble extends Rock implements Serializable {
         return hash;
     }
 
+    @Override
     public boolean nonZero() {
         return x[0] * x[0] + x[1] * x[1] > 1e-4;
     }
 
+    @Override
     public void setLocation(final double x, final double y) {
         if (x == this.x[0] && y == this.x[1])
             return;
@@ -98,6 +106,7 @@ public class RockDouble extends Rock implements Serializable {
         dirty = true;
     }
 
+    @Override
     public void setLocation(final double x, final double y, final double z) {
         if (x == this.x[0] && y == this.x[1] && z == this.x[2])
             return;
@@ -107,6 +116,7 @@ public class RockDouble extends Rock implements Serializable {
         dirty = true;
     }
 
+    @Override
     public void setX(final double x) {
         if (x == this.x[0])
             return;
@@ -114,6 +124,7 @@ public class RockDouble extends Rock implements Serializable {
         dirty = true;
     }
 
+    @Override
     public void setY(final double y) {
         if (y == x[1])
             return;
@@ -121,6 +132,7 @@ public class RockDouble extends Rock implements Serializable {
         dirty = true;
     }
 
+    @Override
     public void setZ(final double alpha) {
         if (alpha == x[2])
             return;

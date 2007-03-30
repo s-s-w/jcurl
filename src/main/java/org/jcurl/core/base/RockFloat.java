@@ -47,22 +47,27 @@ class RockFloat extends Rock implements Serializable {
         dirty = true;
     }
 
+    @Override
     public Object clone() {
         return new RockFloat(x[0], x[1], x[2]);
     }
 
+    @Override
     public double getX() {
         return x[0];
     }
 
+    @Override
     public double getY() {
         return x[1];
     }
 
+    @Override
     public double getZ() {
         return x[2];
     }
 
+    @Override
     public int hashCode() {
         // http://www.angelikalanger.com/Articles/JavaSpektrum/03.HashCode/03.HashCode.html
         // hashcode N = hashcode N-1 * multiplikator + feldwert N
@@ -75,16 +80,19 @@ class RockFloat extends Rock implements Serializable {
         return hash;
     }
 
+    @Override
     public boolean nonZero() {
         return x[0] * x[0] + x[1] * x[1] > 1e-12;
     }
 
+    @Override
     public void setLocation(final double x, final double y) {
         this.x[0] = (float) x;
         this.x[1] = (float) y;
         dirty = true;
     }
 
+    @Override
     public void setLocation(final double x, final double y, final double z) {
         this.x[0] = (float) x;
         this.x[1] = (float) y;
@@ -92,16 +100,19 @@ class RockFloat extends Rock implements Serializable {
         dirty = true;
     }
 
+    @Override
     public void setX(final double x) {
         this.x[0] = (float) x;
         dirty = true;
     }
 
+    @Override
     public void setY(final double y) {
         x[1] = (float) y;
         dirty = true;
     }
 
+    @Override
     public void setZ(final double alpha) {
         x[2] = (float) alpha;
         dirty = true;

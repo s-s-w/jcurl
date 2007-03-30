@@ -168,6 +168,7 @@ public class RockEditDisplay extends PositionDisplay {
         return MathVec.add(getPos().getRock(idx), speed.getRock(idx), dst);
     }
 
+    @Override
     public void paint(final Graphics g) {
         final Graphics2D g2 = (Graphics2D) g;
         super.paint(g2);
@@ -226,6 +227,7 @@ public class RockEditDisplay extends PositionDisplay {
      * @param evt
      * @see PositionDisplay#propertyChange(PropertyChangeEvent)
      */
+    @Override
     public void propertyChange(final PropertyChangeEvent evt) {
         final Object tmp = evt.getNewValue();
         if (SpeedSet.class.isAssignableFrom(tmp.getClass()))

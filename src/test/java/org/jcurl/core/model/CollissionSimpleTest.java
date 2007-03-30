@@ -59,6 +59,7 @@ public class CollissionSimpleTest extends TestCase {
         bv = speed.getLight(0);
     }
 
+    @Override
     public void setUp() {
         PositionSet.allHome(pos);
         RockSet.allZero(speed);

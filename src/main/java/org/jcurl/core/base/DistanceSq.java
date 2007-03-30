@@ -66,9 +66,9 @@ public class DistanceSq extends R1R1Function {
      *            <code>(r1+r2)^2</code>
      */
     DistanceSq(final R1RNFunction c1, final R1RNFunction c2, final double r12Sqr) {
-        if (c1.dim != c2.dim)
-            throw new IllegalArgumentException("Dimension mismatch: " + c1.dim
-                    + "!=" + c2.dim);
+        if (c1.dim() != c2.dim())
+            throw new IllegalArgumentException("Dimension mismatch: "
+                    + c1.dim() + "!=" + c2.dim());
         this.c1 = c1;
         this.c2 = c2;
         r2 = r12Sqr;
@@ -80,6 +80,7 @@ public class DistanceSq extends R1R1Function {
      * @param t
      * @return the value
      */
+    @Override
     public double at(final double t) {
         // TUNE Thread safety at the cost of 2 instanciations
         final double[] a = c1.at(0, t, new double[3]);
@@ -97,6 +98,7 @@ public class DistanceSq extends R1R1Function {
      * @see #at(double)
      * @see #valueC1(double)
      */
+    @Override
     public double at(final int derivative, final double t) {
         if (derivative == 0)
             return at(t);
@@ -109,11 +111,11 @@ public class DistanceSq extends R1R1Function {
      * <code>2 * (c1 - c2) * (c1' - c2')</code> Feed into maxima:
      * 
      * <pre>
-     *      a(t) := [ ax(t), ay(t) ];
-     *      b(t) := [ bx(t), by(t) ];
-     *      d(t) := (a(t) - b(t)) . (a(t) - b(t));
-     *      diff(d(t), t);
-     *      quit$
+     *       a(t) := [ ax(t), ay(t) ];
+     *       b(t) := [ bx(t), by(t) ];
+     *       d(t) := (a(t) - b(t)) . (a(t) - b(t));
+     *       diff(d(t), t);
+     *       quit$
      * </pre>
      */
     double valueC1(final double t) {

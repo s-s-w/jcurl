@@ -50,11 +50,13 @@ public class MouseRectPanel extends JPanel implements MouseMotionListener {
     public MouseRectPanel() {
         addMouseListener(new MouseAdapter() {
 
+            @Override
             public void mouseClicked(final MouseEvent evt) {
                 if (evt.getClickCount() >= 2)
                     MouseRectPanel.this.remove(current);
             }
 
+            @Override
             public void mousePressed(final MouseEvent evt) {
                 final int x = evt.getX();
                 final int y = evt.getY();
@@ -115,12 +117,14 @@ public class MouseRectPanel extends JPanel implements MouseMotionListener {
             setCursor(Cursor.getDefaultCursor());
     }
 
+    @Override
     public void paintComponent(final Graphics g) {
         super.paintComponent(g);
         for (int i = 0; i < nsquares; i++)
             draw(g, i);
     }
 
+    @Override
     public void remove(final int n) {
         if (n < 0 || n >= nsquares)
             return;

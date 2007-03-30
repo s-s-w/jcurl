@@ -196,6 +196,7 @@ public class CurveTransformedTest extends TestShowBase {
         Rock ret = null;
         final AffineTransform at = AffineTransform.getScaleInstance(0.75, 1.25);
         final CurveTransformed cw = new CurveTransformed(new CurveRock() {
+            @Override
             public double at(int component, int derivative, double t) {
                 switch (component) {
                 case 0:

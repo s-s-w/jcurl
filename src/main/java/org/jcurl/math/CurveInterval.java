@@ -35,7 +35,7 @@ public class CurveInterval extends R1RNFunction {
 
     public CurveInterval(final double tmin, final double tmax,
             final R1RNFunction curve) {
-        super(curve.dim);
+        super(curve.dim());
         this.curve = curve;
         this.tmin = tmin;
         this.tmax = tmax;
@@ -50,6 +50,7 @@ public class CurveInterval extends R1RNFunction {
      *            parameter
      * @return value
      */
+    @Override
     public double at(final int dim, final int c, double t) {
         if (t < tmin) {
             if (c > 0)
