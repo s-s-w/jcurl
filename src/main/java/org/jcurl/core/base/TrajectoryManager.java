@@ -23,6 +23,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.base.CollissionStore.Tupel;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.log.JCLoggerFactory;
 
@@ -35,6 +36,8 @@ import org.jcurl.core.log.JCLoggerFactory;
 public class TrajectoryManager extends MutableObject implements
         PropertyChangeListener {
 
+    private static final double hitDt = 1e-6;
+
     private static final Log log = JCLoggerFactory
             .getLogger(TrajectoryManager.class);
 
@@ -44,7 +47,7 @@ public class TrajectoryManager extends MutableObject implements
 
     private CollissionDetector collissionDetector = null;
 
-    // private final CollissionStore collissionStore = new CollissionStore();
+    private final CollissionStore collissionStore = new CollissionStore();
 
     private final PositionSet currentPos = new PositionSet();
 
@@ -54,7 +57,7 @@ public class TrajectoryManager extends MutableObject implements
 
     private CurveStore curveStore = new CurveStore(RockSet.ROCKS_PER_SET);
 
-    private boolean init = false;
+    private boolean dirty = true;
 
     private PositionSet initialPos = null;
 
@@ -65,28 +68,109 @@ public class TrajectoryManager extends MutableObject implements
     public TrajectoryManager() {
     }
 
+    /**
+     * Internal. Compute one rock curve segment and don't change internal state.
+     * 
+     * @param i
+     *            which rock
+     * @param t0
+     *            starttime
+     * @return the new Curve in world coordinates.
+     */
+    CurveRock doComputeCurve(final int i, final double t0, final PositionSet p,
+            final SpeedSet s) {
+        final Rock x = p.getRock(i);
+        final Rock v = s.getRock(i);
+        final CurveRock wc;
+        if (v.distanceSq(0, 0) == 0)
+            wc = CurveRock.still(x);
+        else
+            // FIXME add stop detection! Either here or in each slider?
+            wc = new CurveTransformed(slider.computeRc(x, v), CurveTransformed
+                    .createRc2Wc(new AffineTransform(), x, v), t0);
+        if (log.isDebugEnabled())
+            log.debug(i + " " + wc);
+        return wc;
+    }
+
+    /**
+     * Internal.
+     * 
+     * @return when is the next hit, which are the rocks involved.
+     */
+    Tupel doGetNextHit() {
+        doInit();
+        return collissionStore.first();
+    }
+
+    /**
+     * Internal.
+     */
     void doInit() {
-        if (init)
+        if (!dirty)
             return;
         final double t0 = 0.0;
         // initial curves:
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             curveStore.reset(i);
-            final Rock x = initialPos.getRock(i);
-            final Rock v = initialSpeed.getRock(i);
-            final CurveRock wc;
-            if (v.distanceSq(0, 0) == 0)
-                wc = CurveRock.still(x);
-            else
-                // FIXME add stop detection! Either here or in each slider?
-                wc = new CurveTransformed(slider.computeRc(x, v),
-                        CurveTransformed.createRc2Wc(new AffineTransform(), x,
-                                v), t0);
-            curveStore.add(i, t0, wc);
+            curveStore.add(i, t0, doComputeCurve(i, t0, initialPos,
+                    initialSpeed));
         }
-        // TODO initial collission detection:
+        // initial collission detection:
+        collissionStore.clear();
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+            for (int j = i - 1; j >= 0; j--)
+                // log.info("collissionDetect " + i + ", " + j);
+                collissionStore.add(collissionDetector.compute(t0, 30,
+                        curveStore.getCurve(i), curveStore.getCurve(j)), i, j);
+        dirty = false;
+    }
 
-        init = true;
+    /**
+     * Internal. Typically after a hit: Recompute the new curves and upcoming
+     * collission candidates.
+     * 
+     * @param hitMask
+     * @return bitmask of rocks with new curves
+     */
+    int doRecomputeCurvesAndCollissionTimes(final int hitMask, double t0) {
+        int computedMask = 0;
+        // first computed the new curves:
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+            if (!RockSet.isSet(hitMask, i))
+                continue;
+            curveStore.add(i, t0, doComputeCurve(i, t0, currentPos,
+                    currentSpeed));
+            computedMask |= 1 << i;
+        }
+        // then and all combinations of potential collissions
+        t0 += hitDt;
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+            if (!RockSet.isSet(computedMask, i))
+                continue;
+            for (int j = RockSet.ROCKS_PER_SET - 1; j >= 0; j--) {
+                if (i == j || i > j && RockSet.isSet(computedMask, j))
+                    continue;
+                collissionStore.replace(collissionDetector.compute(t0, 30,
+                        curveStore.getCurve(i), curveStore.getCurve(j)), i, j);
+            }
+        }
+        return computedMask;
+    }
+
+    /**
+     * Internal. Does not {@link RockSet#notifyChange()}!
+     * 
+     * @param currentTime
+     * @param tmp
+     */
+    void doUpdatePosAndSpeed(final double currentTime, final double[] tmp) {
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+            currentPos.getRock(i).setLocation(
+                    curveStore.getCurve(i).at(0, currentTime, tmp));
+            currentSpeed.getRock(i).setLocation(
+                    curveStore.getCurve(i).at(1, currentTime, tmp));
+        }
     }
 
     public boolean equals(final Object obj) {
@@ -138,14 +222,14 @@ public class TrajectoryManager extends MutableObject implements
     }
 
     public void setCollider(final Collider collider) {
-        init = false;
+        dirty = true;
         propChange.firePropertyChange("collider", this.collider, collider);
         this.collider = collider;
     }
 
     public void setCollissionDetector(
             final CollissionDetector collissionDetector) {
-        init = false;
+        dirty = true;
         propChange.firePropertyChange("collissionDetector",
                 this.collissionDetector, collissionDetector);
         this.collissionDetector = collissionDetector;
@@ -153,57 +237,63 @@ public class TrajectoryManager extends MutableObject implements
 
     public void setCurrentTime(final double currentTime) {
         // log.info(Double.toString(currentTime));
-        if (init) {
+        if (!dirty) {
             if (this.currentTime == currentTime)
                 return;
         } else
             doInit();
-        // TODO check time range (is known ground?) and compute collissions if
-        // necessary
-
-        // thread safety at the cost of one instanciation per call:
-        final double[] tmp = { 0, 0, 0 };
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            currentPos.getRock(i).setLocation(
-                    curveStore.getCurve(i).at(0, currentTime, tmp));
-            currentSpeed.getRock(i).setLocation(
-                    curveStore.getCurve(i).at(1, currentTime, tmp));
+        {
+            // TUNE thread safety at the cost of two instanciations per call:
+            final double[] tmp = { 0, 0, 0 };
+            final AffineTransform m = new AffineTransform();
+            // NaN-safe time range check (are we navigating known ground?):
+            while (currentTime > doGetNextHit().t) {
+                final Tupel nh = doGetNextHit();
+                doUpdatePosAndSpeed(nh.t, tmp);
+                // compute collission(s);
+                final int mask = collider.compute(currentPos, currentSpeed, m);
+                if (mask == 0)
+                    break;
+                doRecomputeCurvesAndCollissionTimes(mask, nh.t);
+            }
+            doUpdatePosAndSpeed(currentTime, tmp);
         }
-        final double ot = this.currentTime;
-        this.currentTime = currentTime;
-        currentPos.notifyChange();
-        currentSpeed.notifyChange();
-        propChange.firePropertyChange("currentTime", ot, currentTime);
-        propChange.firePropertyChange("currentPos", currentPos, currentPos);
-        propChange.firePropertyChange("currentSpeed", currentSpeed,
-                currentSpeed);
+        {
+            final double ot = this.currentTime;
+            this.currentTime = currentTime;
+            currentPos.notifyChange();
+            currentSpeed.notifyChange();
+            propChange.firePropertyChange("currentTime", ot, currentTime);
+            propChange.firePropertyChange("currentPos", currentPos, currentPos);
+            propChange.firePropertyChange("currentSpeed", currentSpeed,
+                    currentSpeed);
+        }
     }
 
     public void setCurveStore(final CurveStore curveStore) {
-        init = false;
+        dirty = true;
         propChange
                 .firePropertyChange("curveStore", this.curveStore, curveStore);
         this.curveStore = curveStore;
     }
 
     public void setInitialPos(final PositionSet initialPos) {
-        init = false;
+        dirty = true;
         propChange
                 .firePropertyChange("initialPos", this.initialPos, initialPos);
         this.initialPos = initialPos;
     }
 
     public void setInitialSpeed(final SpeedSet initialSpeed) {
-        init = false;
+        dirty = true;
         propChange.firePropertyChange("initialSpeed", this.initialSpeed,
                 initialSpeed);
         this.initialSpeed = initialSpeed;
     }
 
     public void setSlider(final SlideNoCurl slider) {
-        init = false;
+        dirty = true;
         propChange.firePropertyChange("slider", this.slider, slider);
         this.slider = slider;
     }
-
 }

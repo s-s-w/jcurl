@@ -35,13 +35,13 @@ import org.jcurl.math.MathVec;
  */
 public abstract class Collider extends ModelBase implements Strategy {
 
-    private static final float _Rad = RockProps.DEFAULT.getRadius();
+    private static final double _Rad = RockProps.DEFAULT.getRadius();
 
-    private static final float HIT_MAX_DIST = 1e-6F;
+    private static final double HIT_MAX_DIST = 1e-6F;
 
     private static final Log log = JCLoggerFactory.getLogger(Collider.class);
 
-    /** Maximum distance [m] of two rocks to consider them touching */
+    /** Maximum distance square [m] of two rocks to consider them touching */
     public static final double MaxDistSq = sqr(_Rad + _Rad + HIT_MAX_DIST);
 
     protected static double abs(final double a) {
@@ -105,23 +105,35 @@ public abstract class Collider extends ModelBase implements Strategy {
      * Iterate over all rocks and call
      * {@link Collider#computeWC(Rock, Rock, Rock, Rock, AffineTransform)} for
      * each pair.
+     * <p>
+     * Does not change <code>pos</code>!
+     * </p>
+     * <p>
+     * Does not fire {@link SpeedSet#notifyChange()}!
+     * </p>
      * 
      * @see Collider#computeWC(Rock, Rock, Rock, Rock, AffineTransform)
      * @param pos
      * @param speed
+     * @param tr
+     *            <code>null</code> creates a new instance.
      * @return bitmask of the changed rocks
      */
-    public int compute(final PositionSet pos, final SpeedSet speed) {
+    public int compute(final PositionSet pos, final SpeedSet speed,
+            AffineTransform tr) {
         if (log.isDebugEnabled())
             log.debug("compute()");
         int hits = 0;
-        final AffineTransform mat = new AffineTransform();
+        if (tr == null)
+            tr = new AffineTransform();
+        else
+            tr.setToIdentity();
         for (int B = 0; B < RockSet.ROCKS_PER_SET; B++)
             for (int A = 0; A < B; A++) {
                 if (log.isDebugEnabled())
                     log.debug("Compute hit " + A + "<->" + B);
                 if (computeWC(pos.getRock(A), pos.getRock(B), speed.getRock(A),
-                        speed.getRock(B), mat)) {
+                        speed.getRock(B), tr)) {
                     // mark the rocks' bits hit
                     hits |= 1 << A;
                     hits |= 1 << B;

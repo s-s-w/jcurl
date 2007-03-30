@@ -18,6 +18,7 @@
  */
 package org.jcurl.core.base;
 
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.util.Map;
 import java.util.TreeMap;
@@ -207,7 +208,7 @@ public abstract class SlideStrategy extends ModelBase implements Source,
                     rocksInMotion = mov;
                 }
                 // compute the hit
-                final int hit = coll.compute(maxPos, maxSpeed);
+                final int hit = coll.compute(maxPos, maxSpeed, null);
                 set(tmax + dtHit, maxPos, maxSpeed, hit);
                 rocksInMotion |= hit;
             }
@@ -225,11 +226,12 @@ public abstract class SlideStrategy extends ModelBase implements Source,
      * Test all combinations of the given rocks for upcoming collissions.
      * <p>
      * There is a little conceptual gap between the space-distance (used by
-     * {@link Collider#compute(PositionSet, SpeedSet)}) and the time distance
-     * used here and in {@link #computeUntil(double, double)}. This is because
-     * the collission engine should not need to know about rock propagation and
-     * therefore cannot compute the exact time until the hit - the slider on the
-     * other hand needs to know the time to propagate the rocks until the hit.
+     * {@link Collider#compute(PositionSet, SpeedSet, AffineTransform)}) and
+     * the time distance used here and in {@link #computeUntil(double, double)}.
+     * This is because the collission engine should not need to know about rock
+     * propagation and therefore cannot compute the exact time until the hit -
+     * the slider on the other hand needs to know the time to propagate the
+     * rocks until the hit.
      * </p>
      * <p>
      * This is solved by additionally checking the distance in
