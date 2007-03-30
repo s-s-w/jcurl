@@ -23,6 +23,7 @@ import org.jcurl.math.R1RNFunction;
 /**
  * Trajectory of one Rock, in either rock-coordinates or world-coordinates.
  * 
+ * @deprecated Maybe obsolete?
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id: CurveRock.java 361 2006-08-28 20:21:07Z mrohrmoser $
  */
@@ -30,15 +31,6 @@ public abstract class CurveRock extends R1RNFunction {
 
     public static CurveRock still(final double x, final double y, final double a) {
         return new CurveRock() {
-            public Rock at(final double t, final Rock ret) {
-                return at(0, t, ret);
-            }
-
-            public Rock at(final int derivative, final double t, final Rock ret) {
-                ret.setLocation(at(0, derivative, t), at(1, derivative, t), at(
-                        2, derivative, t));
-                return ret;
-            }
 
             public double at(final int dim, final int c, final double t) {
                 if (c > 0)
@@ -53,10 +45,6 @@ public abstract class CurveRock extends R1RNFunction {
                 default:
                     throw new RuntimeException();
                 }
-            }
-
-            public int dimension() {
-                return 3;
             }
 
             public String toString() {
@@ -79,9 +67,11 @@ public abstract class CurveRock extends R1RNFunction {
         super(3);
     }
 
-    public abstract Rock at(double t, Rock ret);
-
-    public abstract Rock at(int derivative, double t, Rock ret);
-
-    public abstract int dimension();
+    public Rock at(final int derivative, final double t, Rock ret) {
+        if (ret == null)
+            ret = new RockDouble();
+        ret.setLocation(at(0, derivative, t), at(1, derivative, t), at(2,
+                derivative, t));
+        return ret;
+    }
 }

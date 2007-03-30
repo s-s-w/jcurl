@@ -27,7 +27,7 @@ import java.awt.geom.Point2D;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id: CurveTransformed.java 361 2006-08-28 20:21:07Z mrohrmoser $
  */
-public class CurveTransformed extends CurveRockBase {
+public class CurveTransformed extends CurveRock {
 
     /**
      * Create the transformation from a Rock Coordinates (rc) System at p0_wc

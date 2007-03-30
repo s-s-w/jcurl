@@ -195,7 +195,7 @@ public class CurveTransformedTest extends TestShowBase {
     public void testValueC0() throws MathException {
         Rock ret = null;
         final AffineTransform at = AffineTransform.getScaleInstance(0.75, 1.25);
-        final CurveTransformed cw = new CurveTransformed(new CurveRockBase() {
+        final CurveTransformed cw = new CurveTransformed(new CurveRock() {
             public double at(int component, int derivative, double t) {
                 switch (component) {
                 case 0:
@@ -209,13 +209,13 @@ public class CurveTransformedTest extends TestShowBase {
                 }
             }
         }, at, 0);
-        ret = cw.at(0, ret);
+        ret = cw.at(0, 0, ret);
         assertEquals(0, 0, 0, ret, 1e-9);
-        ret = cw.at(0.5, ret);
+        ret = cw.at(0, 0.5, ret);
         assertEquals(0.75, 0.9375, 0.25, ret, 1e-9);
-        ret = cw.at(1.0, ret);
+        ret = cw.at(0, 1.0, ret);
         assertEquals(1.5, 1.875, 0.5, ret, 1e-9);
-        ret = cw.at(1.5, ret);
+        ret = cw.at(0, 1.5, ret);
         assertEquals(2.25, 2.8125, 0.75, ret, 1e-9);
     }
 

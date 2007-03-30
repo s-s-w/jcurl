@@ -29,6 +29,9 @@ import org.jcurl.core.log.JCLoggerFactory;
  */
 public abstract class R1RNFunction {
 
+    private static final Log log = JCLoggerFactory
+            .getLogger(R1RNFunction.class);
+
     /**
      * Helper to check (inclusive) interval containment. Robust against
      * {@link Double#NaN} etc.
@@ -113,9 +116,6 @@ public abstract class R1RNFunction {
      */
     public abstract double at(int dim, int c, double t);
 
-    private static final Log log = JCLoggerFactory
-            .getLogger(R1RNFunction.class);
-
     /**
      * Compute <code>x where f^c(x) = y</code> using Newton's algorithm.
      * 
@@ -136,8 +136,8 @@ public abstract class R1RNFunction {
             final double y, final double x0, final double xstop) {
         final double eps = 1e-9;
         for (double x = x0;;) {
-            if (false)
-                log.info("x=" + x + " y" + c + "=" + this.at(dim, c, x) + " y"
+            if (log.isDebugEnabled())
+                log.debug("x=" + x + " y" + c + "=" + this.at(dim, c, x) + " y"
                         + (c + 1) + "=" + this.at(dim, c + 1, x));
             double dx = this.at(dim, c + 1, x);
             if (dx == 0)

@@ -181,7 +181,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
 
     public int hashCode() {
         // http://www.angelikalanger.com/Articles/JavaSpektrum/03.HashCode/03.HashCode.html
-        // TODO hashcode N = hashcode N-1 * multiplikator + feldwert N
+        // hashcode N = hashcode N-1 * multiplikator + feldwert N
         int hash = 17;
         final int fact = 59;
         for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {

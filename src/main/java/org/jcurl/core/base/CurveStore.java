@@ -21,6 +21,15 @@ package org.jcurl.core.base;
 import org.jcurl.math.CurveCombined;
 import org.jcurl.math.R1RNFunction;
 
+/**
+ * Manage rock trajectory segments for a complete set of rocks over time.
+ * <p>
+ * This implementation is based on {@link CurveCombined}.
+ * </p>
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public class CurveStore {
 
     private static final byte DIM = 3;

@@ -37,7 +37,7 @@ public class CurveRockTest extends TestCase {
                 for (int dim = 0; dim < 3; dim++)
                     assertEquals("c=" + c + " dim=" + dim + " t=" + t, a.at(
                             dim, c, t), b.at(dim, c, t), 1e-9);
-                assertEquals(a.at(t, ra), b.at(t, rb));
+                assertEquals(a.at(0, t, ra), b.at(0, t, rb));
             }
     }
 }
