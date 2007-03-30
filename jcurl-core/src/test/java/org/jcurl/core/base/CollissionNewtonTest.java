@@ -36,8 +36,8 @@ public class CollissionNewtonTest extends TestCase {
         // System.out.println(co.compute(0, Double.NaN, c0, c1));
         assertEquals("", 1.6952814631961088, co.compute(0, 5, c0, c1), 1e-9);
 
-        System.out.println(new DistanceSq(c0, c1, CollissionDetector.RR2)
-                .at(1.6952814631961088));
+        // System.out.println(new DistanceSq(c0, c1,
+        // CollissionDetector.RR2).at(1.6952814631961088));
     }
 
     public void testPre() {
@@ -57,5 +57,12 @@ public class CollissionNewtonTest extends TestCase {
         assertEquals("", 1.5690174844768945, new DistanceSq(c0, c1,
                 CollissionDetector.RR2).computeNewtonValue(0, 0,
                 CollissionDetector.RR2, 0, 5), 1e-9);
+    }
+
+    public void testStill() {
+        final CollissionNewton co = new CollissionNewton();
+        final CurveRock c0 = CurveRock.still(0, 1, 0);
+        final CurveRock c1 = CurveRock.still(0, 2, 0);
+        assertEquals("", Double.NaN, co.compute(0, 5, c0, c1), 1e-9);
     }
 }

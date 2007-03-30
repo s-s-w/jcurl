@@ -19,7 +19,6 @@
 package org.jcurl.core.base;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CollissionSimple;
 import org.jcurl.core.swing.Zoomer;
@@ -29,21 +28,55 @@ public class TrajectoryManagerTest extends TestShowBase {
     private static final Log log = JCLoggerFactory
             .getLogger(TrajectoryManagerTest.class);
 
-    public void test1() throws InterruptedException {
+    public void testFastHit() throws InterruptedException {
         final TrajectoryManager te = new TrajectoryManager();
         te.setCollider(new CollissionSimple());
-        te.setCollissionDetector(new CollissionDetector() {
-            public double compute(final double t0, final double tmax,
-                    final CurveRock fa, final CurveRock fb, final double rb) {
-                throw new NotImplementedYetException();
-            }
-        });
+        te.setCollissionDetector(new CollissionNewton());
+        te.setSlider(new SlideNoCurl(23, 0));
+        te.setInitialPos(PositionSet.allHome());
+        te.getInitialPos().getDark(0).setLocation(0, Ice.HOG_2_TEE, 0);
+        te.getInitialPos().getLight(0).setLocation(0.1, Ice.BACK_2_TEE,
+                0.25 * Math.PI);
+        te.setInitialSpeed(new SpeedSet());
+        te.getInitialSpeed().getDark(0).setLocation(0,
+                -te.getSlider().computeV0(5), Math.PI / 2);
+
+        assertFalse(Double.isNaN(te.doGetNextHit().t));
+        assertFalse((1 > te.doGetNextHit().t));
+
+        // Raw throughput:
+        final int loops = 10000;
+        final long t0 = System.currentTimeMillis();
+        for (int i = loops; i > 0; i--)
+            te.setCurrentTime(1e-3 * i);
+        log.info(loops + " computations took "
+                + (System.currentTimeMillis() - t0) + " millis, i.e. " + loops
+                * 1000 / (System.currentTimeMillis() - t0) + " per second.");
+
+        // with Display:
+        showPositionDisplay(te.getCurrentPos(), Zoomer.HOUSE, 5000,
+                new TimeRunnable() {
+                    public void run(final double t) throws InterruptedException {
+                        te.setCurrentTime(t);
+                        Thread.sleep(20);
+                    }
+                });
+        // FIXME Test is not ok yet!
+    }
+
+    public void testSlowNoHit() throws InterruptedException {
+        final TrajectoryManager te = new TrajectoryManager();
+        te.setCollider(new CollissionSimple());
+        te.setCollissionDetector(new CollissionNewton());
         te.setSlider(new SlideNoCurl(23, 0));
         te.setInitialPos(PositionSet.allHome());
         te.getInitialPos().getDark(0).setLocation(0, Ice.HOG_2_TEE, Math.PI);
         te.setInitialSpeed(new SpeedSet());
         te.getInitialSpeed().getDark(0).setLocation(0,
                 -te.getSlider().computeV0(9), Math.PI / 2);
+
+        assertEquals(Double.NaN, te.doGetNextHit().t);
+        assertFalse((1 > te.doGetNextHit().t));
 
         // Raw throughput:
         final int loops = 10000;

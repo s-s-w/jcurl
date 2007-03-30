@@ -164,6 +164,15 @@ public final class MathVec {
         return b;
     }
 
+    public static double scal(final double[] a, final double[] b) {
+        if (a.length != b.length)
+            throw new IllegalArgumentException();
+        double ret = 0;
+        for (int i = a.length - 1; i >= 0; i--)
+            ret += a[i] * b[i];
+        return ret;
+    }
+
     public static double scal(final Point2D a, final Point2D b) {
         return a.getX() * b.getX() + a.getY() * b.getY();
     }

@@ -159,4 +159,15 @@ public class CurveTransformed extends CurveRockBase {
     double getT0() {
         return t0;
     }
+
+    public String toString() {
+        final StringBuffer b = new StringBuffer();
+        b.append("[");
+        for (int i = 0; i < p.length; i++)
+            b.append(p[i]).append(", ");
+        b.setLength(b.length() - 2);
+        b.append("] ");
+        b.append(rc.toString());
+        return b.toString();
+    }
 }

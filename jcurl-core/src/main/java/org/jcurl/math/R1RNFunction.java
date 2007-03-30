@@ -141,7 +141,7 @@ public abstract class R1RNFunction {
                         + (c + 1) + "=" + this.at(dim, c + 1, x));
             double dx = this.at(dim, c + 1, x);
             if (dx == 0)
-                return 0;
+                return Math.abs(this.at(dim, c, x) - y) < eps ? x : Double.NaN;
             dx = (this.at(dim, c, x) - y) / dx;
             x -= dx;
             if (!isInside(x, x0, xstop, true))

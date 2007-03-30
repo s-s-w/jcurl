@@ -56,7 +56,7 @@ public class DistanceSqTest extends TestBase {
     }
 
     public void testPointStraightLine() throws MathException {
-        final R1R1Function d = new DistanceSq(createPoint2D(2, 1),
+        final DistanceSq d = new DistanceSq(createPoint2D(2, 1),
                 createPoly(new double[] { -1, 0.5 }), CollissionDetector.RR2);
         assertEquals(2.811956073217295, Math.sqrt(d.at(0)));
         assertEquals(1.7768221513994102, Math.sqrt(d.at(1)));

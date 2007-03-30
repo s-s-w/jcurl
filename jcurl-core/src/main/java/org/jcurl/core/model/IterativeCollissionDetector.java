@@ -19,12 +19,12 @@
 package org.jcurl.core.model;
 
 import org.jcurl.core.base.CollissionDetector;
-import org.jcurl.core.base.CurveRock;
+import org.jcurl.math.R1RNFunction;
 
 public class IterativeCollissionDetector extends CollissionDetector {
 
     public double compute(final double t0, final double tmax,
-            final CurveRock fa, final CurveRock fb, final double rb) {
+            final R1RNFunction fa, final R1RNFunction fb, final double rb) {
         throw new UnsupportedOperationException("Not implemented.");
     }
 

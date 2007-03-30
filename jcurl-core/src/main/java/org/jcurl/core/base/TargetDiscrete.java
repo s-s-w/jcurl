@@ -18,6 +18,8 @@
  */
 package org.jcurl.core.base;
 
+import java.awt.geom.AffineTransform;
+
 /**
  * Interface for classes consuming discrete {@link org.jcurl.core.base.Rock}location
  * data.
@@ -35,7 +37,7 @@ public interface TargetDiscrete extends Target {
      * @param rocks
      * @param discontinuous
      *            bitmask of discontinuous rocks as returned by
-     *            {@link org.jcurl.core.base.Collider#compute(PositionSet, SpeedSet)}.
+     *            {@link org.jcurl.core.base.Collider#compute(PositionSet, SpeedSet, AffineTransform)}.
      */
     public void setPos(final PositionSet rocks, final int discontinuous);
 }

@@ -21,9 +21,10 @@ package org.jcurl.core.base;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.R1R1Function;
+import org.jcurl.math.R1RNFunction;
 
 /**
- * The distance between two {@link CurveRock}s.
+ * The distance between two {@link R1RNFunction}s - only 2 dimensions used.
  * 
  * Differentiable min. 1x.
  * 
@@ -32,15 +33,15 @@ import org.jcurl.math.R1R1Function;
  */
 public class DistanceSq extends R1R1Function {
 
-    private final CurveRock c1;
+    private final R1RNFunction c1;
 
-    private final CurveRock c2;
+    private final R1RNFunction c2;
 
     /** (r1+r2)^2 */
     private final double r2;
 
     /**
-     * Distance between two (n-dimensional) spheres moving along curve
+     * Distance between two (2-dimensional) spheres moving along curve
      * <code>c1</code> and curve <code>c2</code>, having radii
      * <code>r1</code> and <code>r2</code>.
      * 
@@ -49,13 +50,13 @@ public class DistanceSq extends R1R1Function {
      * @param c2
      * @param r2
      */
-    DistanceSq(final CurveRock c1, final double r1, final CurveRock c2,
+    DistanceSq(final R1RNFunction c1, final double r1, final R1RNFunction c2,
             final double r2) {
         this(c1, c2, MathVec.sqr(r1 + r2));
     }
 
     /**
-     * Distance between two (n-dimensional) spheres moving along curve
+     * Distance between two (2-dimensional) spheres moving along curve
      * <code>c1</code> and curve <code>c2</code>, having the square sum of
      * radii <code>r12Sqr</code>.
      * 
@@ -64,10 +65,10 @@ public class DistanceSq extends R1R1Function {
      * @param r12Sqr
      *            <code>(r1+r2)^2</code>
      */
-    DistanceSq(final CurveRock c1, final CurveRock c2, final double r12Sqr) {
-        if (c1.dimension() != c2.dimension())
-            throw new IllegalArgumentException("Dimension mismatch: "
-                    + c1.dimension() + "!=" + c2.dimension());
+    DistanceSq(final R1RNFunction c1, final R1RNFunction c2, final double r12Sqr) {
+        if (c1.dim != c2.dim)
+            throw new IllegalArgumentException("Dimension mismatch: " + c1.dim
+                    + "!=" + c2.dim);
         this.c1 = c1;
         this.c2 = c2;
         r2 = r12Sqr;
@@ -80,10 +81,13 @@ public class DistanceSq extends R1R1Function {
      * @return the value
      */
     public double at(final double t) {
-        // TUNE Thread safety at the cost of 2 Rock instanciations
-        final Rock a = c1.at(t, new RockDouble());
-        final Rock b = c2.at(t, new RockDouble());
-        return a.distanceSq(b) - r2;
+        // TUNE Thread safety at the cost of 2 instanciations
+        final double[] a = c1.at(0, t, new double[3]);
+        final double[] b = c2.at(0, t, new double[3]);
+        a[0] -= b[0];
+        a[1] -= b[1];
+        a[2] = 0;
+        return MathVec.scal(a, a) - r2;
     }
 
     /**
@@ -105,22 +109,22 @@ public class DistanceSq extends R1R1Function {
      * <code>2 * (c1 - c2) * (c1' - c2')</code> Feed into maxima:
      * 
      * <pre>
-     *    a(t) := [ ax(t), ay(t) ];
-     *    b(t) := [ bx(t), by(t) ];
-     *    d(t) := (a(t) - b(t)) . (a(t) - b(t));
-     *    diff(d(t), t);
-     *    quit$
+     *     a(t) := [ ax(t), ay(t) ];
+     *     b(t) := [ bx(t), by(t) ];
+     *     d(t) := (a(t) - b(t)) . (a(t) - b(t));
+     *     diff(d(t), t);
+     *     quit$
      * </pre>
      */
     double valueC1(final double t) {
-        // TUNE Thread safety at the cost of 4 Rock instanciations
-        final Rock a = c1.at(t, new RockDouble());
-        final Rock b = c2.at(t, new RockDouble());
-        final Rock da = c1.at(1, t, new RockDouble());
-        final Rock db = c2.at(1, t, new RockDouble());
+        // TUNE Thread safety at the cost of 4 instanciations
+        final double[] a = c1.at(0, t, new double[3]);
+        final double[] b = c2.at(0, t, new double[3]);
+        final double[] da = c1.at(1, t, new double[3]);
+        final double[] db = c2.at(1, t, new double[3]);
         double ret = 0.0;
-        ret += (a.getX() - b.getX()) * (da.getX() - db.getX());
-        ret += (a.getY() - b.getY()) * (da.getY() - db.getY());
+        ret += (a[0] - b[0]) * (da[0] - db[0]);
+        ret += (a[1] - b[1]) * (da[1] - db[1]);
         return 2.0 * ret;
     }
 
