@@ -26,7 +26,7 @@ import org.jcurl.math.R1R1Function;
 public class DistanceSqTest extends TestBase {
 
     static CurveRock createPoint2D(final double x, final double y) {
-        return new CurveRockBase() {
+        return new CurveRock() {
             public double at(final int component, final int derivative,
                     final double t) {
                 if (derivative == 0) {
@@ -41,7 +41,7 @@ public class DistanceSqTest extends TestBase {
     }
 
     static CurveRock createPoly(final double[] c) {
-        return new CurveRockBase() {
+        return new CurveRock() {
             private final Polynome p = new Polynome(c);
 
             public double at(final int component, final int derivative,

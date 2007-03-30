@@ -26,6 +26,7 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.base.CollissionStore.Tupel;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.log.JCLoggerFactory;
+import org.jcurl.math.R1RNFunction;
 
 /**
  * Bring it all together and trigger computation.
@@ -77,11 +78,11 @@ public class TrajectoryManager extends MutableObject implements
      *            starttime
      * @return the new Curve in world coordinates.
      */
-    CurveRock doComputeCurve(final int i, final double t0, final PositionSet p,
-            final SpeedSet s) {
+    R1RNFunction doComputeCurve(final int i, final double t0,
+            final PositionSet p, final SpeedSet s) {
         final Rock x = p.getRock(i);
         final Rock v = s.getRock(i);
-        final CurveRock wc;
+        final R1RNFunction wc;
         if (v.distanceSq(0, 0) == 0)
             wc = CurveRock.still(x);
         else

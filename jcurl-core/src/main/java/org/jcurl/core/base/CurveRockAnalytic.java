@@ -22,7 +22,13 @@ import org.jcurl.math.CurveFkt;
 import org.jcurl.math.R1R1Function;
 import org.jcurl.math.R1RNFunction;
 
-public class CurveRockAnalytic extends CurveRockBase {
+/**
+ * Wrapper for rock trajectory segments based on {@link R1RNFunction}s.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
+public class CurveRockAnalytic extends CurveRock {
 
     private final R1RNFunction f;
 
