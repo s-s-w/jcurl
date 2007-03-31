@@ -169,7 +169,8 @@ public abstract class SlideCurves extends SlideStrategy {
 
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             if (0 != (discontinuous & 1 << i)) {
-                log.info("compute rock #" + i);
+                if (log.isDebugEnabled())
+                    log.debug("compute rock #" + i);
                 // add a new curve to the list
                 final R1RNFunction cu = createCurve(t0, pos.getRock(i), speed
                         .getRock(i));

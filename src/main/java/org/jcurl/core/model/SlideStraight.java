@@ -82,10 +82,11 @@ public class SlideStraight extends SlideCurves {
         transformRc2Wc(x0, v0_1, p1, p);
         // rotation remains constant
         p[2] = Polynome.getPoly(t0, x0.getZ(), v0.getZ(), 0);
+        if(log.isDebugEnabled())
         {
-            log.info("x : " + p[0]);
-            log.info("y : " + p[1]);
-            log.info("z : " + p[2]);
+            log.debug("x : " + p[0]);
+            log.debug("y : " + p[1]);
+            log.debug("z : " + p[2]);
         }
         return new CurveFkt(p);
     }
