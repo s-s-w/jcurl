@@ -18,6 +18,9 @@
  */
 package org.jcurl.core.base;
 
+import java.util.Iterator;
+import java.util.Map.Entry;
+
 import org.jcurl.math.CurveCombined;
 import org.jcurl.math.R1RNFunction;
 
@@ -30,14 +33,15 @@ import org.jcurl.math.R1RNFunction;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveStore {
+public class CurveStore implements
+        Iterable<Iterable<Entry<Double, R1RNFunction>>> {
 
     private static final byte DIM = 3;
 
     private final CurveCombined[] curve;
 
-    public CurveStore(final int dim) {
-        curve = new CurveCombined[dim];
+    public CurveStore(final int capacity) {
+        curve = new CurveCombined[capacity];
         for (int i = curve.length - 1; i >= 0; i--)
             curve[i] = new CurveCombined(DIM);
     }
@@ -48,6 +52,29 @@ public class CurveStore {
 
     public R1RNFunction getCurve(final int i) {
         return curve[i];
+    }
+
+    /**
+     * Ascending iterator over the cuves returning each segment.
+     * 
+     * @return iterator over the cuves returning each segment.
+     */
+    public Iterator<Iterable<Entry<Double, R1RNFunction>>> iterator() {
+        return new Iterator<Iterable<Entry<Double, R1RNFunction>>>() {
+            int current = 0;
+
+            public boolean hasNext() {
+                return current < curve.length;
+            }
+
+            public Iterable<Entry<Double, R1RNFunction>> next() {
+                return curve[current++];
+            }
+
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 
     public void reset(final int i) {

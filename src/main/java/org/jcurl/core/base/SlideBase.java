@@ -18,6 +18,42 @@
  */
 package org.jcurl.core.base;
 
-abstract class SlideBase implements Strategy, Factory {
+abstract class SlideBase implements Slide, Strategy, Factory {
+
+    public static CurveRock still(final double x, final double y, final double a) {
+        return new CurveRock() {
+
+            @Override
+            public double at(final int dim, final int c, final double t) {
+                if (c > 0)
+                    return 0;
+                switch (dim) {
+                case 0:
+                    return x;
+                case 1:
+                    return y;
+                case 2:
+                    return a;
+                default:
+                    throw new RuntimeException();
+                }
+            }
+
+            @Override
+            public String toString() {
+                final StringBuffer buf = new StringBuffer();
+                buf.append('[');
+                buf.append(x).append(", ");
+                buf.append(y).append(", ");
+                buf.append(a);
+                buf.append(']');
+                return buf.toString();
+            }
+        };
+    }
+
+    public static CurveRock still(final Rock x) {
+        return still(x.getX(), x.getY(), x.getZ());
+    }
 
 }
