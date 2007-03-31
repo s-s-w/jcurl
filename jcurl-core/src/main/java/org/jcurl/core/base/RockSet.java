@@ -31,8 +31,36 @@ import org.jcurl.math.MathVec;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:RockSet.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public abstract class RockSet extends MutableObject implements Iterable,
-        Cloneable, Serializable {
+public abstract class RockSet extends MutableObject implements Cloneable,
+        Serializable {
+
+    private class REntry implements Entry<Integer, Rock> {
+
+        private final int i;
+
+        public REntry(final int i) {
+            this.i = i;
+        }
+
+        public Integer getKey() {
+            return i;
+        }
+
+        public Rock getValue() {
+            return getRock(i);
+        }
+
+        public Rock setValue(final Rock value) {
+            getValue().setLocation(value);
+            return getValue();
+        }
+
+        @Override
+        public String toString() {
+            return new StringBuffer().append("[").append(getKey())
+                    .append(" : ").append(getValue()).append("]").toString();
+        }
+    }
 
     public static final int ALL_MASK = 0xFFFF;
 
@@ -199,66 +227,11 @@ public abstract class RockSet extends MutableObject implements Iterable,
     }
 
     /**
-     * Iterator over this {@link RockSet}.
-     * <p>
-     * Doesn't return {@link Entry} - which could be very convenient - to save
-     * instanciations in inner loops.
-     * </p>
+     * Careful - this is about 20 times slower than a for loop over int.
      * 
-     * @return {@link Integer} rather than {@link Rock} as the latter doesn't
-     *         know it's own index or color.
+     * @return a (very slow) iterator
      */
-    public Iterator iterator() {
-        return itIdx();
-    }
-
-    public Iterator<Integer> itIdx() {
-        return new Iterator<Integer>() {
-            int current = 0;
-
-            public boolean hasNext() {
-                return current < RockSet.ROCKS_PER_SET;
-            }
-
-            public Integer next() {
-                return current++;
-            }
-
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
-    }
-
-    private class REntry implements Entry<Integer, Rock> {
-
-        private final int i;
-
-        public REntry(final int i) {
-            this.i = i;
-        }
-
-        public Integer getKey() {
-            return i;
-        }
-
-        public Rock getValue() {
-            return getRock(i);
-        }
-
-        public Rock setValue(final Rock value) {
-            getValue().setLocation(value);
-            return getValue();
-        }
-
-        @Override
-        public String toString() {
-            return new StringBuffer().append("[").append(getKey())
-                    .append(" : ").append(getValue()).append("]").toString();
-        }
-    }
-
-    public Iterator<Entry<Integer, Rock>> itEntries() {
+    Iterator<Entry<Integer, Rock>> itEntries() {
         return new Iterator<Entry<Integer, Rock>>() {
             int current = 0;
 
@@ -276,7 +249,50 @@ public abstract class RockSet extends MutableObject implements Iterable,
         };
     }
 
-    public Iterator<Rock> itRocks() {
+    /**
+     * Iterator over this {@link RockSet}.
+     * <p>
+     * Doesn't return {@link Entry} - which could be very convenient - to save
+     * instanciations in inner loops. But maybe cached transient references
+     * could help here?
+     * </p>
+     * 
+     * @return {@link Integer} rather than {@link Rock} as the latter doesn't
+     *         know it's own index or color.
+     */
+    Iterator<Integer> iterator() {
+        return itIdx();
+    }
+
+    /**
+     * Careful - this is about 10 times slower than a for loop over int.
+     * 
+     * @return a (slow) iterator
+     */
+    Iterator<Integer> itIdx() {
+        return new Iterator<Integer>() {
+            int current = 0;
+
+            public boolean hasNext() {
+                return current < RockSet.ROCKS_PER_SET;
+            }
+
+            public Integer next() {
+                return current++;
+            }
+
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
+    }
+
+    /**
+     * Careful - this is about 10 times slower than a for loop over int.
+     * 
+     * @return a (slow) iterator
+     */
+    Iterator<Rock> itRocks() {
         return new Iterator<Rock>() {
             int current = 0;
 

@@ -22,9 +22,6 @@ import java.util.Iterator;
 import java.util.SortedMap;
 import java.util.Map.Entry;
 
-import org.apache.commons.logging.Log;
-import org.jcurl.core.log.JCLoggerFactory;
-
 /**
  * Combined curve. Becomes more and more similar to {@link SortedMap} with some
  * restrictions and additions.
@@ -66,9 +63,6 @@ public class CurveCombined extends R1RNFunction implements
     private static final int growth = 120;
 
     private static final int initialSize = 5;
-
-    private static final Log log = JCLoggerFactory
-            .getLogger(CurveCombined.class);
 
     /**
      * Search only part of an array.

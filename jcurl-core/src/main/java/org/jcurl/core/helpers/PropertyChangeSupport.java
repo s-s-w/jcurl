@@ -186,7 +186,7 @@ public class PropertyChangeSupport {
                     listenerMap.get(ALL_PROPERTIES));
             targets.addAll(listenerMap.get(event.getPropertyName()));
             for (final PropertyChangeListener element : targets)
-                (element).propertyChange(event);
+                element.propertyChange(event);
         }
     }
 

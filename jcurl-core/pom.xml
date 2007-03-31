@@ -54,8 +54,8 @@
 			</roles>
 			<timezone>+1</timezone>
 			<properties>
-        		<curlingCareer>http://tinyurl.com/ypv9u4</curlingCareer>
-		    </properties>
+				<curlingCareer>http://tinyurl.com/ypv9u4</curlingCareer>
+			</properties>
 		</developer>
 	</developers>
 	<licenses>
@@ -260,6 +260,9 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-pmd-plugin</artifactId>
+				<configuration>
+					<targetJdk>1.5</targetJdk>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>

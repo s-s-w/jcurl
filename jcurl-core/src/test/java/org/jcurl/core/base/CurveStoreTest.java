@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005-2006 M. Rohrmoser
+ * Copyright (C) 2005-2007 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -18,26 +18,18 @@
  */
 package org.jcurl.core.base;
 
+import java.util.Map.Entry;
+
+import junit.framework.TestCase;
+
 import org.jcurl.math.R1RNFunction;
 
-/**
- * Trajectory of one Rock, in either rock-coordinates or world-coordinates.
- * 
- * @deprecated Maybe obsolete?
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: CurveRock.java 361 2006-08-28 20:21:07Z mrohrmoser $
- */
-@Deprecated
-public abstract class CurveRock extends R1RNFunction {
-    protected CurveRock() {
-        super(3);
-    }
+public class CurveStoreTest extends TestCase {
 
-    public Rock at(final int derivative, final double t, Rock ret) {
-        if (ret == null)
-            ret = new RockDouble();
-        ret.setLocation(at(0, derivative, t), at(1, derivative, t), at(2,
-                derivative, t));
-        return ret;
+    public void testIterator() {
+        final CurveStore cs = new CurveStore(3);
+        for (final Iterable<Entry<Double, R1RNFunction>> element : cs)
+            for (final Entry<Double, R1RNFunction> e2 : element)
+                System.out.println(e2.getValue());
     }
 }

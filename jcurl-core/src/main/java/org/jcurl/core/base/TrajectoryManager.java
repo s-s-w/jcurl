@@ -37,6 +37,8 @@ import org.jcurl.math.R1RNFunction;
 public class TrajectoryManager extends MutableObject implements
         PropertyChangeListener {
 
+    private static final double _30 = 30.0;
+
     private static final double hitDt = 1e-6;
 
     private static final Log log = JCLoggerFactory
@@ -84,7 +86,7 @@ public class TrajectoryManager extends MutableObject implements
         final Rock v = s.getRock(i);
         final R1RNFunction wc;
         if (v.distanceSq(0, 0) == 0)
-            wc = CurveRock.still(x);
+            wc = SlideBase.still(x);
         else
             // FIXME add stop detection! Either here or in each slider?
             wc = new CurveTransformed(slider.computeRc(x, v), CurveTransformed
@@ -122,7 +124,7 @@ public class TrajectoryManager extends MutableObject implements
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             for (int j = i - 1; j >= 0; j--)
                 // log.info("collissionDetect " + i + ", " + j);
-                collissionStore.add(collissionDetector.compute(t0, 30,
+                collissionStore.add(collissionDetector.compute(t0, _30,
                         curveStore.getCurve(i), curveStore.getCurve(j)), i, j);
         dirty = false;
     }
@@ -152,7 +154,7 @@ public class TrajectoryManager extends MutableObject implements
             for (int j = RockSet.ROCKS_PER_SET - 1; j >= 0; j--) {
                 if (i == j || i > j && RockSet.isSet(computedMask, j))
                     continue;
-                collissionStore.replace(collissionDetector.compute(t0, 30,
+                collissionStore.replace(collissionDetector.compute(t0, _30,
                         curveStore.getCurve(i), curveStore.getCurve(j)), i, j);
             }
         }
