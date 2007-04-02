@@ -199,8 +199,10 @@ public abstract class Collider extends ModelBase implements Strategy {
         // re-transform
         mat.transform(_va, va);
         va.setZ(_va.getZ());
+        // FIXME apply angle delta from Collission coordinates to WC
         mat.transform(_vb, vb);
         vb.setZ(_vb.getZ());
+        // FIXME apply angle delta from Collission coordinates to WC
         return true;
     }
 }
