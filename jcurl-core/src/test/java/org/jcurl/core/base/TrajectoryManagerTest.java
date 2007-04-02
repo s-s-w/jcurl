@@ -61,7 +61,7 @@ public class TrajectoryManagerTest extends TestShowBase {
                         Thread.sleep(20);
                     }
                 });
-        // FIXME Test is not ok yet!
+        // FIXME WC angles after collission!
     }
 
     public void testSlowNoHit() throws InterruptedException {
@@ -95,6 +95,6 @@ public class TrajectoryManagerTest extends TestShowBase {
                         Thread.sleep(20);
                     }
                 });
-        // FIXME Test is not ok yet!
+        // FIXME at the end sit still and don't revert!
     }
 }
