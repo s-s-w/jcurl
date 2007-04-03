@@ -18,6 +18,8 @@
  */
 package org.jcurl.core.base;
 
+import java.awt.Component;
+
 import javax.swing.JFrame;
 
 import org.apache.commons.logging.Log;
@@ -27,8 +29,12 @@ import org.jcurl.core.swing.Zoomer;
 
 public abstract class TestShowBase extends TestBase {
 
-    public static interface TimeRunnable {
-        public void run(double t) throws InterruptedException;
+    public static abstract class TimeRunnable {
+        public abstract void run(double t) throws InterruptedException;
+
+        public void run(double t, Component p) throws InterruptedException {
+            run(t);
+        }
     }
 
     private static final Log log = JCLoggerFactory
@@ -66,7 +72,7 @@ public abstract class TestShowBase extends TestBase {
         int loop = 0;
         try {
             while (System.currentTimeMillis() - t0 < millis) {
-                r.run(1e-3 * (System.currentTimeMillis() - t0));
+                r.run(1e-3 * (System.currentTimeMillis() - t0), display);
                 loop++;
             }
         } catch (final InterruptedException e) {
