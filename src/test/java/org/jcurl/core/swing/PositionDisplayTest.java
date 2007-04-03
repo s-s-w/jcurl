@@ -18,6 +18,10 @@
  */
 package org.jcurl.core.swing;
 
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.TestShowBase;
 
@@ -25,16 +29,25 @@ public class PositionDisplayTest extends TestShowBase {
 
     public void testThroughPut() {
         final int dt = 5000;
+        final Graphics g = new BufferedImage(1024 * 2, 768 * 2,
+                BufferedImage.TYPE_INT_ARGB).getGraphics();
         final PositionSet p = PositionSet.allHome();
         final int frames = showPositionDisplay(p, Zoomer.HOG2HACK, dt,
                 new TimeRunnable() {
                     public void run(final double t) throws InterruptedException {
-                        p.notifyChange();
-                        Thread.sleep(4);
+                        throw new UnsupportedOperationException();
+                    }
+
+                    public void run(final double t, final Component jp)
+                            throws InterruptedException {
+                        jp.paint(g);
                     }
                 });
-        if (show)
+        if (show) {
             System.out.println(getClass().getName() + " frequency: " + frames
-                    / (double) dt + " frames per second");
+                    * 1000L / (double) dt + " frames per second");
+            // System.out.println(frames + " computations took " + dt
+            // + " millis, i.e. " + frames * 1000L / dt + " per second.");
+        }
     }
 }

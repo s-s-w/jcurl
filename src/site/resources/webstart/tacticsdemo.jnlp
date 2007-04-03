@@ -2,7 +2,7 @@
 <!-- $Id: editordemo.jnlp 191 2005-12-07 13:41:27Z mrohrmoser $ -->
 <jnlp
   spec="1.0+"
-  codebase="http://www.jcurl.org/webstart"
+  codebase="http://www.jcurl.org/m2/site/jcurl-core/0.7.0/webstart"
   href="tacticsdemo.jnlp">
   <information>
     <title>JCurl Tactics Demo</title>

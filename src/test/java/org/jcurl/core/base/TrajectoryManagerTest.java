@@ -58,7 +58,7 @@ public class TrajectoryManagerTest extends TestShowBase {
                 new TimeRunnable() {
                     public void run(final double t) throws InterruptedException {
                         te.setCurrentTime(t);
-                        Thread.sleep(20);
+                        Thread.sleep(1000 / 50);
                     }
                 });
         // FIXME WC angles after collission!
@@ -92,7 +92,7 @@ public class TrajectoryManagerTest extends TestShowBase {
                 new TimeRunnable() {
                     public void run(final double t) throws InterruptedException {
                         te.setCurrentTime(t);
-                        Thread.sleep(20);
+                        Thread.sleep(1000 / 50);
                     }
                 });
         // FIXME at the end sit still and don't revert!
