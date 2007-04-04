@@ -24,10 +24,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.ComputedSource;
 import org.jcurl.core.base.Source;
 import org.jcurl.core.base.TargetDiscrete;
-import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.swing.PositionDisplay;
 import org.xml.sax.SAXException;
 

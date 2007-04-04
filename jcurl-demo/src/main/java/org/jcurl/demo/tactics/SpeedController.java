@@ -27,7 +27,7 @@ import java.awt.geom.Point2D;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.swing.RockEditDisplay;
 
 /**

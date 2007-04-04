@@ -25,11 +25,10 @@ import java.net.URL;
 import javax.swing.JApplet;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.ComputedSource;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.TargetDiscrete;
-import org.jcurl.core.helpers.JCLoggerFactory;
+import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.SlideStraight;
 import org.jcurl.core.swing.JCurlDisplay;

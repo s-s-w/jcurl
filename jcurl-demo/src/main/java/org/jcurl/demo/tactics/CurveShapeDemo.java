@@ -28,8 +28,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.helpers.JCLoggerFactory;
 import org.jcurl.core.helpers.Version;
+import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.CurveFkt;
 import org.jcurl.math.CurveShape;
 import org.jcurl.math.Polynome;
