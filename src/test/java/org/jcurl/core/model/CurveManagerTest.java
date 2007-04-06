@@ -16,21 +16,24 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.base;
+package org.jcurl.core.model;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.base.Ice;
+import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.SpeedSet;
+import org.jcurl.core.base.TestShowBase;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.model.CollissionSimple;
 import org.jcurl.core.swing.Zoomer;
 import org.jcurl.math.R1RNFunction;
 
-public class TrajectoryManagerTest extends TestShowBase {
+public class CurveManagerTest extends TestShowBase {
 
     private static final Log log = JCLoggerFactory
-            .getLogger(TrajectoryManagerTest.class);
+            .getLogger(CurveManagerTest.class);
 
     void showPaths(Iterator<Iterable<Entry<Double, R1RNFunction>>> it,
             double tmin, double tmax) throws InterruptedException {

@@ -24,7 +24,7 @@ package org.jcurl.core.base;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-interface Slider extends Strategy, Factory {
+public interface Slider extends Strategy, Factory {
 
     public abstract CurveRock computeRc(final Rock x0, final Rock v0);
 

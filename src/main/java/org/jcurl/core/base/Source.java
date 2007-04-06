@@ -22,9 +22,11 @@ package org.jcurl.core.base;
  * Interface for classes providing {@link org.jcurl.core.base.Rock} location and
  * speed data.
  * 
+ * @deprecated
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:Source.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
+@Deprecated
 public interface Source {
     /**
      * Get the end time.

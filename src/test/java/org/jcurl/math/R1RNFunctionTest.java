@@ -36,10 +36,10 @@ public class R1RNFunctionTest extends TestCase {
         assertFalse(MathVec.isInside(Double.NEGATIVE_INFINITY,
                 Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, true));
 
-        assertTrue(MathVec.isInside(0, Double.NEGATIVE_INFINITY,
-                Double.NaN, true));
-        assertTrue(MathVec.isInside(0, Double.POSITIVE_INFINITY,
-                Double.NaN, true));
+        assertTrue(MathVec.isInside(0, Double.NEGATIVE_INFINITY, Double.NaN,
+                true));
+        assertTrue(MathVec.isInside(0, Double.POSITIVE_INFINITY, Double.NaN,
+                true));
         assertTrue(MathVec.isInside(0, Double.NaN, Double.NaN, true));
 
         assertTrue(MathVec.isInside(0, 0, Double.NEGATIVE_INFINITY, true));

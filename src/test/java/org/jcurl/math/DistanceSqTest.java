@@ -16,12 +16,16 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.base;
+package org.jcurl.math;
 
 import org.apache.commons.math.MathException;
-import org.jcurl.math.MathVec;
-import org.jcurl.math.Polynome;
-import org.jcurl.math.R1R1Function;
+import org.jcurl.core.base.CollissionDetector;
+import org.jcurl.core.base.CurveRock;
+import org.jcurl.core.base.CurveRockAnalytic;
+import org.jcurl.core.base.Rock;
+import org.jcurl.core.base.RockDouble;
+import org.jcurl.core.base.RockProps;
+import org.jcurl.core.base.TestBase;
 
 public class DistanceSqTest extends TestBase {
 
