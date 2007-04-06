@@ -1,0 +1,49 @@
+/* $Id$
+	
+	/usr/bin/maxima -b $1
+
+	software: http://maxima.sourceforge.net 
+	manual: file:///usr/share/maxima/5.9.1/doc/html/maxima_toc.html
+*/
+NEXTLAYERFACTOR(TRUE)$
+/* DEBUGMODE(TRUE)$ */
+/* texput(tau, "\\tau")$ */
+
+f2m(f) ::= 0.3048 * f$
+declare(HOG2TEE, constant)$ /* ::= 0.3048 * (21.0 + 72.0)$ */
+declare(BACK2HOG, constant)$ /* ::= 0.3048 * (27.0)$ */
+
+print("Location")$ 
+F(t) := - 2 * beta * m$
+a(t) := F(t) / m$
+v(t) := v0 + integrate(a(t),t,0,t)$
+y(t) := y0 + integrate(v(t),t,0,t)$
+x(t) := 0$
+
+print("Spin")$
+omega(t) := omega[0]$
+alpha(t) := alpha[0] + integrate(omega(t),t,0,t)$
+
+print("The Equations of motion:")$
+print("x(t):=", expand(x(t)))$
+print("y(t):=", expand(y(t)))$
+print("alpha(t):=", expand(alpha(t)))$
+
+print("Ice properties from draw-to-tee time")$
+solve([y(t)=HOG2TEE,diff(y(t),t)=0],[v0,beta]);
+inpart(%,1,2,2);
+
+print("v0 from split-time")$
+solve(y(ts)=BACK2HOG, v0);
+inpart(%,1,2);
+subst(v0 = %, v(ts));
+
+/* print("Plot v0(ts) for 23s draw-to-tee")$ */
+subst(beta = %o21, %)$
+subst(y0 = 0, %)$
+subst(BACK2HOG = f2m(27.0), %)$
+subst(HOG2TEE = f2m(21.0 + 72.0), %)$
+subst(t = 23, %)$
+factor(%)$
+plot2d(%, [ts, 1, 6], [gnuplot_preamble, "set ylabel 'v0 [m/s]';set xlabel 'Split Time [s]'; set title 'v0(ts) for 23s draw-to-tee ice'"])$
+quit$

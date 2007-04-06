@@ -1,0 +1,63 @@
+\section{Denny Model}
+The curl model by Mark Denny published in \cite{denny:98} uses polynomes of 
+fourth degree to model a decent curl.
+
+\subsection{Equations of Motion}
+\begin{eqnarray}
+\eqlab{denX}
+x(t) &\approx& - \frac{ b v_0^2 }{ 4 \epsilon R \tau } \left( \frac{ t^3 }{ 3 } 
+- \frac{ t^4 } { 4 \tau } \right) \\
+\eqlab{denY}
+y(t) &\approx& v_0 \left( t - \frac{ t^2 }{ 2\tau } \right) \\
+\eqlab{denW}
+\omega(t) &\approx& \omega_0 \left(1 - \frac{t}{\tau}\right)^{1/\epsilon} \\
+\eqlab{denA}
+\alpha(t) &\approx& \int_0^t \omega(t) \dt = 
+-{{\omega_{0}\,\varepsilon\,\left(\tau\,\left({{\tau-t}\over{\tau}} 
+\right)^{{{1}\over{\varepsilon}}}-t\,\left({{\tau-t}\over{\tau}} 
+\right)^{{{1}\over{\varepsilon}}}-\tau\right)}\over{\varepsilon+1}}
+\end{eqnarray}
+
+\bigskip
+\begin{tabular}{lll}
+$t$		& [s] & time \\
+$x$		& [m] & curl \\
+$y$		& [m] & distance along the track \\
+$b$ 	& [1] & parameter for the curl's magnitude \\
+$\epsilon$	& [1] & parameter $ \frac{ I }{ mR^2 } $\\
+$\tau$	& [s] & total time until $v=0$ \\
+$R$		& [m] & radius of the touching area rock/ice $\approx$ 6.3e-2 \\
+$\mu$	& [1] & friction coefficient rock/ice \\
+$I$		&  & moment of inertia (z-direction) \\
+$g$		& [N/kg] & 9.81 gravitation \\
+\end{tabular}
+\bigskip
+
+The final properties are:
+\begin{eqnarray}
+\eqlab{denTau}
+\tau    & = &     \frac{ v_0 }{ \mu g } \\
+x(\tau) &\approx& - \frac{ b_\mathrm{LR} }{ 12\epsilon } \frac{y^2(\tau) }{R} \\
+y(\tau) &\approx& \frac{ v_0^2 }{ 2\mu g }
+\end{eqnarray}
+
+\subsection{Ice Friction from Draw-to-Tee Time}
+For a draw-to-tee we have -- with distance Hog-to-Tee $Y$ and Draw-to-Tee time 
+$T$ --
+\begin{eqnarray}
+y(T) &=& Y \\
+\dot y(T) &=& 0
+\end{eqnarray}
+an thus
+
+\subsection{Initial speed from split time}
+Setting the coordinate origin to Center Line $\times$ Hog Line and playing 
+along the center line we get $v_0$ at the Hog-Line for the Split Time $t_S$ and 
+the distance Back-Line to Hog-Line $Y$:
+
+\begin{eqnarray}
+y(-t_S) &=& -Y \\
+y(0) &=& 0
+\end{eqnarray}
+
+
