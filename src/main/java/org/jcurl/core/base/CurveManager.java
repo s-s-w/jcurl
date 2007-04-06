@@ -46,7 +46,7 @@ public class CurveManager extends MutableObject implements
 
     private static final long serialVersionUID = 7198540442889130378L;
 
-    private ColliderBase collider = null;
+    private Collider collider = null;
 
     private CollissionDetector collissionDetector = null;
 
@@ -182,7 +182,7 @@ public class CurveManager extends MutableObject implements
         return false;
     }
 
-    public ColliderBase getCollider() {
+    public Collider getCollider() {
         return collider;
     }
 
@@ -227,7 +227,7 @@ public class CurveManager extends MutableObject implements
         log.info(arg0);
     }
 
-    public void setCollider(final ColliderBase collider) {
+    public void setCollider(final Collider collider) {
         dirty = true;
         propChange.firePropertyChange("collider", this.collider, collider);
         this.collider = collider;

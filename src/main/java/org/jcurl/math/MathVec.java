@@ -197,4 +197,29 @@ public final class MathVec {
 
     private MathVec() {
     }
+
+    /**
+     * Helper to check (inclusive) interval containment. Robust against
+     * {@link Double#NaN} etc.
+     * 
+     * @param x
+     * @param a
+     * @param b
+     * @param allowSwap
+     *            may <code>a &gt; b</code>?
+     * @return is <code>x</code> within <code>a</code> and <code>b</code>?
+     */
+    static boolean isInside(final double x, double a, double b,
+            final boolean allowSwap) {
+        if (Double.isNaN(x) || Double.isInfinite(x))
+            return false;
+        if (Double.isNaN(a) || Double.isNaN(b))
+            return true;
+        if (allowSwap && a > b) {
+            final double t = a;
+            a = b;
+            b = t;
+        }
+        return a <= x && x <= b;
+    }
 }

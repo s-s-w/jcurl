@@ -148,7 +148,7 @@ public class CollissionSpinLoss extends ColliderBase {
     }
 
     void singleLoss(final Point2D va, final Point2D vb, final double[] w) {
-        final double I = 2.0 * (1.0 / MASS + sqr(RADIUS) / INERTIA);
+        final double I = 2.0 * (1.0 / MASS + MathVec.sqr(RADIUS) / INERTIA);
         final double FHdivOmega = Math.sqrt(2.0 * MASS * Loss());
 
         // A's real surface-speed:
@@ -161,7 +161,7 @@ public class CollissionSpinLoss extends ColliderBase {
             cost0 = 0.0;
         assert cost0 <= 1.0;
 
-        final Point2D dv = new Point2D.Double(sgn(Veff) * mu, 1.0);
+        final Point2D dv = new Point2D.Double(MathVec.sgn(Veff) * mu, 1.0);
         // sint1 is the time when the Hook-force equals the friction.
         double sint1;
 
@@ -170,7 +170,7 @@ public class CollissionSpinLoss extends ColliderBase {
             sint1 = 1.0;
         assert 0.0 <= sint1;
 
-        if (1.0 - sqr(cost0) < sqr(sint1) || cost0 == 0.0 && sint1 == 1.0) {
+        if (1.0 - MathVec.sqr(cost0) < MathVec.sqr(sint1) || cost0 == 0.0 && sint1 == 1.0) {
             // surface speed becomes 0 before the friction is killed:
             // => our force points in || direction only, but the loss of
             // momentum
@@ -183,12 +183,12 @@ public class CollissionSpinLoss extends ColliderBase {
             assert 0.0 <= sint1;
 
             // the loss of momentum in perp. direction:
-            dv.setLocation(-sgn(Veff) * mu * va.getY() * fabs(cost0 - 1.0), va
+            dv.setLocation(-MathVec.sgn(Veff) * mu * va.getY() * fabs(cost0 - 1.0), va
                     .getY()
-                    * (sqrt(1.0 - sqr(sint1)) - 1.0));
+                    * (Math.sqrt(1.0 - MathVec.sqr(sint1)) - 1.0));
         } else
-            MathVec.mult(va.getY() * (sqrt(1.0 - sqr(sint1)) - 1.0), dv, dv);
-        assert sgn(dv.getX()) == -sgn(Veff);
+            MathVec.mult(va.getY() * (Math.sqrt(1.0 - MathVec.sqr(sint1)) - 1.0), dv, dv);
+        assert MathVec.sgn(dv.getX()) == -MathVec.sgn(Veff);
         assert dv.getY() <= 0.0;
 
         MathVec.add(va, dv, va);
@@ -200,14 +200,14 @@ public class CollissionSpinLoss extends ColliderBase {
     void singleNoLoss(final Point2D va, final Point2D vb, final double[] w) {
         final double Veff = -vb.getX() - RADIUS * w[1] + va.getX() - RADIUS
                 * w[0];
-        final double I = 2.0 * (1.0 / MASS + sqr(RADIUS) / INERTIA);
+        final double I = 2.0 * (1.0 / MASS + MathVec.sqr(RADIUS) / INERTIA);
         double tmp = vb.getY() - va.getY();
         va.setLocation(va.getX(), va.getY() + tmp);
         vb.setLocation(vb.getX(), vb.getY() - tmp);
 
         double X = -Veff / I;
         if (fabs(X) > (tmp = mu * MASS * fabs(tmp)))
-            X = -sgn(Veff) * tmp;
+            X = -MathVec.sgn(Veff) * tmp;
 
         // apply the x-change:
         tmp = X / MASS;

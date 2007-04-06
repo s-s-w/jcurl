@@ -21,7 +21,7 @@ package org.jcurl.core.io;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.ColliderBase;
+import org.jcurl.core.base.Collider;
 import org.jcurl.core.base.Ice;
 import org.jcurl.core.base.ModelBase;
 import org.jcurl.core.base.PositionSet;
@@ -69,7 +69,7 @@ public class SetupBuilder {
 
     private static final int SpeedTo = 4;
 
-    private ColliderBase collStrat = null;
+    private Collider collStrat = null;
 
     private boolean isFrozen = false;
 
@@ -91,8 +91,8 @@ public class SetupBuilder {
             throws InstantiationException, IllegalAccessException {
         final ModelBase mb = (ModelBase) clz.newInstance();
         mb.init(params);
-        if (mb instanceof ColliderBase)
-            collStrat = (ColliderBase) mb;
+        if (mb instanceof Collider)
+            collStrat = (Collider) mb;
         else if (mb instanceof SlideStrategy)
             slideStrat = (SlideStrategy) mb;
         else

@@ -27,13 +27,13 @@ import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.MathVec;
 
 /**
- * Abstract base class for collission models.
+ * Abstract base class for collission models computed in rock-coordinates.
  * 
  * @see org.jcurl.core.base.SlideStrategy
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CollissionStrategy.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public abstract class ColliderBase extends ModelBase implements Strategy {
+public abstract class ColliderBase extends ModelBase implements Collider {
 
     private static final double _Rad = RockProps.DEFAULT.getRadius();
 
@@ -42,7 +42,7 @@ public abstract class ColliderBase extends ModelBase implements Strategy {
     private static final Log log = JCLoggerFactory.getLogger(ColliderBase.class);
 
     /** Maximum distance square [m] of two rocks to consider them touching */
-    public static final double MaxDistSq = sqr(_Rad + _Rad + HIT_MAX_DIST);
+    public static final double MaxDistSq = MathVec.sqr(_Rad + _Rad + HIT_MAX_DIST);
 
     protected static double abs(final double a) {
         return Math.abs(a);
@@ -71,13 +71,13 @@ public abstract class ColliderBase extends ModelBase implements Strategy {
         return mat;
     }
 
-    public static ColliderBase newInstance(final Class clz) {
+    public static Collider newInstance(final Class clz) {
         final Class parent = ColliderBase.class;
         if (!parent.isAssignableFrom(clz))
             throw new IllegalArgumentException("Class [" + clz.getName()
                     + "] is no descendant of [" + parent.getName() + "]");
         try {
-            return (ColliderBase) clz.newInstance();
+            return (Collider) clz.newInstance();
         } catch (final InstantiationException e) {
             final IllegalArgumentException ex = new IllegalArgumentException();
             ex.initCause(e);
@@ -87,18 +87,6 @@ public abstract class ColliderBase extends ModelBase implements Strategy {
             ex.initCause(e);
             throw ex;
         }
-    }
-
-    protected static byte sgn(final double a) {
-        return MathVec.sgn(a);
-    }
-
-    protected static final double sqr(final double a) {
-        return MathVec.sqr(a);
-    }
-
-    protected static double sqrt(final double a) {
-        return Math.sqrt(a);
     }
 
     /**

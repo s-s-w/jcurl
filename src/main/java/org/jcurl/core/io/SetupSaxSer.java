@@ -40,6 +40,8 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:SetupSaxSer.java 378 2007-01-24 01:18:35Z mrohrmoser $
@@ -218,8 +220,10 @@ public class SetupSaxSer {
                 "http://jcurl.berlios.de/schema/setup/2005/1.0");
         xml.startElement(NS, null, "jcurl", atts);
         xml.startElement(NS, null, "setup", null);
-        if (slide != null)
-            this.internal(slide.getColl());
+        if (slide != null) {
+            throw new NotImplementedException();
+            // FIXME this.internal(slide.getColl());
+        }
         this.internal(slide);
         this.internal(pos);
         this.internal(speed);
