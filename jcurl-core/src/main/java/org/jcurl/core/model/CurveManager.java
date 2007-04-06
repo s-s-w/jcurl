@@ -16,16 +16,27 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.base;
+package org.jcurl.core.model;
 
 import java.awt.geom.AffineTransform;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.CollissionStore.Tupel;
+import org.jcurl.core.base.Collider;
+import org.jcurl.core.base.CollissionDetector;
+import org.jcurl.core.base.ComputedTrajectorySet;
+import org.jcurl.core.base.CurveStore;
+import org.jcurl.core.base.CurveTransformed;
+import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.Rock;
+import org.jcurl.core.base.RockSet;
+import org.jcurl.core.base.SlideBase;
+import org.jcurl.core.base.Slider;
+import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.log.JCLoggerFactory;
+import org.jcurl.core.model.CollissionStore.Tupel;
 import org.jcurl.math.R1RNFunction;
 
 /**

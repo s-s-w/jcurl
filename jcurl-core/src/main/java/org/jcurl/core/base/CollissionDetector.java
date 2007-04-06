@@ -29,7 +29,8 @@ import org.jcurl.math.R1RNFunction;
  */
 public abstract class CollissionDetector implements Strategy {
 
-    static final double RR2 = MathVec.sqr(2 * RockProps.DEFAULT.getRadius());
+    public static final double RR2 = MathVec.sqr(2 * RockProps.DEFAULT
+            .getRadius());
 
     /**
      * Find the smallest <code>t</code> with

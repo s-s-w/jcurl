@@ -22,12 +22,12 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 /**
- * Implementation base for {@link Slide}rs.
+ * Implementation base for {@link Slider}s.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-abstract class SlideBase implements Slider {
+public abstract class SlideBase implements Slider {
 
     public static CurveRock still(final double x, final double y, final double a) {
         return new CurveRock() {

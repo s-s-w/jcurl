@@ -39,10 +39,12 @@ public abstract class ColliderBase extends ModelBase implements Collider {
 
     private static final double HIT_MAX_DIST = 1e-6F;
 
-    private static final Log log = JCLoggerFactory.getLogger(ColliderBase.class);
+    private static final Log log = JCLoggerFactory
+            .getLogger(ColliderBase.class);
 
     /** Maximum distance square [m] of two rocks to consider them touching */
-    public static final double MaxDistSq = MathVec.sqr(_Rad + _Rad + HIT_MAX_DIST);
+    public static final double MaxDistSq = MathVec.sqr(_Rad + _Rad
+            + HIT_MAX_DIST);
 
     protected static double abs(final double a) {
         return Math.abs(a);
@@ -91,8 +93,8 @@ public abstract class ColliderBase extends ModelBase implements Collider {
 
     /**
      * Iterate over all rocks and call
-     * {@link ColliderBase#computeWC(Rock, Rock, Rock, Rock, AffineTransform)} for
-     * each pair.
+     * {@link ColliderBase#computeWC(Rock, Rock, Rock, Rock, AffineTransform)}
+     * for each pair.
      * <p>
      * Does not change <code>pos</code>!
      * </p>

@@ -35,7 +35,9 @@ import org.jcurl.math.R1RNFunction;
  * @see org.jcurl.math.R1RNFunction
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:SlideCurves.java 378 2007-01-24 01:18:35Z mrohrmoser $
+ * @deprecated
  */
+@Deprecated
 public abstract class SlideCurves extends SlideStrategy {
 
     private static final Log log = JCLoggerFactory.getLogger(SlideCurves.class);

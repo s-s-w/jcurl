@@ -170,7 +170,8 @@ public class CollissionSpinLoss extends ColliderBase {
             sint1 = 1.0;
         assert 0.0 <= sint1;
 
-        if (1.0 - MathVec.sqr(cost0) < MathVec.sqr(sint1) || cost0 == 0.0 && sint1 == 1.0) {
+        if (1.0 - MathVec.sqr(cost0) < MathVec.sqr(sint1) || cost0 == 0.0
+                && sint1 == 1.0) {
             // surface speed becomes 0 before the friction is killed:
             // => our force points in || direction only, but the loss of
             // momentum
@@ -183,11 +184,12 @@ public class CollissionSpinLoss extends ColliderBase {
             assert 0.0 <= sint1;
 
             // the loss of momentum in perp. direction:
-            dv.setLocation(-MathVec.sgn(Veff) * mu * va.getY() * fabs(cost0 - 1.0), va
-                    .getY()
+            dv.setLocation(-MathVec.sgn(Veff) * mu * va.getY()
+                    * fabs(cost0 - 1.0), va.getY()
                     * (Math.sqrt(1.0 - MathVec.sqr(sint1)) - 1.0));
         } else
-            MathVec.mult(va.getY() * (Math.sqrt(1.0 - MathVec.sqr(sint1)) - 1.0), dv, dv);
+            MathVec.mult(va.getY()
+                    * (Math.sqrt(1.0 - MathVec.sqr(sint1)) - 1.0), dv, dv);
         assert MathVec.sgn(dv.getX()) == -MathVec.sgn(Veff);
         assert dv.getY() <= 0.0;
 

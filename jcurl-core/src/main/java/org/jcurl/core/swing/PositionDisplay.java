@@ -45,7 +45,7 @@ import org.jcurl.core.base.RockSet;
 public class PositionDisplay extends WCComponent implements
         PropertyChangeListener {
 
-    private static final Map hints = new HashMap(); // @jve:decl-index=0:
+    private static final Map<Object, Object> hints = new HashMap<Object, Object>();
 
     private static final long serialVersionUID = -2680676530327406261L;
 
@@ -320,4 +320,4 @@ public class PositionDisplay extends WCComponent implements
         this.rockPainter = rockPainter;
         this.repaint();
     }
-} // @jve:decl-index=0:visual-constraint="10,10"
+}

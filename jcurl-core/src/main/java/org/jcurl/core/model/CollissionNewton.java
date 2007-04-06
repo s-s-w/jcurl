@@ -16,8 +16,10 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.base;
+package org.jcurl.core.model;
 
+import org.jcurl.core.base.CollissionDetector;
+import org.jcurl.math.DistanceSq;
 import org.jcurl.math.R1RNFunction;
 
 /**

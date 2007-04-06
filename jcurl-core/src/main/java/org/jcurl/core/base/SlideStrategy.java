@@ -226,17 +226,18 @@ public abstract class SlideStrategy extends ModelBase implements Source,
      * Test all combinations of the given rocks for upcoming collissions.
      * <p>
      * There is a little conceptual gap between the space-distance (used by
-     * {@link ColliderBase#compute(PositionSet, SpeedSet, AffineTransform)}) and
-     * the time distance used here and in {@link #computeUntil(double, double)}.
-     * This is because the collission engine should not need to know about rock
-     * propagation and therefore cannot compute the exact time until the hit -
-     * the slider on the other hand needs to know the time to propagate the
-     * rocks until the hit.
+     * {@link ColliderBase#compute(PositionSet, SpeedSet, AffineTransform)})
+     * and the time distance used here and in
+     * {@link #computeUntil(double, double)}. This is because the collission
+     * engine should not need to know about rock propagation and therefore
+     * cannot compute the exact time until the hit - the slider on the other
+     * hand needs to know the time to propagate the rocks until the hit.
      * </p>
      * <p>
      * This is solved by additionally checking the distance in
      * {@link #timetilhit(int, Rock, Rock, int, Rock, Rock)}&nsbp;and returning
-     * 0 if two rocks are touching in the sense of {@link ColliderBase#MaxDistSq}.
+     * 0 if two rocks are touching in the sense of
+     * {@link ColliderBase#MaxDistSq}.
      * </p>
      * <p>
      * So the propagation should continue until 0 is returned here.

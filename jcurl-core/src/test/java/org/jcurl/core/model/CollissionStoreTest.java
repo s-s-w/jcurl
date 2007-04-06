@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.base;
+package org.jcurl.core.model;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,6 +28,8 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import junit.framework.TestCase;
+
+import org.jcurl.core.base.RockSet;
 
 public class CollissionStoreTest extends TestCase {
 

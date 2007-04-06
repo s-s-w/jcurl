@@ -16,11 +16,15 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.base;
+package org.jcurl.core.model;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
+import org.jcurl.core.base.Ice;
+import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.Slider;
+import org.jcurl.core.base.TestShowBase;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.swing.Zoomer;
 import org.jcurl.math.Polynome;

@@ -16,12 +16,9 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.base;
+package org.jcurl.math;
 
 import org.jcurl.core.helpers.NotImplementedYetException;
-import org.jcurl.math.MathVec;
-import org.jcurl.math.R1R1Function;
-import org.jcurl.math.R1RNFunction;
 
 /**
  * The distance between two {@link R1RNFunction}s - only 2 dimensions used.
@@ -65,7 +62,8 @@ public class DistanceSq extends R1R1Function {
      * @param r12Sqr
      *            <code>(r1+r2)^2</code>
      */
-    DistanceSq(final R1RNFunction c1, final R1RNFunction c2, final double r12Sqr) {
+    public DistanceSq(final R1RNFunction c1, final R1RNFunction c2,
+            final double r12Sqr) {
         if (c1.dim() != c2.dim())
             throw new IllegalArgumentException("Dimension mismatch: "
                     + c1.dim() + "!=" + c2.dim());
