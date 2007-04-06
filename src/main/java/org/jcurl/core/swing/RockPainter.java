@@ -27,6 +27,7 @@ import java.awt.geom.Arc2D;
 
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.RockSet;
+import org.jcurl.core.base.Zoomer;
 
 /**
  * Strategy to paint one single rock at (0,0) with the handle pointing along the
@@ -60,9 +61,9 @@ public class RockPainter {
     protected static final Arc2D.Float outer;
 
     static {
-        fo = new Font("SansSerif", Font.BOLD, WCComponent.SCALE / 5);
+        fo = new Font("SansSerif", Font.BOLD, Zoomer.SCALE / 5);
 
-        final int f = WCComponent.SCALE;
+        final int f = Zoomer.SCALE;
         final float ro = f * RockProps.DEFAULT.getRadius();
         final float ri = f * 0.7F * RockProps.DEFAULT.getRadius();
         outer = new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 0, 360, Arc2D.CHORD);

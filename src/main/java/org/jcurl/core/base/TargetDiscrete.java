@@ -27,8 +27,10 @@ import java.awt.geom.AffineTransform;
  * @see org.jcurl.core.swing.JCurlDisplay
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:TargetDiscrete.java 378 2007-01-24 01:18:35Z mrohrmoser $
+ * @deprecated
  */
-public interface TargetDiscrete extends Target {
+@Deprecated
+interface TargetDiscrete extends Target {
 
     public void setPos(final PositionSet rocks);
 

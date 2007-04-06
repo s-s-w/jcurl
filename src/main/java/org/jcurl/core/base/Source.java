@@ -27,7 +27,7 @@ package org.jcurl.core.base;
  * @version $Id:Source.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 @Deprecated
-public interface Source {
+interface Source {
     /**
      * Get the end time.
      * 

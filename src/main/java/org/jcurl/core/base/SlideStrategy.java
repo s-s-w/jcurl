@@ -35,7 +35,9 @@ import org.jcurl.math.MathVec;
  * @see org.jcurl.core.base.ColliderBase
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:SlideStrategy.java 378 2007-01-24 01:18:35Z mrohrmoser $
+ * @deprecated
  */
+@Deprecated
 public abstract class SlideStrategy extends ModelBase implements Source,
         Strategy, Factory {
 

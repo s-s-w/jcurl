@@ -19,23 +19,23 @@
 package org.jcurl.core.model;
 
 import org.jcurl.core.base.CollissionDetector;
-import org.jcurl.math.DistanceSq;
+import org.jcurl.math.Distance2DSq;
 import org.jcurl.math.R1RNFunction;
 
 /**
  * Uses
  * {@link R1RNFunction#computeNewtonValue(int, int, double, double, double)} on
- * {@link DistanceSq} to find the next collission.
+ * {@link Distance2DSq} to find the next collission.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CollissionNewton extends CollissionDetector {
+public class NewtonCollissionDetector extends CollissionDetector {
 
     @Override
     public double compute(final double t0, final double tmax,
             final R1RNFunction fa, final R1RNFunction fb, final double distSq) {
-        return new DistanceSq(fa, fb, 0).computeNewtonValue(0, 0, distSq, t0,
+        return new Distance2DSq(fa, fb, 0).computeNewtonValue(0, 0, distSq, t0,
                 tmax);
     }
 }

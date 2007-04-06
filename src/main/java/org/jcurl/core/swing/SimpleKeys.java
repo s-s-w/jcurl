@@ -21,8 +21,7 @@ package org.jcurl.core.swing;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import org.jcurl.core.base.Source;
-import org.jcurl.core.base.TargetDiscrete;
+import org.jcurl.core.base.TrajectorySet;
 
 /**
  * A first, simple keyboard input class. Uses a
@@ -37,11 +36,9 @@ public class SimpleKeys implements KeyListener {
 
     private Thread worker = null;
 
-    public SimpleKeys(final Source src, final TargetDiscrete dst) {
-        final double t0 = src.getMinT();
-        player = new RealTimePlayer(t0, 1.0, src, dst);
-        // push the initial state from src to dst
-        dst.setPos(src.getPos());
+    public SimpleKeys(final TrajectorySet src) {
+        final double t0 = 0;
+        player = new RealTimePlayer(t0, 1.0, src);
     }
 
     public void keyPressed(final KeyEvent e) {

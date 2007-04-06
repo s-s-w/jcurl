@@ -28,7 +28,7 @@ import org.jcurl.core.helpers.NotImplementedYetException;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id: DistanceSq.java 370 2007-01-23 03:04:05Z mrohrmoser $
  */
-public class DistanceSq extends R1R1Function {
+public class Distance2DSq extends R1R1Function {
 
     private final R1RNFunction c1;
 
@@ -47,7 +47,7 @@ public class DistanceSq extends R1R1Function {
      * @param c2
      * @param r2
      */
-    DistanceSq(final R1RNFunction c1, final double r1, final R1RNFunction c2,
+    Distance2DSq(final R1RNFunction c1, final double r1, final R1RNFunction c2,
             final double r2) {
         this(c1, c2, MathVec.sqr(r1 + r2));
     }
@@ -62,7 +62,7 @@ public class DistanceSq extends R1R1Function {
      * @param r12Sqr
      *            <code>(r1+r2)^2</code>
      */
-    public DistanceSq(final R1RNFunction c1, final R1RNFunction c2,
+    public Distance2DSq(final R1RNFunction c1, final R1RNFunction c2,
             final double r12Sqr) {
         if (c1.dim() != c2.dim())
             throw new IllegalArgumentException("Dimension mismatch: "

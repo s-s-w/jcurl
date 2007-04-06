@@ -26,8 +26,8 @@ import org.jcurl.core.base.Ice;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.TestShowBase;
+import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.swing.Zoomer;
 import org.jcurl.math.R1RNFunction;
 
 public class CurveManagerTest extends TestShowBase {
@@ -35,8 +35,8 @@ public class CurveManagerTest extends TestShowBase {
     private static final Log log = JCLoggerFactory
             .getLogger(CurveManagerTest.class);
 
-    void showPaths(Iterator<Iterable<Entry<Double, R1RNFunction>>> it,
-            double tmin, double tmax) throws InterruptedException {
+    void showPaths(final Iterator<Iterable<Entry<Double, R1RNFunction>>> it,
+            final double tmin, final double tmax) throws InterruptedException {
         if (frame == null)
             return;
         frame.setVisible(true);
@@ -46,7 +46,7 @@ public class CurveManagerTest extends TestShowBase {
     public void testFastHit() throws InterruptedException {
         final CurveManager te = new CurveManager();
         te.setCollider(new CollissionSimple());
-        te.setCollissionDetector(new CollissionNewton());
+        te.setCollissionDetector(new NewtonCollissionDetector());
         te.setSlider(new SlideNoCurl(23, 0));
         te.setInitialPos(PositionSet.allHome());
         te.getInitialPos().getDark(0).setLocation(0, Ice.HOG_2_TEE, 0);
@@ -71,6 +71,7 @@ public class CurveManagerTest extends TestShowBase {
         // with Display:
         showPositionDisplay(te.getCurrentPos(), Zoomer.HOUSE, 5000,
                 new TimeRunnable() {
+                    @Override
                     public void run(final double t) throws InterruptedException {
                         te.setCurrentTime(t);
                         Thread.sleep(1000 / 50);
@@ -83,7 +84,7 @@ public class CurveManagerTest extends TestShowBase {
     public void testSlowNoHit() throws InterruptedException {
         final CurveManager te = new CurveManager();
         te.setCollider(new CollissionSimple());
-        te.setCollissionDetector(new CollissionNewton());
+        te.setCollissionDetector(new NewtonCollissionDetector());
         te.setSlider(new SlideNoCurl(23, 0));
         te.setInitialPos(PositionSet.allHome());
         te.getInitialPos().getDark(0).setLocation(0, Ice.HOG_2_TEE, Math.PI);
@@ -106,6 +107,7 @@ public class CurveManagerTest extends TestShowBase {
         // with Display:
         showPositionDisplay(te.getCurrentPos(), Zoomer.HOUSE, 5000,
                 new TimeRunnable() {
+                    @Override
                     public void run(final double t) throws InterruptedException {
                         te.setCurrentTime(t);
                         Thread.sleep(1000 / 50);

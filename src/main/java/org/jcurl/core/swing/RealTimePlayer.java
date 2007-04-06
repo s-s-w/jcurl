@@ -20,24 +20,19 @@ package org.jcurl.core.swing;
 
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.Source;
 import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.base.TargetDiscrete;
+import org.jcurl.core.base.TrajectorySet;
 
 /**
- * Extract locations from a (non-discrete) {@link org.jcurl.core.base.Source}and
- * push them into a {@link TargetDiscrete}.
+ * Extract locations from a (non-discrete) {@link TrajectorySet} and walk on in
+ * real time.
  * 
- * @see org.jcurl.core.base.Source
- * @see org.jcurl.core.base.TargetDiscrete
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:RealTimePlayer.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class RealTimePlayer implements Runnable {
 
-    private final TargetDiscrete dst;
-
-    private final Source src;
+    private final TrajectorySet src;
 
     private final double t0Start;
 
@@ -50,11 +45,10 @@ public class RealTimePlayer implements Runnable {
     private final long timeSleep = 25;
 
     public RealTimePlayer(final double t0, final double scale,
-            final Source src, final TargetDiscrete dst) {
+            final TrajectorySet src) {
         t0Start = t0Last = tNow = t0;
         timeScale = scale;
         this.src = src;
-        this.dst = dst;
     }
 
     /**
@@ -70,20 +64,15 @@ public class RealTimePlayer implements Runnable {
      */
     public void run() {
         try {
-            PositionSet pos = PositionSet.allHome(null);
-            SpeedSet speed = new SpeedSet();
+            final PositionSet pos = PositionSet.allHome(null);
+            final SpeedSet speed = new SpeedSet();
             final long start = System.currentTimeMillis();
             for (;;) {
                 final long dt = System.currentTimeMillis() - start;
                 tNow = t0Last + dt * timeScale * 1e-3;
                 // get the position
-                src.setTime(tNow);
-                pos = src.getPos();
-                // push it to the target
-                if (dst != null)
-                    dst.setPos(pos);
-                speed = src.getSpeed();
-                if (0 == RockSet.nonZero(speed)) {
+                src.setCurrentTime(tNow);
+                if (0 == RockSet.nonZero(src.getCurrentSpeed())) {
                     t0Last = t0Start;
                     break;
                 }

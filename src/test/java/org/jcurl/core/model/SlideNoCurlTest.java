@@ -25,8 +25,8 @@ import org.jcurl.core.base.Ice;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Slider;
 import org.jcurl.core.base.TestShowBase;
+import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.helpers.Dim;
-import org.jcurl.core.swing.Zoomer;
 import org.jcurl.math.Polynome;
 
 public class SlideNoCurlTest extends TestShowBase {
@@ -112,6 +112,7 @@ public class SlideNoCurlTest extends TestShowBase {
             final int millis, final int dt) {
         final PositionSet pos = PositionSet.allHome();
         showPositionDisplay(pos, zoom, millis, new TimeRunnable() {
+            @Override
             public void run(final double t) throws InterruptedException {
                 pos.getRock(0).setLocation(p[0].at(t), p[1].at(t), p[2].at(t));
                 pos.notifyChange();

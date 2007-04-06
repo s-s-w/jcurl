@@ -25,14 +25,14 @@ import javax.swing.JFrame;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.swing.PositionDisplay;
-import org.jcurl.core.swing.Zoomer;
 
 public abstract class TestShowBase extends TestBase {
 
     public static abstract class TimeRunnable {
         public abstract void run(double t) throws InterruptedException;
 
-        public void run(double t, Component p) throws InterruptedException {
+        public void run(final double t, final Component p)
+                throws InterruptedException {
             run(t);
         }
     }
@@ -90,6 +90,7 @@ public abstract class TestShowBase extends TestBase {
         return loop;
     }
 
+    @Override
     public void tearDown() {
         if (frame != null)
             frame.setVisible(false);
