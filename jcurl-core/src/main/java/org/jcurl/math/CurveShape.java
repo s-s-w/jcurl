@@ -21,7 +21,8 @@ import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 
 /**
- * Enable convenient approximated Java2D drawing of arbitratry curves.
+ * Enable convenient approximated Java2D drawing of arbitratry 2-dimensional
+ * curves.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$

@@ -24,7 +24,9 @@ package org.jcurl.math;
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
+ * @deprecated
  */
+@Deprecated
 public class CurveInterval extends R1RNFunction {
 
     private final R1RNFunction curve;
