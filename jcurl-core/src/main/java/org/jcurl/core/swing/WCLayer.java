@@ -20,6 +20,8 @@ package org.jcurl.core.swing;
 
 import java.awt.geom.Point2D;
 
+import org.jcurl.core.base.Zoomer;
+
 public interface WCLayer {
 
     public abstract Point2D wc2dc(final Point2D wc, Point2D dc);

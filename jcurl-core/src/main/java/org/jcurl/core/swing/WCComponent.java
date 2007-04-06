@@ -32,26 +32,22 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import org.jcurl.core.base.Orientation;
+import org.jcurl.core.base.Zoomer;
+
 public abstract class WCComponent extends Component implements WCLayer {
 
     /**
-     * Scale WC a bit to avoid int rounding errors. This is relevant only for
-     * int based wc drawing operations e.g. fonts. WC objects (rocks etc.)
-     * remain unaffected by this.
-     */
-    protected static final int SCALE = 1000;
-
-    /**
-     * @see #SCALE
+     * @see Zoomer#SCALE
      */
     static final AffineTransform postScale = AffineTransform.getScaleInstance(
-            1.0 / SCALE, 1.0 / SCALE);
+            1.0 / Zoomer.SCALE, 1.0 / Zoomer.SCALE);
 
     /**
-     * @see #SCALE
+     * @see Zoomer#SCALE
      */
     static final AffineTransform preScale = AffineTransform.getScaleInstance(
-            SCALE, SCALE);
+            Zoomer.SCALE, Zoomer.SCALE);
 
     protected int oldHei = -1;
 
@@ -73,7 +69,7 @@ public abstract class WCComponent extends Component implements WCLayer {
     public Point2D dc2wc(final Point2D dc, Point2D wc) {
         try {
             wc = wc_mat.inverseTransform(dc, wc);
-            wc.setLocation(wc.getX() / SCALE, wc.getY() / SCALE);
+            wc.setLocation(wc.getX() / Zoomer.SCALE, wc.getY() / Zoomer.SCALE);
             return wc;
         } catch (final NoninvertibleTransformException e) {
             throw new RuntimeException("Why uninvertible?", e);
@@ -151,7 +147,7 @@ public abstract class WCComponent extends Component implements WCLayer {
     public Point2D wc2dc(final Point2D wc, Point2D dc) {
         if (dc == null)
             dc = new Point2D.Float();
-        dc.setLocation(wc.getX() * SCALE, wc.getY() * SCALE);
+        dc.setLocation(wc.getX() * Zoomer.SCALE, wc.getY() * Zoomer.SCALE);
         return wc_mat.transform(dc, dc);
     }
 }

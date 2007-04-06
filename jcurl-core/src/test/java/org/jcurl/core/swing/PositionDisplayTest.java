@@ -24,6 +24,7 @@ import java.awt.image.BufferedImage;
 
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.TestShowBase;
+import org.jcurl.core.base.Zoomer;
 
 public class PositionDisplayTest extends TestShowBase {
 
@@ -34,10 +35,12 @@ public class PositionDisplayTest extends TestShowBase {
         final PositionSet p = PositionSet.allHome();
         final int frames = showPositionDisplay(p, Zoomer.HOG2HACK, dt,
                 new TimeRunnable() {
+                    @Override
                     public void run(final double t) throws InterruptedException {
                         throw new UnsupportedOperationException();
                     }
 
+                    @Override
                     public void run(final double t, final Component jp)
                             throws InterruptedException {
                         jp.paint(g);

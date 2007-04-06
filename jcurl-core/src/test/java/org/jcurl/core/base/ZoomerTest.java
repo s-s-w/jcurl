@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.swing;
+package org.jcurl.core.base;
 
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
@@ -25,12 +25,10 @@ import java.awt.geom.Rectangle2D;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.base.Ice;
-
 /**
  * JUnit test
  * 
- * @see org.jcurl.core.swing.Zoomer
+ * @see org.jcurl.core.base.Zoomer
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:ZoomerTest.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
@@ -115,7 +113,7 @@ public class ZoomerTest extends TestCase {
     }
 
     public void test100_Zoom1by1() {
-        final int S = WCComponent.SCALE;
+        final int S = Zoomer.SCALE;
         final double[] flat = new double[6];
         final Point2D dst = new Point2D.Double();
         final Point2D src = new Point2D.Double();

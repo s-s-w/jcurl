@@ -34,7 +34,6 @@ import javax.swing.JComponent;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.TargetDiscrete;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.swing.RockPainter.ColorSet;
 
@@ -44,7 +43,7 @@ import org.jcurl.core.swing.RockPainter.ColorSet;
  * @version $Id:SumDisplayBase.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public abstract class SumDisplayBase extends JComponent implements
-        TargetDiscrete, PropertyChangeListener {
+        PropertyChangeListener {
 
     private static final ColorSet colors = new ColorSet();
 

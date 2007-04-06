@@ -32,7 +32,6 @@ import org.jcurl.math.R1RNFunction;
  * dynamics", Mark Denny, Canadian Journal of Physics, 1988, P. 295-304.
  * <p>
  * 
- * @see org.jcurl.core.model.SlideStraight
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:SlideDenny.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */

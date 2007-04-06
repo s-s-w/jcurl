@@ -24,8 +24,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import org.jcurl.core.base.TargetDiscrete;
-
 /**
  * A {@link org.jcurl.core.swing.PositionDisplay}with some additional meta data
  * displayed (here: time).
@@ -35,7 +33,7 @@ import org.jcurl.core.base.TargetDiscrete;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:JCurlDisplay.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class JCurlDisplay extends PositionDisplay implements TargetDiscrete {
+public class JCurlDisplay extends PositionDisplay {
 
     private static final long serialVersionUID = -3587954807831602402L;
 

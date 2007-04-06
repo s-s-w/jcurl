@@ -28,6 +28,7 @@ import javax.imageio.ImageIO;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.io.SetupBuilder;
 import org.jcurl.core.io.SetupSaxDeSer;
 import org.xml.sax.SAXException;

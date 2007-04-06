@@ -16,15 +16,13 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.swing;
+package org.jcurl.core.base;
 
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import org.jcurl.core.base.Ice;
-import org.jcurl.core.base.RockProps;
 import org.jcurl.core.helpers.NotImplementedYetException;
 
 /**
@@ -58,6 +56,13 @@ public class Zoomer {
             2 * (Ice.SIDE_2_CENTER + _dia), _dia + Ice.HOG_2_TEE
                     + Ice.BACK_2_TEE + Ice.HACK_2_BACK, 0,
             -(Ice.BACK_2_TEE + Ice.HACK_2_BACK));
+
+    /**
+     * Scale WC a bit to avoid int rounding errors. This is relevant only for
+     * int based wc drawing operations e.g. fonts. WC objects (rocks etc.)
+     * remain unaffected by this.
+     */
+    public static final int SCALE = 1000;
 
     private static final boolean uniform = true;
 
@@ -160,7 +165,7 @@ public class Zoomer {
         else
             mat.setToIdentity();
         mat.translate(-dc.getX(), -dc.getY());
-        final int SCALE = WCComponent.SCALE;
+        final int SCALE = Zoomer.SCALE;
         double sca_x = dc.getWidth();
         double sca_y = dc.getHeight();
         if (Orientation.N.equals(orient)) {

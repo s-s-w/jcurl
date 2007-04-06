@@ -27,6 +27,6 @@ package org.jcurl.core.base;
  * @version $Id:Target.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 @Deprecated
-public interface Target {
+interface Target {
 
 }
