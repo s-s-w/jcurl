@@ -18,18 +18,30 @@
  */
 package org.jcurl.core.base;
 
+import java.util.Iterator;
+import java.util.Map.Entry;
+
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CollissionSimple;
 import org.jcurl.core.swing.Zoomer;
+import org.jcurl.math.R1RNFunction;
 
 public class TrajectoryManagerTest extends TestShowBase {
 
     private static final Log log = JCLoggerFactory
             .getLogger(TrajectoryManagerTest.class);
 
+    void showPaths(Iterator<Iterable<Entry<Double, R1RNFunction>>> it,
+            double tmin, double tmax) throws InterruptedException {
+        if (frame == null)
+            return;
+        frame.setVisible(true);
+        Thread.sleep(3000);
+    }
+
     public void testFastHit() throws InterruptedException {
-        final TrajectoryManager te = new TrajectoryManager();
+        final CurveManager te = new CurveManager();
         te.setCollider(new CollissionSimple());
         te.setCollissionDetector(new CollissionNewton());
         te.setSlider(new SlideNoCurl(23, 0));
@@ -62,10 +74,11 @@ public class TrajectoryManagerTest extends TestShowBase {
                     }
                 });
         // FIXME WC angles after collission!
+        showPaths(te.getCurveStore().iterator(), 0, 10);
     }
 
     public void testSlowNoHit() throws InterruptedException {
-        final TrajectoryManager te = new TrajectoryManager();
+        final CurveManager te = new CurveManager();
         te.setCollider(new CollissionSimple());
         te.setCollissionDetector(new CollissionNewton());
         te.setSlider(new SlideNoCurl(23, 0));

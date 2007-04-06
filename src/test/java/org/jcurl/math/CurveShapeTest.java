@@ -27,19 +27,19 @@ import junit.framework.TestCase;
 public class CurveShapeTest extends TestCase {
     public void test010_sections() {
         double[] d = new double[0];
-        CurveShape.sections(0, 1, d);
+        CurveShape.aequidistantSections(0, 1, d);
 
         d = new double[1];
-        CurveShape.sections(0, 1, d);
+        CurveShape.aequidistantSections(0, 1, d);
         assertEquals(1, d[0], 1e-9);
 
         d = new double[2];
-        CurveShape.sections(0, 1, d);
+        CurveShape.aequidistantSections(0, 1, d);
         assertEquals(0, d[0], 1e-9);
         assertEquals(1, d[1], 1e-9);
 
         d = new double[3];
-        CurveShape.sections(0, 2, d);
+        CurveShape.aequidistantSections(0, 2, d);
         assertEquals(0, d[0], 1e-9);
         assertEquals(1, d[1], 1e-9);
         assertEquals(2, d[2], 1e-9);

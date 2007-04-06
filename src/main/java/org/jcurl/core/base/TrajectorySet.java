@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005 M. Rohrmoser
+ * Copyright (C) 2005-2007 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -18,26 +18,20 @@
  */
 package org.jcurl.core.base;
 
-import java.awt.geom.AffineTransform;
-
 /**
- * Interface for classes consuming discrete {@link org.jcurl.core.base.Rock}location
- * data.
+ * "Read-only" trajectories of a whole set of rocks.
  * 
- * @see org.jcurl.core.swing.JCurlDisplay
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id:TargetDiscrete.java 378 2007-01-24 01:18:35Z mrohrmoser $
+ * @version $Id$
  */
-public interface TargetDiscrete extends Target {
+public interface TrajectorySet {
 
-    public void setPos(final PositionSet rocks);
+    public abstract void setCurrentTime(final double currentTime);
 
-    /**
-     * 
-     * @param rocks
-     * @param discontinuous
-     *            bitmask of discontinuous rocks as returned by
-     *            {@link org.jcurl.core.base.ColliderBase#compute(PositionSet, SpeedSet, AffineTransform)}.
-     */
-    public void setPos(final PositionSet rocks, final int discontinuous);
+    public abstract double getCurrentTime();
+
+    public abstract SpeedSet getCurrentSpeed();
+
+    public abstract PositionSet getCurrentPos();
+
 }

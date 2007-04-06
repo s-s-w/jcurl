@@ -33,13 +33,13 @@ import org.jcurl.math.MathVec;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CollissionStrategy.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public abstract class Collider extends ModelBase implements Strategy {
+public abstract class ColliderBase extends ModelBase implements Strategy {
 
     private static final double _Rad = RockProps.DEFAULT.getRadius();
 
     private static final double HIT_MAX_DIST = 1e-6F;
 
-    private static final Log log = JCLoggerFactory.getLogger(Collider.class);
+    private static final Log log = JCLoggerFactory.getLogger(ColliderBase.class);
 
     /** Maximum distance square [m] of two rocks to consider them touching */
     public static final double MaxDistSq = sqr(_Rad + _Rad + HIT_MAX_DIST);
@@ -71,13 +71,13 @@ public abstract class Collider extends ModelBase implements Strategy {
         return mat;
     }
 
-    public static Collider newInstance(final Class clz) {
-        final Class parent = Collider.class;
+    public static ColliderBase newInstance(final Class clz) {
+        final Class parent = ColliderBase.class;
         if (!parent.isAssignableFrom(clz))
             throw new IllegalArgumentException("Class [" + clz.getName()
                     + "] is no descendant of [" + parent.getName() + "]");
         try {
-            return (Collider) clz.newInstance();
+            return (ColliderBase) clz.newInstance();
         } catch (final InstantiationException e) {
             final IllegalArgumentException ex = new IllegalArgumentException();
             ex.initCause(e);
@@ -103,7 +103,7 @@ public abstract class Collider extends ModelBase implements Strategy {
 
     /**
      * Iterate over all rocks and call
-     * {@link Collider#computeWC(Rock, Rock, Rock, Rock, AffineTransform)} for
+     * {@link ColliderBase#computeWC(Rock, Rock, Rock, Rock, AffineTransform)} for
      * each pair.
      * <p>
      * Does not change <code>pos</code>!
@@ -112,7 +112,7 @@ public abstract class Collider extends ModelBase implements Strategy {
      * Does not fire {@link SpeedSet#notifyChange()}!
      * </p>
      * 
-     * @see Collider#computeWC(Rock, Rock, Rock, Rock, AffineTransform)
+     * @see ColliderBase#computeWC(Rock, Rock, Rock, Rock, AffineTransform)
      * @param pos
      * @param speed
      * @param tr

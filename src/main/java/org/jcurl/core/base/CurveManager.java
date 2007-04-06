@@ -34,19 +34,19 @@ import org.jcurl.math.R1RNFunction;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class TrajectoryManager extends MutableObject implements
-        PropertyChangeListener {
+public class CurveManager extends MutableObject implements
+        PropertyChangeListener, ComputedTrajectorySet {
 
     private static final double _30 = 30.0;
 
     private static final double hitDt = 1e-6;
 
     private static final Log log = JCLoggerFactory
-            .getLogger(TrajectoryManager.class);
+            .getLogger(CurveManager.class);
 
     private static final long serialVersionUID = 7198540442889130378L;
 
-    private Collider collider = null;
+    private ColliderBase collider = null;
 
     private CollissionDetector collissionDetector = null;
 
@@ -66,9 +66,9 @@ public class TrajectoryManager extends MutableObject implements
 
     private SpeedSet initialSpeed = null;
 
-    private SlideNoCurl slider = null;
+    private Slider slider = null;
 
-    public TrajectoryManager() {
+    public CurveManager() {
     }
 
     /**
@@ -107,7 +107,8 @@ public class TrajectoryManager extends MutableObject implements
     }
 
     /**
-     * Internal.
+     * Internal. Compute initial curves and the first hit of each combination of
+     * 2 rocks if the dirty flag is set.
      */
     void doInit() {
         if (!dirty)
@@ -181,7 +182,7 @@ public class TrajectoryManager extends MutableObject implements
         return false;
     }
 
-    public Collider getCollider() {
+    public ColliderBase getCollider() {
         return collider;
     }
 
@@ -213,7 +214,7 @@ public class TrajectoryManager extends MutableObject implements
         return initialSpeed;
     }
 
-    public SlideNoCurl getSlider() {
+    public Slider getSlider() {
         return slider;
     }
 
@@ -226,7 +227,7 @@ public class TrajectoryManager extends MutableObject implements
         log.info(arg0);
     }
 
-    public void setCollider(final Collider collider) {
+    public void setCollider(final ColliderBase collider) {
         dirty = true;
         propChange.firePropertyChange("collider", this.collider, collider);
         this.collider = collider;
@@ -296,7 +297,7 @@ public class TrajectoryManager extends MutableObject implements
         this.initialSpeed = initialSpeed;
     }
 
-    public void setSlider(final SlideNoCurl slider) {
+    public void setSlider(final Slider slider) {
         dirty = true;
         propChange.firePropertyChange("slider", this.slider, slider);
         this.slider = slider;

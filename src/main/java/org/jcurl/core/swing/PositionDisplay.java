@@ -47,14 +47,6 @@ public class PositionDisplay extends WCComponent implements
 
     private static final Map hints = new HashMap(); // @jve:decl-index=0:
 
-    // TODO move to WCComponent
-    private static final AffineTransform postScale = AffineTransform
-            .getScaleInstance(1.0 / WCComponent.SCALE, 1.0 / WCComponent.SCALE);
-
-    // TODO move to WCComponent
-    private static final AffineTransform preScale = AffineTransform
-            .getScaleInstance(WCComponent.SCALE, WCComponent.SCALE);
-
     private static final long serialVersionUID = -2680676530327406261L;
 
     static {
@@ -254,9 +246,9 @@ public class PositionDisplay extends WCComponent implements
                     * rock.getY());
             g.rotate(Math.PI + rock.getZ());
         } else {
-            g.transform(preScale);
+            g.transform(WCComponent.preScale);
             g.transform(rock.getTrafo());
-            g.transform(postScale);
+            g.transform(WCComponent.postScale);
         }
 
         // make the right-handed coordinate system left handed again (for

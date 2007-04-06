@@ -32,7 +32,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-public abstract class WCComponent extends Component {
+public abstract class WCComponent extends Component implements WCLayer {
 
     /**
      * Scale WC a bit to avoid int rounding errors. This is relevant only for
@@ -40,6 +40,18 @@ public abstract class WCComponent extends Component {
      * remain unaffected by this.
      */
     protected static final int SCALE = 1000;
+
+    /**
+     * @see #SCALE
+     */
+    static final AffineTransform postScale = AffineTransform.getScaleInstance(
+            1.0 / SCALE, 1.0 / SCALE);
+
+    /**
+     * @see #SCALE
+     */
+    static final AffineTransform preScale = AffineTransform.getScaleInstance(
+            SCALE, SCALE);
 
     protected int oldHei = -1;
 
@@ -142,5 +154,4 @@ public abstract class WCComponent extends Component {
         dc.setLocation(wc.getX() * SCALE, wc.getY() * SCALE);
         return wc_mat.transform(dc, dc);
     }
-
 }

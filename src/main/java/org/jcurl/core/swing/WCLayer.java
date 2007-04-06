@@ -16,12 +16,18 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.base;
+package org.jcurl.core.swing;
 
-/**
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
- */
-public interface Slide {
+import java.awt.geom.Point2D;
+
+public interface WCLayer {
+
+    public abstract Point2D wc2dc(final Point2D wc, Point2D dc);
+
+    public abstract void setZoom(final Zoomer zoom);
+
+    public abstract Zoomer getZoom();
+
+    public abstract Point2D dc2wc(final Point2D dc, Point2D wc);
 
 }

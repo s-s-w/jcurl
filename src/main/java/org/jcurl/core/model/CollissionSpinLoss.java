@@ -22,7 +22,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
-import org.jcurl.core.base.Collider;
+import org.jcurl.core.base.ColliderBase;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.RockProps;
@@ -39,7 +39,7 @@ import org.jcurl.math.MathVec;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CollissionSpinLoss.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class CollissionSpinLoss extends Collider {
+public class CollissionSpinLoss extends ColliderBase {
 
     private static final double HIT_MAX_DIST = 1e-6;
 
