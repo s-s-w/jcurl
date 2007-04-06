@@ -1,0 +1,57 @@
+                                    ------
+								JCurl Todos
+
+In Progress
+
+	* Package structure rework
+
+	* PathIterator to display trajectories
+
+	* Denny curl model
+
+	* Design rework
+
+Next
+
+	* Make PositionDisplay fast
+
+	* Sophisticated editing UI
+	
+	* Proper viewing UI
+
+Postponed
+	
+	* Meta data (event, game, players, etc.)
+
+	* Realistic collission model including loss of energy
+
+Finished
+
+	* Analytic collission detection
+
+	* transformed (WC) trajectories
+
+	* Curve store
+
+	* Collission computing without spin (as a baseline for other collission models)
+
+	* Ice friction from Draw-to-Tee time
+
+	* Initial speed from Split-Time (+Broom?)
+
+	* No-curl Ice model with constant friction (as a baseline for other curl models)
+
+	* Save game situations
+
+	* physical collission model including rock rotation
+
+	* Reduce download size
+
+	* Load game situations
+
+	* Display of a (hard-coded) rock setup
+
+	* animation of rock movement
+
+	* very simple physical model (ice without curl, fully 
+          elastic hits neglecting rock rotation)

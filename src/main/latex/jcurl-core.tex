@@ -1,0 +1,39 @@
+% $Id: curlsci.tex 441 2007-02-05 22:53:27Z mrohrmoser $
+\documentclass[a4paper,11pt,twoside]{report}
+\usepackage{pslatex}
+\usepackage[T1]{fontenc}
+%\usepackage{hyperref}
+\usepackage{makeidx}\makeindex
+\usepackage{curling}
+
+%\includeonly{literature}
+
+\nonfrenchspacing
+\renewcommand{\baselinestretch}{1.2}
+\jot=1em          % zus"atzlicher Zeilenabstand innerhalb eqnarray
+%\renewcommand{\familydefault}{\sfdefault}
+
+\pagestyle{plain}
+\pagestyle{headings}
+\title{jcurl \rock\ core}
+\author{M. Rohrmoser\\{\small jcurl\symbol{64}gmx.net}}
+%\date{March 27th 1998}
+
+\begin{document}
+\maketitle \tableofcontents
+%\listoffigures
+%\listoftables
+
+\include{preface}
+\chapter{Curl Models}
+\input{cu-straight}
+\input{cu-denny}
+
+\begin{appendix}
+\end{appendix}
+
+%\addcontentsline{toc}{chapter}{Index}
+%\printindex
+
+\include{literature}
+\end{document}

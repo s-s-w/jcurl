@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id: editordemo.jnlp 191 2005-12-07 13:41:27Z mrohrmoser $ -->
+<jnlp
+  spec="1.0+"
+  codebase="http://www.jcurl.org/m2/site/jcurl-core/0.7.0/webstart"
+  href="tacticsdemo.jnlp">
+  <information>
+    <title>JCurl Tactics Demo</title>
+    <vendor>M. Rohrmoser</vendor>
+    <homepage href="http://www.jcurl.org/index.html"/>
+    <description>JCurl Tactics Demo</description>
+    <description kind="short">A demo of the capabilities of the JCurl Curling Framework.</description>
+	<description kind="tooltip">JCurl Tactics</description>
+    <icon href="../images/jcurl-icon.gif"/>
+    <offline-allowed/>
+    <shortcut online="false">
+    <desktop/>
+    <menu submenu="JCurl"/>
+  </shortcut>
+  </information>
+  <security>
+      <all-permissions/>
+  </security>  
+  <resources>
+    <j2se version="1.4+"/>
+    <jar href="jcurl-0.2.jar" main="true" download="eager"/>
+    <jar href="ugli-simple.jar" main="false" download="eager"/>
+  </resources>
+  <application-desc main-class="jcurl.demo.tactics.TacticsApp"/>
+</jnlp> 
