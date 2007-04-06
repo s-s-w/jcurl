@@ -2,7 +2,7 @@
 <!-- $Id: editordemo.jnlp 213 2005-12-30 17:42:01Z mrohrmoser $ -->
 <jnlp
   spec="1.0+"
-  codebase="http://www.jcurl.org/m2/site/jcurl-core/0.7.0/webstart"
+  codebase="http://www.jcurl.org/m2/site/jcurl-core/0.7.1/webstart"
   href="editordemo.jnlp">
   <information>
     <title>JCurl Editor Demo</title>
