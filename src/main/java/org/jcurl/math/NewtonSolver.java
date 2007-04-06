@@ -27,7 +27,7 @@ package org.jcurl.math;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id: NewtonSolver.java 369 2007-01-23 02:45:01Z mrohrmoser $
  */
-public class NewtonSolver extends SolverImpl {
+class NewtonSolver extends SolverImpl {
 
     /** Serializable version identifier */
     private static final long serialVersionUID = 2606474895443431607L;

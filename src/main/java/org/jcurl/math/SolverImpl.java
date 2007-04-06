@@ -24,7 +24,7 @@ package org.jcurl.math;
  * 
  * @version $Id: SolverImpl.java 370 2007-01-23 03:04:05Z mrohrmoser $
  */
-public abstract class SolverImpl implements R1R1Solver {
+abstract class SolverImpl implements R1R1Solver {
     /** Serializable version identifier */
     private static final long serialVersionUID = 1112491292565386596L;
 

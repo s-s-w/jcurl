@@ -25,7 +25,7 @@ package org.jcurl.math;
  * 
  * @version $Id: R1R1Solver.java 370 2007-01-23 03:04:05Z mrohrmoser $
  */
-public interface R1R1Solver {
+interface R1R1Solver {
 
     /**
      * Get the actual absolute accuracy.
