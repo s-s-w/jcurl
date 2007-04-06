@@ -6,7 +6,7 @@
 
 package org.jcurl.demo.tactics;
 
-import org.jcurl.core.swing.Zoomer;
+import org.jcurl.core.base.Zoomer;
 import org.jdesktop.layout.GroupLayout;
 import org.jdesktop.layout.LayoutStyle;
 

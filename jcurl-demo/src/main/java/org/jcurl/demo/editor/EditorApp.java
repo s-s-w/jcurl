@@ -51,6 +51,7 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
+import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.helpers.Version;
 import org.jcurl.core.io.SetupIO;
 import org.jcurl.core.log.JCLoggerFactory;
@@ -61,7 +62,6 @@ import org.jcurl.core.swing.PositionDisplay;
 import org.jcurl.core.swing.RockEditDisplay;
 import org.jcurl.core.swing.SumShotDisplay;
 import org.jcurl.core.swing.SumWaitDisplay;
-import org.jcurl.core.swing.Zoomer;
 import org.xml.sax.SAXException;
 
 /**

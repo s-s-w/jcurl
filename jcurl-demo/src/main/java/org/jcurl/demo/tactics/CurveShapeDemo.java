@@ -84,8 +84,7 @@ public class CurveShapeDemo extends JFrame {
                 g2.setStroke(st);
                 g2.drawLine(0, 0, 650, 500);
                 g2.setPaint(new Color(255, 170, 0, 128));
-                g2.draw(CurveShape.approximate(frame.curve, CurveShape
-                        .sections(-1, 3, sections)));
+                // FIXME g2.draw(CurveShape.approximate(frame.curve, CurveShape.sections(-1, 3, sections)));
             }
         });
     }

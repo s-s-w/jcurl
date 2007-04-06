@@ -27,10 +27,10 @@ import javax.swing.JApplet;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.base.TargetDiscrete;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CollissionSpin;
-import org.jcurl.core.model.SlideStraight;
+import org.jcurl.core.model.CurveManager;
+import org.jcurl.core.model.SlideNoCurl;
 import org.jcurl.core.swing.JCurlDisplay;
 import org.jcurl.core.swing.SimpleKeys;
 import org.xml.sax.SAXException;
@@ -56,9 +56,8 @@ public class ViewerApplet extends JApplet {
         // final Container contentPane = getContentPane();
         final JCurlDisplay mp = new JCurlDisplay();
         getContentPane().add(mp);
-        final TargetDiscrete dst = mp;
 
-        final ComputedSource src = new ComputedSource();
+        final CurveManager src = new CurveManager();
         try {
             if (true) {
                 final URL url;
@@ -70,7 +69,7 @@ public class ViewerApplet extends JApplet {
                     url = tmp;
                 }
                 log.info("Loading setup [" + url + "]");
-                src.loadStart(url.openStream());
+                // FIXME src.loadStart(url.openStream());
             } else {
                 // initial state
                 final PositionSet pos = PositionSet.allOut();
@@ -80,16 +79,14 @@ public class ViewerApplet extends JApplet {
                 final SpeedSet speed = new SpeedSet();
                 speed.getDark(0).setLocation(0, -1.325, 0.75);
                 // dynamics engines
-                src.init(pos, speed, new SlideStraight(), new CollissionSpin());
+                // FIXME src.init(pos, speed, new SlideNoCurl(23,0), new CollissionSpin());
             }
         } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        } catch (SAXException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         // set up the keyboard handler
-        addKeyListener(new SimpleKeys(src, dst));
+        addKeyListener(new SimpleKeys(src));
     }
 }

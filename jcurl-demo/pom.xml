@@ -4,7 +4,7 @@
   <groupId>org.jcurl</groupId>
   <artifactId>jcurl-demo</artifactId>
   <name>JCurl Demo App: Tactics</name>
-  <version>0.7.0</version>
+  <version>0.7.1</version>
   <url>http://www.jcurl.org/</url>
   <issueManagement>
     <system>Bugzilla</system>

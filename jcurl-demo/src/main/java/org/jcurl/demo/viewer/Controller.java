@@ -23,23 +23,28 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.xml.transform.Source;
+
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.Source;
-import org.jcurl.core.base.TargetDiscrete;
+import org.jcurl.core.base.ComputedTrajectorySet;
+import org.jcurl.core.base.TrajectorySet;
 import org.jcurl.core.log.JCLoggerFactory;
+import org.jcurl.core.model.CurveManager;
 import org.jcurl.core.swing.PositionDisplay;
 import org.xml.sax.SAXException;
+
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class Controller {
 
     public static class RealTimeRunner extends Thread {
         private final long dtMillis;
 
-        private final Source s;
+        private final TrajectorySet s;
 
         private final double timeWarp;
 
-        public RealTimeRunner(final Source s, long dt) {
+        public RealTimeRunner(final TrajectorySet s, long dt) {
             this.s = s;
             this.dtMillis = dt;
             this.timeWarp = 1.0 * 1e-3;
@@ -47,9 +52,9 @@ public class Controller {
 
         public void run() {
             final long start = System.currentTimeMillis();
-            final long t0sys = start - (long) (s.getTime() / timeWarp);
+            final long t0sys = start - (long) (s.getCurrentTime() / timeWarp);
             for (int counter = 0; !isInterrupted();) {
-                s.setTime(timeWarp * (System.currentTimeMillis() - t0sys));
+                s.setCurrentTime(timeWarp * (System.currentTimeMillis() - t0sys));
                 yield();
                 try {
                     final long dt = ++counter * dtMillis
@@ -71,16 +76,12 @@ public class Controller {
 
     private RealTimeRunner runner;
 
-    private ComputedSource src = new ComputedSource();
+    private ComputedTrajectorySet src = new CurveManager();
 
     private boolean stopped = true;
 
     public synchronized void addTarget(PositionDisplay dst) {
-        dst.setPos(src.getPos());
-    }
-
-    public synchronized void addTarget(TargetDiscrete dst) {
-        dst.setPos(src.getPos());
+        dst.setPos(src.getCurrentPos());
     }
 
     public synchronized long getDt() {
@@ -88,7 +89,7 @@ public class Controller {
     }
 
     public synchronized long getTime() {
-        return (long) (src.getTime() * 1000);
+        return (long) (src.getCurrentTime() * 1000);
     }
 
     public synchronized boolean isPaused() {
@@ -107,9 +108,11 @@ public class Controller {
     public synchronized void load(final InputStream f) throws SAXException,
             IOException {
         stop();
-        src.loadStart(f);
-        src.setTime(35.0);
-        src.setTime(0.0);
+        throw new NotImplementedException();
+        // FIXME
+        //src.loadStart(f);
+        //src.setCurrentTime(35.0);
+        //src.setCurrentTime(0.0);
     }
 
     public synchronized void pause() {
@@ -120,10 +123,6 @@ public class Controller {
         paused = true;
     }
 
-    public synchronized void removeTarget(TargetDiscrete dst) {
-        dst.setPos(null);
-    }
-
     public synchronized void setDt(long dt) {
         this.dt = dt;
     }
@@ -131,7 +130,7 @@ public class Controller {
     public synchronized void setTime(long time) {
         if (log.isDebugEnabled())
             log.debug(Long.toString(getTime()) + " / " + Long.toString(time));
-        src.setTime(time * 1e-3);
+        src.setCurrentTime(time * 1e-3);
     }
 
     public synchronized void start() {

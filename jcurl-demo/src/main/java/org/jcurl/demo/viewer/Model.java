@@ -28,4 +28,7 @@ public class Model extends MutableObject {
         return false;
     }
 
+    public int hashCode() {
+        return 0;
+    }
 }

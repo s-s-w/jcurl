@@ -18,7 +18,7 @@
  */
 package org.jcurl.demo.viewer;
 
-import org.jcurl.core.swing.Zoomer;
+import org.jcurl.core.base.Zoomer;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

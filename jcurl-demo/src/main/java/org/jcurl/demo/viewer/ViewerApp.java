@@ -32,7 +32,8 @@ import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CollissionSpin;
-import org.jcurl.core.model.SlideStraight;
+import org.jcurl.core.model.CurveManager;
+import org.jcurl.core.model.SlideNoCurl;
 import org.jcurl.core.swing.JCurlDisplay;
 import org.jcurl.core.swing.SimpleKeys;
 import org.xml.sax.SAXException;
@@ -40,7 +41,6 @@ import org.xml.sax.SAXException;
 /**
  * A simple viewer that brings all together.
  * 
- * @see org.jcurl.core.model.SlideStraight
  * @see org.jcurl.core.model.CollissionSimple
  * @see org.jcurl.core.swing.SimpleKeys
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -81,7 +81,7 @@ public class ViewerApp extends JFrame {
 
     public static void main(String[] args) throws MalformedURLException,
             ParserConfigurationException, SAXException, IOException {
-        final ComputedSource src = new ComputedSource();
+        final CurveManager src = new CurveManager();
         if (true) {
             final URL url;
             {
@@ -92,7 +92,7 @@ public class ViewerApp extends JFrame {
                 url = tmp;
             }
             log.info("Loading setup [" + url + "]");
-            src.loadStart(url.openStream());
+            // FIXME src.loadStart(url.openStream());
         } else {
             // initial state
             final PositionSet pos = PositionSet.allOut();
@@ -102,20 +102,21 @@ public class ViewerApp extends JFrame {
             final SpeedSet speed = new SpeedSet();
             speed.getDark(0).setLocation(0, -1.325, 0.75);
             // dynamics engines
-            src.init(pos, speed, new SlideStraight(), new CollissionSpin());
+            // FIXME src.init(pos, speed, new SlideNoCurl(23,0), new
+            // CollissionSpin());
         }
         final ViewerApp frame = new ViewerApp(src);
         // set up the keyboard handler
-        frame.addKeyListener(new SimpleKeys(src, frame.jCurlDisplay));
+        frame.addKeyListener(new SimpleKeys(src));
         // display
         frame.show();
     }
 
     private JCurlDisplay jCurlDisplay = null; // @jve:decl-index=0:visual-constraint="25,38"
 
-    public ViewerApp(ComputedSource src) {
+    public ViewerApp(CurveManager src) {
         final JCurlDisplay mp = new JCurlDisplay();
-        mp.setPos(src.getPos());
+        mp.setPos(src.getCurrentPos());
         getContentPane().add(mp, "Center");
         // getContentPane().add(new SumShotDisplay(), "East");
         // getContentPane().add(new SumWaitDisplay(), "West");
