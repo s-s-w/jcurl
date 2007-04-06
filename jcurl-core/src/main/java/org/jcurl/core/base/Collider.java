@@ -18,35 +18,35 @@
  */
 package org.jcurl.core.base;
 
-import org.jcurl.math.R1RNFunction;
+import java.awt.geom.AffineTransform;
 
 /**
- * {@link R1RNFunction} based trajectory set.
+ * Compute rock collissions.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface ComputedTrajectorySet extends TrajectorySet {
+public interface Collider extends Strategy {
 
-    public abstract Collider getCollider();
-
-    public abstract CollissionDetector getCollissionDetector();
-
-    public abstract PositionSet getInitialPos();
-
-    public abstract SpeedSet getInitialSpeed();
-
-    public abstract Slider getSlider();
-
-    public abstract void setCollider(final Collider collider);
-
-    public abstract void setCollissionDetector(
-            final CollissionDetector collissionDetector);
-
-    public abstract void setInitialPos(final PositionSet initialPos);
-
-    public abstract void setInitialSpeed(final SpeedSet initialSpeed);
-
-    public abstract void setSlider(final Slider slider);
+    /**
+     * Check for and compute all collissions.
+     * <p>
+     * Does not change <code>pos</code>!
+     * </p>
+     * <p>
+     * Does not fire {@link SpeedSet#notifyChange()}!
+     * </p>
+     * 
+     * @param pos
+     *            the positions (before and after the hit)
+     * @param speed
+     *            (before and after the hit)
+     * @param tr
+     *            Helper reference to avoid internal instanciations.
+     *            <code>null</code> creates a new instance.
+     * @return bitmask of the changed rocks
+     */
+    public abstract int compute(final PositionSet pos, final SpeedSet speed,
+            AffineTransform tr);
 
 }

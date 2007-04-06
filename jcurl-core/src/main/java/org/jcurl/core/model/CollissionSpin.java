@@ -23,6 +23,7 @@ import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
+import org.jcurl.math.MathVec;
 
 /**
  * A hitter including spin.
@@ -60,7 +61,7 @@ public class CollissionSpin extends ColliderBase {
         final double dVy = vb.getY() - va.getY();
         final double dPabs = m * abs(dVy);
         if (abs(X) > mu * dPabs)
-            X = -sgn(Veff) * mu * dPabs;
+            X = -MathVec.sgn(Veff) * mu * dPabs;
         final double dVx = X / m;
         final double dW = -X * R / J;
         va.setX(va.getX() + dVx);

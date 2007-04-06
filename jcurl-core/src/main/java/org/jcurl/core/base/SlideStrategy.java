@@ -134,7 +134,7 @@ public abstract class SlideStrategy extends ModelBase implements Source,
         return timetilhit(a, ap, av, b, bp, bv);
     }
 
-    private ColliderBase coll;
+    private Collider coll;
 
     protected double dt = 0.050;
 
@@ -270,7 +270,7 @@ public abstract class SlideStrategy extends ModelBase implements Source,
 
     protected abstract RockSet getC(int c, double time, RockSet rocks);
 
-    public ColliderBase getColl() {
+    public Collider getColl() {
         return coll;
     }
 
@@ -436,7 +436,7 @@ public abstract class SlideStrategy extends ModelBase implements Source,
     protected abstract void set(final double t0, final PositionSet pos,
             final SpeedSet speed, final int discontinuous);
 
-    public void setColl(final ColliderBase coll) {
+    public void setColl(final Collider coll) {
         if (coll == null) {
             if (this.coll == null)
                 throw new IllegalArgumentException(

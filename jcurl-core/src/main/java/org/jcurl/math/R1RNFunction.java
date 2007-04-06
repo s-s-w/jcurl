@@ -32,31 +32,6 @@ public abstract class R1RNFunction {
     private static final Log log = JCLoggerFactory
             .getLogger(R1RNFunction.class);
 
-    /**
-     * Helper to check (inclusive) interval containment. Robust against
-     * {@link Double#NaN} etc.
-     * 
-     * @param x
-     * @param a
-     * @param b
-     * @param allowSwap
-     *            may <code>a &gt; b</code>?
-     * @return is <code>x</code> within <code>a</code> and <code>b</code>?
-     */
-    static boolean isInside(final double x, double a, double b,
-            final boolean allowSwap) {
-        if (Double.isNaN(x) || Double.isInfinite(x))
-            return false;
-        if (Double.isNaN(a) || Double.isNaN(b))
-            return true;
-        if (allowSwap && a > b) {
-            final double t = a;
-            a = b;
-            b = t;
-        }
-        return a <= x && x <= b;
-    }
-
     private final int dim;
 
     protected R1RNFunction(final int dim) {
@@ -148,7 +123,7 @@ public abstract class R1RNFunction {
                 return Math.abs(this.at(dim, c, x) - y) < eps ? x : Double.NaN;
             dx = (this.at(dim, c, x) - y) / dx;
             x -= dx;
-            if (!isInside(x, x0, xstop, true))
+            if (!MathVec.isInside(x, x0, xstop, true))
                 return Double.NaN;
             if (Math.abs(dx) < eps)
                 return x;
