@@ -141,7 +141,7 @@ public abstract class CurveShape {
      * @param sections
      * @return filled <code>sections</code> array.
      */
-    public static double[] sections(final double min, final double max,
+    public static double[] aequidistantSections(final double min, final double max,
             final double[] sections) {
         final int n = sections.length;
         if (n == 0)

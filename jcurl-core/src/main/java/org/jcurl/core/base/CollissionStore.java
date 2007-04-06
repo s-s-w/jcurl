@@ -25,6 +25,13 @@ import java.util.LinkedList;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
 
+/**
+ * Store unique tupels of two rocks (indices). Has a time stamp for sorting
+ * purpose.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 class CollissionStore {
 
     public static class Tupel {
@@ -49,8 +56,18 @@ class CollissionStore {
 
         @Override
         public boolean equals(final Object obj) {
-            final Tupel b = (Tupel) obj;
-            return a == b.a && this.b == b.b;
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            final Tupel other = (Tupel) obj;
+            if (a != other.a)
+                return false;
+            if (b != other.b)
+                return false;
+            return true;
         }
 
         @Override

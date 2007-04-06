@@ -18,7 +18,16 @@
  */
 package org.jcurl.core.base;
 
-abstract class SlideBase implements Slide, Strategy, Factory {
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+
+/**
+ * Implementation base for {@link Slide}rs.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
+abstract class SlideBase implements Slider {
 
     public static CurveRock still(final double x, final double y, final double a) {
         return new CurveRock() {
@@ -54,6 +63,105 @@ abstract class SlideBase implements Slide, Strategy, Factory {
 
     public static CurveRock still(final Rock x) {
         return still(x.getX(), x.getY(), x.getZ());
+    }
+
+    public abstract CurveRock computeRc(final Rock x0, final Rock v0);
+
+    /**
+     * Compute the RC-&gt;WC transformation for a rock at any time.
+     * 
+     * @param ret
+     *            <code>null</code> creates a new one.
+     * @param x0
+     *            (world coordinates)
+     * @param y0
+     *            (world coordinates)
+     * @param vx
+     *            (world coordinates)
+     * @param vy
+     *            (world coordinates)
+     * @return the transformation matrix
+     * @see CurveTransformed#createRc2Wc(AffineTransform, double, double,
+     *      double, double)
+     * @deprecated Use
+     *             {@link CurveTransformed#createRc2Wc(AffineTransform, double, double, double, double)}
+     */
+    @Deprecated
+    public AffineTransform computeRc2Wc(final AffineTransform ret,
+            final double x0, final double y0, final double vx, final double vy) {
+        return CurveTransformed.createRc2Wc(ret, x0, y0, vx, vy);
+    }
+
+    /**
+     * Compute the RC-&gt;WC transformation for a rock at any time.
+     * 
+     * @param ret
+     *            <code>null</code> creates a new one.
+     * @param x
+     *            (world coordinates)
+     * @param v
+     *            (world coordinates)
+     * @return the transformation matrix
+     * @see CurveTransformed#createRc2Wc(AffineTransform, Point2D, Point2D)
+     * @deprecated Use
+     *             {@link CurveTransformed#createRc2Wc(AffineTransform, Point2D, Point2D)}
+     */
+    @Deprecated
+    public AffineTransform computeRc2Wc(final AffineTransform ret,
+            final Point2D x, final Point2D v) {
+        return CurveTransformed.createRc2Wc(ret, x, v);
+    }
+
+    public abstract double computeV0(final double intervalTime);
+
+    public abstract double getDrawToTeeCurl();
+
+    public abstract double getDrawToTeeTime();
+
+    /**
+     * Compute the RC-&gt;WC transformation for a rock immediately after it's
+     * release (at the hog).
+     * 
+     * @param ret
+     *            <code>null</code> creates a new one.
+     * @param broomX
+     *            (world coordinates)
+     * @param broomY
+     *            (world coordinates)
+     * @return the transformation matrix
+     */
+    public AffineTransform releaseRc2Wc(AffineTransform ret,
+            final double broomX, final double broomY) {
+        if (ret == null)
+            ret = new AffineTransform();
+        else
+            ret.setToIdentity();
+        final double dx = (0 - broomX) * Ice.HACK_2_HOG
+                / (Ice.FAR_HACK_2_TEE - broomY);
+        ret.translate(dx, Ice.FAR_HOG_2_TEE);
+        // TUNE avoid trigonometry
+        ret.rotate(Math.atan2(dx, Ice.HACK_2_HOG) + Math.PI);
+        return ret;
+    }
+
+    /**
+     * Compute the RC-&gt;WC transformation for a rock immediately after release
+     * it's (at the hog).
+     * <p>
+     * Convenience wrapper for
+     * {@link #releaseRc2Wc(AffineTransform, double, double)}.
+     * </p>
+     * 
+     * @param ret
+     *            <code>null</code> creates a new one.
+     * @param broom
+     *            (world coordinates)
+     * @return the transformation matrix
+     * @see #releaseRc2Wc(AffineTransform, double, double)
+     */
+    public AffineTransform releaseRc2Wc(final AffineTransform ret,
+            final Point2D broom) {
+        return releaseRc2Wc(ret, broom.getX(), broom.getY());
     }
 
 }

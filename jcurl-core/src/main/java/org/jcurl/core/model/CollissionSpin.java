@@ -18,7 +18,7 @@
  */
 package org.jcurl.core.model;
 
-import org.jcurl.core.base.Collider;
+import org.jcurl.core.base.ColliderBase;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.helpers.Dim;
@@ -33,7 +33,7 @@ import org.jcurl.core.helpers.DimVal;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CollissionSpin.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class CollissionSpin extends Collider {
+public class CollissionSpin extends ColliderBase {
 
     private static final String FRR = "friction rock-rock";
 

@@ -53,19 +53,27 @@ public abstract class TestShowBase extends TestBase {
         showGui = inEclipse;
     }
 
-    protected final boolean show = showGui;
+    protected final PositionDisplay display;
+
+    protected final JFrame frame;
+
+    public TestShowBase() {
+        frame = showGui ? new JFrame() : null;
+        if (frame != null) {
+            display = new PositionDisplay();
+            frame.setBounds(0, 0, 800, 600);
+            frame.setTitle(getClass().getName());
+            frame.getContentPane().add(display);
+        } else
+            display = null;
+    }
 
     public int showPositionDisplay(final PositionSet p, final Zoomer zoom,
             final long millis, final TimeRunnable r) {
-        if (!show)
+        if (frame == null)
             return -1;
-        final JFrame frame = new JFrame();
-        frame.setBounds(0, 0, 800, 600);
-        frame.setTitle(getClass().getName());
-        final PositionDisplay display = new PositionDisplay();
         display.setZoom(zoom);
         display.setPos(p);
-        frame.getContentPane().add(display);
         frame.setVisible(true);
 
         final long t0 = System.currentTimeMillis();
@@ -80,6 +88,11 @@ public abstract class TestShowBase extends TestBase {
         }
         frame.setVisible(false);
         return loop;
+    }
+
+    public void tearDown() {
+        if (frame != null)
+            frame.setVisible(false);
     }
 
 }

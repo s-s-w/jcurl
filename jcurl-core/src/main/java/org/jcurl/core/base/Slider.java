@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005 M. Rohrmoser
+ * Copyright (C) 2005-2007 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -18,26 +18,30 @@
  */
 package org.jcurl.core.base;
 
-import java.awt.geom.AffineTransform;
-
 /**
- * Interface for classes consuming discrete {@link org.jcurl.core.base.Rock}location
- * data.
+ * Create rock-coordinate curves for running rocks.
  * 
- * @see org.jcurl.core.swing.JCurlDisplay
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id:TargetDiscrete.java 378 2007-01-24 01:18:35Z mrohrmoser $
+ * @version $Id$
  */
-public interface TargetDiscrete extends Target {
+interface Slider extends Strategy, Factory {
 
-    public void setPos(final PositionSet rocks);
+    public abstract CurveRock computeRc(final Rock x0, final Rock v0);
 
     /**
+     * Compute the (absolute) speed at the hog line for a rock released with
+     * given interval time.
+     * <p>
+     * <code>v_0 = {@link Ice#BACK_2_HOG} / t_S - beta t_S</code>
+     * </p>
      * 
-     * @param rocks
-     * @param discontinuous
-     *            bitmask of discontinuous rocks as returned by
-     *            {@link org.jcurl.core.base.ColliderBase#compute(PositionSet, SpeedSet, AffineTransform)}.
+     * @param intervalTime
+     * @return the hog speed.
      */
-    public void setPos(final PositionSet rocks, final int discontinuous);
+    public abstract double computeV0(final double intervalTime);
+
+    public abstract double getDrawToTeeCurl();
+
+    public abstract double getDrawToTeeTime();
+
 }
