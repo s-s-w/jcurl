@@ -51,8 +51,25 @@ public class XmlEncoderTest extends TestCase {
         final XMLEncoder xs = new XMLEncoder(bout);
         xs.writeObject(te);
         xs.close();
-        System.out.println(new String(bout.toByteArray(), "UTF-8"));
-
+        assertEquals(
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
+                        + "<java version=\"1.5.0_10\" class=\"java.beans.XMLDecoder\"> \n"
+                        + " <object class=\"org.jcurl.core.model.CurveManager\"> \n"
+                        + "  <void property=\"collider\"> \n"
+                        + "   <object class=\"org.jcurl.core.model.CollissionSimple\"/> \n"
+                        + "  </void> \n"
+                        + "  <void property=\"collissionDetector\"> \n"
+                        + "   <object class=\"org.jcurl.core.model.NewtonCollissionDetector\"/> \n"
+                        + "  </void> \n"
+                        + "  <void property=\"initialPos\"> \n"
+                        + "   <object class=\"org.jcurl.core.base.PositionSet\"/> \n"
+                        + "  </void> \n"
+                        + "  <void property=\"initialSpeed\"> \n"
+                        + "   <object class=\"org.jcurl.core.base.SpeedSet\"/> \n"
+                        + "  </void> \n"
+                        + "  <void property=\"slider\"> \n"
+                        + "   <object class=\"org.jcurl.core.model.SlideNoCurl\"/> \n"
+                        + "  </void> \n" + " </object> \n" + "</java> \n" + "",
+                new String(bout.toByteArray(), "UTF-8"));
     }
-
 }
