@@ -99,12 +99,6 @@ public class SetupSaxSer {
         this(new XmlSerializer(dst, false));
     }
 
-    private void characters(final ContentHandler dst, final CharSequence str)
-            throws SAXException {
-        final char[] ch = str.toString().toCharArray();
-        dst.characters(ch, 0, ch.length);
-    }
-
     void internal(final Model model) throws SAXException {
         if (model == null)
             return;
@@ -114,7 +108,7 @@ public class SetupSaxSer {
                     .getName());
             xml.startElement(NS, null, "model", atts);
         }
-        for (Entry<CharSequence, DimVal> element : model) {
+        for (final Entry<CharSequence, DimVal> element : model) {
             final AttributesImpl atts = new AttributesImpl();
             atts.addAttribute(NS, null, "name", null, element.getKey()
                     .toString());

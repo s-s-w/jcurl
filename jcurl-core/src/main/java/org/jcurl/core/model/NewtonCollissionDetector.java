@@ -25,8 +25,8 @@ import org.jcurl.math.R1RNFunctionImpl;
 
 /**
  * Uses
- * {@link R1RNFunctionImpl#computeNewtonValue(int, int, double, double, double)} on
- * {@link Distance2DSq} to find the next collission.
+ * {@link R1RNFunctionImpl#computeNewtonValue(int, int, double, double, double)}
+ * on {@link Distance2DSq} to find the next collission.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$

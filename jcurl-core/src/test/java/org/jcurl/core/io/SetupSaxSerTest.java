@@ -52,6 +52,7 @@ public class SetupSaxSerTest extends TestCase {
         Model m = new ModelBase() {
             @Override
             public void init(Map<CharSequence, DimVal> params) {
+                internalInit(params);
             }
         };
         m.init(p);

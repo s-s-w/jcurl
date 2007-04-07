@@ -90,7 +90,7 @@ public class CollissionSpin extends ColliderBase {
      *            the value
      */
     public void setFricRockRock(final double v) {
-        ModelProps.setFrictionRockRock(this.params, mu = v);
+        ModelProps.setFrictionRockRock(params, mu = v);
     }
 
     /**
@@ -101,6 +101,6 @@ public class CollissionSpin extends ColliderBase {
      *            [Joule] the value
      */
     public void setLoss(final double v) {
-        ModelProps.setLoss(this.params, v);
+        ModelProps.setLoss(params, v);
     }
 }

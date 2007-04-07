@@ -42,9 +42,9 @@ public abstract class ModelBase implements Model {
     public abstract void init(final Map<CharSequence, DimVal> params);
 
     protected void internalInit(final Map<CharSequence, DimVal> props) {
-        if (this.params != null)
+        if (params != null)
             throw new IllegalStateException();
-        this.params = ModelProps.create(props);
+        params = ModelProps.create(props);
     }
 
     public Iterator<Entry<CharSequence, DimVal>> iterator() {
@@ -54,7 +54,7 @@ public abstract class ModelBase implements Model {
     protected Object readResolve() throws ObjectStreamException {
         final Map<CharSequence, DimVal> params = this.params;
         this.params = null;
-        this.init(params);
+        init(params);
         return this;
     }
 }

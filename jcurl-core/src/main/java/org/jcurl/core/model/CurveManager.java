@@ -242,12 +242,12 @@ public class CurveManager extends MutableObject implements
 
     protected Object readResolve() throws ObjectStreamException {
         final CurveManager m = new CurveManager();
-        m.setCollider(this.getCollider());
-        m.setCollissionDetector(this.getCollissionDetector());
+        m.setCollider(getCollider());
+        m.setCollissionDetector(getCollissionDetector());
         m.setCurveStore(new CurveStore(RockSet.ROCKS_PER_SET));
-        m.setInitialPos(this.getInitialPos());
-        m.setInitialSpeed(this.getInitialSpeed());
-        m.setSlider(this.getSlider());
+        m.setInitialPos(getInitialPos());
+        m.setInitialSpeed(getInitialSpeed());
+        m.setSlider(getSlider());
         // m.setCurrentTime(this.getCurrentTime());
         return m;
     }

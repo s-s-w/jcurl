@@ -123,8 +123,7 @@ public abstract class WCComponent extends Component implements WCLayer {
         final int w = getWidth();
         final int h = getHeight();
         if (oldWid != w || oldHei != h) {
-            getZoom()
-                    .computeWctoDcTrafo(this.getBounds(), wc_mat);
+            getZoom().computeWctoDcTrafo(this.getBounds(), wc_mat);
             oldWid = w;
             oldHei = h;
             return true;

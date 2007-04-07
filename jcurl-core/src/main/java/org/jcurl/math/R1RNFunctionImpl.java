@@ -38,14 +38,18 @@ public abstract class R1RNFunctionImpl implements R1RNFunction {
         this.dim = dim;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.jcurl.math.R1RNFunction#dim()
      */
     public final int dim() {
         return dim;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.jcurl.math.R1RNFunction#at(int, double, double[])
      */
     public double[] at(final int c, final double t, double[] ret) {
@@ -56,7 +60,9 @@ public abstract class R1RNFunctionImpl implements R1RNFunction {
         return ret;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.jcurl.math.R1RNFunction#at(int, double, float[])
      */
     public float[] at(final int c, final double t, float[] ret) {
@@ -67,7 +73,9 @@ public abstract class R1RNFunctionImpl implements R1RNFunction {
         return ret;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.jcurl.math.R1RNFunction#at(int, int, double)
      */
     public abstract double at(int dim, int c, double t);

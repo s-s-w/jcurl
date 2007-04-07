@@ -106,7 +106,8 @@ public class PositionSet extends RockSet {
      * @return bitmask of the out rocks.
      */
     public static int getOutRocks(final PositionSet a) {
-        final double xmin = IceSize.SIDE_2_CENTER + RockProps.DEFAULT.getRadius();
+        final double xmin = IceSize.SIDE_2_CENTER
+                + RockProps.DEFAULT.getRadius();
         final double ymin = -IceSize.BACK_2_TEE - RockProps.DEFAULT.getRadius();
         int ret = 0;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
@@ -166,7 +167,8 @@ public class PositionSet extends RockSet {
      * @return bitmask of the waiting rocks.
      */
     public static int getWaitRocks(final PositionSet a) {
-        final double xmax = IceSize.SIDE_2_CENTER + RockProps.DEFAULT.getRadius();
+        final double xmax = IceSize.SIDE_2_CENTER
+                + RockProps.DEFAULT.getRadius();
         final double ymax = IceSize.HOG_2_TEE - RockProps.DEFAULT.getRadius();
         int ret = 0;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {

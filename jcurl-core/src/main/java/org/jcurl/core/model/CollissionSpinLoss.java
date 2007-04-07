@@ -124,6 +124,7 @@ public class CollissionSpinLoss extends ColliderBase {
         setLoss(loss);
     }
 
+    @Override
     public void init(final Map<CharSequence, DimVal> params) {
         internalInit(params);
         init(ModelProps.getFrictionRockRock(this.params), ModelProps

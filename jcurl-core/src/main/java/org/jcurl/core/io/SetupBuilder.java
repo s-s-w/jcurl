@@ -71,8 +71,6 @@ public class SetupBuilder {
 
     private static final int SpeedTo = 4;
 
-    private Collider collStrat = null;
-
     private boolean isFrozen = false;
 
     private final PositionSet pos = PositionSet.allHome();
@@ -93,9 +91,8 @@ public class SetupBuilder {
             throws InstantiationException, IllegalAccessException {
         final Model mb = (Model) clz.newInstance();
         mb.init(params);
-        if (mb instanceof Collider)
-            collStrat = (Collider) mb;
-        else if (mb instanceof Slider)
+        if (mb instanceof Collider) {
+        } else if (mb instanceof Slider)
             slideStrat = (Slider) mb;
         else
             throw new IllegalArgumentException("Unknown model type "
@@ -146,10 +143,10 @@ public class SetupBuilder {
                             rocks[i].to_y.to(Dim.METER).val);
                     MathVec.sub(v, x, v);
                     throw new NotImplementedException();
-//                    MathVec.mult(slideStrat.getInitialSpeed(x.getY(),
-//                            rocks[i].speed.val)
-//                            / MathVec.abs2D(v), v, v);
-//                    break;
+                    // MathVec.mult(slideStrat.getInitialSpeed(x.getY(),
+                    // rocks[i].speed.val)
+                    // / MathVec.abs2D(v), v, v);
+                    // break;
                 case Coords:
                     if (rocks[i].vx != null)
                         v.setX(rocks[i].vx.to(Dim.METER_PER_SEC).val);

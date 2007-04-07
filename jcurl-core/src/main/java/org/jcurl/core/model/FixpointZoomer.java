@@ -40,8 +40,8 @@ public class FixpointZoomer extends Zoomer {
     private static final float _dia = 2 * RockProps.DEFAULT.getRadius();
 
     public static final Zoomer C12 = new FixpointZoomer("Twelve foot circle",
-            -IceSize.SIDE_2_CENTER, -IceSize.SIDE_2_CENTER, 2 * IceSize.SIDE_2_CENTER,
-            2 * IceSize.SIDE_2_CENTER, 0, 0);
+            -IceSize.SIDE_2_CENTER, -IceSize.SIDE_2_CENTER,
+            2 * IceSize.SIDE_2_CENTER, 2 * IceSize.SIDE_2_CENTER, 0, 0);
 
     public static final Zoomer HOG2HACK = new FixpointZoomer(
             "Far hog back line", -(IceSize.SIDE_2_CENTER + _dia),

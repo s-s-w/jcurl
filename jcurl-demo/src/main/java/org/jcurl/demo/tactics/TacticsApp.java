@@ -230,7 +230,7 @@ public class TacticsApp extends JFrame {
         }
         {
             final Box b0 = Box.createHorizontalBox();
-            t.add("Ice", b0);
+            t.add("IceSize", b0);
             {
                 final JPanel b1 = new JPanel(new BorderLayout());
                 b1.add(new JLabel("Curl"), "North");

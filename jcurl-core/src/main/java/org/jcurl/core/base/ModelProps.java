@@ -36,19 +36,21 @@ public final class ModelProps {
     private static final long serialVersionUID = -5959858338365408866L;
 
     public static Map<CharSequence, DimVal> create() {
-        return new HashMap<CharSequence, DimVal>();
+        return create(null);
     }
 
-    public static Map<CharSequence, DimVal> create(Map<CharSequence, DimVal> m) {
-        return new HashMap<CharSequence, DimVal>(m);
+    public static Map<CharSequence, DimVal> create(
+            final Map<CharSequence, DimVal> m) {
+        return m == null ? new HashMap<CharSequence, DimVal>()
+                : new HashMap<CharSequence, DimVal>(m);
     }
 
-    public static double get(Map<CharSequence, DimVal> p,
+    public static double get(final Map<CharSequence, DimVal> p,
             final CharSequence key, final Dim dim) {
         return p.get(key).to(dim).val;
     }
 
-    public static double getDrawToTeeCurl(Map<CharSequence, DimVal> p) {
+    public static double getDrawToTeeCurl(final Map<CharSequence, DimVal> p) {
         return get(p, DrawToTeeCurl, Dim.METER);
     }
 
@@ -56,24 +58,24 @@ public final class ModelProps {
      * 
      * @return may be {@link Double#POSITIVE_INFINITY}
      */
-    public static double getDrawToTeeTime(Map<CharSequence, DimVal> p) {
+    public static double getDrawToTeeTime(final Map<CharSequence, DimVal> p) {
         return get(p, DrawToTeeTime, Dim.SECOND);
     }
 
-    public static double getFrictionRockRock(Map<CharSequence, DimVal> p) {
+    public static double getFrictionRockRock(final Map<CharSequence, DimVal> p) {
         return get(p, FrictionRockRock, Dim.NONE);
     }
 
-    public static double getLoss(Map<CharSequence, DimVal> p) {
+    public static double getLoss(final Map<CharSequence, DimVal> p) {
         return get(p, Loss, Dim.JOULE);
     }
 
-    public static void put(Map<CharSequence, DimVal> p, final CharSequence key,
-            final double val, final Dim dim) {
+    public static void put(final Map<CharSequence, DimVal> p,
+            final CharSequence key, final double val, final Dim dim) {
         p.put(key, new DimVal(val, dim));
     }
 
-    public static void setDrawToTeeCurl(Map<CharSequence, DimVal> p,
+    public static void setDrawToTeeCurl(final Map<CharSequence, DimVal> p,
             final double drawToTeeCurl) {
         put(p, DrawToTeeCurl, drawToTeeCurl, Dim.METER);
     }
@@ -83,12 +85,12 @@ public final class ModelProps {
      * @param drawToTeeTime
      *            may be {@link Double#POSITIVE_INFINITY}
      */
-    public static void setDrawToTeeTime(Map<CharSequence, DimVal> p,
+    public static void setDrawToTeeTime(final Map<CharSequence, DimVal> p,
             final double drawToTeeTime) {
         put(p, DrawToTeeTime, drawToTeeTime, Dim.SECOND);
     }
 
-    public static void setFrictionRockRock(Map<CharSequence, DimVal> p,
+    public static void setFrictionRockRock(final Map<CharSequence, DimVal> p,
             final double frictionRockRock) {
         put(p, FrictionRockRock, frictionRockRock, Dim.NONE);
     }
@@ -98,7 +100,8 @@ public final class ModelProps {
      * @param loss
      *            may be {@link Double#POSITIVE_INFINITY}
      */
-    public static void setLoss(Map<CharSequence, DimVal> p, final double loss) {
+    public static void setLoss(final Map<CharSequence, DimVal> p,
+            final double loss) {
         put(p, Loss, loss, Dim.JOULE);
     }
 

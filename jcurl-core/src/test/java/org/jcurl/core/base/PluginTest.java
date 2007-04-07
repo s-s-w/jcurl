@@ -20,8 +20,8 @@ package org.jcurl.core.base;
 
 import java.util.Iterator;
 
-import sun.misc.Service;
 import junit.framework.TestCase;
+import sun.misc.Service;
 
 public class PluginTest extends TestCase {
 

@@ -62,12 +62,12 @@ public class SlideDenny extends SlideBase {
     }
 
     @Override
-    public CurveRock computeRc(Rock x0, Rock v0) {
+    public CurveRock computeRc(final Rock x0, final Rock v0) {
         throw new NotImplementedYetException();
     }
 
     @Override
-    public double computeV0(double intervalTime) {
+    public double computeV0(final double intervalTime) {
         throw new NotImplementedYetException();
     }
 
@@ -124,7 +124,7 @@ public class SlideDenny extends SlideBase {
     }
 
     @Override
-    public void init(Map<CharSequence, DimVal> ice) {
+    public void init(final Map<CharSequence, DimVal> ice) {
         throw new NotImplementedYetException();
     }
 

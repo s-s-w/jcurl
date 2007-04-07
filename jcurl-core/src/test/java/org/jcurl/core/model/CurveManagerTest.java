@@ -34,7 +34,8 @@ public class CurveManagerTest extends TestShowBase {
     private static final Log log = JCLoggerFactory
             .getLogger(CurveManagerTest.class);
 
-    void showPaths(final Iterator<Iterable<Entry<Double, R1RNFunctionImpl>>> it,
+    void showPaths(
+            final Iterator<Iterable<Entry<Double, R1RNFunctionImpl>>> it,
             final double tmin, final double tmax) throws InterruptedException {
         if (frame == null)
             return;
@@ -86,7 +87,8 @@ public class CurveManagerTest extends TestShowBase {
         te.setCollissionDetector(new NewtonCollissionDetector());
         te.setSlider(new SlideNoCurl(23, 0));
         te.setInitialPos(PositionSet.allHome());
-        te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, Math.PI);
+        te.getInitialPos().getDark(0)
+                .setLocation(0, IceSize.HOG_2_TEE, Math.PI);
         te.setInitialSpeed(new SpeedSet());
         te.getInitialSpeed().getDark(0).setLocation(0,
                 -te.getSlider().computeV0(9), Math.PI / 2);

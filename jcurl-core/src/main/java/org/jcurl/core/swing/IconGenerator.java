@@ -53,7 +53,8 @@ public class IconGenerator {
         }
         final SetupBuilder setup = SetupSaxDeSer.parse(url);
 
-        savePng(setup.getPos(), FixpointZoomer.HOUSE2HACK, new File("/tmp/jcurl.png"));
+        savePng(setup.getPos(), FixpointZoomer.HOUSE2HACK, new File(
+                "/tmp/jcurl.png"));
     }
 
     /**

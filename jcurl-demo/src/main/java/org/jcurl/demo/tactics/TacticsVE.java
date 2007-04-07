@@ -54,7 +54,7 @@ public class TacticsVE {
     private PositionDisplay getJCurlDisplay() {
         if (jCurlDisplay == null) {
             jCurlDisplay = new PositionDisplay();
-            jCurlDisplay.setName("Ice");
+            jCurlDisplay.setName("IceSize");
             jCurlDisplay
                     .setFont(new Font("Bitstream Vera Sans", Font.PLAIN, 12));
             //jCurlDisplay.setMinimumSize(new Dimension(100, 50));

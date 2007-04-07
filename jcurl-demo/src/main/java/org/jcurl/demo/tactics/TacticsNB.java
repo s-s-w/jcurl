@@ -291,7 +291,7 @@ public class TacticsNB extends javax.swing.JFrame {
                 GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).add(drawToTeePanel,
                 GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
                 Short.MAX_VALUE));
-        controlTabbedPane.addTab("Ice", iceTab);
+        controlTabbedPane.addTab("IceSize", iceTab);
 
         GroupLayout completePanelLayout = new GroupLayout(completePanel);
         completePanel.setLayout(completePanelLayout);

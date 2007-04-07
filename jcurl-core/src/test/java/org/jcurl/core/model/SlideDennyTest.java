@@ -28,6 +28,6 @@ public class SlideDennyTest extends TestCase {
 
     public void test010() {
         // FIXME final SlideDenny s = new SlideDenny();
-        //final R1RNFunction c = s.createCurve(new RockDouble());
+        // final R1RNFunction c = s.createCurve(new RockDouble());
     }
 }
