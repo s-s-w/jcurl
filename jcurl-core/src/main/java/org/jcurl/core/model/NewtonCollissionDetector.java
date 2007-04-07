@@ -18,7 +18,7 @@
  */
 package org.jcurl.core.model;
 
-import org.jcurl.core.base.CollissionDetector;
+import org.jcurl.core.base.CollissionDetectorBase;
 import org.jcurl.math.Distance2DSq;
 import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.R1RNFunctionImpl;
@@ -31,7 +31,7 @@ import org.jcurl.math.R1RNFunctionImpl;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class NewtonCollissionDetector extends CollissionDetector {
+public class NewtonCollissionDetector extends CollissionDetectorBase {
 
     @Override
     public double compute(final double t0, final double tmax,

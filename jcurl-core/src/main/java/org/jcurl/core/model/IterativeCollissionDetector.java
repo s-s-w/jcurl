@@ -18,10 +18,10 @@
  */
 package org.jcurl.core.model;
 
-import org.jcurl.core.base.CollissionDetector;
+import org.jcurl.core.base.CollissionDetectorBase;
 import org.jcurl.math.R1RNFunction;
 
-public class IterativeCollissionDetector extends CollissionDetector {
+public class IterativeCollissionDetector extends CollissionDetectorBase {
 
     @Override
     public double compute(final double t0, final double tmax,

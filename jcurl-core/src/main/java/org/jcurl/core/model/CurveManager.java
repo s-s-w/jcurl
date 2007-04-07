@@ -25,7 +25,7 @@ import java.io.ObjectStreamException;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.Collider;
-import org.jcurl.core.base.CollissionDetector;
+import org.jcurl.core.base.CollissionDetectorBase;
 import org.jcurl.core.base.ComputedTrajectorySet;
 import org.jcurl.core.base.CurveStore;
 import org.jcurl.core.base.CurveTransformed;
@@ -60,7 +60,7 @@ public class CurveManager extends MutableObject implements
 
     private Collider collider = null;
 
-    private CollissionDetector collissionDetector = null;
+    private CollissionDetectorBase collissionDetector = null;
 
     private transient final CollissionStore collissionStore = new CollissionStore();
 
@@ -199,7 +199,7 @@ public class CurveManager extends MutableObject implements
         return collider;
     }
 
-    public CollissionDetector getCollissionDetector() {
+    public CollissionDetectorBase getCollissionDetector() {
         return collissionDetector;
     }
 
@@ -259,7 +259,7 @@ public class CurveManager extends MutableObject implements
     }
 
     public void setCollissionDetector(
-            final CollissionDetector collissionDetector) {
+            final CollissionDetectorBase collissionDetector) {
         dirty = true;
         propChange.firePropertyChange("collissionDetector",
                 this.collissionDetector, collissionDetector);

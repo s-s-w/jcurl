@@ -18,10 +18,10 @@
  */
 package org.jcurl.core.base;
 
-import org.jcurl.math.R1RNFunctionImpl;
+import org.jcurl.math.R1RNFunction;
 
 /**
- * {@link R1RNFunctionImpl} based trajectory set.
+ * {@link R1RNFunction} based trajectory set.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
@@ -30,7 +30,7 @@ public interface ComputedTrajectorySet extends TrajectorySet {
 
     public abstract Collider getCollider();
 
-    public abstract CollissionDetector getCollissionDetector();
+    public abstract CollissionDetectorBase getCollissionDetector();
 
     public abstract PositionSet getInitialPos();
 
@@ -41,7 +41,7 @@ public interface ComputedTrajectorySet extends TrajectorySet {
     public abstract void setCollider(final Collider collider);
 
     public abstract void setCollissionDetector(
-            final CollissionDetector collissionDetector);
+            final CollissionDetectorBase collissionDetector);
 
     public abstract void setInitialPos(final PositionSet initialPos);
 

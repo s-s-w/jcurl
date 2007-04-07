@@ -20,7 +20,7 @@ package org.jcurl.core.model;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.base.CollissionDetector;
+import org.jcurl.core.base.CollissionDetectorBase;
 import org.jcurl.core.base.CurveRock;
 import org.jcurl.core.base.CurveRockAnalytic;
 import org.jcurl.core.base.SlideBase;
@@ -57,12 +57,12 @@ public class CollissionNewtonTest extends TestCase {
                 new Polynome(new double[] { 3.141592653589793 }) });
 
         assertEquals("", 1.5690174844768945, new Distance2DSq(c0, c1,
-                CollissionDetector.RR2).computeNewtonValue(0, 0,
-                CollissionDetector.RR2, 0, 5), 1e-9);
+                CollissionDetectorBase.RR2).computeNewtonValue(0, 0,
+                CollissionDetectorBase.RR2, 0, 5), 1e-9);
         c1 = SlideBase.still(0, 2, 0);
         assertEquals("", 1.5690174844768945, new Distance2DSq(c0, c1,
-                CollissionDetector.RR2).computeNewtonValue(0, 0,
-                CollissionDetector.RR2, 0, 5), 1e-9);
+                CollissionDetectorBase.RR2).computeNewtonValue(0, 0,
+                CollissionDetectorBase.RR2, 0, 5), 1e-9);
     }
 
     public void testStill() {

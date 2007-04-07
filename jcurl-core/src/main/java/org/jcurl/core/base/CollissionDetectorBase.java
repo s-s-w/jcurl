@@ -28,7 +28,7 @@ import org.jcurl.math.R1RNFunctionImpl;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class CollissionDetector implements Strategy {
+public abstract class CollissionDetectorBase implements Strategy {
 
     public static final double RR2 = MathVec.sqr(2 * RockProps.DEFAULT
             .getRadius());

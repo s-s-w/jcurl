@@ -19,7 +19,7 @@
 package org.jcurl.math;
 
 import org.apache.commons.math.MathException;
-import org.jcurl.core.base.CollissionDetector;
+import org.jcurl.core.base.CollissionDetectorBase;
 import org.jcurl.core.base.CurveRock;
 import org.jcurl.core.base.CurveRockAnalytic;
 import org.jcurl.core.base.Rock;
@@ -63,7 +63,7 @@ public class Distance2DSqTest extends TestBase {
 
     public void testPointStraightLine() throws MathException {
         final Distance2DSq d = new Distance2DSq(createPoint2D(2, 1),
-                createPoly(new double[] { -1, 0.5 }), CollissionDetector.RR2);
+                createPoly(new double[] { -1, 0.5 }), CollissionDetectorBase.RR2);
         assertEquals(2.811956073217295, Math.sqrt(d.at(0)));
         assertEquals(1.7768221513994102, Math.sqrt(d.at(1)));
         assertEquals(0.9524163783260075, Math.sqrt(d.at(2)));
@@ -71,7 +71,7 @@ public class Distance2DSqTest extends TestBase {
         assertEquals(Double.NaN, d.computeNewtonZero(0, 0, 0, 5));
 
         assertEquals(Double.NaN, new Distance2DSq(createPoint2D(2, 2),
-                createPoly(new double[] { 0, 1 }), CollissionDetector.RR2)
+                createPoly(new double[] { 0, 1 }), CollissionDetectorBase.RR2)
                 .computeNewtonZero(0, 0, 0, 5));
     }
 
