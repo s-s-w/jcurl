@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 public class DimVal {
 
     public static final Pattern pat = Pattern
-            .compile("^(-?[0-9]+([.][0-9]+)?(e-?[0-9]+)?)(.*)$");
+            .compile("^(-?[0-9]+([.][0-9]+)?(e-?[0-9]+)?)[ \t]*([\\S]+)$");
 
     public static DimVal parse(final String txt) {
         // split the string

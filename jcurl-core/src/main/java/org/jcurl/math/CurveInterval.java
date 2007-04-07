@@ -29,14 +29,14 @@ package org.jcurl.math;
 @Deprecated
 public class CurveInterval extends R1RNFunctionImpl {
 
-    private final R1RNFunctionImpl curve;
+    private final R1RNFunction curve;
 
     private final double tmax;
 
     private final double tmin;
 
     public CurveInterval(final double tmin, final double tmax,
-            final R1RNFunctionImpl curve) {
+            final R1RNFunction curve) {
         super(curve.dim());
         this.curve = curve;
         this.tmin = tmin;

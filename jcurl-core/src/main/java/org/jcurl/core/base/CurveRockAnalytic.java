@@ -20,6 +20,7 @@ package org.jcurl.core.base;
 
 import org.jcurl.math.CurveFkt;
 import org.jcurl.math.R1R1Function;
+import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.R1RNFunctionImpl;
 
 /**
@@ -30,7 +31,7 @@ import org.jcurl.math.R1RNFunctionImpl;
  */
 public class CurveRockAnalytic extends CurveRock {
 
-    private final R1RNFunctionImpl f;
+    private final R1RNFunction f;
 
     public CurveRockAnalytic(final R1R1Function x, final R1R1Function y,
             final R1R1Function a) {
@@ -46,7 +47,7 @@ public class CurveRockAnalytic extends CurveRock {
         this(new CurveFkt(x));
     }
 
-    public CurveRockAnalytic(final R1RNFunctionImpl f) {
+    public CurveRockAnalytic(final R1RNFunction f) {
         if (f.dim() != 3)
             throw new IllegalArgumentException("Function must be 3-dimensional");
         this.f = f;

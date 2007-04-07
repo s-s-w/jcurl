@@ -27,7 +27,7 @@ import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.math.CurveFkt;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.Polynome;
-import org.jcurl.math.R1RNFunctionImpl;
+import org.jcurl.math.R1RNFunction;
 
 /**
  * Mark Denny's curl-model. Motion of a curling rock acc. to "Curling rock
@@ -78,12 +78,12 @@ public class SlideDenny extends SlideBase {
         super();
     }
 
-    protected R1RNFunctionImpl createCurve(final double t0, final Rock pos,
+    protected R1RNFunction createCurve(final double t0, final Rock pos,
             final Rock speed) {
         throw new NotImplementedYetException();
     }
 
-    protected R1RNFunctionImpl createCurve(final Rock speed) {
+    protected R1RNFunction createCurve(final Rock speed) {
         final Polynome[] x = new Polynome[3];
         x[0] = new Polynome(new double[] { 0, 1, 2, 3 });
         x[1] = new Polynome(new double[] { 0, 1, 2, 3 });

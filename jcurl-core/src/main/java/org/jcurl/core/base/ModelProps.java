@@ -34,35 +34,35 @@ public class ModelProps implements Map<CharSequence, DimVal> {
 
     private static final long serialVersionUID = -5959858338365408866L;
 
-    private final Map<CharSequence, DimVal> p;
+    private final Map<CharSequence, DimVal> props;
 
     public ModelProps() {
         this(null);
     }
 
     public ModelProps(final Map<CharSequence, DimVal> p) {
-        this.p = p == null ? new HashMap<CharSequence, DimVal>() : p;
+        this.props = p == null ? new HashMap<CharSequence, DimVal>() : p;
     }
 
     public void clear() {
-        p.clear();
+        props.clear();
     }
 
     public boolean containsKey(final Object arg0) {
-        return p.containsKey(arg0);
+        return props.containsKey(arg0);
     }
 
     public boolean containsValue(final Object arg0) {
-        return p.containsValue(arg0);
+        return props.containsValue(arg0);
     }
 
     public Set<Entry<CharSequence, DimVal>> entrySet() {
-        return p.entrySet();
+        return props.entrySet();
     }
 
     @Override
     public boolean equals(final Object arg0) {
-        return p.equals(arg0);
+        return props.equals(arg0);
     }
 
     public double get(final CharSequence key, final Dim dim) {
@@ -70,7 +70,7 @@ public class ModelProps implements Map<CharSequence, DimVal> {
     }
 
     public DimVal get(final Object arg0) {
-        return p.get(arg0);
+        return props.get(arg0);
     }
 
     public double getDrawToTeeCurl() {
@@ -87,19 +87,19 @@ public class ModelProps implements Map<CharSequence, DimVal> {
 
     @Override
     public int hashCode() {
-        return p.hashCode();
+        return props.hashCode();
     }
 
     public boolean isEmpty() {
-        return p.isEmpty();
+        return props.isEmpty();
     }
 
     public Set<CharSequence> keySet() {
-        return p.keySet();
+        return props.keySet();
     }
 
     public DimVal put(final CharSequence arg0, final DimVal arg1) {
-        return p.put(arg0, arg1);
+        return props.put(arg0, arg1);
     }
 
     public void put(final CharSequence key, final double val, final Dim dim) {
@@ -107,11 +107,11 @@ public class ModelProps implements Map<CharSequence, DimVal> {
     }
 
     public void putAll(final Map<? extends CharSequence, ? extends DimVal> arg0) {
-        p.putAll(arg0);
+        props.putAll(arg0);
     }
 
     public DimVal remove(final Object arg0) {
-        return p.remove(arg0);
+        return props.remove(arg0);
     }
 
     public void setDrawToTeeCurl(final double drawToTeeCurl) {
@@ -128,10 +128,10 @@ public class ModelProps implements Map<CharSequence, DimVal> {
     }
 
     public int size() {
-        return p.size();
+        return props.size();
     }
 
     public Collection<DimVal> values() {
-        return p.values();
+        return props.values();
     }
 }

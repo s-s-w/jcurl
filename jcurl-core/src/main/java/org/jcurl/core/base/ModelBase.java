@@ -30,22 +30,22 @@ import org.jcurl.core.helpers.DimVal;
  */
 public abstract class ModelBase implements Model {
 
-    protected ModelProps props = null;
+    protected ModelProps data = null;
 
     public DimVal getProp(final CharSequence key) {
-        return props.get(key);
+        return data.get(key);
     }
 
     public void init(final Map<CharSequence, DimVal> props) {
-        if (this.props != null)
+        if (this.data != null)
             throw new IllegalStateException();
         if (props instanceof ModelProps)
-            this.props = (ModelProps) props;
+            this.data = (ModelProps) props;
         else
-            this.props = new ModelProps(props);
+            this.data = new ModelProps(props);
     }
 
     public Iterator<Entry<CharSequence, DimVal>> iterator() {
-        return props.entrySet().iterator();
+        return data.entrySet().iterator();
     }
 }

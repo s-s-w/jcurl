@@ -147,7 +147,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
 
     protected final Rock[] dark = new Rock[ROCKS_PER_COLOR];
 
-    private long lastChanged = 0;
+    private transient long lastChanged = 0;
 
     protected final Rock[] light = new Rock[ROCKS_PER_COLOR];
 

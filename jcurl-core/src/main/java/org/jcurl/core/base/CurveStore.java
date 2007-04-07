@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import org.jcurl.math.CurveCombined;
+import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.R1RNFunctionImpl;
 
 /**
@@ -50,7 +51,7 @@ public class CurveStore implements
         curve[i].add(t, f);
     }
 
-    public R1RNFunctionImpl getCurve(final int i) {
+    public R1RNFunction getCurve(final int i) {
         return curve[i];
     }
 

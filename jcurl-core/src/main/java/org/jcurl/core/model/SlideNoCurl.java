@@ -23,8 +23,8 @@ import java.util.Map;
 import org.jcurl.core.base.CurveRock;
 import org.jcurl.core.base.CurveRockAnalytic;
 import org.jcurl.core.base.IceSize;
-import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.ModelProps;
+import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.SlideBase;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.math.MathVec;
@@ -39,9 +39,9 @@ import org.jcurl.math.Polynome;
  */
 public class SlideNoCurl extends SlideBase {
 
-    double beta;
+    transient double beta;
 
-    double drawToTeeV0;
+    transient double drawToTeeV0;
 
     public SlideNoCurl() {
     }
@@ -125,6 +125,6 @@ public class SlideNoCurl extends SlideBase {
     @Override
     public void init(final Map<CharSequence, DimVal> ice) {
         super.init(ice);
-        init(props.getDrawToTeeTime(), props.getDrawToTeeCurl());
+        init(data.getDrawToTeeTime(), data.getDrawToTeeCurl());
     }
 }

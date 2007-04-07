@@ -19,6 +19,7 @@
 package org.jcurl.core.base;
 
 import org.jcurl.math.MathVec;
+import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.R1RNFunctionImpl;
 
 /**
@@ -56,7 +57,7 @@ public abstract class CollissionDetector implements Strategy {
      * @return time of next collission or {@link Double#NaN} if none.
      */
     public double compute(final double t0, final double tstop,
-            final R1RNFunctionImpl fa, final R1RNFunctionImpl fb) {
+            final R1RNFunction fa, final R1RNFunction fb) {
         return compute(t0, tstop, fa, fb, RR2);
     }
 
@@ -79,7 +80,7 @@ public abstract class CollissionDetector implements Strategy {
      * @return time of next collission or {@link Double#NaN} if none.
      */
     public abstract double compute(final double t0, final double tstop,
-            final R1RNFunctionImpl fa, final R1RNFunctionImpl fb, final double distSq);
+            final R1RNFunction fa, final R1RNFunction fb, final double distSq);
 
     /**
      * Find the smallest <code>t</code> with
@@ -106,7 +107,7 @@ public abstract class CollissionDetector implements Strategy {
      * @return time of next collission or {@link Double#NaN} if none.
      */
     public double compute(final double t0, final double tstop,
-            final R1RNFunctionImpl fa, final double ra, final R1RNFunctionImpl fb,
+            final R1RNFunction fa, final double ra, final R1RNFunction fb,
             final double rb) {
         return compute(t0, tstop, fa, fb, MathVec.sqr(ra + rb));
     }

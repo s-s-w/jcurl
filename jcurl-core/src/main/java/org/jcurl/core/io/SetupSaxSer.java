@@ -49,7 +49,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  */
 public class SetupSaxSer {
 
-    private static final String NS = "http://www.jcurl.org/schemas/2006/basic";
+    static final String NS = "http://www.jcurl.org/schemas/2006/basic";
 
     private static ContentHandler getCH(final File dst) throws IOException {
         OutputStream o = new FileOutputStream(dst, false);

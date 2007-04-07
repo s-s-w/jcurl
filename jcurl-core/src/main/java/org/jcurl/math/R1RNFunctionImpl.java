@@ -27,7 +27,7 @@ import org.jcurl.core.log.JCLoggerFactory;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class R1RNFunctionImpl {
+public abstract class R1RNFunctionImpl implements R1RNFunction {
 
     private static final Log log = JCLoggerFactory
             .getLogger(R1RNFunctionImpl.class);
@@ -38,22 +38,15 @@ public abstract class R1RNFunctionImpl {
         this.dim = dim;
     }
 
+    /* (non-Javadoc)
+     * @see org.jcurl.math.R1RNFunction#dim()
+     */
     public final int dim() {
         return dim;
     }
 
-    /**
-     * Compute the c'th derivative of all dimensions at <code>t</code>.
-     * 
-     * Default implementation via iteration over {@link #at(int, int, double)}.
-     * 
-     * @param c
-     *            derivative (0=location, 1:speed, ...)
-     * @param t
-     *            t-value (input)
-     * @param ret
-     *            return value container
-     * @return the c'th derivative at <code>t</code>
+    /* (non-Javadoc)
+     * @see org.jcurl.math.R1RNFunction#at(int, double, double[])
      */
     public double[] at(final int c, final double t, double[] ret) {
         if (ret == null)
@@ -63,16 +56,8 @@ public abstract class R1RNFunctionImpl {
         return ret;
     }
 
-    /**
-     * Compute the c'th derivative of all dimensions at <code>t</code>.
-     * 
-     * @param c
-     *            derivative (0=location, 1:speed, ...)
-     * @param t
-     *            t-value (input)
-     * @param ret
-     *            return value container
-     * @return the c'th derivative at <code>t</code>
+    /* (non-Javadoc)
+     * @see org.jcurl.math.R1RNFunction#at(int, double, float[])
      */
     public float[] at(final int c, final double t, float[] ret) {
         if (ret == null)
@@ -82,16 +67,8 @@ public abstract class R1RNFunctionImpl {
         return ret;
     }
 
-    /**
-     * Compute the c'th derivative of the given dimension at <code>t</code>.
-     * 
-     * @param dim
-     *            dimension (0,1,2,...)
-     * @param c
-     *            derivative (0=location, 1:speed, ...)
-     * @param t
-     *            t-value
-     * @return the c'th derivative at <code>t</code>
+    /* (non-Javadoc)
+     * @see org.jcurl.math.R1RNFunction#at(int, int, double)
      */
     public abstract double at(int dim, int c, double t);
 

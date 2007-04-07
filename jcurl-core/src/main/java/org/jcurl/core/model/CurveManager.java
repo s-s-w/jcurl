@@ -21,6 +21,7 @@ package org.jcurl.core.model;
 import java.awt.geom.AffineTransform;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.ObjectStreamException;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.Collider;
@@ -61,17 +62,18 @@ public class CurveManager extends MutableObject implements
 
     private CollissionDetector collissionDetector = null;
 
-    private final CollissionStore collissionStore = new CollissionStore();
+    private transient final CollissionStore collissionStore = new CollissionStore();
 
-    private final PositionSet currentPos = new PositionSet();
+    private transient final PositionSet currentPos = new PositionSet();
 
-    private final SpeedSet currentSpeed = new SpeedSet();
+    private transient final SpeedSet currentSpeed = new SpeedSet();
 
-    private double currentTime = 0;
+    private transient double currentTime = 0;
 
-    private CurveStore curveStore = new CurveStore(RockSet.ROCKS_PER_SET);
+    private transient CurveStore curveStore = new CurveStore(
+            RockSet.ROCKS_PER_SET);
 
-    private boolean dirty = true;
+    private transient boolean dirty = true;
 
     private PositionSet initialPos = null;
 
@@ -236,6 +238,18 @@ public class CurveManager extends MutableObject implements
 
     public void propertyChange(final PropertyChangeEvent arg0) {
         log.info(arg0);
+    }
+
+    protected Object readResolve() throws ObjectStreamException {
+        final CurveManager m = new CurveManager();
+        m.setCollider(this.getCollider());
+        m.setCollissionDetector(this.getCollissionDetector());
+        m.setCurveStore(new CurveStore(RockSet.ROCKS_PER_SET));
+        m.setInitialPos(this.getInitialPos());
+        m.setInitialSpeed(this.getInitialSpeed());
+        m.setSlider(this.getSlider());
+        // m.setCurrentTime(this.getCurrentTime());
+        return m;
     }
 
     public void setCollider(final Collider collider) {
