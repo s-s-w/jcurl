@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005 M. Rohrmoser
+ * Copyright (C) 2005-2007 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -18,15 +18,20 @@
  */
 package org.jcurl.core.base;
 
-/**
- * Marker interface for classes consuming {@link org.jcurl.core.base.Rock}
- * location data.
- * 
- * @deprecated
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id:Target.java 378 2007-01-24 01:18:35Z mrohrmoser $
- */
-@Deprecated
-interface Target {
+import java.util.Iterator;
 
+import sun.misc.Service;
+import junit.framework.TestCase;
+
+public class PluginTest extends TestCase {
+
+    public void testSlider() {
+        final Iterator it = Service.providers(Slider.class);
+        assertNotNull(it.next());
+    }
+
+    public void testCollider() {
+        final Iterator it = Service.providers(Collider.class);
+        assertNotNull(it.next());
+    }
 }

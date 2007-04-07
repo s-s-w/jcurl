@@ -174,7 +174,7 @@ public class PositionDisplay extends WCComponent implements
         g2.setPaint(getIcePainter().color.backGround);
         g2.fillRect(0, 0, getWidth(), getHeight());
         g2.transform(wc_mat);
-        // Ice
+        // IceSize
         getIcePainter().paintIceWC(g2);
     }
 

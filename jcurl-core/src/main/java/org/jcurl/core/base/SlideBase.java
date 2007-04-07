@@ -27,8 +27,7 @@ import java.awt.geom.Point2D;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class SlideBase implements Slider {
-
+public abstract class SlideBase extends ModelBase implements Slider {
     public static CurveRock still(final double x, final double y, final double a) {
         return new CurveRock() {
 
@@ -136,11 +135,11 @@ public abstract class SlideBase implements Slider {
             ret = new AffineTransform();
         else
             ret.setToIdentity();
-        final double dx = (0 - broomX) * Ice.HACK_2_HOG
-                / (Ice.FAR_HACK_2_TEE - broomY);
-        ret.translate(dx, Ice.FAR_HOG_2_TEE);
+        final double dx = (0 - broomX) * IceSize.HACK_2_HOG
+                / (IceSize.FAR_HACK_2_TEE - broomY);
+        ret.translate(dx, IceSize.FAR_HOG_2_TEE);
         // TUNE avoid trigonometry
-        ret.rotate(Math.atan2(dx, Ice.HACK_2_HOG) + Math.PI);
+        ret.rotate(Math.atan2(dx, IceSize.HACK_2_HOG) + Math.PI);
         return ret;
     }
 

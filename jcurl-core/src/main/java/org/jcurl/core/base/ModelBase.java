@@ -20,29 +20,32 @@ package org.jcurl.core.base;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.Map.Entry;
+
+import org.jcurl.core.helpers.DimVal;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:ModelBase.java 378 2007-01-24 01:18:35Z mrohrmoser $
- * @deprecated
  */
-@Deprecated
-public abstract class ModelBase {
-    protected final Map props = new TreeMap();
+public abstract class ModelBase implements Model {
 
-    public abstract String description();
+    protected ModelProps props = null;
 
-    public Object getProp(final String key) {
+    public DimVal getProp(final CharSequence key) {
         return props.get(key);
     }
 
-    public void init(final Map props) {
-        this.props.clear();
-        this.props.putAll(props);
+    public void init(final Map<CharSequence, DimVal> props) {
+        if (this.props != null)
+            throw new IllegalStateException();
+        if (props instanceof ModelProps)
+            this.props = (ModelProps) props;
+        else
+            this.props = new ModelProps(props);
     }
 
-    public Iterator properties() {
-        return props.keySet().iterator();
+    public Iterator<Entry<CharSequence, DimVal>> iterator() {
+        return props.entrySet().iterator();
     }
 }

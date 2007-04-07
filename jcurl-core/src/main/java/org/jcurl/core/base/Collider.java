@@ -19,6 +19,9 @@
 package org.jcurl.core.base;
 
 import java.awt.geom.AffineTransform;
+import java.util.Map;
+
+import org.jcurl.core.helpers.DimVal;
 
 /**
  * Compute rock collissions.
@@ -26,7 +29,7 @@ import java.awt.geom.AffineTransform;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface Collider extends Strategy {
+public interface Collider extends Model, Strategy {
 
     /**
      * Check for and compute all collissions.
@@ -49,4 +52,5 @@ public interface Collider extends Strategy {
     public abstract int compute(final PositionSet pos, final SpeedSet speed,
             AffineTransform tr);
 
+    public void init(final Map<CharSequence, DimVal> ice);
 }

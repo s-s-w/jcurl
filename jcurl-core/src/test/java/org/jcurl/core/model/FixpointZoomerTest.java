@@ -25,7 +25,7 @@ import java.awt.geom.Rectangle2D;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.base.Ice;
+import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.Orientation;
 import org.jcurl.core.base.Zoomer;
 
@@ -74,8 +74,8 @@ public class FixpointZoomerTest extends TestCase {
     public void test020() {
         final int width = 200;
         final Point2D.Float zero = new Point2D.Float(0, 0);
-        final Point2D.Float ch = new Point2D.Float(0, Ice.HOG_2_TEE);
-        final Point2D.Float cb = new Point2D.Float(0, -Ice.BACK_2_TEE);
+        final Point2D.Float ch = new Point2D.Float(0, IceSize.HOG_2_TEE);
+        final Point2D.Float cb = new Point2D.Float(0, -IceSize.BACK_2_TEE);
         final float h = ch.y - cb.y;
         final float sca = width / h;
 

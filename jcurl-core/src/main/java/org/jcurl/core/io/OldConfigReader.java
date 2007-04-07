@@ -27,7 +27,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.Ice;
+import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
@@ -248,9 +248,9 @@ public class OldConfigReader {
         final DimVal _x = parseDim(x);
         final DimVal _y;
         if ("NHOG".equals(y))
-            _y = new DimVal(Ice.HOG_2_TEE, Dim.METER);
+            _y = new DimVal(IceSize.HOG_2_TEE, Dim.METER);
         else if ("HACK".equals(y))
-            _y = new DimVal(Ice.FAR_HACK_2_TEE, Dim.METER);
+            _y = new DimVal(IceSize.FAR_HACK_2_TEE, Dim.METER);
         else
             _y = parseDim(y);
         log

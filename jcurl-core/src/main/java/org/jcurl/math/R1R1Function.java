@@ -21,12 +21,12 @@ package org.jcurl.math;
 /**
  * A one-dimensional function <code>f : R^1 -&gt; R^1</code>. Because this is
  * the same as a 1-dimensional curve it extends
- * {@link org.jcurl.math.R1RNFunction}.
+ * {@link org.jcurl.math.R1RNFunctionImpl}.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class R1R1Function extends R1RNFunction {
+public abstract class R1R1Function extends R1RNFunctionImpl {
 
     protected R1R1Function() {
         super(1);
@@ -80,7 +80,7 @@ public abstract class R1R1Function extends R1RNFunction {
     /**
      * Compute <code>x where f(x) = 0</code> using Newton's algorithm.
      * 
-     * @see R1RNFunction#computeNewtonZero(int, int, double, double)
+     * @see R1RNFunctionImpl#computeNewtonZero(int, int, double, double)
      * @param c
      *            c'th derivative
      * @param x

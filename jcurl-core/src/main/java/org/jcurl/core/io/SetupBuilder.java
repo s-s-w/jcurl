@@ -22,17 +22,19 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.Collider;
-import org.jcurl.core.base.Ice;
-import org.jcurl.core.base.ModelBase;
+import org.jcurl.core.base.IceSize;
+import org.jcurl.core.base.Model;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.SlideStrategy;
+import org.jcurl.core.base.Slider;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.MathVec;
+
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Accumulate setup data.
@@ -77,7 +79,7 @@ public class SetupBuilder {
 
     private final RockData[] rocks;
 
-    private SlideStrategy slideStrat = null;
+    private Slider slideStrat = null;
 
     private final SpeedSet speed = new SpeedSet();
 
@@ -89,12 +91,12 @@ public class SetupBuilder {
 
     void addModel(final Class clz, final Map params)
             throws InstantiationException, IllegalAccessException {
-        final ModelBase mb = (ModelBase) clz.newInstance();
+        final Model mb = (Model) clz.newInstance();
         mb.init(params);
         if (mb instanceof Collider)
             collStrat = (Collider) mb;
-        else if (mb instanceof SlideStrategy)
-            slideStrat = (SlideStrategy) mb;
+        else if (mb instanceof Slider)
+            slideStrat = (Slider) mb;
         else
             throw new IllegalArgumentException("Unknown model type "
                     + clz.getName());
@@ -104,8 +106,6 @@ public class SetupBuilder {
         try {
             log.debug("-");
             // set up the slider's collission engine - if possible
-            if (slideStrat != null)
-                slideStrat.setColl(collStrat);
 
             // set up positions and speeds
             for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
@@ -114,7 +114,7 @@ public class SetupBuilder {
                 // Position stuff
                 switch (rocks[i].positionFlag) {
                 case Out:
-                    Ice.setOut(x, i % 2 == 0, i / 2);
+                    IceSize.setOut(x, i % 2 == 0, i / 2);
                     break;
                 case Coords:
                     if (rocks[i].x0 != null)
@@ -145,10 +145,11 @@ public class SetupBuilder {
                     v.setLocation(rocks[i].to_x.to(Dim.METER).val,
                             rocks[i].to_y.to(Dim.METER).val);
                     MathVec.sub(v, x, v);
-                    MathVec.mult(slideStrat.getInitialSpeed(x.getY(),
-                            rocks[i].speed.val)
-                            / MathVec.abs2D(v), v, v);
-                    break;
+                    throw new NotImplementedException();
+//                    MathVec.mult(slideStrat.getInitialSpeed(x.getY(),
+//                            rocks[i].speed.val)
+//                            / MathVec.abs2D(v), v, v);
+//                    break;
                 case Coords:
                     if (rocks[i].vx != null)
                         v.setX(rocks[i].vx.to(Dim.METER_PER_SEC).val);
@@ -183,7 +184,7 @@ public class SetupBuilder {
         return pos;
     }
 
-    public SlideStrategy getSlide() {
+    public Slider getSlide() {
         return slideStrat;
     }
 
@@ -203,7 +204,7 @@ public class SetupBuilder {
     void setPosNHog(final int idx) {
         log.debug("-");
         freezeCheck();
-        setPosY(idx, new DimVal(Ice.HOG_2_TEE, Dim.METER));
+        setPosY(idx, new DimVal(IceSize.HOG_2_TEE, Dim.METER));
     }
 
     void setPosOut(final int idx) {

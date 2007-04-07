@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005 M. Rohrmoser
+ * Copyright (C) 2005-2007 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -18,23 +18,18 @@
  */
 package org.jcurl.core.base;
 
-import junit.framework.TestCase;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
-/**
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id:SlideStrategyTest.java 378 2007-01-24 01:18:35Z mrohrmoser $
- */
-public class SlideStrategyTest extends TestCase {
+import org.jcurl.core.helpers.DimVal;
 
-    public void test005_nextHit() {
-        final PositionSet pos = PositionSet.allHome();
-        pos.getDark(0).setLocation(0, 5);
-        pos.getLight(0).setLocation(0.2, 4.0);
-        final PositionSet speed = new PositionSet();
-        speed.getDark(0).setLocation(0, -1);
+public interface Model extends Iterable<Entry<CharSequence, DimVal>> {
 
-        final double dt = SlideStrategy.tst_timetilhit(0, pos.getDark(0), speed
-                .getDark(0), 8, pos.getLight(0), speed.getLight(0));
-        assertEquals("", 0.7699933864073221, dt, 1e-9);
-    }
+    public abstract DimVal getProp(final CharSequence key);
+
+    public abstract void init(final Map<CharSequence, DimVal> props);
+
+    public abstract Iterator<Entry<CharSequence, DimVal>> iterator();
+
 }

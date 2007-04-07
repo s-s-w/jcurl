@@ -21,7 +21,7 @@ package org.jcurl.math.dom;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.jcurl.math.R1RNFunction;
+import org.jcurl.math.R1RNFunctionImpl;
 
 /**
  * A n-dimensional, continuous curve (R -&gt; R^n) based on a
@@ -34,7 +34,7 @@ import org.jcurl.math.R1RNFunction;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveDom extends R1RNFunction {
+public class CurveDom extends R1RNFunctionImpl {
 
     /** Internal helper - mutable number implementation */
     private static final class Num extends Number {

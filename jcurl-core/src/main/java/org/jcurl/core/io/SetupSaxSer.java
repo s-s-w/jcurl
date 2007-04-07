@@ -24,14 +24,15 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.zip.GZIPOutputStream;
 
-import org.jcurl.core.base.ModelBase;
+import org.jcurl.core.base.Collider;
+import org.jcurl.core.base.Model;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.SlideStrategy;
+import org.jcurl.core.base.Slider;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
@@ -98,13 +99,13 @@ public class SetupSaxSer {
         this(new XmlSerializer(dst, false));
     }
 
-    private void characters(final ContentHandler dst, final String str)
+    private void characters(final ContentHandler dst, final CharSequence str)
             throws SAXException {
-        final char[] ch = str.toCharArray();
+        final char[] ch = str.toString().toCharArray();
         dst.characters(ch, 0, ch.length);
     }
 
-    void internal(final ModelBase model) throws SAXException {
+    void internal(final Model model) throws SAXException {
         if (model == null)
             return;
         {
@@ -113,21 +114,16 @@ public class SetupSaxSer {
                     .getName());
             xml.startElement(NS, null, "model", atts);
         }
-        xml.startElement(NS, null, "description", null);
-        characters(xml, model.description());
-        xml.endElement(NS, null, "description");
-        for (final Iterator it = model.properties(); it.hasNext();) {
-            final String key = (String) it.next();
-            final Object val = model.getProp(key);
+        for (Entry<CharSequence, DimVal> element : model) {
             final AttributesImpl atts = new AttributesImpl();
-            atts.addAttribute(NS, null, "name", null, key);
-            if (val instanceof DimVal) {
-                final DimVal dv = (DimVal) val;
+            atts.addAttribute(NS, null, "name", null, element.getKey()
+                    .toString());
+            {
                 atts.addAttribute(NS, null, "val", null, Double
-                        .toString(dv.val));
-                atts.addAttribute(NS, null, "dim", null, dv.dim.toString());
-            } else
-                atts.addAttribute(NS, null, "val", null, val.toString());
+                        .toString(element.getValue().val));
+                atts.addAttribute(NS, null, "dim", null, element.getValue().dim
+                        .toString());
+            }
             xml.startElement(NS, null, "param", atts);
             xml.endElement(NS, null, "param");
         }
@@ -212,7 +208,7 @@ public class SetupSaxSer {
     }
 
     public void write(final PositionSet pos, final SpeedSet speed,
-            final SlideStrategy slide) throws SAXException {
+            final Collider coll, final Slider slide) throws SAXException {
         xml.startDocument();
         xml.startPrefixMapping(null, NS);
         final AttributesImpl atts = new AttributesImpl();
@@ -222,7 +218,7 @@ public class SetupSaxSer {
         xml.startElement(NS, null, "setup", null);
         if (slide != null)
             throw new NotImplementedException();
-            // FIXME this.internal(slide.getColl());
+        this.internal(coll);
         this.internal(slide);
         this.internal(pos);
         this.internal(speed);
@@ -230,8 +226,8 @@ public class SetupSaxSer {
         xml.endElement(NS, null, "jcurl");
         xml.endDocument();
     }
-
-    public void write(final SetupBuilder setup) throws SAXException {
-        this.write(setup.getPos(), setup.getSpeed(), setup.getSlide());
-    }
+    //
+    // public void write(final SetupBuilder setup) throws SAXException {
+    // this.write(setup.getPos(), setup.getSpeed(), setup.getSlide());
+    // }
 }

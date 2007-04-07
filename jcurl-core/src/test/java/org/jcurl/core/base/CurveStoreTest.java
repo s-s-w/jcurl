@@ -22,14 +22,14 @@ import java.util.Map.Entry;
 
 import junit.framework.TestCase;
 
-import org.jcurl.math.R1RNFunction;
+import org.jcurl.math.R1RNFunctionImpl;
 
 public class CurveStoreTest extends TestCase {
 
     public void testIterator() {
         final CurveStore cs = new CurveStore(3);
-        for (final Iterable<Entry<Double, R1RNFunction>> element : cs)
-            for (final Entry<Double, R1RNFunction> e2 : element)
+        for (final Iterable<Entry<Double, R1RNFunctionImpl>> element : cs)
+            for (final Entry<Double, R1RNFunctionImpl> e2 : element)
                 System.out.println(e2.getValue());
     }
 }

@@ -23,7 +23,7 @@ import junit.framework.TestCase;
 /**
  * JUnit Test.
  * 
- * @see org.jcurl.math.R1RNFunction
+ * @see org.jcurl.math.R1RNFunctionImpl
  * @see org.jcurl.math.dom.CurveDom
  * @see org.jcurl.math.CurveCombined
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

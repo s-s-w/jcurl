@@ -29,13 +29,13 @@ import java.awt.geom.GeneralPath;
  */
 public abstract class CurveShape {
 
-    public static Shape approximate(final R1RNFunction c,
+    public static Shape approximate(final R1RNFunctionImpl c,
             final double[] sections) {
         // return approximateLinear(c, sections);
         return approximateQuadratic(c, sections);
     }
 
-    public static Shape approximateLinear(final R1RNFunction c,
+    public static Shape approximateLinear(final R1RNFunctionImpl c,
             final double[] sections) {
         final double[] x_1 = { c.at(0, 0, sections[0]), c.at(1, 0, sections[0]) };
         final double[] x_2 = { 0, 0 };
@@ -52,7 +52,7 @@ public abstract class CurveShape {
         return gp;
     }
 
-    public static Shape approximateQuadratic(final R1RNFunction c,
+    public static Shape approximateQuadratic(final R1RNFunctionImpl c,
             final double[] sections) {
         final double[] p0 = { c.at(0, 0, sections[0]), c.at(1, 0, sections[0]) };
         final double[] v0 = { c.at(0, 1, sections[0]), c.at(1, 1, sections[0]) };

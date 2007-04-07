@@ -27,14 +27,14 @@ import org.jcurl.core.log.JCLoggerFactory;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class R1RNFunction {
+public abstract class R1RNFunctionImpl {
 
     private static final Log log = JCLoggerFactory
-            .getLogger(R1RNFunction.class);
+            .getLogger(R1RNFunctionImpl.class);
 
     private final int dim;
 
-    protected R1RNFunction(final int dim) {
+    protected R1RNFunctionImpl(final int dim) {
         this.dim = dim;
     }
 

@@ -21,12 +21,12 @@ package org.jcurl.core.base;
 import org.jcurl.core.helpers.Dim;
 
 /**
- * Ice dimensions.
+ * IceSize dimensions.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id:Ice.java 378 2007-01-24 01:18:35Z mrohrmoser $
+ * @version $Id:IceSize.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public final class Ice {
+public final class IceSize {
 
     /** Distance from Back-line to Hog. 21+6 feet (converted to meter) */
     public static final float BACK_2_HOG = Dim.f2m(21 + 6);
@@ -156,6 +156,6 @@ public final class Ice {
                 .f2m(i % 2 == 0 ? -8 : -9.2), 0);
     }
 
-    private Ice() {
+    private IceSize() {
     }
 }

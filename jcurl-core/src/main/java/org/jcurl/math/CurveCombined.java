@@ -29,10 +29,10 @@ import java.util.Map.Entry;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveCombined extends R1RNFunction implements
-        Iterable<Entry<Double, R1RNFunction>> {
+public class CurveCombined extends R1RNFunctionImpl implements
+        Iterable<Entry<Double, R1RNFunctionImpl>> {
 
-    private class CCEntry implements Entry<Double, R1RNFunction> {
+    private class CCEntry implements Entry<Double, R1RNFunctionImpl> {
 
         private final int i;
 
@@ -44,11 +44,11 @@ public class CurveCombined extends R1RNFunction implements
             return t0[i];
         }
 
-        public R1RNFunction getValue() {
+        public R1RNFunctionImpl getValue() {
             return fkt[i];
         }
 
-        public R1RNFunction setValue(final R1RNFunction value) {
+        public R1RNFunctionImpl setValue(final R1RNFunctionImpl value) {
             throw new UnsupportedOperationException();
             // try {return v;} finally {v = value;}
         }
@@ -98,7 +98,7 @@ public class CurveCombined extends R1RNFunction implements
         }
     }
 
-    private R1RNFunction[] fkt;
+    private R1RNFunctionImpl[] fkt;
 
     private int parts = 0;
 
@@ -110,10 +110,10 @@ public class CurveCombined extends R1RNFunction implements
     public CurveCombined(final int dim) {
         super(dim);
         t0 = new double[initialSize];
-        fkt = new R1RNFunction[initialSize];
+        fkt = new R1RNFunctionImpl[initialSize];
     }
 
-    public void add(final double t0, final R1RNFunction fkt) {
+    public void add(final double t0, final R1RNFunctionImpl fkt) {
         if (fkt.dim() != dim())
             throw new IllegalArgumentException();
         // re-alloc?
@@ -122,7 +122,7 @@ public class CurveCombined extends R1RNFunction implements
             final double[] t = new double[siz];
             System.arraycopy(this.t0, 0, t, 0, parts);
             this.t0 = t;
-            final R1RNFunction[] c = new R1RNFunction[siz];
+            final R1RNFunctionImpl[] c = new R1RNFunctionImpl[siz];
             System.arraycopy(this.fkt, 0, c, 0, parts);
             this.fkt = c;
         }
@@ -140,7 +140,7 @@ public class CurveCombined extends R1RNFunction implements
      * @param ret
      *            <code>null</code> creates a new instance
      * @return the value
-     * @see R1RNFunction#at(int, double, double[])
+     * @see R1RNFunctionImpl#at(int, double, double[])
      */
     @Override
     public double[] at(final int c, final double t, final double[] ret) {
@@ -174,15 +174,15 @@ public class CurveCombined extends R1RNFunction implements
         return -2 - idx;
     }
 
-    public Iterator<Entry<Double, R1RNFunction>> iterator() {
-        return new Iterator<Entry<Double, R1RNFunction>>() {
+    public Iterator<Entry<Double, R1RNFunctionImpl>> iterator() {
+        return new Iterator<Entry<Double, R1RNFunctionImpl>>() {
             int current = 0;
 
             public boolean hasNext() {
                 return current < parts;
             }
 
-            public Entry<Double, R1RNFunction> next() {
+            public Entry<Double, R1RNFunctionImpl> next() {
                 return new CCEntry(current++);
             }
 

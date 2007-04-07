@@ -47,8 +47,8 @@ public class PositionSet extends RockSet {
     public static PositionSet allHome(PositionSet ret) {
         ret = ret != null ? ret : new PositionSet();
         for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
-            Ice.setHome(ret.dark[i], true, i);
-            Ice.setHome(ret.light[i], false, i);
+            IceSize.setHome(ret.dark[i], true, i);
+            IceSize.setHome(ret.light[i], false, i);
         }
         ret.notifyChange();
         return ret;
@@ -61,8 +61,8 @@ public class PositionSet extends RockSet {
     public static PositionSet allOut(PositionSet ret) {
         ret = ret != null ? ret : new PositionSet();
         for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
-            Ice.setOut(ret.dark[i], true, i);
-            Ice.setOut(ret.light[i], false, i);
+            IceSize.setOut(ret.dark[i], true, i);
+            IceSize.setOut(ret.light[i], false, i);
         }
         ret.notifyChange();
         return ret;
@@ -106,8 +106,8 @@ public class PositionSet extends RockSet {
      * @return bitmask of the out rocks.
      */
     public static int getOutRocks(final PositionSet a) {
-        final double xmin = Ice.SIDE_2_CENTER + RockProps.DEFAULT.getRadius();
-        final double ymin = -Ice.BACK_2_TEE - RockProps.DEFAULT.getRadius();
+        final double xmin = IceSize.SIDE_2_CENTER + RockProps.DEFAULT.getRadius();
+        final double ymin = -IceSize.BACK_2_TEE - RockProps.DEFAULT.getRadius();
         int ret = 0;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             final Point2D rock = a.getRock(i);
@@ -166,8 +166,8 @@ public class PositionSet extends RockSet {
      * @return bitmask of the waiting rocks.
      */
     public static int getWaitRocks(final PositionSet a) {
-        final double xmax = Ice.SIDE_2_CENTER + RockProps.DEFAULT.getRadius();
-        final double ymax = Ice.HOG_2_TEE - RockProps.DEFAULT.getRadius();
+        final double xmax = IceSize.SIDE_2_CENTER + RockProps.DEFAULT.getRadius();
+        final double ymax = IceSize.HOG_2_TEE - RockProps.DEFAULT.getRadius();
         int ret = 0;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             final Point2D rock = a.getRock(i);

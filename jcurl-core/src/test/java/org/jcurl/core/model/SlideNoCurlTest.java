@@ -21,7 +21,7 @@ package org.jcurl.core.model;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
-import org.jcurl.core.base.Ice;
+import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Slider;
 import org.jcurl.core.base.TestShowBase;
@@ -143,7 +143,7 @@ public class SlideNoCurlTest extends TestShowBase {
         x.setLocation(0.5, 1);
         m.transform(x, x);
         assertEquals(-0.5, x.getX());
-        assertEquals(-1, x.getY() - Ice.FAR_HOG_2_TEE);
+        assertEquals(-1, x.getY() - IceSize.FAR_HOG_2_TEE);
 
         s.releaseRc2Wc(m, Dim.f2m(14), 0);
         // System.out.println(new AffineTransform(
@@ -156,7 +156,7 @@ public class SlideNoCurlTest extends TestShowBase {
         x.setLocation(0.5, 1);
         m.transform(x, x);
         assertEquals(-1.2249733953800335, x.getX() + 0.5);
-        assertEquals(0.061332027536110445, x.getY() - Ice.FAR_HOG_2_TEE + 1);
+        assertEquals(0.061332027536110445, x.getY() - IceSize.FAR_HOG_2_TEE + 1);
 
         s.releaseRc2Wc(m, Dim.f2m(-7), 0);
         // System.out.println(new AffineTransform(
@@ -169,6 +169,6 @@ public class SlideNoCurlTest extends TestShowBase {
         x.setLocation(0.5, 1);
         m.transform(x, x);
         assertEquals(-0.3849601560620878, x.getX() - 0.5);
-        assertEquals(-0.026195362711519, x.getY() - Ice.FAR_HOG_2_TEE + 1);
+        assertEquals(-0.026195362711519, x.getY() - IceSize.FAR_HOG_2_TEE + 1);
     }
 }

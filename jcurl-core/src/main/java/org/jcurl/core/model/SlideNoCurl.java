@@ -18,11 +18,15 @@
  */
 package org.jcurl.core.model;
 
+import java.util.Map;
+
 import org.jcurl.core.base.CurveRock;
 import org.jcurl.core.base.CurveRockAnalytic;
-import org.jcurl.core.base.Ice;
+import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.Rock;
+import org.jcurl.core.base.ModelProps;
 import org.jcurl.core.base.SlideBase;
+import org.jcurl.core.helpers.DimVal;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.Polynome;
 
@@ -35,14 +39,17 @@ import org.jcurl.math.Polynome;
  */
 public class SlideNoCurl extends SlideBase {
 
-    final double beta;
+    double beta;
 
-    final double drawToTeeV0;
+    double drawToTeeV0;
+
+    public SlideNoCurl() {
+    }
 
     /**
      * Computes the internal ice friction coefficient as:
      * <p>
-     * <code>beta = {@link Ice#FAR_HOG_2_TEE} / drawToTeeTime^2</code>
+     * <code>beta = {@link IceSize#FAR_HOG_2_TEE} / drawToTeeTime^2</code>
      * </p>
      * 
      * @param drawToTeeTime
@@ -51,14 +58,20 @@ public class SlideNoCurl extends SlideBase {
      *            MUST be 0
      */
     public SlideNoCurl(final double drawToTeeTime, final double drawToTeeCurl) {
-        if (drawToTeeCurl != 0)
-            throw new IllegalArgumentException("Curl must be zero!");
-        if (Double.isInfinite(drawToTeeTime) && drawToTeeTime > 0)
-            beta = drawToTeeV0 = 0;
-        else {
-            beta = Ice.FAR_HOG_2_TEE / MathVec.sqr(drawToTeeTime);
-            drawToTeeV0 = 2 * Ice.FAR_HOG_2_TEE / drawToTeeTime;
-        }
+        final ModelProps t = new ModelProps();
+        t.setDrawToTeeTime(drawToTeeTime);
+        t.setDrawToTeeCurl(drawToTeeCurl);
+        init(t);
+    }
+
+    public SlideNoCurl(final Map<CharSequence, DimVal> ice) {
+        init(ice);
+    }
+
+    @Override
+    public CurveRock computeRc(final Rock x0, final Rock v0) {
+        return new CurveRockAnalytic(computeRcPoly(x0.getZ(),
+                MathVec.abs2D(v0), v0.getZ()));
     }
 
     /**
@@ -84,14 +97,8 @@ public class SlideNoCurl extends SlideBase {
     }
 
     @Override
-    public CurveRock computeRc(final Rock x0, final Rock v0) {
-        return new CurveRockAnalytic(computeRcPoly(x0.getZ(),
-                MathVec.abs2D(v0), v0.getZ()));
-    }
-
-    @Override
     public double computeV0(final double intervalTime) {
-        return Ice.BACK_2_HOG / intervalTime - beta * intervalTime;
+        return IceSize.BACK_2_HOG / intervalTime - beta * intervalTime;
     }
 
     @Override
@@ -101,6 +108,23 @@ public class SlideNoCurl extends SlideBase {
 
     @Override
     public double getDrawToTeeTime() {
-        return Math.sqrt(Ice.FAR_HOG_2_TEE / beta);
+        return Math.sqrt(IceSize.FAR_HOG_2_TEE / beta);
+    }
+
+    void init(final double drawToTeeTime, final double drawToTeeCurl) {
+        if (drawToTeeCurl != 0)
+            throw new IllegalArgumentException("Curl must be zero!");
+        if (Double.isInfinite(drawToTeeTime) && drawToTeeTime > 0)
+            beta = 0;
+        else {
+            beta = IceSize.FAR_HOG_2_TEE / MathVec.sqr(drawToTeeTime);
+            drawToTeeV0 = 2 * IceSize.FAR_HOG_2_TEE / drawToTeeTime;
+        }
+    }
+
+    @Override
+    public void init(final Map<CharSequence, DimVal> ice) {
+        super.init(ice);
+        init(props.getDrawToTeeTime(), props.getDrawToTeeCurl());
     }
 }

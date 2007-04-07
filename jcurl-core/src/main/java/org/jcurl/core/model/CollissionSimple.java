@@ -18,8 +18,11 @@
  */
 package org.jcurl.core.model;
 
+import java.util.Map;
+
 import org.jcurl.core.base.ColliderBase;
 import org.jcurl.core.base.Rock;
+import org.jcurl.core.helpers.DimVal;
 
 /**
  * A very simple hit-model using conservation of energy and momentum.
@@ -32,15 +35,19 @@ import org.jcurl.core.base.Rock;
  * @version $Id:CollissionSimple.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class CollissionSimple extends ColliderBase {
+
+    public CollissionSimple() {
+
+    }
+
+    public CollissionSimple(final Map<CharSequence, DimVal> ice) {
+        init(ice);
+    }
+
     @Override
     public void computeRC(final Rock va, final Rock vb) {
         final double tmp = va.getY();
         va.setLocation(va.getX(), vb.getY());
         vb.setLocation(vb.getX(), tmp);
-    }
-
-    @Override
-    public String description() {
-        return "Simple collissions";
     }
 }

@@ -27,10 +27,10 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
 import org.jcurl.core.base.Collider;
-import org.jcurl.core.base.Ice;
+import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockSetProps;
-import org.jcurl.core.base.SlideStrategy;
+import org.jcurl.core.base.Slider;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
 
@@ -42,11 +42,11 @@ public class Config {
 
     static DimVal getDim(final String token) {
         if ("HACK".equals(token))
-            return new DimVal(Ice.FAR_HACK_2_TEE, Dim.METER);
+            return new DimVal(IceSize.FAR_HACK_2_TEE, Dim.METER);
         if ("FHOG".equals(token))
-            return new DimVal(Ice.HOG_2_HOG + Ice.HOG_2_TEE, Dim.METER);
+            return new DimVal(IceSize.HOG_2_HOG + IceSize.HOG_2_TEE, Dim.METER);
         if ("NHOG".equals(token))
-            return new DimVal(Ice.HOG_2_TEE, Dim.METER);
+            return new DimVal(IceSize.HOG_2_TEE, Dim.METER);
         return DimVal.parse(token);
     }
 
@@ -79,7 +79,7 @@ public class Config {
         return null;
     }
 
-    public SlideStrategy getSlider() {
+    public Slider getSlider() {
         return null;
     }
 

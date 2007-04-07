@@ -27,7 +27,7 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
-import org.jcurl.core.base.Ice;
+import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.helpers.Dim;
@@ -40,7 +40,7 @@ import org.jcurl.core.helpers.Dim;
  * @version $Id:IcePainter.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class IcePainter {
-    /** Ice colors */
+    /** IceSize colors */
     public static class ColorSet {
 
         public Paint backGround = new Color(0xF0F0FF);
@@ -100,11 +100,11 @@ public class IcePainter {
     /** Define colors and the shapes to be filled and drawn */
     static {
         final int f = Zoomer.SCALE;
-        final float fhy = f * Ice.FAR_HOG_2_TEE;
-        final float nhy = f * Ice.HOG_2_TEE;
-        final float hy = f * Ice.FAR_HACK_2_TEE;
-        final float dx = f * Ice.SIDE_2_CENTER;
-        final float by = f * Ice.BACK_2_TEE;
+        final float fhy = f * IceSize.FAR_HOG_2_TEE;
+        final float nhy = f * IceSize.HOG_2_TEE;
+        final float hy = f * IceSize.FAR_HACK_2_TEE;
+        final float dx = f * IceSize.SIDE_2_CENTER;
+        final float by = f * IceSize.BACK_2_TEE;
         final float c1 = f * Dim.f2m(0.5);
         final float c4 = f * Dim.f2m(2.0);
         final float c8 = f * Dim.f2m(4.0);

@@ -29,7 +29,6 @@ import org.jcurl.math.MathVec;
 /**
  * Abstract base class for collission models computed in rock-coordinates.
  * 
- * @see org.jcurl.core.base.SlideStrategy
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CollissionStrategy.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */

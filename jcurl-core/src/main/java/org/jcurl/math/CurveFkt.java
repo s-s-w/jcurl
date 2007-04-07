@@ -26,7 +26,7 @@ package org.jcurl.math;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveFkt extends R1RNFunction {
+public class CurveFkt extends R1RNFunctionImpl {
 
     private final R1R1Function[] fkt;
 

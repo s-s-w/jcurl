@@ -23,7 +23,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-import org.jcurl.core.base.Ice;
+import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.Orientation;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.Zoomer;
@@ -40,27 +40,27 @@ public class FixpointZoomer extends Zoomer {
     private static final float _dia = 2 * RockProps.DEFAULT.getRadius();
 
     public static final Zoomer C12 = new FixpointZoomer("Twelve foot circle",
-            -Ice.SIDE_2_CENTER, -Ice.SIDE_2_CENTER, 2 * Ice.SIDE_2_CENTER,
-            2 * Ice.SIDE_2_CENTER, 0, 0);
+            -IceSize.SIDE_2_CENTER, -IceSize.SIDE_2_CENTER, 2 * IceSize.SIDE_2_CENTER,
+            2 * IceSize.SIDE_2_CENTER, 0, 0);
 
     public static final Zoomer HOG2HACK = new FixpointZoomer(
-            "Far hog back line", -(Ice.SIDE_2_CENTER + _dia),
-            -(Ice.BACK_2_TEE + Ice.HACK_2_BACK),
-            2 * (Ice.SIDE_2_CENTER + _dia), _dia + Ice.FAR_HOG_2_TEE
-                    + Ice.BACK_2_TEE + Ice.HACK_2_BACK, 0,
-            -(Ice.BACK_2_TEE + Ice.HACK_2_BACK));
+            "Far hog back line", -(IceSize.SIDE_2_CENTER + _dia),
+            -(IceSize.BACK_2_TEE + IceSize.HACK_2_BACK),
+            2 * (IceSize.SIDE_2_CENTER + _dia), _dia + IceSize.FAR_HOG_2_TEE
+                    + IceSize.BACK_2_TEE + IceSize.HACK_2_BACK, 0,
+            -(IceSize.BACK_2_TEE + IceSize.HACK_2_BACK));
 
     public static final Zoomer HOUSE = new FixpointZoomer("House",
-            -(Ice.SIDE_2_CENTER + _dia), -(Ice.BACK_2_TEE + _dia),
-            2 * (Ice.SIDE_2_CENTER + _dia), 2 * _dia + Ice.HOG_2_TEE
-                    + Ice.BACK_2_TEE, 0, -(_dia + Ice.BACK_2_TEE));
+            -(IceSize.SIDE_2_CENTER + _dia), -(IceSize.BACK_2_TEE + _dia),
+            2 * (IceSize.SIDE_2_CENTER + _dia), 2 * _dia + IceSize.HOG_2_TEE
+                    + IceSize.BACK_2_TEE, 0, -(_dia + IceSize.BACK_2_TEE));
 
     public static final Zoomer HOUSE2HACK = new FixpointZoomer(
-            "House until back line", -(Ice.SIDE_2_CENTER + _dia),
-            -(Ice.BACK_2_TEE + Ice.HACK_2_BACK),
-            2 * (Ice.SIDE_2_CENTER + _dia), _dia + Ice.HOG_2_TEE
-                    + Ice.BACK_2_TEE + Ice.HACK_2_BACK, 0,
-            -(Ice.BACK_2_TEE + Ice.HACK_2_BACK));
+            "House until back line", -(IceSize.SIDE_2_CENTER + _dia),
+            -(IceSize.BACK_2_TEE + IceSize.HACK_2_BACK),
+            2 * (IceSize.SIDE_2_CENTER + _dia), _dia + IceSize.HOG_2_TEE
+                    + IceSize.BACK_2_TEE + IceSize.HACK_2_BACK, 0,
+            -(IceSize.BACK_2_TEE + IceSize.HACK_2_BACK));
 
     private static final long serialVersionUID = -3935666633509837731L;
 

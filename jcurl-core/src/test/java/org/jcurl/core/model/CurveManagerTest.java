@@ -22,19 +22,19 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.Ice;
+import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.TestShowBase;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.math.R1RNFunction;
+import org.jcurl.math.R1RNFunctionImpl;
 
 public class CurveManagerTest extends TestShowBase {
 
     private static final Log log = JCLoggerFactory
             .getLogger(CurveManagerTest.class);
 
-    void showPaths(final Iterator<Iterable<Entry<Double, R1RNFunction>>> it,
+    void showPaths(final Iterator<Iterable<Entry<Double, R1RNFunctionImpl>>> it,
             final double tmin, final double tmax) throws InterruptedException {
         if (frame == null)
             return;
@@ -48,8 +48,8 @@ public class CurveManagerTest extends TestShowBase {
         te.setCollissionDetector(new NewtonCollissionDetector());
         te.setSlider(new SlideNoCurl(23, 0));
         te.setInitialPos(PositionSet.allHome());
-        te.getInitialPos().getDark(0).setLocation(0, Ice.HOG_2_TEE, 0);
-        te.getInitialPos().getLight(0).setLocation(0.1, Ice.BACK_2_TEE,
+        te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
+        te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
                 0.25 * Math.PI);
         te.setInitialSpeed(new SpeedSet());
         te.getInitialSpeed().getDark(0).setLocation(0,
@@ -86,7 +86,7 @@ public class CurveManagerTest extends TestShowBase {
         te.setCollissionDetector(new NewtonCollissionDetector());
         te.setSlider(new SlideNoCurl(23, 0));
         te.setInitialPos(PositionSet.allHome());
-        te.getInitialPos().getDark(0).setLocation(0, Ice.HOG_2_TEE, Math.PI);
+        te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, Math.PI);
         te.setInitialSpeed(new SpeedSet());
         te.getInitialSpeed().getDark(0).setLocation(0,
                 -te.getSlider().computeV0(9), Math.PI / 2);

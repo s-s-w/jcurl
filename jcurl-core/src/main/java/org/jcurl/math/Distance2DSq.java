@@ -21,7 +21,7 @@ package org.jcurl.math;
 import org.jcurl.core.helpers.NotImplementedYetException;
 
 /**
- * The distance between two {@link R1RNFunction}s - only 2 dimensions used.
+ * The distance between two {@link R1RNFunctionImpl}s - only 2 dimensions used.
  * 
  * Differentiable min. 1x.
  * 
@@ -30,9 +30,9 @@ import org.jcurl.core.helpers.NotImplementedYetException;
  */
 public class Distance2DSq extends R1R1Function {
 
-    private final R1RNFunction c1;
+    private final R1RNFunctionImpl c1;
 
-    private final R1RNFunction c2;
+    private final R1RNFunctionImpl c2;
 
     /** (r1+r2)^2 */
     private final double r2;
@@ -47,7 +47,7 @@ public class Distance2DSq extends R1R1Function {
      * @param c2
      * @param r2
      */
-    Distance2DSq(final R1RNFunction c1, final double r1, final R1RNFunction c2,
+    Distance2DSq(final R1RNFunctionImpl c1, final double r1, final R1RNFunctionImpl c2,
             final double r2) {
         this(c1, c2, MathVec.sqr(r1 + r2));
     }
@@ -62,7 +62,7 @@ public class Distance2DSq extends R1R1Function {
      * @param r12Sqr
      *            <code>(r1+r2)^2</code>
      */
-    public Distance2DSq(final R1RNFunction c1, final R1RNFunction c2,
+    public Distance2DSq(final R1RNFunctionImpl c1, final R1RNFunctionImpl c2,
             final double r12Sqr) {
         if (c1.dim() != c2.dim())
             throw new IllegalArgumentException("Dimension mismatch: "

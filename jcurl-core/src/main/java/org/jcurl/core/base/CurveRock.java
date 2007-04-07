@@ -18,7 +18,7 @@
  */
 package org.jcurl.core.base;
 
-import org.jcurl.math.R1RNFunction;
+import org.jcurl.math.R1RNFunctionImpl;
 
 /**
  * Trajectory of one Rock, in either rock-coordinates or world-coordinates.
@@ -28,7 +28,7 @@ import org.jcurl.math.R1RNFunction;
  * @version $Id: CurveRock.java 361 2006-08-28 20:21:07Z mrohrmoser $
  */
 @Deprecated
-public abstract class CurveRock extends R1RNFunction {
+public abstract class CurveRock extends R1RNFunctionImpl {
     protected CurveRock() {
         super(3);
     }

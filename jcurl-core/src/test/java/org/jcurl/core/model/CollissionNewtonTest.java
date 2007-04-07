@@ -26,17 +26,17 @@ import org.jcurl.core.base.CurveRockAnalytic;
 import org.jcurl.core.base.SlideBase;
 import org.jcurl.math.Distance2DSq;
 import org.jcurl.math.Polynome;
-import org.jcurl.math.R1RNFunction;
+import org.jcurl.math.R1RNFunctionImpl;
 
 public class CollissionNewtonTest extends TestCase {
 
     public void testCompute() {
         final SlideNoCurl s = new SlideNoCurl(1000, 0);
         final NewtonCollissionDetector co = new NewtonCollissionDetector();
-        final R1RNFunction c0 = new CurveRockAnalytic(s.computeRcPoly(0, 1,
+        final R1RNFunctionImpl c0 = new CurveRockAnalytic(s.computeRcPoly(0, 1,
                 Math.PI / 2));
         // System.out.println(c0.toString());
-        final R1RNFunction c1 = SlideBase.still(0, 2, 0);
+        final R1RNFunctionImpl c1 = SlideBase.still(0, 2, 0);
         // System.out.println(c0.at(2, null));
         // System.out.println(c1.at(2, new RockDouble()));
         // System.out.println(co.compute(0, Double.NaN, c0, c1));
@@ -51,7 +51,7 @@ public class CollissionNewtonTest extends TestCase {
                 new Polynome(new double[] { 0 }),
                 new Polynome(new double[] { 0, 1, -2.8346399307250977E-5 }),
                 new Polynome(new double[] { 0, 1.5707963267948966 }) });
-        R1RNFunction c1 = new CurveRockAnalytic(new Polynome[] {
+        R1RNFunctionImpl c1 = new CurveRockAnalytic(new Polynome[] {
                 new Polynome(new double[] { 0 }),
                 new Polynome(new double[] { 2 }),
                 new Polynome(new double[] { 3.141592653589793 }) });
@@ -67,8 +67,8 @@ public class CollissionNewtonTest extends TestCase {
 
     public void testStill() {
         final NewtonCollissionDetector co = new NewtonCollissionDetector();
-        final R1RNFunction c0 = SlideBase.still(0, 1, 0);
-        final R1RNFunction c1 = SlideBase.still(0, 2, 0);
+        final R1RNFunctionImpl c0 = SlideBase.still(0, 1, 0);
+        final R1RNFunctionImpl c1 = SlideBase.still(0, 2, 0);
         assertEquals("", Double.NaN, co.compute(0, 5, c0, c1), 1e-9);
     }
 }

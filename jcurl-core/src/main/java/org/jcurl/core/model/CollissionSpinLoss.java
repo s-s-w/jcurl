@@ -117,11 +117,6 @@ public class CollissionSpinLoss extends ColliderBase {
 
     }
 
-    @Override
-    public String description() {
-        return "Collissions with spin and loss of energy";
-    }
-
     private double Loss() {
         return U;
     }

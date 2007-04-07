@@ -21,8 +21,6 @@ package org.jcurl.core.model;
 import org.jcurl.core.base.ColliderBase;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
-import org.jcurl.core.helpers.Dim;
-import org.jcurl.core.helpers.DimVal;
 import org.jcurl.math.MathVec;
 
 /**
@@ -72,11 +70,6 @@ public class CollissionSpin extends ColliderBase {
         vb.setZ(vb.getZ() + dW);
     }
 
-    @Override
-    public String description() {
-        return "Collissions with spin";
-    }
-
     /**
      * The friction rock/rock. Set the parameter for friction rock/rock.
      * 
@@ -85,7 +78,7 @@ public class CollissionSpin extends ColliderBase {
      */
     public void setFricRockRock(final double v) {
         mu = v;
-        props.put(FRR, new Double(v));
+        // FIXME props.put(FRR, new Double(v));
     }
 
     /**
@@ -96,6 +89,6 @@ public class CollissionSpin extends ColliderBase {
      *            [Joule] the value
      */
     public void setLoss(final double v) {
-        props.put(LOSS, new DimVal(v, Dim.JOULE));
+        // FIXME props.put(LOSS, new DimVal(v, Dim.JOULE));
     }
 }
