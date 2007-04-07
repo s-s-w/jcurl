@@ -6,7 +6,7 @@
 
 package org.jcurl.demo.tactics;
 
-import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.base.CenteredZoomer;
 import org.jdesktop.layout.GroupLayout;
 import org.jdesktop.layout.LayoutStyle;
 
@@ -309,7 +309,7 @@ public class TacticsNB extends javax.swing.JFrame {
                 controlTabbedPane, GroupLayout.DEFAULT_SIZE, 179,
                 Short.MAX_VALUE));
 
-        overviewDisplay.setZoom(Zoomer.HOG2HACK);
+        overviewDisplay.setZoom(CenteredZoomer.HOG2HACK);
 
         fileMenu.setText("File");
         newMenuItem.setText("New");

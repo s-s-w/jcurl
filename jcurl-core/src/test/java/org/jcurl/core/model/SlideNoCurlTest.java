@@ -25,7 +25,7 @@ import org.jcurl.core.base.Ice;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Slider;
 import org.jcurl.core.base.TestShowBase;
-import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.base.CenteredZoomer;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.math.Polynome;
 
@@ -74,7 +74,7 @@ public class SlideNoCurlTest extends TestShowBase {
     public void testComputeRcPoly() {
         SlideNoCurl s = new SlideNoCurl(17, 0);
         Polynome[] p = s.computeRcPoly(Math.PI, 2, 0.2);
-        showTrajectory(p, Zoomer.HOUSE, 5000, 40);
+        showTrajectory(p, CenteredZoomer.HOUSE, 5000, 40);
         assertEquals(0, p[0].at(0));
         assertEquals(0, p[1].at(0));
         assertEquals(Math.PI, p[2].at(0));
@@ -108,7 +108,7 @@ public class SlideNoCurlTest extends TestShowBase {
         assertEquals(7.741592653589794, p[2].at(23));
     }
 
-    void showTrajectory(final Polynome[] p, final Zoomer zoom,
+    void showTrajectory(final Polynome[] p, final CenteredZoomer zoom,
             final int millis, final int dt) {
         final PositionSet pos = PositionSet.allHome();
         showPositionDisplay(pos, zoom, millis, new TimeRunnable() {

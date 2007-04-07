@@ -29,7 +29,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.jcurl.core.base.Ice;
 import org.jcurl.core.base.RockProps;
-import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.base.CenteredZoomer;
 import org.jcurl.core.helpers.Dim;
 
 /**
@@ -60,7 +60,7 @@ public class IcePainter {
         public Paint hog2tee = new Color(0xFFFFFF);
 
         /** (wc) millimiters */
-        public Stroke stroke = new BasicStroke(0.005F * Zoomer.SCALE);
+        public Stroke stroke = new BasicStroke(0.005F * CenteredZoomer.SCALE);
 
         public Paint tee2back = new Color(0xFFFFFF);
     }
@@ -99,7 +99,7 @@ public class IcePainter {
 
     /** Define colors and the shapes to be filled and drawn */
     static {
-        final int f = Zoomer.SCALE;
+        final int f = CenteredZoomer.SCALE;
         final float fhy = f * Ice.FAR_HOG_2_TEE;
         final float nhy = f * Ice.HOG_2_TEE;
         final float hy = f * Ice.FAR_HACK_2_TEE;

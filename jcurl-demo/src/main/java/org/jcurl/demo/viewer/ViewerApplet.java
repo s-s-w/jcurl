@@ -28,12 +28,9 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurveManager;
-import org.jcurl.core.model.SlideNoCurl;
-import org.jcurl.core.swing.JCurlDisplay;
+import org.jcurl.core.swing.PositionDisplay;
 import org.jcurl.core.swing.SimpleKeys;
-import org.xml.sax.SAXException;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -54,7 +51,7 @@ public class ViewerApplet extends JApplet {
         setFocusable(true);
         // resize(200, 100);
         // final Container contentPane = getContentPane();
-        final JCurlDisplay mp = new JCurlDisplay();
+        final PositionDisplay mp = new PositionDisplay();
         getContentPane().add(mp);
 
         final CurveManager src = new CurveManager();

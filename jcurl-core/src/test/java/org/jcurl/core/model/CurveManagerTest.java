@@ -26,7 +26,7 @@ import org.jcurl.core.base.Ice;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.TestShowBase;
-import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.base.CenteredZoomer;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.R1RNFunction;
 
@@ -69,7 +69,7 @@ public class CurveManagerTest extends TestShowBase {
                 * 1000 / (System.currentTimeMillis() - t0) + " per second.");
 
         // with Display:
-        showPositionDisplay(te.getCurrentPos(), Zoomer.HOUSE, 5000,
+        showPositionDisplay(te.getCurrentPos(), CenteredZoomer.HOUSE, 5000,
                 new TimeRunnable() {
                     @Override
                     public void run(final double t) throws InterruptedException {
@@ -105,7 +105,7 @@ public class CurveManagerTest extends TestShowBase {
                 * 1000 / (System.currentTimeMillis() - t0) + " per second.");
 
         // with Display:
-        showPositionDisplay(te.getCurrentPos(), Zoomer.HOUSE, 5000,
+        showPositionDisplay(te.getCurrentPos(), CenteredZoomer.HOUSE, 5000,
                 new TimeRunnable() {
                     @Override
                     public void run(final double t) throws InterruptedException {

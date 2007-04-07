@@ -68,7 +68,7 @@ public abstract class TestShowBase extends TestBase {
             display = null;
     }
 
-    public int showPositionDisplay(final PositionSet p, final Zoomer zoom,
+    public int showPositionDisplay(final PositionSet p, final CenteredZoomer zoom,
             final long millis, final TimeRunnable r) {
         if (frame == null)
             return -1;

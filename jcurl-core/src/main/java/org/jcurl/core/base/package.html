@@ -1,21 +1,32 @@
 <?xml version='1.0'?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
-
-  <head>
-
-    <title>None</title>
-
-  </head>
-
-  <body>
-
-    <p>Value objects (Data Transfer Objects). Stupid containers without 
-    logic.</p>
-
-    <h3>A 3rd Level Heading</h3>
-
-  </body>
-
+<head>
+<title>None</title>
+</head>
+<body>
+<p>Core datatypes and concepts.</p>
+<h3>Cordinate systems</h3>
+<p>JCurl uses various coordinate systems to reduce complexity. All
+of them are 2 dimensional and related to each other via {@link
+java.awt.geom.AffineTransform} matrices.</p>
+	<h4>World Coordinates (WC)</h4>
+	<p>Real world locations. (0,0) is at the tee (centerline x
+	teeline) with positive Y-axis along the centerline. Right handed, unit
+	of measurement is 1 meter.</p>
+	<h4>Display Coordinates (DC)</h4>
+	<p>(0,0) is at the top left edge of the current window on screen.
+	Almost only for incoming mouse events. Left handed, unit of measurement
+	is 1 pixel.</p>
+	<h4>Rock Coordinates (RC)</h4>
+	<p>Used to compute rock curves i.e. to implement curl models.
+	(0,0) is at the rock's center of mass with positive Y-axis along the
+	initial speed. Right handed, unit of measurement is 1 meter.</p>
+	<h4>Collission Coordinates (CC)</h4>
+	<p>Used to compute rock collissions i.e. to implement hit models.
+	(0,0) is at the rock A's center of mass with positive Y-axis pointing
+	towards B's center of mass. Right handed, unit of measurement is 1
+	meter.</p>
+<p></p>
+</body>
 </html>
-

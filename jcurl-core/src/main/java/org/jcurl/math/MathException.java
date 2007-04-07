@@ -19,9 +19,8 @@
 package org.jcurl.math;
 
 /**
- * TODO maybe extend {@link org.apache.commons.math.MathException}
+ * TODO maybe extend <code>org.apache.commons.math.MathException</code>.
  * 
- * @see org.apache.commons.math.MathException
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id: MathException.java 370 2007-01-23 03:04:05Z mrohrmoser $
  */

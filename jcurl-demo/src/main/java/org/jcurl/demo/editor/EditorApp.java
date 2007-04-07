@@ -51,7 +51,7 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.base.CenteredZoomer;
 import org.jcurl.core.helpers.Version;
 import org.jcurl.core.io.SetupIO;
 import org.jcurl.core.log.JCLoggerFactory;
@@ -161,7 +161,7 @@ public class EditorApp extends JFrame {
         master.setSpeed(mod_speeds);
         final PositionDisplay pnl2 = new PositionDisplay();
         pnl2.setPos(mod_locations);
-        pnl2.setZoom(Zoomer.HOG2HACK);
+        pnl2.setZoom(CenteredZoomer.HOG2HACK);
 
         final Container con = getContentPane();
 

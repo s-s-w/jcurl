@@ -28,7 +28,7 @@ import junit.framework.TestCase;
 /**
  * JUnit test
  * 
- * @see org.jcurl.core.base.Zoomer
+ * @see org.jcurl.core.base.CenteredZoomer
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:ZoomerTest.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
@@ -113,7 +113,7 @@ public class ZoomerTest extends TestCase {
     }
 
     public void test100_Zoom1by1() {
-        final int S = Zoomer.SCALE;
+        final int S = CenteredZoomer.SCALE;
         final double[] flat = new double[6];
         final Point2D dst = new Point2D.Double();
         final Point2D src = new Point2D.Double();
@@ -121,7 +121,7 @@ public class ZoomerTest extends TestCase {
         final Rectangle2D wc = new Rectangle2D.Double(1, 2, 3, 4);
         final Rectangle dc = new Rectangle(1, 2, 3, 4);
         final Point2D fix = new Point2D.Double(1, 2);
-        final Zoomer zom = new Zoomer("1:1", wc, fix);
+        final CenteredZoomer zom = new CenteredZoomer("1:1", wc, fix);
 
         mat.setToIdentity();
         zom.computeWctoDcTrafo(dc, Orientation.N, false, mat);
@@ -148,7 +148,7 @@ public class ZoomerTest extends TestCase {
         final Rectangle2D wc = new Rectangle2D.Double(1, 2, 3, 4);
         final Rectangle dc = new Rectangle(-1, -2, 3, 4);
         final Point2D fix = new Point2D.Double(1, 2);
-        final Zoomer zom = new Zoomer("1:1", wc, fix);
+        final CenteredZoomer zom = new CenteredZoomer("1:1", wc, fix);
 
         mat.setToIdentity();
         zom.computeWctoDcTrafo(dc, Orientation.N, false, mat);

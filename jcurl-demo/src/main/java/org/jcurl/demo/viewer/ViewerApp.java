@@ -31,10 +31,8 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurveManager;
-import org.jcurl.core.model.SlideNoCurl;
-import org.jcurl.core.swing.JCurlDisplay;
+import org.jcurl.core.swing.PositionDisplay;
 import org.jcurl.core.swing.SimpleKeys;
 import org.xml.sax.SAXException;
 
@@ -71,9 +69,9 @@ public class ViewerApp extends JFrame {
      * 
      * @return org.jcurl.core.swing.JCurlDisplay
      */
-    private JCurlDisplay getJCurlDisplay() {
+    private PositionDisplay getJCurlDisplay() {
         if (jCurlDisplay == null) {
-            jCurlDisplay = new JCurlDisplay();
+            jCurlDisplay = new PositionDisplay();
             jCurlDisplay.setSize(new Dimension(519, 123));
         }
         return jCurlDisplay;
@@ -112,10 +110,10 @@ public class ViewerApp extends JFrame {
         frame.show();
     }
 
-    private JCurlDisplay jCurlDisplay = null; // @jve:decl-index=0:visual-constraint="25,38"
+    private PositionDisplay jCurlDisplay = null; // @jve:decl-index=0:visual-constraint="25,38"
 
     public ViewerApp(CurveManager src) {
-        final JCurlDisplay mp = new JCurlDisplay();
+        final PositionDisplay mp = new PositionDisplay();
         mp.setPos(src.getCurrentPos());
         getContentPane().add(mp, "Center");
         // getContentPane().add(new SumShotDisplay(), "East");

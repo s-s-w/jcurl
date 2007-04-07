@@ -33,7 +33,7 @@ import java.awt.Graphics2D;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:JCurlDisplay.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class JCurlDisplay extends PositionDisplay {
+class JCurlDisplay extends PositionDisplay {
 
     private static final long serialVersionUID = -3587954807831602402L;
 
