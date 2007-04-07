@@ -21,11 +21,14 @@ package org.jcurl.core.model;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
+import java.util.Map;
 
 import org.jcurl.core.base.ColliderBase;
+import org.jcurl.core.base.ModelProps;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.RockProps;
+import org.jcurl.core.helpers.DimVal;
 import org.jcurl.math.MathVec;
 
 /**
@@ -40,7 +43,6 @@ import org.jcurl.math.MathVec;
  * @version $Id:CollissionSpinLoss.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class CollissionSpinLoss extends ColliderBase {
-
     private static final double HIT_MAX_DIST = 1e-6;
 
     private static final double INERTIA = RockProps.DEFAULT.getInertia();
@@ -53,9 +55,9 @@ public class CollissionSpinLoss extends ColliderBase {
         return Math.abs(a);
     }
 
-    private double mu;
+    private transient double mu;
 
-    private double U;
+    private transient double U;
 
     public CollissionSpinLoss() {
         setLoss(0);
@@ -115,6 +117,17 @@ public class CollissionSpinLoss extends ColliderBase {
     public void computeRC(final Rock va, final Rock vb) {
         // TODO Auto-generated method stub
 
+    }
+
+    void init(final double fritionRockRock, final double loss) {
+        setFricRockRock(fritionRockRock);
+        setLoss(loss);
+    }
+
+    public void init(final Map<CharSequence, DimVal> params) {
+        internalInit(params);
+        init(ModelProps.getFrictionRockRock(this.params), ModelProps
+                .getLoss(this.params));
     }
 
     private double Loss() {

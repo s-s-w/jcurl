@@ -18,11 +18,14 @@
  */
 package org.jcurl.core.model;
 
+import java.util.Map;
+
 import org.jcurl.core.base.CurveRock;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.SlideBase;
+import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.math.CurveFkt;
 import org.jcurl.math.MathVec;
@@ -38,26 +41,6 @@ import org.jcurl.math.R1RNFunction;
  * @version $Id:SlideDenny.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class SlideDenny extends SlideBase {
-
-    @Override
-    public CurveRock computeRc(Rock x0, Rock v0) {
-        throw new NotImplementedYetException();
-    }
-
-    @Override
-    public double computeV0(double intervalTime) {
-        throw new NotImplementedYetException();
-    }
-
-    @Override
-    public double getDrawToTeeCurl() {
-        throw new NotImplementedYetException();
-    }
-
-    @Override
-    public double getDrawToTeeTime() {
-        throw new NotImplementedYetException();
-    }
 
     private static final double _R = 6.5e-2;
 
@@ -78,6 +61,16 @@ public class SlideDenny extends SlideBase {
         super();
     }
 
+    @Override
+    public CurveRock computeRc(Rock x0, Rock v0) {
+        throw new NotImplementedYetException();
+    }
+
+    @Override
+    public double computeV0(double intervalTime) {
+        throw new NotImplementedYetException();
+    }
+
     protected R1RNFunction createCurve(final double t0, final Rock pos,
             final Rock speed) {
         throw new NotImplementedYetException();
@@ -89,6 +82,16 @@ public class SlideDenny extends SlideBase {
         x[1] = new Polynome(new double[] { 0, 1, 2, 3 });
         x[2] = new Polynome(new double[] { 0, 1, 2, 3 });
         return new CurveFkt(x);
+    }
+
+    @Override
+    public double getDrawToTeeCurl() {
+        throw new NotImplementedYetException();
+    }
+
+    @Override
+    public double getDrawToTeeTime() {
+        throw new NotImplementedYetException();
     }
 
     /**
@@ -118,6 +121,11 @@ public class SlideDenny extends SlideBase {
 
     public double getMu() {
         return _mu;
+    }
+
+    @Override
+    public void init(Map<CharSequence, DimVal> ice) {
+        throw new NotImplementedYetException();
     }
 
     public void setDraw2Tee(final double T, final double X) {

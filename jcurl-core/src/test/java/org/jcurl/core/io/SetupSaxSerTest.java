@@ -19,6 +19,7 @@
 package org.jcurl.core.io;
 
 import java.io.StringWriter;
+import java.util.Map;
 
 import junit.framework.TestCase;
 
@@ -44,11 +45,14 @@ public class SetupSaxSerTest extends TestCase {
     }
 
     public void testModel() throws SAXException {
-        ModelProps p = new ModelProps();
+        Map<CharSequence, DimVal> p = ModelProps.create();
         p.put("none", new DimVal(1, Dim.NONE));
         p.put("meter", new DimVal(1, Dim.METER));
         p.put("second", new DimVal(1, Dim.SECOND));
         Model m = new ModelBase() {
+            @Override
+            public void init(Map<CharSequence, DimVal> params) {
+            }
         };
         m.init(p);
         final StringWriter w = new StringWriter();

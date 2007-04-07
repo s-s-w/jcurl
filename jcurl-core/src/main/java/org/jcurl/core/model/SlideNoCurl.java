@@ -58,9 +58,9 @@ public class SlideNoCurl extends SlideBase {
      *            MUST be 0
      */
     public SlideNoCurl(final double drawToTeeTime, final double drawToTeeCurl) {
-        final ModelProps t = new ModelProps();
-        t.setDrawToTeeTime(drawToTeeTime);
-        t.setDrawToTeeCurl(drawToTeeCurl);
+        final Map<CharSequence, DimVal> t = ModelProps.create();
+        ModelProps.setDrawToTeeTime(t, drawToTeeTime);
+        ModelProps.setDrawToTeeCurl(t, drawToTeeCurl);
         init(t);
     }
 
@@ -124,7 +124,8 @@ public class SlideNoCurl extends SlideBase {
 
     @Override
     public void init(final Map<CharSequence, DimVal> ice) {
-        super.init(ice);
-        init(data.getDrawToTeeTime(), data.getDrawToTeeCurl());
+        internalInit(ice);
+        init(ModelProps.getDrawToTeeTime(params), ModelProps
+                .getDrawToTeeCurl(params));
     }
 }

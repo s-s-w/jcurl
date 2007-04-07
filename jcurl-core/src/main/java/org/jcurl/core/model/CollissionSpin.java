@@ -18,9 +18,13 @@
  */
 package org.jcurl.core.model;
 
+import java.util.Map;
+
 import org.jcurl.core.base.ColliderBase;
+import org.jcurl.core.base.ModelProps;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
+import org.jcurl.core.helpers.DimVal;
 import org.jcurl.math.MathVec;
 
 /**
@@ -34,21 +38,19 @@ import org.jcurl.math.MathVec;
  */
 public class CollissionSpin extends ColliderBase {
 
-    private static final String FRR = "friction rock-rock";
-
     private static final double J = RockProps.DEFAULT.getInertia();
-
-    private static final String LOSS = "loss";
 
     private static final double m = RockProps.DEFAULT.getMass();
 
     private static final double R = RockProps.DEFAULT.getRadius();
 
-    private double mu;
+    private transient double mu;
 
     public CollissionSpin() {
-        setLoss(0);
-        setFricRockRock(0.5);
+        final Map<CharSequence, DimVal> t = ModelProps.create();
+        ModelProps.setFrictionRockRock(t, 0);
+        ModelProps.setLoss(t, 0);
+        init(t);
     }
 
     @Override
@@ -70,6 +72,17 @@ public class CollissionSpin extends ColliderBase {
         vb.setZ(vb.getZ() + dW);
     }
 
+    void init(final double fritionRockRock, final double loss) {
+        mu = fritionRockRock;
+    }
+
+    @Override
+    public void init(final Map<CharSequence, DimVal> params) {
+        internalInit(params);
+        init(ModelProps.getFrictionRockRock(this.params), ModelProps
+                .getLoss(this.params));
+    }
+
     /**
      * The friction rock/rock. Set the parameter for friction rock/rock.
      * 
@@ -77,8 +90,7 @@ public class CollissionSpin extends ColliderBase {
      *            the value
      */
     public void setFricRockRock(final double v) {
-        mu = v;
-        // FIXME props.put(FRR, new Double(v));
+        ModelProps.setFrictionRockRock(this.params, mu = v);
     }
 
     /**
@@ -89,6 +101,6 @@ public class CollissionSpin extends ColliderBase {
      *            [Joule] the value
      */
     public void setLoss(final double v) {
-        // FIXME props.put(LOSS, new DimVal(v, Dim.JOULE));
+        ModelProps.setLoss(this.params, v);
     }
 }

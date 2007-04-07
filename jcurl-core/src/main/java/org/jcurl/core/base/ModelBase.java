@@ -18,6 +18,7 @@
  */
 package org.jcurl.core.base;
 
+import java.io.ObjectStreamException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -25,27 +26,35 @@ import java.util.Map.Entry;
 import org.jcurl.core.helpers.DimVal;
 
 /**
+ * Help with post-constructor one-time initialisation.
+ * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:ModelBase.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public abstract class ModelBase implements Model {
 
-    protected ModelProps data = null;
+    protected Map<CharSequence, DimVal> params = null;
 
     public DimVal getProp(final CharSequence key) {
-        return data.get(key);
+        return params.get(key);
     }
 
-    public void init(final Map<CharSequence, DimVal> props) {
-        if (this.data != null)
+    public abstract void init(final Map<CharSequence, DimVal> params);
+
+    protected void internalInit(final Map<CharSequence, DimVal> props) {
+        if (this.params != null)
             throw new IllegalStateException();
-        if (props instanceof ModelProps)
-            this.data = (ModelProps) props;
-        else
-            this.data = new ModelProps(props);
+        this.params = ModelProps.create(props);
     }
 
     public Iterator<Entry<CharSequence, DimVal>> iterator() {
-        return data.entrySet().iterator();
+        return params.entrySet().iterator();
+    }
+
+    protected Object readResolve() throws ObjectStreamException {
+        final Map<CharSequence, DimVal> params = this.params;
+        this.params = null;
+        this.init(params);
+        return this;
     }
 }

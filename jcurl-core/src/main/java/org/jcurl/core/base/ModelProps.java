@@ -18,120 +18,90 @@
  */
 package org.jcurl.core.base;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
 
-public class ModelProps implements Map<CharSequence, DimVal> {
-
+public final class ModelProps {
     public static final CharSequence DrawToTeeCurl = "drawToTeeCurl";
 
     public static final CharSequence DrawToTeeTime = "drawToTeeTime";
 
+    public static final CharSequence FrictionRockRock = "frictionRockRock";
+
+    public static final CharSequence Loss = "loss";
+
     private static final long serialVersionUID = -5959858338365408866L;
 
-    private final Map<CharSequence, DimVal> props;
-
-    public ModelProps() {
-        this(null);
+    public static Map<CharSequence, DimVal> create() {
+        return new HashMap<CharSequence, DimVal>();
     }
 
-    public ModelProps(final Map<CharSequence, DimVal> p) {
-        this.props = p == null ? new HashMap<CharSequence, DimVal>() : p;
+    public static Map<CharSequence, DimVal> create(Map<CharSequence, DimVal> m) {
+        return new HashMap<CharSequence, DimVal>(m);
     }
 
-    public void clear() {
-        props.clear();
+    public static double get(Map<CharSequence, DimVal> p,
+            final CharSequence key, final Dim dim) {
+        return p.get(key).to(dim).val;
     }
 
-    public boolean containsKey(final Object arg0) {
-        return props.containsKey(arg0);
-    }
-
-    public boolean containsValue(final Object arg0) {
-        return props.containsValue(arg0);
-    }
-
-    public Set<Entry<CharSequence, DimVal>> entrySet() {
-        return props.entrySet();
-    }
-
-    @Override
-    public boolean equals(final Object arg0) {
-        return props.equals(arg0);
-    }
-
-    public double get(final CharSequence key, final Dim dim) {
-        return get(key).to(dim).val;
-    }
-
-    public DimVal get(final Object arg0) {
-        return props.get(arg0);
-    }
-
-    public double getDrawToTeeCurl() {
-        return get(DrawToTeeCurl, Dim.METER);
+    public static double getDrawToTeeCurl(Map<CharSequence, DimVal> p) {
+        return get(p, DrawToTeeCurl, Dim.METER);
     }
 
     /**
      * 
      * @return may be {@link Double#POSITIVE_INFINITY}
      */
-    public double getDrawToTeeTime() {
-        return get(DrawToTeeTime, Dim.SECOND);
+    public static double getDrawToTeeTime(Map<CharSequence, DimVal> p) {
+        return get(p, DrawToTeeTime, Dim.SECOND);
     }
 
-    @Override
-    public int hashCode() {
-        return props.hashCode();
+    public static double getFrictionRockRock(Map<CharSequence, DimVal> p) {
+        return get(p, FrictionRockRock, Dim.NONE);
     }
 
-    public boolean isEmpty() {
-        return props.isEmpty();
+    public static double getLoss(Map<CharSequence, DimVal> p) {
+        return get(p, Loss, Dim.JOULE);
     }
 
-    public Set<CharSequence> keySet() {
-        return props.keySet();
+    public static void put(Map<CharSequence, DimVal> p, final CharSequence key,
+            final double val, final Dim dim) {
+        p.put(key, new DimVal(val, dim));
     }
 
-    public DimVal put(final CharSequence arg0, final DimVal arg1) {
-        return props.put(arg0, arg1);
-    }
-
-    public void put(final CharSequence key, final double val, final Dim dim) {
-        put(key, new DimVal(val, dim));
-    }
-
-    public void putAll(final Map<? extends CharSequence, ? extends DimVal> arg0) {
-        props.putAll(arg0);
-    }
-
-    public DimVal remove(final Object arg0) {
-        return props.remove(arg0);
-    }
-
-    public void setDrawToTeeCurl(final double drawToTeeCurl) {
-        put(DrawToTeeCurl, drawToTeeCurl, Dim.METER);
+    public static void setDrawToTeeCurl(Map<CharSequence, DimVal> p,
+            final double drawToTeeCurl) {
+        put(p, DrawToTeeCurl, drawToTeeCurl, Dim.METER);
     }
 
     /**
-     * May be {@link Double#POSITIVE_INFINITY}
      * 
      * @param drawToTeeTime
+     *            may be {@link Double#POSITIVE_INFINITY}
      */
-    public void setDrawToTeeTime(final double drawToTeeTime) {
-        put(DrawToTeeTime, drawToTeeTime, Dim.SECOND);
+    public static void setDrawToTeeTime(Map<CharSequence, DimVal> p,
+            final double drawToTeeTime) {
+        put(p, DrawToTeeTime, drawToTeeTime, Dim.SECOND);
     }
 
-    public int size() {
-        return props.size();
+    public static void setFrictionRockRock(Map<CharSequence, DimVal> p,
+            final double frictionRockRock) {
+        put(p, FrictionRockRock, frictionRockRock, Dim.NONE);
     }
 
-    public Collection<DimVal> values() {
-        return props.values();
+    /**
+     * 
+     * @param loss
+     *            may be {@link Double#POSITIVE_INFINITY}
+     */
+    public static void setLoss(Map<CharSequence, DimVal> p, final double loss) {
+        put(p, Loss, loss, Dim.JOULE);
+    }
+
+    private ModelProps() {
     }
 }

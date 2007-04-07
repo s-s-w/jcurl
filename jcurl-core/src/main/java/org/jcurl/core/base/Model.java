@@ -24,6 +24,16 @@ import java.util.Map.Entry;
 
 import org.jcurl.core.helpers.DimVal;
 
+import sun.misc.Service;
+
+/**
+ * Interface for all classes that have <code>key=value</code> parameters and
+ * support post-constructor initialisation as required by
+ * {@link Service#providers(Class)}.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public interface Model extends Iterable<Entry<CharSequence, DimVal>> {
 
     public abstract DimVal getProp(final CharSequence key);

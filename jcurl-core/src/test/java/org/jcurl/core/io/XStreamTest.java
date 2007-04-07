@@ -30,6 +30,7 @@ import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.model.CollissionSimple;
+import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurveManager;
 import org.jcurl.core.model.NewtonCollissionDetector;
 import org.jcurl.core.model.SlideNoCurl;
@@ -95,7 +96,7 @@ public class XStreamTest extends TestCase {
 
     public void test010() {
         final CurveManager te = new CurveManager();
-        te.setCollider(new CollissionSimple());
+        te.setCollider(new CollissionSpin());
         te.setCollissionDetector(new NewtonCollissionDetector());
         te.setSlider(new SlideNoCurl(23, 0));
         te.setInitialPos(PositionSet.allHome());
@@ -112,8 +113,76 @@ public class XStreamTest extends TestCase {
         xs.alias("dimval", DimVal.class);
         xs.alias("rock", RockDouble.class);
         String x = xs.toXML(te);
-        System.out.println(x);
-        // assertEquals("", x);
+        // System.out.println(x);
+        assertEquals(
+                "<org.jcurl.core.model.CurveManager>\n"
+                        + "  <collider class=\"org.jcurl.core.model.CollissionSpin\">\n"
+                        + "    <params>\n"
+                        + "      <entry>\n"
+                        + "        <string>loss</string>\n"
+                        + "        <dimval>0.0 J</dimval>\n"
+                        + "      </entry>\n"
+                        + "      <entry>\n"
+                        + "        <string>frictionRockRock</string>\n"
+                        + "        <dimval>0.0 </dimval>\n"
+                        + "      </entry>\n"
+                        + "    </params>\n"
+                        + "  </collider>\n"
+                        + "  <collissionDetector class=\"org.jcurl.core.model.NewtonCollissionDetector\"/>\n"
+                        + "  <initialPos>\n"
+                        + "    <dark>\n"
+                        + "      <rock>0.0, 6.4008002281188965, 0.0</rock>\n"
+                        + "      <rock>-2.2098000049591064, 9.083040237426758, 0.0</rock>\n"
+                        + "      <rock>-2.2098000049591064, 8.717280387878418, 0.0</rock>\n"
+                        + "      <rock>-2.2098000049591064, 8.351519584655762, 0.0</rock>\n"
+                        + "      <rock>-2.2098000049591064, 7.98576021194458, 0.0</rock>\n"
+                        + "      <rock>-2.2098000049591064, 7.619999885559082, 0.0</rock>\n"
+                        + "      <rock>-2.2098000049591064, 7.254240036010742, 0.0</rock>\n"
+                        + "      <rock>-2.2098000049591064, 6.888480186462402, 0.0</rock>\n"
+                        + "    </dark>\n"
+                        + "    <light>\n"
+                        + "      <rock>0.1, 1.8287999629974365, 0.7853981633974483</rock>\n"
+                        + "      <rock>2.2098000049591064, 9.083040237426758, 0.0</rock>\n"
+                        + "      <rock>2.2098000049591064, 8.717280387878418, 0.0</rock>\n"
+                        + "      <rock>2.2098000049591064, 8.351519584655762, 0.0</rock>\n"
+                        + "      <rock>2.2098000049591064, 7.98576021194458, 0.0</rock>\n"
+                        + "      <rock>2.2098000049591064, 7.619999885559082, 0.0</rock>\n"
+                        + "      <rock>2.2098000049591064, 7.254240036010742, 0.0</rock>\n"
+                        + "      <rock>2.2098000049591064, 6.888480186462402, 0.0</rock>\n"
+                        + "    </light>\n"
+                        + "  </initialPos>\n"
+                        + "  <initialSpeed>\n"
+                        + "    <dark>\n"
+                        + "      <rock>0.0, -1.3779956114540028, 1.5707963267948966</rock>\n"
+                        + "      <rock>0.0, 0.0, 0.0</rock>\n"
+                        + "      <rock>0.0, 0.0, 0.0</rock>\n"
+                        + "      <rock>0.0, 0.0, 0.0</rock>\n"
+                        + "      <rock>0.0, 0.0, 0.0</rock>\n"
+                        + "      <rock>0.0, 0.0, 0.0</rock>\n"
+                        + "      <rock>0.0, 0.0, 0.0</rock>\n"
+                        + "      <rock>0.0, 0.0, 0.0</rock>\n"
+                        + "    </dark>\n"
+                        + "    <light>\n"
+                        + "      <rock>0.0, 0.0, 0.0</rock>\n"
+                        + "      <rock>0.0, 0.0, 0.0</rock>\n"
+                        + "      <rock>0.0, 0.0, 0.0</rock>\n"
+                        + "      <rock>0.0, 0.0, 0.0</rock>\n"
+                        + "      <rock>0.0, 0.0, 0.0</rock>\n"
+                        + "      <rock>0.0, 0.0, 0.0</rock>\n"
+                        + "      <rock>0.0, 0.0, 0.0</rock>\n"
+                        + "      <rock>0.0, 0.0, 0.0</rock>\n"
+                        + "    </light>\n"
+                        + "  </initialSpeed>\n"
+                        + "  <slider class=\"org.jcurl.core.model.SlideNoCurl\">\n"
+                        + "    <params>\n" + "      <entry>\n"
+                        + "        <string>drawToTeeTime</string>\n"
+                        + "        <dimval>23.0 s</dimval>\n"
+                        + "      </entry>\n" + "      <entry>\n"
+                        + "        <string>drawToTeeCurl</string>\n"
+                        + "        <dimval>0.0 m</dimval>\n"
+                        + "      </entry>\n" + "    </params>\n"
+                        + "  </slider>\n"
+                        + "</org.jcurl.core.model.CurveManager>", x);
 
         CurveManager o = (CurveManager) xs.fromXML(x);
         assertNotNull(o);
