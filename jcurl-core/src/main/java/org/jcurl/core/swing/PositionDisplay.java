@@ -33,7 +33,8 @@ import java.util.Map;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.CenteredZoomer;
+import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.model.FixpointZoomer;
 
 /**
  * Base for rock location displays. Does all the coordinate transformation math
@@ -127,7 +128,7 @@ public class PositionDisplay extends WCComponent implements
         setRockPainter(new RockPainter());
         setIcePainter(new IcePainter());
         this.setPos(PositionSet.allOut());
-        setZoom(CenteredZoomer.HOUSE2HACK);
+        setZoom(FixpointZoomer.HOUSE2HACK);
     }
 
     @Override
@@ -243,7 +244,7 @@ public class PositionDisplay extends WCComponent implements
             final boolean isDark, final int idx) {
         final AffineTransform t = g.getTransform();
         if (false) {
-            g.translate(CenteredZoomer.SCALE * rock.getX(), CenteredZoomer.SCALE * rock.getY());
+            g.translate(Zoomer.SCALE * rock.getX(), Zoomer.SCALE * rock.getY());
             g.rotate(Math.PI + rock.getZ());
         } else {
             g.transform(WCComponent.preScale);

@@ -28,9 +28,10 @@ import javax.imageio.ImageIO;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.CenteredZoomer;
+import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.io.SetupBuilder;
 import org.jcurl.core.io.SetupSaxDeSer;
+import org.jcurl.core.model.FixpointZoomer;
 import org.xml.sax.SAXException;
 
 /**
@@ -52,7 +53,7 @@ public class IconGenerator {
         }
         final SetupBuilder setup = SetupSaxDeSer.parse(url);
 
-        savePng(setup.getPos(), CenteredZoomer.HOUSE2HACK, new File("/tmp/jcurl.png"));
+        savePng(setup.getPos(), FixpointZoomer.HOUSE2HACK, new File("/tmp/jcurl.png"));
     }
 
     /**
@@ -61,7 +62,7 @@ public class IconGenerator {
      * @param dst
      * @throws IOException
      */
-    public static void savePng(final PositionSet loc, final CenteredZoomer zoom,
+    public static void savePng(final PositionSet loc, final Zoomer zoom,
             final File dst) throws IOException {
         // Create image and graphics.
         final BufferedImage img = new BufferedImage(1024, 768,

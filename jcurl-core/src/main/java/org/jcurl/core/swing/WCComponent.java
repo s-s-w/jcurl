@@ -33,21 +33,21 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 import org.jcurl.core.base.Orientation;
-import org.jcurl.core.base.CenteredZoomer;
+import org.jcurl.core.base.Zoomer;
 
 public abstract class WCComponent extends Component implements WCLayer {
 
     /**
-     * @see CenteredZoomer#SCALE
+     * @see Zoomer#SCALE
      */
     static final AffineTransform postScale = AffineTransform.getScaleInstance(
-            1.0 / CenteredZoomer.SCALE, 1.0 / CenteredZoomer.SCALE);
+            1.0 / Zoomer.SCALE, 1.0 / Zoomer.SCALE);
 
     /**
-     * @see CenteredZoomer#SCALE
+     * @see Zoomer#SCALE
      */
     static final AffineTransform preScale = AffineTransform.getScaleInstance(
-            CenteredZoomer.SCALE, CenteredZoomer.SCALE);
+            Zoomer.SCALE, Zoomer.SCALE);
 
     protected int oldHei = -1;
 
@@ -57,7 +57,7 @@ public abstract class WCComponent extends Component implements WCLayer {
 
     protected final AffineTransform wc_mat = new AffineTransform();
 
-    private CenteredZoomer zoom = null;
+    private Zoomer zoom = null;
 
     /**
      * Convert display to world-coordinates.
@@ -69,7 +69,7 @@ public abstract class WCComponent extends Component implements WCLayer {
     public Point2D dc2wc(final Point2D dc, Point2D wc) {
         try {
             wc = wc_mat.inverseTransform(dc, wc);
-            wc.setLocation(wc.getX() / CenteredZoomer.SCALE, wc.getY() / CenteredZoomer.SCALE);
+            wc.setLocation(wc.getX() / Zoomer.SCALE, wc.getY() / Zoomer.SCALE);
             return wc;
         } catch (final NoninvertibleTransformException e) {
             throw new RuntimeException("Why uninvertible?", e);
@@ -109,7 +109,7 @@ public abstract class WCComponent extends Component implements WCLayer {
         ImageIO.write(img, "png", dst);
     }
 
-    public CenteredZoomer getZoom() {
+    public Zoomer getZoom() {
         return zoom;
     }
 
@@ -122,9 +122,9 @@ public abstract class WCComponent extends Component implements WCLayer {
     protected boolean resized() {
         final int w = getWidth();
         final int h = getHeight();
-        if (getZoom().hasChanged() || oldWid != w || oldHei != h) {
+        if (oldWid != w || oldHei != h) {
             getZoom()
-                    .computeWctoDcTrafo(this.getBounds(), orient, true, wc_mat);
+                    .computeWctoDcTrafo(this.getBounds(), wc_mat);
             oldWid = w;
             oldHei = h;
             return true;
@@ -132,7 +132,7 @@ public abstract class WCComponent extends Component implements WCLayer {
         return false;
     }
 
-    public void setZoom(final CenteredZoomer zoom) {
+    public void setZoom(final Zoomer zoom) {
         this.zoom = zoom;
         this.repaint();
     }
@@ -147,7 +147,7 @@ public abstract class WCComponent extends Component implements WCLayer {
     public Point2D wc2dc(final Point2D wc, Point2D dc) {
         if (dc == null)
             dc = new Point2D.Float();
-        dc.setLocation(wc.getX() * CenteredZoomer.SCALE, wc.getY() * CenteredZoomer.SCALE);
+        dc.setLocation(wc.getX() * Zoomer.SCALE, wc.getY() * Zoomer.SCALE);
         return wc_mat.transform(dc, dc);
     }
 }

@@ -24,7 +24,7 @@ import java.awt.image.BufferedImage;
 
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.TestShowBase;
-import org.jcurl.core.base.CenteredZoomer;
+import org.jcurl.core.model.FixpointZoomer;
 
 public class PositionDisplayTest extends TestShowBase {
 
@@ -33,7 +33,7 @@ public class PositionDisplayTest extends TestShowBase {
         final Graphics g = new BufferedImage(1024 * 2, 768 * 2,
                 BufferedImage.TYPE_INT_ARGB).getGraphics();
         final PositionSet p = PositionSet.allHome();
-        final int frames = showPositionDisplay(p, CenteredZoomer.HOG2HACK, dt,
+        final int frames = showPositionDisplay(p, FixpointZoomer.HOG2HACK, dt,
                 new TimeRunnable() {
                     @Override
                     public void run(final double t) throws InterruptedException {

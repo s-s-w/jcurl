@@ -22,6 +22,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import org.apache.commons.math.MathException;
+import org.jcurl.core.model.FixpointZoomer;
 import org.jcurl.math.Point3D;
 
 public class CurveTransformedTest extends TestShowBase {
@@ -252,7 +253,7 @@ public class CurveTransformedTest extends TestShowBase {
         for (int i = c.length - 1; i >= 0; i--)
             p.getRock(i).setLocation(c[i].at(0, 0, tmp));
         // Check if "sibling" rocks look alike:
-        showPositionDisplay(p, CenteredZoomer.C12, 5000, new TimeRunnable() {
+        showPositionDisplay(p, FixpointZoomer.C12, 5000, new TimeRunnable() {
             @Override
             public void run(final double t) throws InterruptedException {
                 p.notifyChange();

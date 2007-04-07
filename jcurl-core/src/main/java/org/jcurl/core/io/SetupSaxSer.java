@@ -220,10 +220,9 @@ public class SetupSaxSer {
                 "http://jcurl.berlios.de/schema/setup/2005/1.0");
         xml.startElement(NS, null, "jcurl", atts);
         xml.startElement(NS, null, "setup", null);
-        if (slide != null) {
+        if (slide != null)
             throw new NotImplementedException();
             // FIXME this.internal(slide.getColl());
-        }
         this.internal(slide);
         this.internal(pos);
         this.internal(speed);

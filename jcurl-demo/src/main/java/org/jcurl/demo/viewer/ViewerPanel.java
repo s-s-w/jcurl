@@ -18,7 +18,7 @@
  */
 package org.jcurl.demo.viewer;
 
-import org.jcurl.core.base.CenteredZoomer;
+import org.jcurl.core.model.FixpointZoomer;
 import org.jcurl.core.swing.PositionDisplay;
 
 /**
@@ -63,7 +63,7 @@ public class ViewerPanel extends javax.swing.JPanel {
         pauseButton = new javax.swing.JButton();
 
         detailPanel.setPreferredSize(new java.awt.Dimension(207, 200));
-        detailDisplay.setZoom(CenteredZoomer.HOUSE);
+        detailDisplay.setZoom(FixpointZoomer.HOUSE);
 
         org.jdesktop.layout.GroupLayout detailPanelLayout = new org.jdesktop.layout.GroupLayout(
                 detailPanel);
@@ -79,7 +79,7 @@ public class ViewerPanel extends javax.swing.JPanel {
                         org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 228,
                         Short.MAX_VALUE));
 
-        birdsEyeDisplay.setZoom(CenteredZoomer.HOG2HACK);
+        birdsEyeDisplay.setZoom(FixpointZoomer.HOG2HACK);
 
         controlPanel.setLayout(new javax.swing.BoxLayout(controlPanel,
                 javax.swing.BoxLayout.Y_AXIS));

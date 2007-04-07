@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.base;
+package org.jcurl.core.model;
 
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
@@ -25,14 +25,18 @@ import java.awt.geom.Rectangle2D;
 
 import junit.framework.TestCase;
 
+import org.jcurl.core.base.Ice;
+import org.jcurl.core.base.Orientation;
+import org.jcurl.core.base.Zoomer;
+
 /**
  * JUnit test
  * 
- * @see org.jcurl.core.base.CenteredZoomer
+ * @see org.jcurl.core.model.FixpointZoomer
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id:ZoomerTest.java 378 2007-01-24 01:18:35Z mrohrmoser $
+ * @version $Id:FixpointZoomerTest.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class ZoomerTest extends TestCase {
+public class FixpointZoomerTest extends TestCase {
 
     private static void print(final String msg, final Point2D p) {
         System.out.println(msg + p.toString());
@@ -113,7 +117,7 @@ public class ZoomerTest extends TestCase {
     }
 
     public void test100_Zoom1by1() {
-        final int S = CenteredZoomer.SCALE;
+        final int S = Zoomer.SCALE;
         final double[] flat = new double[6];
         final Point2D dst = new Point2D.Double();
         final Point2D src = new Point2D.Double();
@@ -121,7 +125,7 @@ public class ZoomerTest extends TestCase {
         final Rectangle2D wc = new Rectangle2D.Double(1, 2, 3, 4);
         final Rectangle dc = new Rectangle(1, 2, 3, 4);
         final Point2D fix = new Point2D.Double(1, 2);
-        final CenteredZoomer zom = new CenteredZoomer("1:1", wc, fix);
+        final FixpointZoomer zom = new FixpointZoomer("1:1", wc, fix);
 
         mat.setToIdentity();
         zom.computeWctoDcTrafo(dc, Orientation.N, false, mat);
@@ -148,7 +152,7 @@ public class ZoomerTest extends TestCase {
         final Rectangle2D wc = new Rectangle2D.Double(1, 2, 3, 4);
         final Rectangle dc = new Rectangle(-1, -2, 3, 4);
         final Point2D fix = new Point2D.Double(1, 2);
-        final CenteredZoomer zom = new CenteredZoomer("1:1", wc, fix);
+        final FixpointZoomer zom = new FixpointZoomer("1:1", wc, fix);
 
         mat.setToIdentity();
         zom.computeWctoDcTrafo(dc, Orientation.N, false, mat);
