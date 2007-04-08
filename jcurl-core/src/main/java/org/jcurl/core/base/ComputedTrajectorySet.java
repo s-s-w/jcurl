@@ -30,7 +30,7 @@ public interface ComputedTrajectorySet extends TrajectorySet {
 
     public abstract Collider getCollider();
 
-    public abstract CollissionDetectorBase getCollissionDetector();
+    public abstract CollissionDetector getCollissionDetector();
 
     public abstract PositionSet getInitialPos();
 
@@ -41,7 +41,7 @@ public interface ComputedTrajectorySet extends TrajectorySet {
     public abstract void setCollider(final Collider collider);
 
     public abstract void setCollissionDetector(
-            final CollissionDetectorBase collissionDetector);
+            final CollissionDetector collissionDetector);
 
     public abstract void setInitialPos(final PositionSet initialPos);
 

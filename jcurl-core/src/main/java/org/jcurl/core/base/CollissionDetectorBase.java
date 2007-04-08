@@ -20,7 +20,6 @@ package org.jcurl.core.base;
 
 import org.jcurl.math.MathVec;
 import org.jcurl.math.R1RNFunction;
-import org.jcurl.math.R1RNFunctionImpl;
 
 /**
  * Find Collissions of two spheres moving along curves.
@@ -28,83 +27,27 @@ import org.jcurl.math.R1RNFunctionImpl;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class CollissionDetectorBase implements Strategy {
+public abstract class CollissionDetectorBase implements Strategy, CollissionDetector {
 
     public static final double RR2 = MathVec.sqr(2 * RockProps.DEFAULT
             .getRadius());
 
-    /**
-     * Find the smallest <code>t</code> with
-     * <code>t0 &lt;= t &lt;= tmax</code> when the two spheres <code>ra</code>
-     * moving along <code>fa</code> and <code>rb</code> moving along
-     * <code>fb</code> touch.
-     * <p>
-     * Assumes a curling rock's radius for the radii of the both spheres.
-     * </p>
-     * <p>
-     * Delegates to
-     * {@link #compute(double, double, R1RNFunctionImpl, R1RNFunctionImpl, double)}.
-     * </p>
-     * 
-     * @param t0
-     *            start time
-     * @param tstop
-     *            max. time
-     * @param fa
-     *            location of sphere <code>a</code>
-     * @param fb
-     *            location of sphere <code>b</code>
-     * @return time of next collission or {@link Double#NaN} if none.
+    /* (non-Javadoc)
+     * @see org.jcurl.core.base.CollissionDetector#compute(double, double, org.jcurl.math.R1RNFunction, org.jcurl.math.R1RNFunction)
      */
     public double compute(final double t0, final double tstop,
             final R1RNFunction fa, final R1RNFunction fb) {
         return compute(t0, tstop, fa, fb, RR2);
     }
 
-    /**
-     * Find the smallest <code>t</code> with
-     * <code>t0 &lt;= t &lt;= tmax</code> when the two spheres <code>ra</code>
-     * moving along <code>fa</code> and <code>rb</code> moving along
-     * <code>fb</code> touch.
-     * 
-     * @param t0
-     *            start time
-     * @param tstop
-     *            max. time
-     * @param fa
-     *            location of sphere <code>a</code>
-     * @param fb
-     *            location of sphere <code>b</code>
-     * @param distSq
-     *            square of sum of both spheres radii
-     * @return time of next collission or {@link Double#NaN} if none.
+    /* (non-Javadoc)
+     * @see org.jcurl.core.base.CollissionDetector#compute(double, double, org.jcurl.math.R1RNFunction, org.jcurl.math.R1RNFunction, double)
      */
     public abstract double compute(final double t0, final double tstop,
             final R1RNFunction fa, final R1RNFunction fb, final double distSq);
 
-    /**
-     * Find the smallest <code>t</code> with
-     * <code>t0 &lt;= t &lt;= tmax</code> when the two spheres <code>ra</code>
-     * moving along <code>fa</code> and <code>rb</code> moving along
-     * <code>fb</code> touch.
-     * <p>
-     * Delegates to
-     * {@link #compute(double, double, R1RNFunctionImpl, R1RNFunctionImpl, double)}.
-     * </p>
-     * 
-     * @param t0
-     *            start time
-     * @param tstop
-     *            max. time
-     * @param fa
-     *            location of sphere <code>a</code>
-     * @param ra
-     *            radius of sphere <code>a</code>
-     * @param fb
-     *            location of sphere <code>b</code>
-     * @param rb
-     *            radius of sphere <code>b</code>
-     * @return time of next collission or {@link Double#NaN} if none.
+    /* (non-Javadoc)
+     * @see org.jcurl.core.base.CollissionDetector#compute(double, double, org.jcurl.math.R1RNFunction, double, org.jcurl.math.R1RNFunction, double)
      */
     public double compute(final double t0, final double tstop,
             final R1RNFunction fa, final double ra, final R1RNFunction fb,

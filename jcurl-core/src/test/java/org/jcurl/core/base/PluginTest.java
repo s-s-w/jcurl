@@ -34,4 +34,9 @@ public class PluginTest extends TestCase {
         final Iterator it = Service.providers(Collider.class);
         assertNotNull(it.next());
     }
+
+    public void testCollissionDetector() {
+        final Iterator it = Service.providers(CollissionDetector.class);
+        assertNotNull(it.next());
+    }
 }
