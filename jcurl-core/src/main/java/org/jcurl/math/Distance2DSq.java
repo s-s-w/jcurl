@@ -18,8 +18,6 @@
  */
 package org.jcurl.math;
 
-import org.jcurl.core.helpers.NotImplementedYetException;
-
 /**
  * The distance between two {@link R1RNFunctionImpl}s - only 2 dimensions used.
  * 
@@ -30,9 +28,6 @@ import org.jcurl.core.helpers.NotImplementedYetException;
  */
 public class Distance2DSq extends R1R1Function {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1239814260738123868L;
 
     private final R1RNFunction c1;
@@ -107,7 +102,7 @@ public class Distance2DSq extends R1R1Function {
             return at(t);
         if (derivative == 1)
             return valueC1(t);
-        throw new NotImplementedYetException();
+        throw new UnsupportedOperationException();
     }
 
     /**
