@@ -30,7 +30,7 @@ public class CurveCombinedTest extends TestCase {
         cc.add(2, new Polynome(new double[] { 2 }));
 
         int i = 0;
-        for (final Entry<Double, R1RNFunctionImpl> element : cc) {
+        for (final Entry<Double, R1RNFunction> element : cc) {
             System.out.println(element);
             i++;
         }

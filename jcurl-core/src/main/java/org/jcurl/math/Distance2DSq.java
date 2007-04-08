@@ -30,6 +30,11 @@ import org.jcurl.core.helpers.NotImplementedYetException;
  */
 public class Distance2DSq extends R1R1Function {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1239814260738123868L;
+
     private final R1RNFunction c1;
 
     private final R1RNFunction c2;

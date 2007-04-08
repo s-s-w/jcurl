@@ -18,12 +18,12 @@
  */
 package org.jcurl.core.base;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
 import org.jcurl.math.CurveCombined;
 import org.jcurl.math.R1RNFunction;
-import org.jcurl.math.R1RNFunctionImpl;
 
 /**
  * Manage rock trajectory segments for a complete set of rocks over time.
@@ -35,9 +35,11 @@ import org.jcurl.math.R1RNFunctionImpl;
  * @version $Id$
  */
 public class CurveStore implements
-        Iterable<Iterable<Entry<Double, R1RNFunctionImpl>>> {
+        Iterable<Iterable<Entry<Double, R1RNFunction>>>, Serializable {
 
     private static final byte DIM = 3;
+
+    private static final long serialVersionUID = -1485170570756670720L;
 
     private final CurveCombined[] curve;
 
@@ -47,8 +49,11 @@ public class CurveStore implements
             curve[i] = new CurveCombined(DIM);
     }
 
-    public void add(final int i, final double t, final R1RNFunctionImpl f) {
-        curve[i].add(t, f);
+    public void add(final int i, final double t, final R1RNFunction f) {
+        if (f instanceof CurveRockAnalytic)
+            curve[i].add(t, ((CurveRockAnalytic) f).curve);
+        else
+            curve[i].add(t, f);
     }
 
     public R1RNFunction getCurve(final int i) {
@@ -60,15 +65,15 @@ public class CurveStore implements
      * 
      * @return iterator over the cuves returning each segment.
      */
-    public Iterator<Iterable<Entry<Double, R1RNFunctionImpl>>> iterator() {
-        return new Iterator<Iterable<Entry<Double, R1RNFunctionImpl>>>() {
+    public Iterator<Iterable<Entry<Double, R1RNFunction>>> iterator() {
+        return new Iterator<Iterable<Entry<Double, R1RNFunction>>>() {
             int current = 0;
 
             public boolean hasNext() {
                 return current < curve.length;
             }
 
-            public Iterable<Entry<Double, R1RNFunctionImpl>> next() {
+            public Iterable<Entry<Double, R1RNFunction>> next() {
                 return curve[current++];
             }
 

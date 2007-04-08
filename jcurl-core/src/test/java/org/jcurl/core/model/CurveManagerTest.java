@@ -27,7 +27,7 @@ import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.TestShowBase;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.math.R1RNFunctionImpl;
+import org.jcurl.math.R1RNFunction;
 
 public class CurveManagerTest extends TestShowBase {
 
@@ -35,7 +35,7 @@ public class CurveManagerTest extends TestShowBase {
             .getLogger(CurveManagerTest.class);
 
     void showPaths(
-            final Iterator<Iterable<Entry<Double, R1RNFunctionImpl>>> it,
+            final Iterator<Iterable<Entry<Double, R1RNFunction>>> it,
             final double tmin, final double tmax) throws InterruptedException {
         if (frame == null)
             return;

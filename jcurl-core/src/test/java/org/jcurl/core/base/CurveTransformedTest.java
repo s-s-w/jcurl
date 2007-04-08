@@ -227,27 +227,27 @@ public class CurveTransformedTest extends TestShowBase {
         int k = -1;
         // Plain & straight
         m[++k] = new AffineTransform();
-        c[k] = new CurveTransformed(SlideBase.still(0.25, 1, 0), m[k], 0);
+        c[k] = new CurveTransformed(CurveStill.newInstance(0.25, 1, 0), m[k], 0);
         m[++k] = new AffineTransform();
         m[k].translate(0.5, 1);
-        c[k] = new CurveTransformed(SlideBase.still(0, 0, 0), m[k], 0);
+        c[k] = new CurveTransformed(CurveStill.newInstance(0, 0, 0), m[k], 0);
 
         // Plain & looking left
         m[++k] = new AffineTransform();
-        c[k] = new CurveTransformed(SlideBase.still(0.25, 1.5, 0.25 * Math.PI),
+        c[k] = new CurveTransformed(CurveStill.newInstance(0.25, 1.5, 0.25 * Math.PI),
                 m[k], 0);
         m[++k] = new AffineTransform();
         m[k].translate(0.5, 1.5);
         m[k].rotate(0.25 * Math.PI);
-        c[k] = new CurveTransformed(SlideBase.still(0, 0, 0), m[k], 0);
+        c[k] = new CurveTransformed(CurveStill.newInstance(0, 0, 0), m[k], 0);
 
         // createRc2Wc & looking left
         m[++k] = new AffineTransform();
-        c[k] = new CurveTransformed(SlideBase.still(0.25, 2, 0.25 * Math.PI),
+        c[k] = new CurveTransformed(CurveStill.newInstance(0.25, 2, 0.25 * Math.PI),
                 m[k], 0);
         m[++k] = CurveTransformed.createRc2Wc(null, new Point2D.Double(0.5, 2),
                 new Point2D.Double(-1, 1));
-        c[k] = new CurveTransformed(SlideBase.still(0, 0, 0), m[k], 0);
+        c[k] = new CurveTransformed(CurveStill.newInstance(0, 0, 0), m[k], 0);
 
         final double[] tmp = { 0, 0, 0 };
         for (int i = c.length - 1; i >= 0; i--)

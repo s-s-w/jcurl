@@ -31,7 +31,9 @@ import org.jcurl.math.R1RNFunctionImpl;
  */
 public class CurveRockAnalytic extends CurveRock {
 
-    private final R1RNFunction f;
+    private static final long serialVersionUID = 6879559446969142018L;
+
+    final R1RNFunction curve;
 
     public CurveRockAnalytic(final R1R1Function x, final R1R1Function y,
             final R1R1Function a) {
@@ -40,7 +42,7 @@ public class CurveRockAnalytic extends CurveRock {
 
     @Override
     public String toString() {
-        return f.toString();
+        return curve.toString();
     }
 
     public CurveRockAnalytic(final R1R1Function[] x) {
@@ -50,12 +52,12 @@ public class CurveRockAnalytic extends CurveRock {
     public CurveRockAnalytic(final R1RNFunction f) {
         if (f.dim() != 3)
             throw new IllegalArgumentException("Function must be 3-dimensional");
-        this.f = f;
+        this.curve = f;
     }
 
     @Override
     public double at(final int dim, final int c, final double t) {
-        return f.at(dim, c, t);
+        return curve.at(dim, c, t);
     }
 
 }

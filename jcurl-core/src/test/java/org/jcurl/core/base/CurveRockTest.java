@@ -29,7 +29,7 @@ public class CurveRockTest extends TestCase {
                 new Polynome(new double[] { 0 }),
                 new Polynome(new double[] { 2 }),
                 new Polynome(new double[] { Math.PI }) });
-        final CurveRock b = SlideBase.still(0, 2, Math.PI);
+        final CurveRock b = CurveStill.newInstance(0, 2, Math.PI);
         final Rock ra = new RockDouble();
         final Rock rb = new RockDouble();
         for (int c = 0; c < 3; c++)

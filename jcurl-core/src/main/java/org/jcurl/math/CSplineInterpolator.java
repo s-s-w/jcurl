@@ -28,6 +28,8 @@ package org.jcurl.math;
  */
 public class CSplineInterpolator extends R1R1Function {
 
+    private static final long serialVersionUID = -3630835719496788354L;
+
     private static final int a = 0;
 
     private static final float arrayFill = 0.80F;
@@ -181,7 +183,7 @@ public class CSplineInterpolator extends R1R1Function {
             // compute the c3 values
             splines = computeSplines(points, this.x, y);
         // find the correct index
-        int idx = CurveCombined.binarySearch(this.x, x, 0, points - 1);
+        int idx = CurveCombined1.binarySearch(this.x, x, 0, points - 1);
         if (idx < 0) {
             if (idx == -1)
                 return -1;

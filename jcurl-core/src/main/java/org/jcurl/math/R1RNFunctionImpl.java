@@ -32,26 +32,16 @@ public abstract class R1RNFunctionImpl implements R1RNFunction {
     private static final Log log = JCLoggerFactory
             .getLogger(R1RNFunctionImpl.class);
 
-    private final int dim;
+    private final transient int dim;
 
     protected R1RNFunctionImpl(final int dim) {
         this.dim = dim;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.jcurl.math.R1RNFunction#dim()
-     */
     public final int dim() {
         return dim;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.jcurl.math.R1RNFunction#at(int, double, double[])
-     */
     public double[] at(final int c, final double t, double[] ret) {
         if (ret == null)
             ret = new double[dim];
@@ -60,11 +50,6 @@ public abstract class R1RNFunctionImpl implements R1RNFunction {
         return ret;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.jcurl.math.R1RNFunction#at(int, double, float[])
-     */
     public float[] at(final int c, final double t, float[] ret) {
         if (ret == null)
             ret = new float[dim];
@@ -73,11 +58,6 @@ public abstract class R1RNFunctionImpl implements R1RNFunction {
         return ret;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.jcurl.math.R1RNFunction#at(int, int, double)
-     */
     public abstract double at(int dim, int c, double t);
 
     /**

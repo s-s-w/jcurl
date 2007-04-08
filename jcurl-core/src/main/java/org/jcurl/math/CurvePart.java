@@ -16,20 +16,41 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.base;
+package org.jcurl.math;
 
 import java.util.Map.Entry;
 
-import junit.framework.TestCase;
+/**
+ * @see CurveCombined2
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
+class CurvePart implements Entry<Double, R1RNFunction> {
 
-import org.jcurl.math.R1RNFunction;
+    private final R1RNFunction curve;
 
-public class CurveStoreTest extends TestCase {
+    private final Double t0;
 
-    public void testIterator() {
-        final CurveStore cs = new CurveStore(3);
-        for (final Iterable<Entry<Double, R1RNFunction>> element : cs)
-            for (final Entry<Double, R1RNFunction> e2 : element)
-                System.out.println(e2.getValue());
+    public CurvePart(final double t0, final R1RNFunction f) {
+        this.t0 = new Double(t0);
+        curve = f;
+    }
+
+    public Double getKey() {
+        return t0;
+    }
+
+    public R1RNFunction getValue() {
+        return curve;
+    }
+
+    public R1RNFunction setValue(final R1RNFunction value) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuffer().append("[").append(getKey())
+                .append(" : ").append(getValue()).append("]").toString();
     }
 }

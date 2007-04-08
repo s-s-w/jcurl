@@ -29,6 +29,7 @@ import org.jcurl.core.base.SlideBase;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.Polynome;
+import org.jcurl.math.PolynomeCurve;
 
 /**
  * This is not a realistic curl model but rather a baseline for the development
@@ -70,8 +71,8 @@ public class SlideNoCurl extends SlideBase {
 
     @Override
     public CurveRock computeRc(final Rock x0, final Rock v0) {
-        return new CurveRockAnalytic(computeRcPoly(x0.getZ(),
-                MathVec.abs2D(v0), v0.getZ()));
+        return new CurveRockAnalytic(new PolynomeCurve(computeRcPoly(x0.getZ(),
+                MathVec.abs2D(v0), v0.getZ())));
     }
 
     /**
@@ -88,7 +89,7 @@ public class SlideNoCurl extends SlideBase {
      */
     Polynome[] computeRcPoly(final double alpha0, final double v0,
             final double omega0) {
-        final double[] x = { 0, 0 };
+        final double[] x = { 0 };
         final double[] y = { 0, v0, -beta };
         final double[] a = { alpha0, omega0 };
         final Polynome[] ret = { new Polynome(x), new Polynome(y),

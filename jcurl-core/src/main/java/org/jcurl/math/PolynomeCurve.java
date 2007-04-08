@@ -18,20 +18,33 @@
  */
 package org.jcurl.math;
 
-import java.util.SortedMap;
-
 /**
- * Combined curve. Becomes more and more similar to {@link SortedMap} with some
- * restrictions and additions.
+ * Multidimensional curves of polynomes.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id: Polynome.java 483 2007-03-30 17:56:46Z mrohrmoser $
  */
-public class CurveCombined extends CurveCombined2 {
+public class PolynomeCurve extends R1RNFunctionImpl {
 
-    private static final long serialVersionUID = 1575324222492566792L;
+    private static final long serialVersionUID = 7503158531478359260L;
 
-    public CurveCombined(final int dim) {
-        super(dim);
+    private final double[][] params;
+
+    public PolynomeCurve(final double[][] params) {
+        super(params.length);
+        this.params = params;
     }
+
+    public PolynomeCurve(final Polynome[] polys) {
+        super(polys.length);
+        this.params = new double[polys.length][];
+        for (int i = params.length - 1; i >= 0; i--)
+            this.params[i] = polys[i].params;
+    }
+
+    @Override
+    public double at(int dim, int c, double t) {
+        return Polynome.poly(c, t, params[dim]);
+    }
+
 }

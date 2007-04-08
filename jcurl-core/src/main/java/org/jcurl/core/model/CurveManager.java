@@ -27,12 +27,12 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.base.Collider;
 import org.jcurl.core.base.CollissionDetector;
 import org.jcurl.core.base.ComputedTrajectorySet;
+import org.jcurl.core.base.CurveStill;
 import org.jcurl.core.base.CurveStore;
 import org.jcurl.core.base.CurveTransformed;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.SlideBase;
 import org.jcurl.core.base.Slider;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.MutableObject;
@@ -99,7 +99,7 @@ public class CurveManager extends MutableObject implements
         final Rock v = s.getRock(i);
         final R1RNFunctionImpl wc;
         if (v.distanceSq(0, 0) == 0)
-            wc = SlideBase.still(x);
+            wc = CurveStill.newInstance(x);
         else
             // FIXME add stop detection! Either here or in each slider?
             wc = new CurveTransformed(slider.computeRc(x, v), CurveTransformed

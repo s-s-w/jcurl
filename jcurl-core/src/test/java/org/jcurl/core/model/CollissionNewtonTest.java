@@ -23,7 +23,7 @@ import junit.framework.TestCase;
 import org.jcurl.core.base.CollissionDetectorBase;
 import org.jcurl.core.base.CurveRock;
 import org.jcurl.core.base.CurveRockAnalytic;
-import org.jcurl.core.base.SlideBase;
+import org.jcurl.core.base.CurveStill;
 import org.jcurl.math.Distance2DSq;
 import org.jcurl.math.Polynome;
 import org.jcurl.math.R1RNFunction;
@@ -36,7 +36,7 @@ public class CollissionNewtonTest extends TestCase {
         final R1RNFunction c0 = new CurveRockAnalytic(s.computeRcPoly(0, 1,
                 Math.PI / 2));
         // System.out.println(c0.toString());
-        final R1RNFunction c1 = SlideBase.still(0, 2, 0);
+        final R1RNFunction c1 = CurveStill.newInstance(0, 2, 0);
         // System.out.println(c0.at(2, null));
         // System.out.println(c1.at(2, new RockDouble()));
         // System.out.println(co.compute(0, Double.NaN, c0, c1));
@@ -59,7 +59,7 @@ public class CollissionNewtonTest extends TestCase {
         assertEquals("", 1.5690174844768945, new Distance2DSq(c0, c1,
                 CollissionDetectorBase.RR2).computeNewtonValue(0, 0,
                 CollissionDetectorBase.RR2, 0, 5), 1e-9);
-        c1 = SlideBase.still(0, 2, 0);
+        c1 = CurveStill.newInstance(0, 2, 0);
         assertEquals("", 1.5690174844768945, new Distance2DSq(c0, c1,
                 CollissionDetectorBase.RR2).computeNewtonValue(0, 0,
                 CollissionDetectorBase.RR2, 0, 5), 1e-9);
@@ -67,8 +67,8 @@ public class CollissionNewtonTest extends TestCase {
 
     public void testStill() {
         final NewtonCollissionDetector co = new NewtonCollissionDetector();
-        final R1RNFunction c0 = SlideBase.still(0, 1, 0);
-        final R1RNFunction c1 = SlideBase.still(0, 2, 0);
+        final R1RNFunction c0 = CurveStill.newInstance(0, 1, 0);
+        final R1RNFunction c1 = CurveStill.newInstance(0, 2, 0);
         assertEquals("", Double.NaN, co.compute(0, 5, c0, c1), 1e-9);
     }
 }

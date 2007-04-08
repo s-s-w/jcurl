@@ -18,13 +18,15 @@
  */
 package org.jcurl.math;
 
+import java.io.Serializable;
+
 /**
  * Interface for n-dimensional curves <code>f : R^1 -&gt; R^n</code>.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id: R1RNFunctionImpl.java 513 2007-04-07 19:43:48Z mrohrmoser $
  */
-public interface R1RNFunction {
+public interface R1RNFunction extends Serializable {
 
     public abstract int dim();
 

@@ -25,6 +25,9 @@ package org.jcurl.math;
  * @version $Id$
  */
 public class Polynome extends R1R1Function {
+
+    private static final long serialVersionUID = 7503158531478359260L;
+
     /**
      * Compute <code>a!</code>
      * 
@@ -137,7 +140,7 @@ public class Polynome extends R1R1Function {
         return ret.toString();
     }
 
-    private final double[] params;
+    final double[] params;
 
     public Polynome(final double[] params) {
         this.params = params;

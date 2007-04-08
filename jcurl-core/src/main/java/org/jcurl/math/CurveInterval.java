@@ -29,6 +29,11 @@ package org.jcurl.math;
 @Deprecated
 public class CurveInterval extends R1RNFunctionImpl {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7537438250546573258L;
+
     private final R1RNFunction curve;
 
     private final double tmax;

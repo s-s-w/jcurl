@@ -21,6 +21,8 @@ package org.jcurl.core.base;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
+import org.jcurl.math.R1RNFunction;
+
 /**
  * Decorator to apply an rc -&gt; wc {@link AffineTransform} and a time-shift.
  * 
@@ -28,6 +30,8 @@ import java.awt.geom.Point2D;
  * @version $Id: CurveTransformed.java 361 2006-08-28 20:21:07Z mrohrmoser $
  */
 public class CurveTransformed extends CurveRock {
+
+    private static final long serialVersionUID = -665772521427597014L;
 
     /**
      * Create the transformation from a Rock Coordinates (rc) System at p0_wc
@@ -78,11 +82,11 @@ public class CurveTransformed extends CurveRock {
                 .getY());
     }
 
-    private final double[] p = new double[6];
+    private final double[] trafo = new double[6];
 
-    final CurveRock rc;
+    final R1RNFunction rc;
 
-    final double rot;
+    final transient double rot;
 
     final double t0;
 
@@ -96,8 +100,11 @@ public class CurveTransformed extends CurveRock {
     public CurveTransformed(final CurveRock rc, final AffineTransform t,
             final double t0) {
         this.t0 = t0;
-        this.rc = rc;
-        t.getMatrix(p);
+        if (rc instanceof CurveRockAnalytic)
+            this.rc = ((CurveRockAnalytic) rc).curve;
+        else
+            this.rc = rc;
+        t.getMatrix(trafo);
         rot = Math.atan2(t.getShearY(), t.getScaleY());
     }
 
@@ -123,12 +130,12 @@ public class CurveTransformed extends CurveRock {
         final double y;
         final double z;
         if (derivative < 1) {
-            x = p[0] * ret[0] + p[2] * ret[1] + p[4];
-            y = p[1] * ret[0] + p[3] * ret[1] + p[5];
+            x = trafo[0] * ret[0] + trafo[2] * ret[1] + trafo[4];
+            y = trafo[1] * ret[0] + trafo[3] * ret[1] + trafo[5];
             z = ret[2] + rot;
         } else {
-            x = p[0] * ret[0] + p[2] * ret[1];
-            y = p[1] * ret[0] + p[3] * ret[1];
+            x = trafo[0] * ret[0] + trafo[2] * ret[1];
+            y = trafo[1] * ret[0] + trafo[3] * ret[1];
             z = ret[2];
         }
         ret[0] = x;
@@ -140,15 +147,20 @@ public class CurveTransformed extends CurveRock {
     @Override
     public Rock at(final int derivative, double t, Rock ret) {
         t -= t0;
-        ret = rc.at(derivative, t, ret);
+        if (ret == null)
+            ret = new RockDouble();
+        ret.setLocation(rc.at(0, derivative, t), rc.at(1, derivative, t), rc
+                .at(2, derivative, t));
         if (derivative < 1) {
-            final double x = p[0] * ret.getX() + p[2] * ret.getY() + p[4];
-            final double y = p[1] * ret.getX() + p[3] * ret.getY() + p[5];
+            final double x = trafo[0] * ret.getX() + trafo[2] * ret.getY()
+                    + trafo[4];
+            final double y = trafo[1] * ret.getX() + trafo[3] * ret.getY()
+                    + trafo[5];
             final double z = ret.getZ() + rot;
             ret.setLocation(x, y, z);
         } else {
-            final double x = p[0] * ret.getX() + p[2] * ret.getY();
-            final double y = p[1] * ret.getX() + p[3] * ret.getY();
+            final double x = trafo[0] * ret.getX() + trafo[2] * ret.getY();
+            final double y = trafo[1] * ret.getX() + trafo[3] * ret.getY();
             ret.setLocation(x, y);
         }
         return ret;
@@ -167,7 +179,7 @@ public class CurveTransformed extends CurveRock {
     public String toString() {
         final StringBuffer b = new StringBuffer();
         b.append("[");
-        for (final double element : p)
+        for (final double element : trafo)
             b.append(element).append(", ");
         b.setLength(b.length() - 2);
         b.append("] ");
