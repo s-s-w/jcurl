@@ -36,7 +36,7 @@ public interface ComputedTrajectorySet extends TrajectorySet {
 
     public abstract SpeedSet getInitialSpeed();
 
-    public abstract Slider getSlider();
+    public abstract Curler getCurler();
 
     public abstract void setCollider(final Collider collider);
 
@@ -47,6 +47,6 @@ public interface ComputedTrajectorySet extends TrajectorySet {
 
     public abstract void setInitialSpeed(final SpeedSet initialSpeed);
 
-    public abstract void setSlider(final Slider slider);
+    public abstract void setCurler(final Curler curler);
 
 }

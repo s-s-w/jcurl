@@ -47,14 +47,14 @@ public class CurveManagerTest extends TestShowBase {
         final CurveManager te = new CurveManager();
         te.setCollider(new CollissionSimple());
         te.setCollissionDetector(new NewtonCollissionDetector());
-        te.setSlider(new SlideNoCurl(23, 0));
+        te.setCurler(new CurlerNoCurl(23, 0));
         te.setInitialPos(PositionSet.allHome());
         te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
         te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
                 0.25 * Math.PI);
         te.setInitialSpeed(new SpeedSet());
         te.getInitialSpeed().getDark(0).setLocation(0,
-                -te.getSlider().computeV0(5), Math.PI / 2);
+                -te.getCurler().computeV0(5), Math.PI / 2);
 
         assertFalse(Double.isNaN(te.doGetNextHit().t));
         assertFalse((1 > te.doGetNextHit().t));
@@ -85,13 +85,13 @@ public class CurveManagerTest extends TestShowBase {
         final CurveManager te = new CurveManager();
         te.setCollider(new CollissionSimple());
         te.setCollissionDetector(new NewtonCollissionDetector());
-        te.setSlider(new SlideNoCurl(23, 0));
+        te.setCurler(new CurlerNoCurl(23, 0));
         te.setInitialPos(PositionSet.allHome());
         te.getInitialPos().getDark(0)
                 .setLocation(0, IceSize.HOG_2_TEE, Math.PI);
         te.setInitialSpeed(new SpeedSet());
         te.getInitialSpeed().getDark(0).setLocation(0,
-                -te.getSlider().computeV0(9), Math.PI / 2);
+                -te.getCurler().computeV0(9), Math.PI / 2);
 
         assertEquals(Double.NaN, te.doGetNextHit().t);
         assertFalse((1 > te.doGetNextHit().t));

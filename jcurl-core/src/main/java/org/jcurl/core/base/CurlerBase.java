@@ -22,12 +22,12 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 /**
- * Implementation base for {@link Slider}s.
+ * Implementation base for {@link Curler}s.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class SlideBase extends ModelBase implements Slider {
+public abstract class CurlerBase extends PropModelImpl implements Curler {
     public abstract CurveRock computeRc(final Rock x0, final Rock v0);
 
     public abstract double computeV0(final double intervalTime);

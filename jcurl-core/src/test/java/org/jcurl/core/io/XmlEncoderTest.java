@@ -30,7 +30,7 @@ import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.model.CollissionSimple;
 import org.jcurl.core.model.CurveManager;
 import org.jcurl.core.model.NewtonCollissionDetector;
-import org.jcurl.core.model.SlideNoCurl;
+import org.jcurl.core.model.CurlerNoCurl;
 
 public class XmlEncoderTest extends TestCase {
 
@@ -38,38 +38,41 @@ public class XmlEncoderTest extends TestCase {
         final CurveManager te = new CurveManager();
         te.setCollider(new CollissionSimple());
         te.setCollissionDetector(new NewtonCollissionDetector());
-        te.setSlider(new SlideNoCurl(23, 0));
+        te.setCurler(new CurlerNoCurl(23, 0));
         te.setInitialPos(PositionSet.allHome());
         te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
         te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
                 0.25 * Math.PI);
         te.setInitialSpeed(new SpeedSet());
         te.getInitialSpeed().getDark(0).setLocation(0,
-                -te.getSlider().computeV0(5), Math.PI / 2);
+                -te.getCurler().computeV0(5), Math.PI / 2);
 
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         final XMLEncoder xs = new XMLEncoder(bout);
         xs.writeObject(te);
         xs.close();
         assertEquals(
-                "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
-                        + "<java version=\"1.5.0_10\" class=\"java.beans.XMLDecoder\"> \n"
-                        + " <object class=\"org.jcurl.core.model.CurveManager\"> \n"
-                        + "  <void property=\"collider\"> \n"
-                        + "   <object class=\"org.jcurl.core.model.CollissionSimple\"/> \n"
-                        + "  </void> \n"
-                        + "  <void property=\"collissionDetector\"> \n"
-                        + "   <object class=\"org.jcurl.core.model.NewtonCollissionDetector\"/> \n"
-                        + "  </void> \n"
-                        + "  <void property=\"initialPos\"> \n"
-                        + "   <object class=\"org.jcurl.core.base.PositionSet\"/> \n"
-                        + "  </void> \n"
-                        + "  <void property=\"initialSpeed\"> \n"
-                        + "   <object class=\"org.jcurl.core.base.SpeedSet\"/> \n"
-                        + "  </void> \n"
-                        + "  <void property=\"slider\"> \n"
-                        + "   <object class=\"org.jcurl.core.model.SlideNoCurl\"/> \n"
-                        + "  </void> \n" + " </object> \n" + "</java> \n" + "",
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n" + 
+                "<java version=\"1.5.0_10\" class=\"java.beans.XMLDecoder\"> \n" + 
+                " <object class=\"org.jcurl.core.model.CurveManager\"> \n" + 
+                "  <void property=\"collider\"> \n" + 
+                "   <object class=\"org.jcurl.core.model.CollissionSimple\"/> \n" + 
+                "  </void> \n" + 
+                "  <void property=\"collissionDetector\"> \n" + 
+                "   <object class=\"org.jcurl.core.model.NewtonCollissionDetector\"/> \n" + 
+                "  </void> \n" + 
+                "  <void property=\"curler\"> \n" + 
+                "   <object class=\"org.jcurl.core.model.CurlerNoCurl\"/> \n" + 
+                "  </void> \n" + 
+                "  <void property=\"initialPos\"> \n" + 
+                "   <object class=\"org.jcurl.core.base.PositionSet\"/> \n" + 
+                "  </void> \n" + 
+                "  <void property=\"initialSpeed\"> \n" + 
+                "   <object class=\"org.jcurl.core.base.SpeedSet\"/> \n" + 
+                "  </void> \n" + 
+                " </object> \n" + 
+                "</java> \n" + 
+                "",
                 new String(bout.toByteArray(), "UTF-8"));
     }
 }

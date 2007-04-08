@@ -32,7 +32,7 @@ import org.jcurl.math.MathVec;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CollissionStrategy.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public abstract class ColliderBase extends ModelBase implements Collider {
+public abstract class ColliderBase extends PropModelImpl implements Collider {
 
     private static final double _Rad = RockProps.DEFAULT.getRadius();
 

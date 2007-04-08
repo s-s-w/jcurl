@@ -18,39 +18,36 @@
  */
 package org.jcurl.core.base;
 
-import java.awt.geom.AffineTransform;
 import java.util.Map;
 
 import org.jcurl.core.helpers.DimVal;
 
 /**
- * Compute rock collissions.
+ * Create rock-coordinate curves for running rocks.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface Collider extends PropModel, Strategy {
+public interface Curler extends PropModel, Strategy, Factory {
+
+    public abstract CurveRock computeRc(final Rock x0, final Rock v0);
 
     /**
-     * Check for and compute all collissions.
+     * Compute the (absolute) speed at the hog line for a rock released with
+     * given interval time.
      * <p>
-     * Does not change <code>pos</code>!
-     * </p>
-     * <p>
-     * Does not fire {@link SpeedSet#notifyChange()}!
+     * <code>v_0 = {@link IceSize#BACK_2_HOG} / t_S - beta t_S</code>
      * </p>
      * 
-     * @param pos
-     *            the positions (before and after the hit)
-     * @param speed
-     *            (before and after the hit)
-     * @param tr
-     *            Helper reference to avoid internal instanciations.
-     *            <code>null</code> creates a new instance.
-     * @return bitmask of the changed rocks
+     * @param intervalTime
+     * @return the hog speed.
      */
-    public abstract int compute(final PositionSet pos, final SpeedSet speed,
-            AffineTransform tr);
+    public abstract double computeV0(final double intervalTime);
+
+    public abstract double getDrawToTeeCurl();
+
+    public abstract double getDrawToTeeTime();
 
     public void init(final Map<CharSequence, DimVal> ice);
+
 }

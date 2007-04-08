@@ -24,7 +24,7 @@ import org.jcurl.core.base.CurveRock;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
-import org.jcurl.core.base.SlideBase;
+import org.jcurl.core.base.CurlerBase;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.math.CurveFkt;
@@ -40,7 +40,7 @@ import org.jcurl.math.R1RNFunction;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:SlideDenny.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class SlideDenny extends SlideBase {
+public class SlideDenny extends CurlerBase {
 
     private static final double _R = 6.5e-2;
 

@@ -23,7 +23,7 @@ import java.awt.geom.Point2D;
 
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.Slider;
+import org.jcurl.core.base.Curler;
 import org.jcurl.core.base.TestShowBase;
 import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.helpers.Dim;
@@ -32,13 +32,13 @@ import org.jcurl.math.Polynome;
 public class SlideNoCurlTest extends TestShowBase {
 
     public void testBeta() {
-        assertEquals(0.0980844266686885, new SlideNoCurl(17, 0).beta);
-        assertEquals(0.0535848758171096, new SlideNoCurl(23, 0).beta);
-        assertEquals(0.04193254335392156, new SlideNoCurl(26, 0).beta);
+        assertEquals(0.0980844266686885, new CurlerNoCurl(17, 0).beta);
+        assertEquals(0.0535848758171096, new CurlerNoCurl(23, 0).beta);
+        assertEquals(0.04193254335392156, new CurlerNoCurl(26, 0).beta);
     }
 
     public void testComputeV0() {
-        Slider s = new SlideNoCurl(17, 0);
+        Curler s = new CurlerNoCurl(17, 0);
         for (int i = 1; i <= 6; i++)
             System.out.println(s.computeV0(i));
         assertEquals(8.131515526029066, s.computeV0(1));
@@ -48,7 +48,7 @@ public class SlideNoCurlTest extends TestShowBase {
         assertEquals(1.1554978571961083, s.computeV0(5));
         assertEquals(0.7830934321041613, s.computeV0(6));
 
-        s = new SlideNoCurl(23, 0);
+        s = new CurlerNoCurl(23, 0);
         assertEquals(8.176015076880644, s.computeV0(1));
         assertEquals(4.007630224714657, s.computeV0(2));
         assertEquals(2.5824453567812555, s.computeV0(3));
@@ -56,7 +56,7 @@ public class SlideNoCurlTest extends TestShowBase {
         assertEquals(1.3779956114540028, s.computeV0(5));
         assertEquals(1.0500907372136346, s.computeV0(6));
 
-        s = new SlideNoCurl(26, 0);
+        s = new CurlerNoCurl(26, 0);
         assertEquals(8.187667409343833, s.computeV0(1));
         assertEquals(4.030934889641034, s.computeV0(2));
         assertEquals(2.61740235417082, s.computeV0(3));
@@ -66,13 +66,13 @@ public class SlideNoCurlTest extends TestShowBase {
     }
 
     public void testDrawToTeeV0() {
-        assertEquals(3.334870506735409, new SlideNoCurl(17, 0).drawToTeeV0);
-        assertEquals(2.4649042875870415, new SlideNoCurl(23, 0).drawToTeeV0);
-        assertEquals(2.180492254403921, new SlideNoCurl(26, 0).drawToTeeV0);
+        assertEquals(3.334870506735409, new CurlerNoCurl(17, 0).drawToTeeV0);
+        assertEquals(2.4649042875870415, new CurlerNoCurl(23, 0).drawToTeeV0);
+        assertEquals(2.180492254403921, new CurlerNoCurl(26, 0).drawToTeeV0);
     }
 
     public void testComputeRcPoly() {
-        SlideNoCurl s = new SlideNoCurl(17, 0);
+        CurlerNoCurl s = new CurlerNoCurl(17, 0);
         Polynome[] p = s.computeRcPoly(Math.PI, 2, 0.2);
         showTrajectory(p, FixpointZoomer.HOUSE, 5000, 40);
         assertEquals(0, p[0].at(0));
@@ -90,7 +90,7 @@ public class SlideNoCurlTest extends TestShowBase {
         assertEquals(22.653600692749027, p[1].at(17));
         assertEquals(6.5415926535897935, p[2].at(17));
 
-        s = new SlideNoCurl(23, 0);
+        s = new CurlerNoCurl(23, 0);
         p = s.computeRcPoly(Math.PI, 2, 0.2);
         assertEquals(0, p[0].at(0));
         assertEquals(0, p[1].at(0));
@@ -132,7 +132,7 @@ public class SlideNoCurlTest extends TestShowBase {
         assertEquals(24, AffineTransform.TYPE_MASK_ROTATION);
         assertEquals(32, AffineTransform.TYPE_GENERAL_TRANSFORM);
         assertEquals(64, AffineTransform.TYPE_FLIP);
-        final SlideNoCurl s = new SlideNoCurl(23, 0);
+        final CurlerNoCurl s = new CurlerNoCurl(23, 0);
         final AffineTransform m = new AffineTransform();
         final Point2D x = new Point2D.Double();
         s.releaseRc2Wc(m, 0, 0);

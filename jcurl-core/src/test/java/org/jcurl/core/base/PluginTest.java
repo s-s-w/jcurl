@@ -26,17 +26,17 @@ import sun.misc.Service;
 public class PluginTest extends TestCase {
 
     public void testSlider() {
-        final Iterator it = Service.providers(Slider.class);
-        assertNotNull(it.next());
+        final Iterator it = Service.providers(Curler.class);
+        assertNotNull((Curler) it.next());
     }
 
     public void testCollider() {
         final Iterator it = Service.providers(Collider.class);
-        assertNotNull(it.next());
+        assertNotNull((Collider) it.next());
     }
 
     public void testCollissionDetector() {
         final Iterator it = Service.providers(CollissionDetector.class);
-        assertNotNull(it.next());
+        assertNotNull((CollissionDetector) it.next());
     }
 }

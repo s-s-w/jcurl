@@ -31,7 +31,7 @@ import org.jcurl.math.R1RNFunction;
 public class CollissionNewtonTest extends TestCase {
 
     public void testCompute() {
-        final SlideNoCurl s = new SlideNoCurl(1000, 0);
+        final CurlerNoCurl s = new CurlerNoCurl(1000, 0);
         final NewtonCollissionDetector co = new NewtonCollissionDetector();
         final R1RNFunction c0 = new CurveRockAnalytic(s.computeRcPoly(0, 1,
                 Math.PI / 2));

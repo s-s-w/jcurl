@@ -28,11 +28,11 @@ import java.util.Map.Entry;
 import java.util.zip.GZIPOutputStream;
 
 import org.jcurl.core.base.Collider;
-import org.jcurl.core.base.Model;
+import org.jcurl.core.base.PropModel;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.Slider;
+import org.jcurl.core.base.Curler;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
@@ -99,7 +99,7 @@ public class SetupSaxSer {
         this(new XmlSerializer(dst, false));
     }
 
-    void internal(final Model model) throws SAXException {
+    void internal(final PropModel model) throws SAXException {
         if (model == null)
             return;
         {
@@ -202,7 +202,7 @@ public class SetupSaxSer {
     }
 
     public void write(final PositionSet pos, final SpeedSet speed,
-            final Collider coll, final Slider slide) throws SAXException {
+            final Collider coll, final Curler slide) throws SAXException {
         xml.startDocument();
         xml.startPrefixMapping(null, NS);
         final AttributesImpl atts = new AttributesImpl();

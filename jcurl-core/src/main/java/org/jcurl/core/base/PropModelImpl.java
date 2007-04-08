@@ -31,7 +31,7 @@ import org.jcurl.core.helpers.DimVal;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:ModelBase.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public abstract class ModelBase implements Model {
+public abstract class PropModelImpl implements PropModel {
 
     protected Map<CharSequence, DimVal> params = null;
 
@@ -44,7 +44,7 @@ public abstract class ModelBase implements Model {
     protected void internalInit(final Map<CharSequence, DimVal> props) {
         if (params != null)
             throw new IllegalStateException();
-        params = ModelProps.create(props);
+        params = PropModelHelper.create(props);
     }
 
     public Iterator<Entry<CharSequence, DimVal>> iterator() {

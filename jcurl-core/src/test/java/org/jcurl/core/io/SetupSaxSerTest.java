@@ -23,13 +23,13 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.base.Model;
-import org.jcurl.core.base.ModelBase;
-import org.jcurl.core.base.ModelProps;
+import org.jcurl.core.base.PropModel;
+import org.jcurl.core.base.PropModelImpl;
+import org.jcurl.core.base.PropModelHelper;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.model.CollissionSimple;
-import org.jcurl.core.model.SlideNoCurl;
+import org.jcurl.core.model.CurlerNoCurl;
 import org.xml.sax.SAXException;
 
 public class SetupSaxSerTest extends TestCase {
@@ -37,19 +37,19 @@ public class SetupSaxSerTest extends TestCase {
     public void testSlider() throws SAXException {
         final StringWriter w = new StringWriter();
         SetupSaxSer s = new SetupSaxSer(w);
-        s.internal(new SlideNoCurl(23, 0));
+        s.internal(new CurlerNoCurl(23, 0));
         w.flush();
         assertEquals(
-                "<model engine=\"org.jcurl.core.model.SlideNoCurl\"><param name=\"drawToTeeTime\" val=\"23.0\" dim=\"s\"></param><param name=\"drawToTeeCurl\" val=\"0.0\" dim=\"m\"></param></model>",
+                "<model engine=\"org.jcurl.core.model.CurlerNoCurl\"><param name=\"drawToTeeTime\" val=\"23.0\" dim=\"s\"></param><param name=\"drawToTeeCurl\" val=\"0.0\" dim=\"m\"></param></model>",
                 w.getBuffer().toString());
     }
 
     public void testModel() throws SAXException {
-        Map<CharSequence, DimVal> p = ModelProps.create();
+        Map<CharSequence, DimVal> p = PropModelHelper.create();
         p.put("none", new DimVal(1, Dim.NONE));
         p.put("meter", new DimVal(1, Dim.METER));
         p.put("second", new DimVal(1, Dim.SECOND));
-        Model m = new ModelBase() {
+        PropModel m = new PropModelImpl() {
             @Override
             public void init(Map<CharSequence, DimVal> params) {
                 internalInit(params);

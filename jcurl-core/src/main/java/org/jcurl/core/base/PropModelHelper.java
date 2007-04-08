@@ -24,7 +24,7 @@ import java.util.Map;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
 
-public final class ModelProps {
+public final class PropModelHelper {
     public static final CharSequence DrawToTeeCurl = "drawToTeeCurl";
 
     public static final CharSequence DrawToTeeTime = "drawToTeeTime";
@@ -105,6 +105,6 @@ public final class ModelProps {
         put(p, Loss, loss, Dim.JOULE);
     }
 
-    private ModelProps() {
+    private PropModelHelper() {
     }
 }

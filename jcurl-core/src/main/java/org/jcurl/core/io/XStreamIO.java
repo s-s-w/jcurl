@@ -21,10 +21,21 @@ package org.jcurl.core.io;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jcurl.core.base.CurveStill;
+import org.jcurl.core.base.CurveTransformed;
+import org.jcurl.core.base.JCurlIO;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockDouble;
+import org.jcurl.core.base.StoredTrajectorySet;
 import org.jcurl.core.base.TrajectorySet;
 import org.jcurl.core.helpers.DimVal;
+import org.jcurl.core.model.CollissionSpin;
+import org.jcurl.core.model.CurlerNoCurl;
+import org.jcurl.core.model.CurveManager;
+import org.jcurl.core.model.NewtonCollissionDetector;
+import org.jcurl.math.CurveCombined;
+import org.jcurl.math.CurvePart;
+import org.jcurl.math.PolynomeCurve;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.Converter;
@@ -33,7 +44,7 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
-public class XStreamIO {
+public class XStreamIO implements JCurlIO {
     public static class DimValConverter implements Converter {
         public boolean canConvert(final Class arg0) {
             return DimVal.class.isAssignableFrom(arg0);
@@ -89,17 +100,43 @@ public class XStreamIO {
 
     public XStreamIO() {
         xs = new XStream();
-        xs.registerConverter(new DimValConverter());
-        xs.registerConverter(new RockConverter());
-        xs.alias("dimval", DimVal.class);
-        xs.alias("rock", RockDouble.class);
+        registerConverter(xs);
+        registerAliases(xs);
     }
 
-    public TrajectorySet read(String s) {
+    public TrajectorySet read(final String s) {
         return (TrajectorySet) xs.fromXML(s);
     }
 
-    public String write(TrajectorySet t) {
+    /**
+     * Map all basic concepts to be a little bit robust against refactorings.
+     * Make the aliases upper- or camelcase to distinguish them from properties.
+     */
+    protected XStream registerAliases(final XStream xs) {
+        xs.alias("DimVal", DimVal.class);
+        xs.alias("Rock", RockDouble.class);
+        // 
+        xs.alias("StoredTrajectory", StoredTrajectorySet.class);
+        xs.alias("CombinedCurve", CurveCombined.class);
+        xs.alias("CurvePart", CurvePart.class);
+        xs.alias("TransformedCurve", CurveTransformed.class);
+        xs.alias("PolynomeCurve", PolynomeCurve.class);
+        xs.alias("PointCurve", CurveStill.class);
+        // 
+        xs.alias("CurveManager", CurveManager.class);
+        xs.alias("CollissionSpin", CollissionSpin.class);
+        xs.alias("NewtonCollissionDetector", NewtonCollissionDetector.class);
+        xs.alias("NoCurlCurler", CurlerNoCurl.class);
+        return xs;
+    }
+
+    protected XStream registerConverter(final XStream xs) {
+        xs.registerConverter(new DimValConverter());
+        xs.registerConverter(new RockConverter());
+        return xs;
+    }
+
+    public String write(final TrajectorySet t) {
         return xs.toXML(t);
     }
 }

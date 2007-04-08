@@ -23,9 +23,9 @@ import java.util.Map;
 import org.jcurl.core.base.CurveRock;
 import org.jcurl.core.base.CurveRockAnalytic;
 import org.jcurl.core.base.IceSize;
-import org.jcurl.core.base.ModelProps;
+import org.jcurl.core.base.PropModelHelper;
 import org.jcurl.core.base.Rock;
-import org.jcurl.core.base.SlideBase;
+import org.jcurl.core.base.CurlerBase;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.Polynome;
@@ -38,13 +38,13 @@ import org.jcurl.math.PolynomeCurve;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SlideNoCurl extends SlideBase {
+public class CurlerNoCurl extends CurlerBase {
 
     transient double beta;
 
     transient double drawToTeeV0;
 
-    public SlideNoCurl() {
+    public CurlerNoCurl() {
     }
 
     /**
@@ -58,14 +58,14 @@ public class SlideNoCurl extends SlideBase {
      * @param drawToTeeCurl
      *            MUST be 0
      */
-    public SlideNoCurl(final double drawToTeeTime, final double drawToTeeCurl) {
-        final Map<CharSequence, DimVal> t = ModelProps.create();
-        ModelProps.setDrawToTeeTime(t, drawToTeeTime);
-        ModelProps.setDrawToTeeCurl(t, drawToTeeCurl);
+    public CurlerNoCurl(final double drawToTeeTime, final double drawToTeeCurl) {
+        final Map<CharSequence, DimVal> t = PropModelHelper.create();
+        PropModelHelper.setDrawToTeeTime(t, drawToTeeTime);
+        PropModelHelper.setDrawToTeeCurl(t, drawToTeeCurl);
         init(t);
     }
 
-    public SlideNoCurl(final Map<CharSequence, DimVal> ice) {
+    public CurlerNoCurl(final Map<CharSequence, DimVal> ice) {
         init(ice);
     }
 
@@ -126,7 +126,7 @@ public class SlideNoCurl extends SlideBase {
     @Override
     public void init(final Map<CharSequence, DimVal> ice) {
         internalInit(ice);
-        init(ModelProps.getDrawToTeeTime(params), ModelProps
+        init(PropModelHelper.getDrawToTeeTime(params), PropModelHelper
                 .getDrawToTeeCurl(params));
     }
 }

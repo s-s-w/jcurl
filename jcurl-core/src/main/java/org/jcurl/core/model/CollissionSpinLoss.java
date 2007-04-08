@@ -24,7 +24,7 @@ import java.awt.geom.Point2D;
 import java.util.Map;
 
 import org.jcurl.core.base.ColliderBase;
-import org.jcurl.core.base.ModelProps;
+import org.jcurl.core.base.PropModelHelper;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.RockProps;
@@ -127,7 +127,7 @@ public class CollissionSpinLoss extends ColliderBase {
     @Override
     public void init(final Map<CharSequence, DimVal> params) {
         internalInit(params);
-        init(ModelProps.getFrictionRockRock(this.params), ModelProps
+        init(PropModelHelper.getFrictionRockRock(this.params), PropModelHelper
                 .getLoss(this.params));
     }
 

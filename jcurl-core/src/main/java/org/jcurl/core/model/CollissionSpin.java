@@ -21,7 +21,7 @@ package org.jcurl.core.model;
 import java.util.Map;
 
 import org.jcurl.core.base.ColliderBase;
-import org.jcurl.core.base.ModelProps;
+import org.jcurl.core.base.PropModelHelper;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.helpers.DimVal;
@@ -47,9 +47,9 @@ public class CollissionSpin extends ColliderBase {
     private transient double mu;
 
     public CollissionSpin() {
-        final Map<CharSequence, DimVal> t = ModelProps.create();
-        ModelProps.setFrictionRockRock(t, 0);
-        ModelProps.setLoss(t, 0);
+        final Map<CharSequence, DimVal> t = PropModelHelper.create();
+        PropModelHelper.setFrictionRockRock(t, 0);
+        PropModelHelper.setLoss(t, 0);
         init(t);
     }
 
@@ -79,7 +79,7 @@ public class CollissionSpin extends ColliderBase {
     @Override
     public void init(final Map<CharSequence, DimVal> params) {
         internalInit(params);
-        init(ModelProps.getFrictionRockRock(this.params), ModelProps
+        init(PropModelHelper.getFrictionRockRock(this.params), PropModelHelper
                 .getLoss(this.params));
     }
 
@@ -90,7 +90,7 @@ public class CollissionSpin extends ColliderBase {
      *            the value
      */
     public void setFricRockRock(final double v) {
-        ModelProps.setFrictionRockRock(params, mu = v);
+        PropModelHelper.setFrictionRockRock(params, mu = v);
     }
 
     /**
@@ -101,6 +101,6 @@ public class CollissionSpin extends ColliderBase {
      *            [Joule] the value
      */
     public void setLoss(final double v) {
-        ModelProps.setLoss(params, v);
+        PropModelHelper.setLoss(params, v);
     }
 }

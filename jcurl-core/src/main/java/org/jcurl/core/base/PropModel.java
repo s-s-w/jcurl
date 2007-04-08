@@ -34,7 +34,7 @@ import sun.misc.Service;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface Model extends Iterable<Entry<CharSequence, DimVal>> {
+public interface PropModel extends Iterable<Entry<CharSequence, DimVal>> {
 
     public abstract DimVal getProp(final CharSequence key);
 

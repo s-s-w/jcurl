@@ -25,7 +25,7 @@ import java.util.Map.Entry;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-class CurvePart implements Entry<Double, R1RNFunction> {
+public class CurvePart implements Entry<Double, R1RNFunction> {
 
     private final R1RNFunction curve;
 

@@ -23,11 +23,11 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.Collider;
 import org.jcurl.core.base.IceSize;
-import org.jcurl.core.base.Model;
+import org.jcurl.core.base.PropModel;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.Slider;
+import org.jcurl.core.base.Curler;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
@@ -77,7 +77,7 @@ public class SetupBuilder {
 
     private final RockData[] rocks;
 
-    private Slider slideStrat = null;
+    private Curler slideStrat = null;
 
     private final SpeedSet speed = new SpeedSet();
 
@@ -89,11 +89,11 @@ public class SetupBuilder {
 
     void addModel(final Class clz, final Map params)
             throws InstantiationException, IllegalAccessException {
-        final Model mb = (Model) clz.newInstance();
+        final PropModel mb = (PropModel) clz.newInstance();
         mb.init(params);
         if (mb instanceof Collider) {
-        } else if (mb instanceof Slider)
-            slideStrat = (Slider) mb;
+        } else if (mb instanceof Curler)
+            slideStrat = (Curler) mb;
         else
             throw new IllegalArgumentException("Unknown model type "
                     + clz.getName());
@@ -181,7 +181,7 @@ public class SetupBuilder {
         return pos;
     }
 
-    public Slider getSlide() {
+    public Curler getSlide() {
         return slideStrat;
     }
 

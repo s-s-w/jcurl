@@ -84,7 +84,7 @@ public class CurveTransformed extends CurveRock {
 
     private final double[] trafo = new double[6];
 
-    final R1RNFunction rc;
+    final R1RNFunction base;
 
     final transient double rot;
 
@@ -101,9 +101,9 @@ public class CurveTransformed extends CurveRock {
             final double t0) {
         this.t0 = t0;
         if (rc instanceof CurveRockAnalytic)
-            this.rc = ((CurveRockAnalytic) rc).curve;
+            this.base = ((CurveRockAnalytic) rc).curve;
         else
-            this.rc = rc;
+            this.base = rc;
         t.getMatrix(trafo);
         rot = Math.atan2(t.getShearY(), t.getScaleY());
     }
@@ -125,7 +125,7 @@ public class CurveTransformed extends CurveRock {
     @Override
     public double[] at(final int derivative, double t, double[] ret) {
         t -= t0;
-        ret = rc.at(derivative, t, ret);
+        ret = base.at(derivative, t, ret);
         final double x;
         final double y;
         final double z;
@@ -149,8 +149,8 @@ public class CurveTransformed extends CurveRock {
         t -= t0;
         if (ret == null)
             ret = new RockDouble();
-        ret.setLocation(rc.at(0, derivative, t), rc.at(1, derivative, t), rc
-                .at(2, derivative, t));
+        ret.setLocation(base.at(0, derivative, t), base.at(1, derivative, t),
+                base.at(2, derivative, t));
         if (derivative < 1) {
             final double x = trafo[0] * ret.getX() + trafo[2] * ret.getY()
                     + trafo[4];
@@ -183,7 +183,7 @@ public class CurveTransformed extends CurveRock {
             b.append(element).append(", ");
         b.setLength(b.length() - 2);
         b.append("] ");
-        b.append(rc.toString());
+        b.append(base.toString());
         return b.toString();
     }
 }

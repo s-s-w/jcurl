@@ -33,7 +33,7 @@ import org.jcurl.core.base.CurveTransformed;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.Slider;
+import org.jcurl.core.base.Curler;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.log.JCLoggerFactory;
@@ -79,7 +79,7 @@ public class CurveManager extends MutableObject implements
 
     private SpeedSet initialSpeed = null;
 
-    private Slider slider = null;
+    private Curler curler = null;
 
     public CurveManager() {
     }
@@ -102,7 +102,7 @@ public class CurveManager extends MutableObject implements
             wc = CurveStill.newInstance(x);
         else
             // FIXME add stop detection! Either here or in each slider?
-            wc = new CurveTransformed(slider.computeRc(x, v), CurveTransformed
+            wc = new CurveTransformed(curler.computeRc(x, v), CurveTransformed
                     .createRc2Wc(new AffineTransform(), x, v), t0);
         if (log.isDebugEnabled())
             log.debug(i + " " + wc);
@@ -227,8 +227,8 @@ public class CurveManager extends MutableObject implements
         return initialSpeed;
     }
 
-    public Slider getSlider() {
-        return slider;
+    public Curler getCurler() {
+        return curler;
     }
 
     @Override
@@ -247,7 +247,7 @@ public class CurveManager extends MutableObject implements
         m.setCurveStore(new CurveStore(RockSet.ROCKS_PER_SET));
         m.setInitialPos(getInitialPos());
         m.setInitialSpeed(getInitialSpeed());
-        m.setSlider(getSlider());
+        m.setCurler(getCurler());
         // m.setCurrentTime(this.getCurrentTime());
         return m;
     }
@@ -322,9 +322,9 @@ public class CurveManager extends MutableObject implements
         this.initialSpeed = initialSpeed;
     }
 
-    public void setSlider(final Slider slider) {
+    public void setCurler(final Curler curler) {
         dirty = true;
-        propChange.firePropertyChange("slider", this.slider, slider);
-        this.slider = slider;
+        propChange.firePropertyChange("curler", this.curler, curler);
+        this.curler = curler;
     }
 }
