@@ -20,6 +20,7 @@ package org.jcurl.core.base;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.io.ObjectStreamException;
 
 import org.jcurl.math.R1RNFunction;
 
@@ -82,30 +83,35 @@ public class CurveTransformed extends CurveRock {
                 .getY());
     }
 
-    private final double[] trafo = new double[6];
-
     final R1RNFunction base;
 
     final transient double rot;
 
     final double t0;
 
+    private final double[] trafo = new double[6];
+
+    private CurveTransformed(final AffineTransform trafo,
+            final R1RNFunction base, final double t0) {
+        this.t0 = t0;
+        if (base instanceof CurveRockAnalytic)
+            this.base = ((CurveRockAnalytic) base).curve;
+        else
+            this.base = base;
+        trafo.getMatrix(this.trafo);
+        rot = Math.atan2(trafo.getShearY(), trafo.getScaleY());
+    }
+
     /**
      * 
-     * @param rc
-     * @param t
+     * @param base
+     * @param trafo
      *            See {@link #createRc2Wc(AffineTransform, Point2D, Point2D)}
      * @param t0
      */
-    public CurveTransformed(final CurveRock rc, final AffineTransform t,
+    public CurveTransformed(final CurveRock base, final AffineTransform trafo,
             final double t0) {
-        this.t0 = t0;
-        if (rc instanceof CurveRockAnalytic)
-            this.base = ((CurveRockAnalytic) rc).curve;
-        else
-            this.base = rc;
-        t.getMatrix(trafo);
-        rot = Math.atan2(t.getShearY(), t.getScaleY());
+        this(trafo, base, t0);
     }
 
     /**
@@ -173,6 +179,11 @@ public class CurveTransformed extends CurveRock {
 
     double getT0() {
         return t0;
+    }
+
+    protected Object readResolve() throws ObjectStreamException {
+        return new CurveTransformed(new AffineTransform(trafo), base,
+                t0);
     }
 
     @Override

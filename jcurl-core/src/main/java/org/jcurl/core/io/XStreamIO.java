@@ -45,7 +45,9 @@ import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 public class XStreamIO implements JCurlIO {
+
     public static class DimValConverter implements Converter {
+
         public boolean canConvert(final Class arg0) {
             return DimVal.class.isAssignableFrom(arg0);
         }
@@ -65,11 +67,37 @@ public class XStreamIO implements JCurlIO {
         }
     }
 
+    public static class DoubleArrayConverter implements Converter {
+
+        public boolean canConvert(final Class arg0) {
+            return double[].class.isAssignableFrom(arg0);
+        }
+
+        public void marshal(final Object arg0,
+                final HierarchicalStreamWriter arg1,
+                final MarshallingContext arg2) {
+            final double[] d = (double[]) arg0;
+            final StringBuffer s = new StringBuffer();
+            for (int i = 0; i < d.length; i++)
+                s.append(d[i]).append(' ');
+            arg1.setValue(s.toString().trim());
+        }
+
+        public Object unmarshal(final HierarchicalStreamReader arg0,
+                final UnmarshallingContext arg1) {
+            final String[] p = arg0.getValue().split(" ");
+            double[] d = new double[p.length];
+            for (int i = 0; i < d.length; i++)
+                d[i] = Double.parseDouble(p[i]);
+            return d;
+        }
+    }
+
     public static class RockConverter implements Converter {
         static final String num = "-?[0-9]+(?:[.][0-9]+)?(?:e-?[0-9]+)?";
 
-        static final Pattern p = Pattern.compile("(" + num + "), (" + num
-                + "), (" + num + ")");
+        static final Pattern p = Pattern.compile("(" + num + ") (" + num
+                + ") (" + num + ")");
 
         public boolean canConvert(final Class arg0) {
             return Rock.class.isAssignableFrom(arg0);
@@ -80,8 +108,8 @@ public class XStreamIO implements JCurlIO {
                 final MarshallingContext arg2) {
             final Rock d = (Rock) arg0;
             final StringBuffer s = new StringBuffer();
-            s.append(d.getX()).append(", ");
-            s.append(d.getY()).append(", ");
+            s.append(d.getX()).append(" ");
+            s.append(d.getY()).append(" ");
             s.append(d.getZ());
             arg1.setValue(s.toString());
         }
@@ -132,6 +160,7 @@ public class XStreamIO implements JCurlIO {
 
     protected XStream registerConverter(final XStream xs) {
         xs.registerConverter(new DimValConverter());
+        xs.registerConverter(new DoubleArrayConverter());
         xs.registerConverter(new RockConverter());
         return xs;
     }

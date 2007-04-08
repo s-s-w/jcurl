@@ -19,7 +19,8 @@
 package org.jcurl.core.base;
 
 /**
- * "Read-only" trajectories of a whole set of rocks.
+ * "Read-only" trajectories of a whole set of {@link RockSet#ROCKS_PER_SET}
+ * rocks.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
