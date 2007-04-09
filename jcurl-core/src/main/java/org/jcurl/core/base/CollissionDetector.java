@@ -18,6 +18,7 @@
  */
 package org.jcurl.core.base;
 
+import org.jcurl.math.MathVec;
 import org.jcurl.math.R1RNFunction;
 
 /**
@@ -27,6 +28,9 @@ import org.jcurl.math.R1RNFunction;
  * @version $Id$
  */
 public interface CollissionDetector extends Strategy {
+
+    public static final double RR2 = MathVec.sqr(2 * RockProps.DEFAULT
+            .getRadius());
 
     /**
      * Find the smallest <code>t</code> with

@@ -50,7 +50,7 @@ public class CurvePart implements Entry<Double, R1RNFunction> {
 
     @Override
     public String toString() {
-        return new StringBuffer().append("[").append(getKey())
-                .append(" : ").append(getValue()).append("]").toString();
+        return new StringBuffer().append("[").append(getKey()).append(" : ")
+                .append(getValue()).append("]").toString();
     }
 }

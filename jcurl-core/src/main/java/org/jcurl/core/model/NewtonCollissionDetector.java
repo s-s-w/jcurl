@@ -33,10 +33,9 @@ import org.jcurl.math.R1RNFunction;
  */
 public class NewtonCollissionDetector extends CollissionDetectorBase {
 
-    @Override
     public double compute(final double t0, final double tmax,
             final R1RNFunction fa, final R1RNFunction fb, final double distSq) {
-        return NewtonSimpleSolver.computeNewtonValue(new Distance2DSq(fa, fb, 0),
-                0, 0, distSq, t0, tmax);
+        return NewtonSimpleSolver.computeNewtonValue(
+                new Distance2DSq(fa, fb, 0), 0, 0, distSq, t0, tmax);
     }
 }

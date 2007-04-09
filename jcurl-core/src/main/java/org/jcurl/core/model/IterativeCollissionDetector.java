@@ -23,7 +23,6 @@ import org.jcurl.math.R1RNFunction;
 
 public class IterativeCollissionDetector extends CollissionDetectorBase {
 
-    @Override
     public double compute(final double t0, final double tmax,
             final R1RNFunction fa, final R1RNFunction fb, final double rb) {
         throw new UnsupportedOperationException("Not implemented.");

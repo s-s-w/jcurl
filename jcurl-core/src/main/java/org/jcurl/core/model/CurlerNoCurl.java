@@ -70,7 +70,8 @@ public class CurlerNoCurl extends CurlerBase {
     }
 
     @Override
-    public CurveRock computeRc(final Rock x0, final Rock v0, final double sweepFactor) {
+    public CurveRock computeRc(final Rock x0, final Rock v0,
+            final double sweepFactor) {
         return new CurveRockAnalytic(new PolynomeCurve(computeRcPoly(x0.getZ(),
                 MathVec.abs2D(v0), v0.getZ(), sweepFactor)));
     }
@@ -85,7 +86,8 @@ public class CurlerNoCurl extends CurlerBase {
      * 
      * @param alpha0
      * @param v0
-     * @param sweepFactor TODO
+     * @param sweepFactor
+     *            TODO
      * @return The trajectory in rock coordinates.
      */
     Polynome[] computeRcPoly(final double alpha0, final double v0,

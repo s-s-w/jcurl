@@ -182,8 +182,7 @@ public class CurveTransformed extends CurveRock {
     }
 
     protected Object readResolve() throws ObjectStreamException {
-        return new CurveTransformed(new AffineTransform(trafo), base,
-                t0);
+        return new CurveTransformed(new AffineTransform(trafo), base, t0);
     }
 
     @Override

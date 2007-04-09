@@ -45,9 +45,10 @@ public class NewtonStopDetector implements StopDetector {
      * @see NewtonSimpleSolver#computeNewtonZero(R1RNFunction, int, int, double,
      *      double)
      */
-    public double compute(final R1RNFunction f, final double tmin, final double tmax) {
-        final double stop = NewtonSimpleSolver.computeNewtonZero(new Distance2DSq(f,
-                zero, 0, 1), 0, 0, tmin, tmax);
+    public double compute(final R1RNFunction f, final double tmin,
+            final double tmax) {
+        final double stop = NewtonSimpleSolver.computeNewtonZero(
+                new Distance2DSq(f, zero, 0, 1), 0, 0, tmin, tmax);
         if (log.isDebugEnabled())
             log.debug("Stop: " + stop);
         return stop;

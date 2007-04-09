@@ -27,28 +27,14 @@ import org.jcurl.math.R1RNFunction;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class CollissionDetectorBase implements Strategy, CollissionDetector {
+public abstract class CollissionDetectorBase implements Strategy,
+        CollissionDetector {
 
-    public static final double RR2 = MathVec.sqr(2 * RockProps.DEFAULT
-            .getRadius());
-
-    /* (non-Javadoc)
-     * @see org.jcurl.core.base.CollissionDetector#compute(double, double, org.jcurl.math.R1RNFunction, org.jcurl.math.R1RNFunction)
-     */
     public double compute(final double t0, final double tstop,
             final R1RNFunction fa, final R1RNFunction fb) {
-        return compute(t0, tstop, fa, fb, RR2);
+        return compute(t0, tstop, fa, fb, CollissionDetector.RR2);
     }
 
-    /* (non-Javadoc)
-     * @see org.jcurl.core.base.CollissionDetector#compute(double, double, org.jcurl.math.R1RNFunction, org.jcurl.math.R1RNFunction, double)
-     */
-    public abstract double compute(final double t0, final double tstop,
-            final R1RNFunction fa, final R1RNFunction fb, final double distSq);
-
-    /* (non-Javadoc)
-     * @see org.jcurl.core.base.CollissionDetector#compute(double, double, org.jcurl.math.R1RNFunction, double, org.jcurl.math.R1RNFunction, double)
-     */
     public double compute(final double t0, final double tstop,
             final R1RNFunction fa, final double ra, final R1RNFunction fb,
             final double rb) {

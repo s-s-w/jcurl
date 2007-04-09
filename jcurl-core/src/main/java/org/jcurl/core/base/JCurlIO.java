@@ -18,7 +18,6 @@
  */
 package org.jcurl.core.base;
 
-
 public interface JCurlIO {
 
     public abstract TrajectorySet read(final String s);

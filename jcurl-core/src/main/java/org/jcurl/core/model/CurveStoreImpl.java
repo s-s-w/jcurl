@@ -112,7 +112,7 @@ public class CurveStoreImpl implements Serializable, CurveStore {
         };
     }
 
-    public Iterator<Entry<Double, R1RNFunction>> iterator(int i) {
+    public Iterator<Entry<Double, R1RNFunction>> iterator(final int i) {
         return curve[i].iterator();
     }
 

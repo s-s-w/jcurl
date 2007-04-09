@@ -18,7 +18,6 @@
  */
 package org.jcurl.math;
 
-
 /**
  * Interface for n-dimensional curves <code>f : R^1 -&gt; R^n</code>.
  * 
