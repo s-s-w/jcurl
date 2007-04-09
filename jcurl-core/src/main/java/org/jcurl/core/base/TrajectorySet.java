@@ -30,6 +30,7 @@ import java.util.Map;
 public interface TrajectorySet {
 
     public Map<String, Object> getAnnotations();
+
     public abstract PositionSet getCurrentPos();
 
     public abstract SpeedSet getCurrentSpeed();

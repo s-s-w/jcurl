@@ -22,13 +22,13 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.AnnoHelp;
 import org.jcurl.core.base.ComputedTrajectorySet;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockSetTest;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.TestShowBase;
+import org.jcurl.core.helpers.AnnoHelp;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.R1RNFunction;
 
@@ -46,8 +46,8 @@ public class CurveManagerTest extends TestShowBase {
         te.setInitialPos(PositionSet.allOut());
         te.setInitialSpeed(new SpeedSet());
         te.getAnnotations().put(AnnoHelp.HammerK, AnnoHelp.HammerVDark);
-        te.getAnnotations().put(AnnoHelp.TeamDarkK, "Scotland");
-        te.getAnnotations().put(AnnoHelp.TeamLightK, "Canada");
+        te.getAnnotations().put(AnnoHelp.DarkTeamK, "Scotland");
+        te.getAnnotations().put(AnnoHelp.LightTeamK, "Canada");
         te.getAnnotations().put(AnnoHelp.GameK, "Semifinal");
         te.getAnnotations().put(AnnoHelp.EventK, "World Curling Championships");
         te.getAnnotations().put(AnnoHelp.DateK, "1992");

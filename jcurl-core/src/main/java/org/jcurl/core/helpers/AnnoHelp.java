@@ -16,9 +16,21 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.base;
+package org.jcurl.core.helpers;
 
 public interface AnnoHelp {
+
+    public static final String DarkCoachK = "org.jcurl.core.Dark.Coach";
+
+    public static final String DarkLeadK = "org.jcurl.core.Dark.Lead";
+
+    public static final String DarkSecondK = "org.jcurl.core.Dark.Second";
+
+    public static final String DarkSkipK = "org.jcurl.core.Dark.Skip";
+
+    public static final String DarkTeamK = "org.jcurl.core.Dark.Team";
+
+    public static final String DarkThirdK = "org.jcurl.core.Dark.Third";
 
     public static final String DateK = "org.jcurl.core.Date";
 
@@ -34,9 +46,7 @@ public interface AnnoHelp {
 
     public static final String HammerVLight = "Light";
 
+    public static final String LightTeamK = "org.jcurl.core.Light.Team";
+
     public static final String LocationK = "org.jcurl.core.Location";
-
-    public static final String TeamDarkK = "org.jcurl.core.Team.Dark";
-
-    public static final String TeamLightK = "org.jcurl.core.Team.Light";
 }

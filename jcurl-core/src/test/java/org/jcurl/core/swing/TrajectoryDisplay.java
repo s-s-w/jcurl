@@ -18,23 +18,34 @@
  */
 package org.jcurl.core.swing;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import org.jcurl.core.base.CurveStore;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
+import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.RockSet;
+import org.jcurl.core.base.TrajectorySet;
 import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.model.CurveManager;
 import org.jcurl.core.model.FixpointZoomer;
+import org.jcurl.math.CurveShape;
+import org.jcurl.math.R1RNFunction;
 
 /**
  * Base for rock location displays. Does all the coordinate transformation math
@@ -44,10 +55,16 @@ import org.jcurl.core.model.FixpointZoomer;
  * @version $Id: RockLocationDisplayBase.java 230 2006-02-19 12:34:18Z
  *          mrohrmoser $
  */
-public class PositionDisplay extends WCComponent implements
+public class TrajectoryDisplay extends WCComponent implements
         PropertyChangeListener {
 
     private static final Map<Object, Object> hints = new HashMap<Object, Object>();
+
+    private static final Color pathDark;
+
+    private static final Color pathLight;
+
+    private static final Stroke pathStroke;
 
     private static final long serialVersionUID = -2680676530327406261L;
 
@@ -70,17 +87,25 @@ public class PositionDisplay extends WCComponent implements
         // RenderingHints.VALUE_STROKE_NORMALIZE);
         // hints.put(RenderingHints.KEY_TEXT_ANTIALIASING,
         // RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        final int opa = 100;
+        pathDark = new Color(255, 0, 0, opa);
+        pathLight = new Color(255, 255, 0, opa);
+        pathStroke = new BasicStroke(Zoomer.SCALE * 2
+                * RockProps.DEFAULT.getRadius(), BasicStroke.CAP_ROUND,
+                BasicStroke.JOIN_ROUND, 0);
     }
 
     private IcePainter icePainter = null; // @jve:decl-index=0:
 
     private BufferedImage img = null;
 
-    private PositionSet pos = null;
+    private TrajectorySet pos = null;
 
     private RockPainter rockPainter = null;
 
-    public PositionDisplay() {
+    private CurvePainter curvePainter = null;
+
+    public TrajectoryDisplay() {
         initialize();
     }
 
@@ -109,7 +134,7 @@ public class PositionDisplay extends WCComponent implements
         return icePainter;
     }
 
-    public PositionSet getPos() {
+    public TrajectorySet getPos() {
         return pos;
     }
 
@@ -123,11 +148,16 @@ public class PositionDisplay extends WCComponent implements
     }
 
     private void initialize() {
+        final int opa = 100;
+        this.curvePainter = new CurvePainter(new Color(255, 0, 0, opa),
+                new Color(255, 255, 0, opa), new BasicStroke(Zoomer.SCALE * 2
+                        * RockProps.DEFAULT.getRadius(), BasicStroke.CAP_ROUND,
+                        BasicStroke.JOIN_ROUND, 0));
         this.setSize(new Dimension(600, 120));
         // setOpaque(true);
         setRockPainter(new RockPainter());
         setIcePainter(new IcePainter());
-        this.setPos(PositionSet.allOut());
+        this.setPos(null);
         setZoom(FixpointZoomer.HOUSE2HACK);
     }
 
@@ -158,7 +188,11 @@ public class PositionDisplay extends WCComponent implements
                 g2.setTransform(backup);
             }
             g2.transform(wc_mat);
-            paintRocksWC(g2, pos, RockSet.ALL_MASK);
+            curvePainter.doPaint(g2, ((CurveManager) pos)
+                    .getCurveStore());
+            g2.setTransform(backup);
+            g2.transform(wc_mat);
+            paintRocksWC(g2, pos.getCurrentPos(), RockSet.ALL_MASK);
         } finally {
             g2.setTransform(backup);
         }
@@ -252,12 +286,12 @@ public class PositionDisplay extends WCComponent implements
      * Property (rocks) changed.
      * 
      * @param evt
-     * @see #setPos(PositionSet)
+     * @see #setPos(TrajectorySet)
      */
     public void propertyChange(final PropertyChangeEvent evt) {
         final Object tmp = evt.getNewValue();
         if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass()))
-            this.setPos((PositionSet) tmp);
+            ;// FIXME this.setPos((PositionSet) tmp);
     }
 
     /**
@@ -276,9 +310,9 @@ public class PositionDisplay extends WCComponent implements
      * 
      * @param rocks
      *            rocks' locations.
-     * @see #setPos(PositionSet, int)
+     * @see #setPos(TrajectorySet, int)
      */
-    public void setPos(final PositionSet rocks) {
+    public void setPos(final TrajectorySet rocks) {
         this.setPos(rocks, RockSet.ALL_MASK);
     }
 
@@ -291,11 +325,11 @@ public class PositionDisplay extends WCComponent implements
      * @param discontinuous
      *            bitmask of discontinuous locations
      */
-    public void setPos(final PositionSet rocks, final int discontinuous) {
+    public void setPos(final TrajectorySet rocks, final int discontinuous) {
         if (pos != rocks) {
             if (pos != null)
-                pos.removePropertyChangeListener(this);
-            rocks.addPropertyChangeListener(this);
+                pos.getCurrentPos().removePropertyChangeListener(this);
+            rocks.getCurrentPos().addPropertyChangeListener(this);
         }
         pos = rocks;
         this.repaint();

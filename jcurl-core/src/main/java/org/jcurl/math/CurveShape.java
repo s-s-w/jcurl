@@ -21,13 +21,36 @@ import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 
 /**
- * Enable convenient approximated Java2D drawing of arbitratry 2-dimensional
- * curves.
+ * Helper for convenient approximated Java2D drawing of arbitratry curves with
+ * at least 2 dimensions.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public abstract class CurveShape {
+
+    /**
+     * Split the given interval [min,max] into equidistant sections.
+     * 
+     * @param min
+     * @param max
+     * @param sections
+     * @return filled <code>sections</code> array.
+     */
+    public static double[] aequidistantSections(final double min,
+            final double max, final double[] sections) {
+        final int n = sections.length;
+        if (n == 0)
+            return sections;
+        sections[0] = min;
+        sections[n - 1] = max;
+        if (n <= 2)
+            return sections;
+        final double d = (max - min) / (n - 1);
+        for (int i = n - 2; i > 0; i--)
+            sections[i] = min + i * d;
+        return sections;
+    }
 
     public static Shape approximate(final R1RNFunction c,
             final double[] sections) {
@@ -37,41 +60,89 @@ public abstract class CurveShape {
 
     public static Shape approximateLinear(final R1RNFunction c,
             final double[] sections) {
-        final double[] x_1 = { c.at(0, 0, sections[0]), c.at(1, 0, sections[0]) };
-        final double[] x_2 = { 0, 0 };
+        return approximateLinear(c, sections, 1, null);
+    }
+
+    /**
+     * Turns the first 2 dimensions of a {@link R1RNFunction} into a drawable
+     * {@link Shape}.
+     * 
+     * @param c
+     * @param sections
+     * @param zoom
+     *            factor - typically 1
+     * @param tmp
+     *            save instanciations calling
+     *            {@link R1RNFunction#at(int, double, double[])}.
+     * @return the shape.
+     */
+    public static Shape approximateLinear(final R1RNFunction c,
+            final double[] sections, final float zoom, double[] tmp) {
+        if (tmp == null)
+            tmp = new double[c.dim()];
+        c.at(0, sections[0], tmp);
         final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
                 sections.length + 1);
-        gp.moveTo((float) x_1[0], (float) x_1[1]);
+        gp.moveTo((float) (zoom * tmp[0]), (float) (zoom * tmp[1]));
         for (int i = 1; i < sections.length; i++) {
-            x_2[0] = c.at(0, 0, sections[i]);
-            x_2[1] = c.at(1, 0, sections[i]);
-            gp.lineTo((float) x_2[0], (float) x_2[1]);
-            x_1[0] = x_2[0];
-            x_1[1] = x_2[1];
+            c.at(0, sections[i], tmp);
+            gp.lineTo((float) (zoom * tmp[0]), (float) (zoom * tmp[1]));
         }
         return gp;
     }
 
     public static Shape approximateQuadratic(final R1RNFunction c,
             final double[] sections) {
-        final double[] p0 = { c.at(0, 0, sections[0]), c.at(1, 0, sections[0]) };
-        final double[] v0 = { c.at(0, 1, sections[0]), c.at(1, 1, sections[0]) };
-        final double[] p1 = { 0, 0 };
-        final double[] v1 = { 0, 0 };
+        return approximateQuadratic(c, sections, 1, null, null, null, null);
+    }
+
+    /**
+     * Turns the first 2 dimensions of a {@link R1RNFunction} into a drawable
+     * {@link Shape}.
+     * 
+     * @param c
+     * @param sections
+     * @param zoom
+     *            factor - typically 1
+     * @param p0
+     *            save instanciations calling
+     *            {@link R1RNFunction#at(int, double, double[])}.
+     * @param v0
+     *            save instanciations calling
+     *            {@link R1RNFunction#at(int, double, double[])}.
+     * @param p1
+     *            save instanciations calling
+     *            {@link R1RNFunction#at(int, double, double[])}.
+     * @param v1
+     *            save instanciations calling
+     *            {@link R1RNFunction#at(int, double, double[])}.
+     * @return the shape
+     */
+    public static Shape approximateQuadratic(final R1RNFunction c,
+            final double[] sections, final float zoom, double[] p0,
+            double[] v0, double[] p1, double[] v1) {
+        if (p0 == null)
+            p0 = new double[c.dim()];
+        if (v0 == null)
+            v0 = new double[c.dim()];
+        if (p1 == null)
+            p1 = new double[c.dim()];
+        if (v1 == null)
+            v1 = new double[c.dim()];
+        c.at(0, sections[0], p0);
+        c.at(1, sections[0], v0);
         final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
                 sections.length + 1);
-        gp.moveTo((float) p0[0], (float) p0[1]);
+        gp.moveTo((float) (zoom * p0[0]), (float) (zoom * p0[1]));
         final double tmp_a[][] = { { 0, 0 }, { 0, 0 } };
         final double tmp_b[] = { 0, 0 };
         final double pc[] = { 0, 0 };
         for (int i = 1; i < sections.length; i++) {
-            p1[0] = c.at(0, 0, sections[i]);
-            p1[1] = c.at(1, 0, sections[i]);
-            v1[0] = c.at(0, 1, sections[i]);
-            v1[1] = c.at(1, 1, sections[i]);
-            computeControlPoint(p0, v0, p1, v1, tmp_a, tmp_b, pc);
-            gp.quadTo((float) pc[0], (float) pc[1], (float) p1[0],
-                    (float) p1[1]);
+            c.at(0, sections[i], p1);
+            c.at(1, sections[i], v1);
+            CurveShape.computeControlPoint(p0, v0, p1, v1, tmp_a, tmp_b, pc);
+            gp.quadTo((float) (zoom * pc[0]), (float) (zoom * pc[1]),
+                    (float) (zoom * p1[0]), (float) (zoom * p1[1]));
             p0[0] = p1[0];
             p0[1] = p1[1];
             v0[0] = v1[0];
@@ -85,17 +156,17 @@ public abstract class CurveShape {
      * Maxima code:
      * 
      * <pre>
-     *                 NEXTLAYERFACTOR(TRUE)$
-     *                 DEBUGMODE(TRUE)$ 
-     *                  
-     *                 pa[0] + k * va[0] = pb[0] + l * vb[0];
-     *                 pa[1] + k * va[1] = pb[1] + l * vb[1];
-     *                  
-     *                 LINSOLVE([%i4, %i5],[k, l]),GLOBALSOLVE:TRUE,BACKSUBST:TRUE$
-     *                  
-     *                 SCSIMP(PART(%o6,1,2)); 
-     *                  
-     *                 quit$
+     * NEXTLAYERFACTOR(TRUE)$
+     * DEBUGMODE(TRUE)$ 
+     * 
+     * pa[0] + k * va[0] = pb[0] + l * vb[0];
+     * pa[1] + k * va[1] = pb[1] + l * vb[1];
+     * 
+     * LINSOLVE([%i4, %i5],[k, l]),GLOBALSOLVE:TRUE,BACKSUBST:TRUE$
+     * 
+     * SCSIMP(PART(%o6,1,2)); 
+     * 
+     * quit$
      * </pre>
      * 
      * @param pa
@@ -133,28 +204,4 @@ public abstract class CurveShape {
         pc[1] = pa[1] + f * va[1];
         return pc;
     }
-
-    /**
-     * Split the given interval [min,max] into equidistant sections.
-     * 
-     * @param min
-     * @param max
-     * @param sections
-     * @return filled <code>sections</code> array.
-     */
-    public static double[] aequidistantSections(final double min,
-            final double max, final double[] sections) {
-        final int n = sections.length;
-        if (n == 0)
-            return sections;
-        sections[0] = min;
-        sections[n - 1] = max;
-        if (n <= 2)
-            return sections;
-        final double d = (max - min) / (n - 1);
-        for (int i = n - 2; i > 0; i--)
-            sections[i] = min + i * d;
-        return sections;
-    }
-
 }
