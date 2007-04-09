@@ -75,7 +75,7 @@ public class CurveManager extends MutableObject implements
 
     private transient double currentTime = 0;
 
-    private transient CurveStore curveStore = new CurveStore(
+    private transient CurveStore curveStore = new CurveStoreImpl(
             new NewtonStopDetector(), RockSet.ROCKS_PER_SET);
 
     private transient boolean dirty = true;
@@ -249,7 +249,7 @@ public class CurveManager extends MutableObject implements
         final CurveManager m = new CurveManager();
         m.setCollider(getCollider());
         m.setCollissionDetector(getCollissionDetector());
-        m.setCurveStore(new CurveStore(null, RockSet.ROCKS_PER_SET));
+        m.setCurveStore(new CurveStoreImpl(null, RockSet.ROCKS_PER_SET));
         m.setInitialPos(getInitialPos());
         m.setInitialSpeed(getInitialSpeed());
         m.setCurler(getCurler());

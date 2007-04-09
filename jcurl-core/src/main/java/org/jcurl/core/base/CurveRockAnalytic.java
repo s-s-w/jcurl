@@ -55,6 +55,10 @@ public class CurveRockAnalytic extends CurveRock {
         return curve.at(dim, c, t);
     }
 
+    public R1RNFunction getCurve() {
+        return curve;
+    }
+
     @Override
     public String toString() {
         return curve.toString();

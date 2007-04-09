@@ -32,7 +32,9 @@ import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerNoCurl;
 import org.jcurl.core.model.CurveManager;
+import org.jcurl.core.model.CurveStoreImpl;
 import org.jcurl.core.model.NewtonCollissionDetector;
+import org.jcurl.core.model.NewtonStopDetector;
 import org.jcurl.math.CurveCombined;
 import org.jcurl.math.CurvePart;
 import org.jcurl.math.PolynomeCurve;
@@ -152,6 +154,8 @@ public class XStreamIO implements JCurlIO {
         xs.alias("PointCurve", CurveStill.class);
         // 
         xs.alias("CurveManager", CurveManager.class);
+        xs.alias("CurveStoreImpl", CurveStoreImpl.class);
+        xs.alias("NewtonStopDetector", NewtonStopDetector.class);
         xs.alias("CollissionSpin", CollissionSpin.class);
         xs.alias("NewtonCollissionDetector", NewtonCollissionDetector.class);
         xs.alias("NoCurlCurler", CurlerNoCurl.class);
