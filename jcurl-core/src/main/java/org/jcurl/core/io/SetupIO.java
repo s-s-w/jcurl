@@ -27,9 +27,9 @@ import java.net.URL;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.Collider;
+import org.jcurl.core.base.CurlerBase;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.CurlerBase;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.xml.sax.ContentHandler;

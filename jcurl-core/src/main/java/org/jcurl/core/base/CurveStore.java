@@ -47,6 +47,8 @@ public interface CurveStore extends
      */
     public abstract Iterator<Iterable<Entry<Double, R1RNFunction>>> iterator();
 
+    public Iterator<Entry<Double, R1RNFunction>> iterator(int i);
+
     public abstract void reset(final int i);
 
 }

@@ -19,7 +19,6 @@
 package org.jcurl.core.base;
 
 import org.jcurl.math.R1RNFunction;
-import org.jcurl.math.R1RNFunctionImpl;
 
 /**
  * Find Collissions of two spheres moving along curves.
@@ -27,7 +26,7 @@ import org.jcurl.math.R1RNFunctionImpl;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface CollissionDetector {
+public interface CollissionDetector extends Strategy {
 
     /**
      * Find the smallest <code>t</code> with

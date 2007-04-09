@@ -20,11 +20,11 @@ package org.jcurl.core.model;
 
 import java.util.Map;
 
+import org.jcurl.core.base.CurlerBase;
 import org.jcurl.core.base.CurveRock;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
-import org.jcurl.core.base.CurlerBase;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.math.CurveFkt;

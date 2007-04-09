@@ -41,12 +41,12 @@ import org.jcurl.math.R1RNFunction;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveStoreImpl implements
-        Serializable, CurveStore {
+public class CurveStoreImpl implements Serializable, CurveStore {
 
     private static final byte DIM = 3;
 
-    private static final Log log = JCLoggerFactory.getLogger(CurveStoreImpl.class);
+    private static final Log log = JCLoggerFactory
+            .getLogger(CurveStoreImpl.class);
 
     private static final long serialVersionUID = -1485170570756670720L;
 
@@ -110,6 +110,10 @@ public class CurveStoreImpl implements
                 throw new UnsupportedOperationException();
             }
         };
+    }
+
+    public Iterator<Entry<Double, R1RNFunction>> iterator(int i) {
+        return curve[i].iterator();
     }
 
     public void reset(final int i) {

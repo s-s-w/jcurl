@@ -22,14 +22,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.SortedMap;
 import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
 
 /**
- * Combined curve. Becomes more and more similar to {@link SortedMap} with some
+ * Combined curve. Becomes more and more similar to {@link List} with some
  * restrictions and additions.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

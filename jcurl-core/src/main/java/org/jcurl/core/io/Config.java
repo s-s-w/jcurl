@@ -27,10 +27,10 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
 import org.jcurl.core.base.Collider;
+import org.jcurl.core.base.Curler;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockSetProps;
-import org.jcurl.core.base.Curler;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
 
