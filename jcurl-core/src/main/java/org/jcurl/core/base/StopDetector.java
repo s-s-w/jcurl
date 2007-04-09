@@ -16,27 +16,27 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.model;
+package org.jcurl.core.base;
 
-import org.jcurl.core.base.CollissionDetectorBase;
-import org.jcurl.math.Distance2DSq;
-import org.jcurl.math.NewtonSimpleSolver;
 import org.jcurl.math.R1RNFunction;
 
 /**
- * Uses
- * {@link NewtonSimpleSolver#computeNewtonValue(R1RNFunction , int, int, double, double, double)}
- * on {@link Distance2DSq} to find the next collission.
+ * When drops the "speed" (first derivative) of a function to zero?
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class NewtonCollissionDetector extends CollissionDetectorBase {
+public interface StopDetector extends Strategy {
 
-    @Override
-    public double compute(final double t0, final double tmax,
-            final R1RNFunction fa, final R1RNFunction fb, final double distSq) {
-        return NewtonSimpleSolver.computeNewtonValue(new Distance2DSq(fa, fb, 0),
-                0, 0, distSq, t0, tmax);
-    }
+    /**
+     * When drops the "speed" (first derivative) of a function to zero?
+     * 
+     * @param f
+     * @param tmin
+     * @param tmax
+     * @return {@link Double#NaN} if not stopping within [tmin, tmax]
+     */
+    public abstract double compute(final R1RNFunction f, double tmin,
+            double tmax);
+
 }

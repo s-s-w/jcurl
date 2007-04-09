@@ -28,7 +28,7 @@ import java.awt.geom.Point2D;
  * @version $Id$
  */
 public abstract class CurlerBase extends PropModelImpl implements Curler {
-    public abstract CurveRock computeRc(final Rock x0, final Rock v0);
+    public abstract CurveRock computeRc(final Rock x0, final Rock v0, double sweepFactor);
 
     public abstract double computeV0(final double intervalTime);
 

@@ -22,11 +22,16 @@ public class CurveStill extends CurveRock {
 
     private static final long serialVersionUID = -8031863193302315171L;
 
-    public static CurveRock newInstance(final double x, final double y, final double a) {
-        return new CurveStill(x,y,a);
+    public static CurveStill newInstance(final double x, final double y,
+            final double a) {
+        return new CurveStill(x, y, a);
     }
 
-    public static CurveRock newInstance(final Rock x) {
+    public static CurveStill newInstance(final double[] x) {
+        return CurveStill.newInstance(x[0], x[1], x[2]);
+    }
+
+    public static CurveStill newInstance(final Rock x) {
         return CurveStill.newInstance(x.getX(), x.getY(), x.getZ());
     }
 

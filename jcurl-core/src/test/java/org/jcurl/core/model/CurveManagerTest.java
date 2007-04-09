@@ -34,8 +34,7 @@ public class CurveManagerTest extends TestShowBase {
     private static final Log log = JCLoggerFactory
             .getLogger(CurveManagerTest.class);
 
-    void showPaths(
-            final Iterator<Iterable<Entry<Double, R1RNFunction>>> it,
+    void showPaths(final Iterator<Iterable<Entry<Double, R1RNFunction>>> it,
             final double tmin, final double tmax) throws InterruptedException {
         if (frame == null)
             return;
@@ -60,8 +59,12 @@ public class CurveManagerTest extends TestShowBase {
         assertFalse((1 > te.doGetNextHit().t));
 
         // Raw throughput:
+        long t0 = System.currentTimeMillis();
+        te.setCurrentTime(25);
+        log.info("Initial computation took "
+                + (System.currentTimeMillis() - t0) + " millis");
         final int loops = 10000;
-        final long t0 = System.currentTimeMillis();
+        t0 = System.currentTimeMillis();
         for (int i = loops; i > 0; i--)
             te.setCurrentTime(1e-3 * i);
         log.info(loops + " computations took "

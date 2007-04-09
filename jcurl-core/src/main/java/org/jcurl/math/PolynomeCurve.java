@@ -37,13 +37,13 @@ public class PolynomeCurve extends R1RNFunctionImpl {
 
     public PolynomeCurve(final Polynome[] polys) {
         super(polys.length);
-        this.params = new double[polys.length][];
+        params = new double[polys.length][];
         for (int i = params.length - 1; i >= 0; i--)
-            this.params[i] = polys[i].params;
+            params[i] = polys[i].params;
     }
 
     @Override
-    public double at(int dim, int c, double t) {
+    public double at(final int dim, final int c, final double t) {
         return Polynome.poly(c, t, params[dim]);
     }
 

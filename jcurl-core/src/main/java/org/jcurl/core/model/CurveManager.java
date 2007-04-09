@@ -27,13 +27,13 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.base.Collider;
 import org.jcurl.core.base.CollissionDetector;
 import org.jcurl.core.base.ComputedTrajectorySet;
+import org.jcurl.core.base.Curler;
 import org.jcurl.core.base.CurveStill;
 import org.jcurl.core.base.CurveStore;
 import org.jcurl.core.base.CurveTransformed;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.Curler;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.log.JCLoggerFactory;
@@ -51,10 +51,13 @@ public class CurveManager extends MutableObject implements
 
     private static final double _30 = 30.0;
 
+    /** Time leap during a hit. */
     private static final double hitDt = 1e-6;
 
     private static final Log log = JCLoggerFactory
             .getLogger(CurveManager.class);
+
+    private static final double NoSweep = 0;
 
     private static final long serialVersionUID = 7198540442889130378L;
 
@@ -64,6 +67,8 @@ public class CurveManager extends MutableObject implements
 
     private transient final CollissionStore collissionStore = new CollissionStore();
 
+    private Curler curler = null;
+
     private transient final PositionSet currentPos = new PositionSet();
 
     private transient final SpeedSet currentSpeed = new SpeedSet();
@@ -71,15 +76,13 @@ public class CurveManager extends MutableObject implements
     private transient double currentTime = 0;
 
     private transient CurveStore curveStore = new CurveStore(
-            RockSet.ROCKS_PER_SET);
+            new NewtonStopDetector(), RockSet.ROCKS_PER_SET);
 
     private transient boolean dirty = true;
 
     private PositionSet initialPos = null;
 
     private SpeedSet initialSpeed = null;
-
-    private Curler curler = null;
 
     public CurveManager() {
     }
@@ -91,19 +94,21 @@ public class CurveManager extends MutableObject implements
      *            which rock
      * @param t0
      *            starttime
+     * @param sweepFactor
+     *            TODO
      * @return the new Curve in world coordinates.
      */
     R1RNFunctionImpl doComputeCurve(final int i, final double t0,
-            final PositionSet p, final SpeedSet s) {
+            final PositionSet p, final SpeedSet s, final double sweepFactor) {
         final Rock x = p.getRock(i);
         final Rock v = s.getRock(i);
         final R1RNFunctionImpl wc;
         if (v.distanceSq(0, 0) == 0)
             wc = CurveStill.newInstance(x);
         else
-            // FIXME add stop detection! Either here or in each slider?
-            wc = new CurveTransformed(curler.computeRc(x, v), CurveTransformed
-                    .createRc2Wc(new AffineTransform(), x, v), t0);
+            wc = new CurveTransformed(curler.computeRc(x, v, sweepFactor),
+                    CurveTransformed.createRc2Wc(new AffineTransform(), x, v),
+                    t0);
         if (log.isDebugEnabled())
             log.debug(i + " " + wc);
         return wc;
@@ -131,7 +136,7 @@ public class CurveManager extends MutableObject implements
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
             curveStore.reset(i);
             curveStore.add(i, t0, doComputeCurve(i, t0, initialPos,
-                    initialSpeed));
+                    initialSpeed, NoSweep), _30);
         }
         // initial collission detection:
         collissionStore.clear();
@@ -157,7 +162,7 @@ public class CurveManager extends MutableObject implements
             if (!RockSet.isSet(hitMask, i))
                 continue;
             curveStore.add(i, t0, doComputeCurve(i, t0, currentPos,
-                    currentSpeed));
+                    currentSpeed, NoSweep), _30);
             computedMask |= 1 << i;
         }
         // then and all combinations of potential collissions
@@ -203,6 +208,10 @@ public class CurveManager extends MutableObject implements
         return collissionDetector;
     }
 
+    public Curler getCurler() {
+        return curler;
+    }
+
     public PositionSet getCurrentPos() {
         return currentPos;
     }
@@ -227,10 +236,6 @@ public class CurveManager extends MutableObject implements
         return initialSpeed;
     }
 
-    public Curler getCurler() {
-        return curler;
-    }
-
     @Override
     public int hashCode() {
         return 0;
@@ -244,7 +249,7 @@ public class CurveManager extends MutableObject implements
         final CurveManager m = new CurveManager();
         m.setCollider(getCollider());
         m.setCollissionDetector(getCollissionDetector());
-        m.setCurveStore(new CurveStore(RockSet.ROCKS_PER_SET));
+        m.setCurveStore(new CurveStore(null, RockSet.ROCKS_PER_SET));
         m.setInitialPos(getInitialPos());
         m.setInitialSpeed(getInitialSpeed());
         m.setCurler(getCurler());
@@ -264,6 +269,12 @@ public class CurveManager extends MutableObject implements
         propChange.firePropertyChange("collissionDetector",
                 this.collissionDetector, collissionDetector);
         this.collissionDetector = collissionDetector;
+    }
+
+    public void setCurler(final Curler curler) {
+        dirty = true;
+        propChange.firePropertyChange("curler", this.curler, curler);
+        this.curler = curler;
     }
 
     public void setCurrentTime(final double currentTime) {
@@ -320,11 +331,5 @@ public class CurveManager extends MutableObject implements
         propChange.firePropertyChange("initialSpeed", this.initialSpeed,
                 initialSpeed);
         this.initialSpeed = initialSpeed;
-    }
-
-    public void setCurler(final Curler curler) {
-        dirty = true;
-        propChange.firePropertyChange("curler", this.curler, curler);
-        this.curler = curler;
     }
 }

@@ -25,9 +25,9 @@ import junit.framework.TestCase;
 public class CurveCombinedTest extends TestCase {
     public void testIterator() {
         final CurveCombined cc = new CurveCombined(1);
-        cc.add(0, new Polynome(new double[] { 0 }));
-        cc.add(1, new Polynome(new double[] { 1 }));
-        cc.add(2, new Polynome(new double[] { 2 }));
+        cc.add(0, new Polynome(new double[] { 0 }), true);
+        cc.add(1, new Polynome(new double[] { 1 }), true);
+        cc.add(2, new Polynome(new double[] { 2 }), true);
 
         int i = 0;
         for (final Entry<Double, R1RNFunction> element : cc) {

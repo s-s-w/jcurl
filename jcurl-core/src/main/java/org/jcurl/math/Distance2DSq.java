@@ -30,6 +30,8 @@ public class Distance2DSq extends R1R1Function {
 
     private static final long serialVersionUID = 1239814260738123868L;
 
+    private final int c0;
+
     private final R1RNFunction c1;
 
     private final R1RNFunction c2;
@@ -64,12 +66,30 @@ public class Distance2DSq extends R1R1Function {
      */
     public Distance2DSq(final R1RNFunction c1, final R1RNFunction c2,
             final double r12Sqr) {
+        this(c1, c2, r12Sqr, 0);
+    }
+
+    /**
+     * Distance between two (2-dimensional) spheres moving along curve
+     * <code>c1</code> and curve <code>c2</code>, having the square sum of
+     * radii <code>r12Sqr</code>.
+     * 
+     * @param c1
+     * @param c2
+     * @param r12Sqr
+     *            <code>(r1+r2)^2</code>
+     * @param c0
+     *            derivative of c1 and c2 to operate on. Usually <code>0</code>
+     */
+    public Distance2DSq(final R1RNFunction c1, final R1RNFunction c2,
+            final double r12Sqr, final int c0) {
         if (c1.dim() != c2.dim())
             throw new IllegalArgumentException("Dimension mismatch: "
                     + c1.dim() + "!=" + c2.dim());
         this.c1 = c1;
         this.c2 = c2;
         r2 = r12Sqr;
+        this.c0 = c0;
     }
 
     /**
@@ -81,8 +101,8 @@ public class Distance2DSq extends R1R1Function {
     @Override
     public double at(final double t) {
         // TUNE Thread safety at the cost of 2 instanciations
-        final double[] a = c1.at(0, t, new double[3]);
-        final double[] b = c2.at(0, t, new double[3]);
+        final double[] a = c1.at(c0, t, new double[3]);
+        final double[] b = c2.at(c0, t, new double[3]);
         a[0] -= b[0];
         a[1] -= b[1];
         a[2] = 0;
@@ -118,10 +138,10 @@ public class Distance2DSq extends R1R1Function {
      */
     double valueC1(final double t) {
         // TUNE Thread safety at the cost of 4 instanciations
-        final double[] a = c1.at(0, t, new double[3]);
-        final double[] b = c2.at(0, t, new double[3]);
-        final double[] da = c1.at(1, t, new double[3]);
-        final double[] db = c2.at(1, t, new double[3]);
+        final double[] a = c1.at(c0, t, new double[3]);
+        final double[] b = c2.at(c0, t, new double[3]);
+        final double[] da = c1.at(c0 + 1, t, new double[3]);
+        final double[] db = c2.at(c0 + 1, t, new double[3]);
         double ret = 0.0;
         ret += (a[0] - b[0]) * (da[0] - db[0]);
         ret += (a[1] - b[1]) * (da[1] - db[1]);

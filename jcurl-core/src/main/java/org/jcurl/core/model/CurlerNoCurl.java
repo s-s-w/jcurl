@@ -20,12 +20,12 @@ package org.jcurl.core.model;
 
 import java.util.Map;
 
+import org.jcurl.core.base.CurlerBase;
 import org.jcurl.core.base.CurveRock;
 import org.jcurl.core.base.CurveRockAnalytic;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PropModelHelper;
 import org.jcurl.core.base.Rock;
-import org.jcurl.core.base.CurlerBase;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.Polynome;
@@ -70,9 +70,9 @@ public class CurlerNoCurl extends CurlerBase {
     }
 
     @Override
-    public CurveRock computeRc(final Rock x0, final Rock v0) {
+    public CurveRock computeRc(final Rock x0, final Rock v0, final double sweepFactor) {
         return new CurveRockAnalytic(new PolynomeCurve(computeRcPoly(x0.getZ(),
-                MathVec.abs2D(v0), v0.getZ())));
+                MathVec.abs2D(v0), v0.getZ(), sweepFactor)));
     }
 
     /**
@@ -85,10 +85,11 @@ public class CurlerNoCurl extends CurlerBase {
      * 
      * @param alpha0
      * @param v0
+     * @param sweepFactor TODO
      * @return The trajectory in rock coordinates.
      */
     Polynome[] computeRcPoly(final double alpha0, final double v0,
-            final double omega0) {
+            final double omega0, final double sweepFactor) {
         final double[] x = { 0 };
         final double[] y = { 0, v0, -beta };
         final double[] a = { alpha0, omega0 };

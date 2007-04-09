@@ -22,15 +22,18 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import org.apache.commons.logging.Log;
+import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.CurveCombined;
 import org.jcurl.math.R1RNFunction;
 
 /**
  * Manage rock trajectory segments for a complete set of rocks over time.
  * <p>
- * This implementation is based on {@link CurveCombined}.
+ * Supports smart stop detection.
  * </p>
  * 
+ * @see CurveCombined
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -39,21 +42,47 @@ public class CurveStore implements
 
     private static final byte DIM = 3;
 
+    private static final Log log = JCLoggerFactory.getLogger(CurveStore.class);
+
     private static final long serialVersionUID = -1485170570756670720L;
 
     private final CurveCombined[] curve;
 
-    public CurveStore(final int capacity) {
+    private final StopDetector stopper;
+
+    /**
+     * 
+     * @param stopper
+     *            May be <code>null</code> for no stop detection.
+     * @param capacity
+     */
+    public CurveStore(final StopDetector stopper, final int capacity) {
+        this.stopper = stopper;
         curve = new CurveCombined[capacity];
         for (int i = curve.length - 1; i >= 0; i--)
             curve[i] = new CurveCombined(DIM);
     }
 
-    public void add(final int i, final double t, final R1RNFunction f) {
+    public void add(final int i, final double t, final R1RNFunction f,
+            final double tstop) {
+        if (log.isDebugEnabled())
+            log.debug(i + "  t=" + t + " " + f);
         if (f instanceof CurveRockAnalytic)
-            curve[i].add(t, ((CurveRockAnalytic) f).curve);
+            curve[i].add(t, ((CurveRockAnalytic) f).curve, true);
         else
-            curve[i].add(t, f);
+            curve[i].add(t, f, true);
+        // Stop detection. Either here or in each slider?
+        if (stopper != null) {
+            final double stop = stopper.compute(f, 0, tstop - t);
+            if (stop > 0 && !Double.isNaN(stop)) {
+                // TUNE save one instanciation?
+                final double[] tmp = { 0, 0, 0 };
+                curve[i].add(stop, CurveStill.newInstance(f.at(0, stop, tmp)),
+                        true);
+                if (log.isDebugEnabled())
+                    log.debug(i + "  t=" + t + " Still");
+            }
+        }
     }
 
     public R1RNFunction getCurve(final int i) {

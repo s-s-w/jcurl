@@ -77,18 +77,4 @@ public abstract class R1R1Function extends R1RNFunctionImpl {
         return this.at(c, x);
     }
 
-    /**
-     * Compute <code>x where f(x) = 0</code> using Newton's algorithm.
-     * 
-     * @see R1RNFunctionImpl#computeNewtonZero(int, int, double, double)
-     * @param c
-     *            c'th derivative
-     * @param x
-     *            start value
-     * @return x for getC(c, x) = 0
-     */
-    public double computeNewtonZero(final int c, final double x) {
-        return this.computeNewtonZero(0, c, x, Double.MAX_VALUE);
-    }
-
 }

@@ -21,7 +21,7 @@ package org.jcurl.math;
 import java.util.Map.Entry;
 
 /**
- * @see CurveCombined2
+ * @see CurveCombined
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

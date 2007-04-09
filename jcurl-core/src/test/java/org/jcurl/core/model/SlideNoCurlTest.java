@@ -73,7 +73,7 @@ public class SlideNoCurlTest extends TestShowBase {
 
     public void testComputeRcPoly() {
         CurlerNoCurl s = new CurlerNoCurl(17, 0);
-        Polynome[] p = s.computeRcPoly(Math.PI, 2, 0.2);
+        Polynome[] p = s.computeRcPoly(Math.PI, 2, 0.2, 0);
         showTrajectory(p, FixpointZoomer.HOUSE, 5000, 40);
         assertEquals(0, p[0].at(0));
         assertEquals(0, p[1].at(0));
@@ -82,7 +82,7 @@ public class SlideNoCurlTest extends TestShowBase {
         assertEquals(5.653600692749025, p[1].at(17));
         assertEquals(6.5415926535897935, p[2].at(17));
 
-        p = s.computeRcPoly(Math.PI, 3, 0.2);
+        p = s.computeRcPoly(Math.PI, 3, 0.2, 0);
         assertEquals(0, p[0].at(0));
         assertEquals(0, p[1].at(0));
         assertEquals(Math.PI, p[2].at(0));
@@ -91,7 +91,7 @@ public class SlideNoCurlTest extends TestShowBase {
         assertEquals(6.5415926535897935, p[2].at(17));
 
         s = new CurlerNoCurl(23, 0);
-        p = s.computeRcPoly(Math.PI, 2, 0.2);
+        p = s.computeRcPoly(Math.PI, 2, 0.2, 0);
         assertEquals(0, p[0].at(0));
         assertEquals(0, p[1].at(0));
         assertEquals(Math.PI, p[2].at(0));
@@ -99,7 +99,7 @@ public class SlideNoCurlTest extends TestShowBase {
         assertEquals(17.653600692749023, p[1].at(23));
         assertEquals(7.741592653589794, p[2].at(23));
 
-        p = s.computeRcPoly(Math.PI, 3, 0.2);
+        p = s.computeRcPoly(Math.PI, 3, 0.2, 0);
         assertEquals(0, p[0].at(0));
         assertEquals(0, p[1].at(0));
         assertEquals(Math.PI, p[2].at(0));

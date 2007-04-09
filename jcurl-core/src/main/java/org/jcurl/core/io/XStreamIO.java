@@ -78,15 +78,15 @@ public class XStreamIO implements JCurlIO {
                 final MarshallingContext arg2) {
             final double[] d = (double[]) arg0;
             final StringBuffer s = new StringBuffer();
-            for (int i = 0; i < d.length; i++)
-                s.append(d[i]).append(' ');
+            for (final double element : d)
+                s.append(element).append(' ');
             arg1.setValue(s.toString().trim());
         }
 
         public Object unmarshal(final HierarchicalStreamReader arg0,
                 final UnmarshallingContext arg1) {
             final String[] p = arg0.getValue().split(" ");
-            double[] d = new double[p.length];
+            final double[] d = new double[p.length];
             for (int i = 0; i < d.length; i++)
                 d[i] = Double.parseDouble(p[i]);
             return d;

@@ -18,6 +18,8 @@
  */
 package org.jcurl.math;
 
+import java.io.Serializable;
+
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
 
@@ -27,7 +29,7 @@ import org.jcurl.core.log.JCLoggerFactory;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class R1RNFunctionImpl implements R1RNFunction {
+public abstract class R1RNFunctionImpl implements R1RNFunction, Serializable {
 
     private static final Log log = JCLoggerFactory
             .getLogger(R1RNFunctionImpl.class);
@@ -36,10 +38,6 @@ public abstract class R1RNFunctionImpl implements R1RNFunction {
 
     protected R1RNFunctionImpl(final int dim) {
         this.dim = dim;
-    }
-
-    public final int dim() {
-        return dim;
     }
 
     public double[] at(final int c, final double t, double[] ret) {
@@ -60,56 +58,7 @@ public abstract class R1RNFunctionImpl implements R1RNFunction {
 
     public abstract double at(int dim, int c, double t);
 
-    /**
-     * Compute <code>x where f^c(x) = y</code> using Newton's algorithm.
-     * 
-     * @param dim
-     *            dimension (0,1,2,...)
-     * @param c
-     *            c'th derivative
-     * @param y
-     *            value
-     * @param x0
-     *            start value
-     * @param xstop
-     *            stop value, may be {@link Double#NaN}.
-     * @return x for getC(dim, c, x) = y, {@link Double#NaN} if there's no
-     *         solution.
-     */
-    public double computeNewtonValue(final int dim, final int c,
-            final double y, final double x0, final double xstop) {
-        final double eps = 1e-9;
-        for (double x = x0;;) {
-            if (log.isDebugEnabled())
-                log.debug("x=" + x + " y" + c + "=" + this.at(dim, c, x) + " y"
-                        + (c + 1) + "=" + this.at(dim, c + 1, x));
-            double dx = this.at(dim, c + 1, x);
-            if (dx == 0)
-                return Math.abs(this.at(dim, c, x) - y) < eps ? x : Double.NaN;
-            dx = (this.at(dim, c, x) - y) / dx;
-            x -= dx;
-            if (!MathVec.isInside(x, x0, xstop, true))
-                return Double.NaN;
-            if (Math.abs(dx) < eps)
-                return x;
-        }
-    }
-
-    /**
-     * Compute <code>x where f(x) = 0</code> using Newton's algorithm.
-     * 
-     * @param dim
-     *            dimension (0,1,2,...)
-     * @param c
-     *            c'th derivative
-     * @param x0
-     *            start value
-     * @param xstop
-     *            stop value
-     * @return x for getC(dim, c, x) = 0, {@link Double#NaN} for "no solution".
-     */
-    public double computeNewtonZero(final int dim, final int c,
-            final double x0, final double xstop) {
-        return computeNewtonValue(dim, c, 0, x0, xstop);
+    public final int dim() {
+        return dim;
     }
 }

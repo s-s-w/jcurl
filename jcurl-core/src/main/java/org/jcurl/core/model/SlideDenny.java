@@ -62,7 +62,7 @@ public class SlideDenny extends CurlerBase {
     }
 
     @Override
-    public CurveRock computeRc(final Rock x0, final Rock v0) {
+    public CurveRock computeRc(final Rock x0, final Rock v0, final double sweepFactor) {
         throw new NotImplementedYetException();
     }
 

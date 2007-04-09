@@ -76,7 +76,7 @@ public class StoredTrajectorySet extends MutableObject implements TrajectorySet 
     }
 
     protected Object readResolve() throws ObjectStreamException {
-        return new StoredTrajectorySet(this.store);
+        return new StoredTrajectorySet(store);
     }
 
     public void setCurrentTime(final double currentTime) {

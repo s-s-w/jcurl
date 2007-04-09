@@ -39,7 +39,7 @@ public interface CollissionDetector {
      * </p>
      * <p>
      * Delegates to
-     * {@link #compute(double, double, R1RNFunctionImpl, R1RNFunctionImpl, double)}.
+     * {@link #compute(double, double, R1RNFunction, R1RNFunction, double)}.
      * </p>
      * 
      * @param t0
@@ -83,7 +83,7 @@ public interface CollissionDetector {
      * <code>fb</code> touch.
      * <p>
      * Delegates to
-     * {@link #compute(double, double, R1RNFunctionImpl, R1RNFunctionImpl, double)}.
+     * {@link #compute(double, double, R1RNFunction, R1RNFunction, double)}.
      * </p>
      * 
      * @param t0

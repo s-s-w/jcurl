@@ -18,7 +18,15 @@
  */
 package org.jcurl.math;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.SortedMap;
+import java.util.Map.Entry;
+
+import org.apache.commons.logging.Log;
+import org.jcurl.core.log.JCLoggerFactory;
 
 /**
  * Combined curve. Becomes more and more similar to {@link SortedMap} with some
@@ -27,11 +35,115 @@ import java.util.SortedMap;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveCombined extends CurveCombined2 {
+public class CurveCombined extends R1RNFunctionImpl implements
+        Iterable<Entry<Double, R1RNFunction>>, Serializable {
 
-    private static final long serialVersionUID = 1575324222492566792L;
+    private static final Log log = JCLoggerFactory
+            .getLogger(CurveCombined.class);
+
+    private static final long serialVersionUID = 5955065096153576747L;
+
+    /**
+     * Search only part of an array.
+     * 
+     * @see java.util.Arrays#binarySearch(double[], double)
+     * @param a
+     * @param key
+     * @param min
+     * @param max
+     * @return found index
+     */
+    static int binarySearch(final List<Entry<Double, R1RNFunction>> a,
+            final double key, int min, int max) {
+        for (;;) {
+            if (key == a.get(min).getKey().doubleValue())
+                return min;
+            if (key == a.get(max).getKey().doubleValue())
+                return max;
+            final int m = (max + min) / 2;
+            if (key == a.get(m).getKey().doubleValue())
+                return m;
+            if (min + 1 >= max) {
+                if (a.get(min).getKey().doubleValue() < key
+                        && key < a.get(max).getKey().doubleValue())
+                    return -1 - max;
+                return -1;
+            }
+            if (key < a.get(m).getKey().doubleValue()) {
+                max = m;
+                continue;
+            } else if (key > a.get(m).getKey().doubleValue()) {
+                min = m;
+                continue;
+            }
+        }
+    }
+
+    private final List<Entry<Double, R1RNFunction>> parts = new ArrayList<Entry<Double, R1RNFunction>>();
 
     public CurveCombined(final int dim) {
         super(dim);
+    }
+
+    public void add(final double t0, final R1RNFunction fkt,
+            final boolean dropTail) {
+        if (fkt.dim() != dim())
+            throw new IllegalArgumentException();
+        if (dropTail) {
+            final int idx = findFktIdx_BS(t0);
+            for (int i = parts.size() - 1; i > idx; i--)
+                parts.remove(i);
+        }
+        parts.add(new CurvePart(t0, fkt));
+    }
+
+    /**
+     * Get the n-th derivative of all dimensions.
+     * 
+     * @param c
+     *            derivative
+     * @param t
+     * @param ret
+     *            <code>null</code> creates a new instance
+     * @return the value
+     * @see R1RNFunctionImpl#at(int, double, double[])
+     */
+    @Override
+    public double[] at(final int c, final double t, final double[] ret) {
+        return parts.get(findFktIdx_BS(t)).getValue().at(c, t, ret);
+    }
+
+    @Override
+    public double at(final int dim, final int c, final double t) {
+        return parts.get(findFktIdx_BS(t)).getValue().at(dim, c, t);
+    }
+
+    public void clear() {
+        parts.clear();
+    }
+
+    /**
+     * Binary search.
+     * 
+     * @param t
+     * @return the curve index
+     */
+    private int findFktIdx_BS(final double t) {
+        if (parts.size() == 0)
+            return -1;
+        if (t < parts.get(0).getKey().doubleValue())
+            throw new IllegalArgumentException("t < tmin");
+        // find the correct index
+        final int idx = CurveCombined.binarySearch(parts, t, 0,
+                parts.size() - 1);
+        if (idx >= 0)
+            return idx;
+        if (idx == -1)
+            return parts.size() - 1;
+        return -2 - idx;
+    }
+
+    public Iterator<Entry<Double, R1RNFunction>> iterator() {
+        return parts.iterator();
     }
 }

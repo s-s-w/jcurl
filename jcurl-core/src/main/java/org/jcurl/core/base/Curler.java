@@ -30,7 +30,7 @@ import org.jcurl.core.helpers.DimVal;
  */
 public interface Curler extends PropModel, Strategy, Factory {
 
-    public abstract CurveRock computeRc(final Rock x0, final Rock v0);
+    public abstract CurveRock computeRc(final Rock x0, final Rock v0, double sweepFactor);
 
     /**
      * Compute the (absolute) speed at the hog line for a rock released with
