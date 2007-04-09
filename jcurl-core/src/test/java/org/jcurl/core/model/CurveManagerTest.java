@@ -22,8 +22,11 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.base.AnnoHelp;
+import org.jcurl.core.base.ComputedTrajectorySet;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.RockSetTest;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.TestShowBase;
 import org.jcurl.core.log.JCLoggerFactory;
@@ -33,6 +36,25 @@ public class CurveManagerTest extends TestShowBase {
 
     private static final Log log = JCLoggerFactory
             .getLogger(CurveManagerTest.class);
+
+    public static ComputedTrajectorySet initHammy(ComputedTrajectorySet te) {
+        if (te == null)
+            te = new CurveManager();
+        te.setCollider(new CollissionSpin(0.5, 0.0));
+        te.setCollissionDetector(new NewtonCollissionDetector());
+        te.setCurler(new CurlerNoCurl(24, 0));
+        te.setInitialPos(PositionSet.allOut());
+        te.setInitialSpeed(new SpeedSet());
+        te.getAnnotations().put(AnnoHelp.HammerK, AnnoHelp.HammerVDark);
+        te.getAnnotations().put(AnnoHelp.TeamDarkK, "Scotland");
+        te.getAnnotations().put(AnnoHelp.TeamLightK, "Canada");
+        te.getAnnotations().put(AnnoHelp.GameK, "Semifinal");
+        te.getAnnotations().put(AnnoHelp.EventK, "World Curling Championships");
+        te.getAnnotations().put(AnnoHelp.DateK, "1992");
+        te.getAnnotations().put(AnnoHelp.LocationK, "Garmisch");
+        RockSetTest.initHammy(te.getInitialPos(), te.getInitialSpeed());
+        return te;
+    }
 
     void showPaths(final Iterator<Iterable<Entry<Double, R1RNFunction>>> it,
             final double tmin, final double tmax) throws InterruptedException {
@@ -82,6 +104,26 @@ public class CurveManagerTest extends TestShowBase {
                 });
         // FIXME WC angles after collission!
         showPaths(te.getCurveStore().iterator(), 0, 10);
+    }
+
+    public void testHammy() throws InterruptedException {
+        final ComputedTrajectorySet te = initHammy(new CurveManager());
+
+        // Raw throughput:
+        final long t0 = System.currentTimeMillis();
+        te.setCurrentTime(25);
+        log.info("Initial computation took "
+                + (System.currentTimeMillis() - t0) + " millis");
+
+        // with Display:
+        showPositionDisplay(te.getCurrentPos(), FixpointZoomer.HOUSE, 7500,
+                new TimeRunnable() {
+                    @Override
+                    public void run(final double t) throws InterruptedException {
+                        te.setCurrentTime(t);
+                        Thread.sleep(1000 / 50);
+                    }
+                });
     }
 
     public void testSlowNoHit() throws InterruptedException {

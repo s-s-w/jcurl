@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!-- $Id$ -->
+<!-- $Id: hammy.jcx 386 2007-01-27 00:47:47Z mrohrmoser $ -->
 <jcurl xmlns="http://jcurl.berlios.de/schema/setup/2005/1.0">
   <setup>
     <model engine="org.jcurl.core.model.CollissionSpin">

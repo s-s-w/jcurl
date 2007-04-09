@@ -18,24 +18,25 @@
  */
 package org.jcurl.core.base;
 
-import java.util.Map;
+public interface AnnoHelp {
 
-/**
- * "Read-only" trajectories of a whole set of {@link RockSet#ROCKS_PER_SET}
- * rocks.
- * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
- */
-public interface TrajectorySet {
+    public static final String DateK = "org.jcurl.core.Date";
 
-    public Map<String, Object> getAnnotations();
-    public abstract PositionSet getCurrentPos();
+    public static final String EndK = "org.jcurl.core.End";
 
-    public abstract SpeedSet getCurrentSpeed();
+    public static final String EventK = "org.jcurl.core.Event";
 
-    public abstract double getCurrentTime();
+    public static final String GameK = "org.jcurl.core.Game";
 
-    public abstract void setCurrentTime(final double currentTime);
+    public static final String HammerK = "org.jcurl.core.Hammer";
 
+    public static final String HammerVDark = "Dark";
+
+    public static final String HammerVLight = "Light";
+
+    public static final String LocationK = "org.jcurl.core.Location";
+
+    public static final String TeamDarkK = "org.jcurl.core.Team.Dark";
+
+    public static final String TeamLightK = "org.jcurl.core.Team.Light";
 }

@@ -43,7 +43,7 @@ public class SetupSaxDeSerTest extends TestCase {
     // private static final File _base = new File(
     // "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup");
 
-    private static final File base = new File("config/jcurl.jar/setup");
+    private static final File base = new File("src/test/resources/setup");
 
     private static final URL baseUrl;
 

@@ -19,12 +19,16 @@
 package org.jcurl.core.base;
 
 import java.io.ObjectStreamException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.jcurl.core.helpers.MutableObject;
 
 public class StoredTrajectorySet extends MutableObject implements TrajectorySet {
 
     private static final long serialVersionUID = -829911104054850124L;
+
+    private final Map<String, Object> annotations = new HashMap<String, Object>();
 
     private transient final PositionSet currentPos = new PositionSet();
 
@@ -56,6 +60,10 @@ public class StoredTrajectorySet extends MutableObject implements TrajectorySet 
     @Override
     public boolean equals(final Object obj) {
         return false;
+    }
+
+    public Map<String, Object> getAnnotations() {
+        return annotations;
     }
 
     public PositionSet getCurrentPos() {

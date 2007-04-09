@@ -22,6 +22,8 @@ import java.awt.geom.AffineTransform;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.ObjectStreamException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.Collider;
@@ -35,6 +37,7 @@ import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
+import org.jcurl.core.base.StopDetector;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CollissionStore.Tupel;
@@ -61,6 +64,10 @@ public class CurveManager extends MutableObject implements
 
     private static final long serialVersionUID = 7198540442889130378L;
 
+    private static final StopDetector stopper = new NewtonStopDetector();
+
+    private final Map<String, Object> annotations = new HashMap<String, Object>();
+
     private Collider collider = null;
 
     private CollissionDetector collissionDetector = null;
@@ -75,8 +82,8 @@ public class CurveManager extends MutableObject implements
 
     private transient double currentTime = 0;
 
-    private transient CurveStore curveStore = new CurveStoreImpl(
-            new NewtonStopDetector(), RockSet.ROCKS_PER_SET);
+    private transient CurveStore curveStore = new CurveStoreImpl(stopper,
+            RockSet.ROCKS_PER_SET);
 
     private transient boolean dirty = true;
 
@@ -200,6 +207,10 @@ public class CurveManager extends MutableObject implements
         return false;
     }
 
+    public Map<String, Object> getAnnotations() {
+        return annotations;
+    }
+
     public Collider getCollider() {
         return collider;
     }
@@ -249,7 +260,7 @@ public class CurveManager extends MutableObject implements
         final CurveManager m = new CurveManager();
         m.setCollider(getCollider());
         m.setCollissionDetector(getCollissionDetector());
-        m.setCurveStore(new CurveStoreImpl(null, RockSet.ROCKS_PER_SET));
+        m.setCurveStore(new CurveStoreImpl(stopper, RockSet.ROCKS_PER_SET));
         m.setInitialPos(getInitialPos());
         m.setInitialSpeed(getInitialSpeed());
         m.setCurler(getCurler());
