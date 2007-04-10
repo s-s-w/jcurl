@@ -56,6 +56,22 @@ public class CurveManagerTest extends TestShowBase {
         return te;
     }
 
+    public static ComputedTrajectorySet initOneHit(ComputedTrajectorySet te) {
+        if (te == null)
+            te = new CurveManager();
+        te.setCollider(new CollissionSpin(0.5, 0.0));
+        te.setCollissionDetector(new NewtonCollissionDetector());
+        te.setCurler(new CurlerNoCurl(24, 0));
+        te.setInitialPos(PositionSet.allHome());
+        te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
+        te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
+                0.25 * Math.PI);
+        te.setInitialSpeed(new SpeedSet());
+        te.getInitialSpeed().getDark(0).setLocation(0,
+                -te.getCurler().computeV0(5), Math.PI / 2);
+        return te;
+    }
+    
     void showPaths(final Iterator<Iterable<Entry<Double, R1RNFunction>>> it,
             final double tmin, final double tmax) throws InterruptedException {
         if (frame == null)

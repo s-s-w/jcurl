@@ -101,10 +101,32 @@ public class TrajectoryDisplayTest extends TestShowBase {
 
         // Raw throughput:
         final long t0 = System.currentTimeMillis();
-        te.setCurrentTime(25);
-        te.setCurrentTime(0);
+        te.setCurrentTime(29.9);
         log.info("Initial computation took "
                 + (System.currentTimeMillis() - t0) + " millis");
+        te.setCurrentTime(0);
+
+        // with Display:
+        showTrajectoryDisplay(te, FixpointZoomer.HOUSE, 7500,
+                new TimeRunnable() {
+                    @Override
+                    public void run(final double t) throws InterruptedException {
+                        te.setCurrentTime(t);
+                        Thread.sleep(1000 / 50);
+                    }
+                });
+    }
+
+    public void testOneHit() throws InterruptedException {
+        final ComputedTrajectorySet te = CurveManagerTest
+                .initOneHit(new CurveManager());
+
+        // Raw throughput:
+        final long t0 = System.currentTimeMillis();
+        te.setCurrentTime(29.9);
+        log.info("Initial computation took "
+                + (System.currentTimeMillis() - t0) + " millis");
+        te.setCurrentTime(0);
 
         // with Display:
         showTrajectoryDisplay(te, FixpointZoomer.HOUSE, 7500,

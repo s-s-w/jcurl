@@ -41,8 +41,10 @@ public class CurvePainter {
 
     private final Color light;
 
-    private final double[] sections = { 0, 0, 0, 0, 0, 0, 0 };
-
+    //private final double[] sections = { 0, 0, 0, 0, 0, 0, 0 };
+    private final double[] sections = { 0, 0, 0 };
+    //private final double[] sections = { 0, 0 };
+    
     private final Stroke stroke;
 
     private final double[] t1 = { 0, 0, 0 };

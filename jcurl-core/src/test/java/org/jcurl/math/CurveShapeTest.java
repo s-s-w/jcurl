@@ -25,27 +25,37 @@ import junit.framework.TestCase;
  * @version $Id$
  */
 public class CurveShapeTest extends TestCase {
-    public void test010_sections() {
+    
+    public void testSections() {
         double[] d = new double[0];
-        CurveShape.aequidistantSections(0, 1, d);
-
+        CurveShape.aequidistantSections(1, 2, d);
+        
         d = new double[1];
-        CurveShape.aequidistantSections(0, 1, d);
+        CurveShape.aequidistantSections(1, 2, d);
+        assertEquals(1, d[0], 1e-9);
+        CurveShape.aequidistantSections(2, 1, d);
         assertEquals(1, d[0], 1e-9);
 
         d = new double[2];
-        CurveShape.aequidistantSections(0, 1, d);
-        assertEquals(0, d[0], 1e-9);
-        assertEquals(1, d[1], 1e-9);
+        CurveShape.aequidistantSections(1, 2, d);
+        assertEquals(1, d[0], 1e-9);
+        assertEquals(2, d[1], 1e-9);
+        CurveShape.aequidistantSections(2, 1, d);
+        assertEquals(1, d[0], 1e-9);
+        assertEquals(2, d[1], 1e-9);
 
         d = new double[3];
-        CurveShape.aequidistantSections(0, 2, d);
-        assertEquals(0, d[0], 1e-9);
-        assertEquals(1, d[1], 1e-9);
-        assertEquals(2, d[2], 1e-9);
+        CurveShape.aequidistantSections(1, 3, d);
+        assertEquals(1, d[0], 1e-9);
+        assertEquals(2, d[1], 1e-9);
+        assertEquals(3, d[2], 1e-9);
+        CurveShape.aequidistantSections(3, 1, d);
+        assertEquals(1, d[0], 1e-9);
+        assertEquals(2, d[1], 1e-9);
+        assertEquals(3, d[2], 1e-9);
     }
 
-    public void test020_computeControlPoint() {
+    public void testComputeControlPoint() {
         final double[] p0 = { 0, 0 };
         final double[] p1 = { 1, 0 };
         final double[] v0 = { 1, 1 };

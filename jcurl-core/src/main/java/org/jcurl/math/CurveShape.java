@@ -37,17 +37,24 @@ public abstract class CurveShape {
      * @param sections
      * @return filled <code>sections</code> array.
      */
-    public static double[] aequidistantSections(final double min,
-            final double max, final double[] sections) {
-        final int n = sections.length;
-        if (n == 0)
+    public static double[] aequidistantSections(double min, double max,
+            final double[] sections) {
+        final int n = sections.length - 1;
+        if (n < 0)
             return sections;
+        if (min > max) {
+            final double tmp = min;
+            min = max;
+            max = tmp;
+        }
         sections[0] = min;
-        sections[n - 1] = max;
-        if (n <= 2)
+        if (n < 1)
             return sections;
-        final double d = (max - min) / (n - 1);
-        for (int i = n - 2; i > 0; i--)
+        sections[n] = max;
+        if (n < 2)
+            return sections;
+        final double d = (max - min) / n;
+        for (int i = n - 1; i > 0; i--)
             sections[i] = min + i * d;
         return sections;
     }
