@@ -78,7 +78,7 @@ public class CSplineInterpolatorTest extends TestCase {
         assertEquals("", 1, CurveCombined1.binarySearch(a, 1, 0, a.length - 1));
         assertEquals("", 4, CurveCombined1.binarySearch(a, 4, 0, a.length - 1));
         assertEquals("", -1, CurveCombined1.binarySearch(a, 1, 2, a.length - 1));
-        assertEquals("", -2, CurveCombined1
-                .binarySearch(a, 0.5, 0, a.length - 1));
+        assertEquals("", -2, CurveCombined1.binarySearch(a, 0.5, 0,
+                a.length - 1));
     }
 }

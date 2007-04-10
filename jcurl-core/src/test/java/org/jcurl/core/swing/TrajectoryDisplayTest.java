@@ -39,6 +39,10 @@ public class TrajectoryDisplayTest extends TestShowBase {
     protected final TrajectoryDisplay display;
 
     public TrajectoryDisplayTest() {
+        if (frame == null) {
+            display = null;
+            return;
+        }
         frame.getContentPane().removeAll();
         frame.getContentPane().add(display = new TrajectoryDisplay());
     }

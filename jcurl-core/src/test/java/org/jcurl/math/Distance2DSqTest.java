@@ -68,11 +68,12 @@ public class Distance2DSqTest extends TestBase {
         assertEquals(1.7768221513994102, Math.sqrt(d.at(1)));
         assertEquals(0.9524163783260075, Math.sqrt(d.at(2)));
         assertEquals(1.075684413619361, Math.sqrt(d.at(3)));
-        assertEquals(Double.NaN, NewtonSimpleSolver.computeNewtonZero(d, 0, 0, 0, 5));
+        assertEquals(Double.NaN, NewtonSimpleSolver.computeNewtonZero(d, 0, 0,
+                0, 5));
 
-        assertEquals(Double.NaN, NewtonSimpleSolver.computeNewtonZero(new Distance2DSq(createPoint2D(2, 2),
-                createPoly(new double[] { 0, 1 }), CollissionDetector.RR2)
-                , 0, 0, 0, 5));
+        assertEquals(Double.NaN, NewtonSimpleSolver.computeNewtonZero(
+                new Distance2DSq(createPoint2D(2, 2), createPoly(new double[] {
+                        0, 1 }), CollissionDetector.RR2), 0, 0, 0, 5));
     }
 
     public void testPolyHit() {
@@ -90,7 +91,8 @@ public class Distance2DSqTest extends TestBase {
                 assertEquals(Double.toString(t), x0.distanceSq(x1), d.at(0, t),
                         1e-9);
             }
-            assertEquals("", 2, NewtonSimpleSolver.computeNewtonZero(d, 0, 0, 0, 5), 1e-9);
+            assertEquals("", 2, NewtonSimpleSolver.computeNewtonZero(d, 0, 0,
+                    0, 5), 1e-9);
         }
         {
             final R1R1Function d = new Distance2DSq(c0, c1, 1);
@@ -101,7 +103,8 @@ public class Distance2DSqTest extends TestBase {
                 assertEquals(Double.toString(t), x0.distanceSq(x1) - 1, d.at(0,
                         t), 1e-9);
             }
-            assertEquals("", 1, NewtonSimpleSolver.computeNewtonZero(d, 0, 0, 0, 5), 1e-9);
+            assertEquals("", 1, NewtonSimpleSolver.computeNewtonZero(d, 0, 0,
+                    0, 5), 1e-9);
         }
         {
             final double RR2 = MathVec.sqr(RockProps.DEFAULT.getRadius() * 2);
@@ -133,7 +136,8 @@ public class Distance2DSqTest extends TestBase {
                 assertEquals(Double.toString(t), x0.distanceSq(x1), d.at(0, t),
                         1e-9);
             }
-            assertEquals("", Double.NaN, NewtonSimpleSolver.computeNewtonZero(d, 0, 0, 0, 5), 1e-9);
+            assertEquals("", Double.NaN, NewtonSimpleSolver.computeNewtonZero(
+                    d, 0, 0, 0, 5), 1e-9);
         }
         {
             final double RR2 = MathVec.sqr(RockProps.DEFAULT.getRadius() * 2);
@@ -145,7 +149,8 @@ public class Distance2DSqTest extends TestBase {
                 assertEquals(Double.toString(t), x0.distanceSq(x1) - RR2, d.at(
                         0, t), 1e-9);
             }
-            assertEquals("", Double.NaN, NewtonSimpleSolver.computeNewtonZero(d, 0, 0, 0, 5), 1e-9);
+            assertEquals("", Double.NaN, NewtonSimpleSolver.computeNewtonZero(
+                    d, 0, 0, 0, 5), 1e-9);
         }
     }
 }

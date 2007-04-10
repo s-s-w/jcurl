@@ -28,9 +28,9 @@ import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.model.CollissionSimple;
+import org.jcurl.core.model.CurlerNoCurl;
 import org.jcurl.core.model.CurveManager;
 import org.jcurl.core.model.NewtonCollissionDetector;
-import org.jcurl.core.model.CurlerNoCurl;
 
 public class XmlEncoderTest extends TestCase {
 
@@ -52,27 +52,24 @@ public class XmlEncoderTest extends TestCase {
         xs.writeObject(te);
         xs.close();
         assertEquals(
-                "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n" + 
-                "<java version=\"1.5.0_10\" class=\"java.beans.XMLDecoder\"> \n" + 
-                " <object class=\"org.jcurl.core.model.CurveManager\"> \n" + 
-                "  <void property=\"collider\"> \n" + 
-                "   <object class=\"org.jcurl.core.model.CollissionSimple\"/> \n" + 
-                "  </void> \n" + 
-                "  <void property=\"collissionDetector\"> \n" + 
-                "   <object class=\"org.jcurl.core.model.NewtonCollissionDetector\"/> \n" + 
-                "  </void> \n" + 
-                "  <void property=\"curler\"> \n" + 
-                "   <object class=\"org.jcurl.core.model.CurlerNoCurl\"/> \n" + 
-                "  </void> \n" + 
-                "  <void property=\"initialPos\"> \n" + 
-                "   <object class=\"org.jcurl.core.base.PositionSet\"/> \n" + 
-                "  </void> \n" + 
-                "  <void property=\"initialSpeed\"> \n" + 
-                "   <object class=\"org.jcurl.core.base.SpeedSet\"/> \n" + 
-                "  </void> \n" + 
-                " </object> \n" + 
-                "</java> \n" + 
-                "",
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
+                        + "<java version=\"1.5.0_10\" class=\"java.beans.XMLDecoder\"> \n"
+                        + " <object class=\"org.jcurl.core.model.CurveManager\"> \n"
+                        + "  <void property=\"collider\"> \n"
+                        + "   <object class=\"org.jcurl.core.model.CollissionSimple\"/> \n"
+                        + "  </void> \n"
+                        + "  <void property=\"collissionDetector\"> \n"
+                        + "   <object class=\"org.jcurl.core.model.NewtonCollissionDetector\"/> \n"
+                        + "  </void> \n"
+                        + "  <void property=\"curler\"> \n"
+                        + "   <object class=\"org.jcurl.core.model.CurlerNoCurl\"/> \n"
+                        + "  </void> \n"
+                        + "  <void property=\"initialPos\"> \n"
+                        + "   <object class=\"org.jcurl.core.base.PositionSet\"/> \n"
+                        + "  </void> \n"
+                        + "  <void property=\"initialSpeed\"> \n"
+                        + "   <object class=\"org.jcurl.core.base.SpeedSet\"/> \n"
+                        + "  </void> \n" + " </object> \n" + "</java> \n" + "",
                 new String(bout.toByteArray(), "UTF-8"));
     }
 }

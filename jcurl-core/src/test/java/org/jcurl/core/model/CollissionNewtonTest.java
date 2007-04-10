@@ -57,13 +57,15 @@ public class CollissionNewtonTest extends TestCase {
                 new Polynome(new double[] { 2 }),
                 new Polynome(new double[] { 3.141592653589793 }) });
 
-        assertEquals("", 1.5690174844768945, NewtonSimpleSolver.computeNewtonValue(new Distance2DSq(c0, c1,
-                CollissionDetector.RR2), 0, 0,
-                CollissionDetector.RR2, 0, 5), 1e-9);
+        assertEquals("", 1.5690174844768945, NewtonSimpleSolver
+                .computeNewtonValue(new Distance2DSq(c0, c1,
+                        CollissionDetector.RR2), 0, 0, CollissionDetector.RR2,
+                        0, 5), 1e-9);
         c1 = CurveStill.newInstance(0, 2, 0);
-        assertEquals("", 1.5690174844768945, NewtonSimpleSolver.computeNewtonValue(new Distance2DSq(c0, c1,
-                CollissionDetector.RR2), 0, 0,
-                CollissionDetector.RR2, 0, 5), 1e-9);
+        assertEquals("", 1.5690174844768945, NewtonSimpleSolver
+                .computeNewtonValue(new Distance2DSq(c0, c1,
+                        CollissionDetector.RR2), 0, 0, CollissionDetector.RR2,
+                        0, 5), 1e-9);
     }
 
     public void testStill() {

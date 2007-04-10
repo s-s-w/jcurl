@@ -20,9 +20,9 @@ package org.jcurl.core.base;
 
 import java.util.Iterator;
 
-import org.jcurl.core.helpers.Dim;
-
 import junit.framework.TestCase;
+
+import org.jcurl.core.helpers.Dim;
 
 public class RockSetTest extends TestCase {
     public void testCountBits() {

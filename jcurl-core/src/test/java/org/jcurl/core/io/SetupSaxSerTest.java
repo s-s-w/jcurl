@@ -24,8 +24,8 @@ import java.util.Map;
 import junit.framework.TestCase;
 
 import org.jcurl.core.base.PropModel;
-import org.jcurl.core.base.PropModelImpl;
 import org.jcurl.core.base.PropModelHelper;
+import org.jcurl.core.base.PropModelImpl;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.model.CollissionSimple;

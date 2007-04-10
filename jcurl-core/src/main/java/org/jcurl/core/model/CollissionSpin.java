@@ -49,7 +49,7 @@ public class CollissionSpin extends ColliderBase {
     public CollissionSpin() {
     }
 
-    public CollissionSpin(double f, double l) {
+    public CollissionSpin(final double f, final double l) {
         final Map<CharSequence, DimVal> t = PropModelHelper.create();
         PropModelHelper.setFrictionRockRock(t, f);
         PropModelHelper.setLoss(t, l);

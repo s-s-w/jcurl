@@ -25,17 +25,13 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import org.jcurl.core.base.CurveStore;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
@@ -44,8 +40,6 @@ import org.jcurl.core.base.TrajectorySet;
 import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.model.CurveManager;
 import org.jcurl.core.model.FixpointZoomer;
-import org.jcurl.math.CurveShape;
-import org.jcurl.math.R1RNFunction;
 
 /**
  * Base for rock location displays. Does all the coordinate transformation math
@@ -59,12 +53,6 @@ public class TrajectoryDisplay extends WCComponent implements
         PropertyChangeListener {
 
     private static final Map<Object, Object> hints = new HashMap<Object, Object>();
-
-    private static final Color pathDark;
-
-    private static final Color pathLight;
-
-    private static final Stroke pathStroke;
 
     private static final long serialVersionUID = -2680676530327406261L;
 
@@ -87,12 +75,6 @@ public class TrajectoryDisplay extends WCComponent implements
         // RenderingHints.VALUE_STROKE_NORMALIZE);
         // hints.put(RenderingHints.KEY_TEXT_ANTIALIASING,
         // RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        final int opa = 100;
-        pathDark = new Color(255, 0, 0, opa);
-        pathLight = new Color(255, 255, 0, opa);
-        pathStroke = new BasicStroke(Zoomer.SCALE * 2
-                * RockProps.DEFAULT.getRadius(), BasicStroke.CAP_ROUND,
-                BasicStroke.JOIN_ROUND, 0);
     }
 
     private IcePainter icePainter = null; // @jve:decl-index=0:
@@ -188,8 +170,7 @@ public class TrajectoryDisplay extends WCComponent implements
                 g2.setTransform(backup);
             }
             g2.transform(wc_mat);
-            curvePainter.doPaint(g2, ((CurveManager) pos)
-                    .getCurveStore());
+            curvePainter.doPaint(g2, ((CurveManager) pos).getCurveStore());
             g2.setTransform(backup);
             g2.transform(wc_mat);
             paintRocksWC(g2, pos.getCurrentPos(), RockSet.ALL_MASK);

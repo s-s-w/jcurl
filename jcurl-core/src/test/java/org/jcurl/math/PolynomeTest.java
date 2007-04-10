@@ -93,21 +93,23 @@ public class PolynomeTest extends TestCase {
         {
             final double[] a = { -1, 1 };
             final Polynome po = new Polynome(a);
-            assertEquals("", 1, NewtonSimpleSolver.computeNewtonZero(po, 0, 0.5), 1e-6);
+            assertEquals("", 1, NewtonSimpleSolver
+                    .computeNewtonZero(po, 0, 0.5), 1e-6);
         }
         {
             final double[] a = { -1, 0, 1 };
             final Polynome po = new Polynome(a);
             assertEquals("", 0, po.at(0, 1), 1e-6);
-            assertEquals("", 1, NewtonSimpleSolver.computeNewtonZero(po, 0, 0.5), 1e-6);
+            assertEquals("", 1, NewtonSimpleSolver
+                    .computeNewtonZero(po, 0, 0.5), 1e-6);
         }
         {
             final double[] a = { 0, 1, -0.0535848758171096 };
             final Polynome po = new Polynome(a);
             assertEquals("", 0.0, po.at(0, 0), 1e-6);
             assertEquals("", 1.0, po.at(1, 0), 1e-6);
-            assertEquals("", 9.330991112241236, NewtonSimpleSolver.computeNewtonZero(po, 1, 0),
-                    1e-6);
+            assertEquals("", 9.330991112241236, NewtonSimpleSolver
+                    .computeNewtonZero(po, 1, 0), 1e-6);
         }
     }
 
