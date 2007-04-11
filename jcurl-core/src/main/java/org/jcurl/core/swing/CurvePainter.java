@@ -29,6 +29,7 @@ import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.CurveStore;
+import org.jcurl.core.base.Strategy;
 import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.CurveShape;
@@ -40,7 +41,7 @@ import org.jcurl.math.R1RNFunction;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurvePainter {
+public class CurvePainter implements Strategy {
     private static final Log log = JCLoggerFactory
             .getLogger(CurvePainter.class);
 

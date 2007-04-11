@@ -27,6 +27,7 @@ import java.awt.geom.Arc2D;
 
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.RockSet;
+import org.jcurl.core.base.Strategy;
 import org.jcurl.core.base.Zoomer;
 
 /**
@@ -37,7 +38,7 @@ import org.jcurl.core.base.Zoomer;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:RockPainter.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class RockPainter {
+public class RockPainter implements Strategy {
     /** Rock colors */
     public static class ColorSet {
         public Paint contour = Color.BLACK;

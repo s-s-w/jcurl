@@ -30,7 +30,7 @@ import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CurveManager;
 import org.jcurl.core.swing.PositionDisplay;
-import org.jcurl.core.swing.SimpleKeys;
+import org.jcurl.demo.util.SimpleKeys;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

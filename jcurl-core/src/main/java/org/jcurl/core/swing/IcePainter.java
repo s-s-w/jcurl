@@ -29,6 +29,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.RockProps;
+import org.jcurl.core.base.Strategy;
 import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.helpers.Dim;
 
@@ -39,7 +40,7 @@ import org.jcurl.core.helpers.Dim;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:IcePainter.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class IcePainter {
+public class IcePainter implements Strategy {
     /** IceSize colors */
     public static class ColorSet {
 

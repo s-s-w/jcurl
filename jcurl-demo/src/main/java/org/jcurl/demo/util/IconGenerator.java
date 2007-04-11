@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.swing;
+package org.jcurl.demo.util;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -27,6 +27,7 @@ import javax.imageio.ImageIO;
 
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.swing.PositionDisplay;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -46,7 +47,7 @@ public class IconGenerator {
         final BufferedImage img = new BufferedImage(1024, 768,
                 BufferedImage.TYPE_INT_ARGB);
         final Graphics g = img.getGraphics();
-        final JCurlDisplay jp = new JCurlDisplay();
+        final PositionDisplay jp = new PositionDisplay();
         jp.setPos(loc);
         jp.setZoom(zoom);
         jp.setSize(img.getWidth(), img.getHeight());

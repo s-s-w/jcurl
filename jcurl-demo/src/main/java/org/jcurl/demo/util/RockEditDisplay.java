@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.swing;
+package org.jcurl.demo.util;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -31,6 +31,7 @@ import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.EnumBase;
 import org.jcurl.core.log.JCLoggerFactory;
+import org.jcurl.core.swing.PositionDisplay;
 import org.jcurl.math.MathVec;
 
 /**

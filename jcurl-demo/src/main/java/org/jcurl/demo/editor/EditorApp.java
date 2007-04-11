@@ -55,13 +55,13 @@ import org.jcurl.core.helpers.Version;
 import org.jcurl.core.io.SetupIO;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.FixpointZoomer;
-import org.jcurl.core.swing.AboutDialog;
 import org.jcurl.core.swing.JcxFileChooser;
 import org.jcurl.core.swing.PngFileChooser;
 import org.jcurl.core.swing.PositionDisplay;
-import org.jcurl.core.swing.RockEditDisplay;
 import org.jcurl.core.swing.SumShotDisplay;
 import org.jcurl.core.swing.SumWaitDisplay;
+import org.jcurl.demo.util.AboutDialog;
+import org.jcurl.demo.util.RockEditDisplay;
 import org.xml.sax.SAXException;
 
 /**

@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.swing;
+package org.jcurl.demo.util;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -25,7 +25,7 @@ import org.jcurl.core.base.TrajectorySet;
 
 /**
  * A first, simple keyboard input class. Uses a
- * {@link org.jcurl.core.swing.RealTimePlayer}to play.
+ * {@link org.jcurl.demo.util.RealTimePlayer}to play.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:SimpleKeys.java 378 2007-01-24 01:18:35Z mrohrmoser $
