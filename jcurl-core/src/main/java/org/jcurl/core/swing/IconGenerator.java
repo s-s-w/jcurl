@@ -22,40 +22,17 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Zoomer;
-import org.jcurl.core.io.SetupBuilder;
-import org.jcurl.core.io.SetupSaxDeSer;
-import org.jcurl.core.model.FixpointZoomer;
-import org.xml.sax.SAXException;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:IconGenerator.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class IconGenerator {
-
-    public static void main(final String[] args)
-            throws ParserConfigurationException, SAXException, IOException {
-        // Load an initial setup
-        final URL url;
-        {
-            URL tmp = IconGenerator.class.getResource("/setup/hammy.jcx");
-            if (tmp == null)
-                tmp = new URL("file", "localhost",
-                        "/home/m/eclipse/berlios/jcurl/config/jcurl.jar/setup/hammy.jcx");
-            url = tmp;
-        }
-        final SetupBuilder setup = SetupSaxDeSer.parse(url);
-
-        savePng(setup.getPos(), FixpointZoomer.HOUSE2HACK, new File(
-                "/tmp/jcurl.png"));
-    }
 
     /**
      * @param loc
@@ -67,7 +44,7 @@ public class IconGenerator {
             final File dst) throws IOException {
         // Create image and graphics.
         final BufferedImage img = new BufferedImage(1024, 768,
-                BufferedImage.TYPE_INT_RGB);
+                BufferedImage.TYPE_INT_ARGB);
         final Graphics g = img.getGraphics();
         final JCurlDisplay jp = new JCurlDisplay();
         jp.setPos(loc);
