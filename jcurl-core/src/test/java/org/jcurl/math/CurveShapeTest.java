@@ -119,8 +119,8 @@ public class CurveShapeTest extends TestCase {
         vb[0] = 0.16553674989608172;
         vb[1] = -0.6468692822960592;
         CurveShape.computeControlPoint(pa, va, pb, vb, tmp_a, tmp_b, pc);
-        assertEquals(-0.39661024966883773, pc[0], 1e-9);
-        assertEquals(3.7694078098097754, pc[1], 1e-9);
+        assertEquals(0.1, pc[0], 1e-9);
+        assertEquals(1.8287999629974365, pc[1], 1e-9);
 
         pa[0] = 0.8018748099036024;
         pa[1] = -0.9139218484978673;
@@ -131,8 +131,8 @@ public class CurveShapeTest extends TestCase {
         vb[0] = 0.08276837495774463;
         vb[1] = -0.32343464118594906;
         CurveShape.computeControlPoint(pa, va, pb, vb, tmp_a, tmp_b, pc);
-        assertEquals(Double.NaN, pc[0], 1e-9);
-        assertEquals(Double.NaN, pc[1], 1e-9);
+        assertEquals(Double.POSITIVE_INFINITY, pc[0], 1e-9);
+        assertEquals(Double.NEGATIVE_INFINITY, pc[1], 1e-9);
 
         pa[0] = 1.2229996958720961;
         pa[1] = -2.559554935497948;
@@ -173,16 +173,16 @@ public class CurveShapeTest extends TestCase {
             ct.at(0, sections[1], pb);
             ct.at(1, sections[1], vb);
             CurveShape.computeControlPoint(pa, va, pb, vb, tmp_a, tmp_b, pc);
-            assertEquals(-0.39661024966883773, pc[0], 1e-9);
-            assertEquals(3.7694078098097754, pc[1], 1e-9);
+            assertEquals(0.1, pc[0], 1e-9);
+            assertEquals(1.8287999629974365, pc[1], 1e-9);
 
             ct.at(0, sections[1], pa);
             ct.at(1, sections[1], va);
             ct.at(0, sections[2], pb);
             ct.at(1, sections[2], vb);
             CurveShape.computeControlPoint(pa, va, pb, vb, tmp_a, tmp_b, pc);
-            assertEquals(Double.NaN, pc[0], 1e-9);
-            assertEquals(Double.NaN, pc[1], 1e-9);
+            assertEquals(Double.POSITIVE_INFINITY, pc[0], 1e-9);
+            assertEquals(Double.NEGATIVE_INFINITY, pc[1], 1e-9);
 
             ct.at(0, sections[2], pa);
             ct.at(1, sections[2], va);

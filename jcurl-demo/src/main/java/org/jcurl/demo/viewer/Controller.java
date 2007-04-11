@@ -23,8 +23,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.xml.transform.Source;
-
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.ComputedTrajectorySet;
 import org.jcurl.core.base.TrajectorySet;
@@ -109,7 +107,6 @@ public class Controller {
             IOException {
         stop();
         throw new NotImplementedException();
-        // FIXME
         //src.loadStart(f);
         //src.setCurrentTime(35.0);
         //src.setCurrentTime(0.0);

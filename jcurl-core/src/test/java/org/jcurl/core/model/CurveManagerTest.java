@@ -118,7 +118,6 @@ public class CurveManagerTest extends TestShowBase {
                         Thread.sleep(1000 / 50);
                     }
                 });
-        // FIXME WC angles after collission!
         showPaths(te.getCurveStore().iterator(), 0, 10);
     }
 
@@ -175,6 +174,5 @@ public class CurveManagerTest extends TestShowBase {
                         Thread.sleep(1000 / 50);
                     }
                 });
-        // FIXME at the end sit still and don't revert!
     }
 }

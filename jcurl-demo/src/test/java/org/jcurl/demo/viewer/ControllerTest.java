@@ -109,7 +109,7 @@ public class ControllerTest extends TestCase {
         final long t = 2500;
         final Controller c = new Controller();
         assertNotNull(find("hammy.jcx"));
-        // FIXME
+        // TODO
         if (false) {
             c.load(find("hammy.jcx").openStream());
             c.addTarget(p);

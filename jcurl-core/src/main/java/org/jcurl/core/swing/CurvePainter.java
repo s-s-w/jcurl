@@ -88,7 +88,7 @@ public class CurvePainter {
     }
 
     /**
-     * Paint all curves of the store, delegate to
+     * Paint all curves of a store, delegate to
      * {@link #doPaint(Graphics2D, Iterator, double[], float, double[], double[], double[], double[])}.
      * 
      * @param g2
@@ -110,7 +110,8 @@ public class CurvePainter {
     }
 
     /**
-     * Paint the segments of one curve.
+     * Paint the segments of one curve. Delegate to
+     * {@link #doPaint(Graphics2D, R1RNFunction, double[], float, double[], double[], double[], double[])}.
      * 
      * @param g2
      *            where to draw
@@ -130,6 +131,7 @@ public class CurvePainter {
      * @param t4
      *            save instanciations calling
      *            {@link R1RNFunction#at(int, double, double[])}.
+     * @see #doSections(double[], double, double)
      * @see #doPaint(Graphics2D, R1RNFunction, double[], float, double[],
      *      double[], double[], double[])
      */
@@ -187,7 +189,16 @@ public class CurvePainter {
                     t2, t3, t4));
     }
 
-    public void doSections(final double[] sections, double min, double max) {
-        CurveShape.exponentialSections(min, max, sections);
+    /**
+     * Split the given interval into sections.
+     * 
+     * @see CurveShape#exponentialSections(double, double, double[])
+     * @param sections
+     * @param min
+     * @param max
+     * @return sections
+     */
+    public double[] doSections(final double[] sections, double min, double max) {
+        return CurveShape.exponentialSections(min, max, sections);
     }
 }

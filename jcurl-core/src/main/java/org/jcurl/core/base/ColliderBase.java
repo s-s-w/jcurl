@@ -191,7 +191,7 @@ public abstract class ColliderBase extends PropModelImpl implements Collider {
         // FIXME apply angle delta from Collission coordinates to WC
         mat.transform(_vb, vb);
         vb.setZ(_vb.getZ());
-        // FIXME apply angle delta from Collission coordinates to WC
+        // apply angle delta from Collission coordinates to WC
         return true;
     }
 }

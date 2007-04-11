@@ -31,7 +31,6 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.Version;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.CurveFkt;
-import org.jcurl.math.CurveShape;
 import org.jcurl.math.Polynome;
 import org.jcurl.math.R1R1Function;
 import org.jcurl.math.R1RNFunction;
@@ -84,7 +83,6 @@ public class CurveShapeDemo extends JFrame {
                 g2.setStroke(st);
                 g2.drawLine(0, 0, 650, 500);
                 g2.setPaint(new Color(255, 170, 0, 128));
-                // FIXME g2.draw(CurveShape.approximate(frame.curve, CurveShape.sections(-1, 3, sections)));
             }
         });
     }

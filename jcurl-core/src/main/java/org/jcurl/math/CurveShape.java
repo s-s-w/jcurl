@@ -203,27 +203,16 @@ public abstract class CurveShape {
     static double[] computeControlPoint(final double[] pa, final double[] va,
             final double[] pb, final double[] vb, final double[][] tmp_matrix,
             final double[] tmp_right, final double[] pc) {
-        if (false) {
-            tmp_matrix[0][0] = va[0];
-            tmp_matrix[1][0] = va[1];
-            tmp_matrix[0][1] = vb[0];
-            tmp_matrix[1][1] = vb[1];
-            tmp_right[0] = pb[0] - pa[0];
-            tmp_right[1] = pb[1] - pa[1];
-            MathVec.gauss(tmp_matrix, tmp_right, pc);
-        } else {
-            if (va[0] == 0.0 && va[1] == 0.0 && vb[0] == 0.0 && vb[1] == 0.0) {
-                pc[0] = 0.5 * (pa[0] + pb[0]);
-                pc[1] = 0.5 * (pa[1] + pb[1]);
-                return pc;
-            }
-            // final double f = pc[0];
-            final double f = (-pb[0] * vb[1] + pa[0] * vb[1] + vb[0]
-                    * (pb[1] - pa[1]))
-                    / (vb[0] * va[1] - va[0] * vb[1]);
-            pc[0] = pa[0] + f * va[0];
-            pc[1] = pa[1] + f * va[1];
+        if (va[0] == 0.0 && va[1] == 0.0 && vb[0] == 0.0 && vb[1] == 0.0) {
+            pc[0] = 0.5 * (pa[0] + pb[0]);
+            pc[1] = 0.5 * (pa[1] + pb[1]);
+            return pc;
         }
+        // final double f = pc[0];
+        final double f = (vb[1] * (pa[0] - pb[0]) + vb[0] * (pb[1] - pa[1]))
+                / (vb[0] * va[1] - va[0] * vb[1]);
+        pc[0] = pa[0] + f * va[0];
+        pc[1] = pa[1] + f * va[1];
         if (log.isDebugEnabled()) {
             final StringBuffer b = new StringBuffer();
             b.append("pa=").append(toString(pa));

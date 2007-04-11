@@ -1,7 +1,5 @@
 package org.jcurl;
 
-import java.io.StringReader;
-
 import junit.framework.TestCase;
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
