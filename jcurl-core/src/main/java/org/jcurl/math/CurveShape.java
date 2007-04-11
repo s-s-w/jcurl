@@ -20,6 +20,9 @@ package org.jcurl.math;
 import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 
+import org.apache.commons.logging.Log;
+import org.jcurl.core.log.JCLoggerFactory;
+
 /**
  * Helper for convenient approximated Java2D drawing of arbitratry curves with
  * at least 2 dimensions.
@@ -28,6 +31,8 @@ import java.awt.geom.GeneralPath;
  * @version $Id$
  */
 public abstract class CurveShape {
+
+    private static final Log log = JCLoggerFactory.getLogger(CurveShape.class);
 
     /**
      * Split the given interval [min,max] into equidistant sections.
@@ -145,6 +150,8 @@ public abstract class CurveShape {
         final double tmp_b[] = { 0, 0 };
         final double pc[] = { 0, 0 };
         for (int i = 1; i < sections.length; i++) {
+            if (log.isDebugEnabled())
+                log.debug("t=" + sections[i]);
             c.at(0, sections[i], p1);
             c.at(1, sections[i], v1);
             CurveShape.computeControlPoint(p0, v0, p1, v1, tmp_a, tmp_b, pc);
@@ -196,19 +203,83 @@ public abstract class CurveShape {
     static double[] computeControlPoint(final double[] pa, final double[] va,
             final double[] pb, final double[] vb, final double[][] tmp_matrix,
             final double[] tmp_right, final double[] pc) {
-        // tmp_matrix[0][0] = va[0];
-        // tmp_matrix[1][0] = va[1];
-        // tmp_matrix[0][1] = vb[0];
-        // tmp_matrix[1][1] = vb[1];
-        // tmp_right[0] = pb[0] - pa[0];
-        // tmp_right[1] = pb[1] - pa[1];
-        // MathVec.gauss(tmp_matrix, tmp_right, pc);
-        // final double f = pc[0];
-        final double f = (-pb[0] * vb[1] + pa[0] * vb[1] + vb[0]
-                * (pb[1] - pa[1]))
-                / (vb[0] * va[1] - va[0] * vb[1]);
-        pc[0] = pa[0] + f * va[0];
-        pc[1] = pa[1] + f * va[1];
+        if (false) {
+            tmp_matrix[0][0] = va[0];
+            tmp_matrix[1][0] = va[1];
+            tmp_matrix[0][1] = vb[0];
+            tmp_matrix[1][1] = vb[1];
+            tmp_right[0] = pb[0] - pa[0];
+            tmp_right[1] = pb[1] - pa[1];
+            MathVec.gauss(tmp_matrix, tmp_right, pc);
+        } else {
+            if (va[0] == 0.0 && va[1] == 0.0 && vb[0] == 0.0 && vb[1] == 0.0) {
+                pc[0] = 0.5 * (pa[0] + pb[0]);
+                pc[1] = 0.5 * (pa[1] + pb[1]);
+                return pc;
+            }
+            // final double f = pc[0];
+            final double f = (-pb[0] * vb[1] + pa[0] * vb[1] + vb[0]
+                    * (pb[1] - pa[1]))
+                    / (vb[0] * va[1] - va[0] * vb[1]);
+            pc[0] = pa[0] + f * va[0];
+            pc[1] = pa[1] + f * va[1];
+        }
+        if (log.isDebugEnabled()) {
+            final StringBuffer b = new StringBuffer();
+            b.append("pa=").append(toString(pa));
+            b.append(" va=").append(toString(va));
+            b.append(" pb=").append(toString(pb));
+            b.append(" vb=").append(toString(vb));
+            b.append(" pc=").append(toString(pc));
+            log.debug(b.toString());
+        }
         return pc;
     }
+
+    public static double[] exponentialSections(double min, double max,
+            final double[] sections) {
+        final int n = sections.length - 1;
+        if (n < 0)
+            return sections;
+        if (min > max) {
+            final double tmp = min;
+            min = max;
+            max = tmp;
+        }
+        sections[0] = min;
+        if (n < 1)
+            return sections;
+        sections[n] = max;
+        if (n < 2)
+            return sections;
+        long j = 0;
+        for (int i = n; i > 0; i--)
+            j += i;
+        int k = 0;
+        for (int i = 1; i < n; i++) {
+            k += n - i + 1;
+            log.debug(k + "/" + j);
+            sections[i] = min + (max - min) * k / j;
+        }
+        return null;
+    }
+
+    static String toString(double[] arr) {
+        final StringBuffer w = new StringBuffer();
+        if (arr == null) {
+            w.append("null");
+        } else {
+            boolean start = true;
+            w.append("[");
+            for (int i = 0; i < arr.length; i++) {
+                if (!start)
+                    w.append(" ");
+                w.append(Double.toString(arr[i]));
+                start = false;
+            }
+            w.append("]");
+        }
+        return w.toString();
+    }
+
 }

@@ -47,4 +47,15 @@ public class PolynomeCurve extends R1RNFunctionImpl {
         return Polynome.poly(c, t, params[dim]);
     }
 
+    @Override
+    public String toString() {
+        final StringBuffer b = new StringBuffer();
+        b.append("[");
+        for (int i = 0; i < params.length; i++)
+            b.append(Polynome.toString(params[i])).append(", ");
+        if (params.length > 0)
+            b.setLength(b.length() - 2);
+        return b.toString();
+    }
+
 }

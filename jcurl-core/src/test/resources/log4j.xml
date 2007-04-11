@@ -24,6 +24,13 @@
 	<category name="jcurl.core.io.OldConfigReader">
 		<level value="WARN"/>
 	</category>
+	<category name="org.jcurl.core.swing.CurvePainter">
+		<level value="DEBUG"/>
+	</category>
+	<category name="org.jcurl.math.CurveShape">
+		<level value="DEBUG"/>
+	</category>
+	
 	<!-- ======================= -->
 	<!-- Setup the Root category -->
 	<!-- ======================= -->
