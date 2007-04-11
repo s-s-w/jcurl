@@ -24,6 +24,7 @@ import java.awt.geom.Point2D;
 import org.apache.commons.math.MathException;
 import org.jcurl.core.model.FixpointZoomer;
 import org.jcurl.math.Point3D;
+import org.jcurl.math.PolynomeCurve;
 
 public class CurveTransformedTest extends TestShowBase {
 
@@ -218,6 +219,48 @@ public class CurveTransformedTest extends TestShowBase {
         assertEquals(1.5, 1.875, 0.5, ret, 1e-9);
         ret = cw.at(0, 1.5, ret);
         assertEquals(2.25, 2.8125, 0.75, ret, 1e-9);
+    }
+
+    public void testAffineTrafoLayout() {
+        // { m00 m10 m01 m11 [m02 m12]}.
+        double[] t = { 0, 1, 2, 3, 4, 5 };
+        final AffineTransform at = new AffineTransform(t);
+        final double m00 = at.getScaleX();
+        final double m10 = at.getShearY();
+        final double m01 = at.getShearX();
+        final double m11 = at.getScaleY();
+        final double m02 = at.getTranslateX();
+        final double m12 = at.getTranslateY();
+        assertEquals(0, m00, 1e-9);
+        assertEquals(1, m10, 1e-9);
+        assertEquals(2, m01, 1e-9);
+        assertEquals(3, m11, 1e-9);
+        assertEquals(4, m02, 1e-9);
+        assertEquals(5, m12, 1e-9);
+    }
+
+    public void testPoly() {
+        final double[] tr = { -0.9687816430468471, -0.24791556646457572,
+                0.24791556646457572, -0.9687816430468471, 0.1,
+                1.8287999629974365 };
+        final AffineTransform trafo = new AffineTransform(tr);
+        final double[][] raw = { { 0 },
+                { 0.0, 1.0015713348516129, -0.049212498797310725 }, { 0 } };
+        final PolynomeCurve base = new PolynomeCurve(raw);
+        final CurveTransformed ct = new CurveTransformed(new CurveRockAnalytic(
+                base), trafo, 0);
+        final PolynomeCurve pt = PolynomeCurve.transform(trafo, base);
+        final double[] tc = { 0, 0, 0 };
+        final double[] tp = { 0, 0, 0 };
+        for (int c = 0; c < 3; c++)
+            for (int t = 0; t < 100; t++) {
+                ct.at(c, t, tc);
+                pt.at(c, t, tp);
+                for (int i = 0; i < 2; i++)
+                    // Test only 2 dimensions:
+                    assertEquals("i=" + i + " c=" + c + " t=" + t, tc[i],
+                            tp[i], 1e-6);
+            }
     }
 
     public void testStill() {
