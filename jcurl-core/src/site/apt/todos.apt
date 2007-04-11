@@ -3,21 +3,21 @@
 
 In Progress
 
-	* Package structure rework
-
-	* PathIterator to display trajectories
+	* Fix CurveShapeTest, Check CurveTransformed
 
 	* Denny curl model
 
 	* Design rework
 
-Next
+	* Package structure rework
 
-	* Make PositionDisplay fast
+Next
 
 	* Sophisticated editing UI
 	
 	* Proper viewing UI
+
+	* Make PositionDisplay fast
 
 Postponed
 	

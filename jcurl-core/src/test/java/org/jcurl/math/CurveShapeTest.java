@@ -157,39 +157,66 @@ public class CurveShapeTest extends TestCase {
         final double[] tmp_b = { 0, 0 };
         final double[] pc = { 0, 0 };
 
-        final double[][] poly = { { 0 },
-                { 0.0, 1.0015713348516129, -0.049212498797310725 }, { 0 } };
-        PolynomeCurve p = new PolynomeCurve(poly);
+        final PolynomeCurve p = new PolynomeCurve(new double[][] { { 0 },
+                { 0.0, 1.0015713348516129, -0.049212498797310725 }, { 0 } });
         final double[] sections = { 3.4880897073627515, 6.880084828014439,
                 10.272079948666127, 13.664075069317814 };
-        CurveTransformed ct = new CurveTransformed(new CurveRockAnalytic(p),
-                new AffineTransform(new double[] { -0.9687816430468471,
-                        -0.24791556646457572, 0.24791556646457572,
-                        -0.9687816430468471, 0.1, 1.8287999629974365 }),
-                sections[0]);
-        ct.at(0, sections[0], pa);
-        ct.at(1, sections[0], va);
-        ct.at(0, sections[1], pb);
-        ct.at(1, sections[1], vb);
-        CurveShape.computeControlPoint(pa, va, pb, vb, tmp_a, tmp_b, pc);
-        assertEquals(-0.39661024966883773, pc[0], 1e-9);
-        assertEquals(3.7694078098097754, pc[1], 1e-9);
+        {
+            final CurveTransformed ct = new CurveTransformed(
+                    new CurveRockAnalytic(p), new AffineTransform(new double[] {
+                            -0.9687816430468471, -0.24791556646457572,
+                            0.24791556646457572, -0.9687816430468471, 0.1,
+                            1.8287999629974365 }), sections[0]);
+            // transformed:
+            ct.at(0, sections[0], pa);
+            ct.at(1, sections[0], va);
+            ct.at(0, sections[1], pb);
+            ct.at(1, sections[1], vb);
+            CurveShape.computeControlPoint(pa, va, pb, vb, tmp_a, tmp_b, pc);
+            assertEquals(-0.39661024966883773, pc[0], 1e-9);
+            assertEquals(3.7694078098097754, pc[1], 1e-9);
 
-        ct.at(0, sections[1], pa);
-        ct.at(1, sections[1], va);
-        ct.at(0, sections[2], pb);
-        ct.at(1, sections[2], vb);
+            ct.at(0, sections[1], pa);
+            ct.at(1, sections[1], va);
+            ct.at(0, sections[2], pb);
+            ct.at(1, sections[2], vb);
+            CurveShape.computeControlPoint(pa, va, pb, vb, tmp_a, tmp_b, pc);
+            assertEquals(Double.NaN, pc[0], 1e-9);
+            assertEquals(Double.NaN, pc[1], 1e-9);
+
+            ct.at(0, sections[2], pa);
+            ct.at(1, sections[2], va);
+            ct.at(0, sections[3], pb);
+            ct.at(1, sections[3], vb);
+            CurveShape.computeControlPoint(pa, va, pb, vb, tmp_a, tmp_b, pc);
+            assertEquals(Double.POSITIVE_INFINITY, pc[0], 1e-9);
+            assertEquals(Double.NEGATIVE_INFINITY, pc[1], 1e-9);
+        }
+
+        // Untransformed:
+        p.at(0, sections[0] - sections[0], pa);
+        p.at(1, sections[0] - sections[0], va);
+        p.at(0, sections[1] - sections[0], pb);
+        p.at(1, sections[1] - sections[0], vb);
         CurveShape.computeControlPoint(pa, va, pb, vb, tmp_a, tmp_b, pc);
         assertEquals(Double.NaN, pc[0], 1e-9);
         assertEquals(Double.NaN, pc[1], 1e-9);
 
-        ct.at(0, sections[2], pa);
-        ct.at(1, sections[2], va);
-        ct.at(0, sections[3], pb);
-        ct.at(1, sections[3], vb);
+        p.at(0, sections[1] - sections[0], pa);
+        p.at(1, sections[1] - sections[0], va);
+        p.at(0, sections[2] - sections[0], pb);
+        p.at(1, sections[2] - sections[0], vb);
         CurveShape.computeControlPoint(pa, va, pb, vb, tmp_a, tmp_b, pc);
-        assertEquals(Double.POSITIVE_INFINITY, pc[0], 1e-9);
-        assertEquals(Double.NEGATIVE_INFINITY, pc[1], 1e-9);
+        assertEquals(Double.NaN, pc[0], 1e-9);
+        assertEquals(Double.NaN, pc[1], 1e-9);
+
+        p.at(0, sections[2] - sections[0], pa);
+        p.at(1, sections[2] - sections[0], va);
+        p.at(0, sections[3] - sections[0], pb);
+        p.at(1, sections[3] - sections[0], vb);
+        CurveShape.computeControlPoint(pa, va, pb, vb, tmp_a, tmp_b, pc);
+        assertEquals(Double.NaN, pc[0], 1e-9);
+        assertEquals(Double.NaN, pc[1], 1e-9);
     }
 
     public void testExponentialSections() {
