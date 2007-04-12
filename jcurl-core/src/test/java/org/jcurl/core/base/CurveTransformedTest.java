@@ -32,7 +32,7 @@ public class CurveTransformedTest extends TestShowBase {
         final String txt = "";
         assertEquals(txt, x, p.getX(), delta);
         assertEquals(txt, y, p.getY(), delta);
-        assertEquals(txt, z, p.getZ(), delta);
+        assertEquals(txt, z, p.getA(), delta);
     }
 
     public void testAffineTransformMemoryLayout() {

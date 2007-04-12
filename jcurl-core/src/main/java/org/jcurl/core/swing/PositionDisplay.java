@@ -234,7 +234,7 @@ public class PositionDisplay extends WCComponent implements
         final AffineTransform t = g.getTransform();
         if (false) {
             g.translate(Zoomer.SCALE * rock.getX(), Zoomer.SCALE * rock.getY());
-            g.rotate(Math.PI + rock.getZ());
+            g.rotate(Math.PI + rock.getA());
         } else {
             g.transform(WCComponent.preScale);
             g.transform(rock.getTrafo());

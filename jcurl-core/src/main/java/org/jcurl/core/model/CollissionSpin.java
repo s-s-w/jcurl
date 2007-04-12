@@ -58,8 +58,8 @@ public class CollissionSpin extends ColliderBase {
 
     @Override
     public void computeRC(final Rock va, final Rock vb) {
-        final double Veff = va.getX() + R * va.getZ()
-                - (vb.getX() + R * vb.getZ());
+        final double Veff = va.getX() + R * va.getA()
+                - (vb.getX() + R * vb.getA());
         double X = -Veff / (2 * (1 / m + R * R / J));
         final double dVy = vb.getY() - va.getY();
         final double dPabs = m * abs(dVy);
@@ -69,10 +69,10 @@ public class CollissionSpin extends ColliderBase {
         final double dW = -X * R / J;
         va.setX(va.getX() + dVx);
         va.setY(va.getY() + dVy);
-        va.setZ(va.getZ() + dW);
+        va.setA(va.getA() + dW);
         vb.setX(vb.getX() - dVx);
         vb.setY(vb.getY() - dVy);
-        vb.setZ(vb.getZ() + dW);
+        vb.setA(vb.getA() + dW);
     }
 
     void init(final double fritionRockRock, final double loss) {

@@ -161,7 +161,7 @@ public class SetupSaxSer {
 
         part(xml, r.getX(), Dim.METER, "x", Dim.FOOT);
         part(xml, r.getY(), Dim.METER, "y", Dim.FOOT);
-        part(xml, r.getZ(), Dim.RADIANT, "a", Dim.DEGREE);
+        part(xml, r.getA(), Dim.RADIANT, "a", Dim.DEGREE);
 
         xml.endElement(NS, null, "rock");
     }
@@ -183,7 +183,7 @@ public class SetupSaxSer {
 
         part(xml, r.getX(), Dim.METER_PER_SEC, "x", Dim.METER_PER_SEC);
         part(xml, r.getY(), Dim.METER_PER_SEC, "y", Dim.METER_PER_SEC);
-        part(xml, r.getZ(), Dim.RAD_PER_SEC, "spin", Dim.HERTZ);
+        part(xml, r.getA(), Dim.RAD_PER_SEC, "spin", Dim.HERTZ);
 
         xml.endElement(NS, null, "rock");
     }

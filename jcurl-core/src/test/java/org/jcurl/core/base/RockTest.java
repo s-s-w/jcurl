@@ -36,7 +36,7 @@ public class RockTest extends TestBase {
         else
             m.setToIdentity();
         m.translate(r.getX(), r.getY());
-        m.rotate(r.getZ());
+        m.rotate(r.getA());
         return m;
     }
 
@@ -44,7 +44,7 @@ public class RockTest extends TestBase {
             final Rock was) {
         assertEquals(x, was.getX());
         assertEquals(y, was.getY());
-        assertEquals(z, was.getZ());
+        assertEquals(z, was.getA());
     }
 
     public void testMatrix() {

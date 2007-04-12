@@ -40,7 +40,7 @@ class RockFloat extends Rock implements Serializable {
             return;
         setX(pt[0]);
         setY(pt[0]);
-        setZ(pt[0]);
+        setA(pt[0]);
         //dirty = true;
     }
 
@@ -75,7 +75,7 @@ class RockFloat extends Rock implements Serializable {
     }
 
     @Override
-    public double getZ() {
+    public double getA() {
         return x[2];
     }
 
@@ -125,7 +125,7 @@ class RockFloat extends Rock implements Serializable {
     }
 
     @Override
-    public void setZ(final double alpha) {
+    public void setA(final double alpha) {
         x[2] = (float) alpha;
         dirty = true;
     }

@@ -92,14 +92,14 @@ public class CollissionSpinLoss extends ColliderBase {
         final Rock _vb = new RockDouble();
         mat.transform(va, _va);
         mat.transform(vb, _vb);
-        final double[] w = { va.getZ(), vb.getZ() };
+        final double[] w = { va.getA(), vb.getA() };
 
         if (va.nonZero() ^ vb.nonZero())
             singleLoss(_va, _vb, w);
         singleNoLoss(_va, _vb, w);
 
-        va.setZ(w[0]);
-        vb.setZ(w[1]);
+        va.setA(w[0]);
+        vb.setA(w[1]);
 
         try {
             // re-transformation: do the coordinate-trafo new->world:

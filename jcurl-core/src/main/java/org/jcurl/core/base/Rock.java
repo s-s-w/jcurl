@@ -21,8 +21,6 @@ package org.jcurl.core.base;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
-import org.jcurl.math.MathVec;
-
 /**
  * Base class for rock information (either location or speed). The "Z" component
  * is the handle angle in radians.
@@ -37,39 +35,8 @@ public abstract class Rock extends Point2D implements Cloneable {
 
     protected transient AffineTransform trafo;
 
-    public abstract void setLocation(double x, double y, double z);
-
-    public boolean equals(final Rock b) {
-        if (this == b)
-            return true;
-        if (b == null)
-            return false;
-        return getX() == b.getX() && getY() == b.getY() && getZ() == b.getZ();
-    }
-
-
-    public abstract void setX(double z);
-
-    public abstract void setY(double z);
-
-    public abstract void setZ(double z);
-
-    public abstract void setLocation(double[] l);
-
-    public abstract double getZ();
-
     @Override
     public abstract Object clone();
-
-    /**
-     * Override super to ignore {@link #getZ()}.
-     * 
-     * @param b
-     * @return the distance square.
-     */
-    public double distanceSq(final Rock b) {
-        return MathVec.sqr(getX() - b.getX()) + MathVec.sqr(getY() - b.getY());
-    }
 
     @Override
     public final boolean equals(final Object obj) {
@@ -78,6 +45,16 @@ public abstract class Rock extends Point2D implements Cloneable {
         return equals((Rock) obj);
     }
 
+    private boolean equals(final Rock b) {
+        if (this == b)
+            return true;
+        if (b == null)
+            return false;
+        return getX() == b.getX() && getY() == b.getY() && getA() == b.getA();
+    }
+
+    public abstract double getA();
+
     public AffineTransform getTrafo() {
         if (trafo == null || dirty) {
             if (trafo == null)
@@ -85,7 +62,7 @@ public abstract class Rock extends Point2D implements Cloneable {
             else
                 trafo.setToIdentity();
             trafo.translate(getX(), getY());
-            trafo.rotate(getZ());
+            trafo.rotate(getA());
             dirty = false;
         }
         return trafo;
@@ -101,8 +78,14 @@ public abstract class Rock extends Point2D implements Cloneable {
      */
     public abstract boolean nonZero();
 
+    public abstract void setA(double a);
+
+    public abstract void setLocation(double x, double y, double a);
+
+    public abstract void setLocation(double[] l);
+
     /**
-     * Danger: Loss of information as the {@link #getZ()} is restricted to the
+     * Danger: Loss of information as the {@link #getA()} is restricted to the
      * values of {@link Math#asin(double)}!
      * 
      * @param trafo
@@ -118,6 +101,10 @@ public abstract class Rock extends Point2D implements Cloneable {
         dirty = false;
     }
 
+    public abstract void setX(double z);
+
+    public abstract void setY(double z);
+
     @Override
     public String toString() {
         final StringBuffer buf = new StringBuffer();
@@ -126,7 +113,7 @@ public abstract class Rock extends Point2D implements Cloneable {
         buf.append(", ");
         buf.append(getY());
         buf.append(", ");
-        buf.append(getZ());
+        buf.append(getA());
         buf.append(']');
         return buf.toString();
     }

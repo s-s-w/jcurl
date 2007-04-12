@@ -72,8 +72,8 @@ public class CurlerNoCurl extends CurlerBase {
     @Override
     public CurveRock computeRc(final Rock x0, final Rock v0,
             final double sweepFactor) {
-        return new CurveRockAnalytic(new PolynomeCurve(computeRcPoly(x0.getZ(),
-                MathVec.abs2D(v0), v0.getZ(), sweepFactor)));
+        return new CurveRockAnalytic(new PolynomeCurve(computeRcPoly(x0.getA(),
+                MathVec.abs2D(v0), v0.getA(), sweepFactor)));
     }
 
     /**

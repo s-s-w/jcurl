@@ -112,7 +112,7 @@ public class XStreamIO implements JCurlIO {
             final StringBuffer s = new StringBuffer();
             s.append(d.getX()).append(" ");
             s.append(d.getY()).append(" ");
-            s.append(d.getZ());
+            s.append(d.getA());
             arg1.setValue(s.toString());
         }
 

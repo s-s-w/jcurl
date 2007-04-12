@@ -162,7 +162,7 @@ public class CurveTransformed extends CurveRock {
                     + trafo[4];
             final double y = trafo[1] * ret.getX() + trafo[3] * ret.getY()
                     + trafo[5];
-            final double z = ret.getZ() + rot;
+            final double z = ret.getA() + rot;
             ret.setLocation(x, y, z);
         } else {
             final double x = trafo[0] * ret.getX() + trafo[2] * ret.getY();

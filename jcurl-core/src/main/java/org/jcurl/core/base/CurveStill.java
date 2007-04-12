@@ -38,7 +38,7 @@ public class CurveStill extends CurveRock {
     }
 
     public static CurveStill newInstance(final Rock x) {
-        return CurveStill.newInstance(x.getX(), x.getY(), x.getZ());
+        return CurveStill.newInstance(x.getX(), x.getY(), x.getA());
     }
 
     private final double a;
@@ -54,7 +54,7 @@ public class CurveStill extends CurveRock {
     }
 
     CurveStill(final Rock x) {
-        this(x.getX(), x.getY(), x.getZ());
+        this(x.getX(), x.getY(), x.getA());
     }
 
     @Override

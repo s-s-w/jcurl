@@ -73,7 +73,7 @@ public class RockDouble extends Rock implements Serializable {
     }
 
     @Override
-    public double getZ() {
+    public double getA() {
         return x[2];
     }
 
@@ -107,12 +107,12 @@ public class RockDouble extends Rock implements Serializable {
     }
 
     @Override
-    public void setLocation(final double x, final double y, final double z) {
-        if (x == this.x[0] && y == this.x[1] && z == this.x[2])
+    public void setLocation(final double x, final double y, final double a) {
+        if (x == this.x[0] && y == this.x[1] && a == this.x[2])
             return;
         this.x[0] = x;
         this.x[1] = y;
-        this.x[2] = z;
+        this.x[2] = a;
         dirty = true;
     }
 
@@ -133,7 +133,7 @@ public class RockDouble extends Rock implements Serializable {
     }
 
     @Override
-    public void setZ(final double alpha) {
+    public void setA(final double alpha) {
         if (alpha == x[2])
             return;
         x[2] = alpha;

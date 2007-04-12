@@ -119,7 +119,7 @@ public class SetupBuilder {
                     if (rocks[i].y0 != null)
                         x.setY(rocks[i].y0.to(Dim.METER).val);
                     if (rocks[i].a0 != null)
-                        x.setZ(rocks[i].a0.to(Dim.RADIANT).val);
+                        x.setA(rocks[i].a0.to(Dim.RADIANT).val);
                     break;
                 case Release:
                     log.info("TODO"); // TODO compute projection
@@ -130,7 +130,7 @@ public class SetupBuilder {
                 }
                 // Speed stuff
                 if (rocks[i].spin != null)
-                    v.setZ(rocks[i].spin.to(Dim.RAD_PER_SEC).val);
+                    v.setA(rocks[i].spin.to(Dim.RAD_PER_SEC).val);
                 switch (rocks[i].speedFlag) {
                 case SpeedTo:
                     // check dimension
