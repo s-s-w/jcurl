@@ -71,7 +71,7 @@ public class CurveManagerTest extends TestShowBase {
                 -te.getCurler().computeV0(5), Math.PI / 2);
         return te;
     }
-    
+
     void showPaths(final Iterator<Iterable<Entry<Double, R1RNFunction>>> it,
             final double tmin, final double tmax) throws InterruptedException {
         if (frame == null)

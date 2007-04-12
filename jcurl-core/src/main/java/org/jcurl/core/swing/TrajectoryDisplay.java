@@ -131,12 +131,12 @@ public class TrajectoryDisplay extends WCComponent implements
 
     private void initialize() {
         int opa = 100;
-        this.curvePainter = new CurvePainter(new Color(255, 0, 0, opa),
-                new Color(255, 255, 0, opa), new BasicStroke(Zoomer.SCALE * 2
-                        * RockProps.DEFAULT.getRadius(), BasicStroke.CAP_ROUND,
-                        BasicStroke.JOIN_ROUND, 0));
+        curvePainter = new CurvePainter(new Color(255, 0, 0, opa), new Color(
+                255, 255, 0, opa), new BasicStroke(Zoomer.SCALE * 2
+                * RockProps.DEFAULT.getRadius(), BasicStroke.CAP_ROUND,
+                BasicStroke.JOIN_ROUND, 0));
         opa = 150;
-        this.curvePainter = new CurvePainter(new Color(255, 153, 153, opa),
+        curvePainter = new CurvePainter(new Color(255, 153, 153, opa),
                 new Color(255, 255, 153, opa), new BasicStroke(Zoomer.SCALE * 2
                         * RockProps.DEFAULT.getRadius(), BasicStroke.CAP_ROUND,
                         BasicStroke.JOIN_ROUND, 0));

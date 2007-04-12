@@ -72,7 +72,7 @@ public class PolynomeCurve extends R1RNFunctionImpl {
      */
     public static PolynomeCurve transform(final AffineTransform at,
             final PolynomeCurve p) {
-        double[][] ret = new double[p.params.length][];
+        final double[][] ret = new double[p.params.length][];
         for (int i = ret.length - 1; i >= 2; i--)
             ret[i] = p.params[i]; // clone? No: immutable
         final double m00 = at.getScaleX();
@@ -116,7 +116,7 @@ public class PolynomeCurve extends R1RNFunctionImpl {
     public String toString() {
         final StringBuffer b = new StringBuffer();
         b.append("[");
-        for (double[] element : params)
+        for (final double[] element : params)
             b.append(Polynome.toString(element)).append(", ");
         if (params.length > 0)
             b.setLength(b.length() - 2);

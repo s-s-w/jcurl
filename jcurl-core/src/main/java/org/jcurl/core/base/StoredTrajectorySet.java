@@ -24,6 +24,12 @@ import java.util.Map;
 
 import org.jcurl.core.helpers.MutableObject;
 
+/**
+ * Trajectory wrapping a {@link CurveStore}.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public class StoredTrajectorySet extends MutableObject implements TrajectorySet {
 
     private static final long serialVersionUID = -829911104054850124L;

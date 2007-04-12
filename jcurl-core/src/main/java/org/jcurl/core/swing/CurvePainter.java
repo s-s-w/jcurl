@@ -45,23 +45,23 @@ public class CurvePainter implements Strategy {
     private static final Log log = JCLoggerFactory
             .getLogger(CurvePainter.class);
 
-    static Writer toString(Writer w, double[] arr) {
+    static Writer toString(final Writer w, final double[] arr) {
         try {
-            if (arr == null) {
+            if (arr == null)
                 w.write("null");
-            } else {
+            else {
                 boolean start = true;
                 w.write("[");
-                for (int i = 0; i < arr.length; i++) {
+                for (double element : arr) {
                     if (!start)
                         w.write(" ");
-                    w.write(Double.toString(arr[i]));
+                    w.write(Double.toString(element));
                     start = false;
                 }
                 w.write("]");
             }
             return w;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new IllegalStateException("Couldn't write to writer.", e);
         }
     }
@@ -104,7 +104,7 @@ public class CurvePainter implements Strategy {
         for (final Iterable<Entry<Double, R1RNFunction>> name : cs) {
             if (log.isDebugEnabled())
                 log.debug("i=" + i + " " + (i % 2 == 0 ? "dark" : "light")
-                        + " " + (i / 2));
+                        + " " + i / 2);
             g2.setPaint(i++ % 2 == 0 ? dark : light);
             doPaint(g2, name.iterator(), sections, Zoomer.SCALE, t1, t2, t3, t4);
         }
@@ -180,7 +180,7 @@ public class CurvePainter implements Strategy {
      *            save instanciations calling
      *            {@link R1RNFunction#at(int, double, double[])}.
      */
-    public void doPaint(final Graphics2D g2, R1RNFunction curr,
+    public void doPaint(final Graphics2D g2, final R1RNFunction curr,
             final double[] sections, final float zoom, final double[] t1,
             final double[] t2, final double[] t3, final double[] t4) {
         if (true)
@@ -199,7 +199,8 @@ public class CurvePainter implements Strategy {
      * @param max
      * @return sections
      */
-    public double[] doSections(final double[] sections, double min, double max) {
+    public double[] doSections(final double[] sections, final double min,
+            final double max) {
         return CurveShape.exponentialSections(min, max, sections);
     }
 }

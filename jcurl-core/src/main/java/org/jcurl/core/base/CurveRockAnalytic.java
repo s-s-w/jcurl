@@ -21,10 +21,10 @@ package org.jcurl.core.base;
 import org.jcurl.math.CurveFkt;
 import org.jcurl.math.R1R1Function;
 import org.jcurl.math.R1RNFunction;
-import org.jcurl.math.R1RNFunctionImpl;
 
 /**
- * Wrapper for rock trajectory segments based on {@link R1RNFunctionImpl}s.
+ * Wrapper for rock trajectory segments wrapping 3 dimensional
+ * {@link R1RNFunction}s.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$

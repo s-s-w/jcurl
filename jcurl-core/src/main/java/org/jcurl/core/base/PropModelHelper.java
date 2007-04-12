@@ -24,6 +24,12 @@ import java.util.Map;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
 
+/**
+ * Help accessing {@link PropModel} properties.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public final class PropModelHelper {
     public static final CharSequence DrawToTeeCurl = "drawToTeeCurl";
 

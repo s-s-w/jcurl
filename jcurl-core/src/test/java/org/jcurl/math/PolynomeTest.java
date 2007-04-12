@@ -59,9 +59,9 @@ public class PolynomeTest extends TestCase {
         p1 = new double[] { 3, 4 };
         ret = PolynomeCurve.mult(p1, p2, null);
         assertEquals(3, ret.length);
-        assertEquals(1*3, ret[0], 1e-9);
-        assertEquals(1*4+2*3, ret[1], 1e-9);
-        assertEquals(2*4, ret[2], 1e-9);
+        assertEquals(1 * 3, ret[0], 1e-9);
+        assertEquals(1 * 4 + 2 * 3, ret[1], 1e-9);
+        assertEquals(2 * 4, ret[2], 1e-9);
     }
 
     public void _test040_load() {

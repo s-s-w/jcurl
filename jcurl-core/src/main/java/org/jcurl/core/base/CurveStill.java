@@ -18,6 +18,12 @@
  */
 package org.jcurl.core.base;
 
+/**
+ * Curve implementation for rocks NOT in motion.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public class CurveStill extends CurveRock {
 
     private static final long serialVersionUID = -8031863193302315171L;

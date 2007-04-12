@@ -253,17 +253,17 @@ public abstract class CurveShape {
         return null;
     }
 
-    static String toString(double[] arr) {
+    static String toString(final double[] arr) {
         final StringBuffer w = new StringBuffer();
-        if (arr == null) {
+        if (arr == null)
             w.append("null");
-        } else {
+        else {
             boolean start = true;
             w.append("[");
-            for (int i = 0; i < arr.length; i++) {
+            for (double element : arr) {
                 if (!start)
                     w.append(" ");
-                w.append(Double.toString(arr[i]));
+                w.append(Double.toString(element));
                 start = false;
             }
             w.append("]");

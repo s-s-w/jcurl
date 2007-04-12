@@ -19,7 +19,7 @@
 package org.jcurl.math;
 
 /**
- * The distance between two {@link R1RNFunctionImpl}s - only 2 dimensions used.
+ * The distance between two {@link R1RNFunction}s - only 2 dimensions used.
  * 
  * Differentiable min. 1x.
  * 
