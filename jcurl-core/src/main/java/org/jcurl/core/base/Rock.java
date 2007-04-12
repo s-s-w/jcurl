@@ -19,9 +19,9 @@
 package org.jcurl.core.base;
 
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 
 import org.jcurl.math.MathVec;
-import org.jcurl.math.Point3D;
 
 /**
  * Base class for rock information (either location or speed). The "Z" component
@@ -31,11 +31,32 @@ import org.jcurl.math.Point3D;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:Rock.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public abstract class Rock extends Point3D implements Cloneable {
+public abstract class Rock extends Point2D implements Cloneable {
 
     protected transient boolean dirty = true;
 
     protected transient AffineTransform trafo;
+
+    public abstract void setLocation(double x, double y, double z);
+
+    public boolean equals(final Rock b) {
+        if (this == b)
+            return true;
+        if (b == null)
+            return false;
+        return getX() == b.getX() && getY() == b.getY() && getZ() == b.getZ();
+    }
+
+
+    public abstract void setX(double z);
+
+    public abstract void setY(double z);
+
+    public abstract void setZ(double z);
+
+    public abstract void setLocation(double[] l);
+
+    public abstract double getZ();
 
     @Override
     public abstract Object clone();
@@ -54,7 +75,7 @@ public abstract class Rock extends Point3D implements Cloneable {
     public final boolean equals(final Object obj) {
         if (obj == null || !(obj instanceof Rock))
             return false;
-        return super.equals((Rock) obj);
+        return equals((Rock) obj);
     }
 
     public AffineTransform getTrafo() {

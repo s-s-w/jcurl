@@ -260,7 +260,7 @@ public abstract class CurveShape {
         else {
             boolean start = true;
             w.append("[");
-            for (double element : arr) {
+            for (final double element : arr) {
                 if (!start)
                     w.append(" ");
                 w.append(Double.toString(element));

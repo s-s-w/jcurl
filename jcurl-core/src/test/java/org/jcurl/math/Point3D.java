@@ -26,7 +26,7 @@ import java.awt.geom.Point2D;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class Point3D extends Point2D {
+abstract class Point3D extends Point2D {
 
     public double distanceSq(final Point3D b) {
         return MathVec.sqr(getX() - b.getX()) + MathVec.sqr(getY() - b.getY())

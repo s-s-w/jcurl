@@ -23,13 +23,12 @@ import java.awt.geom.Point2D;
 
 import org.apache.commons.math.MathException;
 import org.jcurl.core.model.FixpointZoomer;
-import org.jcurl.math.Point3D;
 import org.jcurl.math.PolynomeCurve;
 
 public class CurveTransformedTest extends TestShowBase {
 
     private static void assertEquals(final double x, final double y,
-            final double z, final Point3D p, final double delta) {
+            final double z, final Rock p, final double delta) {
         final String txt = "";
         assertEquals(txt, x, p.getX(), delta);
         assertEquals(txt, y, p.getY(), delta);

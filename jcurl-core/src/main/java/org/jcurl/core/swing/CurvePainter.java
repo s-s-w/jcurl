@@ -52,7 +52,7 @@ public class CurvePainter implements Strategy {
             else {
                 boolean start = true;
                 w.write("[");
-                for (double element : arr) {
+                for (final double element : arr) {
                     if (!start)
                         w.write(" ");
                     w.write(Double.toString(element));
