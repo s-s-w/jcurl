@@ -34,7 +34,11 @@ import org.jcurl.core.model.NewtonCollissionDetector;
 
 public class XmlEncoderTest extends TestCase {
 
-    public void test010() throws UnsupportedEncodingException {
+    public void testOk() {
+        
+    }
+    
+    public void _test010() throws UnsupportedEncodingException {
         final CurveManager te = new CurveManager();
         te.setCollider(new CollissionSimple());
         te.setCollissionDetector(new NewtonCollissionDetector());
