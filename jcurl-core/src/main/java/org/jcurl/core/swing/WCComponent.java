@@ -21,6 +21,7 @@ package org.jcurl.core.swing;
 import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.RenderingHints.Key;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
@@ -81,7 +82,7 @@ public abstract class WCComponent extends Component implements WCLayer {
                 BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g2 = (Graphics2D) img.getGraphics();
         {
-            final Map hints = new HashMap();
+            final Map<Key, Object> hints = new HashMap<Key, Object>();
             hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION,
                     RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
             hints.put(RenderingHints.KEY_ANTIALIASING,

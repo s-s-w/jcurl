@@ -24,6 +24,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.RenderingHints;
+import java.awt.RenderingHints.Key;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
@@ -47,7 +48,7 @@ public abstract class SumDisplayBase extends JComponent implements
 
     private static final ColorSet colors = new ColorSet();
 
-    private static final Map hints = new HashMap();
+    private static final Map<Key, Object> hints = new HashMap<Key, Object>();
 
     private static final Log log = JCLoggerFactory
             .getLogger(SumDisplayBase.class);

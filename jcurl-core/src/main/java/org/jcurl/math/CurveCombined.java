@@ -86,6 +86,7 @@ public class CurveCombined extends R1RNFunctionImpl implements
 
     public void add(final double t0, final R1RNFunction fkt,
             final boolean dropTail) {
+        log.debug("");
         if (fkt.dim() != dim())
             throw new IllegalArgumentException();
         if (dropTail) {

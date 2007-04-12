@@ -20,9 +20,6 @@ package org.jcurl.math;
 
 import java.io.Serializable;
 
-import org.apache.commons.logging.Log;
-import org.jcurl.core.log.JCLoggerFactory;
-
 /**
  * Abstract base class for n-dimensional curves <code>f : R^1 -&gt; R^n</code>.
  * 
@@ -30,9 +27,6 @@ import org.jcurl.core.log.JCLoggerFactory;
  * @version $Id$
  */
 public abstract class R1RNFunctionImpl implements R1RNFunction, Serializable {
-
-    private static final Log log = JCLoggerFactory
-            .getLogger(R1RNFunctionImpl.class);
 
     private final transient int dim;
 

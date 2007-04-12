@@ -41,7 +41,7 @@ class RockFloat extends Rock implements Serializable {
         setX(pt[0]);
         setY(pt[0]);
         setA(pt[0]);
-        //dirty = true;
+        // dirty = true;
     }
 
     private static final long serialVersionUID = 3219049101239057245L;

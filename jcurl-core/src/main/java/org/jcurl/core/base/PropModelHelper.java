@@ -62,6 +62,7 @@ public final class PropModelHelper {
 
     /**
      * 
+     * @param p
      * @return may be {@link Double#POSITIVE_INFINITY}
      */
     public static double getDrawToTeeTime(final Map<CharSequence, DimVal> p) {
@@ -88,6 +89,7 @@ public final class PropModelHelper {
 
     /**
      * 
+     * @param p
      * @param drawToTeeTime
      *            may be {@link Double#POSITIVE_INFINITY}
      */
@@ -103,6 +105,7 @@ public final class PropModelHelper {
 
     /**
      * 
+     * @param p
      * @param loss
      *            may be {@link Double#POSITIVE_INFINITY}
      */

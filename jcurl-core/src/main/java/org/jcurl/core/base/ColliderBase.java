@@ -72,24 +72,6 @@ public abstract class ColliderBase extends PropModelImpl implements Collider {
         return mat;
     }
 
-    public static Collider newInstance(final Class clz) {
-        final Class parent = ColliderBase.class;
-        if (!parent.isAssignableFrom(clz))
-            throw new IllegalArgumentException("Class [" + clz.getName()
-                    + "] is no descendant of [" + parent.getName() + "]");
-        try {
-            return (Collider) clz.newInstance();
-        } catch (final InstantiationException e) {
-            final IllegalArgumentException ex = new IllegalArgumentException();
-            ex.initCause(e);
-            throw ex;
-        } catch (final IllegalAccessException e) {
-            final IllegalArgumentException ex = new IllegalArgumentException();
-            ex.initCause(e);
-            throw ex;
-        }
-    }
-
     /**
      * Iterate over all rocks and call
      * {@link ColliderBase#computeWC(Rock, Rock, Rock, Rock, AffineTransform)}

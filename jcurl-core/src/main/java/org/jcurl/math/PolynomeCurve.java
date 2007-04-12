@@ -69,6 +69,10 @@ public class PolynomeCurve extends R1RNFunctionImpl {
 
     /**
      * Works only proper for 2 Dimensions!
+     * 
+     * @param at
+     * @param p
+     * @return the transformed curve.
      */
     public static PolynomeCurve transform(final AffineTransform at,
             final PolynomeCurve p) {
