@@ -90,7 +90,7 @@
 					<verbose>true</verbose>
 					<fork>true</fork>
 					<encoding>utf-8</encoding>
-					<optimize>true</optimize>
+					<optimize>false</optimize>
 					<compilerVersion>1.5</compilerVersion>
 					<source>1.5</source>
 					<target>1.5</target>
@@ -134,29 +134,31 @@
 					<connectionType>developerConnection</connectionType>
 				</configuration>
 			</plugin>
-<plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-        <configuration>
-          <check>
-            <branchRate>0</branchRate>
-            <lineRate>0</lineRate>
-            <haltOnFailure>true</haltOnFailure>
-            <totalBranchRate>0</totalBranchRate>
-            <totalLineRate>0</totalLineRate>
-            <packageLineRate>0</packageLineRate>
-            <packageBranchRate>0</packageBranchRate>
-          </check>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>clean</goal>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>		</plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.0</version>
+				<!-- configuration>
+					<check>
+						<branchRate>10</branchRate>
+						<lineRate>10</lineRate>
+						<haltOnFailure>true</haltOnFailure>
+						<totalBranchRate>10</totalBranchRate>
+						<totalLineRate>10</totalLineRate>
+						<packageLineRate>10</packageLineRate>
+						<packageBranchRate>10</packageBranchRate>
+					</check>
+				</configuration -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>clean</goal>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
 	<dependencies>
 		<dependency>
@@ -318,6 +320,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.0</version>
 			</plugin>
 		</plugins>
 	</reporting>
