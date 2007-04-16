@@ -19,18 +19,21 @@
 package org.jcurl.core.helpers;
 
 import java.beans.PropertyChangeListener;
+import java.lang.ref.WeakReference;
 import java.util.AbstractSet;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.WeakHashMap;
 
 /**
- * Implements a HashSet where the objects given are stored in weak references.
+ * Implements a {@link HashSet} where the objects given are stored in
+ * {@link WeakReference}s.
  * <p>
- * Uses the WeakHashMap class as a backing store to implement a set of objects
- * that are stored as weak references. All information concerning using keys in
- * the WeakHashMap class pertain to this class and it is reccomended that the
- * user of this class review that material before using the class.
+ * Uses the {@link WeakHashMap} class as a backing store to implement a set of
+ * objects that are stored as weak references. All information concerning using
+ * keys in the WeakHashMap class pertain to this class and it is reccomended
+ * that the user of this class review that material before using the class.
  * </p>
  * <p>
  * Because this set contains only weak references, it is not serializable. If
@@ -62,7 +65,7 @@ public class WeakHashSet extends AbstractSet<PropertyChangeListener> {
     private static final Object DUMMY = new String("DUMMY");
 
     /** Holds the backing store. */
-    private WeakHashMap<PropertyChangeListener, Object> backingStore = new WeakHashMap<PropertyChangeListener, Object>();
+    private final WeakHashMap<PropertyChangeListener, Object> backingStore;
 
     /**
      * Constructs a new empty WeakHashSet with default values passed the the
@@ -192,15 +195,15 @@ public class WeakHashSet extends AbstractSet<PropertyChangeListener> {
      * <p>
      * Note that this iterator is extremely volatile because the user may
      * iterate over an element in the set and find seconds later that it has
-     * been removed. This is because of the semantics of weak references which
-     * act like a second thread is silently modifying the collection. For this
-     * reason, it is advisable that if the user wants to do something with the
-     * set that they maintain a strong reference to the object and not rely on
-     * it being in the collection for them.
+     * been removed. This is because of the semantics of {@link WeakReference}s
+     * which act like a second thread is silently modifying the collection. For
+     * this reason, it is advisable that if the user wants to do something with
+     * the set that they maintain a strong reference to the object and not rely
+     * on it being in the collection for them.
      * </p>
      * <p>
-     * This iterator is fail fast and WeakReference transparrent. By this we
-     * mean that the iterator simply ignores objects pending in the reference
+     * This iterator is fail fast and {@link WeakReference} transparent. By this
+     * we mean that the iterator simply ignores objects pending in the reference
      * queue for cleanup.
      * </p>
      * 

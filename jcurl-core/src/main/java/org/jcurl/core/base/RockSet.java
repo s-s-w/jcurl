@@ -36,10 +36,10 @@ public abstract class RockSet extends MutableObject implements Cloneable,
 
     private class REntry implements Entry<Integer, Rock> {
 
-        private final int i;
+        private final Integer i;
 
         public REntry(final int i) {
-            this.i = i;
+            this.i = boxIdx16(i);
         }
 
         public Integer getKey() {
@@ -66,6 +66,8 @@ public abstract class RockSet extends MutableObject implements Cloneable,
 
     public static final int DARK_MASK = 0xAAAA;
 
+    static Integer[] idx;
+
     public static final int LIGHT_MASK = 0x5555;
 
     public static final int ROCKS_PER_COLOR = 8;
@@ -77,6 +79,21 @@ public abstract class RockSet extends MutableObject implements Cloneable,
             dst.getRock(i).setLocation(0, 0, 0);
         dst.notifyChange();
         return dst;
+    }
+
+    /**
+     * Fast Boxing.
+     * 
+     * @param i
+     * @return {@link Integer}
+     */
+    private final Integer boxIdx16(final int i) {
+        if (idx == null) {
+            idx = new Integer[ROCKS_PER_SET];
+            for (int j = ROCKS_PER_SET - 1; j >= 0; j--)
+                idx[j] = j;
+        }
+        return idx[i];
     }
 
     public static RockSet copy(final RockSet src, final RockSet dst) {
@@ -265,7 +282,17 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     }
 
     /**
-     * Careful - this is about 10 times slower than a for loop over int.
+     * Careful - this is several times slower than a for loop over int.
+     * <p>
+     * The unbeateable fastest way to iterate it
+     * 
+     * <pre>
+     * for (int i = ROCKS_PER_SET - 1; i &gt;= 0; i--)
+     *     ;
+     * </pre>
+     * 
+     * But this iterator here only requires one additional instanciation.
+     * </p>
      * 
      * @return a (slow) iterator
      */
@@ -278,7 +305,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
             }
 
             public Integer next() {
-                return current++;
+                return boxIdx16(current++);
             }
 
             public void remove() {

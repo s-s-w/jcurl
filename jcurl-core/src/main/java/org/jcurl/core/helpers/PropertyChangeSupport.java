@@ -24,6 +24,7 @@ import java.beans.Introspector;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyDescriptor;
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -34,28 +35,26 @@ import org.jcurl.core.log.JCLoggerFactory;
 
 /**
  * Implements a beans like property change support utility that stores the
- * references to the listeners in a weak set and thus are memory-safe.
+ * references to the listeners in a {@link WeakHashSet} and thus are
+ * memory-safe.
  * <p>
- * 
- * By storing the references to the listeners in weak references instead of
- * strong references, we can be sure that if the listener is no longer used by
- * other classes, it will be garbage collected with this class. Since the
+ * By storing the references to the listeners in {@link WeakReference}s instead
+ * of strong references, we can be sure that if the listener is no longer used
+ * by other classes, it will be garbage collected with this class. Since the
  * producer of messages should not have the responsability of maintaining the
  * garbage collection status of its listeners, this is needed.
  * </p>
- * 
  * <p>
  * Note that this class implements the identical interface to
- * <tt>java.lang.PropertyChangeSupport</tt>. This means that it is completely
+ * {@link java.beans.PropertyChangeSupport}. This means that it is completely
  * plug in compatible, enabling users to switch out current support in favor of
  * the safe version.
  * </p>
  * <p>
- * This object is not serializable because it uses a <tt>WeakHashSet</tt> to
- * hold the listeners. Refer to that class for reasons for this decision. Users
- * must declare this attribute <tt>transient</tt>.
+ * This object is not serializable because it uses a {@link WeakHashSet} to hold
+ * the listeners. Refer to that class for reasons for this decision. Users must
+ * declare this attribute <tt>transient</tt>.
  * </p>
- * 
  * <p>
  * This class is thread safe.
  * </p>
@@ -65,8 +64,22 @@ import org.jcurl.core.log.JCLoggerFactory;
  * @see java.lang.ref.WeakReference
  * @see java.beans.PropertyChangeSupport
  */
-
 public class PropertyChangeSupport {
+
+    public void fireIndexedPropertyChange(final String propertyName,
+            final int index, final boolean oldValue, final boolean newValue) {
+        throw new NotImplementedYetException();
+    }
+
+    public void fireIndexedPropertyChange(final String propertyName,
+            final int index, final int oldValue, final int newValue) {
+        throw new NotImplementedYetException();
+    }
+
+    public void fireIndexedPropertyChange(final String propertyName,
+            final int index, final Object oldValue, final Object newValue) {
+        throw new NotImplementedYetException();
+    }
 
     /**
      * Holds the value used as the key for general listeners in the listener
@@ -80,13 +93,14 @@ public class PropertyChangeSupport {
             .getLogger(PropertyChangeSupport.class);
 
     /**
-     * Holds the Listener map. The map is held as an index of WeakHashSet
-     * objects. Each property will appear as a key once in the set and when a
-     * property change event is fired on a property, the event will be fired to
-     * the union of the specific listeners set and the general listeners set.
+     * Holds the Listener map. The map is held as an index of
+     * {@link WeakHashSet} objects. Each property will appear as a key once in
+     * the set and when a property change event is fired on a property, the
+     * event will be fired to the union of the specific listeners set and the
+     * general listeners set.
      * 
      * The general listeners are also held in the set with the key set by
-     * <tt>ALL_PROPERTIES</tt>
+     * {@link #ALL_PROPERTIES}
      */
 
     private final Map<String, Set<PropertyChangeListener>> listenerMap = new HashMap<String, Set<PropertyChangeListener>>();
@@ -117,11 +131,11 @@ public class PropertyChangeSupport {
     }
 
     /**
-     * Add a non-specific PropertyChangeListener. Adds a listener that will
-     * recieve events on all properties.
+     * Add a non-specific {@link PropertyChangeListener}. Adds a listener that
+     * will recieve events on all properties.
      * 
      * @param pcl
-     *            The PropertyChangeListener add.
+     *            The {@link PropertyChangeListener} add.
      */
     public void addPropertyChangeListener(final PropertyChangeListener pcl) {
         synchronized (listenerMap) {
@@ -130,7 +144,7 @@ public class PropertyChangeSupport {
     }
 
     /**
-     * Add a PropertyChangeListener for a specific property.
+     * Add a {@link PropertyChangeListener} for a specific property.
      * 
      * @param property
      *            The name of the relevant property.
@@ -260,8 +274,9 @@ public class PropertyChangeSupport {
 
     /**
      * Returns an array of all the listeners that were added to the
-     * PropertyChangeSupport object with addPropertyChangeListener(). The array
-     * is computed as late as possible to give as much cleanout time as neded.
+     * {@link PropertyChangeSupport} object with addPropertyChangeListener().
+     * The array is computed as late as possible to give as much cleanout time
+     * as neded.
      * 
      * @return An array of all listeners.
      */
@@ -317,7 +332,7 @@ public class PropertyChangeSupport {
      * PropertyChangeListener that was registered for all properties.
      * 
      * @param pcl
-     *            The PropertyChangeListener to be removed
+     *            The {@link PropertyChangeListener} to be removed
      */
     public void removePropertyChangeListener(final PropertyChangeListener pcl) {
         synchronized (listenerMap) {
@@ -326,7 +341,7 @@ public class PropertyChangeSupport {
     }
 
     /**
-     * Remove a PropertyChangeListener for a specific property.
+     * Remove a {@link PropertyChangeListener} for a specific property.
      * 
      * @param property
      *            The name of the relevant property.
