@@ -38,22 +38,19 @@ public class ControlPanel extends JTabbedPane {
     public ControlPanel(final Model m) {
         setVisible(false);
         model = m == null ? new Model() : m;
-        final JPanel p00 = new DimValSliderPanel(model, "Broom", "broomX", Dim.FOOT);
-        // final JPanel p01 = new SliderPanel(model, "Interval", "interval",
-        // Dim.SECOND);
+
         final JPanel p0 = new JPanel();
         p0.setLayout(new FlowLayout());
-        p0.add(p00);
-        // p0.add(p01);
+        p0.add(new DimValSliderPanel(model, "Broom", "broomX", Dim.FOOT));
+        p0
+                .add(new DimValSliderPanel(model, "Interval", "interval",
+                        Dim.SECOND));
         this.addTab("Rock", p0);
 
-        final JPanel p10 = new DimValSliderPanel(model, "Curl", "drawCurl", Dim.FOOT);
-        // final JPanel p11 = new SliderPanel(model, "Time", "drawTime",
-        // Dim.SECOND);
         final JPanel p1 = new JPanel();
         p1.setLayout(new FlowLayout());
-        p1.add(p10);
-        // p1.add(p11);
+        p1.add(new DimValSliderPanel(model, "Curl", "drawCurl", Dim.FOOT));
+        p1.add(new DimValSliderPanel(model, "Time", "drawTime", Dim.SECOND));
         this.addTab("Ice", p1);
 
         setVisible(true);

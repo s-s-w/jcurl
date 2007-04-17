@@ -95,7 +95,7 @@ public class DimValSliderPanel extends JPanel implements ChangeListener,
         this.add(slider = new JSlider(), "Center");
         slider.setOrientation(SwingConstants.VERTICAL);
 
-        final int max = (int) (new DimVal(IceSize.SIDE_2_CENTER, Dim.METER)
+        final int max = (int) (new DimVal(IceSize.SIDE_2_CENTER, dim.BaseDim)
                 .to(dim).val * Granularity);
         slider.setMaximum((int) (Granularity * Math.ceil((double) max
                 / Granularity)));
