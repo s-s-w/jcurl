@@ -112,5 +112,7 @@ public class RockSetTest extends TestCase {
         p.getDark(8 - 1).setLocation(Dim.f2m(3.89991), IceSize.HOG_2_TEE, 0);
         RockSet.allZero(s);
         s.getDark(7).setLocation(0, -3, 100 * Math.PI / 180);
+        p.notifyChange();
+        s.notifyChange();
     }
 }

@@ -30,6 +30,15 @@
 	<category name="org.jcurl.math.CurveShape">
 		<level value="INFO"/>
 	</category>
+	<category name="org.jcurl.mr.gui.DetailPanel">
+		<level value="DEBUG"/>
+	</category>
+	<category name="org.jcurl.mr.gui.TacticsApplet">
+		<level value="DEBUG"/>
+	</category>
+	<category name="org.jcurl.core.swing.WCComponent">
+		<level value="DEBUG"/>
+	</category>	
 	
 	<!-- ======================= -->
 	<!-- Setup the Root category -->

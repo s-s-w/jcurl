@@ -29,6 +29,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 
+import javax.swing.BoundedRangeModel;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -43,10 +44,16 @@ import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.log.JCLoggerFactory;
 
+/**
+ * @see BoundedRangeModel
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public class DimValSliderPanel extends JPanel implements ChangeListener,
         ActionListener, PropertyChangeListener {
 
-    private static final Log log = JCLoggerFactory.getLogger(DimValSliderPanel.class);
+    private static final Log log = JCLoggerFactory
+            .getLogger(DimValSliderPanel.class);
 
     private static final long serialVersionUID = 9008976409239381440L;
 
@@ -85,14 +92,11 @@ public class DimValSliderPanel extends JPanel implements ChangeListener,
         this.dim = dim;
         prop = findProperty(model.getClass(), property);
 
-        setLayout(new BorderLayout());
-
-        final JLabel label;
-        this.add(label = new JLabel(), "North");
+        final JLabel label = new JLabel();
         label.setText(title);
         label.setHorizontalAlignment(SwingConstants.CENTER);
 
-        this.add(slider = new JSlider(), "Center");
+        slider = new JSlider();
         slider.setOrientation(SwingConstants.VERTICAL);
 
         final int max = (int) (new DimVal(IceSize.SIDE_2_CENTER, dim.BaseDim)
@@ -109,12 +113,16 @@ public class DimValSliderPanel extends JPanel implements ChangeListener,
         slider.setPaintTrack(true);
         slider.addChangeListener(this);
 
-        this.add(text = new JTextField(), "South");
+        text = new JTextField();
         text.setHorizontalAlignment(SwingConstants.CENTER);
         text.setEditable(true);
         text.addActionListener(this);
         text.selectAll();
 
+        setLayout(new BorderLayout());
+        this.add(label, "North");
+        this.add(slider, "Center");
+        this.add(text, "South");
         this.setSize(50, 100);
         setValue(new DimVal(0, dim));
         setVisible(true);
@@ -159,5 +167,37 @@ public class DimValSliderPanel extends JPanel implements ChangeListener,
     public void stateChanged(final ChangeEvent arg0) {
         if (arg0.getSource() == slider)
             setValue(new DimVal((double) slider.getValue() / Granularity, dim));
+    }
+
+    public int getMajorTickSpacing() {
+        return slider.getMajorTickSpacing();
+    }
+
+    public int getMaximum() {
+        return slider.getMaximum();
+    }
+
+    public int getMinimum() {
+        return slider.getMinimum();
+    }
+
+    public int getMinorTickSpacing() {
+        return slider.getMinorTickSpacing();
+    }
+
+    public void setMajorTickSpacing(int arg0) {
+        slider.setMajorTickSpacing(arg0);
+    }
+
+    public void setMaximum(int arg0) {
+        slider.setMaximum(arg0);
+    }
+
+    public void setMinimum(int arg0) {
+        slider.setMinimum(arg0);
+    }
+
+    public void setMinorTickSpacing(int arg0) {
+        slider.setMinorTickSpacing(arg0);
     }
 }

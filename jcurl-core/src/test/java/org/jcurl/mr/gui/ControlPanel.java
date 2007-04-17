@@ -18,13 +18,24 @@
  */
 package org.jcurl.mr.gui;
 
-import java.awt.FlowLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 
 import org.jcurl.core.helpers.Dim;
 
+/**
+ * {@link JSlider} plus {@link JTextField} for Broom direction, Interval Time,
+ * Draw-To-Tee Time and -Curl.
+ * 
+ * @see DimValSliderPanel
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public class ControlPanel extends JTabbedPane {
 
     private static final long serialVersionUID = -7647827327554178710L;
@@ -38,21 +49,28 @@ public class ControlPanel extends JTabbedPane {
     public ControlPanel(final Model m) {
         setVisible(false);
         model = m == null ? new Model() : m;
-
+        DimValSliderPanel p = null;
         final JPanel p0 = new JPanel();
-        p0.setLayout(new FlowLayout());
-        p0.add(new DimValSliderPanel(model, "Broom", "broomX", Dim.FOOT));
-        p0
-                .add(new DimValSliderPanel(model, "Interval", "interval",
-                        Dim.SECOND));
+        p0.setLayout(new GridLayout(0, 2));
+        p0.add(p = new DimValSliderPanel(model, "Broom", "broomX", Dim.FOOT));
+        p0.add(p = new DimValSliderPanel(model, "Interval", "interval",
+                Dim.SECOND));
+        p.setMinimum(1000);
+        p.setMaximum(4000);
         this.addTab("Rock", p0);
 
         final JPanel p1 = new JPanel();
-        p1.setLayout(new FlowLayout());
-        p1.add(new DimValSliderPanel(model, "Curl", "drawCurl", Dim.FOOT));
-        p1.add(new DimValSliderPanel(model, "Time", "drawTime", Dim.SECOND));
+        p1.setLayout(p0.getLayout());
+        p1.add(p = new DimValSliderPanel(model, "Curl", "drawCurl", Dim.FOOT));
+        p1
+                .add(p = new DimValSliderPanel(model, "Time", "drawTime",
+                        Dim.SECOND));
+        p.setMinimum(15000);
+        p.setMaximum(30000);
         this.addTab("Ice", p1);
 
+        setSize(180, 250);
+        setMinimumSize(new Dimension(180, 250));
         setVisible(true);
     }
 }

@@ -31,12 +31,22 @@ import org.jcurl.core.model.CollissionSimple;
 import org.jcurl.core.model.CurlerNoCurl;
 import org.jcurl.core.model.CurveManager;
 
+/**
+ * Higher level Data Model - more abstract than {@link ComputedTrajectorySet}.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 class Model extends MutableObject {
 
     public Model() {
         trajectory = new CurveManager();
         trajectory.setCollider(new CollissionSimple());
         trajectory.setCurler(new CurlerNoCurl(23, 0));
+        // setBroomX(new DimVal(0, Dim.METER));
+        // setInterval(new DimVal(2.5, Dim.SECOND));
+        // setDrawCurl(new DimVal(3, Dim.FOOT));
+        // setDrawTime(new DimVal(25, Dim.SECOND));
     }
 
     private static final Log log = JCLoggerFactory.getLogger(Model.class);

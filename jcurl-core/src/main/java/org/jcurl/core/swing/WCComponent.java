@@ -18,7 +18,9 @@
  */
 package org.jcurl.core.swing;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.RenderingHints.Key;
@@ -33,10 +35,14 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.logging.Log;
 import org.jcurl.core.base.Orientation;
 import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.log.JCLoggerFactory;
 
 public abstract class WCComponent extends Component implements WCLayer {
+
+    private static final Log log = JCLoggerFactory.getLogger(WCComponent.class);
 
     /**
      * @see Zoomer#SCALE
@@ -77,7 +83,7 @@ public abstract class WCComponent extends Component implements WCLayer {
         }
     }
 
-    public void exportPng(File dst) throws IOException {
+    public void exportPng(File dst, final String watermark) throws IOException {
         final BufferedImage img = new BufferedImage(getWidth(), getHeight(),
                 BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g2 = (Graphics2D) img.getGraphics();
@@ -103,7 +109,16 @@ public abstract class WCComponent extends Component implements WCLayer {
                     RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             g2.addRenderingHints(hints);
         }
+        final Font f0 = g2.getFont();
         paint(g2);
+        g2.setTransform(new AffineTransform());
+        if (watermark != null) {
+            if (log.isDebugEnabled())
+                log.debug(f0);
+            g2.setFont(f0);
+            g2.setColor(new Color(0, 0, 0, 128));
+            g2.drawString(watermark, 10, 20);
+        }
         g2.dispose();
         if (!dst.getName().endsWith(".png"))
             dst = new File(dst.getName() + ".png");
