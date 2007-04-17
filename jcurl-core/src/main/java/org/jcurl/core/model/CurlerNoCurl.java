@@ -105,25 +105,17 @@ public class CurlerNoCurl extends CurlerBase {
         return IceSize.BACK_2_HOG / intervalTime - beta * intervalTime;
     }
 
-    @Override
     public double getDrawToTeeCurl() {
         return 0;
     }
 
-    @Override
     public double getDrawToTeeTime() {
         return Math.sqrt(IceSize.FAR_HOG_2_TEE / beta);
     }
 
     void init(final double drawToTeeTime, final double drawToTeeCurl) {
-        if (drawToTeeCurl != 0)
-            throw new IllegalArgumentException("Curl must be zero!");
-        if (Double.isInfinite(drawToTeeTime) && drawToTeeTime > 0)
-            beta = 0;
-        else {
-            beta = IceSize.FAR_HOG_2_TEE / MathVec.sqr(drawToTeeTime);
-            drawToTeeV0 = 2 * IceSize.FAR_HOG_2_TEE / drawToTeeTime;
-        }
+        setDrawToTeeCurl(drawToTeeCurl);
+        setDrawToTeeTime(drawToTeeTime);
     }
 
     @Override
@@ -131,5 +123,21 @@ public class CurlerNoCurl extends CurlerBase {
         internalInit(ice);
         init(PropModelHelper.getDrawToTeeTime(params), PropModelHelper
                 .getDrawToTeeCurl(params));
+    }
+
+    public void setDrawToTeeCurl(final double drawToTeeCurl) {
+        if (drawToTeeCurl != 0)
+            throw new IllegalArgumentException("Curl must be zero!");
+        PropModelHelper.setDrawToTeeCurl(params, drawToTeeCurl);
+    }
+
+    public void setDrawToTeeTime(final double drawToTeeTime) {
+        if (Double.isInfinite(drawToTeeTime) && drawToTeeTime > 0)
+            beta = 0;
+        else {
+            beta = IceSize.FAR_HOG_2_TEE / MathVec.sqr(drawToTeeTime);
+            drawToTeeV0 = 2 * IceSize.FAR_HOG_2_TEE / drawToTeeTime;
+        }
+        PropModelHelper.setDrawToTeeTime(params, drawToTeeTime);
     }
 }

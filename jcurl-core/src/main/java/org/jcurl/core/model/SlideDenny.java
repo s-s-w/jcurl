@@ -23,10 +23,12 @@ import java.util.Map;
 import org.jcurl.core.base.CurlerBase;
 import org.jcurl.core.base.CurveRock;
 import org.jcurl.core.base.IceSize;
+import org.jcurl.core.base.PropModelHelper;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.helpers.NotImplementedYetException;
+import org.jcurl.core.helpers.Physics;
 import org.jcurl.math.CurveFkt;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.Polynome;
@@ -42,12 +44,12 @@ import org.jcurl.math.R1RNFunction;
  */
 public class SlideDenny extends CurlerBase {
 
-    private static final double _R = 6.5e-2;
+    private static final double _R = RockProps.DEFAULT.getRadius();
 
     private static final double eps = RockProps.DEFAULT.getInertia()
             / (RockProps.DEFAULT.getMass() * MathVec.sqr(_R));
 
-    private static final double g = 9.81;
+    private static final double g = Physics.g;
 
     private double _mu;
 
@@ -85,12 +87,10 @@ public class SlideDenny extends CurlerBase {
         return new CurveFkt(x);
     }
 
-    @Override
     public double getDrawToTeeCurl() {
         throw new NotImplementedYetException();
     }
 
-    @Override
     public double getDrawToTeeTime() {
         throw new NotImplementedYetException();
     }
@@ -135,5 +135,15 @@ public class SlideDenny extends CurlerBase {
         _mu = 2.0 * IceSize.FAR_HOG_2_TEE / (MathVec.sqr(draw_time) * g);
         draw_curl = X;
         b = -draw_curl * 12.0 * eps * _R / MathVec.sqr(IceSize.FAR_HOG_2_TEE);
+    }
+
+    public void setDrawToTeeCurl(final double drawToTeeCurl) {
+        PropModelHelper.setDrawToTeeCurl(params, drawToTeeCurl);
+        throw new NotImplementedYetException();
+    }
+
+    public void setDrawToTeeTime(final double drawToTeeTime) {
+        PropModelHelper.setDrawToTeeTime(params, drawToTeeTime);
+        throw new NotImplementedYetException();
     }
 }

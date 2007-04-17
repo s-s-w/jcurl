@@ -51,4 +51,8 @@ public interface Curler extends PropModel, Strategy, Factory {
 
     public void init(final Map<CharSequence, DimVal> ice);
 
+    public abstract void setDrawToTeeCurl(double drawToTeeCurl);
+
+    public abstract void setDrawToTeeTime(double drawToTeeTime);
+
 }

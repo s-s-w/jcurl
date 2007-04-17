@@ -33,10 +33,6 @@ public abstract class CurlerBase extends PropModelImpl implements Curler {
 
     public abstract double computeV0(final double intervalTime);
 
-    public abstract double getDrawToTeeCurl();
-
-    public abstract double getDrawToTeeTime();
-
     /**
      * Compute the RC-&gt;WC transformation for a rock immediately after it's
      * release (at the hog).
