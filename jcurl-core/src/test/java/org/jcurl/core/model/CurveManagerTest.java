@@ -25,36 +25,16 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.base.ComputedTrajectorySet;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.RockSetTest;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.TestShowBase;
-import org.jcurl.core.helpers.AnnoHelp;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.R1RNFunction;
+import org.jcurl.mr.gui.TacticsApplet;
 
 public class CurveManagerTest extends TestShowBase {
 
     private static final Log log = JCLoggerFactory
             .getLogger(CurveManagerTest.class);
-
-    public static ComputedTrajectorySet initHammy(ComputedTrajectorySet te) {
-        if (te == null)
-            te = new CurveManager();
-        te.setCollider(new CollissionSpin(0.5, 0.0));
-        te.setCollissionDetector(new NewtonCollissionDetector());
-        te.setCurler(new CurlerNoCurl(24, 0));
-        te.setInitialPos(PositionSet.allOut());
-        te.setInitialSpeed(new SpeedSet());
-        te.getAnnotations().put(AnnoHelp.HammerK, AnnoHelp.HammerVDark);
-        te.getAnnotations().put(AnnoHelp.DarkTeamK, "Scotland");
-        te.getAnnotations().put(AnnoHelp.LightTeamK, "Canada");
-        te.getAnnotations().put(AnnoHelp.GameK, "Semifinal");
-        te.getAnnotations().put(AnnoHelp.EventK, "World Curling Championships");
-        te.getAnnotations().put(AnnoHelp.DateK, "1992");
-        te.getAnnotations().put(AnnoHelp.LocationK, "Garmisch");
-        RockSetTest.initHammy(te.getInitialPos(), te.getInitialSpeed());
-        return te;
-    }
 
     public static ComputedTrajectorySet initOneHit(ComputedTrajectorySet te) {
         if (te == null)
@@ -122,7 +102,7 @@ public class CurveManagerTest extends TestShowBase {
     }
 
     public void testHammy() throws InterruptedException {
-        final ComputedTrajectorySet te = initHammy(new CurveManager());
+        final ComputedTrajectorySet te = TacticsApplet.initHammy(new CurveManager());
 
         // Raw throughput:
         final long t0 = System.currentTimeMillis();

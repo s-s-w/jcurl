@@ -33,9 +33,9 @@ import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerNoCurl;
 import org.jcurl.core.model.CurveManager;
-import org.jcurl.core.model.CurveManagerTest;
 import org.jcurl.core.model.FixpointZoomer;
 import org.jcurl.core.model.NewtonCollissionDetector;
+import org.jcurl.mr.gui.TacticsApplet;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -364,7 +364,7 @@ public class XStreamIOTest extends TestShowBase {
         final CurveManager te;
         {
             final JCurlIO xs = new XStreamIO();
-            final String x = xs.write(CurveManagerTest.initHammy(null));
+            final String x = xs.write(TacticsApplet.initHammy(null));
             // System.out.println(x);
             assertEquals(
                     "<CurveManager>\n"

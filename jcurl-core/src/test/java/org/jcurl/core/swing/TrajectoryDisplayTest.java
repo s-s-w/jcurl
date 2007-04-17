@@ -31,6 +31,7 @@ import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CurveManager;
 import org.jcurl.core.model.CurveManagerTest;
 import org.jcurl.core.model.FixpointZoomer;
+import org.jcurl.mr.gui.TacticsApplet;
 
 public class TrajectoryDisplayTest extends TestShowBase {
     private static final Log log = JCLoggerFactory
@@ -51,7 +52,7 @@ public class TrajectoryDisplayTest extends TestShowBase {
         final int dt = 5000;
         final Graphics g = new BufferedImage(1024 * 2, 768 * 2,
                 BufferedImage.TYPE_INT_ARGB).getGraphics();
-        final TrajectorySet p = CurveManagerTest.initHammy(null);
+        final TrajectorySet p = TacticsApplet.initHammy(null);
         final int frames = showTrajectoryDisplay(p, FixpointZoomer.HOG2HACK,
                 dt, new TimeRunnable() {
                     @Override
@@ -96,7 +97,7 @@ public class TrajectoryDisplayTest extends TestShowBase {
     }
 
     public void testHammy() throws InterruptedException {
-        final ComputedTrajectorySet te = CurveManagerTest
+        final ComputedTrajectorySet te = TacticsApplet
                 .initHammy(new CurveManager());
 
         // Raw throughput:
