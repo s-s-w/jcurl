@@ -38,11 +38,14 @@ import org.apache.commons.logging.LogFactory;
 import org.jcurl.core.base.ComputedTrajectorySet;
 import org.jcurl.core.base.Factory;
 import org.jcurl.core.base.IceSize;
+import org.jcurl.core.base.JCurlIO;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
+import org.jcurl.core.base.JCurlIO.Container;
 import org.jcurl.core.helpers.AnnoHelp;
 import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.io.XStreamIO;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerNoCurl;
 import org.jcurl.core.model.CurveManager;
@@ -103,8 +106,21 @@ public class TacticsApplet extends JApplet {
                 throw new IllegalArgumentException(
                         "Is not a file but a directory: " + f);
             try {
-                return f.toURL();
-            } catch (final MalformedURLException e) {
+                final URL u = f.toURL();
+                final JCurlIO io = new XStreamIO();
+                final Container co = io.read(u, null);
+                switch (co.getTrajectories().length) {
+                case 0:
+                    return u;
+                case 1:
+                    m.setTrajectory((ComputedTrajectorySet) co
+                            .getTrajectories()[0]);
+                    return u;
+                default:
+                    // TODO show a list? store them all?
+                    return u;
+                }
+            } catch (final IOException e) {
                 throw new RuntimeException("Unhandled", e);
             }
         }

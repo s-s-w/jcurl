@@ -18,10 +18,45 @@
  */
 package org.jcurl.core.base;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
+import java.net.URL;
+import java.util.Map;
+
 public interface JCurlIO {
 
-    public abstract TrajectorySet read(final String s);
+    public static interface Container {
 
-    public abstract String write(final TrajectorySet t);
+        public Map<String, Object> getAnnotations();
+
+        public TrajectorySet[] getTrajectories();
+
+    };
+
+    public Container read(InputStream src, Container dst);
+
+    public Container read(Reader src, Container dst);
+
+    public Container read(String s);
+
+    public Container read(URL src, Container dst) throws IOException;
+
+    public Container wrap(Map<String, Object> annotations,
+            TrajectorySet[] trajectories);
+
+    public Container wrap(Map<String, Object> annotations,
+            TrajectorySet trajectory);
+
+    public String write(Container src);
+
+    public void write(Container src, File dst) throws IOException;
+
+    public void write(Container src, OutputStream dst);
+
+    public void write(Container src, Writer dst);
 
 }

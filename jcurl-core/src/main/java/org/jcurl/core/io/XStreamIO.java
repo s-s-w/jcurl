@@ -18,8 +18,20 @@
  */
 package org.jcurl.core.io;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import org.jcurl.core.base.CurveStill;
 import org.jcurl.core.base.CurveTransformed;
@@ -48,7 +60,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 public class XStreamIO implements JCurlIO {
 
-    public static class DimValConverter implements Converter {
+    static class DimValConverter implements Converter {
 
         public boolean canConvert(final Class arg0) {
             return DimVal.class.isAssignableFrom(arg0);
@@ -69,7 +81,7 @@ public class XStreamIO implements JCurlIO {
         }
     }
 
-    public static class DoubleArrayConverter implements Converter {
+    static class DoubleArrayConverter implements Converter {
 
         public boolean canConvert(final Class arg0) {
             return double[].class.isAssignableFrom(arg0);
@@ -92,6 +104,28 @@ public class XStreamIO implements JCurlIO {
             for (int i = 0; i < d.length; i++)
                 d[i] = Double.parseDouble(p[i]);
             return d;
+        }
+    }
+
+    private static class Container2007 implements Container {
+        private final Map<String, Object> annotations = new HashMap<String, Object>();
+
+        private TrajectorySet[] trajectories;
+
+        private Container2007(final Map<String, Object> annotations,
+                final TrajectorySet[] trajectories) {
+            this.annotations.clear();
+            if (annotations != null)
+                this.annotations.putAll(annotations);
+            this.trajectories = trajectories;
+        }
+
+        public Map<String, Object> getAnnotations() {
+            return annotations;
+        }
+
+        public TrajectorySet[] getTrajectories() {
+            return trajectories;
         }
     }
 
@@ -134,8 +168,28 @@ public class XStreamIO implements JCurlIO {
         registerAliases(xs);
     }
 
-    public TrajectorySet read(final String s) {
-        return (TrajectorySet) xs.fromXML(s);
+    public Container read(final InputStream src, final Container dst) {
+        return (Container) xs.fromXML(src, dst);
+    }
+
+    public Container read(final Reader src, final Container dst) {
+        return (Container) xs.fromXML(src, dst);
+    };
+
+    public Container read(final String s) {
+        return (Container) xs.fromXML(s);
+    }
+
+    public Container read(final URL src, final Container dst)
+            throws IOException {
+        InputStream s = src.openStream();
+        try {
+            if (src.getFile().endsWith(".jcz"))
+                s = new GZIPInputStream(s);
+            return read(s, dst);
+        } finally {
+            s.close();
+        }
     }
 
     /**
@@ -146,6 +200,8 @@ public class XStreamIO implements JCurlIO {
         xs.alias("DimVal", DimVal.class);
         xs.alias("Rock", RockDouble.class);
         // 
+        xs.alias("org.jcurl.container.2007", Container2007.class);
+        // 
         xs.alias("StoredTrajectory", StoredTrajectorySet.class);
         xs.alias("CombinedCurve", CurveCombined.class);
         xs.alias("CurvePart", CurvePart.class);
@@ -154,7 +210,7 @@ public class XStreamIO implements JCurlIO {
         xs.alias("PointCurve", CurveStill.class);
         // 
         xs.alias("CurveManager", CurveManager.class);
-        xs.alias("CurveStoreImpl", CurveStoreImpl.class);
+        xs.alias("CurveStore", CurveStoreImpl.class);
         xs.alias("NewtonStopDetector", NewtonStopDetector.class);
         xs.alias("CollissionSpin", CollissionSpin.class);
         xs.alias("NewtonCollissionDetector", NewtonCollissionDetector.class);
@@ -169,7 +225,35 @@ public class XStreamIO implements JCurlIO {
         return xs;
     }
 
-    public String write(final TrajectorySet t) {
-        return xs.toXML(t);
+    public Container wrap(final Map<String, Object> annotations,
+            final TrajectorySet[] trajectories) {
+        return new Container2007(annotations, trajectories);
+    }
+
+    public Container wrap(Map<String, Object> annotations, final TrajectorySet t) {
+        return wrap(null, new TrajectorySet[] { t });
+    }
+
+    public String write(final Container src) {
+        return xs.toXML(src);
+    }
+
+    public void write(final Container src, final File dst) throws IOException {
+        OutputStream d = new FileOutputStream(dst);
+        try {
+            if (dst.getName().endsWith(".jcz"))
+                d = new GZIPOutputStream(d);
+            write(src, d);
+        } finally {
+            d.close();
+        }
+    }
+
+    public void write(final Container src, final OutputStream dst) {
+        xs.toXML(src, dst);
+    }
+
+    public void write(final Container src, final Writer dst) {
+        xs.toXML(src, dst);
     }
 }
