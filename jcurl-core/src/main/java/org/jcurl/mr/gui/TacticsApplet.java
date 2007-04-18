@@ -238,19 +238,21 @@ public class TacticsApplet extends JApplet {
         s.notifyChange();
     }
 
-    final TacticsController c;
+    private final TacticsController c;
 
-    final Model m = new Model();
+    private final Model m;
 
-    final DetailPanel p = new DetailPanel(m);
+    private final DetailPanel p;
 
     public TacticsApplet() {
+        m = new Model();
+        p = new DetailPanel(m);
         c = new TacticsController(this, p, m);
         getContentPane().add(p);
         final MenuFactory mf = new MenuFactory();
         setJMenuBar(mf.menu(c, this));
     }
-    
+
     @Override
     public void destroy() {
         super.destroy();
