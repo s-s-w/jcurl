@@ -1,0 +1,45 @@
+#!/usr/bin/dot -Tsvg -o TaticsApplet.svg
+/*
+    $Id: deployment.dot 12872 2006-10-31 16:59:40Z rohrmoser $
+
+        See http://www.graphviz.org/Documentation.php
+*/
+digraph G {
+        rankdir=LR;
+
+        edge [fontname="Helvetica",fontsize=10, fontcolor="black", labelfontname="Helvetica",labelfontsize=10, color="red"];
+        node [fontname="Helvetica",fontsize=10, fontcolor="black", shape=record, color="red", style=filled, fillcolor="#FFFFCC"];
+        compound=true;
+/* size="10,8"; node [color=lightblue2, style=filled, fontsize=7]; */
+
+subgraph cluster_org_jcurl_mr_gui { 
+        ControlPanel;
+        DetailPanel;
+        DimValSliderPanel;
+        Model;
+        TacticsApplet;
+        TacticsController;
+        label="org.jcurl.mr.gui"; 
+}
+
+TacticsApplet -> TacticsController;
+TacticsApplet -> DetailPanel;
+TacticsApplet -> Model;
+
+TacticsController -> Model;
+TacticsController -> DetailPanel;
+
+DetailPanel -> Model;
+DetailPanel -> PositionDisplay;
+DetailPanel -> ControlPanel;
+
+ControlPanel -> DimValSliderPanel;
+
+Model -> ComputedTrajectorySet;
+
+ComputedTrajectorySet -> PositionSet;
+
+PositionDisplay -> PositionSet;
+
+/* PositionSet -> PositionDisplay [style="dashed"]; */
+}

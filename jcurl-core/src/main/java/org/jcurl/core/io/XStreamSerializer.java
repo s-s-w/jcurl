@@ -35,7 +35,7 @@ import java.util.zip.GZIPOutputStream;
 
 import org.jcurl.core.base.CurveStill;
 import org.jcurl.core.base.CurveTransformed;
-import org.jcurl.core.base.JCurlIO;
+import org.jcurl.core.base.JCurlSerializer;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.StoredTrajectorySet;
@@ -58,7 +58,13 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
-public class XStreamIO implements JCurlIO {
+/**
+ * Uses the great {@link XStream} for serialization.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
+public class XStreamSerializer implements JCurlSerializer {
 
     static class DimValConverter implements Converter {
 
@@ -107,12 +113,12 @@ public class XStreamIO implements JCurlIO {
         }
     }
 
-    private static class Container2007 implements Container {
+    private static class Payload2007 implements Payload {
         private final Map<String, Object> annotations = new HashMap<String, Object>();
 
         private TrajectorySet[] trajectories;
 
-        private Container2007(final Map<String, Object> annotations,
+        private Payload2007(final Map<String, Object> annotations,
                 final TrajectorySet[] trajectories) {
             this.annotations.clear();
             if (annotations != null)
@@ -162,26 +168,25 @@ public class XStreamIO implements JCurlIO {
 
     private final XStream xs;
 
-    public XStreamIO() {
+    public XStreamSerializer() {
         xs = new XStream();
         registerConverter(xs);
         registerAliases(xs);
     }
 
-    public Container read(final InputStream src, final Container dst) {
-        return (Container) xs.fromXML(src, dst);
+    public Payload read(final InputStream src, final Payload dst) {
+        return (Payload) xs.fromXML(src, dst);
     }
 
-    public Container read(final Reader src, final Container dst) {
-        return (Container) xs.fromXML(src, dst);
+    public Payload read(final Reader src, final Payload dst) {
+        return (Payload) xs.fromXML(src, dst);
     };
 
-    public Container read(final String s) {
-        return (Container) xs.fromXML(s);
+    public Payload read(final String s) {
+        return (Payload) xs.fromXML(s);
     }
 
-    public Container read(final URL src, final Container dst)
-            throws IOException {
+    public Payload read(final URL src, final Payload dst) throws IOException {
         InputStream s = src.openStream();
         try {
             if (src.getFile().endsWith(".jcz"))
@@ -200,7 +205,7 @@ public class XStreamIO implements JCurlIO {
         xs.alias("DimVal", DimVal.class);
         xs.alias("Rock", RockDouble.class);
         // 
-        xs.alias("org.jcurl.container.2007", Container2007.class);
+        xs.alias("org.jcurl.container.2007", Payload2007.class);
         // 
         xs.alias("StoredTrajectory", StoredTrajectorySet.class);
         xs.alias("CombinedCurve", CurveCombined.class);
@@ -225,20 +230,20 @@ public class XStreamIO implements JCurlIO {
         return xs;
     }
 
-    public Container wrap(final Map<String, Object> annotations,
+    public Payload wrap(final Map<String, Object> annotations,
             final TrajectorySet[] trajectories) {
-        return new Container2007(annotations, trajectories);
+        return new Payload2007(annotations, trajectories);
     }
 
-    public Container wrap(Map<String, Object> annotations, final TrajectorySet t) {
+    public Payload wrap(Map<String, Object> annotations, final TrajectorySet t) {
         return wrap(null, new TrajectorySet[] { t });
     }
 
-    public String write(final Container src) {
+    public String write(final Payload src) {
         return xs.toXML(src);
     }
 
-    public void write(final Container src, final File dst) throws IOException {
+    public void write(final Payload src, final File dst) throws IOException {
         OutputStream d = new FileOutputStream(dst);
         try {
             if (dst.getName().endsWith(".jcz"))
@@ -249,11 +254,11 @@ public class XStreamIO implements JCurlIO {
         }
     }
 
-    public void write(final Container src, final OutputStream dst) {
+    public void write(final Payload src, final OutputStream dst) {
         xs.toXML(src, dst);
     }
 
-    public void write(final Container src, final Writer dst) {
+    public void write(final Payload src, final Writer dst) {
         xs.toXML(src, dst);
     }
 }

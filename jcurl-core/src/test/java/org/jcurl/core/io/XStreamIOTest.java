@@ -24,14 +24,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jcurl.core.base.IceSize;
-import org.jcurl.core.base.JCurlIO;
+import org.jcurl.core.base.JCurlSerializer;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.StoredTrajectorySet;
 import org.jcurl.core.base.TestShowBase;
 import org.jcurl.core.base.TrajectorySet;
-import org.jcurl.core.base.JCurlIO.Container;
+import org.jcurl.core.base.JCurlSerializer.Payload;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerNoCurl;
@@ -45,8 +45,8 @@ import com.thoughtworks.xstream.XStream;
 public class XStreamIOTest extends TestShowBase {
 
     public void testComputedTrajectorySet() throws IOException {
-        final XStreamIO xs = new XStreamIO();
-        final Container con = xs.wrap(null, TacticsApplet.initHammy(null));
+        final XStreamSerializer xs = new XStreamSerializer();
+        final Payload con = xs.wrap(null, TacticsApplet.initHammy(null));
         final String x = xs.write(con);
         assertEquals(
                 "<org.jcurl.container.2007>\n"
@@ -173,8 +173,8 @@ public class XStreamIOTest extends TestShowBase {
         te.setCurrentTime(20);
 
         final XStream xs = new XStream();
-        xs.registerConverter(new XStreamIO.DimValConverter());
-        xs.registerConverter(new XStreamIO.RockConverter());
+        xs.registerConverter(new XStreamSerializer.DimValConverter());
+        xs.registerConverter(new XStreamSerializer.RockConverter());
         xs.alias("dimval", DimVal.class);
         xs.alias("rock", RockDouble.class);
         final String x = xs.toXML(te.getCurveStore());
@@ -480,7 +480,7 @@ public class XStreamIOTest extends TestShowBase {
     public void testHammy() {
         final CurveManager te;
         {
-            final JCurlIO xs = new XStreamIO();
+            final JCurlSerializer xs = new XStreamSerializer();
             final String x = xs.write(xs.wrap(null, TacticsApplet
                     .initHammy(null)));
             // System.out.println(x);
@@ -633,8 +633,8 @@ public class XStreamIOTest extends TestShowBase {
                 -te.getCurler().computeV0(5), Math.PI / 2);
 
         final XStream xs = new XStream();
-        xs.registerConverter(new XStreamIO.DimValConverter());
-        xs.registerConverter(new XStreamIO.RockConverter());
+        xs.registerConverter(new XStreamSerializer.DimValConverter());
+        xs.registerConverter(new XStreamSerializer.RockConverter());
         xs.alias("dimval", DimVal.class);
         xs.alias("rock", RockDouble.class);
         final String x = xs.toXML(te);
@@ -736,8 +736,8 @@ public class XStreamIOTest extends TestShowBase {
                 -te.getCurler().computeV0(5), Math.PI / 2);
         te.setCurrentTime(20);
 
-        final JCurlIO xs = new XStreamIO();
-        final Container con = xs.wrap(null, new StoredTrajectorySet(te
+        final JCurlSerializer xs = new XStreamSerializer();
+        final Payload con = xs.wrap(null, new StoredTrajectorySet(te
                 .getCurveStore()));
         final String x = xs.write(con);
         // System.out.println(x);
@@ -1008,7 +1008,7 @@ public class XStreamIOTest extends TestShowBase {
         final TrajectorySet[] tmp = new TrajectorySet[160];
         for (int i = tmp.length - 1; i >= 0; i--)
             tmp[i] = con.getTrajectories()[0];
-        Container c2 = xs.wrap(null, tmp);
+        Payload c2 = xs.wrap(null, tmp);
         xs.write(c2, f2);
     }
 
@@ -1025,7 +1025,7 @@ public class XStreamIOTest extends TestShowBase {
         te.getInitialSpeed().getDark(0).setLocation(0,
                 -te.getCurler().computeV0(5), Math.PI / 2);
 
-        final JCurlIO xs = new XStreamIO();
+        final JCurlSerializer xs = new XStreamSerializer();
         final String x = xs.write(xs.wrap(null, te));
         // System.out.println(x);
         assertEquals(

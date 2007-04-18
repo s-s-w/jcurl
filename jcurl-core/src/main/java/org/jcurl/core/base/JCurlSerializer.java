@@ -27,9 +27,15 @@ import java.io.Writer;
 import java.net.URL;
 import java.util.Map;
 
-public interface JCurlIO {
+/**
+ * Read and write JCurl data.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
+public interface JCurlSerializer {
 
-    public static interface Container {
+    public static interface Payload {
 
         public Map<String, Object> getAnnotations();
 
@@ -37,26 +43,40 @@ public interface JCurlIO {
 
     };
 
-    public Container read(InputStream src, Container dst);
+    public Payload read(InputStream src, Payload dst);
 
-    public Container read(Reader src, Container dst);
+    public Payload read(Reader src, Payload dst);
 
-    public Container read(String s);
+    public Payload read(String s);
 
-    public Container read(URL src, Container dst) throws IOException;
+    public Payload read(URL src, Payload dst) throws IOException;
 
-    public Container wrap(Map<String, Object> annotations,
+    /**
+     * {@link Payload} factory.
+     * 
+     * @param annotations
+     * @param trajectories
+     * @return the payload
+     */
+    public Payload wrap(Map<String, Object> annotations,
             TrajectorySet[] trajectories);
 
-    public Container wrap(Map<String, Object> annotations,
+    /**
+     * {@link Payload} factory.
+     * 
+     * @param annotations
+     * @param trajectory
+     * @return the payload
+     */
+    public Payload wrap(Map<String, Object> annotations,
             TrajectorySet trajectory);
 
-    public String write(Container src);
+    public String write(Payload src);
 
-    public void write(Container src, File dst) throws IOException;
+    public void write(Payload src, File dst) throws IOException;
 
-    public void write(Container src, OutputStream dst);
+    public void write(Payload src, OutputStream dst);
 
-    public void write(Container src, Writer dst);
+    public void write(Payload src, Writer dst);
 
 }

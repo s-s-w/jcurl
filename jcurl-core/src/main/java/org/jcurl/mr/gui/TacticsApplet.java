@@ -20,11 +20,9 @@ package org.jcurl.mr.gui;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Enumeration;
 
 import javax.swing.AbstractAction;
 import javax.swing.JApplet;
@@ -38,14 +36,11 @@ import org.apache.commons.logging.LogFactory;
 import org.jcurl.core.base.ComputedTrajectorySet;
 import org.jcurl.core.base.Factory;
 import org.jcurl.core.base.IceSize;
-import org.jcurl.core.base.JCurlIO;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.base.JCurlIO.Container;
 import org.jcurl.core.helpers.AnnoHelp;
 import org.jcurl.core.helpers.Dim;
-import org.jcurl.core.io.XStreamIO;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerNoCurl;
 import org.jcurl.core.model.CurveManager;
@@ -55,143 +50,8 @@ import org.jcurl.core.swing.PngFileChooser;
 
 public class TacticsApplet extends JApplet {
 
-    static class Controller {
-        final Model m;
-
-        final DetailPanel p;
-
-        private Thread running = null;
-
-        private URL url;
-
-        public Controller(final Model m, final DetailPanel p) {
-            this.m = m;
-            this.p = p;
-        }
-
-        public URL exportPng(File f) {
-            log.info(f);
-            if (f.isDirectory())
-                throw new IllegalArgumentException(
-                        "Is not a file but a directory: " + f);
-            if (!f.getName().endsWith(".png"))
-                f = new File(f.getAbsoluteFile() + ".png");
-            try {
-                p.exportPng(f, "created by " + getClass().getName());
-                return f.toURL();
-            } catch (final MalformedURLException e) {
-                throw new RuntimeException("Unhandled", e);
-            } catch (IOException e) {
-                throw new RuntimeException("Unhandled", e);
-            }
-        }
-
-        public File getFile() {
-            if (url == null || !"file".equals(url.getProtocol()))
-                return null;
-            try {
-                return new File(url.toURI());
-            } catch (final URISyntaxException e) {
-                throw new RuntimeException("Unhandled", e);
-            }
-        }
-
-        public URL getUrl() {
-            return url;
-        }
-
-        public URL open(final File f) {
-            log.info(f);
-            if (f.isDirectory())
-                throw new IllegalArgumentException(
-                        "Is not a file but a directory: " + f);
-            try {
-                final URL u = f.toURL();
-                final JCurlIO io = new XStreamIO();
-                final Container co = io.read(u, null);
-                switch (co.getTrajectories().length) {
-                case 0:
-                    return u;
-                case 1:
-                    m.setTrajectory((ComputedTrajectorySet) co
-                            .getTrajectories()[0]);
-                    return u;
-                default:
-                    // TODO show a list? store them all?
-                    return u;
-                }
-            } catch (final IOException e) {
-                throw new RuntimeException("Unhandled", e);
-            }
-        }
-
-        public synchronized void pause() {
-            if (running != null) {
-                running.interrupt();
-                running = null;
-            } else {
-                play((long) (1e3 * m.getTrajectory().getCurrentTime()));
-            }
-        }
-
-        public synchronized void play(final long offMillis) {
-            log.debug("Play!!");
-            if (running != null)
-                running.interrupt();
-            running = new Thread() {
-                @Override
-                public void run() {
-                    log.debug("run");
-                    try {
-                        final long t0 = System.currentTimeMillis() - offMillis;
-                        for (;;) {
-                            final long dt = System.currentTimeMillis() - t0;
-                            setTime(dt);
-                            if (dt > 25000)
-                                return;
-                            sleep(20);
-                        }
-                    } catch (InterruptedException e) {
-                        log.debug("Interrupt");
-                        return;
-                    } finally {
-                        log.debug("stop");
-                        running = null;
-                    }
-                }
-            };
-            running.start();
-        }
-
-        public URL save(File f) {
-            log.info(f);
-            if (f.isDirectory())
-                throw new IllegalArgumentException(
-                        "Is not a file but a directory: " + f);
-            if (!(f.getName().endsWith(".jcx") || f.getName().endsWith(".jcz")))
-                f = new File(f.getAbsoluteFile() + ".jcz");
-            try {
-                return f.toURL();
-            } catch (final MalformedURLException e) {
-                throw new RuntimeException("Unhandled", e);
-            }
-        }
-
-        private void setTime(long millis) {
-            m.getTrajectory().setCurrentTime(1e-3 * millis);
-        }
-
-        public synchronized void stop() {
-            if (running != null) {
-                running.interrupt();
-                running = null;
-            }
-            setTime(0);
-        }
-    }
-
     static class MenuFactory implements Factory {
-        public JMenu file(final Controller c, final Component parent) {
+        public JMenu file(final TacticsController c, final Component parent) {
             final JMenu m = new JMenu("File");
             m.setMnemonic('F');
             JMenuItem i = null;
@@ -262,7 +122,7 @@ public class TacticsApplet extends JApplet {
             return m;
         }
 
-        public JMenu help(final Controller c, final Component parent) {
+        public JMenu help(final TacticsController c, final Component parent) {
             final JMenu m = new JMenu("Help");
             m.setMnemonic('H');
             JMenuItem i = null;
@@ -280,7 +140,7 @@ public class TacticsApplet extends JApplet {
             return m;
         }
 
-        public JMenuBar menu(final Controller c, final Component parent) {
+        public JMenuBar menu(final TacticsController c, final Component parent) {
             final JMenuBar b = new JMenuBar();
             b.add(file(c, parent));
             b.add(play(c, parent));
@@ -288,7 +148,7 @@ public class TacticsApplet extends JApplet {
             return b;
         }
 
-        public JMenu play(final Controller c, final Component parent) {
+        public JMenu play(final TacticsController c, final Component parent) {
             final JMenu m = new JMenu("Play");
             m.setMnemonic('P');
             JMenuItem i = null;
@@ -328,7 +188,7 @@ public class TacticsApplet extends JApplet {
         }
     }
 
-    private static final Log log = LogFactory.getLog(TacticsApplet.class);
+    static final Log log = LogFactory.getLog(TacticsApplet.class);
 
     private static final long serialVersionUID = -3501742002653592196L;
 
@@ -378,19 +238,19 @@ public class TacticsApplet extends JApplet {
         s.notifyChange();
     }
 
-    final Controller c;
+    final TacticsController c;
 
     final Model m = new Model();
 
     final DetailPanel p = new DetailPanel(m);
 
     public TacticsApplet() {
-        c = new Controller(m, p);
+        c = new TacticsController(this, p, m);
         getContentPane().add(p);
         final MenuFactory mf = new MenuFactory();
         setJMenuBar(mf.menu(c, this));
     }
-
+    
     @Override
     public void destroy() {
         super.destroy();
@@ -404,7 +264,17 @@ public class TacticsApplet extends JApplet {
     @Override
     public void start() {
         super.start();
-        TacticsApplet.initHammy(m.getTrajectory());
+        if (true)
+            TacticsApplet.initHammy(m.getTrajectory());
+        else
+            try {
+                final Enumeration<URL> en = this.getClass().getClassLoader()
+                        .getResources("hammy.jcz");
+                if (en.hasMoreElements())
+                    c.open(en.nextElement());
+            } catch (final IOException e) {
+                TacticsApplet.initHammy(m.getTrajectory());
+            }
     }
 
     @Override
