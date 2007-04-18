@@ -23,7 +23,7 @@ package org.jcurl.math;
  * <p>
  * Implementations will search for only one zero in the given interval.
  * 
- * @version $Id: R1R1Solver.java 370 2007-01-23 03:04:05Z mrohrmoser $
+ * @version $Id$
  */
 interface R1R1Solver {
 

@@ -25,7 +25,7 @@ package org.jcurl.math;
  * The function should be continuous but not necessarily smooth.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: NewtonSolver.java 369 2007-01-23 02:45:01Z mrohrmoser $
+ * @version $Id$
  */
 class NewtonSolver extends SolverImpl {
 

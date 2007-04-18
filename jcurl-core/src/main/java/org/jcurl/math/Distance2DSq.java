@@ -24,7 +24,7 @@ package org.jcurl.math;
  * Differentiable min. 1x.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: DistanceSq.java 370 2007-01-23 03:04:05Z mrohrmoser $
+ * @version $Id$
  */
 public class Distance2DSq extends R1R1Function {
 

@@ -28,7 +28,7 @@ import org.jcurl.math.R1RNFunctionImpl;
  * </p>
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: CurveRock.java 361 2006-08-28 20:21:07Z mrohrmoser $
+ * @version $Id$
  */
 public abstract class CurveRock extends R1RNFunctionImpl {
     protected CurveRock() {

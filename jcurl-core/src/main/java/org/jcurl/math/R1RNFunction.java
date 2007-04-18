@@ -22,7 +22,7 @@ package org.jcurl.math;
  * Interface for n-dimensional curves <code>f : R^1 -&gt; R^n</code>.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: R1RNFunctionImpl.java 513 2007-04-07 19:43:48Z mrohrmoser $
+ * @version $Id$
  */
 public interface R1RNFunction {
 

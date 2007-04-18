@@ -22,7 +22,7 @@ package org.jcurl.math;
  * Provide a default implementation for several functions useful to generic
  * solvers. *
  * 
- * @version $Id: SolverImpl.java 370 2007-01-23 03:04:05Z mrohrmoser $
+ * @version $Id$
  */
 abstract class SolverImpl implements R1R1Solver {
     /** Serializable version identifier */

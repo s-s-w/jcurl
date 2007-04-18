@@ -28,7 +28,7 @@ import java.util.Map.Entry;
  * restrictions and additions.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: CurveCombined.java 513 2007-04-07 19:43:48Z mrohrmoser $
+ * @version $Id$
  */
 class CurveCombined1 extends R1RNFunctionImpl implements
         Iterable<Entry<Double, R1RNFunction>>, Serializable {

@@ -20,7 +20,7 @@ package org.jcurl.math;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: ConvergenceException.java 367 2006-08-29 00:57:40Z mrohrmoser $
+ * @version $Id$
  */
 class ConvergenceException extends MathException {
 

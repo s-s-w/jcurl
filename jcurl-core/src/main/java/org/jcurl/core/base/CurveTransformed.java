@@ -28,7 +28,7 @@ import org.jcurl.math.R1RNFunction;
  * Decorator to apply an rc -&gt; wc {@link AffineTransform} and a time-shift.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: CurveTransformed.java 361 2006-08-28 20:21:07Z mrohrmoser $
+ * @version $Id$
  */
 public class CurveTransformed extends CurveRock {
 

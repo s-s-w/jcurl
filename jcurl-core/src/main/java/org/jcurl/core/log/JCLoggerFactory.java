@@ -25,7 +25,7 @@ import org.apache.commons.logging.LogFactory;
  * Factory to have all logging in hand.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: JCLoggerFactory.java 451 2007-03-02 01:12:34Z mrohrmoser $
+ * @version $Id$
  */
 public final class JCLoggerFactory {
     /**
