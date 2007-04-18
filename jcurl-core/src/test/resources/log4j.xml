@@ -39,6 +39,9 @@
 	<category name="org.jcurl.core.swing.WCComponent">
 		<level value="DEBUG"/>
 	</category>	
+	<category name="org.jcurl.core.io.XppMiniTest">
+		<level value="DEBUG"/>
+	</category>	
 	
 	<!-- ======================= -->
 	<!-- Setup the Root category -->
