@@ -125,7 +125,6 @@
 						<exclude>
 							org/jcurl/core/swing/BatikDemoTest.java
 						</exclude>
-						<exclude>**/*Test.java</exclude>
 					</excludes>
 				</configuration>
 			</plugin>

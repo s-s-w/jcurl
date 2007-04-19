@@ -41,8 +41,16 @@ import org.jcurl.core.model.NewtonCollissionDetector;
 import org.jcurl.mr.gui.TacticsApplet;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.converters.reflection.Sun14ReflectionProvider;
 
 public class XStreamIOTest extends TestShowBase {
+
+    public void testDefaultSettings() {
+        XStream xs = new XStream();
+        System.out.println(xs.getClassLoader());
+        assertEquals(Sun14ReflectionProvider.class, xs.getReflectionProvider()
+                .getClass());
+    }
 
     public void testComputedTrajectorySet() throws IOException {
         final XStreamSerializer xs = new XStreamSerializer();
