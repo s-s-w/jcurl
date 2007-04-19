@@ -22,16 +22,27 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import org.apache.commons.logging.Log;
 import org.jcurl.core.base.ComputedTrajectorySet;
 import org.jcurl.core.base.JCurlSerializer;
 import org.jcurl.core.base.JCurlSerializer.Payload;
 import org.jcurl.core.io.XStreamSerializer;
+import org.jcurl.core.log.JCLoggerFactory;
+import org.jcurl.core.swing.FileDialogService.Contents;
 
 public class TacticsController {
+    private static final String[] jcxExt = { "jcx", "jcz" };
+
+    private static final Log log = JCLoggerFactory
+            .getLogger(TacticsController.class);
+
+    private static final String[] pngExt = { "png" };
+
     final Model m;
 
     final DetailPanel p;
@@ -53,7 +64,7 @@ public class TacticsController {
     }
 
     public URL exportPng(File f) {
-        TacticsApplet.log.info(f);
+        log.info(f);
         if (f.isDirectory())
             throw new IllegalArgumentException(
                     "Is not a file but a directory: " + f);
@@ -73,6 +84,21 @@ public class TacticsController {
         }
     }
 
+    public void exportPng(final OutputStream f) {
+        log.info(f);
+        final Cursor c = parent.getCursor();
+        try {
+            parent.setCursor(wc);
+            p.exportPng(f, "created by " + parent.getClass().getName());
+        } catch (final MalformedURLException e) {
+            throw new RuntimeException("Unhandled", e);
+        } catch (final IOException e) {
+            throw new RuntimeException("Unhandled", e);
+        } finally {
+            parent.setCursor(c);
+        }
+    }
+
     public File getFile() {
         if (url == null || !"file".equals(url.getProtocol()))
             return null;
@@ -83,8 +109,36 @@ public class TacticsController {
         }
     }
 
+    public String[] getJcxExt() {
+        return jcxExt;
+    }
+
+    public String getPathHint() {
+        return url == null ? "" : url.getFile();
+    }
+
+    public String[] getPngExt() {
+        return pngExt;
+    }
+
     public URL getUrl() {
         return url;
+    }
+
+    public URL open(final Contents co) {
+        log.info(co.getName());
+        final Cursor c = parent.getCursor();
+        try {
+            parent.setCursor(wc);
+            final JCurlSerializer io = new XStreamSerializer();
+            return url = open(null, io.read(co.getInputStream(), co.getName(),
+                    null));
+        } catch (final IOException e) {
+            log.error("Failed opening [" + co.getName() + "]", e);
+            return null;
+        } finally {
+            parent.setCursor(c);
+        }
     }
 
     public URL open(final File f) {
@@ -99,29 +153,28 @@ public class TacticsController {
     }
 
     public URL open(final URL url) throws IOException {
-        TacticsApplet.log.info(url);
+        log.info(url);
         final Cursor c = parent.getCursor();
         try {
             parent.setCursor(wc);
             final JCurlSerializer io = new XStreamSerializer();
-            final Payload co = io.read(url, null);
-            switch (co.getTrajectories().length) {
-            case 0:
-                return url;
-            case 1:
-                m
-                        .setTrajectory((ComputedTrajectorySet) co
-                                .getTrajectories()[0]);
-                return url;
-            default:
-                // TODO show a list? store them all?
-                m
-                        .setTrajectory((ComputedTrajectorySet) co
-                                .getTrajectories()[0]);
-                return url;
-            }
+            return open(url, io.read(url, null));
         } finally {
             parent.setCursor(c);
+        }
+    }
+
+    URL open(final URL url, final Payload co) {
+        switch (co.getTrajectories().length) {
+        case 0:
+            return url;
+        case 1:
+            m.setTrajectory((ComputedTrajectorySet) co.getTrajectories()[0]);
+            return url;
+        default:
+            // TODO show a list? Keep them all?
+            m.setTrajectory((ComputedTrajectorySet) co.getTrajectories()[0]);
+            return url;
         }
     }
 
@@ -134,13 +187,13 @@ public class TacticsController {
     }
 
     public synchronized void play(final long offMillis) {
-        TacticsApplet.log.debug("Play!!");
+        log.debug("Play!!");
         if (running != null)
             running.interrupt();
         running = new Thread() {
             @Override
             public void run() {
-                TacticsApplet.log.debug("run");
+                log.debug("run");
                 try {
                     final long t0 = System.currentTimeMillis() - offMillis;
                     for (;;) {
@@ -151,10 +204,10 @@ public class TacticsController {
                         sleep(20);
                     }
                 } catch (final InterruptedException e) {
-                    TacticsApplet.log.debug("Interrupt");
+                    log.debug("Interrupt");
                     return;
                 } finally {
-                    TacticsApplet.log.debug("stop");
+                    log.debug("stop");
                     running = null;
                 }
             }
@@ -163,7 +216,7 @@ public class TacticsController {
     }
 
     public URL save(File f) {
-        TacticsApplet.log.info(f);
+        log.info(f);
         if (f.isDirectory())
             throw new IllegalArgumentException(
                     "Is not a file but a directory: " + f);

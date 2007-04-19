@@ -30,6 +30,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,6 +85,21 @@ public abstract class WCComponent extends Component implements WCLayer {
     }
 
     public void exportPng(File dst, final String watermark) throws IOException {
+        if (!dst.getName().endsWith(".png"))
+            dst = new File(dst.getName() + ".png");
+        ImageIO.write(renderPng(watermark), "png", dst);
+    }
+
+    public void exportPng(final OutputStream dst, final String watermark)
+            throws IOException {
+        ImageIO.write(renderPng(watermark), "png", dst);
+    }
+
+    public Zoomer getZoom() {
+        return zoom;
+    }
+
+    private BufferedImage renderPng(final String watermark) {
         final BufferedImage img = new BufferedImage(getWidth(), getHeight(),
                 BufferedImage.TYPE_INT_ARGB);
         final Graphics2D g2 = (Graphics2D) img.getGraphics();
@@ -120,13 +136,7 @@ public abstract class WCComponent extends Component implements WCLayer {
             g2.drawString(watermark, 10, 20);
         }
         g2.dispose();
-        if (!dst.getName().endsWith(".png"))
-            dst = new File(dst.getName() + ".png");
-        ImageIO.write(img, "png", dst);
-    }
-
-    public Zoomer getZoom() {
-        return zoom;
+        return img;
     }
 
     /**

@@ -45,6 +45,9 @@ public interface JCurlSerializer {
 
     public Payload read(InputStream src, Payload dst);
 
+    public Payload read(InputStream src, String name, Payload dst)
+            throws IOException;
+
     public Payload read(Reader src, Payload dst);
 
     public Payload read(String s);
@@ -55,21 +58,21 @@ public interface JCurlSerializer {
      * {@link Payload} factory.
      * 
      * @param annotations
-     * @param trajectories
-     * @return the payload
-     */
-    public Payload wrap(Map<String, Object> annotations,
-            TrajectorySet[] trajectories);
-
-    /**
-     * {@link Payload} factory.
-     * 
-     * @param annotations
      * @param trajectory
      * @return the payload
      */
     public Payload wrap(Map<String, Object> annotations,
             TrajectorySet trajectory);
+
+    /**
+     * {@link Payload} factory.
+     * 
+     * @param annotations
+     * @param trajectories
+     * @return the payload
+     */
+    public Payload wrap(Map<String, Object> annotations,
+            TrajectorySet[] trajectories);
 
     public String write(Payload src);
 

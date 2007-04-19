@@ -18,7 +18,6 @@
  */
 package org.jcurl.mr.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -53,7 +52,7 @@ public class ControlPanel extends JTabbedPane {
         DimValSliderPanel p = null;
         final JPanel p0 = new JPanel();
         // FIXME leads to Rock-Numbering Shift!!!
-        p0.setLayout(new GridLayout(0, 2));        
+        p0.setLayout(new GridLayout(0, 2));
         p0.add(p = new DimValSliderPanel(model, "Broom", "broomX", Dim.FOOT));
         p0.add(p = new DimValSliderPanel(model, "Interval", "interval",
                 Dim.SECOND));

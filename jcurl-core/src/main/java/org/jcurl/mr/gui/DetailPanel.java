@@ -21,6 +21,7 @@ package org.jcurl.mr.gui;
 import java.awt.BorderLayout;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.swing.Box;
 import javax.swing.JPanel;
@@ -52,11 +53,11 @@ public class DetailPanel extends JPanel implements ChangeListener {
 
     final int Granularity = 1000;
 
+    final PositionDisplay ice = new PositionDisplay();
+
     private final Model model;
 
     final JSlider time = new JSlider();
-
-    final PositionDisplay ice = new PositionDisplay();
 
     public DetailPanel() {
         this(null);
@@ -80,11 +81,11 @@ public class DetailPanel extends JPanel implements ChangeListener {
         final SumDisplayBase shot = new SumShotDisplay(ice.getPos());
 
         setLayout(new BorderLayout());
-        JPanel b0 = new JPanel(new BorderLayout());
+        final JPanel b0 = new JPanel(new BorderLayout());
         b0.add(wait, BorderLayout.WEST);
         b0.add(ice, BorderLayout.CENTER);
         b0.add(shot, BorderLayout.EAST);
-        Box b = Box.createVerticalBox();
+        final Box b = Box.createVerticalBox();
         b.add(time);
         b.add(b0);
         add(b, BorderLayout.CENTER);
@@ -98,6 +99,16 @@ public class DetailPanel extends JPanel implements ChangeListener {
         setVisible(true);
     }
 
+    public void exportPng(final File dst, final String watermark)
+            throws IOException {
+        ice.exportPng(dst, watermark);
+    }
+
+    public void exportPng(final OutputStream dst, final String watermark)
+            throws IOException {
+        ice.exportPng(dst, watermark);
+    }
+
     public void stateChanged(final ChangeEvent arg0) {
         if (arg0.getSource() == time) {
             model.getTrajectory().setCurrentTime(
@@ -106,9 +117,5 @@ public class DetailPanel extends JPanel implements ChangeListener {
             return;
         }
         log.debug(arg0.getSource());
-    }
-
-    public void exportPng(File dst, String watermark) throws IOException {
-        ice.exportPng(dst, watermark);
     }
 }

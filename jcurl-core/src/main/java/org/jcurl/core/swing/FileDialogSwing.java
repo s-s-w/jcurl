@@ -20,11 +20,7 @@ package org.jcurl.core.swing;
 
 import java.awt.Component;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
@@ -32,6 +28,7 @@ import javax.swing.filechooser.FileFilter;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.swing.FileDialogService.Contents;
+import org.jcurl.core.swing.FileDialogService.ContentsFile;
 import org.jcurl.core.swing.FileDialogService.OpenService;
 import org.jcurl.core.swing.FileDialogService.SaveService;
 
@@ -43,45 +40,6 @@ import org.jcurl.core.swing.FileDialogService.SaveService;
  * @version $Id$
  */
 class FileDialogSwing implements OpenService, SaveService {
-
-    private static class ContentsSwing implements Contents {
-
-        private final File file;
-
-        ContentsSwing(final File file) {
-            this.file = file;
-        }
-
-        public boolean canRead() {
-            return file.canRead();
-        }
-
-        public boolean canWrite() {
-            return file.canWrite();
-        }
-
-        public InputStream getInputStream() {
-            try {
-                return new FileInputStream(file);
-            } catch (final FileNotFoundException e) {
-                return null;
-            }
-        }
-
-        public String getName() {
-            return file.getName();
-        }
-
-        public OutputStream getOutputStream(final boolean overwrite) {
-            try {
-                return new FileOutputStream(file);
-            } catch (final FileNotFoundException e) {
-                return null;
-            }
-        }
-
-    }
-
     private static final Log log = JCLoggerFactory
             .getLogger(FileDialogSwing.class);
 
@@ -122,7 +80,7 @@ class FileDialogSwing implements OpenService, SaveService {
         final int ret = fc.showOpenDialog(parent);
         switch (ret) {
         case 0:
-            return new ContentsSwing(fc.getSelectedFile());
+            return new ContentsFile(fc.getSelectedFile());
         case 1:
             return null;
         default:
@@ -138,7 +96,7 @@ class FileDialogSwing implements OpenService, SaveService {
         final int ret = fc.showSaveDialog(parent);
         switch (ret) {
         case 0:
-            return new ContentsSwing(fc.getSelectedFile());
+            return new ContentsFile(fc.getSelectedFile());
         case 1:
             return null;
         default:
@@ -154,7 +112,7 @@ class FileDialogSwing implements OpenService, SaveService {
         final int ret = fc.showSaveDialog(parent);
         switch (ret) {
         case 0:
-            return new ContentsSwing(fc.getSelectedFile());
+            return new ContentsFile(fc.getSelectedFile());
         case 1:
             return null;
         default:

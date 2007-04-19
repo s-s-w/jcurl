@@ -264,7 +264,7 @@ public class CurveManager extends MutableObject implements
         m.setInitialPos(getInitialPos());
         m.setInitialSpeed(getInitialSpeed());
         m.setCurler(getCurler());
-        m.annotations.putAll(this.annotations);
+        m.annotations.putAll(annotations);
         // m.setCurrentTime(this.getCurrentTime());
         return m;
     }

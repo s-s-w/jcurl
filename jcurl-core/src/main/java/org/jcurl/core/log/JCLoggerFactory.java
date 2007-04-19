@@ -20,14 +20,31 @@ package org.jcurl.core.log;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.impl.Jdk14Logger;
+import org.apache.commons.logging.impl.SimpleLog;
 
 /**
  * Factory to have all logging in hand.
+ * <p>
+ * Does some tricks to be useable in unsigned Webstart Applications.
+ * </p>
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public final class JCLoggerFactory {
+
+    private static final boolean fallback;
+    static {
+        boolean t = false;
+        try {
+            final Log l = LogFactory.getLog(JCLoggerFactory.class);
+        } catch (final ExceptionInInitializerError e) {
+            t = true;
+        }
+        fallback = t;
+    }
+
     /**
      * Delegate to {@link LogFactory#getLog(Class)}.
      * 
@@ -35,7 +52,16 @@ public final class JCLoggerFactory {
      * @return the logger.
      */
     public static Log getLogger(final Class clz) {
-        return LogFactory.getLog(clz);
+        if (!fallback)
+            return LogFactory.getLog(clz);
+        if (false) {
+            final Jdk14Logger l = new Jdk14Logger(clz.getName());
+            return l;
+        } else {
+            final SimpleLog l = new SimpleLog(clz.getName());
+            l.setLevel(SimpleLog.LOG_LEVEL_ALL);
+            return l;
+        }
     }
 
     private JCLoggerFactory() {

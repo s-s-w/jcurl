@@ -37,17 +37,7 @@ import org.jcurl.core.model.CurveManager;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-class Model extends MutableObject {
-
-    public Model() {
-        trajectory = new CurveManager();
-        trajectory.setCollider(new CollissionSimple());
-        trajectory.setCurler(new CurlerNoCurl(23, 0));
-        // setBroomX(new DimVal(0, Dim.METER));
-        // setInterval(new DimVal(2.5, Dim.SECOND));
-        // setDrawCurl(new DimVal(3, Dim.FOOT));
-        // setDrawTime(new DimVal(25, Dim.SECOND));
-    }
+public class Model extends MutableObject {
 
     private static final Log log = JCLoggerFactory.getLogger(Model.class);
 
@@ -60,6 +50,16 @@ class Model extends MutableObject {
     private DimVal interval;
 
     private ComputedTrajectorySet trajectory;
+
+    public Model() {
+        trajectory = new CurveManager();
+        trajectory.setCollider(new CollissionSimple());
+        trajectory.setCurler(new CurlerNoCurl(23, 0));
+        // setBroomX(new DimVal(0, Dim.METER));
+        // setInterval(new DimVal(2.5, Dim.SECOND));
+        // setDrawCurl(new DimVal(3, Dim.FOOT));
+        // setDrawTime(new DimVal(25, Dim.SECOND));
+    }
 
     @Override
     public boolean equals(final Object obj) {

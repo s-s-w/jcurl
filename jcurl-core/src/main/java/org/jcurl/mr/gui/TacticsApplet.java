@@ -20,6 +20,8 @@ package org.jcurl.mr.gui;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
@@ -32,7 +34,6 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jcurl.core.base.ComputedTrajectorySet;
 import org.jcurl.core.base.Factory;
 import org.jcurl.core.base.IceSize;
@@ -41,6 +42,7 @@ import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.AnnoHelp;
 import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerNoCurl;
 import org.jcurl.core.model.CurveManager;
@@ -63,11 +65,20 @@ public class TacticsApplet extends JApplet {
 
                 public void actionPerformed(final ActionEvent arg0) {
                     if (true) {
-                        final String[] ext = { ".jcx", ".jcz" };
                         final FileDialogService fs = new FileDialogService();
-                        final Contents cs = fs.openFileDialog("", ext, parent);
-                        if (cs != null)
+                        final Contents cs = fs.openFileDialog(c.getPathHint(),
+                                c.getJcxExt(), parent);
+                        if (cs != null) {
+                            if (log.isDebugEnabled()) {
+                                log.debug(cs.getInputStream());
+                                log.debug(cs.getName());
+                                log.debug(cs.getOutputStream(false));
+                                log.debug(cs.canRead());
+                                log.debug(cs.canWrite());
+                            }
                             log.info("TODO");// TODO
+                            c.open(cs);
+                        }
                     } else {
                         final JcxFileChooser fc = new JcxFileChooser(c
                                 .getFile());
@@ -113,16 +124,42 @@ public class TacticsApplet extends JApplet {
                 private static final long serialVersionUID = -645032579622467308L;
 
                 public void actionPerformed(final ActionEvent arg0) {
-                    final PngFileChooser fc = new PngFileChooser(c.getFile());
-                    final int ret = fc.showSaveDialog(parent);
-                    switch (ret) {
-                    case 0:
-                        log.debug(c.exportPng(fc.getSelectedFile()));
-                        break;
-                    case 1:
-                        break;
-                    default:
-                        log.warn("Ignored Dialog Result " + ret);
+                    if (true) {
+                        final byte[] b;
+                        try {
+                            final ByteArrayOutputStream bout = new ByteArrayOutputStream();
+                            c.exportPng(bout);
+                            bout.close();
+                            b = bout.toByteArray();
+                        } catch (final IOException e) {
+                            throw new RuntimeException("Unhandled", e);
+                        }
+                        final FileDialogService fs = new FileDialogService();
+                        final Contents cs = fs.saveFileDialog(c.getPathHint(),
+                                c.getPngExt(), new ByteArrayInputStream(b),
+                                "jcurl.png", parent);
+                        log.debug(cs);
+                        if (cs != null)
+                            if (log.isDebugEnabled()) {
+                                log.debug(cs.getInputStream());
+                                log.debug(cs.getName());
+                                log.debug(cs.getOutputStream(false));
+                                log.debug(cs.canRead());
+                                log.debug(cs.canWrite());
+                            }
+                    } else {
+                        final PngFileChooser fc = new PngFileChooser(c
+                                .getFile());
+                        final int ret = fc.showSaveDialog(parent);
+                        switch (ret) {
+                        case 0:
+                            log.debug(c.exportPng(fc.getSelectedFile()));
+                            break;
+                        case 1:
+                            break;
+                        default:
+                            log.warn("Ignored Dialog Result " + ret);
+                        }
                     }
                 }
             });
@@ -199,7 +236,8 @@ public class TacticsApplet extends JApplet {
         }
     }
 
-    static final Log log = LogFactory.getLog(TacticsApplet.class);
+    private static final Log log = JCLoggerFactory
+            .getLogger(TacticsApplet.class);
 
     private static final long serialVersionUID = -3501742002653592196L;
 

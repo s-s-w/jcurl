@@ -174,24 +174,33 @@ public class XStreamSerializer implements JCurlSerializer {
         registerAliases(xs);
     }
 
+    boolean isZipped(final String name) {
+        return name != null && name.endsWith(".jcz");
+    }
+
     public Payload read(final InputStream src, final Payload dst) {
         return (Payload) xs.fromXML(src, dst);
     }
 
+    public Payload read(InputStream src, final String name, final Payload dst)
+            throws IOException {
+        if (isZipped(name))
+            src = new GZIPInputStream(src);
+        return read(src, dst);
+    };
+
     public Payload read(final Reader src, final Payload dst) {
         return (Payload) xs.fromXML(src, dst);
-    };
+    }
 
     public Payload read(final String s) {
         return (Payload) xs.fromXML(s);
     }
 
     public Payload read(final URL src, final Payload dst) throws IOException {
-        InputStream s = src.openStream();
+        final InputStream s = src.openStream();
         try {
-            if (src.getFile().endsWith(".jcz"))
-                s = new GZIPInputStream(s);
-            return read(s, dst);
+            return read(s, src.getFile(), dst);
         } finally {
             s.close();
         }
@@ -231,12 +240,13 @@ public class XStreamSerializer implements JCurlSerializer {
     }
 
     public Payload wrap(final Map<String, Object> annotations,
-            final TrajectorySet[] trajectories) {
-        return new Payload2007(annotations, trajectories);
+            final TrajectorySet t) {
+        return wrap(null, new TrajectorySet[] { t });
     }
 
-    public Payload wrap(Map<String, Object> annotations, final TrajectorySet t) {
-        return wrap(null, new TrajectorySet[] { t });
+    public Payload wrap(final Map<String, Object> annotations,
+            final TrajectorySet[] trajectories) {
+        return new Payload2007(annotations, trajectories);
     }
 
     public String write(final Payload src) {
@@ -246,7 +256,7 @@ public class XStreamSerializer implements JCurlSerializer {
     public void write(final Payload src, final File dst) throws IOException {
         OutputStream d = new FileOutputStream(dst);
         try {
-            if (dst.getName().endsWith(".jcz"))
+            if (isZipped(dst.getName()))
                 d = new GZIPOutputStream(d);
             write(src, d);
         } finally {

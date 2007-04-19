@@ -20,8 +20,9 @@ package org.jcurl.core.swing;
 
 import java.awt.Component;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
@@ -32,81 +33,65 @@ import org.jcurl.core.swing.FileDialogService.SaveService;
 /**
  * Fully reflection based implementation to avoid dependency.
  * 
+ * https://java.sun.com/products/javawebstart/1.0.1/javadoc/javax/jnlp/FileOpenService.html
+ * https://java.sun.com/products/javawebstart/1.0.1/javadoc/javax/jnlp/FileSaveService.html
+ * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 class FileDialogWebstart implements OpenService, SaveService {
 
-    static class ContentsWS implements Contents {
-        final Object[] empty = {};
-
-        private String name;
-
-        final Class[] nop = {};
-
-        private final Object o;
-
-        private boolean read;
-
-        private boolean write;
-
-        ContentsWS(final Object o) {
-            this.o = o;
-            try {
-                read = ((Boolean) o.getClass().getMethod("canRead", nop)
-                        .invoke(o, empty)).booleanValue();
-                write = ((Boolean) o.getClass().getMethod("canWrite", nop)
-                        .invoke(o, empty)).booleanValue();
-                name = (String) o.getClass().getMethod("getName", nop).invoke(
-                        o, empty);
-            } catch (final Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        public boolean canRead() {
-            return read;
-        }
-
-        public boolean canWrite() {
-            return write;
-        }
-
-        public InputStream getInputStream() {
-            try {
-                return (InputStream) o.getClass().getMethod("getInputStream",
-                        nop).invoke(o, empty);
-            } catch (final Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public OutputStream getOutputStream(final boolean b) {
-            try {
-                return (OutputStream) o.getClass().getMethod("getOutputStream",
-                        new Class[] { Boolean.class }).invoke(o,
-                        new Object[] { b });
-            } catch (final Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
     private static final Log log = JCLoggerFactory
             .getLogger(FileDialogWebstart.class);
 
-    private static Contents wrap(final Object o) {
-        if (o == null)
+    /**
+     * Dynamic Interface Wrapper (or dynamic Delegate) using
+     * {@link Proxy#newProxyInstance(ClassLoader, Class[], InvocationHandler)}
+     * mapping only identical methods.
+     * <p>
+     * The two interfaces must have identical methods!
+     * </p>
+     * 
+     * @param src
+     *            the source instance (the one to wrap)
+     * @param dstT
+     *            destination interface type
+     * @return target interface instance.
+     */
+    static Object wrap(final Object src, final Class dstT) {
+        if (log.isDebugEnabled())
+            log.debug("wrap(" + src + ", " + dstT + ")");
+        if (src == null)
             return null;
-        log.info(o);
-        return new ContentsWS(o);
+        return Proxy.newProxyInstance(
+                FileDialogWebstart.class.getClassLoader(),
+                new Class[] { dstT }, new InvocationHandler() {
+                    public Object invoke(final Object proxy,
+                            final Method method, final Object[] args)
+                            throws Throwable {
+                        final Class srcT = src.getClass();
+                        // Wrap ALL Methods (also getClass, equals, toString,
+                        // ...)
+                        final Method dstM = srcT.getMethod(method.getName(),
+                                method.getParameterTypes());
+                        if (log.isDebugEnabled()) {
+                            log.debug("proxy: " + proxy.getClass());
+                            log.debug("method: " + method);
+                            log.debug("args: " + args);
+                            log.debug("srcT: " + srcT);
+                            log.debug("dstM: " + dstM);
+                        }
+                        final Object ret = dstM.invoke(src, args);
+                        if (log.isDebugEnabled())
+                            log.debug("ret: " + ret);
+                        return ret;
+                    }
+                });
     }
 
     private final Object fos;
+
+    private final Object fss;
 
     private final Method open;
 
@@ -114,41 +99,74 @@ class FileDialogWebstart implements OpenService, SaveService {
 
     private final Method saveAs;
 
+    private final Class tco;
+
     FileDialogWebstart() {
         try {
+            tco = Class.forName("javax.jnlp.FileContents");
+            if (log.isDebugEnabled()) {
+                final Method[] ms = tco.getMethods();
+                for (int i = ms.length - 1; i >= 0; i--)
+                    log.debug(ms[i]);
+            }
+            // FileOpenService
             fos = Class.forName("javax.jnlp.ServiceManager").getMethod(
                     "lookup", new Class[] { String.class }).invoke(null,
                     new Object[] { "javax.jnlp.FileOpenService" });
             log.debug(fos);
+            if (log.isDebugEnabled()) {
+                final Method[] ms = fos.getClass().getMethods();
+                for (int i = ms.length - 1; i >= 0; i--)
+                    log.debug(ms[i]);
+            }
             open = fos.getClass().getMethod("openFileDialog",
                     new Class[] { String.class, String[].class });
             log.debug(open);
-            saveAs = null;
+            // FileSaveService
+            fss = Class.forName("javax.jnlp.ServiceManager").getMethod(
+                    "lookup", new Class[] { String.class }).invoke(null,
+                    new Object[] { "javax.jnlp.FileSaveService" });
+            log.debug(fss);
+            if (log.isDebugEnabled()) {
+                final Method[] ms = fss.getClass().getMethods();
+                for (int i = ms.length - 1; i >= 0; i--)
+                    log.debug(ms[i]);
+            }
+            saveAs = fss.getClass().getMethod("saveAsFileDialog",
+                    new Class[] { String.class, String[].class, tco });
             log.debug(saveAs);
-            save = fos.getClass().getMethod(
+            save = fss.getClass().getMethod(
                     "saveFileDialog",
                     new Class[] { String.class, String[].class,
                             InputStream.class, String.class });
-            log.debug(saveAs);
+            log.debug(save);
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     public Contents openFileDialog(final String pathHint,
-            final String[] extensions, Component parent) {
+            final String[] extensions, final Component parent) {
         try {
-            return wrap(open.invoke(fos, new Object[] { pathHint, extensions }));
+            if (log.isDebugEnabled())
+                log.debug("openFileDialog(" + pathHint + ", " + to(extensions)
+                        + ", " + parent + ")");
+            return (Contents) wrap(open.invoke(fos, new Object[] { pathHint,
+                    extensions }), Contents.class);
         } catch (final Exception e) {
             throw new RuntimeException("Unhandled", e);
         }
     }
 
     public Contents saveAsFileDialog(final String pathHint,
-            final String[] extensions, final Contents contents, Component parent) {
+            final String[] extensions, final Contents contents,
+            final Component parent) {
         try {
-            return wrap(saveAs.invoke(fos,
-                    new Object[] { pathHint, extensions, contents }));
+            if (log.isDebugEnabled())
+                log.debug(pathHint + ", " + to(extensions) + ", " + contents
+                        + ", " + parent);
+            return (Contents) wrap(saveAs.invoke(fss, new Object[] { pathHint,
+                    extensions, wrap(contents, tco) }), Contents.class);
         } catch (final Exception e) {
             throw new RuntimeException("Unhandled", e);
         }
@@ -156,12 +174,22 @@ class FileDialogWebstart implements OpenService, SaveService {
 
     public Contents saveFileDialog(final String pathHint,
             final String[] extensions, final InputStream stream,
-            final String name, Component parent) {
+            final String name, final Component parent) {
         try {
-            return wrap(save.invoke(fos, new Object[] { pathHint, extensions,
-                    stream, name }));
+            if (log.isDebugEnabled())
+                log.debug(pathHint + ", " + to(extensions) + ", " + stream
+                        + ", " + name + ", " + parent);
+            return (Contents) wrap(save.invoke(fss, new Object[] { pathHint,
+                    extensions, stream, name }), Contents.class);
         } catch (final Exception e) {
             throw new RuntimeException("Unhandled", e);
         }
+    }
+
+    private String to(final String[] a) {
+        final StringBuffer b = new StringBuffer();
+        for (final String element : a)
+            b.append(element).append(" ");
+        return b.toString().trim();
     }
 }

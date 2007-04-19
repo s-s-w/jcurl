@@ -185,19 +185,19 @@ public class DimValSliderPanel extends JPanel implements ChangeListener,
         return slider.getMinorTickSpacing();
     }
 
-    public void setMajorTickSpacing(int arg0) {
+    public void setMajorTickSpacing(final int arg0) {
         slider.setMajorTickSpacing(arg0);
     }
 
-    public void setMaximum(int arg0) {
+    public void setMaximum(final int arg0) {
         slider.setMaximum(arg0);
     }
 
-    public void setMinimum(int arg0) {
+    public void setMinimum(final int arg0) {
         slider.setMinimum(arg0);
     }
 
-    public void setMinorTickSpacing(int arg0) {
+    public void setMinorTickSpacing(final int arg0) {
         slider.setMinorTickSpacing(arg0);
     }
 }

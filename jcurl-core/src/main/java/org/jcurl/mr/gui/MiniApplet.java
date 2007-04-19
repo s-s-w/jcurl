@@ -20,7 +20,6 @@ package org.jcurl.mr.gui;
 
 import javax.swing.JApplet;
 
-import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.swing.PositionDisplay;
 
@@ -30,7 +29,7 @@ public class MiniApplet extends JApplet {
     public MiniApplet() {
         final PositionDisplay p = new PositionDisplay();
         getContentPane().add(p);
-        //p.setPos(PositionSet.allOut());
+        // p.setPos(PositionSet.allOut());
         TacticsApplet.initHammy(p.getPos(), new SpeedSet());
     }
 
