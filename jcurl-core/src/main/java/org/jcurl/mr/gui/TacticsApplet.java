@@ -45,8 +45,10 @@ import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerNoCurl;
 import org.jcurl.core.model.CurveManager;
 import org.jcurl.core.model.NewtonCollissionDetector;
+import org.jcurl.core.swing.FileDialogService;
 import org.jcurl.core.swing.JcxFileChooser;
 import org.jcurl.core.swing.PngFileChooser;
+import org.jcurl.core.swing.FileDialogService.Contents;
 
 public class TacticsApplet extends JApplet {
 
@@ -60,16 +62,25 @@ public class TacticsApplet extends JApplet {
                 private static final long serialVersionUID = -645032579622467308L;
 
                 public void actionPerformed(final ActionEvent arg0) {
-                    final JcxFileChooser fc = new JcxFileChooser(c.getFile());
-                    final int ret = fc.showOpenDialog(parent);
-                    switch (ret) {
-                    case 0:
-                        log.debug(c.open(fc.getSelectedFile()));
-                        break;
-                    case 1:
-                        break;
-                    default:
-                        log.warn("Ignored Dialog Result " + ret);
+                    if (true) {
+                        final String[] ext = { ".jcx", ".jcz" };
+                        final FileDialogService fs = new FileDialogService();
+                        final Contents cs = fs.openFileDialog("", ext, parent);
+                        if (cs != null)
+                            log.info("TODO");// TODO
+                    } else {
+                        final JcxFileChooser fc = new JcxFileChooser(c
+                                .getFile());
+                        final int ret = fc.showOpenDialog(parent);
+                        switch (ret) {
+                        case 0:
+                            log.debug(c.open(fc.getSelectedFile()));
+                            break;
+                        case 1:
+                            break;
+                        default:
+                            log.warn("Ignored Dialog Result " + ret);
+                        }
                     }
                 }
             });
