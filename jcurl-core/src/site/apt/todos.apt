@@ -3,24 +3,28 @@
 
 In Progress
 
-	* Fix CurveShapeTest, Check CurveTransformed
-
 	* Denny curl model
+	
+	* Proper viewing UI
+
+	* Sophisticated editing UI
+
+Next
+
+	* Check post-collission rotation (CollissionSpin)
+
+	* Make PositionDisplay fast
 
 	* Design rework
 
 	* Package structure rework
 
-Next
-
-	* Sophisticated editing UI
-	
-	* Proper viewing UI
-
-	* Make PositionDisplay fast
+	* Make curve computing + collission detection faster (CurveManager, CurveStore, CollissionStore)
 
 Postponed
 	
+	* Quadratic or cubic Shape curve approximations, fix CurveShapeTest
+
 	* Meta data (event, game, players, etc.)
 
 	* Realistic collission model including loss of energy
@@ -53,5 +57,4 @@ Finished
 
 	* animation of rock movement
 
-	* very simple physical model (ice without curl, fully 
-          elastic hits neglecting rock rotation)
+	* very simple physical model (ice without curl, fully elastic hits neglecting rock rotation)
