@@ -309,7 +309,7 @@ public class TacticsApp extends JFrame {
             final File dst = fc.getSelectedFile();
             try {
                 this.setCursor(Cwait);
-                master.exportPng(dst);
+                master.exportPng(dst, null);
             } finally {
                 this.setCursor(Cdefault);
             }
