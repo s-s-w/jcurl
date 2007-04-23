@@ -71,14 +71,14 @@ public class CurveTransformed extends CurveRock {
      * Delegate to
      * {@link #createRc2Wc(AffineTransform, double, double, double, double)}
      * 
-     * @param ret
-     *            <code>null</code> creates a new one.
      * @param p0_wc
      * @param v0_wc
+     * @param ret
+     *            <code>null</code> creates a new one.
      * @return trafo rc -&gt; wc
      */
-    public static AffineTransform createRc2Wc(final AffineTransform ret,
-            final Point2D p0_wc, final Point2D v0_wc) {
+    public static AffineTransform createRc2Wc(final Point2D p0_wc,
+            final Point2D v0_wc, final AffineTransform ret) {
         return createRc2Wc(ret, p0_wc.getX(), p0_wc.getY(), v0_wc.getX(), v0_wc
                 .getY());
     }
@@ -106,7 +106,7 @@ public class CurveTransformed extends CurveRock {
      * 
      * @param base
      * @param trafo
-     *            See {@link #createRc2Wc(AffineTransform, Point2D, Point2D)}
+     *            See {@link #createRc2Wc(Point2D, Point2D, AffineTransform)}
      * @param t0
      */
     public CurveTransformed(final CurveRock base, final AffineTransform trafo,
@@ -115,7 +115,7 @@ public class CurveTransformed extends CurveRock {
     }
 
     /**
-     * See {@link #createRc2Wc(AffineTransform, Point2D, Point2D)} and
+     * See {@link #createRc2Wc(Point2D, Point2D, AffineTransform)} and
      * {@link #CurveTransformed(CurveRock, AffineTransform, double)}
      * 
      * @param c
@@ -123,9 +123,9 @@ public class CurveTransformed extends CurveRock {
      * @param v0_wc
      * @param t0
      */
-    public CurveTransformed(final CurveRock c, final Point2D x0_wc,
+    private CurveTransformed(final CurveRock c, final Point2D x0_wc,
             final Point2D v0_wc, final double t0) {
-        this(c, createRc2Wc(null, x0_wc, v0_wc), t0);
+        this(c, createRc2Wc(x0_wc, v0_wc, null), t0);
     }
 
     @Override

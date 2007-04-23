@@ -122,7 +122,7 @@ class FileDialogSwing implements OpenService, SaveService {
                 // TODO fo.write(arg0)
                 fo.close();
                 return c;
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 throw new RuntimeException("Unhandled", e);
             }
         case 1:

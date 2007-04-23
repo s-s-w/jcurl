@@ -30,22 +30,6 @@ public class PolynomeCurve extends R1RNFunctionImpl {
 
     private static final long serialVersionUID = 7503158531478359260L;
 
-    private final double[][] params;
-
-    public static double[] mult(final double[] p1, final double[] p2,
-            double[] ret) {
-        // initialise the return array:
-        if (ret == null || ret.length < p1.length + p2.length || p1 == ret
-                || p2 == ret)
-            ret = new double[p1.length + p2.length - 1];
-        for (int i = ret.length - 1; i >= 0; i--)
-            ret[i] = 0;
-        for (int j = p1.length - 1; j >= 0; j--)
-            for (int k = p2.length - 1; k >= 0; k--)
-                ret[j + k] += p1[j] * p2[k];
-        return ret;
-    }
-
     static double[] add(double[] p1, double[] p2, double[] ret) {
         // swap if dim(p1) < dim(p2):
         if (p1.length < p2.length) {
@@ -64,6 +48,20 @@ public class PolynomeCurve extends R1RNFunctionImpl {
             ret[i] = p1[i] + p2[i];
         for (int i = p1.length - 1; i >= p2.length; i--)
             ret[i] = p1[i];
+        return ret;
+    }
+
+    public static double[] mult(final double[] p1, final double[] p2,
+            double[] ret) {
+        // initialise the return array:
+        if (ret == null || ret.length < p1.length + p2.length || p1 == ret
+                || p2 == ret)
+            ret = new double[p1.length + p2.length - 1];
+        for (int i = ret.length - 1; i >= 0; i--)
+            ret[i] = 0;
+        for (int j = p1.length - 1; j >= 0; j--)
+            for (int k = p2.length - 1; k >= 0; k--)
+                ret[j + k] += p1[j] * p2[k];
         return ret;
     }
 
@@ -98,6 +96,8 @@ public class PolynomeCurve extends R1RNFunctionImpl {
 
         return new PolynomeCurve(ret);
     }
+
+    private final double[][] params;
 
     public PolynomeCurve(final double[][] params) {
         super(params.length);

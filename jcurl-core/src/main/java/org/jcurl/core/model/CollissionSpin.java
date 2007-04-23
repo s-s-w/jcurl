@@ -57,7 +57,7 @@ public class CollissionSpin extends ColliderBase {
     }
 
     @Override
-    public void computeRC(final Rock va, final Rock vb) {
+    public void computeCC(final Rock va, final Rock vb) {
         final double Veff = va.getX() + R * va.getA()
                 - (vb.getX() + R * vb.getA());
         double X = -Veff / (2 * (1 / m + R * R / J));

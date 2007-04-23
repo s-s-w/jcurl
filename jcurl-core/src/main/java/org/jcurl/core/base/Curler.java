@@ -30,7 +30,19 @@ import org.jcurl.core.helpers.DimVal;
  */
 public interface Curler extends PropModel, Strategy, Factory {
 
-    public abstract CurveRock computeRc(final Rock x0, final Rock v0,
+    /**
+     * Create rock-coordinate curves for running rocks.
+     * 
+     * @param a0
+     *            Initial angle (RC).
+     * @param v0
+     *            Initial Speed (RC or WC absolute)
+     * @param omega0
+     *            Initial angular Speed (either WC or RC)
+     * @param sweepFactor
+     * @return trajectory (RC)
+     */
+    public abstract CurveRock computeRc(double a0, double v0, double omega0,
             double sweepFactor);
 
     /**
@@ -43,7 +55,7 @@ public interface Curler extends PropModel, Strategy, Factory {
      * @param intervalTime
      * @return the hog speed.
      */
-    public abstract double computeV0(final double intervalTime);
+    public abstract double computeV0(double intervalTime);
 
     public abstract double getDrawToTeeCurl();
 

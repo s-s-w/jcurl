@@ -37,7 +37,7 @@ import org.jcurl.core.log.JCLoggerFactory;
  * href="http://java.sun.com/javase/6/docs/jre/api/javaws/jnlp/javax/jnlp/FileOpenService.html">FileOpenService</a>
  * and <a
  * href="http://java.sun.com/javase/6/docs/jre/api/javaws/jnlp/javax/jnlp/FileSaveService.html">FileSaveService</a>
- * under the hood if available. *
+ * under the hood if available.
  * <p>
  * Does some tricks to be useable in unsigned Webstart Applications.
  * </p>

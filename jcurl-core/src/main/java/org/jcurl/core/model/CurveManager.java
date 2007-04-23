@@ -41,6 +41,7 @@ import org.jcurl.core.base.StopDetector;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CollissionStore.Tupel;
+import org.jcurl.math.MathVec;
 import org.jcurl.math.R1RNFunctionImpl;
 
 /**
@@ -102,7 +103,6 @@ public class CurveManager extends MutableObject implements
      * @param t0
      *            starttime
      * @param sweepFactor
-     *            TODO
      * @return the new Curve in world coordinates.
      */
     R1RNFunctionImpl doComputeCurve(final int i, final double t0,
@@ -112,10 +112,14 @@ public class CurveManager extends MutableObject implements
         final R1RNFunctionImpl wc;
         if (v.distanceSq(0, 0) == 0)
             wc = CurveStill.newInstance(x);
-        else
-            wc = new CurveTransformed(curler.computeRc(x, v, sweepFactor),
-                    CurveTransformed.createRc2Wc(new AffineTransform(), x, v),
-                    t0);
+        else {
+            // Convert the initial angle from WC to RC.
+            // TUNE 2x sqrt, 2x atan2 to 1x each?
+            wc = new CurveTransformed(curler.computeRc(x.getA()
+                    + Math.atan2(v.getX(), v.getY()), MathVec.abs2D(v), v
+                    .getA(), sweepFactor), CurveTransformed.createRc2Wc(x, v,
+                    new AffineTransform()), t0);
+        }
         if (log.isDebugEnabled())
             log.debug(i + " " + wc);
         return wc;

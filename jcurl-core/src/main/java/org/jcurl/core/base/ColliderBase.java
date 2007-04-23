@@ -27,7 +27,7 @@ import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.MathVec;
 
 /**
- * Abstract base class for collission models computed in rock-coordinates.
+ * Abstract base class for collission models computed in collission-coordinates.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CollissionStrategy.java 378 2007-01-24 01:18:35Z mrohrmoser $
@@ -50,17 +50,17 @@ public abstract class ColliderBase extends PropModelImpl implements Collider {
     }
 
     /**
-     * Compute the trafo to the right handed coordinate-system with origin
-     * <code>orig</code> and positive y-axis pointing from <code>a</code> to
-     * <code>b</code>.
+     * Compute the inverse speed transformation to the right handed, moving
+     * coordinate-system with relative speed <code>v0</code> and positive
+     * y-axis pointing from <code>a</code> to <code>b</code>.
      * 
-     * @param orig
+     * @param v0
      * @param a
      * @param b
      * @param mat
      * @return the given matrix
      */
-    public static AffineTransform getInverseTrafo(final Point2D orig,
+    public static AffineTransform getInverseTrafo(final Point2D v0,
             final Point2D a, final Point2D b, final AffineTransform mat) {
         double dx = b.getX() - a.getX();
         double dy = b.getY() - a.getY();
@@ -68,7 +68,7 @@ public abstract class ColliderBase extends PropModelImpl implements Collider {
         dx /= d;
         dy /= d;
         mat.setTransform(dy, -dx, dx, dy, 0, 0);
-        mat.translate(-orig.getX(), -orig.getY());
+        mat.translate(-v0.getX(), -v0.getY());
         return mat;
     }
 
@@ -116,23 +116,31 @@ public abstract class ColliderBase extends PropModelImpl implements Collider {
     }
 
     /**
-     * Compute a collision in rock-coordinates.
+     * Compute a collision in collission-coordinates.
      * 
      * @param va
      *            speed of rock a
      * @param vb
      *            speed of rock b (zero before the hit)
      */
-    public abstract void computeRC(final Rock va, final Rock vb);
+    public abstract void computeCC(final Rock va, final Rock vb);
 
     /**
-     * Check distance, speed of approach, transform speeds to rock-coordinates,
-     * call {@link #computeRC(Rock, Rock)}and transform back to wc afterwards.
+     * Check distance, speed of approach, transform speeds to
+     * collission-coordinates, call {@link #computeCC(Rock, Rock)} and transform
+     * back to wc afterwards.
+     * <p>
+     * The angle (not the angular speed!) remains in WC and untouched!
+     * </p>
      * 
      * @param xa
+     *            position before the hit (WC)
      * @param xb
+     *            position before the hit (WC)
      * @param va
+     *            speed before the hit (CC)
      * @param vb
+     *            speed before the hit (usually zero)
      * @param mat
      *            may be null. If not avoids frequent instanciations
      * @return <code>true</code> hit, <code>false</code> no hit.
@@ -148,7 +156,7 @@ public abstract class ColliderBase extends PropModelImpl implements Collider {
                         + (xa.distance(xb) - (_Rad + _Rad)));
             return false;
         }
-        // change the coordinate system to rock-coordinates
+        // change the coordinate system to collission-coordinates
         final Rock _va = (Rock) va.clone();
         final Rock _vb = (Rock) vb.clone();
         getInverseTrafo(vb, xa, xb, mat);
@@ -165,15 +173,13 @@ public abstract class ColliderBase extends PropModelImpl implements Collider {
             log.debug("hit!");
 
         // physical model
-        computeRC(_va, _vb);
+        computeCC(_va, _vb);
 
         // re-transform
         mat.transform(_va, va);
         va.setA(_va.getA());
-        // FIXME apply angle delta from Collission coordinates to WC
         mat.transform(_vb, vb);
         vb.setA(_vb.getA());
-        // apply angle delta from Collission coordinates to WC
         return true;
     }
 }

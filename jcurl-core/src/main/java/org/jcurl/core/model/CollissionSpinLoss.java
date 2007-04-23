@@ -114,7 +114,7 @@ public class CollissionSpinLoss extends ColliderBase {
     }
 
     @Override
-    public void computeRC(final Rock va, final Rock vb) {
+    public void computeCC(final Rock va, final Rock vb) {
         // TODO Auto-generated method stub
 
     }

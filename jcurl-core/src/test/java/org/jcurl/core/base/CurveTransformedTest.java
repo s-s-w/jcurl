@@ -153,13 +153,13 @@ public class CurveTransformedTest extends TestShowBase {
      * with positive y axis along wc(2,4.2) into World Coordinates (wc). Uses a
      * Point rc(5,1.3) = wc(8,2.5).
      * 
-     * @see CurveTransformed#createRc2Wc(AffineTransform, Point2D, Point2D)
+     * @see CurveTransformed#createRc2Wc(Point2D, Point2D, AffineTransform)
      */
     public void testCreateRc2Wc() {
         final Point2D p0_wc = new Point2D.Double(3, 3.5);
         final Rock v0_wc = new RockDouble(2, 4.2, 0.3);
-        final AffineTransform at = CurveTransformed.createRc2Wc(null, p0_wc,
-                v0_wc);
+        final AffineTransform at = CurveTransformed.createRc2Wc(p0_wc, v0_wc,
+                null);
         assertEquals(AffineTransform.TYPE_GENERAL_ROTATION
                 + AffineTransform.TYPE_TRANSLATION, at.getType());
         assertEquals(1.0, at.getDeterminant());
@@ -287,8 +287,8 @@ public class CurveTransformedTest extends TestShowBase {
         m[++k] = new AffineTransform();
         c[k] = new CurveTransformed(CurveStill.newInstance(0.25, 2,
                 0.25 * Math.PI), m[k], 0);
-        m[++k] = CurveTransformed.createRc2Wc(null, new Point2D.Double(0.5, 2),
-                new Point2D.Double(-1, 1));
+        m[++k] = CurveTransformed.createRc2Wc(new Point2D.Double(0.5, 2), new Point2D.Double(-1, 1),
+                null);
         c[k] = new CurveTransformed(CurveStill.newInstance(0, 0, 0), m[k], 0);
 
         final double[] tmp = { 0, 0, 0 };
