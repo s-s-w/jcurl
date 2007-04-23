@@ -16,21 +16,24 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.swing;
+package org.jcurl.core.io;
 
 import java.awt.Component;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.helpers.NotImplementedYetException;
+import org.jcurl.core.io.FileDialogService.Contents;
+import org.jcurl.core.io.FileDialogService.ContentsFile;
+import org.jcurl.core.io.FileDialogService.OpenService;
+import org.jcurl.core.io.FileDialogService.SaveService;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.swing.FileDialogService.Contents;
-import org.jcurl.core.swing.FileDialogService.ContentsFile;
-import org.jcurl.core.swing.FileDialogService.OpenService;
-import org.jcurl.core.swing.FileDialogService.SaveService;
 
 /**
  * http://www.koders.com/java/fid88589626EC469B9526AB5888794D34914322B7A9.aspx
@@ -56,7 +59,7 @@ class FileDialogSwing implements OpenService, SaveService {
                 if (showDir && f.isDirectory())
                     return true;
                 for (final String element : extensions)
-                    if (f.getName().endsWith(element))
+                    if (f.getName().endsWith("." + element))
                         return true;
                 return false;
             }
@@ -65,7 +68,7 @@ class FileDialogSwing implements OpenService, SaveService {
             public String getDescription() {
                 final StringBuffer b = new StringBuffer();
                 for (final String element : extensions)
-                    b.append(element).append(", ");
+                    b.append("*.").append(element).append(", ");
                 if (b.length() > 0)
                     b.setLength(b.length() - 2);
                 return b.toString();
@@ -80,7 +83,7 @@ class FileDialogSwing implements OpenService, SaveService {
         final int ret = fc.showOpenDialog(parent);
         switch (ret) {
         case 0:
-            return new ContentsFile(fc.getSelectedFile());
+            throw new NotImplementedYetException();
         case 1:
             return null;
         default:
@@ -96,7 +99,7 @@ class FileDialogSwing implements OpenService, SaveService {
         final int ret = fc.showSaveDialog(parent);
         switch (ret) {
         case 0:
-            return new ContentsFile(fc.getSelectedFile());
+            throw new NotImplementedYetException();
         case 1:
             return null;
         default:
@@ -108,11 +111,20 @@ class FileDialogSwing implements OpenService, SaveService {
     public Contents saveFileDialog(final String pathHint,
             final String[] extensions, final InputStream stream,
             final String name, final Component parent) {
-        final JFileChooser fc = createFileChooser(pathHint, extensions, false);
+        final JFileChooser fc = createFileChooser(pathHint, extensions, true);
         final int ret = fc.showSaveDialog(parent);
         switch (ret) {
         case 0:
-            return new ContentsFile(fc.getSelectedFile());
+            try {
+                final Contents c = new ContentsFile(fc.getSelectedFile());
+                final FileOutputStream fo = new FileOutputStream(fc
+                        .getSelectedFile());
+                // TODO fo.write(arg0)
+                fo.close();
+                return c;
+            } catch (IOException e) {
+                throw new RuntimeException("Unhandled", e);
+            }
         case 1:
             return null;
         default:

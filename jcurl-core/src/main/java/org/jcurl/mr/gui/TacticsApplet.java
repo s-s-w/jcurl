@@ -42,15 +42,15 @@ import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.AnnoHelp;
 import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.io.FileDialogService;
+import org.jcurl.core.io.FileDialogService.Contents;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerNoCurl;
 import org.jcurl.core.model.CurveManager;
 import org.jcurl.core.model.NewtonCollissionDetector;
-import org.jcurl.core.swing.FileDialogService;
 import org.jcurl.core.swing.JcxFileChooser;
 import org.jcurl.core.swing.PngFileChooser;
-import org.jcurl.core.swing.FileDialogService.Contents;
 
 public class TacticsApplet extends JApplet {
 

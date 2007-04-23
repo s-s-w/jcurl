@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.swing;
+package org.jcurl.core.io;
 
 import java.awt.Component;
 import java.io.ByteArrayInputStream;
@@ -192,7 +192,7 @@ public class FileDialogService {
             open = ws;
             save = ws;
         } catch (final Exception e) {
-            log.info("Failed to use Webstart File Services", e);
+            log.debug("Failed to use Webstart File Services, I use Swing");
             final FileDialogSwing ws = new FileDialogSwing();
             open = ws;
             save = ws;

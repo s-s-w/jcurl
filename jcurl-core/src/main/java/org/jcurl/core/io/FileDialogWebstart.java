@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.swing;
+package org.jcurl.core.io;
 
 import java.awt.Component;
 import java.io.InputStream;
@@ -25,10 +25,10 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.io.FileDialogService.Contents;
+import org.jcurl.core.io.FileDialogService.OpenService;
+import org.jcurl.core.io.FileDialogService.SaveService;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.swing.FileDialogService.Contents;
-import org.jcurl.core.swing.FileDialogService.OpenService;
-import org.jcurl.core.swing.FileDialogService.SaveService;
 
 /**
  * Fully reflection based implementation to avoid dependency.
