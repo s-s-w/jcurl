@@ -2,7 +2,10 @@
 <!-- you'll need the maven-webstart plugin:
 	$ svn co  https://svn.codehaus.org/mojo/tags/webstart-maven-plugin-parent-1.0-alpha-1 webstart-maven-plugin
 	$ cd webstart-maven-plugin
-	$ mvn install
+	$ mvn clean install
+	$ scp $HOME/.m2/repository/org/jcurl/demo/viewer/0.7.2/viewer-0.7.2.zip jcurl.org:~/org.jcurl.www/webstart/viewer/0.7.2
+	$ ssh jcurl.org "cd org.jcurl.www/webstart/viewer/0.7.2;unzip viewer-0.7.2.zip"
+	$ javaws http://www.jcurl.org/webstart/viewer/0.7.2/launch.jnlp
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -48,7 +51,7 @@
 						</resources>
 						<outputFile>launch.jnlp</outputFile>
 						<mainClass>
-							org.jcurl.demo.viewer.ViewerApp
+							  org.jcurl.mr.gui.Webstart
 						</mainClass>
 					</jnlp>
 					<!-- SIGNING -->
@@ -81,7 +84,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.jcurl</groupId>
-			<artifactId>jcurl-demo</artifactId>
+			<artifactId>jcurl-core</artifactId>
 			<version>${version}</version>
 		</dependency>
 	</dependencies>
