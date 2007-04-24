@@ -36,6 +36,22 @@ public class CurveManagerTest extends TestShowBase {
     private static final Log log = JCLoggerFactory
             .getLogger(CurveManagerTest.class);
 
+    public static ComputedTrajectorySet initOneHitCurl(ComputedTrajectorySet te) {
+        if (te == null)
+            te = new CurveManager();
+        te.setCollider(new CollissionSpin(0.5, 0.0));
+        te.setCollissionDetector(new NewtonCollissionDetector());
+        te.setCurler(new CurlerDenny(24, 1));
+        te.setInitialPos(PositionSet.allHome());
+        te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
+        te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
+                0.25 * Math.PI);
+        te.setInitialSpeed(new SpeedSet());
+        te.getInitialSpeed().getDark(0).setLocation(0,
+                -te.getCurler().computeV0(5), Math.PI / 2);
+        return te;
+    }
+
     public static ComputedTrajectorySet initOneHit(ComputedTrajectorySet te) {
         if (te == null)
             te = new CurveManager();
@@ -102,7 +118,8 @@ public class CurveManagerTest extends TestShowBase {
     }
 
     public void testHammy() throws InterruptedException {
-        final ComputedTrajectorySet te = TacticsApplet.initHammy(new CurveManager());
+        final ComputedTrajectorySet te = TacticsApplet
+                .initHammy(new CurveManager());
 
         // Raw throughput:
         final long t0 = System.currentTimeMillis();

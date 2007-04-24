@@ -35,7 +35,7 @@ public class CurlerDennyTest extends TestShowBase {
 
     public void testDennyShow() throws InterruptedException {
         final CurveManager te = new CurveManager();
-        te.setCollider(new CollissionSimple());
+        te.setCollider(new CollissionSpin());
         te.setCollissionDetector(new NewtonCollissionDetector());
         te.setCurler(new CurlerDenny(23, 1));
         te.setInitialPos(PositionSet.allHome());
