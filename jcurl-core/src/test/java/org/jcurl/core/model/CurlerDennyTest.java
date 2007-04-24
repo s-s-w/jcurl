@@ -21,6 +21,8 @@ package org.jcurl.core.model;
 import org.jcurl.core.base.CurveRock;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.Rock;
+import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.TestShowBase;
 import org.jcurl.core.base.Zoomer;
@@ -31,27 +33,7 @@ import org.jcurl.core.base.Zoomer;
  */
 public class CurlerDennyTest extends TestShowBase {
 
-    void showTrajectory(final CurveRock p, final Zoomer zoom, final int millis,
-            final int dt) {
-        final PositionSet pos = PositionSet.allOut();
-        showPositionDisplay(pos, zoom, millis, new TimeRunnable() {
-            @Override
-            public void run(final double t) throws InterruptedException {
-                p.at(0, t, pos.getRock(0));
-                pos.notifyChange();
-                Thread.sleep(dt);
-            }
-        });
-    }
-
-    public void testComputeRcPoly() {
-        CurlerDenny s = new CurlerDenny(24, 1);
-        CurveRock p = s.computeRc(Math.PI, 2, 0.2, 0);
-        System.out.println(p);
-        showTrajectory(p, FixpointZoomer.HOUSE, 5000, 40);
-    }
-
-    public void testDenny() throws InterruptedException {
+    public void testDennyShow() throws InterruptedException {
         final CurveManager te = new CurveManager();
         te.setCollider(new CollissionSimple());
         te.setCollissionDetector(new NewtonCollissionDetector());
@@ -77,5 +59,78 @@ public class CurlerDennyTest extends TestShowBase {
                     }
                 });
         // showPaths(te.getCurveStore().iterator(), 0, 10);
+    }
+
+    void showTrajectory(final CurveRock p, final Zoomer zoom, final int millis,
+            final int dt) {
+        final PositionSet pos = PositionSet.allOut();
+        showPositionDisplay(pos, zoom, millis, new TimeRunnable() {
+            @Override
+            public void run(final double t) throws InterruptedException {
+                p.at(0, t, pos.getRock(0));
+                pos.notifyChange();
+                Thread.sleep(dt);
+            }
+        });
+    }
+
+    public void testComputeRcPoly() {
+        CurlerDenny s = new CurlerDenny();
+        try {
+            s.getDrawToTeeTime();
+            fail("expected Exception");
+        } catch (final NullPointerException e) {
+            ;
+        }
+        s = new CurlerDenny(24, 1);
+        assertEquals(24, s.getDrawToTeeTime());
+        assertEquals(1, s.getDrawToTeeCurl());
+
+        final CurveRock p = s.computeRc(0, s.computeV0(3.124), Math.PI / 2, 0);
+        final Rock ret = new RockDouble();
+        try {
+            p.at(3, 0, ret);
+            fail("expected Exception");
+        } catch (final IllegalArgumentException e) {
+            ;
+        }
+        p.at(0, 0, ret);
+        assertEquals(0, ret.getX());
+        assertEquals(0, ret.getY());
+        assertEquals(0, ret.getA());
+        p.at(1, 0, ret);
+        assertEquals(0, ret.getX());
+        assertEquals(2.480575119409491, ret.getY());
+        assertEquals(1.5707963267948966, ret.getA());
+        p.at(2, 0, ret);
+        assertEquals(0, ret.getX());
+        assertEquals(-0.09842499759462145, ret.getY());
+        assertEquals(-0.15565385905987525, ret.getA());
+
+        p.at(0, 10, ret);
+        assertEquals(-0.21342947331342377, ret.getX());
+        assertEquals(19.88450131436384, ret.getY());
+        assertEquals(9.387172187683756, ret.getA());
+        p.at(1, 10, ret);
+        assertEquals(-0.05498659662365676, ret.getX());
+        assertEquals(1.4963251434632767, ret.getY());
+        assertEquals(0.4445043723378003, ret.getA());
+        p.at(2, 10, ret);
+        assertEquals(-0.007380421176583205, ret.getX());
+        assertEquals(-0.09842499759462145, ret.getY());
+        assertEquals(-0.07302010654804114, ret.getA());
+
+        p.at(0, 20, ret);
+        assertEquals(-0.9840561568777606, ret.getX());
+        assertEquals(29.926502869265533, ret.getY());
+        assertEquals(11.273942229300644, ret.getA());
+        p.at(1, 20, ret);
+        assertEquals(-0.07527046056870113, ret.getX());
+        assertEquals(0.5120751675170623, ret.getY());
+        assertEquals(0.03053930825433586, ret.getA());
+        p.at(2, 20, ret);
+        assertEquals(0.00694054653572247, ret.getX());
+        assertEquals(-0.09842499759462145, ret.getY());
+        assertEquals(-0.014659456820910044, ret.getA());
     }
 }
