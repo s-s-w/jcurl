@@ -2,8 +2,6 @@
 								JCurl Todos
 
 In Progress
-
-	* Denny curl model
 	
 	* Proper viewing UI
 
@@ -30,6 +28,8 @@ Postponed
 	* Realistic collission model including loss of energy
 
 Finished
+
+	* Denny curl model
 
 	* Analytic collission detection
 

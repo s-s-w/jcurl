@@ -29,7 +29,7 @@ import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.math.Polynome;
 
-public class SlideNoCurlTest extends TestShowBase {
+public class CurlerNoCurlTest extends TestShowBase {
 
     public void testBeta() {
         assertEquals(0.0980844266686885, new CurlerNoCurl(17, 0).beta);

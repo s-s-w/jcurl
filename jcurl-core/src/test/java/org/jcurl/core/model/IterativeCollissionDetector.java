@@ -21,7 +21,7 @@ package org.jcurl.core.model;
 import org.jcurl.core.base.CollissionDetectorBase;
 import org.jcurl.math.R1RNFunction;
 
-public class IterativeCollissionDetector extends CollissionDetectorBase {
+class IterativeCollissionDetector extends CollissionDetectorBase {
 
     public double compute(final double t0, final double tmax,
             final R1RNFunction fa, final R1RNFunction fb, final double rb) {
