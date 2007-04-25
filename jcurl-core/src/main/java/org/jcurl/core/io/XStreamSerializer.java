@@ -60,6 +60,11 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 /**
  * Uses the great {@link XStream} for serialization.
+ * <p>
+ * To be extensible the configuration ({@link XStream#registerConverter(Converter)}
+ * and {@link XStream#alias(String, Class)}) should be applied by
+ * implementations of an interface and the service provider plugin mechanism.
+ * </p>
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$

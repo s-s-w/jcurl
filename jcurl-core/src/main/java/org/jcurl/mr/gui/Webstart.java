@@ -53,8 +53,7 @@ public class Webstart extends JFrame {
         p = new DetailPanel(m);
         c = new TacticsController(this, p, m);
         getContentPane().add(p);
-        final MenuFactory mf = new MenuFactory();
-        setJMenuBar(mf.menu(c, this));
+        setJMenuBar(new MenuFactory().menu(c, this));
     }
 
 }
