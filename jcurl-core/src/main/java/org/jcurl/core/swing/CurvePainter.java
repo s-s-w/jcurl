@@ -201,10 +201,10 @@ public class CurvePainter implements Strategy {
      */
     public double[] doSections(final double[] sections, final double min,
             final double max) {
-        if (true)
-            return CurveShape.aequidistantSections(min, max, sections);
-        else
-            return CurveShape.exponentialSections(min, max, sections);
+        // if (true)
+        return CurveShape.aequidistantSections(min, max, sections);
+        // else
+        // return CurveShape.exponentialSections(min, max, sections);
 
     }
 }

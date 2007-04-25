@@ -39,8 +39,6 @@ public abstract class PropModelImpl implements PropModel {
         return params.get(key);
     }
 
-    public abstract void init(final Map<CharSequence, DimVal> params);
-
     protected void internalInit(final Map<CharSequence, DimVal> props) {
         if (params != null)
             throw new IllegalStateException();

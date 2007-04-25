@@ -79,7 +79,6 @@ public class CollissionSpin extends ColliderBase {
         mu = fritionRockRock;
     }
 
-    @Override
     public void init(final Map<CharSequence, DimVal> params) {
         internalInit(params);
         init(PropModelHelper.getFrictionRockRock(this.params), PropModelHelper

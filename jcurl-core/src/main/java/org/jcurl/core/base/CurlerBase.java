@@ -21,6 +21,8 @@ package org.jcurl.core.base;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
+import org.jcurl.math.MathVec;
+
 /**
  * Implementation base for {@link Curler}s.
  * 
@@ -29,10 +31,10 @@ import java.awt.geom.Point2D;
  */
 public abstract class CurlerBase extends PropModelImpl implements Curler {
 
-    public abstract CurveRock computeRc(final double a0, final double v0, double omega0,
-            final double sweepFactor);
-
-    public abstract double computeV0(final double intervalTime);
+    public double computeV0(final double intervalTime) {
+        return IceSize.BACK_2_HOG / intervalTime - IceSize.FAR_HOG_2_TEE
+                / MathVec.sqr(getDrawToTeeTime()) * intervalTime;
+    }
 
     /**
      * Compute the RC-&gt;WC transformation for a rock immediately after it's

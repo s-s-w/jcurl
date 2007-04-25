@@ -22,7 +22,6 @@ import java.util.Iterator;
 
 import junit.framework.TestCase;
 
-
 public class RockSetTest extends TestCase {
     public void testCountBits() {
         assertEquals(8, RockSet.countBits(RockSet.DARK_MASK));

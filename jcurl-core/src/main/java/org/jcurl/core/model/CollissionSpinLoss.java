@@ -72,9 +72,12 @@ public class CollissionSpinLoss extends ColliderBase {
         if (!(va.nonZero() || vb.nonZero())
                 || tmp > RADIUS + RADIUS + HIT_MAX_DIST)
             return false;
-        boolean f;
+        // boolean f;
+        // if (true == (va.nonZero() ^ vb.nonZero()))
+        // if (false != (f = vb.nonZero()))
+        // tmp = -tmp;
         if (true == (va.nonZero() ^ vb.nonZero()))
-            if (false != (f = vb.nonZero()))
+            if (false != vb.nonZero())
                 tmp = -tmp;
 
         // get the coordinate-system:
@@ -124,7 +127,6 @@ public class CollissionSpinLoss extends ColliderBase {
         setLoss(loss);
     }
 
-    @Override
     public void init(final Map<CharSequence, DimVal> params) {
         internalInit(params);
         init(PropModelHelper.getFrictionRockRock(this.params), PropModelHelper

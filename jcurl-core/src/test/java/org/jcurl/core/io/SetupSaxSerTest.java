@@ -50,7 +50,7 @@ public class SetupSaxSerTest extends TestCase {
         p.put("meter", new DimVal(1, Dim.METER));
         p.put("second", new DimVal(1, Dim.SECOND));
         PropModel m = new PropModelImpl() {
-            @Override
+
             public void init(Map<CharSequence, DimVal> params) {
                 internalInit(params);
             }

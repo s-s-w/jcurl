@@ -123,7 +123,7 @@ public class CurveTransformed extends CurveRock {
      * @param v0_wc
      * @param t0
      */
-    private CurveTransformed(final CurveRock c, final Point2D x0_wc,
+    CurveTransformed(final CurveRock c, final Point2D x0_wc,
             final Point2D v0_wc, final double t0) {
         this(c, createRc2Wc(x0_wc, v0_wc, null), t0);
     }

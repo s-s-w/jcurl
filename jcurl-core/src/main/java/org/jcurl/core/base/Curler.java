@@ -18,10 +18,6 @@
  */
 package org.jcurl.core.base;
 
-import java.util.Map;
-
-import org.jcurl.core.helpers.DimVal;
-
 /**
  * Create rock-coordinate curves for running rocks.
  * 
@@ -49,7 +45,8 @@ public interface Curler extends PropModel, Strategy, Factory {
      * Compute the (absolute) speed at the hog line for a rock released with
      * given interval time.
      * <p>
-     * <code>v_0 = {@link IceSize#BACK_2_HOG} / t_S - beta t_S</code>
+     * <code>v_0 = {@link IceSize#BACK_2_HOG} / intervalTime - {@link IceSize#FAR_HOG_2_TEE}
+     / MathVec.sqr({@link #getDrawToTeeTime()}) * intervalTime</code>
      * </p>
      * 
      * @param intervalTime
@@ -60,8 +57,6 @@ public interface Curler extends PropModel, Strategy, Factory {
     public abstract double getDrawToTeeCurl();
 
     public abstract double getDrawToTeeTime();
-
-    public void init(final Map<CharSequence, DimVal> ice);
 
     public abstract void setDrawToTeeCurl(double drawToTeeCurl);
 

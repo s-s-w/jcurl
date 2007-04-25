@@ -68,9 +68,8 @@ public class CurlerNoCurl extends CurlerBase {
         init(ice);
     }
 
-    @Override
-    public CurveRock computeRc(final double a0, final double v0, double omega0,
-            final double sweepFactor) {
+    public CurveRock computeRc(final double a0, final double v0,
+            final double omega0, final double sweepFactor) {
         return new CurveRockAnalytic(new PolynomeCurve(computeRcPoly(a0, v0,
                 omega0, sweepFactor)));
     }
@@ -101,11 +100,6 @@ public class CurlerNoCurl extends CurlerBase {
         return ret;
     }
 
-    @Override
-    public double computeV0(final double intervalTime) {
-        return IceSize.BACK_2_HOG / intervalTime - beta * intervalTime;
-    }
-
     public double getDrawToTeeCurl() {
         return 0;
     }
@@ -119,7 +113,6 @@ public class CurlerNoCurl extends CurlerBase {
         setDrawToTeeTime(drawToTeeTime);
     }
 
-    @Override
     public void init(final Map<CharSequence, DimVal> ice) {
         internalInit(ice);
         init(PropModelHelper.getDrawToTeeTime(params), PropModelHelper

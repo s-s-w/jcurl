@@ -287,8 +287,8 @@ public class CurveTransformedTest extends TestShowBase {
         m[++k] = new AffineTransform();
         c[k] = new CurveTransformed(CurveStill.newInstance(0.25, 2,
                 0.25 * Math.PI), m[k], 0);
-        m[++k] = CurveTransformed.createRc2Wc(new Point2D.Double(0.5, 2), new Point2D.Double(-1, 1),
-                null);
+        m[++k] = CurveTransformed.createRc2Wc(new Point2D.Double(0.5, 2),
+                new Point2D.Double(-1, 1), null);
         c[k] = new CurveTransformed(CurveStill.newInstance(0, 0, 0), m[k], 0);
 
         final double[] tmp = { 0, 0, 0 };

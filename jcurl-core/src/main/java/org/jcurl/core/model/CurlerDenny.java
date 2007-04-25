@@ -74,7 +74,6 @@ public class CurlerDenny extends CurlerBase {
         init(t);
     }
 
-    @Override
     public CurveRock computeRc(final double a0, final double v0,
             final double omega0, final double sweepFactor) {
         final double f = -MathVec.sgn(omega0) * b * g * mu / (48 * eps * _R);
@@ -102,16 +101,6 @@ public class CurlerDenny extends CurlerBase {
 
         };
         return new CurveRockAnalytic(x, y, a);
-    }
-
-    /**
-     * Same approximation as {@link CurlerNoCurl} as the curl model is not of
-     * major interest during release.
-     */
-    @Override
-    public double computeV0(final double intervalTime) {
-        return IceSize.BACK_2_HOG / intervalTime - IceSize.FAR_HOG_2_TEE
-                / MathVec.sqr(getDrawToTeeTime()) * intervalTime;
     }
 
     public double getDrawToTeeCurl() {
@@ -147,7 +136,6 @@ public class CurlerDenny extends CurlerBase {
         return tmp;
     }
 
-    @Override
     public void init(final Map<CharSequence, DimVal> ice) {
         internalInit(ice);
         setDrawToTeeCurl(PropModelHelper.getDrawToTeeCurl(params));

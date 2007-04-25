@@ -18,7 +18,6 @@
  */
 package org.jcurl.mr.gui;
 
-import org.apache.commons.logging.Log;
 import org.jcurl.core.base.Collider;
 import org.jcurl.core.base.ComputedTrajectorySet;
 import org.jcurl.core.base.Curler;
@@ -26,7 +25,6 @@ import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.helpers.Dim;
 import org.jcurl.core.helpers.DimVal;
 import org.jcurl.core.helpers.MutableObject;
-import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CollissionSimple;
 import org.jcurl.core.model.CurlerNoCurl;
 import org.jcurl.core.model.CurveManager;
@@ -39,7 +37,7 @@ import org.jcurl.core.model.CurveManager;
  */
 public class Model extends MutableObject {
 
-    private static final Log log = JCLoggerFactory.getLogger(Model.class);
+    // private static final Log log = JCLoggerFactory.getLogger(Model.class);
 
     private static final long serialVersionUID = -8598083673757204804L;
 

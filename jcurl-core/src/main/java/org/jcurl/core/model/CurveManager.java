@@ -112,14 +112,13 @@ public class CurveManager extends MutableObject implements
         final R1RNFunctionImpl wc;
         if (v.distanceSq(0, 0) == 0)
             wc = CurveStill.newInstance(x);
-        else {
+        else
             // Convert the initial angle from WC to RC.
             // TUNE 2x sqrt, 2x atan2 to 1x each?
             wc = new CurveTransformed(curler.computeRc(x.getA()
                     + Math.atan2(v.getX(), v.getY()), MathVec.abs2D(v), v
                     .getA(), sweepFactor), CurveTransformed.createRc2Wc(x, v,
                     new AffineTransform()), t0);
-        }
         if (log.isDebugEnabled())
             log.debug(i + " " + wc);
         return wc;

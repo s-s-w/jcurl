@@ -36,7 +36,6 @@ import org.jcurl.core.helpers.DimVal;
  */
 public class CollissionSimple extends ColliderBase {
 
-    @Override
     public void init(final Map<CharSequence, DimVal> params) {
         internalInit(params);
     }
