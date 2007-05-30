@@ -85,6 +85,15 @@ public abstract class Rock extends Point2D implements Cloneable {
     public abstract void setLocation(double[] l);
 
     /**
+     * 
+     * @param r
+     *            TODO what if this is null?
+     */
+    public void setLocation(final Rock r) {
+        this.setLocation(r.getX(), r.getY(), r.getA());
+    }
+
+    /**
      * Danger: Loss of information as the {@link #getA()} is restricted to the
      * values of {@link Math#asin(double)}!
      * 
