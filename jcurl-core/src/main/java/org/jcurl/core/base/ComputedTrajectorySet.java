@@ -19,6 +19,7 @@
 package org.jcurl.core.base;
 
 import org.jcurl.math.R1RNFunction;
+import org.jcurl.mr.gui.RockPositionMouseController;
 
 /**
  * {@link R1RNFunction} based trajectory set.
@@ -43,8 +44,22 @@ public interface ComputedTrajectorySet extends TrajectorySet {
     public abstract void setCollissionDetector(
             final CollissionDetector collissionDetector);
 
+    /**
+     * Currently the internal reference MUST be final, so this updates via
+     * {@link PositionSet#setLocation(RockSet)}. This is the case to simplify
+     * event controllers, such as {@link RockPositionMouseController}.
+     * 
+     * @param initialPos
+     */
     public abstract void setInitialPos(final PositionSet initialPos);
 
+    /**
+     * Currently the internal reference MUST be final, so this updates via
+     * {@link SpeedSet#setLocation(RockSet)}. This is the case to simplify
+     * event controllers, such as {@link RockPositionMouseController}. *
+     * 
+     * @param initialSpeed
+     */
     public abstract void setInitialSpeed(final SpeedSet initialSpeed);
 
     public abstract void setCurler(final Curler curler);

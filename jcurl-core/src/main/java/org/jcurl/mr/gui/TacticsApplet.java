@@ -52,6 +52,18 @@ import org.jcurl.core.model.NewtonCollissionDetector;
 import org.jcurl.core.swing.JcxFileChooser;
 import org.jcurl.core.swing.PngFileChooser;
 
+/**
+ * Demonstration.
+ * <p>
+ * TODO Paint intial Position regardless of current time (maybe as shades)
+ * </p>
+ * <p>
+ * TODO Paint trajectories.
+ * </p>
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public class TacticsApplet extends JApplet {
 
     static class MenuFactory implements Factory {

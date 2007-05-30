@@ -88,11 +88,12 @@ public class CurveManager extends MutableObject implements
 
     private transient boolean dirty = true;
 
-    private PositionSet initialPos = null;
+    private final PositionSet initialPos = PositionSet.allHome();
 
-    private SpeedSet initialSpeed = null;
+    private final SpeedSet initialSpeed = new SpeedSet();
 
     public CurveManager() {
+        initialPos.addPropertyChangeListener(this);
     }
 
     /**
@@ -255,7 +256,22 @@ public class CurveManager extends MutableObject implements
         return 0;
     }
 
+    /**
+     * TODO Fire a "refresh" event, so the eventqueue can remove obsolete
+     * (outdated) events.
+     */
     public void propertyChange(final PropertyChangeEvent arg0) {
+        final Object src = arg0.getSource();
+        if (src == initialPos || src == initialSpeed) {
+            // force recomputation:
+            this.dirty = true;
+            try {
+                setCurrentTime(getCurrentTime());
+            } catch (NullPointerException e) {
+                log.warn("Oops!", e);
+            }
+            return;
+        }
         log.info(arg0);
     }
 
@@ -336,15 +352,16 @@ public class CurveManager extends MutableObject implements
 
     public void setInitialPos(final PositionSet initialPos) {
         dirty = true;
-        propChange
-                .firePropertyChange("initialPos", this.initialPos, initialPos);
-        this.initialPos = initialPos;
+        // propChange
+        // .firePropertyChange("initialPos", this.initialPos, initialPos);
+        this.initialPos.setLocation(initialPos);
     }
 
     public void setInitialSpeed(final SpeedSet initialSpeed) {
         dirty = true;
-        propChange.firePropertyChange("initialSpeed", this.initialSpeed,
-                initialSpeed);
-        this.initialSpeed = initialSpeed;
+        // propChange.firePropertyChange("initialSpeed", this.initialSpeed,
+        // initialSpeed);
+        // this.initialSpeed = initialSpeed;
+        this.initialSpeed.setLocation(initialSpeed);
     }
 }

@@ -60,6 +60,7 @@ public class TacticsController {
         this.parent = parent;
         this.p = p;
         this.m = m;
+        new RockPositionMouseController(m.getInitialPos(), p.ice, false);
         wc = Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR);
     }
 
