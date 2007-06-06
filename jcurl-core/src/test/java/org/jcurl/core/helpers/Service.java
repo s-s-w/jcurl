@@ -37,13 +37,13 @@ class Service {
 
     private static final Pattern pat = Pattern.compile("\\s*([^# ]+).*");
 
-    public static Iterator providers(final Class clz) {
+    public static Iterator providers(final Class<?> clz) {
         return providers(clz, clz.getClassLoader());
     }
 
-    public static Iterator providers(final Class clz, final ClassLoader cl) {
+    public static Iterator providers(final Class<?> clz, final ClassLoader cl) {
         try {
-            final Collection ret = new ArrayList();
+            final Collection<Object> ret = new ArrayList<Object>();
             // scan all
             for (final Enumeration e = cl.getResources("META-INF/services/"
                     + clz.getName()); e.hasMoreElements();) {
