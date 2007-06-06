@@ -48,13 +48,13 @@ public abstract class WCComponent extends Component implements WCLayer {
     /**
      * @see Zoomer#SCALE
      */
-    static final AffineTransform postScale = AffineTransform.getScaleInstance(
+    public static final AffineTransform postScale = AffineTransform.getScaleInstance(
             1.0 / Zoomer.SCALE, 1.0 / Zoomer.SCALE);
 
     /**
      * @see Zoomer#SCALE
      */
-    static final AffineTransform preScale = AffineTransform.getScaleInstance(
+    public static final AffineTransform preScale = AffineTransform.getScaleInstance(
             Zoomer.SCALE, Zoomer.SCALE);
 
     protected int oldHei = -1;
