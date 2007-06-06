@@ -18,10 +18,9 @@
  */
 package org.jcurl.core.sg;
 
-import java.awt.geom.AffineTransform;
-
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.TestShowBase;
+import org.jcurl.core.swing.CurvePainter;
 import org.jcurl.core.swing.IcePainter;
 import org.jcurl.core.swing.RockPainter;
 
@@ -41,10 +40,19 @@ public class SGComponentTest extends TestShowBase {
     public void testThroughPut() throws InterruptedException {
         if (frame == null)
             return;
-        sg.setRoot(new SGIce(new IcePainter()));
-        sg.getRoot().setTrafo(new AffineTransform());
-        final PositionSet p = PositionSet.allOut();
-        sg.getRoot().children().add(new SGPositionSet(p, new RockPainter()));
+        final SGNode _ini = new SGPositionSet(PositionSet.allHome(),
+                new RockPainter());
+        final SGNode _tra = new SGTrajectory(null, new CurvePainter(null, null,
+                null));
+        final SGNode _ice = new SGIce(new IcePainter());
+
+        _ice.children().add(_ini);
+        _ini.children().add(_tra);
+        _ini.children().add(new SGBroom(null));
+        _tra.children().add(
+                new SGPositionSet(PositionSet.allOut(), new RockPainter()));
+
+        sg.setRoot(_ice);
         frame.setVisible(true);
         while (frame.isVisible())
             Thread.sleep(100);

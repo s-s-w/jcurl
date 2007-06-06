@@ -21,13 +21,12 @@ package org.jcurl.core.sg;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.model.FixpointZoomer;
 
 /**
@@ -41,6 +40,7 @@ public class SGComponent extends Component {
     private static final Map<Object, Object> hints = new HashMap<Object, Object>();
 
     private static final long serialVersionUID = -7128617540182305476L;
+
     static {
         // hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION,
         // RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
@@ -50,6 +50,28 @@ public class SGComponent extends Component {
 
     private SGNode root = null;
 
+    private final Zoomer zoom = FixpointZoomer.HOUSE2HACK;
+
+    /**
+     * Visitor, recursive tree traversal.
+     * 
+     * @param g
+     * @param node
+     */
+    private synchronized void doPaint(final Graphics2D g, final SGNode node) {
+        // TUNE could be quicker: save instanciations
+        final AffineTransform t = g.getTransform();
+        try {
+            if (node.getTrafo() != null)
+                g.transform(node.getTrafo());
+            node.render(g);
+            for (final SGNode element : node.children())
+                doPaint(g, element);
+        } finally {
+            g.setTransform(t);
+        }
+    }
+
     public SGNode getRoot() {
         return root;
     }
@@ -58,16 +80,13 @@ public class SGComponent extends Component {
     public void paint(final Graphics g) {
         final Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHints(hints);
-        super.paint(g2);
+        // super.paint(g2);
         if (getRoot() == null)
             return;
         if (getRoot().getTrafo() == null)
             getRoot().setTrafo(new AffineTransform());
-        // TUNE Do less instanciations!
-        final Rectangle b = this.getBounds();
-        final Rectangle2D r = new Rectangle2D.Float(b.x, b.y, b.width, b.height);
-        FixpointZoomer.HOUSE2HACK.computeWctoDcTrafo(b, getRoot().getTrafo());
-        getRoot().doPaint(g2, r);
+        zoom.computeWctoDcTrafo(this.getBounds(), getRoot().getTrafo());
+        doPaint(g2, getRoot());
     }
 
     public void setRoot(final SGNode root) {

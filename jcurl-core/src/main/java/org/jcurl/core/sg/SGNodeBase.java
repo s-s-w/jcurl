@@ -18,46 +18,23 @@
  */
 package org.jcurl.core.sg;
 
-import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
-abstract class SGNodeBase implements SGNode {
+public abstract class SGNodeBase implements SGNode {
 
-    private final Collection<SGNodeBase> children = new ArrayList<SGNodeBase>();
+    private final List<SGNode> children = new ArrayList<SGNode>();
 
     private AffineTransform trafo;
 
-    public Collection<SGNodeBase> children() {
+    public List<SGNode> children() {
         return children;
-    }
-
-    public void doPaint(final Graphics2D g, final Rectangle2D clip) {
-        // TUNE could be quicker: save instanciations
-        final AffineTransform t = g.getTransform();
-        try {
-            if (getTrafo() != null)
-                g.setTransform(getTrafo());
-            if (isDirty())
-                render(g, clip);
-            for (final SGNode element : children())
-                element.doPaint(g, clip);
-        } finally {
-            g.setTransform(t);
-        }
     }
 
     public AffineTransform getTrafo() {
         return trafo;
     }
-
-    protected boolean isDirty() {
-        return true;
-    }
-
-    protected abstract void render(Graphics2D g, Rectangle2D clip);
 
     public void setTrafo(final AffineTransform trafo) {
         this.trafo = trafo;

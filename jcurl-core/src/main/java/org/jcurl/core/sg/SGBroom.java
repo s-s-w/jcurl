@@ -20,10 +20,8 @@ package org.jcurl.core.sg;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 
 import org.jcurl.core.base.Rock;
-import org.jcurl.core.helpers.NotImplementedYetException;
 
 public class SGBroom extends SGNodeBase {
 
@@ -36,9 +34,8 @@ public class SGBroom extends SGNodeBase {
         return 0;
     }
 
-    @Override
-    protected void render(final Graphics2D g, final Rectangle2D clip) {
-        throw new NotImplementedYetException();
+    public void render(final Graphics2D g) {
+        ;
     }
 
 }

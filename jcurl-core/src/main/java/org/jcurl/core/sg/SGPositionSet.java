@@ -21,7 +21,6 @@ package org.jcurl.core.sg;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
@@ -47,26 +46,28 @@ public class SGPositionSet extends SGNodeBase {
         return 0;
     }
 
-    @Override
-    protected void render(final Graphics2D g, final Rectangle2D clip) {
+    public void render(final Graphics2D g) {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             if ((RockSet.ALL_MASK >> i & 1) == 1) {
                 final Rock rock = data.getRock(i);
                 final AffineTransform t = g.getTransform();
-                if (false) {
-                    g.translate(Zoomer.SCALE * rock.getX(), Zoomer.SCALE
-                            * rock.getY());
-                    g.rotate(Math.PI + rock.getA());
-                } else {
-                    g.transform(WCComponent.preScale);
-                    g.transform(rock.getTrafo());
-                    g.transform(WCComponent.postScale);
+                try {
+                    if (false) {
+                        g.translate(Zoomer.SCALE * rock.getX(), Zoomer.SCALE
+                                * rock.getY());
+                        g.rotate(Math.PI + rock.getA());
+                    } else {
+                        g.transform(WCComponent.preScale);
+                        g.transform(rock.getTrafo());
+                        g.transform(WCComponent.postScale);
+                    }
+                    // make the right-handed coordinate system left handed again
+                    // (for un-flipped text display)
+                    g.scale(-1, 1);
+                    p.paintRockRC(g, i % 2 == 0, i / 2);
+                } finally {
+                    g.setTransform(t);
                 }
-                // make the right-handed coordinate system left handed again
-                // (for un-flipped text display)
-                g.scale(-1, 1);
-                p.paintRockRC(g, i % 2 == 0, i / 2);
-                g.setTransform(t);
             }
     }
 }

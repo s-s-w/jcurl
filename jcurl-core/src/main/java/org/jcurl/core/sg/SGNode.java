@@ -21,24 +21,26 @@ package org.jcurl.core.sg;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.Collection;
+import java.util.List;
 
 /**
- * TODO add Event-concept.
- * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public interface SGNode {
 
-    public abstract Collection<SGNodeBase> children();
+    public abstract List<SGNode> children();
 
     public abstract double distance(Point2D p);
 
     public abstract AffineTransform getTrafo();
 
-    public abstract void doPaint(Graphics2D g, Rectangle2D clip);
+    /**
+     * Non-recursive rendering.
+     * 
+     * @param g
+     */
+    public abstract void render(Graphics2D g);
 
     public abstract void setTrafo(AffineTransform trafo);
 
