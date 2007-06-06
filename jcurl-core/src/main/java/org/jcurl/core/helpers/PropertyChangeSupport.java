@@ -122,8 +122,10 @@ public class PropertyChangeSupport {
             final BeanInfo info = Introspector.getBeanInfo(producer.getClass());
             for (final PropertyDescriptor element : info
                     .getPropertyDescriptors())
-                listenerMap.put(element.getName(), new WeakHashSet());
-            listenerMap.put(ALL_PROPERTIES, new WeakHashSet());
+                listenerMap.put(element.getName(),
+                        new WeakHashSet<PropertyChangeListener>());
+            listenerMap.put(ALL_PROPERTIES,
+                    new WeakHashSet<PropertyChangeListener>());
             this.producer = producer;
         } catch (final IntrospectionException ex) {
             throw new RuntimeException(ex);

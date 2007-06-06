@@ -20,12 +20,15 @@ package org.jcurl.core.sg;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Map.Entry;
 
+import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.swing.CurvePainter;
 import org.jcurl.math.R1RNFunction;
 
-public class SGTrajectory extends SGNodeBase {
+public class SGTrajectory extends SGNodeBase implements PropertyChangeListener {
 
     private final Iterable<Iterable<Entry<Double, R1RNFunction>>> data;
 
@@ -36,6 +39,8 @@ public class SGTrajectory extends SGNodeBase {
             final CurvePainter p) {
         this.data = data;
         this.p = p;
+        if (this.data instanceof MutableObject)
+            ((MutableObject) this.data).addPropertyChangeListener(this);
     }
 
     public double distance(final Point2D p) {
@@ -43,8 +48,12 @@ public class SGTrajectory extends SGNodeBase {
         return 0;
     }
 
+    public void propertyChange(final PropertyChangeEvent evt) {
+        fireNodeChange();
+    }
+
     public void render(final Graphics2D g) {
-        if(p == null || data == null)
+        if (p == null || data == null)
             return;
         p.doPaint(g, data);
     }

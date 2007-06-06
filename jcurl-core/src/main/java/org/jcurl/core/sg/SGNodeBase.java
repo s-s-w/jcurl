@@ -19,24 +19,171 @@
 package org.jcurl.core.sg;
 
 import java.awt.geom.AffineTransform;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public abstract class SGNodeBase implements SGNode {
-
     private final List<SGNode> children = new ArrayList<SGNode>();
+
+    private final NodeChangeSupport ncs = new NodeChangeSupport(this);
+
+    private WeakReference<SGNode> parent = null;
+
+    protected WeakReference<SGNode> root = null;
 
     private AffineTransform trafo;
 
-    public List<SGNode> children() {
-        return children;
+    public void add(final int index, final SGNode element) {
+        element.setParent(this);
+        children.add(index, element);
+    }
+
+    public boolean add(final SGNode o) {
+        o.setParent(this);
+        return children.add(o);
+    }
+
+    public boolean addAll(final Collection<? extends SGNode> c) {
+        for (final SGNode element : c)
+            element.setParent(this);
+        return children.addAll(c);
+    }
+
+    public boolean addAll(final int index, final Collection<? extends SGNode> c) {
+        for (final SGNode element : c)
+            element.setParent(this);
+        return children.addAll(index, c);
+    }
+
+    public boolean addNodeChangeListener(final NodeChangeListener pcl) {
+        return ncs.addNodeChangeListener(pcl);
+    }
+
+    public void clear() {
+        for (final SGNode element : this)
+            element.setParent(null);
+        children.clear();
+    }
+
+    public boolean contains(final Object o) {
+        return children.contains(o);
+    }
+
+    public boolean containsAll(final Collection<?> c) {
+        return children.containsAll(c);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        return children.equals(o);
+    }
+
+    public void fireNodeChange() {
+        ncs.fireNodeChange(new NodeChangeEvent(this));
+    }
+
+    public SGNode get(final int index) {
+        return children.get(index);
+    }
+
+    public SGNode getParent() {
+        return parent == null ? null : parent.get();
     }
 
     public AffineTransform getTrafo() {
         return trafo;
     }
 
+    @Override
+    public int hashCode() {
+        return children.hashCode();
+    }
+
+    public int indexOf(final Object o) {
+        return children.indexOf(o);
+    }
+
+    public boolean isEmpty() {
+        return children.isEmpty();
+    }
+
+    public Iterator<SGNode> iterator() {
+        return children.iterator();
+    }
+
+    public int lastIndexOf(final Object o) {
+        return children.lastIndexOf(o);
+    }
+
+    public ListIterator<SGNode> listIterator() {
+        return children.listIterator();
+    }
+
+    public ListIterator<SGNode> listIterator(final int index) {
+        return children.listIterator(index);
+    }
+
+    public SGNode remove(final int index) {
+        get(index).setParent(null);
+        return children.remove(index);
+    }
+
+    public boolean remove(final Object o) {
+        ((SGNode) o).setParent(null);
+        return children.remove(o);
+    }
+
+    public boolean removeAll(final Collection<?> c) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean removeNodeChangeListener(final NodeChangeListener pcl) {
+        return ncs.removeNodeChangeListener(pcl);
+    }
+
+    public boolean retainAll(final Collection<?> c) {
+        throw new UnsupportedOperationException();
+    }
+
+    public SGNode set(final int index, final SGNode element) {
+        get(index).setParent(null);
+        element.setParent(this);
+        return children.set(index, element);
+    }
+
+    public void setParent(final SGNode parent) {
+        if (parent == null) {
+            root = this.parent = null;
+            return;
+        }
+        this.parent = new WeakReference<SGNode>(parent);
+        SGNode curr = this;
+        while (curr.getParent() != null)
+            curr = curr.getParent();
+        root = new WeakReference<SGNode>(curr);
+    }
+
     public void setTrafo(final AffineTransform trafo) {
         this.trafo = trafo;
+    }
+
+    public int size() {
+        return children.size();
+    }
+
+    public List<SGNode> subList(final int fromIndex, final int toIndex) {
+        return children.subList(fromIndex, toIndex);
+    }
+
+    public Object[] toArray() {
+        return children.toArray();
+    }
+
+    public <T> T[] toArray(final T[] a) {
+        return children.toArray(a);
     }
 }

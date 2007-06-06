@@ -21,6 +21,8 @@ package org.jcurl.core.sg;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
@@ -29,7 +31,7 @@ import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.swing.RockPainter;
 import org.jcurl.core.swing.WCComponent;
 
-public class SGPositionSet extends SGNodeBase {
+public class SGPositionSet extends SGNodeBase implements PropertyChangeListener {
 
     private final PositionSet data;
 
@@ -38,12 +40,16 @@ public class SGPositionSet extends SGNodeBase {
     public SGPositionSet(final PositionSet data, final RockPainter p) {
         this.data = data;
         this.p = p;
-        // TODO register myself as a listener to data
+        this.data.addPropertyChangeListener(this);
     }
 
     public double distance(final Point2D p) {
         // TODO Auto-generated method stub
         return 0;
+    }
+
+    public void propertyChange(final PropertyChangeEvent evt) {
+        fireNodeChange();
     }
 
     public void render(final Graphics2D g) {

@@ -46,11 +46,10 @@ public class SGComponentTest extends TestShowBase {
                 null));
         final SGNode _ice = new SGIce(new IcePainter());
 
-        _ice.children().add(_ini);
-        _ini.children().add(_tra);
-        _ini.children().add(new SGBroom(null));
-        _tra.children().add(
-                new SGPositionSet(PositionSet.allOut(), new RockPainter()));
+        _ice.add(_ini);
+        _ini.add(_tra);
+        _ini.add(new SGBroom(null));
+        _tra.add(new SGPositionSet(PositionSet.allOut(), new RockPainter()));
 
         sg.setRoot(_ice);
         frame.setVisible(true);

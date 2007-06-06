@@ -18,7 +18,6 @@
  */
 package org.jcurl.core.helpers;
 
-import java.beans.PropertyChangeListener;
 import java.lang.ref.WeakReference;
 import java.util.AbstractSet;
 import java.util.Collection;
@@ -56,16 +55,18 @@ import java.util.WeakHashMap;
  * the second isn't.
  * </p>
  * 
+ * @param <E>
+ * 
  * @see java.util.WeakHashMap
  * @see java.lang.ref.WeakReference
  */
-public class WeakHashSet extends AbstractSet<PropertyChangeListener> {
+public class WeakHashSet<E> extends AbstractSet<E> {
 
     /** Dummy value used as a value object. */
-    private static final Object DUMMY = new String("DUMMY");
+    private static final Object DUMMY = "DUMMY";
 
     /** Holds the backing store. */
-    private final WeakHashMap<PropertyChangeListener, Object> backingStore;
+    private final WeakHashMap<E, Object> backingStore;
 
     /**
      * Constructs a new empty WeakHashSet with default values passed the the
@@ -74,7 +75,7 @@ public class WeakHashSet extends AbstractSet<PropertyChangeListener> {
      * @see java.util.WeakHashMap#WeakHashMap()
      */
     public WeakHashSet() {
-        backingStore = new WeakHashMap<PropertyChangeListener, Object>();
+        backingStore = new WeakHashMap<E, Object>();
     }
 
     /**
@@ -86,9 +87,9 @@ public class WeakHashSet extends AbstractSet<PropertyChangeListener> {
      *            collection to use
      * @see WeakHashMap#WeakHashMap(java.util.Map)
      */
-    public WeakHashSet(final Collection<? extends PropertyChangeListener> c) {
-        backingStore = new WeakHashMap<PropertyChangeListener, Object>(Math
-                .max((int) (c.size() / .75f) + 1, 16));
+    public WeakHashSet(final Collection<? extends E> c) {
+        backingStore = new WeakHashMap<E, Object>(Math.max(
+                (int) (c.size() / .75f) + 1, 16));
         addAll(c);
     }
 
@@ -101,8 +102,7 @@ public class WeakHashSet extends AbstractSet<PropertyChangeListener> {
      * @see java.util.WeakHashMap#WeakHashMap(int)
      */
     public WeakHashSet(final int initialCapacity) {
-        backingStore = new WeakHashMap<PropertyChangeListener, Object>(
-                initialCapacity);
+        backingStore = new WeakHashMap<E, Object>(initialCapacity);
     }
 
     /**
@@ -116,8 +116,7 @@ public class WeakHashSet extends AbstractSet<PropertyChangeListener> {
      * @see java.util.WeakHashMap#WeakHashMap(int, float)
      */
     public WeakHashSet(final int initialCapacity, final float loadFactor) {
-        backingStore = new WeakHashMap<PropertyChangeListener, Object>(
-                initialCapacity, loadFactor);
+        backingStore = new WeakHashMap<E, Object>(initialCapacity, loadFactor);
     }
 
     /**
@@ -128,18 +127,17 @@ public class WeakHashSet extends AbstractSet<PropertyChangeListener> {
      *             If the user tries to add null to the set.
      */
     @Override
-    public boolean add(final PropertyChangeListener o) {
+    public boolean add(final E o) {
         if (o == null)
             throw new NullPointerException();
         return backingStore.put(o, DUMMY) == null;
     }
 
     @Override
-    public boolean addAll(final Collection<? extends PropertyChangeListener> c) {
+    public boolean addAll(final Collection<? extends E> c) {
         boolean changed = false;
-        for (final PropertyChangeListener propertyChangeListener : c)
-            changed = changed
-                    | backingStore.put(propertyChangeListener, DUMMY) != DUMMY;
+        for (final E element : c)
+            changed = changed | backingStore.put(element, DUMMY) != DUMMY;
         return changed;
     }
 
@@ -210,7 +208,7 @@ public class WeakHashSet extends AbstractSet<PropertyChangeListener> {
      * @return The iterator.
      */
     @Override
-    public Iterator<PropertyChangeListener> iterator() {
+    public Iterator<E> iterator() {
         return backingStore.keySet().iterator();
     }
 

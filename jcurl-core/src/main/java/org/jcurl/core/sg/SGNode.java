@@ -21,19 +21,47 @@ package org.jcurl.core.sg;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.util.EventObject;
 import java.util.List;
 
 /**
+ * 2D Scenegraph node.
+ * <p>
+ * IS a {@link List} rather than just containing one: Keep control to manage
+ * parentship for event propagation.
+ * </p>
+ * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface SGNode {
+public interface SGNode extends List<SGNode> {
 
-    public abstract List<SGNode> children();
+    public static class NodeChangeEvent extends EventObject {
+        private static final long serialVersionUID = 6616942653781761891L;
+
+        public final SGNode node;
+
+        public NodeChangeEvent(final SGNode node) {
+            super(node);
+            this.node = node;
+        }
+    }
+
+    public static interface NodeChangeListener {
+        public void nodeChange(NodeChangeEvent evt);
+    }
+
+    public abstract boolean addNodeChangeListener(NodeChangeListener l);
 
     public abstract double distance(Point2D p);
 
+    public void fireNodeChange();
+
+    public abstract SGNode getParent();
+
     public abstract AffineTransform getTrafo();
+
+    public abstract boolean removeNodeChangeListener(NodeChangeListener l);
 
     /**
      * Non-recursive rendering.
@@ -41,6 +69,8 @@ public interface SGNode {
      * @param g
      */
     public abstract void render(Graphics2D g);
+
+    public abstract void setParent(SGNode parent);
 
     public abstract void setTrafo(AffineTransform trafo);
 

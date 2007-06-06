@@ -58,14 +58,14 @@ public class SGComponent extends Component {
      * @param g
      * @param node
      */
-    private synchronized void doPaint(final Graphics2D g, final SGNode node) {
+    private void doPaint(final Graphics2D g, final SGNode node) {
         // TUNE could be quicker: save instanciations
         final AffineTransform t = g.getTransform();
         try {
             if (node.getTrafo() != null)
                 g.transform(node.getTrafo());
             node.render(g);
-            for (final SGNode element : node.children())
+            for (final SGNode element : node)
                 doPaint(g, element);
         } finally {
             g.setTransform(t);
@@ -77,7 +77,7 @@ public class SGComponent extends Component {
     }
 
     @Override
-    public void paint(final Graphics g) {
+    public synchronized void paint(final Graphics g) {
         final Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHints(hints);
         // super.paint(g2);
