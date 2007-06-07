@@ -40,11 +40,11 @@ public class SGComponentTest extends TestShowBase {
     public void testThroughPut() throws InterruptedException {
         if (frame == null)
             return;
-        final SGNode _ini = new SGPositionSet(PositionSet.allHome(),
+        final SGPositionSet _ini = new SGPositionSet(PositionSet.allHome(),
                 new RockPainter());
-        final SGNode _tra = new SGTrajectory(null, new CurvePainter(null, null,
+        final SGTrajectory _tra = new SGTrajectory(null, new CurvePainter(null, null,
                 null));
-        final SGNode _ice = new SGIce(new IcePainter());
+        final SGIce _ice = new SGIce(new IcePainter());
 
         _ice.add(_ini);
         _ini.add(_tra);

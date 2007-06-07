@@ -22,8 +22,8 @@ import java.lang.ref.WeakReference;
 import java.util.Set;
 
 import org.jcurl.core.helpers.WeakHashSet;
-import org.jcurl.core.sg.SGNode.NodeChangeEvent;
-import org.jcurl.core.sg.SGNode.NodeChangeListener;
+import org.jcurl.core.sg.SGRoot.NodeChangeEvent;
+import org.jcurl.core.sg.SGRoot.NodeChangeListener;
 
 /**
  * Implements a beans like property change support utility that stores the

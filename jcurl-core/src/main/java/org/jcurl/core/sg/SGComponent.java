@@ -24,10 +24,14 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.model.FixpointZoomer;
+import org.jcurl.core.sg.SGRoot.NodeChangeEvent;
+import org.jcurl.core.sg.SGRoot.NodeChangeListener;
 
 /**
  * Visual and behavioral container for scene graphs.
@@ -35,7 +39,7 @@ import org.jcurl.core.model.FixpointZoomer;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SGComponent extends Component {
+public class SGComponent extends Component implements NodeChangeListener {
 
     private static final Map<Object, Object> hints = new HashMap<Object, Object>();
 
@@ -48,7 +52,10 @@ public class SGComponent extends Component {
                 RenderingHints.VALUE_ANTIALIAS_ON);
     }
 
-    private SGNode root = null;
+    // relies on quick hashing!
+    private final Set<SGNode> dirty = new HashSet<SGNode>();
+
+    private SGRoot root = null;
 
     private final Zoomer zoom = FixpointZoomer.HOUSE2HACK;
 
@@ -57,8 +64,13 @@ public class SGComponent extends Component {
      * 
      * @param g
      * @param node
+     * @param dirty
+     *            TODO
      */
-    private void doPaint(final Graphics2D g, final SGNode node) {
+    private void doPaint(final Graphics2D g, final SGNode node, boolean dirty) {
+        dirty |= this.dirty.remove(node);
+        if (!dirty)
+            return;
         // TUNE could be quicker: save instanciations
         final AffineTransform t = g.getTransform();
         try {
@@ -66,18 +78,26 @@ public class SGComponent extends Component {
                 g.transform(node.getTrafo());
             node.render(g);
             for (final SGNode element : node)
-                doPaint(g, element);
+                doPaint(g, element, dirty);
         } finally {
             g.setTransform(t);
         }
     }
 
-    public SGNode getRoot() {
+    public SGRoot getRoot() {
         return root;
+    }
+
+    public void nodeChange(final NodeChangeEvent evt) {
+        // Trigger a repaint of the parent
+        // dirty.add(evt.node);
+        repaint();
     }
 
     @Override
     public synchronized void paint(final Graphics g) {
+        if (getRoot() == null)
+            return;
         final Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHints(hints);
         // super.paint(g2);
@@ -86,10 +106,29 @@ public class SGComponent extends Component {
         if (getRoot().getTrafo() == null)
             getRoot().setTrafo(new AffineTransform());
         zoom.computeWctoDcTrafo(this.getBounds(), getRoot().getTrafo());
-        doPaint(g2, getRoot());
+        doPaint(g2, getRoot(), true);
+        dirty.clear();
     }
 
     public void setRoot(final SGNode root) {
-        this.root = root;
+        final SGRoot r;
+        if (root instanceof SGRoot)
+            r = (SGRoot) root;
+        else {
+            r = new SGRoot();
+            r.add(root);
+        }
+        setRoot(r);
+    }
+
+    public void setRoot(final SGRoot root) {
+        if (this.root != null && this.root.getRoot() != null)
+            this.root.getRoot().removeNodeChangeListener(this);
+        this.root = (SGRoot) root;
+        if (this.root != null) {
+            if (this.root.getRoot() != null)
+                this.root.getRoot().addNodeChangeListener(this);
+            this.root.fireNodeChange();
+        }
     }
 }

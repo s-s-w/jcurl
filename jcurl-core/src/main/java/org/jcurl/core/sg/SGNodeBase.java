@@ -29,8 +29,6 @@ import java.util.ListIterator;
 public abstract class SGNodeBase implements SGNode {
     private final List<SGNode> children = new ArrayList<SGNode>();
 
-    private final NodeChangeSupport ncs = new NodeChangeSupport(this);
-
     private WeakReference<SGNode> parent = null;
 
     protected WeakReference<SGNode> root = null;
@@ -59,10 +57,6 @@ public abstract class SGNodeBase implements SGNode {
         return children.addAll(index, c);
     }
 
-    public boolean addNodeChangeListener(final NodeChangeListener pcl) {
-        return ncs.addNodeChangeListener(pcl);
-    }
-
     public void clear() {
         for (final SGNode element : this)
             element.setParent(null);
@@ -77,13 +71,11 @@ public abstract class SGNodeBase implements SGNode {
         return children.containsAll(c);
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        return children.equals(o);
-    }
-
     public void fireNodeChange() {
-        ncs.fireNodeChange(new NodeChangeEvent(this));
+        final SGRoot r = getRoot();
+        if (r == null)
+            return;
+        r.fireNodeChange(this);
     }
 
     public SGNode get(final int index) {
@@ -94,13 +86,19 @@ public abstract class SGNodeBase implements SGNode {
         return parent == null ? null : parent.get();
     }
 
-    public AffineTransform getTrafo() {
-        return trafo;
+    public SGRoot getRoot() {
+        if (root == null) {
+            // parentship changed:
+            SGNode curr = this;
+            while (curr.getParent() != null)
+                curr = curr.getParent();
+            root = new WeakReference<SGNode>(curr);
+        }
+        return root.get() instanceof SGRoot ? (SGRoot) root.get() : null;
     }
 
-    @Override
-    public int hashCode() {
-        return children.hashCode();
+    public AffineTransform getTrafo() {
+        return trafo;
     }
 
     public int indexOf(final Object o) {
@@ -141,10 +139,6 @@ public abstract class SGNodeBase implements SGNode {
         throw new UnsupportedOperationException();
     }
 
-    public boolean removeNodeChangeListener(final NodeChangeListener pcl) {
-        return ncs.removeNodeChangeListener(pcl);
-    }
-
     public boolean retainAll(final Collection<?> c) {
         throw new UnsupportedOperationException();
     }
@@ -156,19 +150,23 @@ public abstract class SGNodeBase implements SGNode {
     }
 
     public void setParent(final SGNode parent) {
+        if(parent == getParent())
+            return;
+        // reset root in any case
+        root = null;
         if (parent == null) {
-            root = this.parent = null;
+            this.parent = null;
             return;
         }
         this.parent = new WeakReference<SGNode>(parent);
-        SGNode curr = this;
-        while (curr.getParent() != null)
-            curr = curr.getParent();
-        root = new WeakReference<SGNode>(curr);
+        fireNodeChange();
     }
 
     public void setTrafo(final AffineTransform trafo) {
+        if(trafo == getTrafo())
+            return;
         this.trafo = trafo;
+        fireNodeChange();
     }
 
     public int size() {

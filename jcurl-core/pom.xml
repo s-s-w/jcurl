@@ -225,6 +225,24 @@
 			<version>1.0</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>edu.umd.cs.hcil</groupId>
+			<artifactId>piccolo</artifactId>
+			<version>1.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>edu.umd.cs.hcil</groupId>
+			<artifactId>examples</artifactId>
+			<version>1.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>no.geosoft.cc.graphics</groupId>
+			<artifactId>demos</artifactId>
+			<version>1.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<reporting>
 		<plugins>
@@ -307,6 +325,17 @@
 			</plugin>
 		</plugins>
 	</reporting>
+	<repositories>
+		<repository>
+			<id>jcurl-repository</id>
+			<name>JCurl Maven Repository</name>
+			<layout>default</layout>
+			<url>http://www.jcurl.org/m2/repo</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 	<distributionManagement>
 		<repository>
 			<id>jcurl-repository</id>

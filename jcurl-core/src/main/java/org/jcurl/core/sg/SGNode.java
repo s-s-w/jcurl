@@ -21,14 +21,18 @@ package org.jcurl.core.sg;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.util.EventObject;
 import java.util.List;
+
+import org.jcurl.core.sg.SGRoot.NodeChangeEvent;
 
 /**
  * 2D Scenegraph node.
  * <p>
  * IS a {@link List} rather than just containing one: Keep control to manage
- * parentship for event propagation.
+ * parentship for {@link NodeChangeEvent} delivery.
+ * </p>
+ * <p>
+ * Quick hashing is crucible for quick rendering!
  * </p>
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -36,32 +40,15 @@ import java.util.List;
  */
 public interface SGNode extends List<SGNode> {
 
-    public static class NodeChangeEvent extends EventObject {
-        private static final long serialVersionUID = 6616942653781761891L;
-
-        public final SGNode node;
-
-        public NodeChangeEvent(final SGNode node) {
-            super(node);
-            this.node = node;
-        }
-    }
-
-    public static interface NodeChangeListener {
-        public void nodeChange(NodeChangeEvent evt);
-    }
-
-    public abstract boolean addNodeChangeListener(NodeChangeListener l);
-
     public abstract double distance(Point2D p);
 
-    public void fireNodeChange();
+    public abstract void fireNodeChange();
 
     public abstract SGNode getParent();
 
-    public abstract AffineTransform getTrafo();
+    public abstract SGRoot getRoot();
 
-    public abstract boolean removeNodeChangeListener(NodeChangeListener l);
+    public abstract AffineTransform getTrafo();
 
     /**
      * Non-recursive rendering.
