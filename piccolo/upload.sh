@@ -23,9 +23,9 @@ function mvndeploy {
 }
 
 srcFile=/home/m/tmp/piccolo-1.2/build/piccolo.jar
-pomFile=piccolo.pom
+pomFile=piccolo.pom.xml
 mvndeploy
 
 srcFile=/home/m/tmp/piccolo-1.2/build/piccolox.jar
-pomFile=piccolox.pom
+pomFile=piccolox.pom.xml
 mvndeploy
