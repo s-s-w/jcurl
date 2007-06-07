@@ -29,3 +29,7 @@ mvndeploy
 srcFile=/home/m/tmp/piccolo-1.2/build/piccolox.jar
 pomFile=piccolox.pom.xml
 mvndeploy
+
+srcFile=/home/m/tmp/piccolo-1.2/build/examples.jar
+pomFile=examples.pom.xml
+mvndeploy
