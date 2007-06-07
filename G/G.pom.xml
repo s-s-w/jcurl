@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>no.geosoft.cc.graphics</groupId>
+	<artifactId>G</artifactId>
+	<version>1.0</version>
+	<name>G</name>
+	<description>
+		G is a generic graphics library built on top of Java 2D in order
+		to make scene graph oriented 2D graphics available to client
+		applications in a high level, easy to use way.
+	</description>
+	<url>http://geosoft.no/graphics/index.html</url>
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License</name>
+			<url>http://www.gnu.org/copyleft/lesser.html</url>
+			<distribution>manual</distribution>
+		</license>
+	</licenses>
+	<organization>
+		<name>GeoSoft Geotechnical Software Services</name>
+		<url>http://geosoft.no/</url>
+	</organization>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
