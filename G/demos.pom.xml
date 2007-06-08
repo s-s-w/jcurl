@@ -6,7 +6,7 @@
 	<groupId>no.geosoft.cc.graphics</groupId>
 	<artifactId>demos</artifactId>
 	<version>1.0</version>
-	<name>G</name>
+	<name>G Demos</name>
 	<description>
 		G is a generic graphics library built on top of Java 2D in order
 		to make scene graph oriented 2D graphics available to client
