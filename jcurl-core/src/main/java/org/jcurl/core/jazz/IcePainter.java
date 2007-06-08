@@ -18,9 +18,11 @@
  */
 package org.jcurl.core.jazz;
 
+import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
+import java.awt.geom.AffineTransform;
 
 import org.jcurl.core.base.Zoomer;
 
@@ -28,17 +30,19 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.nodes.PPath;
 
 /**
- * Strategy to paint the ice sheet in world coordinates.
+ * Creates a node displaying a sheet of ice and changes to a <b>RIGHT HANDED</b>
+ * coordinate system.
  * 
- * @see org.jcurl.core.swing.RockPainter
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id:IcePainter.java 378 2007-01-24 01:18:35Z mrohrmoser $
+ * @version $Id$
  */
 public class IcePainter extends org.jcurl.core.swing.IcePainter {
 
+    /**
+     * Do it!
+     */
     public static PNode create() {
-        final PNode r = new PPath();
-        r.scale(1.0 / Zoomer.SCALE);
+        final PNode r = new PNode();
         r.addChild(node(hog2hog, colors.hog2hog, colors.stroke));
         r.addChild(node(hog2tee, colors.hog2tee, colors.stroke));
         r.addChild(node(centerLe, colors.contours, colors.stroke));
@@ -55,12 +59,20 @@ public class IcePainter extends org.jcurl.core.swing.IcePainter {
         r.addChild(node(tee, colors.contours, colors.stroke));
         r.addChild(node(nearHog, colors.contours, colors.stroke));
         r.addChild(node(farHog, colors.contours, colors.stroke));
+        // Make coord-sys right-handed:
+        r.setTransform(AffineTransform.getScaleInstance(1, -1));
         return r;
     }
 
-    static PNode node(final Shape s, final Paint p, final Stroke l) {
+    private static PNode node(final Shape s, final Paint p, final Stroke l) {
         final PNode n = new PPath(s, l);
         n.setPaint(p);
+        n.setScale(1.0 / Zoomer.SCALE);
         return n;
+    }
+
+    @Override
+    public void paintIceWC(final Graphics2D g) {
+        throw new UnsupportedOperationException();
     }
 }

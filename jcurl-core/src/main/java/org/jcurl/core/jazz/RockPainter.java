@@ -18,10 +18,11 @@
  */
 package org.jcurl.core.jazz;
 
-import java.awt.Component;
+import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
+import java.awt.geom.AffineTransform;
 
 import org.jcurl.core.base.Zoomer;
 
@@ -31,22 +32,35 @@ import edu.umd.cs.piccolo.nodes.PText;
 
 public class RockPainter extends org.jcurl.core.swing.RockPainter {
 
-    public static PNode create(final int i, final boolean isDark) {
-        final PNode r = new PPath();
-        r.scale(1.0 / Zoomer.SCALE);
+    public static PNode create(final int idx16) {
+        return create(idx16 / 2, idx16 % 2 == 0);
+    }
+
+    public static PNode create(final int idx8, final boolean isDark) {
+        final PNode r = new PNode();
         r.addChild(node(outer, colors.granite, null));
         r.addChild(node(inner, isDark ? colors.dark : colors.light, null));
-        final PText t = new PText(Integer.toString(i + 1));
+        final PText t = new PText(Integer.toString(idx8 + 1));
         t.setFont(org.jcurl.core.swing.RockPainter.fo);
         t.setTextPaint(colors.contour);
-        t.setJustification(Component.CENTER_ALIGNMENT);
+        t.setScale(1.0 / Zoomer.SCALE);
+        t.translate(-0.5 * t.getWidth(), -0.5 * t.getHeight());
         r.addChild(t);
+        // Make coord-sys left-handed again, as the ice is assumed to be
+        // right-handed:
+        r.setTransform(AffineTransform.getScaleInstance(1, -1));
         return r;
     }
 
     static PNode node(final Shape s, final Paint p, final Stroke l) {
         final PNode n = new PPath(s, l);
         n.setPaint(p);
+        n.setScale(1.0 / Zoomer.SCALE);
         return n;
+    }
+
+    @Override
+    public void paintRockRC(final Graphics2D g, final boolean isDark, final int idx) {
+        throw new UnsupportedOperationException();
     }
 }

@@ -16,42 +16,47 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.sg;
+package org.jcurl.core.jazz;
+
+import java.awt.Color;
 
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.TestShowBase;
-import org.jcurl.core.swing.CurvePainter;
-import org.jcurl.core.swing.IcePainter;
-import org.jcurl.core.swing.RockPainter;
 
-public class SGComponentTest extends TestShowBase {
+import edu.umd.cs.piccolo.PCanvas;
+import edu.umd.cs.piccolo.PNode;
+import edu.umd.cs.piccolo.util.PPaintContext;
 
-    private final SGComponent sg;
+public class PiccoloBasicTest extends TestShowBase {
 
-    public SGComponentTest() {
+    private final PCanvas pico;
+
+    public PiccoloBasicTest() {
         super();
         if (frame != null) {
             frame.getContentPane().remove(display);
-            frame.getContentPane().add(sg = new SGComponent());
+            frame.getContentPane().add(pico = new PCanvas());
         } else
-            sg = null;
+            pico = null;
     }
 
     public void testThroughPut() throws InterruptedException {
         if (frame == null)
             return;
-        final SGPositionSet _ini = new SGPositionSet(PositionSet.allHome(),
-                new RockPainter());
-        final SGTrajectory _tra = new SGTrajectory(null, new CurvePainter(null, null,
-                null));
-        final SGIce _ice = new SGIce(new IcePainter());
 
-        _ice.add(_ini);
-        _ini.add(_tra);
-        _ini.add(new SGBroom(null));
-        _tra.add(new SGPositionSet(PositionSet.allOut(), new RockPainter()));
+        pico.setBackground(new Color(0xE8E8FF));
+        pico.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+        pico.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+        // Shift origin to center of the frame:
+        pico.getLayer().offset(0.5 * frame.getWidth(), 0.5 * frame.getHeight());
+        pico.getLayer().scale(50);
+        frame.getContentPane().add(pico);
 
-        sg.setRoot(_ice);
+        // some curling:
+        final PNode ice = IcePainter.create();
+        pico.getLayer().addChild(ice);
+        ice.addChild(new PPositionSet(PositionSet.allOut()));
+        
         frame.setVisible(true);
         while (frame.isVisible())
             Thread.sleep(100);

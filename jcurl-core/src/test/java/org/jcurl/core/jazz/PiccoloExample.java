@@ -24,12 +24,10 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.base.PositionSet;
 
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PNode;
-import edu.umd.cs.piccolo.nodes.PPath;
-import edu.umd.cs.piccolo.nodes.PText;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
 /**
@@ -59,26 +57,18 @@ public class PiccoloExample {
 
         frame.setBounds(0, 0, 800, 600);
         pico = new PCanvas();
+        pico.setBackground(new Color(0xE8E8FF));
         pico.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         pico.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+        // Shift origin to center of the frame:
+        pico.getLayer().offset(0.5 * frame.getWidth(), 0.5 * frame.getHeight());
+        pico.getLayer().scale(50);
         frame.getContentPane().add(pico);
-        
-        // some text:
-        final PText a = new PText("Hello");
-        a.setTextPaint(Color.BLUE);
-        final PText b = new PText("World!");
-        b.setTextPaint(Color.RED);
-        pico.getLayer().addChild(a);
-        a.addChild(b);
-        b.translate(10, 20);
 
         // some curling:
-        final PNode t = new PPath();
-        t.addChild(IcePainter.create());
-        final PNode r = RockPainter.create(0, true);
-        r.translate(1 * Zoomer.SCALE, 1 * Zoomer.SCALE);
-        t.addChild(r);
-        pico.getLayer().addChild(t);
+        final PNode ice = IcePainter.create();
+        pico.getLayer().addChild(ice);
+        ice.addChild(new PPositionSet(PositionSet.allOut()));
         
         frame.setVisible(true);
     }
