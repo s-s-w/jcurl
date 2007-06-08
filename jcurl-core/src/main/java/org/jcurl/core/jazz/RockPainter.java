@@ -39,23 +39,30 @@ import edu.umd.cs.piccolo.nodes.PText;
  */
 public class RockPainter extends org.jcurl.core.swing.RockPainter {
 
-    public static PNode create(final int idx16) {
+    protected static final String[] labels = { "1", "2", "3", "4", "5", "6",
+            "7", "8" };
+
+    public static PRock create(final int idx16) {
         return create(idx16 / 2, idx16 % 2 == 0);
     }
 
-    public static PNode create(final int idx8, final boolean isDark) {
-        final PNode r = new PNode();
+    public static PRock create(final int idx8, final boolean isDark) {
+        final PRock r = new PRock();
         r.addChild(node(outer, colors.granite, null));
         r.addChild(node(inner, isDark ? colors.dark : colors.light, null));
-        final PText t = new PText(Integer.toString(idx8 + 1));
+        final PText t = new PText(labels[idx8]);
         t.setFont(org.jcurl.core.swing.RockPainter.fo);
         t.setTextPaint(colors.contour);
-        t.setScale(1.0 / Zoomer.SCALE);
-        t.translate(-0.5 * t.getWidth(), -0.5 * t.getHeight());
-        r.addChild(t);
         // Make coord-sys left-handed again, as the ice is assumed to be
         // right-handed:
-        r.setTransform(AffineTransform.getScaleInstance(1, -1));
+        t.setTransform(AffineTransform.getScaleInstance(1, -1));
+        t.scale(1.0 / Zoomer.SCALE);
+        t.translate(-0.5 * t.getWidth(), -0.5 * t.getHeight());
+        t.setPickable(false);
+        r.addChild(t);
+        // r.setChildrenPickable(false);
+        // r.setPickable(true);
+        r.getChild(0).setPickable(true);
         return r;
     }
 
@@ -63,6 +70,7 @@ public class RockPainter extends org.jcurl.core.swing.RockPainter {
         final PNode n = new PPath(s, l);
         n.setPaint(p);
         n.setScale(1.0 / Zoomer.SCALE);
+        n.setPickable(false);
         return n;
     }
 

@@ -30,8 +30,8 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.nodes.PPath;
 
 /**
- * Creates a node displaying a sheet of ice and changes to a <b>RIGHT HANDED</b>
- * coordinate system.
+ * Creates a {@link PNode} displaying a sheet of ice and changes to a <b>RIGHT
+ * HANDED</b> coordinate system.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
@@ -40,25 +40,31 @@ public class IcePainter extends org.jcurl.core.swing.IcePainter {
 
     /**
      * Do it!
+     * 
+     * @return the new PNode
      */
     public static PNode create() {
-        final PNode r = new PNode();
-        r.addChild(node(hog2hog, colors.hog2hog, colors.stroke));
-        r.addChild(node(hog2tee, colors.hog2tee, colors.stroke));
-        r.addChild(node(centerLe, colors.contours, colors.stroke));
-        r.addChild(node(centerRi, colors.contours, colors.stroke));
-        r.addChild(node(tee2back, colors.tee2back, colors.stroke));
-        r.addChild(node(C12, colors.c12, null));
-        r.addChild(node(C8, colors.c8, null));
-        r.addChild(node(C4, colors.c4, null));
-        r.addChild(node(C1, colors.c1, null));
-        r.addChild(node(center, colors.contours, colors.stroke));
-        r.addChild(node(centerLeft, colors.contours, colors.stroke));
-        r.addChild(node(centerRight, colors.contours, colors.stroke));
-        r.addChild(node(back, colors.contours, colors.stroke));
-        r.addChild(node(tee, colors.contours, colors.stroke));
-        r.addChild(node(nearHog, colors.contours, colors.stroke));
-        r.addChild(node(farHog, colors.contours, colors.stroke));
+        final PNode ice = new PNode();
+        ice.addChild(node(hog2hog, colors.hog2hog, colors.stroke));
+        ice.addChild(node(hog2tee, colors.hog2tee, colors.stroke));
+        ice.addChild(node(centerLe, colors.contours, colors.stroke));
+        ice.addChild(node(centerRi, colors.contours, colors.stroke));
+        ice.addChild(node(tee2back, colors.tee2back, colors.stroke));
+        ice.addChild(node(C12, colors.c12, null));
+        ice.addChild(node(C8, colors.c8, null));
+        ice.addChild(node(C4, colors.c4, null));
+        ice.addChild(node(C1, colors.c1, null));
+        ice.addChild(node(center, colors.contours, colors.stroke));
+        ice.addChild(node(centerLeft, colors.contours, colors.stroke));
+        ice.addChild(node(centerRight, colors.contours, colors.stroke));
+        ice.addChild(node(back, colors.contours, colors.stroke));
+        ice.addChild(node(tee, colors.contours, colors.stroke));
+        ice.addChild(node(nearHog, colors.contours, colors.stroke));
+        ice.addChild(node(farHog, colors.contours, colors.stroke));        
+        ice.setChildrenPickable(false);
+        ice.setPickable(false);
+        final PNode r = new PNode();        
+        r.addChild(ice);
         // Make coord-sys right-handed:
         r.setTransform(AffineTransform.getScaleInstance(1, -1));
         return r;
@@ -68,6 +74,7 @@ public class IcePainter extends org.jcurl.core.swing.IcePainter {
         final PNode n = new PPath(s, l);
         n.setPaint(p);
         n.setScale(1.0 / Zoomer.SCALE);
+        n.setPickable(false);
         return n;
     }
 

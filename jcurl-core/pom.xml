@@ -132,6 +132,16 @@
 	</build>
 	<dependencies>
 		<dependency>
+			<groupId>edu.umd.cs.hcil</groupId>
+			<artifactId>piccolo</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.1</version>
@@ -153,11 +163,6 @@
 					<groupId>log4j</groupId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>com.thoughtworks.xstream</groupId>
-			<artifactId>xstream</artifactId>
-			<version>1.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
@@ -225,18 +230,12 @@
 			<version>1.0</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>edu.umd.cs.hcil</groupId>
-			<artifactId>piccolo</artifactId>
-			<version>1.2</version>
-			<scope>test</scope>
-		</dependency>
 		<!-- dependency>
 			<groupId>edu.umd.cs.hcil</groupId>
 			<artifactId>examples</artifactId>
 			<version>1.2</version>
 			<scope>test</scope>
-		</dependency -->
+			</dependency -->
 		<dependency>
 			<groupId>no.geosoft.cc.graphics</groupId>
 			<artifactId>demos</artifactId>

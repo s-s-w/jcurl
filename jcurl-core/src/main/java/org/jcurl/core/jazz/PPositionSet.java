@@ -28,7 +28,7 @@ import org.jcurl.core.base.RockSet;
 import edu.umd.cs.piccolo.PNode;
 
 /**
- * Piccolo Node backed with a {@link PositionSet}.
+ * Piccolo {@link PNode} backed with a {@link PositionSet}.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
@@ -61,7 +61,7 @@ public class PPositionSet extends PNode implements PropertyChangeListener {
     private void sync(final PositionSet src, final PPositionSet dst) {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             sync(src.getRock(i), dst.getChild(i));
-        dst.repaint();
+        dst.invalidatePaint();
     }
 
     private void sync(final Rock src, final PNode dst) {

@@ -25,6 +25,7 @@ import org.jcurl.core.base.TestShowBase;
 
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PNode;
+import edu.umd.cs.piccolo.event.PDragEventHandler;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
 public class PiccoloBasicTest extends TestShowBase {
@@ -44,6 +45,9 @@ public class PiccoloBasicTest extends TestShowBase {
         if (frame == null)
             return;
 
+        pico.removeInputEventListener(pico.getPanEventHandler());
+        pico.addInputEventListener(new PDragEventHandler());
+        
         pico.setBackground(new Color(0xE8E8FF));
         pico.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         pico.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);

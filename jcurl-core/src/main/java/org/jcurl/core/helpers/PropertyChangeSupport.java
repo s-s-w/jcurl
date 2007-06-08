@@ -283,7 +283,7 @@ public class PropertyChangeSupport {
      * @return An array of all listeners.
      */
     public PropertyChangeListener[] getPropertyChangeListeners() {
-        final Set<PropertyChangeListener> all = new WeakHashSet();
+        final Set<PropertyChangeListener> all = new WeakHashSet<PropertyChangeListener>();
         synchronized (listenerMap) {
             for (final Set<PropertyChangeListener> element : listenerMap
                     .values())
