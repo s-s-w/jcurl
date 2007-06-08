@@ -130,30 +130,30 @@ public class IcePainter implements Strategy {
         centerRight = new Line2D.Float(dx, fhy, dx, -by);
     }
 
-    public final ColorSet color = new ColorSet();
+    protected static final ColorSet colors = new ColorSet();
 
     public void paintIceWC(final Graphics2D g) {
-        g.setStroke(color.stroke);
+        g.setStroke(colors.stroke);
         // filled stuff
-        g.setPaint(color.hog2hog);
+        g.setPaint(colors.hog2hog);
         g.fill(hog2hog);
-        g.setPaint(color.hog2tee);
+        g.setPaint(colors.hog2tee);
         g.fill(hog2tee);
-        g.setPaint(color.contours);
+        g.setPaint(colors.contours);
         g.draw(centerLe);
         g.draw(centerRi);
-        g.setPaint(color.tee2back);
+        g.setPaint(colors.tee2back);
         g.fill(tee2back);
-        g.setPaint(color.c12);
+        g.setPaint(colors.c12);
         g.fill(C12);
-        g.setPaint(color.c8);
+        g.setPaint(colors.c8);
         g.fill(C8);
-        g.setPaint(color.c4);
+        g.setPaint(colors.c4);
         g.fill(C4);
-        g.setPaint(color.c1);
+        g.setPaint(colors.c1);
         g.fill(C1);
         // contours
-        g.setPaint(color.contours);
+        g.setPaint(colors.contours);
         // g.draw(C12);
         // g.draw(C8);
         // g.draw(C4);

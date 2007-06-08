@@ -193,7 +193,7 @@ public class TrajectoryDisplay extends WCComponent implements
         if (getIcePainter() == null)
             return;
         // background
-        g2.setPaint(getIcePainter().color.backGround);
+        g2.setPaint(getIcePainter().colors.backGround);
         g2.fillRect(0, 0, getWidth(), getHeight());
         g2.transform(wc_mat);
         // IceSize

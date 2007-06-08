@@ -52,11 +52,11 @@ public class RockPainter implements Strategy {
         public Paint light = new Color(0xFFFF00);
     }
 
-    private static final Font fo;
+    protected static final Font fo;
 
     protected static final Arc2D.Float inner;
 
-    private static final char[] labels = { '1', '2', '3', '4', '5', '6', '7',
+    protected static final char[] labels = { '1', '2', '3', '4', '5', '6', '7',
             '8' };
 
     protected static final Arc2D.Float outer;
@@ -71,7 +71,7 @@ public class RockPainter implements Strategy {
         inner = new Arc2D.Float(-ri, -ri, 2 * ri, 2 * ri, 0, 360, Arc2D.CHORD);
     }
 
-    private final ColorSet colors = new ColorSet();
+    protected static final ColorSet colors = new ColorSet();
 
     private FontMetrics fm = null;
 

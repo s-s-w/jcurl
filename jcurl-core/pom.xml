@@ -231,12 +231,12 @@
 			<version>1.2</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+		<!-- dependency>
 			<groupId>edu.umd.cs.hcil</groupId>
 			<artifactId>examples</artifactId>
 			<version>1.2</version>
 			<scope>test</scope>
-		</dependency>
+		</dependency -->
 		<dependency>
 			<groupId>no.geosoft.cc.graphics</groupId>
 			<artifactId>demos</artifactId>
@@ -267,6 +267,10 @@
 						<link>
 							http://jakarta.apache.org/commons/math/api-1.1/
 						</link>
+						<link>
+							http://www.cs.umd.edu/hcil/jazz/learn/piccolo/doc-1.2/api/
+						</link>
+						<link>http://geosoft.no/graphics/G/docs/</link>
 					</links>
 					<tags>
 						<tag>
