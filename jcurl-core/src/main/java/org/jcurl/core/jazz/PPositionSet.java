@@ -44,11 +44,11 @@ public class PPositionSet extends PNode implements PropertyChangeListener {
         for (int i = 0; i < RockSet.ROCKS_PER_SET; i++)
             addChild(i, RockPainter.create(i));
         p.addPropertyChangeListener(this);
-        sync(this, this.p);
+        sync(this.p, this);
     }
 
     public void propertyChange(final PropertyChangeEvent evt) {
-        sync(this, p);
+        sync(p, this);
     }
 
     @Override
@@ -58,14 +58,14 @@ public class PPositionSet extends PNode implements PropertyChangeListener {
             getChild(i).setPickable(arg0);
     }
 
-    private void sync(final PNode node, final Rock r) {
-        node.setRotation(r.getA());
-        node.setOffset(r.getX(), r.getY());
+    private void sync(final PositionSet src, final PPositionSet dst) {
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+            sync(src.getRock(i), dst.getChild(i));
+        dst.repaint();
     }
 
-    private void sync(final PPositionSet n, final PositionSet p) {
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
-            sync(n.getChild(i), p.getRock(i));
-        n.repaint();
+    private void sync(final Rock src, final PNode dst) {
+        dst.setRotation(src.getA());
+        dst.setOffset(src.getX(), src.getY());
     }
 }

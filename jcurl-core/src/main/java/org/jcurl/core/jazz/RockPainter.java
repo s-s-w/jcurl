@@ -30,6 +30,13 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.nodes.PPath;
 import edu.umd.cs.piccolo.nodes.PText;
 
+/**
+ * Creates a node displaying one rock, assuming a <b>RIGHT HANDED</b> parent
+ * coordinate system.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public class RockPainter extends org.jcurl.core.swing.RockPainter {
 
     public static PNode create(final int idx16) {
@@ -60,7 +67,8 @@ public class RockPainter extends org.jcurl.core.swing.RockPainter {
     }
 
     @Override
-    public void paintRockRC(final Graphics2D g, final boolean isDark, final int idx) {
+    public void paintRockRC(final Graphics2D g, final boolean isDark,
+            final int idx) {
         throw new UnsupportedOperationException();
     }
 }
