@@ -18,8 +18,8 @@
  */
 package org.jcurl.core.base;
 
-import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.RectangularShape;
 
 import org.jcurl.core.helpers.MutableObject;
 
@@ -48,6 +48,6 @@ public abstract class Zoomer extends MutableObject {
      *            {@link AffineTransform#setToIdentity()}&nbsp;before.
      * @return the transformation
      */
-    public abstract AffineTransform computeWctoDcTrafo(final Rectangle dc,
+    public abstract AffineTransform computeWctoDcTrafo(final RectangularShape dc,
             AffineTransform mat);
 }

@@ -19,25 +19,24 @@
 package org.jcurl.core.zui;
 
 import java.awt.Color;
-import java.awt.Rectangle;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.geom.RectangularShape;
+import java.awt.geom.Rectangle2D;
 
 import javax.swing.JFrame;
 
+import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.model.FixpointZoomer;
-import org.jcurl.core.zui.IcePainter;
-import org.jcurl.core.zui.PPositionSet;
-import org.jcurl.core.zui.PRock;
+import org.jcurl.core.base.RockProps;
 
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
 import edu.umd.cs.piccolo.event.PInputEvent;
+import edu.umd.cs.piccolo.event.PInputEventFilter;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
 /**
@@ -45,21 +44,26 @@ import edu.umd.cs.piccolo.util.PPaintContext;
  * @version $Id$
  */
 public class PiccoloExample {
+
     static class HouseZoom extends PBasicInputEventHandler {
+        private final PCamera cam;
+
+        public HouseZoom(final PCamera c) {
+            cam = c;
+        }
+
         @Override
         public void keyPressed(final PInputEvent event) {
             System.out.println("Keypressed");
             switch (event.getKeyCode()) {
+            case KeyEvent.VK_HOME:
             case KeyEvent.VK_H:
-                System.out.println("Keypressed H");
                 event.setHandled(true);
-                final PCamera cam = event.getCamera();
-                final RectangularShape r0 = cam.getBoundsReference();
-                final Rectangle r = new Rectangle((int) r0.getX(), (int) r0.getY(),
-                        (int) r0.getWidth(), (int) r0.getHeight());
-                FixpointZoomer.HOG2HACK.computeWctoDcTrafo(r, cam
-                        .getTransformReference(false));
-                cam.invalidatePaint();
+                cam.animateViewToCenterBounds(houseP, true, 500);
+                break;
+            case KeyEvent.VK_END:
+                event.setHandled(true);
+                cam.animateViewToCenterBounds(sheetP, true, 500);
                 break;
             default:
                 ;
@@ -71,6 +75,7 @@ public class PiccoloExample {
         private final PPositionSet pos;
 
         public PPositionSetDrag(final PPositionSet pos) {
+            setEventFilter(new PInputEventFilter(InputEvent.BUTTON1_MASK));
             this.pos = pos;
             pos.addInputEventListener(this);
         }
@@ -87,7 +92,26 @@ public class PiccoloExample {
         }
     }
 
+    /** House area plus 1 rock margin plus "out" rock space. */
+    static final Rectangle2D houseP;
+
     private static final long serialVersionUID = -8485372274509187133L;
+
+    /**
+     * Inter-hog area area plus house area plus 1 rock margin plus "out" rock
+     * space.
+     */
+    static final Rectangle2D sheetP;
+
+    static {
+        final double r2 = 2 * RockProps.DEFAULT.getRadius();
+        final double x = IceSize.SIDE_2_CENTER + r2;
+        houseP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_TEE + r2), 2 * x,
+                IceSize.HOG_2_TEE + IceSize.BACK_2_TEE + 3 * r2 + 2 * r2);
+        sheetP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_HOG
+                + IceSize.HOG_2_TEE + r2), 2 * x, IceSize.HOG_2_HOG
+                + IceSize.HOG_2_TEE + IceSize.BACK_2_TEE + 3 * r2 + 2 * r2);
+    }
 
     public static void main(final String[] args) {
         new PiccoloExample();
@@ -111,9 +135,10 @@ public class PiccoloExample {
         pico.setBackground(new Color(0xE8E8FF));
         pico.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         pico.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+        final PCamera cam = pico.getCamera();
         // Shift origin to center of the frame:
-        pico.getLayer().offset(0.5 * frame.getWidth(), 0.5 * frame.getHeight());
-        pico.getLayer().scale(50);
+        cam.setViewOffset(0.5 * frame.getWidth(), 0.5 * frame.getHeight());
+        cam.setViewScale(50);
         frame.getContentPane().add(pico);
 
         // some curling:
@@ -123,7 +148,11 @@ public class PiccoloExample {
         ice.addChild(pos);
         new PPositionSetDrag(pos);
 
-        pico.addInputEventListener(new HouseZoom());
+        // some helpers:
+        // pico.getLayer().addChild(new PPath(house));
+
+        pico.getRoot().getDefaultInputManager().setKeyboardFocus(
+                new HouseZoom(cam));
         frame.setVisible(true);
     }
 }

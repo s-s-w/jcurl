@@ -18,10 +18,10 @@
  */
 package org.jcurl.core.model;
 
-import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RectangularShape;
 
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.Orientation;
@@ -66,7 +66,7 @@ public class FixpointZoomer extends Zoomer {
 
     private static final boolean uniform = true;
 
-    private static final Rectangle2D create(final Point2D tl, final Point2D br) {
+    private static final RectangularShape create(final Point2D tl, final Point2D br) {
         final double tlx;
         if (tl.getX() < br.getX())
             tlx = tl.getX();
@@ -84,10 +84,10 @@ public class FixpointZoomer extends Zoomer {
 
     private final Point2D fixPoint;
 
-    private final Rectangle2D viewport;
+    private final RectangularShape viewport;
 
     /**
-     * @see #FixpointZoomer(String, Rectangle2D, Point2D)
+     * @see #FixpointZoomer(String, RectangularShape, Point2D)
      * @param txt
      * @param x0
      * @param y0
@@ -103,7 +103,7 @@ public class FixpointZoomer extends Zoomer {
     }
 
     /**
-     * @see #FixpointZoomer(String, Rectangle2D, Point2D)
+     * @see #FixpointZoomer(String, RectangularShape, Point2D)
      * @param txt
      * @param x0
      * @param y0
@@ -117,7 +117,7 @@ public class FixpointZoomer extends Zoomer {
     }
 
     /**
-     * @see #FixpointZoomer(String, Rectangle2D, Point2D)
+     * @see #FixpointZoomer(String, RectangularShape, Point2D)
      * @param txt
      * @param tl
      * @param br
@@ -129,7 +129,7 @@ public class FixpointZoomer extends Zoomer {
     }
 
     /**
-     * @see #computeWctoDcTrafo(Rectangle, Orientation, boolean,
+     * @see #computeWctoDcTrafo(RectangularShape, Orientation, boolean,
      *      AffineTransform)
      * @param txt
      * @param wc
@@ -138,14 +138,14 @@ public class FixpointZoomer extends Zoomer {
      *            this point's relative position to the wc-viewport is mapped to
      *            the same relative position in the dc-viewport.
      */
-    public FixpointZoomer(final String txt, final Rectangle2D wc,
+    public FixpointZoomer(final String txt, final RectangularShape wc,
             final Point2D fixPoint) {
-        viewport = (Rectangle2D) wc.clone();
+        viewport = (RectangularShape) wc.clone();
         this.fixPoint = (Point2D) fixPoint.clone();
     }
 
     @Override
-    public AffineTransform computeWctoDcTrafo(final Rectangle dc,
+    public AffineTransform computeWctoDcTrafo(final RectangularShape dc,
             final AffineTransform mat) {
         return computeWctoDcTrafo(dc, Orientation.W, true, mat);
     }
@@ -164,7 +164,7 @@ public class FixpointZoomer extends Zoomer {
      *            {@link AffineTransform#setToIdentity()}&nbsp;before.
      * @return the transformation
      */
-    AffineTransform computeWctoDcTrafo(final Rectangle dc,
+    AffineTransform computeWctoDcTrafo(final RectangularShape dc,
             final Orientation orient, final boolean isLeftHanded,
             AffineTransform mat) {
         if (mat == null)
