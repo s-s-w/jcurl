@@ -16,54 +16,23 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.jazz;
+package org.jcurl.core.zui;
 
 import java.awt.Color;
-import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.geom.RectangularShape;
-
-import javax.swing.JFrame;
 
 import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.model.FixpointZoomer;
+import org.jcurl.core.base.TestShowBase;
+import org.jcurl.core.zui.IcePainter;
+import org.jcurl.core.zui.PPositionSet;
+import org.jcurl.core.zui.PRock;
 
-import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
 import edu.umd.cs.piccolo.event.PInputEvent;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
-/**
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
- */
-public class PiccoloExample {
-    static class HouseZoom extends PBasicInputEventHandler {
-        @Override
-        public void keyPressed(final PInputEvent event) {
-            System.out.println("Keypressed");
-            switch (event.getKeyCode()) {
-            case KeyEvent.VK_H:
-                System.out.println("Keypressed H");
-                event.setHandled(true);
-                final PCamera cam = event.getCamera();
-                final RectangularShape r0 = cam.getBoundsReference();
-                final Rectangle r = new Rectangle((int) r0.getX(), (int) r0.getY(),
-                        (int) r0.getWidth(), (int) r0.getHeight());
-                FixpointZoomer.HOG2HACK.computeWctoDcTrafo(r, cam
-                        .getTransformReference(false));
-                cam.invalidatePaint();
-                break;
-            default:
-                ;
-            }
-        }
-    }
-
+public class PiccoloBasicTest extends TestShowBase {
     static class PPositionSetDrag extends PBasicInputEventHandler {
         private final PPositionSet pos;
 
@@ -77,34 +46,34 @@ public class PiccoloExample {
             final PNode aNode = event.getPickedNode();
             if (!(aNode instanceof PRock))
                 return;
-            final PRock n = (PRock) aNode;
-            n.r.setLocation(n.getParent().globalToLocal(event.getPosition()));
             event.setHandled(true);
+            final PRock n = (PRock) aNode;
+            // TODO Add overlap detection!
+            n.r.setLocation(n.getParent().globalToLocal(event.getPosition()));
+            pos.sync(n);
+        }
+
+        @Override
+        public void mouseReleased(final PInputEvent arg0) {
             pos.p.notifyChange();
+            super.mouseReleased(arg0);
         }
     }
 
-    private static final long serialVersionUID = -8485372274509187133L;
-
-    public static void main(final String[] args) {
-        new PiccoloExample();
-    }
-
-    private final JFrame frame;
-
     private final PCanvas pico;
 
-    public PiccoloExample() {
-        frame = new JFrame("Piccolo Example");
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(final WindowEvent e) {
-                System.exit(0);
-            }
-        });
+    public PiccoloBasicTest() {
+        super();
+        if (frame != null) {
+            frame.getContentPane().remove(display);
+            frame.getContentPane().add(pico = new PCanvas());
+        } else
+            pico = null;
+    }
 
-        frame.setBounds(0, 0, 800, 600);
-        pico = new PCanvas();
+    public void testThroughPut() throws InterruptedException {
+        if (frame == null)
+            return;
         pico.setBackground(new Color(0xE8E8FF));
         pico.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         pico.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
@@ -120,7 +89,8 @@ public class PiccoloExample {
         ice.addChild(pos);
         new PPositionSetDrag(pos);
 
-        pico.addInputEventListener(new HouseZoom());
         frame.setVisible(true);
+        while (frame.isVisible())
+            Thread.sleep(100);
     }
 }

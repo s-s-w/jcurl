@@ -27,7 +27,7 @@
  * Piccolo was written at the Human-Computer Interaction Laboratory www.cs.umd.edu/hcil by Jesse Grosjean
  * under the supervision of Ben Bederson. The Piccolo website is www.cs.umd.edu/hcil/piccolo.
  */
-package org.jcurl.core.jazz;
+package org.jcurl.core.zui;
 
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.util.PPickPath;
