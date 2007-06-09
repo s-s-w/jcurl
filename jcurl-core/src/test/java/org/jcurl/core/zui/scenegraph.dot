@@ -55,6 +55,8 @@ subgraph cluster_scenegraph {
 	ice -> current;
 	ice -> initial;
 
+	broom -> broom_fancy;
+
 	initial -> rock_simple [label="16x"];
 	initial -> PPositionSet [color=blue];
 	initial -> PPositionSetDrag;
