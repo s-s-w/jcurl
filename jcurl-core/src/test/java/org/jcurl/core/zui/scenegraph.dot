@@ -1,0 +1,73 @@
+#!/usr/bin/dot -Tsvg -o scenegraph.svg
+/*
+    $Id$
+
+	See http://www.graphviz.org/Documentation.php
+	
+*/
+digraph G {
+	rankdir=TD;
+
+	label="Scenegraph for PiccoloBasicTest";
+	size="10,8"; 
+	node [color=lightblue2, style=filled, fontsize=10];
+	edge [fontsize=9];
+
+subgraph cluster_jcurl_classes { 
+	node [shape=record];
+	label="JCurl Classes"; 
+	
+	PositionSet;
+	Rock;
+	TrajectorySet;
+	PositionSet -> Rock [label="16x"];
+	index16;
+}
+subgraph cluster_zui_classes { 
+	node [shape=record];
+	label="Piccolo Nodes"; 
+	
+	PPositionSet;
+#	PRock;
+	PTrajectorySet -> TrajectorySet;
+
+#	PPositionSet -> PRock [label="16x"];
+	PPositionSet -> PositionSet
+#	PRock -> Rock;
+}
+subgraph cluster_zui_events { 
+	node [shape=record];
+	label="Piccolo Events"; 
+	
+	ZoomHouse;
+	PPositionSetDrag;
+}
+subgraph cluster_scenegraph { 
+	label="Piccolo Scenegraph"; 
+	canvas -> camera;
+	canvas -> layer;
+	camera -> layer;
+	layer -> ice;
+	camera -> ZoomHouse;
+	ice -> ice_fancy;
+	ice -> broom;
+	ice -> trajectory;
+	ice -> current;
+	ice -> initial;
+
+	initial -> rock_simple [label="16x"];
+	initial -> PPositionSet [color=blue];
+	initial -> PPositionSetDrag;
+#	rock_simple -> PRock;
+	rock_simple -> index16;
+
+	current -> rock_fancy [label="16x"];
+	current -> PPositionSet [color=blue];
+#	rock_fancy -> PRock;
+	rock_fancy -> index16;
+	
+	trajectory -> PTrajectorySet [color=blue];
+	trajectory -> path [label="16x"];
+	path -> index16;
+}
+}
