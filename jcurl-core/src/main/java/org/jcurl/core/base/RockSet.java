@@ -284,7 +284,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     /**
      * Careful - this is several times slower than a for loop over int.
      * <p>
-     * The unbeateable fastest way to iterate it
+     * The unbeateable fastest way to iterate is:
      * 
      * <pre>
      * for (int i = ROCKS_PER_SET - 1; i &gt;= 0; i--)

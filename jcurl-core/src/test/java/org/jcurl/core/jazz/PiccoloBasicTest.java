@@ -25,10 +25,37 @@ import org.jcurl.core.base.TestShowBase;
 
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PNode;
-import edu.umd.cs.piccolo.event.PDragEventHandler;
+import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
+import edu.umd.cs.piccolo.event.PInputEvent;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
 public class PiccoloBasicTest extends TestShowBase {
+    static class PPositionSetDrag extends PBasicInputEventHandler {
+        private final PPositionSet pos;
+
+        public PPositionSetDrag(final PPositionSet pos) {
+            this.pos = pos;
+            pos.addInputEventListener(this);
+        }
+
+        @Override
+        public void mouseDragged(final PInputEvent event) {
+            final PNode aNode = event.getPickedNode();
+            if (!(aNode instanceof PRock))
+                return;
+            event.setHandled(true);
+            final PRock n = (PRock) aNode;
+            // TODO Add overlap detection!
+            n.r.setLocation(n.getParent().globalToLocal(event.getPosition()));
+            pos.sync(n);
+        }
+
+        @Override
+        public void mouseReleased(final PInputEvent arg0) {
+            pos.p.notifyChange();
+            super.mouseReleased(arg0);
+        }
+    }
 
     private final PCanvas pico;
 
@@ -44,10 +71,6 @@ public class PiccoloBasicTest extends TestShowBase {
     public void testThroughPut() throws InterruptedException {
         if (frame == null)
             return;
-
-        pico.removeInputEventListener(pico.getPanEventHandler());
-        pico.addInputEventListener(new PDragEventHandler());
-        
         pico.setBackground(new Color(0xE8E8FF));
         pico.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         pico.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
@@ -59,8 +82,10 @@ public class PiccoloBasicTest extends TestShowBase {
         // some curling:
         final PNode ice = IcePainter.create();
         pico.getLayer().addChild(ice);
-        ice.addChild(new PPositionSet(PositionSet.allOut()));
-        
+        final PPositionSet pos = new PPositionSet(PositionSet.allOut());
+        ice.addChild(pos);
+        new PPositionSetDrag(pos);
+
         frame.setVisible(true);
         while (frame.isVisible())
             Thread.sleep(100);

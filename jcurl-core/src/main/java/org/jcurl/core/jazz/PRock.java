@@ -18,7 +18,14 @@
  */
 package org.jcurl.core.jazz;
 
+import org.jcurl.core.base.Rock;
 
 public class PRock extends PComposite {
     private static final long serialVersionUID = 6171991905996499863L;
+
+    final Rock r;
+
+    public PRock(final Rock r) {
+        this.r = r;
+    }
 }

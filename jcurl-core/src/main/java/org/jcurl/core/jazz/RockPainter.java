@@ -24,6 +24,7 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 
+import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.Zoomer;
 
 import edu.umd.cs.piccolo.PNode;
@@ -42,12 +43,12 @@ public class RockPainter extends org.jcurl.core.swing.RockPainter {
     protected static final String[] labels = { "1", "2", "3", "4", "5", "6",
             "7", "8" };
 
-    public static PRock create(final int idx16) {
-        return create(idx16 / 2, idx16 % 2 == 0);
+    public static PRock create(final int idx16, Rock r) {
+        return create(idx16 / 2, idx16 % 2 == 0, r);
     }
 
-    public static PRock create(final int idx8, final boolean isDark) {
-        final PRock r = new PRock();
+    public static PRock create(final int idx8, final boolean isDark, Rock r_) {
+        final PRock r = new PRock(r_);
         r.addChild(node(outer, colors.granite, null));
         r.addChild(node(inner, isDark ? colors.dark : colors.light, null));
         final PText t = new PText(labels[idx8]);
