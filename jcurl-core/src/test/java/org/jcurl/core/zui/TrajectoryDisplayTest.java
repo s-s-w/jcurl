@@ -36,7 +36,6 @@ import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerDenny;
 import org.jcurl.core.model.CurveManager;
 import org.jcurl.core.model.NewtonCollissionDetector;
-import org.jcurl.mr.gui.TacticsApplet;
 
 import edu.umd.cs.piccolo.PNode;
 
@@ -100,7 +99,7 @@ public class TrajectoryDisplayTest extends TestZuiBase {
         final int dt = 5000;
         final Graphics g = new BufferedImage(1024 * 2, 768 * 2,
                 BufferedImage.TYPE_INT_ARGB).getGraphics();
-        final TrajectorySet p = TacticsApplet.initHammy(null);
+        final TrajectorySet p = initHammy(null);
         final int frames = showTrajectoryDisplay(p, dt, new TimeRunnable() {
             @Override
             public void run(final double t) throws InterruptedException {
@@ -152,6 +151,8 @@ public class TrajectoryDisplayTest extends TestZuiBase {
                 + (System.currentTimeMillis() - t0) + " millis");
         cm.setCurrentTime(0);
 
+        if (frame == null)
+            return;
         final PNode a = new PPositionSet(cm.getCurrentPos(),
                 new PRockFactory.Fancy());
         final PNode b = new PCurveStore(cm.getCurveStore(),
@@ -201,6 +202,8 @@ public class TrajectoryDisplayTest extends TestZuiBase {
                 + (System.currentTimeMillis() - t0) + " millis");
         cm.setCurrentTime(0);
 
+        if (frame == null)
+            return;
         final PNode a = new PPositionSet(cm.getCurrentPos(),
                 new PRockFactory.Fancy());
         final PNode b = new PCurveStore(cm.getCurveStore(),
