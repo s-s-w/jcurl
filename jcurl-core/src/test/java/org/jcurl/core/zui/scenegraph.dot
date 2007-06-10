@@ -21,7 +21,15 @@ subgraph cluster_jcurl_classes {
 	Rock;
 	TrajectorySet;
 	PositionSet -> Rock [label="16x"];
-	index16;
+}
+subgraph cluster_attributes { 
+	node [shape=record];
+	label="Piccolo Attributes"; 
+	
+	a_PositionSet;
+	a_index16;
+	
+	a_PositionSet -> PositionSet;
 }
 subgraph cluster_zui_classes { 
 	node [shape=record];
@@ -39,7 +47,7 @@ subgraph cluster_zui_events {
 	node [shape=record];
 	label="Piccolo Events"; 
 	
-	ZoomHouse;
+	KeyBoardZoom;
 	PPositionSetDrag;
 }
 subgraph cluster_scenegraph { 
@@ -48,7 +56,7 @@ subgraph cluster_scenegraph {
 	canvas -> layer;
 	camera -> layer;
 	layer -> ice;
-	camera -> ZoomHouse;
+	camera -> KeyBoardZoom;
 	ice -> ice_fancy;
 	ice -> broom;
 	ice -> trajectory;
@@ -58,18 +66,20 @@ subgraph cluster_scenegraph {
 	broom -> broom_fancy;
 
 	initial -> rock_simple [label="16x"];
-	initial -> PPositionSet [color=blue];
+	initial -> PPositionSet [color=blue, label="is a"];
 	initial -> PPositionSetDrag;
 #	rock_simple -> PRock;
-	rock_simple -> index16;
+	rock_simple -> a_index16;
+	rock_simple -> a_PositionSet;
 
 	current -> rock_fancy [label="16x"];
-	current -> PPositionSet [color=blue];
+	current -> PPositionSet [color=blue, label="is a"];
 #	rock_fancy -> PRock;
-	rock_fancy -> index16;
+	rock_fancy -> a_index16;
+	rock_fancy -> a_PositionSet;
 	
-	trajectory -> PTrajectorySet [color=blue];
+	trajectory -> PTrajectorySet [color=blue, label="is a"];
 	trajectory -> path [label="16x"];
-	path -> index16;
+	path -> a_index16;
 }
 }
