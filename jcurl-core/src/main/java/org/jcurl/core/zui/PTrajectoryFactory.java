@@ -1,0 +1,158 @@
+/*
+ * jcurl curling simulation framework http://www.jcurl.org
+ * Copyright (C) 2005-2007 M. Rohrmoser
+ * 
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
+package org.jcurl.core.zui;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Paint;
+import java.awt.Stroke;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Iterator;
+import java.util.Map.Entry;
+
+import org.apache.commons.logging.Log;
+import org.jcurl.core.base.Factory;
+import org.jcurl.core.base.RockProps;
+import org.jcurl.core.log.JCLoggerFactory;
+import org.jcurl.math.CurveShape;
+import org.jcurl.math.R1RNFunction;
+
+import edu.umd.cs.piccolo.PNode;
+import edu.umd.cs.piccolo.nodes.PPath;
+
+/**
+ * Create an unpickable {@link PNode} for a combined curve describing the path
+ * of one rock.
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
+public abstract class PTrajectoryFactory implements Factory {
+    public static class Fancy extends PTrajectoryFactory {
+        private static Writer toString(final Writer w, final double[] arr) {
+            try {
+                if (arr == null)
+                    w.write("null");
+                else {
+                    boolean start = true;
+                    w.write("[");
+                    for (final double element : arr) {
+                        if (!start)
+                            w.write(" ");
+                        w.write(Double.toString(element));
+                        start = false;
+                    }
+                    w.write("]");
+                }
+                return w;
+            } catch (final IOException e) {
+                throw new IllegalStateException("Couldn't write to writer.", e);
+            }
+        }
+
+        private final Paint dark = new Color(255, 153, 153, 150);
+
+        private final Paint light = new Color(255, 255, 153, 150);
+
+        private final double[] sections = { 0, 0, 0, 0, 0, 0, 0 };
+
+        private final Stroke stroke = new BasicStroke(2 * RockProps.DEFAULT
+                .getRadius(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0);
+
+        private final double[] t1 = { 0, 0, 0 };
+
+        private final double[] t2 = { 0, 0, 0 };
+
+        private final double[] t3 = { 0, 0, 0 };
+
+        private final double[] t4 = { 0, 0, 0 };
+
+        private PNode createNode(final boolean isDark, final int zoom,
+                final R1RNFunction curr) {
+            final PPath c;
+            if (true)
+                c = new PPath(CurveShape.approximateLinear(curr, sections,
+                        zoom, t1), stroke);
+            else
+                c = new PPath(CurveShape.approximateQuadratic(curr, sections,
+                        zoom, t1, t2, t3, t4), stroke);
+            c.setPickable(false);
+            c.setPaint(null);
+            c.setStrokePaint(isDark ? dark : light);
+            return c;
+        }
+
+        /**
+         * Split the given interval into sections.
+         * 
+         * @see CurveShape#exponentialSections(double, double, double[])
+         * @param sections
+         * @param min
+         * @param max
+         * @return sections
+         */
+        private double[] doSections(final double[] sections, final double min,
+                final double max) {
+            if (true)
+                return CurveShape.aequidistantSections(min, max, sections);
+            else
+                return CurveShape.exponentialSections(min, max, sections);
+        }
+
+        @Override
+        public PNode newInstance(final int i8, final boolean isDark,
+                final Iterator<Entry<Double, R1RNFunction>> path) {
+            final int zoom = 1;
+            final PNode r = new PComposite();
+            if (!path.hasNext())
+                return r;
+            Entry<Double, R1RNFunction> curr = path.next();
+            while (path.hasNext()) {
+                final Entry<Double, R1RNFunction> next = path.next();
+                doSections(sections, curr.getKey(), next.getKey());
+                if (flog.isDebugEnabled()) {
+                    final StringWriter wri = new StringWriter();
+                    wri.write("t=");
+                    toString(wri, sections);
+                    wri.write(" c=" + curr.getValue());
+                    flog.debug(wri.getBuffer());
+                }
+                r.addChild(createNode(isDark, zoom, curr.getValue()));
+                // step:
+                curr = next;
+            }
+            r.setChildrenPickable(false);
+            r.setPickable(false);
+            return r;
+        }
+    }
+
+    private static final Log flog = JCLoggerFactory
+            .getLogger(PTrajectoryFactory.Fancy.class);
+
+    public abstract PNode newInstance(int i8, boolean isDark,
+            Iterator<Entry<Double, R1RNFunction>> t);
+
+    public PNode newInstance(final int i16,
+            final Iterator<Entry<Double, R1RNFunction>> t) {
+        return newInstance(i16 / 2, i16 % 2 == 0, t);
+    }
+}

@@ -18,54 +18,25 @@
  */
 package org.jcurl.core.zui;
 
-import java.awt.Color;
-
 import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.TestShowBase;
 
-import edu.umd.cs.piccolo.PCamera;
-import edu.umd.cs.piccolo.PCanvas;
-import edu.umd.cs.piccolo.PNode;
-import edu.umd.cs.piccolo.util.PPaintContext;
-
-public class PiccoloBasicTest extends TestShowBase {
+public class PiccoloBasicTest extends TestZuiBase {
 
     private static final long serialVersionUID = -8485372274509187133L;
-
-    private final PCanvas pico;
-
-    public PiccoloBasicTest() {
-        super();
-        if (frame != null) {
-            frame.getContentPane().remove(display);
-            frame.getContentPane().add(pico = new PCanvas());
-        } else
-            pico = null;
-    }
 
     public void testThroughPut() throws InterruptedException {
         if (frame == null)
             return;
-        pico.setBackground(new Color(0xE8E8FF));
-        pico.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-        pico.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-        frame.getContentPane().add(pico);
 
         // add some curling stuff:
-        final PNode ice = new PIceFactory.Fancy().newInstance();
-        pico.getLayer().addChild(ice);
-        final PPositionSet pos = new PPositionSet(PositionSet.allOut(),
-                new PRockFactory.Fancy());
-        ice.addChild(pos);
-        pos.addInputEventListener(new PPositionSetDrag());
-
-        final PCamera cam = pico.getCamera();
-        pico.getRoot().getDefaultInputManager().setKeyboardFocus(
-                new KeyBoardZoom(cam));
+        final PPositionSet initial = new PPositionSet(PositionSet.allHome(),
+                new PRockFactory.Simple());
+        ice.addChild(initial);
+        initial.addInputEventListener(new PPositionSetDrag());
+        ice.addChild(new PPositionSet(PositionSet.allOut(),
+                new PRockFactory.Fancy()));
 
         frame.setVisible(true);
-        // start with a sensible viewport:
-        cam.animateViewToCenterBounds(KeyBoardZoom.houseP, true, 1);
         while (frame.isVisible())
             Thread.sleep(100);
     }

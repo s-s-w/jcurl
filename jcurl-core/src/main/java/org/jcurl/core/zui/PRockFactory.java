@@ -18,6 +18,7 @@
  */
 package org.jcurl.core.zui;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Paint;
@@ -44,7 +45,7 @@ public abstract class PRockFactory implements Factory {
 
     public static class Fancy extends PRockFactory {
         /** Rock colors */
-        private static class ColorSet {
+        protected static class ColorSet {
             public Paint contour = Color.BLACK;
 
             public Paint dark = new Color(0xFF0000);
@@ -56,13 +57,13 @@ public abstract class PRockFactory implements Factory {
             public Paint light = new Color(0xFFFF00);
         }
 
-        private static final ColorSet colors = new ColorSet();
+        protected static final ColorSet colors = new ColorSet();
 
-        private static final Font fo;
+        protected static final Font fo;
 
-        private static final Arc2D.Float inner;
+        protected static final Arc2D.Float inner;
 
-        private static final Arc2D.Float outer;
+        protected static final Arc2D.Float outer;
 
         static {
             final float ro = RockProps.DEFAULT.getRadius();
@@ -74,7 +75,7 @@ public abstract class PRockFactory implements Factory {
             fo = new Font("SansSerif", Font.BOLD, 1);
         }
 
-        private static PNode node(final Shape s, final Paint p, final Stroke l) {
+        protected static PNode node(final Shape s, final Paint p, final Stroke l) {
             final PNode n = new PPath(s, l);
             n.setPaint(p);
             n.setPickable(false);
@@ -101,6 +102,19 @@ public abstract class PRockFactory implements Factory {
             // r.setChildrenPickable(false);
             // r.setPickable(true);
             r.getChild(0).setPickable(true);
+            return r;
+        }
+    }
+
+    public static class Simple extends Fancy {
+        private static final Stroke s = new BasicStroke(0.010F);
+
+        @Override
+        public PNode newInstance(final int i8, final boolean isDark) {
+            // fill to also make the body, not only the edge
+            // pickable:
+            final PNode r = node(outer, isDark ? colors.dark : colors.light, s);
+            r.setPickable(true);
             return r;
         }
     }

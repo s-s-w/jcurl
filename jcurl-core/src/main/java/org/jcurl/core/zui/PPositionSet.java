@@ -39,20 +39,23 @@ public class PPositionSet extends PNode implements PropertyChangeListener {
 
     private static final long serialVersionUID = 6564103045992326633L;
 
-    static void sync(final Rock src, final PNode dst) {
+    static boolean sync(final Rock src, final PNode dst) {
+        // TUNE check if it's changed at all?
         dst.setRotation(src.getA());
         dst.setOffset(src.getX(), src.getY());
+        dst.invalidatePaint();
+        return true;
     }
 
     private final PositionSet p;
 
     /**
      * Create a pickable child node for each rock and set it's attributes
-     * {@link #index16} and {@link PositionSet#getClass()} - yes the class object is the
-     * key.
+     * {@link #index16} and {@link PositionSet#getClass()} - yes the class
+     * object is the key.
      * 
      * @param p
-     * @param f 
+     * @param f
      */
     public PPositionSet(final PositionSet p, final PRockFactory f) {
         this.p = p;
@@ -68,11 +71,12 @@ public class PPositionSet extends PNode implements PropertyChangeListener {
 
     public void propertyChange(final PropertyChangeEvent evt) {
         sync(p, this);
+        this.repaint();
     }
 
     private void sync(final PositionSet src, final PPositionSet dst) {
+        // TODO check if it's changed at all!
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             sync(src.getRock(i), dst.getChild(i));
-        dst.invalidatePaint();
     }
 }
