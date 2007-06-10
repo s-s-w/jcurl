@@ -19,13 +19,10 @@
 package org.jcurl.core.zui;
 
 import java.awt.Color;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.TestShowBase;
 import org.jcurl.core.helpers.Dim;
@@ -33,72 +30,9 @@ import org.jcurl.core.helpers.Dim;
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PNode;
-import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
-import edu.umd.cs.piccolo.event.PInputEvent;
-import edu.umd.cs.piccolo.event.PInputEventFilter;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
 public class PiccoloBasicTest extends TestShowBase {
-
-    static class KeyBoardZoom extends PBasicInputEventHandler {
-        private static final int _500 = 500;
-
-        private final PCamera cam;
-
-        public KeyBoardZoom(final PCamera cam) {
-            this.cam = cam;
-        }
-
-        @Override
-        public void keyPressed(final PInputEvent event) {
-            switch (event.getKeyCode()) {
-            case KeyEvent.VK_HOME:
-            case KeyEvent.VK_H:
-                event.setHandled(true);
-                if (event.isControlDown())
-                    cam.animateViewToCenterBounds(twelveP, true, _500);
-                else
-                    cam.animateViewToCenterBounds(houseP, true, _500);
-                break;
-            case KeyEvent.VK_END:
-                event.setHandled(true);
-                cam.animateViewToCenterBounds(sheetP, true, _500);
-                break;
-            default:
-                ;
-            }
-        }
-    }
-
-    static class PPositionSetDrag extends PBasicInputEventHandler {
-        private final PPositionSet pos;
-
-        public PPositionSetDrag(final PPositionSet pos) {
-            setEventFilter(new PInputEventFilter(InputEvent.BUTTON1_MASK));
-            this.pos = pos;
-            pos.addInputEventListener(this);
-        }
-
-        @Override
-        public void mouseDragged(final PInputEvent event) {
-            final PNode node = event.getPickedNode();
-            final int i16 = ((Integer) node.getAttribute(PPositionSet.index16))
-                    .intValue();
-            final PositionSet pp = (PositionSet) node
-                    .getAttribute(PositionSet.class);
-            final Rock r = pp.getRock(i16);
-            // TODO Add overlap/collission detection!
-            r.setLocation(node.getParent().globalToLocal(event.getPosition()));
-            event.setHandled(true);
-            pos.sync(r, node);
-        }
-
-        @Override
-        public void mouseReleased(final PInputEvent event) {
-            ((PositionSet) event.getPickedNode()
-                    .getAttribute(PositionSet.class)).notifyChange();
-        }
-    }
 
     /** House area plus 1 rock margin plus "out" rock space. */
     static final Rectangle2D houseP;
@@ -146,11 +80,11 @@ public class PiccoloBasicTest extends TestShowBase {
         frame.getContentPane().add(pico);
 
         // add some curling stuff:
-        final PNode ice = IcePainter.create();
+        final PNode ice = new PIceFactory.Fancy().newInstance();
         pico.getLayer().addChild(ice);
-        final PPositionSet pos = new PPositionSet(PositionSet.allOut());
+        final PPositionSet pos = new PPositionSet(PositionSet.allOut(), new PRockFactory.Fancy());
         ice.addChild(pos);
-        new PPositionSetDrag(pos);
+        pos.addInputEventListener(new PPositionSetDrag());
 
         final PCamera cam = pico.getCamera();
         pico.getRoot().getDefaultInputManager().setKeyboardFocus(

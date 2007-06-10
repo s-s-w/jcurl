@@ -46,10 +46,10 @@ import edu.umd.cs.piccolo.util.PPaintContext;
  */
 public class PiccoloExample {
 
-    static class HouseZoom extends PBasicInputEventHandler {
+    static class KeyboardZoom extends PBasicInputEventHandler {
         private final PCamera cam;
 
-        public HouseZoom(final PCamera c) {
+        public KeyboardZoom(final PCamera c) {
             cam = c;
         }
 
@@ -73,12 +73,9 @@ public class PiccoloExample {
     }
 
     static class PPositionSetDrag extends PBasicInputEventHandler {
-        private final PPositionSet pos;
 
-        public PPositionSetDrag(final PPositionSet pos) {
+        public PPositionSetDrag() {
             setEventFilter(new PInputEventFilter(InputEvent.BUTTON1_MASK));
-            this.pos = pos;
-            pos.addInputEventListener(this);
         }
 
         @Override
@@ -92,7 +89,7 @@ public class PiccoloExample {
             // TODO Add overlap/collission detection!
             event.setHandled(true);
             r.setLocation(node.getParent().globalToLocal(event.getPosition()));
-            pos.sync(r, node);
+            PPositionSet.sync(r, node);
         }
     }
 
@@ -146,17 +143,18 @@ public class PiccoloExample {
         frame.getContentPane().add(pico);
 
         // some curling:
-        final PNode ice = IcePainter.create();
+        final PNode ice = new PIceFactory.Fancy().newInstance();
         pico.getLayer().addChild(ice);
-        final PPositionSet pos = new PPositionSet(PositionSet.allOut());
+        final PPositionSet pos = new PPositionSet(PositionSet.allOut(),
+                new PRockFactory.Fancy());
         ice.addChild(pos);
-        new PPositionSetDrag(pos);
+        pos.addInputEventListener(new PPositionSetDrag());
 
         // some helpers:
         // pico.getLayer().addChild(new PPath(house));
 
         pico.getRoot().getDefaultInputManager().setKeyboardFocus(
-                new HouseZoom(cam));
+                new KeyboardZoom(cam));
         frame.setVisible(true);
     }
 }
