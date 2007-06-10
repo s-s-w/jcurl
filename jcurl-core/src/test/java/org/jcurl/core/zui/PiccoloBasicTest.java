@@ -19,13 +19,9 @@
 package org.jcurl.core.zui;
 
 import java.awt.Color;
-import java.awt.geom.Rectangle2D;
 
-import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.TestShowBase;
-import org.jcurl.core.helpers.Dim;
 
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PCanvas;
@@ -34,31 +30,7 @@ import edu.umd.cs.piccolo.util.PPaintContext;
 
 public class PiccoloBasicTest extends TestShowBase {
 
-    /** House area plus 1 rock margin plus "out" rock space. */
-    static final Rectangle2D houseP;
-
     private static final long serialVersionUID = -8485372274509187133L;
-
-    /**
-     * Inter-hog area area plus house area plus 1 rock margin plus "out" rock
-     * space.
-     */
-    static final Rectangle2D sheetP;
-
-    /** 12-foot circle plus 1 rock */
-    static final Rectangle2D twelveP;
-
-    static {
-        final double r2 = 2 * RockProps.DEFAULT.getRadius();
-        final double x = IceSize.SIDE_2_CENTER + r2;
-        houseP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_TEE + r2), 2 * x,
-                IceSize.HOG_2_TEE + IceSize.BACK_2_TEE + 3 * r2 + 2 * r2);
-        final double c12 = r2 + Dim.f2m(6.0);
-        twelveP = new Rectangle2D.Double(-c12, -c12, 2 * c12, 2 * c12);
-        sheetP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_HOG
-                + IceSize.HOG_2_TEE + r2), 2 * x, IceSize.HOG_2_HOG
-                + IceSize.HOG_2_TEE + IceSize.BACK_2_TEE + 3 * r2 + 2 * r2);
-    }
 
     private final PCanvas pico;
 
@@ -82,7 +54,8 @@ public class PiccoloBasicTest extends TestShowBase {
         // add some curling stuff:
         final PNode ice = new PIceFactory.Fancy().newInstance();
         pico.getLayer().addChild(ice);
-        final PPositionSet pos = new PPositionSet(PositionSet.allOut(), new PRockFactory.Fancy());
+        final PPositionSet pos = new PPositionSet(PositionSet.allOut(),
+                new PRockFactory.Fancy());
         ice.addChild(pos);
         pos.addInputEventListener(new PPositionSetDrag());
 
@@ -92,7 +65,7 @@ public class PiccoloBasicTest extends TestShowBase {
 
         frame.setVisible(true);
         // start with a sensible viewport:
-        cam.animateViewToCenterBounds(houseP, true, 1);
+        cam.animateViewToCenterBounds(KeyBoardZoom.houseP, true, 1);
         while (frame.isVisible())
             Thread.sleep(100);
     }

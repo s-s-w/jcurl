@@ -48,10 +48,11 @@ public class PPositionSet extends PNode implements PropertyChangeListener {
 
     /**
      * Create a pickable child node for each rock and set it's attributes
-     * {@link #index16} and {@link PositionSet} - yes the class object is the
+     * {@link #index16} and {@link PositionSet#getClass()} - yes the class object is the
      * key.
      * 
      * @param p
+     * @param f 
      */
     public PPositionSet(final PositionSet p, final PRockFactory f) {
         this.p = p;

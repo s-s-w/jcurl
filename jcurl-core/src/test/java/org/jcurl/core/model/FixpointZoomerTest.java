@@ -27,7 +27,6 @@ import junit.framework.TestCase;
 
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.Orientation;
-import org.jcurl.core.base.Zoomer;
 
 /**
  * JUnit test
@@ -138,10 +137,10 @@ public class FixpointZoomerTest extends TestCase {
         assertEquals("", 6.0, flat[5], 1e-9);
         src.setLocation(fix);
         mat.transform(src, dst);
-        assertEquals(new Point2D.Double(0.999, 5.998), dst);
+        assertEquals(new Point2D.Double(0, 4), dst);
         src.setLocation(3, 4);
         mat.transform(src, dst);
-        assertEquals(new Point2D.Double(0.997, 5.996), dst);
+        assertEquals(new Point2D.Double(-2, 2), dst);
     }
 
     public void test110_ZoomShift() {
@@ -157,17 +156,17 @@ public class FixpointZoomerTest extends TestCase {
         mat.setToIdentity();
         zom.computeWctoDcTrafo(dc, Orientation.N, false, mat);
         mat.getMatrix(flat);
-        assertEquals("", -0.0010, flat[0], 1e-9);
+        assertEquals("", -1.0, flat[0], 1e-9);
         assertEquals("", 0, flat[1], 1e-9);
         assertEquals("", 0, flat[2], 1e-9);
-        assertEquals("", -0.0010, flat[3], 1e-9);
+        assertEquals("", -1.0, flat[3], 1e-9);
         assertEquals("", 1.0, flat[4], 1e-9);
         assertEquals("", 6, flat[5], 1e-9);
         src.setLocation(fix);
         mat.transform(src, dst);
-        assertEquals(new Point2D.Double(0.999, 5.998), dst);
+        assertEquals(new Point2D.Double(0, 4), dst);
         src.setLocation(3, 4);
         mat.transform(src, dst);
-        assertEquals(new Point2D.Double(0.997, 5.996), dst);
+        assertEquals(new Point2D.Double(-2, 2), dst);
     }
 }
