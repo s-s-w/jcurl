@@ -233,12 +233,10 @@ public class PositionDisplay extends WCComponent implements
             final boolean isDark, final int idx) {
         final AffineTransform t = g.getTransform();
         if (false) {
-            g.translate(Zoomer.SCALE * rock.getX(), Zoomer.SCALE * rock.getY());
+            g.translate(rock.getX(), rock.getY());
             g.rotate(Math.PI + rock.getA());
         } else {
-            g.transform(WCComponent.preScale);
             g.transform(rock.getTrafo());
-            g.transform(WCComponent.postScale);
         }
 
         // make the right-handed coordinate system left handed again (for

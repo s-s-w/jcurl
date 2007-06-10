@@ -28,7 +28,6 @@ import java.awt.geom.Arc2D;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.Strategy;
-import org.jcurl.core.base.Zoomer;
 
 /**
  * Strategy to paint one single rock at (0,0) with the handle pointing along the
@@ -52,26 +51,26 @@ public class RockPainter implements Strategy {
         public Paint light = new Color(0xFFFF00);
     }
 
+    protected static final ColorSet colors = new ColorSet();
+
     protected static final Font fo;
+
+    private static final int FONT_SCALE = 5 * 200;
 
     protected static final Arc2D.Float inner;
 
     protected static final char[] labels = { '1', '2', '3', '4', '5', '6', '7',
             '8' };
-
     protected static final Arc2D.Float outer;
 
     static {
-        fo = new Font("SansSerif", Font.BOLD, Zoomer.SCALE / 5);
+        fo = new Font("SansSerif", Font.BOLD, FONT_SCALE / 5);
 
-        final int f = Zoomer.SCALE;
-        final float ro = f * RockProps.DEFAULT.getRadius();
-        final float ri = f * 0.7F * RockProps.DEFAULT.getRadius();
+        final float ro = RockProps.DEFAULT.getRadius();
+        final float ri = 0.7F * ro;
         outer = new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 0, 360, Arc2D.CHORD);
         inner = new Arc2D.Float(-ri, -ri, 2 * ri, 2 * ri, 0, 360, Arc2D.CHORD);
     }
-
-    protected static final ColorSet colors = new ColorSet();
 
     private FontMetrics fm = null;
 
@@ -94,18 +93,21 @@ public class RockPainter implements Strategy {
         g.fill(outer);
         g.setPaint(isDark ? colors.dark : colors.light);
         g.fill(inner);
-        // label
-        if (fm == null)
-            fm = g.getFontMetrics(fo);
-        if (txtXoff == null) {
-            txtYoff = (int) (0.6F * 0.5F * fm.getHeight());
-            txtXoff = new int[RockSet.ROCKS_PER_COLOR];
-            for (int i = RockSet.ROCKS_PER_COLOR - 1; i >= 0; i--)
-                txtXoff[i] = -fm.charWidth(labels[i]) / 2;
+        {
+            g.scale(1.0 / FONT_SCALE, 1.0 / FONT_SCALE);
+            // label
+            if (fm == null)
+                fm = g.getFontMetrics(fo);
+            if (txtXoff == null) {
+                txtYoff = (int) (0.6F * 0.5F * fm.getHeight());
+                txtXoff = new int[RockSet.ROCKS_PER_COLOR];
+                for (int i = RockSet.ROCKS_PER_COLOR - 1; i >= 0; i--)
+                    txtXoff[i] = -fm.charWidth(labels[i]) / 2;
+            }
+            g.setFont(fo);
+            g.setPaint(colors.label);
+            g.drawChars(labels, idx, 1, txtXoff[idx], txtYoff);
         }
-        g.setFont(fo);
-        g.setPaint(colors.label);
-        g.drawChars(labels, idx, 1, txtXoff[idx], txtYoff);
         // contours
         // g.setPaint(colors.contour);
         // // handle

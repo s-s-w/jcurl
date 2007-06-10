@@ -200,11 +200,11 @@ public class FixpointZoomer extends Zoomer {
                 sca_x = sca_y;
             else
                 sca_y = sca_x;
-        mat.scale(sca_x / SCALE, sca_y / SCALE);
+        mat.scale(sca_x, sca_y);
         mat.rotate(orient.angle - Math.PI);
         if (isLeftHanded)
             mat.scale(-1, 1);
-        mat.translate(-fixPoint.getX() * SCALE, -fixPoint.getY() * SCALE);
+        mat.translate(-fixPoint.getX(), -fixPoint.getY());
         return mat;
     }
 

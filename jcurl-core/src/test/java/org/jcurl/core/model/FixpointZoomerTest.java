@@ -117,7 +117,7 @@ public class FixpointZoomerTest extends TestCase {
     }
 
     public void test100_Zoom1by1() {
-        final int S = Zoomer.SCALE;
+        final int S = 1;
         final double[] flat = new double[6];
         final Point2D dst = new Point2D.Double();
         final Point2D src = new Point2D.Double();

@@ -30,7 +30,6 @@ import java.util.Map.Entry;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.CurveStore;
 import org.jcurl.core.base.Strategy;
-import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.CurveShape;
 import org.jcurl.math.R1RNFunction;
@@ -106,7 +105,7 @@ public class CurvePainter implements Strategy {
                 log.debug("i=" + i + " " + (i % 2 == 0 ? "dark" : "light")
                         + " " + i / 2);
             g2.setPaint(i++ % 2 == 0 ? dark : light);
-            doPaint(g2, name.iterator(), sections, Zoomer.SCALE, t1, t2, t3, t4);
+            doPaint(g2, name.iterator(), sections, 1, t1, t2, t3, t4);
         }
     }
 
@@ -119,7 +118,7 @@ public class CurvePainter implements Strategy {
      * @param path
      * @param sections
      * @param zoom
-     *            factor - typically {@link Zoomer#SCALE}.
+     *            TODO Remove factor - typically 1.
      * @param t1
      *            save instanciations calling
      *            {@link R1RNFunction#at(int, double, double[])}.
@@ -166,7 +165,7 @@ public class CurvePainter implements Strategy {
      * @param curr
      * @param sections
      * @param zoom
-     *            factor - typically {@link Zoomer#SCALE}.
+     *            TODO Remove factor - typically 1.
      * @param t1
      *            save instanciations calling
      *            {@link R1RNFunction#at(int, double, double[])}.

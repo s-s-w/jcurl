@@ -61,7 +61,7 @@ public class IcePainter implements Strategy {
         public Paint hog2tee = new Color(0xFFFFFF);
 
         /** (wc) millimiters */
-        public Stroke stroke = new BasicStroke(0.005F * Zoomer.SCALE);
+        public Stroke stroke = new BasicStroke(0.005F);
 
         public Paint tee2back = new Color(0xFFFFFF);
     }
@@ -100,7 +100,7 @@ public class IcePainter implements Strategy {
 
     /** Define colors and the shapes to be filled and drawn */
     static {
-        final int f = Zoomer.SCALE;
+        final int f = 1;
         final float fhy = f * IceSize.FAR_HOG_2_TEE;
         final float nhy = f * IceSize.HOG_2_TEE;
         final float hy = f * IceSize.FAR_HACK_2_TEE;

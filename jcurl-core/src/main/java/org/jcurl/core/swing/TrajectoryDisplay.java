@@ -132,12 +132,12 @@ public class TrajectoryDisplay extends WCComponent implements
     private void initialize() {
         int opa = 100;
         curvePainter = new CurvePainter(new Color(255, 0, 0, opa), new Color(
-                255, 255, 0, opa), new BasicStroke(Zoomer.SCALE * 2
+                255, 255, 0, opa), new BasicStroke(2
                 * RockProps.DEFAULT.getRadius(), BasicStroke.CAP_ROUND,
                 BasicStroke.JOIN_ROUND, 0));
         opa = 150;
         curvePainter = new CurvePainter(new Color(255, 153, 153, opa),
-                new Color(255, 255, 153, opa), new BasicStroke(Zoomer.SCALE * 2
+                new Color(255, 255, 153, opa), new BasicStroke(2
                         * RockProps.DEFAULT.getRadius(), BasicStroke.CAP_ROUND,
                         BasicStroke.JOIN_ROUND, 0));
         this.setSize(new Dimension(600, 120));
@@ -253,12 +253,10 @@ public class TrajectoryDisplay extends WCComponent implements
             final boolean isDark, final int idx) {
         final AffineTransform t = g.getTransform();
         if (false) {
-            g.translate(Zoomer.SCALE * rock.getX(), Zoomer.SCALE * rock.getY());
+            g.translate(rock.getX(), rock.getY());
             g.rotate(Math.PI + rock.getA());
         } else {
-            g.transform(WCComponent.preScale);
             g.transform(rock.getTrafo());
-            g.transform(WCComponent.postScale);
         }
 
         // make the right-handed coordinate system left handed again (for

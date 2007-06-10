@@ -36,7 +36,7 @@ public abstract class Zoomer extends MutableObject {
      * int based wc drawing operations e.g. fonts. WC objects (rocks etc.)
      * remain unaffected by this.
      */
-    public static final int SCALE = 1000;
+    private static final int SCALE = 1;
 
     /**
      * Map the zoomer's wc viewport to the given dc viewport.
