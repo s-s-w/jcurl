@@ -41,9 +41,9 @@ public interface CurveStore extends
     public abstract R1RNFunction getCurve(final int i);
 
     /**
-     * Ascending iterator over the cuves returning each segment.
+     * Ascending iterator over the curves returning each segment.
      * 
-     * @return iterator over the cuves returning each segment.
+     * @return iterator over the curves returning each segment.
      */
     public abstract Iterator<Iterable<Entry<Double, R1RNFunction>>> iterator();
 

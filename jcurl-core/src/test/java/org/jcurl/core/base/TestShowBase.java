@@ -58,10 +58,14 @@ public abstract class TestShowBase extends TestBase {
     protected final JFrame frame;
 
     public TestShowBase() {
+        this(800, 600);
+    }
+
+    public TestShowBase(int dx, int dy) {
         frame = showGui ? new JFrame() : null;
         if (frame != null) {
             display = new PositionDisplay();
-            frame.setBounds(0, 0, 800, 600);
+            frame.setBounds(0, 0, dx, dy);
             frame.setTitle(getClass().getName());
             frame.getContentPane().add(display);
         } else

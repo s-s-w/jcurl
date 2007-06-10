@@ -47,6 +47,16 @@ import edu.umd.cs.piccolo.nodes.PPath;
  */
 public abstract class PTrajectoryFactory implements Factory {
     public static class Fancy extends PTrajectoryFactory {
+        private static final Paint dark = new Color(255, 153, 153, 150);
+
+        private static final Paint light = new Color(255, 255, 153, 150);
+
+        private static final Stroke stroke = new BasicStroke(
+                2 * RockProps.DEFAULT.getRadius(), BasicStroke.CAP_ROUND,
+                BasicStroke.JOIN_ROUND, 0);
+
+        private static final int zoom = 1;
+
         private static Writer toString(final Writer w, final double[] arr) {
             try {
                 if (arr == null)
@@ -68,14 +78,7 @@ public abstract class PTrajectoryFactory implements Factory {
             }
         }
 
-        private final Paint dark = new Color(255, 153, 153, 150);
-
-        private final Paint light = new Color(255, 255, 153, 150);
-
         private final double[] sections = { 0, 0, 0, 0, 0, 0, 0 };
-
-        private final Stroke stroke = new BasicStroke(2 * RockProps.DEFAULT
-                .getRadius(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0);
 
         private final double[] t1 = { 0, 0, 0 };
 
@@ -85,8 +88,8 @@ public abstract class PTrajectoryFactory implements Factory {
 
         private final double[] t4 = { 0, 0, 0 };
 
-        private PNode createNode(final boolean isDark, final int zoom,
-                final R1RNFunction curr) {
+        private PNode createNode(final boolean isDark, final R1RNFunction curr,
+                final double[] sections) {
             final PPath c;
             if (true)
                 c = new PPath(CurveShape.approximateLinear(curr, sections,
@@ -113,14 +116,12 @@ public abstract class PTrajectoryFactory implements Factory {
                 final double max) {
             if (true)
                 return CurveShape.aequidistantSections(min, max, sections);
-            else
-                return CurveShape.exponentialSections(min, max, sections);
+            return CurveShape.exponentialSections(min, max, sections);
         }
 
         @Override
         public PNode newInstance(final int i8, final boolean isDark,
                 final Iterator<Entry<Double, R1RNFunction>> path) {
-            final int zoom = 1;
             final PNode r = new PComposite();
             if (!path.hasNext())
                 return r;
@@ -135,7 +136,7 @@ public abstract class PTrajectoryFactory implements Factory {
                     wri.write(" c=" + curr.getValue());
                     flog.debug(wri.getBuffer());
                 }
-                r.addChild(createNode(isDark, zoom, curr.getValue()));
+                r.addChild(createNode(isDark, curr.getValue(), sections));
                 // step:
                 curr = next;
             }

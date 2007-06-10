@@ -20,7 +20,11 @@ package org.jcurl.core.zui;
 
 import java.awt.Color;
 
+import org.apache.commons.logging.Log;
+import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.TestShowBase;
+import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.log.JCLoggerFactory;
 
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PCanvas;
@@ -29,14 +33,20 @@ import edu.umd.cs.piccolo.util.PPaintContext;
 
 public abstract class TestZuiBase extends TestShowBase {
 
-    private static final long serialVersionUID = -8485372274509187133L;
+    private static final Log log = JCLoggerFactory.getLogger(TestZuiBase.class);
 
-    protected final PCanvas pico;
+    private static final long serialVersionUID = -8485372274509187133L;
 
     protected final PNode ice;
 
+    protected final PCanvas pico;
+
     public TestZuiBase() {
-        super();
+        this(800, 600);
+    }
+
+    public TestZuiBase(int dx, int dy) {
+        super(dx, dy);
         if (frame != null) {
             frame.getContentPane().remove(display);
             frame.getContentPane().add(pico = new PCanvas());
@@ -60,5 +70,30 @@ public abstract class TestZuiBase extends TestShowBase {
             pico = null;
             ice = null;
         }
+    }
+
+    public int show(final long millis, final TimeRunnable r) {
+        if (frame == null)
+            return -1;
+        frame.setVisible(true);
+
+        final long t0 = System.currentTimeMillis();
+        int loop = 0;
+        try {
+            while (System.currentTimeMillis() - t0 < millis) {
+                r.run(1e-3 * (System.currentTimeMillis() - t0), null);
+                loop++;
+            }
+        } catch (final InterruptedException e) {
+            log.warn("Oops", e);
+        }
+        frame.setVisible(false);
+        return loop;
+    }
+
+    @Override
+    public int showPositionDisplay(final PositionSet p, final Zoomer zoom,
+            final long millis, final TimeRunnable r) {
+        throw new UnsupportedOperationException();
     }
 }

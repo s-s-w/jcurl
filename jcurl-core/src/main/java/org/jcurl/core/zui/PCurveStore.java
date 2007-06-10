@@ -20,6 +20,7 @@ package org.jcurl.core.zui;
 
 import java.util.Map.Entry;
 
+import org.jcurl.core.base.CurveStore;
 import org.jcurl.math.R1RNFunction;
 
 import edu.umd.cs.piccolo.PNode;
@@ -36,11 +37,9 @@ public class PCurveStore extends PNode {
 
     private final PTrajectoryFactory f;
 
-    private final Iterable<Iterable<Entry<Double, R1RNFunction>>> cs;
+    private final CurveStore cs;
 
-    public PCurveStore(
-            final Iterable<Iterable<Entry<Double, R1RNFunction>>> cs,
-            final PTrajectoryFactory f) {
+    public PCurveStore(final CurveStore cs, final PTrajectoryFactory f) {
         this.cs = cs;
         this.f = f;
         int i = 0;

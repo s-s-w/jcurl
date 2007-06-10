@@ -36,7 +36,7 @@ import edu.umd.cs.piccolo.event.PInputEventFilter;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-class PPositionSetDrag extends PBasicInputEventHandler {
+public class PPositionSetDrag extends PBasicInputEventHandler {
 
     public PPositionSetDrag() {
         setEventFilter(new PInputEventFilter(InputEvent.BUTTON1_MASK));

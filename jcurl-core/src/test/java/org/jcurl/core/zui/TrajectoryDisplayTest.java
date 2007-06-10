@@ -40,7 +40,7 @@ import org.jcurl.core.model.NewtonCollissionDetector;
 import edu.umd.cs.piccolo.PNode;
 
 public class TrajectoryDisplayTest extends TestZuiBase {
-    private static final Log log = JCLoggerFactory
+    static final Log log = JCLoggerFactory
             .getLogger(TrajectoryDisplayTest.class);
 
     static ComputedTrajectorySet initHammy(ComputedTrajectorySet te) {
@@ -95,12 +95,16 @@ public class TrajectoryDisplayTest extends TestZuiBase {
         s.notifyChange();
     }
 
+    public TrajectoryDisplayTest() {
+        super();
+    }
+
     public void _testThroughPut() {
         final int dt = 5000;
         final Graphics g = new BufferedImage(1024 * 2, 768 * 2,
                 BufferedImage.TYPE_INT_ARGB).getGraphics();
         final TrajectorySet p = initHammy(null);
-        final int frames = showTrajectoryDisplay(p, dt, new TimeRunnable() {
+        final int frames = show(dt, new TimeRunnable() {
             @Override
             public void run(final double t) throws InterruptedException {
                 throw new UnsupportedOperationException();
@@ -118,26 +122,6 @@ public class TrajectoryDisplayTest extends TestZuiBase {
             // System.out.println(frames + " computations took " + dt
             // + " millis, i.e. " + frames * 1000L / dt + " per second.");
         }
-    }
-
-    public int showTrajectoryDisplay(final TrajectorySet p, final long millis,
-            final TimeRunnable r) {
-        if (frame == null)
-            return -1;
-        frame.setVisible(true);
-
-        final long t0 = System.currentTimeMillis();
-        int loop = 0;
-        try {
-            while (System.currentTimeMillis() - t0 < millis) {
-                r.run(1e-3 * (System.currentTimeMillis() - t0), null);
-                loop++;
-            }
-        } catch (final InterruptedException e) {
-            log.warn("Oops", e);
-        }
-        frame.setVisible(false);
-        return loop;
     }
 
     public void testHammy() throws InterruptedException {
@@ -162,7 +146,7 @@ public class TrajectoryDisplayTest extends TestZuiBase {
             ice.addChild(a);
 
             // with Display:
-            showTrajectoryDisplay(cm, 7500, new TimeRunnable() {
+            show(7500, new TimeRunnable() {
                 @Override
                 public void run(final double t) throws InterruptedException {
                     cm.setCurrentTime(8.5 + t);
@@ -212,7 +196,7 @@ public class TrajectoryDisplayTest extends TestZuiBase {
             ice.addChild(b);
             ice.addChild(a);
             // with Display:
-            showTrajectoryDisplay(cm, 10000, new TimeRunnable() {
+            show(10000, new TimeRunnable() {
                 @Override
                 public void run(final double t) throws InterruptedException {
                     cm.setCurrentTime(14 + t);

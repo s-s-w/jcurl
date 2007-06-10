@@ -35,11 +35,11 @@ import edu.umd.cs.piccolo.event.PInputEvent;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-class KeyboardZoom extends PBasicInputEventHandler {
+public class KeyboardZoom extends PBasicInputEventHandler {
     private static final int _500 = 500;
 
     /** House area plus 1 rock margin plus "out" rock space. */
-    static final Rectangle2D houseP;
+    public static final Rectangle2D houseP;
 
     /**
      * Inter-hog area area plus house area plus 1 rock margin plus "out" rock
