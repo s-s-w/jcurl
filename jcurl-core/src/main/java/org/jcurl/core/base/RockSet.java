@@ -212,20 +212,20 @@ public abstract class RockSet extends MutableObject implements Cloneable,
         return true;
     }
 
-    public Rock getDark(final int i) {
-        return dark[i];
+    public Rock getDark(final int i8) {
+        return dark[i8];
     }
 
     public long getLastChanged() {
         return lastChanged;
     }
 
-    public Rock getLight(final int i) {
-        return light[i];
+    public Rock getLight(final int i8) {
+        return light[i8];
     }
 
-    public Rock getRock(final int i) {
-        return i % 2 == 0 ? dark[i / 2] : light[i / 2];
+    public Rock getRock(final int i16) {
+        return i16 % 2 == 0 ? dark[i16 / 2] : light[i16 / 2];
     }
 
     @Override

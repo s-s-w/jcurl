@@ -29,6 +29,7 @@ import javax.swing.JFrame;
 
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
 
 import edu.umd.cs.piccolo.PCamera;
@@ -82,13 +83,16 @@ public class PiccoloExample {
 
         @Override
         public void mouseDragged(final PInputEvent event) {
-            final PNode aNode = event.getPickedNode();
-            if (!(aNode instanceof PRock))
-                return;
-            final PRock n = (PRock) aNode;
-            n.r.setLocation(n.getParent().globalToLocal(event.getPosition()));
+            final PNode node = event.getPickedNode();
+            final int i16 = ((Integer) node.getAttribute(PPositionSet.index16))
+                    .intValue();
+            final PositionSet pp = (PositionSet) node
+                    .getAttribute(PositionSet.class);
+            final Rock r = pp.getRock(i16);
+            // TODO Add overlap/collission detection!
             event.setHandled(true);
-            pos.p.notifyChange();
+            r.setLocation(node.getParent().globalToLocal(event.getPosition()));
+            pos.sync(r, node);
         }
     }
 

@@ -30,7 +30,7 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.nodes.PPath;
 
 /**
- * Creates a {@link PNode} displaying a sheet of ice and changes to a <b>RIGHT
+ * Creates a unpickable {@link PNode} displaying a sheet of ice with a <b>RIGHT
  * HANDED</b> coordinate system.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -60,10 +60,10 @@ public class IcePainter extends org.jcurl.core.swing.IcePainter {
         ice.addChild(node(back, colors.contours, colors.stroke));
         ice.addChild(node(tee, colors.contours, colors.stroke));
         ice.addChild(node(nearHog, colors.contours, colors.stroke));
-        ice.addChild(node(farHog, colors.contours, colors.stroke));        
+        ice.addChild(node(farHog, colors.contours, colors.stroke));
         ice.setChildrenPickable(false);
         ice.setPickable(false);
-        final PNode r = new PNode();        
+        final PNode r = new PNode();
         r.addChild(ice);
         // Make coord-sys right-handed:
         r.setTransform(AffineTransform.getScaleInstance(1, -1));

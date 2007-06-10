@@ -35,14 +35,27 @@ import edu.umd.cs.piccolo.PNode;
  */
 public class PPositionSet extends PNode implements PropertyChangeListener {
 
+    public static final Object index16 = "index16";
+
     private static final long serialVersionUID = 6564103045992326633L;
 
-    final PositionSet p;
+    private final PositionSet p;
 
+    /**
+     * Create a pickable child node for each rock and set it's attributes
+     * {@link #index16} and {@link PositionSet} - yes the class object is the
+     * key.
+     * 
+     * @param p
+     */
     public PPositionSet(final PositionSet p) {
         this.p = p;
-        for (int i = 0; i < RockSet.ROCKS_PER_SET; i++)
-            addChild(i, RockPainter.create(i, this.p.getRock(i)));
+        for (int i = 0; i < RockSet.ROCKS_PER_SET; i++) {
+            final PNode c = RockPainter.create(i);
+            c.addAttribute(index16, i);
+            c.addAttribute(p.getClass(), p);
+            addChild(i, c);
+        }
         p.addPropertyChangeListener(this);
         sync(this.p, this);
     }
@@ -57,12 +70,7 @@ public class PPositionSet extends PNode implements PropertyChangeListener {
         dst.invalidatePaint();
     }
 
-    void sync(final PRock r) {
-        sync(r.r, r);
-        r.invalidatePaint();
-    }
-
-    private void sync(final Rock src, final PNode dst) {
+    void sync(final Rock src, final PNode dst) {
         dst.setRotation(src.getA());
         dst.setOffset(src.getX(), src.getY());
     }
