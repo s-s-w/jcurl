@@ -61,6 +61,7 @@ public class RockPainter implements Strategy {
 
     protected static final char[] labels = { '1', '2', '3', '4', '5', '6', '7',
             '8' };
+
     protected static final Arc2D.Float outer;
 
     static {

@@ -33,7 +33,6 @@ import java.util.Map;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.model.FixpointZoomer;
 
 /**
@@ -173,7 +172,7 @@ public class PositionDisplay extends WCComponent implements
         if (getIcePainter() == null)
             return;
         // background
-        g2.setPaint(getIcePainter().colors.backGround);
+        g2.setPaint(IcePainter.colors.backGround);
         g2.fillRect(0, 0, getWidth(), getHeight());
         g2.transform(wc_mat);
         // IceSize
@@ -235,9 +234,8 @@ public class PositionDisplay extends WCComponent implements
         if (false) {
             g.translate(rock.getX(), rock.getY());
             g.rotate(Math.PI + rock.getA());
-        } else {
+        } else
             g.transform(rock.getTrafo());
-        }
 
         // make the right-handed coordinate system left handed again (for
         // un-flipped text display)

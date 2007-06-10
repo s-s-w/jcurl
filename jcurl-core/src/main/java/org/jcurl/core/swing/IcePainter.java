@@ -30,7 +30,6 @@ import java.awt.geom.Rectangle2D;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.Strategy;
-import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.helpers.Dim;
 
 /**

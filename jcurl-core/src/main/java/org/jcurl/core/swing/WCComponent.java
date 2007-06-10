@@ -62,7 +62,7 @@ public abstract class WCComponent extends Component implements WCLayer {
      * @param wc
      * @return world coordinates
      */
-    public Point2D dc2wc(final Point2D dc, Point2D wc) {
+    public Point2D dc2wc(final Point2D dc, final Point2D wc) {
         try {
             return wc_mat.inverseTransform(dc, wc);
         } catch (final NoninvertibleTransformException e) {
@@ -155,7 +155,7 @@ public abstract class WCComponent extends Component implements WCLayer {
      * @param dc
      * @return display coordinates
      */
-    public Point2D wc2dc(final Point2D wc, Point2D dc) {
+    public Point2D wc2dc(final Point2D wc, final Point2D dc) {
         return wc_mat.transform(wc, dc);
     }
 }

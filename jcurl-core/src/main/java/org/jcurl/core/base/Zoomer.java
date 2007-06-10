@@ -32,13 +32,6 @@ import org.jcurl.core.helpers.MutableObject;
 public abstract class Zoomer extends MutableObject {
 
     /**
-     * Scale WC a bit to avoid int rounding errors. This is relevant only for
-     * int based wc drawing operations e.g. fonts. WC objects (rocks etc.)
-     * remain unaffected by this.
-     */
-    private static final int SCALE = 1;
-
-    /**
      * Map the zoomer's wc viewport to the given dc viewport.
      * 
      * @param dc
@@ -48,6 +41,6 @@ public abstract class Zoomer extends MutableObject {
      *            {@link AffineTransform#setToIdentity()}&nbsp;before.
      * @return the transformation
      */
-    public abstract AffineTransform computeWctoDcTrafo(final RectangularShape dc,
-            AffineTransform mat);
+    public abstract AffineTransform computeWctoDcTrafo(
+            final RectangularShape dc, AffineTransform mat);
 }

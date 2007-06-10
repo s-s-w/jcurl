@@ -259,16 +259,17 @@ public class CurveManager extends MutableObject implements
     /**
      * TODO Fire a "refresh" event, so the eventqueue can remove obsolete
      * (outdated) events.
-     * @param arg0 
+     * 
+     * @param arg0
      */
     public void propertyChange(final PropertyChangeEvent arg0) {
         final Object src = arg0.getSource();
         if (src == initialPos || src == initialSpeed) {
             // force recomputation:
-            this.dirty = true;
+            dirty = true;
             try {
                 setCurrentTime(getCurrentTime());
-            } catch (NullPointerException e) {
+            } catch (final NullPointerException e) {
                 log.warn("Oops!", e);
             }
             return;

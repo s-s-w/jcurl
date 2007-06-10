@@ -37,7 +37,6 @@ import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.TrajectorySet;
-import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.model.CurveManager;
 import org.jcurl.core.model.FixpointZoomer;
 
@@ -132,14 +131,13 @@ public class TrajectoryDisplay extends WCComponent implements
     private void initialize() {
         int opa = 100;
         curvePainter = new CurvePainter(new Color(255, 0, 0, opa), new Color(
-                255, 255, 0, opa), new BasicStroke(2
-                * RockProps.DEFAULT.getRadius(), BasicStroke.CAP_ROUND,
-                BasicStroke.JOIN_ROUND, 0));
+                255, 255, 0, opa), new BasicStroke(2 * RockProps.DEFAULT
+                .getRadius(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0));
         opa = 150;
         curvePainter = new CurvePainter(new Color(255, 153, 153, opa),
-                new Color(255, 255, 153, opa), new BasicStroke(2
-                        * RockProps.DEFAULT.getRadius(), BasicStroke.CAP_ROUND,
-                        BasicStroke.JOIN_ROUND, 0));
+                new Color(255, 255, 153, opa), new BasicStroke(
+                        2 * RockProps.DEFAULT.getRadius(),
+                        BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0));
         this.setSize(new Dimension(600, 120));
         // setOpaque(true);
         setRockPainter(new RockPainter());
@@ -193,7 +191,7 @@ public class TrajectoryDisplay extends WCComponent implements
         if (getIcePainter() == null)
             return;
         // background
-        g2.setPaint(getIcePainter().colors.backGround);
+        g2.setPaint(IcePainter.colors.backGround);
         g2.fillRect(0, 0, getWidth(), getHeight());
         g2.transform(wc_mat);
         // IceSize
@@ -255,9 +253,8 @@ public class TrajectoryDisplay extends WCComponent implements
         if (false) {
             g.translate(rock.getX(), rock.getY());
             g.rotate(Math.PI + rock.getA());
-        } else {
+        } else
             g.transform(rock.getTrafo());
-        }
 
         // make the right-handed coordinate system left handed again (for
         // un-flipped text display)

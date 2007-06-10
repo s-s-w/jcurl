@@ -66,7 +66,8 @@ public class FixpointZoomer extends Zoomer {
 
     private static final boolean uniform = true;
 
-    private static final RectangularShape create(final Point2D tl, final Point2D br) {
+    private static final RectangularShape create(final Point2D tl,
+            final Point2D br) {
         final double tlx;
         if (tl.getX() < br.getX())
             tlx = tl.getX();
