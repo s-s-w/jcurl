@@ -31,6 +31,42 @@
 			scm:svn:https://svn.cs.umd.edu/repos/piccolo/piccolo.java/trunk
 		</connection>
 	</scm>
+	<profiles>
+		<profile>
+			<id>org.eclipse.swt.win32</id>
+			<activation>
+				<os>
+					<name>windows xp</name>
+					<arch>x86</arch>
+				</os>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>swt</groupId>
+					<artifactId>swt-win32</artifactId>
+					<version>3.0m8</version>
+					<type>jar</type>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>org.eclipse.swt.linux</id>
+			<activation>
+				<os>
+					<name>linux</name>
+					<arch>i386</arch>
+				</os>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>swt</groupId>
+					<artifactId>swt-linux-gtk</artifactId>
+					<version>3.0.1</version>
+					<type>jar</type>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>edu.umd.cs.hcil</groupId>
