@@ -77,5 +77,6 @@
 	</organization>
 	<modules>
 		<module>viewer</module>
+		<module>piccolo</module>
 	</modules>
 </project>

@@ -1,0 +1,131 @@
+<!-- Test project which creates and signs a jar artifact -->
+<!-- you'll need the maven-webstart plugin:
+	$ svn co https://svn.codehaus.org/mojo/tags/webstart-maven-plugin-parent-1.0-alpha-1 webstart-maven-plugin
+	$ cd webstart-maven-plugin
+	$ mvn clean install
+	$ scp $HOME/.m2/repository/org/jcurl/demo/piccolo/1.2/piccolo-1.2.zip jcurl.org:~/org.jcurl.www/webstart/piccolo/1.2
+	$ ssh jcurl.org "cd org.jcurl.www/webstart/piccolo/1.2;unzip piccolo-1.2.zip"
+	$ javaws http://www.jcurl.org/webstart/piccolo/1.2/launch.jnlp
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>piccolo</artifactId>
+	<groupId>org.jcurl.demo</groupId>
+	<version>1.2</version>
+	<packaging>pom</packaging>
+	<name>Piccolo ZUI Demo</name>
+	<organization>
+		<name>http://www.cs.umd.edu/hcil/jazz/index.shtml</name>
+	</organization>
+	<profiles>
+		<profile>
+			<id>org.eclipse.swt.win32</id>
+			<activation>
+				<os>
+					<name>windows xp</name>
+					<arch>x86</arch>
+				</os>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>swt</groupId>
+					<artifactId>swt-linux-gtk</artifactId>
+					<version>3.0.1</version>
+					<type>jar</type>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>org.eclipse.swt.linux</id>
+			<activation>
+				<os>
+					<name>linux</name>
+					<arch>i386</arch>
+				</os>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>swt</groupId>
+					<artifactId>swt-linux-gtk</artifactId>
+					<version>3.0.1</version>
+					<type>jar</type>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>webstart-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jnlp</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<dependencies>
+						<excludes>
+							<exclude>
+								avalon-framework:avalon-framework
+							</exclude>
+							<exclude>log4j:log4j</exclude>
+							<exclude>logkit:logkit</exclude>
+							<exclude>javax.servlet:servlet-api</exclude>
+						</excludes>
+					</dependencies>
+					<jnlp>
+						<!-- we play with the resource path and template relative path to test MOJO-391 -->
+						<!-- inputTemplateResourcePath>
+							${project.basedir}/src/
+							</inputTemplateResourcePath -->
+						<!--  inputTemplate>viewerdemo.jnlp</inputTemplate -->
+						<resources>
+							${project.basedir}/src/jnlp/resources
+						</resources>
+						<outputFile>launch.jnlp</outputFile>
+						<mainClass>
+							edu.umd.cs.piccolo.examples.ExampleRunner
+						</mainClass>
+					</jnlp>
+					<!-- SIGNING -->
+					<!-- defining this will automatically sign the jar and its dependencies -->
+					<sign>
+						<keystore>/tmp/keystore</keystore>
+						<keypass>m2m2m2</keypass>
+						<storepass>m2m2m2</storepass>
+						<!--sigfile>m2m2m2</sigfile-->
+						<alias>mrohrmoser</alias>
+						<validity>30</validity>
+
+						<dnameCn>
+							M. Rohrmoser (http://www.mrohrmoser.de))
+						</dnameCn>
+						<dnameOu>None</dnameOu>
+						<dnameO>M. Rohrmoser</dnameO>
+						<dnameL>Munich</dnameL>
+						<dnameSt />
+						<dnameC>Germany</dnameC>
+						<verify>true</verify>
+					</sign>
+					<keystore>
+						<delete>true</delete>
+						<gen>true</gen>
+					</keystore>
+					<verbose>false</verbose>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>edu.umd.cs.hcil</groupId>
+			<artifactId>examples</artifactId>
+			<version>1.2</version>
+		</dependency>
+	</dependencies>
+</project>

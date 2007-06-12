@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id: viewerdemo.jnlp 213 2005-12-30 17:42:01Z mrohrmoser $ -->
+<jnlp
+  spec="1.0+"
+  codebase="http://www.jcurl.org/webstart/piccolo/1.2"
+  href="$outputFile">
+  <information>
+    <title>Piccolo ZUI Demo</title>
+    <vendor>M. Rohrmoser</vendor>
+    <homepage href="http://www.jcurl.org/index.html"/>
+    <description>Piccolo ZUI Demo</description>
+    <description kind="short">A demo of the capabilities of the piccolo ZUI framework.</description>
+    <icon href="images/jcurl-icon.gif" kind="default"/>
+    <offline-allowed/>
+  </information>
+  <update check="timeout" policy="always"/>
+  <security>
+    <all-permissions/>
+  </security>
+  <resources>
+    <j2se version="1.5+"/>
+    $dependencies
+  </resources>
+  <application-desc main-class="$mainClass"/>
+</jnlp> 
