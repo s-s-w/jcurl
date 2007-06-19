@@ -57,7 +57,7 @@ public class TacticsVE {
             jCurlDisplay.setName("IceSize");
             jCurlDisplay
                     .setFont(new Font("Bitstream Vera Sans", Font.PLAIN, 12));
-            //jCurlDisplay.setMinimumSize(new Dimension(100, 50));
+            // jCurlDisplay.setMinimumSize(new Dimension(100, 50));
         }
         return jCurlDisplay;
     }
@@ -113,7 +113,7 @@ public class TacticsVE {
 
     private JPanel aboutContentPane = null;
 
-    private JDialog aboutDialog = null;  //  @jve:decl-index=0:visual-constraint="537,163"
+    private JDialog aboutDialog = null; // @jve:decl-index=0:visual-constraint="537,163"
 
     private JMenuItem aboutMenuItem = null;
 

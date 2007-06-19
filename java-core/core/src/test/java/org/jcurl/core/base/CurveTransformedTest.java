@@ -21,7 +21,6 @@ package org.jcurl.core.base;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
-import org.apache.commons.math.MathException;
 import org.jcurl.core.model.FixpointZoomer;
 import org.jcurl.math.PolynomeCurve;
 
@@ -192,7 +191,7 @@ public class CurveTransformedTest extends TestShowBase {
         assertEquals(17.36159358309492, rad2deg(ang));
     }
 
-    public void testValueC0() throws MathException {
+    public void testValueC0() {
         Rock ret = null;
         final AffineTransform at = AffineTransform.getScaleInstance(0.75, 1.25);
         final CurveTransformed cw = new CurveTransformed(new CurveRock() {

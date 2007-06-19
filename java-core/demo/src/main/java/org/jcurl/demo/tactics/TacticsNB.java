@@ -103,13 +103,15 @@ public class TacticsNB extends javax.swing.JFrame {
         helpMenu = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
 
-        GroupLayout aboutDialogLayout = new GroupLayout(
-                aboutDialog.getContentPane());
+        GroupLayout aboutDialogLayout = new GroupLayout(aboutDialog
+                .getContentPane());
         aboutDialog.getContentPane().setLayout(aboutDialogLayout);
-        aboutDialogLayout.setHorizontalGroup(aboutDialogLayout.createParallelGroup(
-                GroupLayout.LEADING).add(0, 264, Short.MAX_VALUE));
-        aboutDialogLayout.setVerticalGroup(aboutDialogLayout.createParallelGroup(
-                GroupLayout.LEADING).add(0, 169, Short.MAX_VALUE));
+        aboutDialogLayout.setHorizontalGroup(aboutDialogLayout
+                .createParallelGroup(GroupLayout.LEADING).add(0, 264,
+                        Short.MAX_VALUE));
+        aboutDialogLayout.setVerticalGroup(aboutDialogLayout
+                .createParallelGroup(GroupLayout.LEADING).add(0, 169,
+                        Short.MAX_VALUE));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JCurl Tactics Demo");
@@ -142,20 +144,22 @@ public class TacticsNB extends javax.swing.JFrame {
 
         GroupLayout broomPanelLayout = new GroupLayout(broomPanel);
         broomPanel.setLayout(broomPanelLayout);
-        broomPanelLayout.setHorizontalGroup(broomPanelLayout.createParallelGroup(
-                GroupLayout.LEADING).add(broomLabel, GroupLayout.DEFAULT_SIZE,
-                77, Short.MAX_VALUE).add(broomText, GroupLayout.DEFAULT_SIZE,
-                77, Short.MAX_VALUE).add(broomSlider, GroupLayout.DEFAULT_SIZE,
-                77, Short.MAX_VALUE));
+        broomPanelLayout.setHorizontalGroup(broomPanelLayout
+                .createParallelGroup(GroupLayout.LEADING).add(broomLabel,
+                        GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE).add(
+                        broomText, GroupLayout.DEFAULT_SIZE, 77,
+                        Short.MAX_VALUE).add(broomSlider,
+                        GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE));
         broomPanelLayout.setVerticalGroup(broomPanelLayout.createParallelGroup(
                 GroupLayout.LEADING).add(
                 GroupLayout.TRAILING,
-                broomPanelLayout.createSequentialGroup().add(broomLabel).addPreferredGap(
-                        LayoutStyle.RELATED).add(broomSlider,
-                        GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE).addPreferredGap(
-                        LayoutStyle.RELATED).add(broomText,
-                        GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                        GroupLayout.PREFERRED_SIZE)));
+                broomPanelLayout.createSequentialGroup().add(broomLabel)
+                        .addPreferredGap(LayoutStyle.RELATED).add(broomSlider,
+                                GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                        .addPreferredGap(LayoutStyle.RELATED).add(broomText,
+                                GroupLayout.PREFERRED_SIZE,
+                                GroupLayout.DEFAULT_SIZE,
+                                GroupLayout.PREFERRED_SIZE)));
 
         timePanel.setOpaque(false);
         splitLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -183,9 +187,10 @@ public class TacticsNB extends javax.swing.JFrame {
                 GroupLayout.LEADING).add(
                 timePanelLayout.createSequentialGroup().add(splitLabel).add(7,
                         7, 7).add(splitSlider, GroupLayout.DEFAULT_SIZE, 105,
-                        Short.MAX_VALUE).addPreferredGap(LayoutStyle.RELATED).add(
-                        splitText, GroupLayout.PREFERRED_SIZE,
-                        GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)));
+                        Short.MAX_VALUE).addPreferredGap(LayoutStyle.RELATED)
+                        .add(splitText, GroupLayout.PREFERRED_SIZE,
+                                GroupLayout.DEFAULT_SIZE,
+                                GroupLayout.PREFERRED_SIZE)));
 
         GroupLayout rockTabLayout = new GroupLayout(rockTab);
         rockTab.setLayout(rockTabLayout);
@@ -194,9 +199,10 @@ public class TacticsNB extends javax.swing.JFrame {
                 GroupLayout.TRAILING,
                 rockTabLayout.createSequentialGroup().add(broomPanel,
                         GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
-                        Short.MAX_VALUE).addPreferredGap(LayoutStyle.RELATED).add(
-                        timePanel, GroupLayout.PREFERRED_SIZE,
-                        GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)));
+                        Short.MAX_VALUE).addPreferredGap(LayoutStyle.RELATED)
+                        .add(timePanel, GroupLayout.PREFERRED_SIZE,
+                                GroupLayout.DEFAULT_SIZE,
+                                GroupLayout.PREFERRED_SIZE)));
         rockTabLayout.setVerticalGroup(rockTabLayout.createParallelGroup(
                 GroupLayout.LEADING).add(timePanel, GroupLayout.DEFAULT_SIZE,
                 GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).add(broomPanel,
@@ -233,16 +239,17 @@ public class TacticsNB extends javax.swing.JFrame {
         curlPanelLayout.setVerticalGroup(curlPanelLayout.createParallelGroup(
                 GroupLayout.LEADING).add(
                 GroupLayout.TRAILING,
-                curlPanelLayout.createSequentialGroup().add(curlLabel).addPreferredGap(
-                        LayoutStyle.RELATED).add(curlSlider,
-                        GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE).addPreferredGap(
-                        LayoutStyle.RELATED).add(curlText,
-                        GroupLayout.DEFAULT_SIZE, 76,
-                        GroupLayout.PREFERRED_SIZE)));
+                curlPanelLayout.createSequentialGroup().add(curlLabel)
+                        .addPreferredGap(LayoutStyle.RELATED).add(curlSlider,
+                                GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                        .addPreferredGap(LayoutStyle.RELATED).add(curlText,
+                                GroupLayout.DEFAULT_SIZE, 76,
+                                GroupLayout.PREFERRED_SIZE)));
 
         drawToTeePanel.setDoubleBuffered(false);
         drawToTeePanel.setOpaque(false);
-        drawToTeeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        drawToTeeLabel
+                .setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         drawToTeeLabel.setText("DrawToTee");
         drawToTeeLabel.setMaximumSize(new java.awt.Dimension(70, 15));
         drawToTeeLabel.setMinimumSize(new java.awt.Dimension(70, 15));
@@ -260,21 +267,24 @@ public class TacticsNB extends javax.swing.JFrame {
 
         GroupLayout drawToTeePanelLayout = new GroupLayout(drawToTeePanel);
         drawToTeePanel.setLayout(drawToTeePanelLayout);
-        drawToTeePanelLayout.setHorizontalGroup(drawToTeePanelLayout.createParallelGroup(
-                GroupLayout.LEADING).add(drawToTeeLabel,
-                GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE).add(
-                drawToTeeSlider, GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE).add(
-                drawToTeeText, GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE));
-        drawToTeePanelLayout.setVerticalGroup(drawToTeePanelLayout.createParallelGroup(
-                GroupLayout.LEADING).add(
-                drawToTeePanelLayout.createSequentialGroup().add(
-                        drawToTeeLabel, GroupLayout.PREFERRED_SIZE,
-                        GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).add(
-                        7, 7, 7).add(drawToTeeSlider, GroupLayout.DEFAULT_SIZE,
-                        105, Short.MAX_VALUE).addPreferredGap(
-                        LayoutStyle.RELATED).add(drawToTeeText,
-                        GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                        GroupLayout.PREFERRED_SIZE)));
+        drawToTeePanelLayout.setHorizontalGroup(drawToTeePanelLayout
+                .createParallelGroup(GroupLayout.LEADING).add(drawToTeeLabel,
+                        GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE).add(
+                        drawToTeeSlider, GroupLayout.DEFAULT_SIZE, 79,
+                        Short.MAX_VALUE).add(drawToTeeText,
+                        GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE));
+        drawToTeePanelLayout.setVerticalGroup(drawToTeePanelLayout
+                .createParallelGroup(GroupLayout.LEADING).add(
+                        drawToTeePanelLayout.createSequentialGroup().add(
+                                drawToTeeLabel, GroupLayout.PREFERRED_SIZE,
+                                GroupLayout.DEFAULT_SIZE,
+                                GroupLayout.PREFERRED_SIZE).add(7, 7, 7).add(
+                                drawToTeeSlider, GroupLayout.DEFAULT_SIZE, 105,
+                                Short.MAX_VALUE).addPreferredGap(
+                                LayoutStyle.RELATED).add(drawToTeeText,
+                                GroupLayout.PREFERRED_SIZE,
+                                GroupLayout.DEFAULT_SIZE,
+                                GroupLayout.PREFERRED_SIZE)));
 
         GroupLayout iceTabLayout = new GroupLayout(iceTab);
         iceTab.setLayout(iceTabLayout);
@@ -295,19 +305,20 @@ public class TacticsNB extends javax.swing.JFrame {
 
         GroupLayout completePanelLayout = new GroupLayout(completePanel);
         completePanel.setLayout(completePanelLayout);
-        completePanelLayout.setHorizontalGroup(completePanelLayout.createParallelGroup(
-                GroupLayout.LEADING).add(
-                GroupLayout.TRAILING,
-                completePanelLayout.createSequentialGroup().add(
-                        rocksEditDisplay, GroupLayout.PREFERRED_SIZE, 149,
-                        Short.MAX_VALUE).addPreferredGap(LayoutStyle.RELATED).add(
-                        controlTabbedPane, GroupLayout.PREFERRED_SIZE, 170,
-                        GroupLayout.PREFERRED_SIZE)));
-        completePanelLayout.setVerticalGroup(completePanelLayout.createParallelGroup(
-                GroupLayout.LEADING).add(rocksEditDisplay,
-                GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE).add(
-                controlTabbedPane, GroupLayout.DEFAULT_SIZE, 179,
-                Short.MAX_VALUE));
+        completePanelLayout.setHorizontalGroup(completePanelLayout
+                .createParallelGroup(GroupLayout.LEADING).add(
+                        GroupLayout.TRAILING,
+                        completePanelLayout.createSequentialGroup().add(
+                                rocksEditDisplay, GroupLayout.PREFERRED_SIZE,
+                                149, Short.MAX_VALUE).addPreferredGap(
+                                LayoutStyle.RELATED).add(controlTabbedPane,
+                                GroupLayout.PREFERRED_SIZE, 170,
+                                GroupLayout.PREFERRED_SIZE)));
+        completePanelLayout.setVerticalGroup(completePanelLayout
+                .createParallelGroup(GroupLayout.LEADING).add(rocksEditDisplay,
+                        GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE).add(
+                        controlTabbedPane, GroupLayout.DEFAULT_SIZE, 179,
+                        Short.MAX_VALUE));
 
         overviewDisplay.setZoom(FixpointZoomer.HOG2HACK);
 
@@ -364,13 +375,15 @@ public class TacticsNB extends javax.swing.JFrame {
                 GroupLayout.PREFERRED_SIZE, 329, Short.MAX_VALUE).add(
                 completePanel, GroupLayout.DEFAULT_SIZE,
                 GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
-        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.LEADING).add(
-                GroupLayout.TRAILING,
-                layout.createSequentialGroup().add(completePanel,
-                        GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
-                        Short.MAX_VALUE).add(2, 2, 2).add(overviewDisplay,
-                        GroupLayout.PREFERRED_SIZE, 75,
-                        GroupLayout.PREFERRED_SIZE)));
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.LEADING)
+                .add(
+                        GroupLayout.TRAILING,
+                        layout.createSequentialGroup().add(completePanel,
+                                GroupLayout.DEFAULT_SIZE,
+                                GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).add(
+                                2, 2, 2).add(overviewDisplay,
+                                GroupLayout.PREFERRED_SIZE, 75,
+                                GroupLayout.PREFERRED_SIZE)));
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -383,7 +396,7 @@ public class TacticsNB extends javax.swing.JFrame {
     }// GEN-LAST:event_formWindowClosed
 
     private void loadMenuItemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_loadMenuItemActionPerformed
-    // TODO add your handling code here:
+        // TODO add your handling code here:
     }// GEN-LAST:event_loadMenuItemActionPerformed
 
     /**

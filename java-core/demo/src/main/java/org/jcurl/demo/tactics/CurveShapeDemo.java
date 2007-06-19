@@ -36,8 +36,8 @@ import org.jcurl.math.R1R1Function;
 import org.jcurl.math.R1RNFunction;
 
 /**
- * Demonstrate how to draw a {@link org.jcurl.math.R1RNFunctionImpl}converted to a
- * {@link java.awt.Shape}.
+ * Demonstrate how to draw a {@link org.jcurl.math.R1RNFunctionImpl}converted
+ * to a {@link java.awt.Shape}.
  * 
  * @see org.jcurl.math.CurveShape
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

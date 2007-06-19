@@ -50,7 +50,8 @@ class Service {
                 final URL o = (URL) e.nextElement();
                 final BufferedReader r = new BufferedReader(
                         new InputStreamReader(o.openStream(), "UTF-8"));
-                for (CharSequence line = r.readLine(); line != null; line = r.readLine()) {
+                for (CharSequence line = r.readLine(); line != null; line = r
+                        .readLine()) {
                     final Matcher m = pat.matcher(line);
                     if (!m.matches())
                         continue;

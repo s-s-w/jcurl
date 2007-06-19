@@ -11,14 +11,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jcurl.core</groupId>
 	<artifactId>viewer</artifactId>
-	<groupId>org.jcurl.demo</groupId>
-	<version>0.7.2</version>
+	<version>0.7.3</version>
 	<packaging>pom</packaging>
 	<name>JCurl Viewer Demo</name>
-	<organization>
-		<name>www.jcurl.org</name>
-	</organization>
 	<build>
 		<plugins>
 			<plugin>
@@ -83,8 +80,8 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>org.jcurl</groupId>
-			<artifactId>jcurl-core</artifactId>
+			<groupId>org.jcurl.core</groupId>
+			<artifactId>demo</artifactId>
 			<version>${version}</version>
 		</dependency>
 	</dependencies>

@@ -119,9 +119,9 @@ public class ViewerVE {
     }
 
     /**
-     * This method initializes jJMenuBar	
-     * 	
-     * @return javax.swing.JMenuBar	
+     * This method initializes jJMenuBar
+     * 
+     * @return javax.swing.JMenuBar
      */
     private JMenuBar getJJMenuBar() {
         if (jJMenuBar == null) {
@@ -134,9 +134,9 @@ public class ViewerVE {
     }
 
     /**
-     * This method initializes jMenu	
-     * 	
-     * @return javax.swing.JMenu	
+     * This method initializes jMenu
+     * 
+     * @return javax.swing.JMenu
      */
     private JMenu getFileMenu() {
         if (fileMenu == null) {
@@ -149,9 +149,9 @@ public class ViewerVE {
     }
 
     /**
-     * This method initializes jMenu	
-     * 	
-     * @return javax.swing.JMenu	
+     * This method initializes jMenu
+     * 
+     * @return javax.swing.JMenu
      */
     private JMenu getRunMenu() {
         if (runMenu == null) {
@@ -165,9 +165,9 @@ public class ViewerVE {
     }
 
     /**
-     * This method initializes jMenu	
-     * 	
-     * @return javax.swing.JMenu	
+     * This method initializes jMenu
+     * 
+     * @return javax.swing.JMenu
      */
     private JMenu getHelpMenu() {
         if (helpMenu == null) {
@@ -179,9 +179,9 @@ public class ViewerVE {
     }
 
     /**
-     * This method initializes jMenuItem	
-     * 	
-     * @return javax.swing.JMenuItem	
+     * This method initializes jMenuItem
+     * 
+     * @return javax.swing.JMenuItem
      */
     private JMenuItem getExitMenuItem() {
         if (exitMenuItem == null) {
@@ -197,9 +197,9 @@ public class ViewerVE {
     }
 
     /**
-     * This method initializes jMenuItem	
-     * 	
-     * @return javax.swing.JMenuItem	
+     * This method initializes jMenuItem
+     * 
+     * @return javax.swing.JMenuItem
      */
     private JMenuItem getAboutMenuItem() {
         if (aboutMenuItem == null) {
@@ -220,8 +220,8 @@ public class ViewerVE {
     }
 
     /**
-     * This method initializes aboutDialog	
-     * 	
+     * This method initializes aboutDialog
+     * 
      * @return javax.swing.JDialog
      */
     private JDialog getAboutDialog() {
@@ -248,9 +248,9 @@ public class ViewerVE {
     }
 
     /**
-     * This method initializes aboutVersionLabel	
-     * 	
-     * @return javax.swing.JLabel	
+     * This method initializes aboutVersionLabel
+     * 
+     * @return javax.swing.JLabel
      */
     private JLabel getAboutVersionLabel() {
         if (aboutVersionLabel == null) {
@@ -262,9 +262,9 @@ public class ViewerVE {
     }
 
     /**
-     * This method initializes jMenuItem	
-     * 	
-     * @return javax.swing.JMenuItem	
+     * This method initializes jMenuItem
+     * 
+     * @return javax.swing.JMenuItem
      */
     private JMenuItem getStartMenuItem() {
         if (startMenuItem == null) {
@@ -272,19 +272,24 @@ public class ViewerVE {
             startMenuItem.setText("Start");
             startMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
                     Event.CTRL_MASK, true));
-            startMenuItem.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
-                }
-            });
+            startMenuItem
+                    .addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent e) {
+                            System.out.println("actionPerformed()"); // TODO
+                                                                        // Auto-generated
+                                                                        // Event
+                                                                        // stub
+                                                                        // actionPerformed()
+                        }
+                    });
         }
         return startMenuItem;
     }
 
     /**
-     * This method initializes jMenuItem	
-     * 	
-     * @return javax.swing.JMenuItem	
+     * This method initializes jMenuItem
+     * 
+     * @return javax.swing.JMenuItem
      */
     private JMenuItem getStopMenuItem() {
         if (stopMenuItem == null) {
@@ -294,7 +299,10 @@ public class ViewerVE {
                     Event.CTRL_MASK, true));
             stopMenuItem.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+                    System.out.println("actionPerformed()"); // TODO
+                                                                // Auto-generated
+                                                                // Event stub
+                                                                // actionPerformed()
                 }
             });
         }
@@ -302,9 +310,9 @@ public class ViewerVE {
     }
 
     /**
-     * This method initializes jMenuItem	
-     * 	
-     * @return javax.swing.JMenuItem	
+     * This method initializes jMenuItem
+     * 
+     * @return javax.swing.JMenuItem
      */
     private JMenuItem getPauseMenuItem() {
         if (pauseMenuItem == null) {
@@ -312,19 +320,24 @@ public class ViewerVE {
             pauseMenuItem.setText("Pause");
             pauseMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V,
                     Event.CTRL_MASK, true));
-            pauseMenuItem.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
-                }
-            });
+            pauseMenuItem
+                    .addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent e) {
+                            System.out.println("actionPerformed()"); // TODO
+                                                                        // Auto-generated
+                                                                        // Event
+                                                                        // stub
+                                                                        // actionPerformed()
+                        }
+                    });
         }
         return pauseMenuItem;
     }
 
     /**
-     * This method initializes jMenuItem	
-     * 	
-     * @return javax.swing.JMenuItem	
+     * This method initializes jMenuItem
+     * 
+     * @return javax.swing.JMenuItem
      */
     private JMenuItem getOpenMenuItem() {
         if (openMenuItem == null) {
@@ -334,7 +347,10 @@ public class ViewerVE {
                     Event.CTRL_MASK, true));
             openMenuItem.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+                    System.out.println("actionPerformed()"); // TODO
+                                                                // Auto-generated
+                                                                // Event stub
+                                                                // actionPerformed()
                 }
             });
         }
@@ -342,9 +358,9 @@ public class ViewerVE {
     }
 
     /**
-     * This method initializes controlPanel	
-     * 	
-     * @return javax.swing.JPanel	
+     * This method initializes controlPanel
+     * 
+     * @return javax.swing.JPanel
      */
     private JPanel getControlPanel() {
         if (controlPanel == null) {
@@ -375,9 +391,9 @@ public class ViewerVE {
     }
 
     /**
-     * This method initializes pauseButton	
-     * 	
-     * @return javax.swing.JButton	
+     * This method initializes pauseButton
+     * 
+     * @return javax.swing.JButton
      */
     private JButton getPauseButton() {
         if (pauseButton == null) {
@@ -389,9 +405,9 @@ public class ViewerVE {
     }
 
     /**
-     * This method initializes startButton	
-     * 	
-     * @return javax.swing.JButton	
+     * This method initializes startButton
+     * 
+     * @return javax.swing.JButton
      */
     private JButton getStartButton() {
         if (startButton == null) {
@@ -403,9 +419,9 @@ public class ViewerVE {
     }
 
     /**
-     * This method initializes stopButton	
-     * 	
-     * @return javax.swing.JButton	
+     * This method initializes stopButton
+     * 
+     * @return javax.swing.JButton
      */
     private JButton getStopButton() {
         if (stopButton == null) {
@@ -417,9 +433,9 @@ public class ViewerVE {
     }
 
     /**
-     * This method initializes timeSlider	
-     * 	
-     * @return javax.swing.JSlider	
+     * This method initializes timeSlider
+     * 
+     * @return javax.swing.JSlider
      */
     private JSlider getTimeSlider() {
         if (timeSlider == null) {
@@ -429,9 +445,9 @@ public class ViewerVE {
     }
 
     /**
-     * This method initializes positionDisplay	
-     * 	
-     * @return org.jcurl.core.swing.PositionDisplay	
+     * This method initializes positionDisplay
+     * 
+     * @return org.jcurl.core.swing.PositionDisplay
      */
     private PositionDisplay getPositionDisplay() {
         if (positionDisplay == null) {

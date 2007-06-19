@@ -52,7 +52,8 @@ public class Controller {
             final long start = System.currentTimeMillis();
             final long t0sys = start - (long) (s.getCurrentTime() / timeWarp);
             for (int counter = 0; !isInterrupted();) {
-                s.setCurrentTime(timeWarp * (System.currentTimeMillis() - t0sys));
+                s.setCurrentTime(timeWarp
+                        * (System.currentTimeMillis() - t0sys));
                 yield();
                 try {
                     final long dt = ++counter * dtMillis
@@ -107,9 +108,9 @@ public class Controller {
             IOException {
         stop();
         throw new NotImplementedException();
-        //src.loadStart(f);
-        //src.setCurrentTime(35.0);
-        //src.setCurrentTime(0.0);
+        // src.loadStart(f);
+        // src.setCurrentTime(35.0);
+        // src.setCurrentTime(0.0);
     }
 
     public synchronized void pause() {

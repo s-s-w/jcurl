@@ -18,7 +18,6 @@
  */
 package org.jcurl.math;
 
-import org.apache.commons.math.MathException;
 import org.jcurl.core.base.CollissionDetector;
 import org.jcurl.core.base.CurveRock;
 import org.jcurl.core.base.CurveRockAnalytic;

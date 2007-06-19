@@ -2,25 +2,17 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jcurl.demo</groupId>
+	<parent>
+		<artifactId>parent</artifactId>
+		<groupId>org.jcurl.core</groupId>
+		<version>0.7.3</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
 	<artifactId>webstart</artifactId>
 	<packaging>pom</packaging>
-	<version>0.1</version>
 	<name>JCurl Webstart Demos</name>
 	<inceptionYear>2005</inceptionYear>
 	<url>http://www.jcurl.org/</url>
-	<licenses>
-		<license>
-			<name>GNU GENERAL PUBLIC LICENSE</name>
-			<url>http://www.gnu.org/licenses/gpl.html</url>
-			<distribution>manual</distribution>
-			<comments />
-		</license>
-	</licenses>
-	<issueManagement>
-		<system>Bugzilla</system>
-		<url>http://developer.berlios.de/bugs/?group_id=3203</url>
-	</issueManagement>
 	<scm>
 		<connection>
 			scm:svn:svn://svn.berlios.de/jcurl/trunk/${pom.artifactId}
@@ -31,50 +23,6 @@
 		<tag />
 		<url>http://svn.berlios.de/wsvn/jcurl/trunk/${pom.artifactId}</url>
 	</scm>
-	<developers>
-		<developer>
-			<id>mrohrmoser</id>
-			<name>M. Rohrmoser</name>
-			<email>jcurl@gmx.net</email>
-			<roles>
-				<role>Admin</role>
-				<role>Developer</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-	</developers>
-	<mailingLists>
-		<mailingList>
-			<name>JCurl Announce</name>
-			<subscribe>
-				http://lists.berlios.de/mailman/listinfo/jcurl-announce
-			</subscribe>
-			<unsubscribe>
-				http://lists.berlios.de/mailman/listinfo/jcurl-announce
-			</unsubscribe>
-			<post>jcurl-announce@lists.berlios.de</post>
-			<archive>
-				http://lists.berlios.de/pipermail/jcurl-announce/
-			</archive>
-		</mailingList>
-		<mailingList>
-			<name>JCurl Dev</name>
-			<subscribe>
-				http://lists.berlios.de/mailman/listinfo/jcurl-dev
-			</subscribe>
-			<unsubscribe>
-				http://lists.berlios.de/mailman/listinfo/jcurl-dev
-			</unsubscribe>
-			<post>jcurl-dev@lists.berlios.de</post>
-			<archive>
-				http://lists.berlios.de/pipermail/jcurl-dev/
-			</archive>
-		</mailingList>
-	</mailingLists>
-	<organization>
-		<name>jcurl.org</name>
-		<url>http://www.jcurl.org</url>
-	</organization>
 	<modules>
 		<module>viewer</module>
 		<module>piccolo</module>
