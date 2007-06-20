@@ -129,6 +129,15 @@
 					<show>package</show>
 					<links>
 						<link>
+							http://www.jcurl.org/m2/site/core/${pom.version}/apidocs/
+						</link>
+						<link>
+							http://www.jcurl.org/m2/site/zui/${pom.version}/apidocs/
+						</link>
+						<link>
+							http://www.jcurl.org/m2/site/xsio/${pom.version}/apidocs/
+						</link>
+						<link>
 							http://java.sun.com/j2se/1.5.0/docs/api/
 						</link>
 						<link>
@@ -138,13 +147,13 @@
 							http://xstream.codehaus.org/javadoc/
 						</link>
 						<link>
+							http://www.cs.umd.edu/hcil/jazz/learn/piccolo/doc-1.2/api/
+						</link>
+						<link>
 							http://www.picocontainer.org/versions/1.0/apidocs/
 						</link>
 						<link>
 							http://jakarta.apache.org/commons/math/api-1.1/
-						</link>
-						<link>
-							http://www.cs.umd.edu/hcil/jazz/learn/piccolo/doc-1.2/api/
 						</link>
 						<link>http://geosoft.no/graphics/G/docs/</link>
 					</links>
@@ -225,11 +234,13 @@
 		</repository>
 		<site>
 			<id>jcurl-website</id>
-			<url>
-				${scpsitebase}/${pom.artifactId}/${pom.version}
-			</url>
+			<url>${scpsitebase}/${pom.artifactId}/${pom.version}</url>
 		</site>
 	</distributionManagement>
-	<properties><scpsitebase>scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/site</scpsitebase></properties>
+	<properties>
+		<scpsitebase>
+			scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/site
+		</scpsitebase>
+	</properties>
 </project>
 
