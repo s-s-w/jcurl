@@ -44,6 +44,7 @@
 			<groupId>net.java.dev.swing-layout</groupId>
 			<artifactId>swing-layout</artifactId>
 			<version>1.0.1</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jcurl.core</groupId>
