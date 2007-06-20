@@ -37,9 +37,9 @@ public class Measure {
     public static final Pattern pat = Pattern
             .compile("^(-?[0-9]+([.][0-9]+)?(e-?[0-9]+)?)[ \t]*([\\S]*)$");
 
-    public static Measure parse(final String txt) {
+    public static Measure parse(final CharSequence measure) {
         // split the string
-        final Matcher mat = pat.matcher(txt);
+        final Matcher mat = pat.matcher(measure);
         if (mat.matches()) {
             // for (int i = 0; i < mat.groupCount(); i++)
             // log.debug(i + "=" + mat.group(i));
@@ -49,21 +49,21 @@ public class Measure {
                 return new Measure(Double.parseDouble(val), Unit.find(dim));
             } catch (final RuntimeException e) {
                 final IllegalArgumentException a = new IllegalArgumentException(
-                        "Not a measure: [" + txt + "]");
+                        "Not a measure: [" + measure + "]");
                 a.initCause(e);
                 throw a;
             }
         }
-        throw new IllegalArgumentException("Not a measure: [" + txt + "]");
+        throw new IllegalArgumentException("Not a measure: [" + measure + "]");
     }
 
     public final Unit unit;
 
     public final double quantity;
 
-    public Measure(final double value, final Unit dim) {
-        quantity = value;
-        this.unit = dim;
+    public Measure(final double quantity, final Unit unit) {
+        this.quantity = quantity;
+        this.unit = unit;
     }
 
     @Override

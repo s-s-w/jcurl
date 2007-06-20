@@ -71,7 +71,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
  */
 public class XStreamSerializer implements JCurlSerializer {
 
-    static class DimValConverter implements Converter {
+    static class MeasureConverter implements Converter {
 
         public boolean canConvert(final Class arg0) {
             return Measure.class.isAssignableFrom(arg0);
@@ -238,7 +238,7 @@ public class XStreamSerializer implements JCurlSerializer {
     }
 
     protected XStream registerConverter(final XStream xs) {
-        xs.registerConverter(new DimValConverter());
+        xs.registerConverter(new MeasureConverter());
         xs.registerConverter(new DoubleArrayConverter());
         xs.registerConverter(new RockConverter());
         return xs;

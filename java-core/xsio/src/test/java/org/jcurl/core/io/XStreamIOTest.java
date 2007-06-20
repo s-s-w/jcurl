@@ -228,7 +228,7 @@ public class XStreamIOTest extends TestBase {
         te.setCurrentTime(20);
 
         final XStream xs = new XStream();
-        xs.registerConverter(new XStreamSerializer.DimValConverter());
+        xs.registerConverter(new XStreamSerializer.MeasureConverter());
         xs.registerConverter(new XStreamSerializer.RockConverter());
         xs.alias("dimval", Measure.class);
         xs.alias("rock", RockDouble.class);
@@ -563,7 +563,7 @@ public class XStreamIOTest extends TestBase {
                 -te.getCurler().computeV0(5), Math.PI / 2);
 
         final XStream xs = new XStream();
-        xs.registerConverter(new XStreamSerializer.DimValConverter());
+        xs.registerConverter(new XStreamSerializer.MeasureConverter());
         xs.registerConverter(new XStreamSerializer.RockConverter());
         xs.alias("dimval", Measure.class);
         xs.alias("rock", RockDouble.class);
