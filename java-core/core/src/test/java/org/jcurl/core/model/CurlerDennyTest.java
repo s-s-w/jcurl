@@ -24,8 +24,8 @@ import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.base.TestShowBase;
 import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.swing.TestShowBase;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

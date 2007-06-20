@@ -22,6 +22,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import org.jcurl.core.model.FixpointZoomer;
+import org.jcurl.core.swing.TestShowBase;
 import org.jcurl.math.PolynomeCurve;
 
 public class CurveTransformedTest extends TestShowBase {

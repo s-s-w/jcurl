@@ -24,7 +24,7 @@ import org.jcurl.core.base.PositionSet;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SumShotDisplay extends SumDisplayBase {
+class SumShotDisplay extends SumDisplayBase {
 
     private static final long serialVersionUID = -8749102492237360027L;
 

@@ -26,7 +26,6 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.swing.PositionDisplay;
 
 public abstract class TestShowBase extends TestBase {
 
@@ -55,8 +54,6 @@ public abstract class TestShowBase extends TestBase {
         showGui = inEclipse;
     }
 
-    protected final PositionDisplay display;
-
     protected final JFrame frame;
 
     public TestShowBase() {
@@ -66,34 +63,9 @@ public abstract class TestShowBase extends TestBase {
     public TestShowBase(int dx, int dy) {
         frame = showGui ? new JFrame() : null;
         if (frame != null) {
-            display = new PositionDisplay();
             frame.setBounds(0, 0, dx, dy);
             frame.setTitle(getClass().getName());
-            frame.getContentPane().add(display);
-        } else
-            display = null;
-    }
-
-    public int showPositionDisplay(final PositionSet p, final Zoomer zoom,
-            final long millis, final TimeRunnable r) {
-        if (frame == null)
-            return -1;
-        display.setZoom(zoom);
-        display.setPos(p);
-        frame.setVisible(true);
-
-        final long t0 = System.currentTimeMillis();
-        int loop = 0;
-        try {
-            while (System.currentTimeMillis() - t0 < millis) {
-                r.run(1e-3 * (System.currentTimeMillis() - t0), display);
-                loop++;
-            }
-        } catch (final InterruptedException e) {
-            log.warn("Oops", e);
-        }
-        frame.setVisible(false);
-        return loop;
+        } 
     }
 
     @Override

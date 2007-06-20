@@ -24,20 +24,20 @@ import org.jcurl.core.base.PositionSet;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SumWaitDisplay extends SumDisplayBase {
+class SumOutDisplay extends SumDisplayBase {
 
-    private static final long serialVersionUID = 620126083372910176L;
+    private static final long serialVersionUID = 2862725525779204760L;
 
-    public SumWaitDisplay() {
+    public SumOutDisplay() {
         super();
     }
 
-    public SumWaitDisplay(final PositionSet model) {
+    public SumOutDisplay(final PositionSet model) {
         super(model);
     }
 
     @Override
     protected int computeMask(final PositionSet rocks) {
-        return PositionSet.getWaitRocks(rocks);
+        return PositionSet.getOutRocks(rocks);
     }
 }

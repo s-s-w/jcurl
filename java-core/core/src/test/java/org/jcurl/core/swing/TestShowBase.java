@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.io;
+package org.jcurl.core.swing;
 
 import java.awt.Component;
 
@@ -24,9 +24,9 @@ import javax.swing.JFrame;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.TestBase;
 import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.swing.PositionDisplay;
 
 public abstract class TestShowBase extends TestBase {
 

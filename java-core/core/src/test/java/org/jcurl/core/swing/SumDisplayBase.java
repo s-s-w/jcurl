@@ -43,7 +43,7 @@ import org.jcurl.core.swing.RockPainter.ColorSet;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:SumDisplayBase.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public abstract class SumDisplayBase extends JComponent implements
+abstract class SumDisplayBase extends JComponent implements
         PropertyChangeListener {
 
     private static final ColorSet colors = new ColorSet();

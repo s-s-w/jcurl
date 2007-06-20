@@ -41,7 +41,7 @@ import org.jcurl.core.base.Orientation;
 import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.log.JCLoggerFactory;
 
-public abstract class WCComponent extends Component implements WCLayer {
+abstract class WCComponent extends Component implements WCLayer {
 
     private static final Log log = JCLoggerFactory.getLogger(WCComponent.class);
 

@@ -47,7 +47,6 @@ public abstract class TestZuiBase extends TestShowBase {
     public TestZuiBase(int dx, int dy) {
         super(dx, dy);
         if (frame != null) {
-            frame.getContentPane().remove(display);
             frame.getContentPane().add(pico = new PCanvas());
             pico.setBackground(new Color(0xE8E8FF));
             pico
@@ -88,11 +87,5 @@ public abstract class TestZuiBase extends TestShowBase {
         }
         frame.setVisible(false);
         return loop;
-    }
-
-    @Override
-    public int showPositionDisplay(final PositionSet p, final Zoomer zoom,
-            final long millis, final TimeRunnable r) {
-        throw new UnsupportedOperationException();
     }
 }

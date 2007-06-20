@@ -37,7 +37,7 @@ import org.jcurl.core.base.Strategy;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:RockPainter.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class RockPainter implements Strategy {
+class RockPainter implements Strategy {
     /** Rock colors */
     public static class ColorSet {
         public Paint contour = Color.BLACK;

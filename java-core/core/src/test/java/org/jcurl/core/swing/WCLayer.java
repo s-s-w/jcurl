@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005 M. Rohrmoser
+ * Copyright (C) 2005-2007 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -18,26 +18,18 @@
  */
 package org.jcurl.core.swing;
 
-import org.jcurl.core.base.PositionSet;
+import java.awt.geom.Point2D;
 
-/**
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
- */
-public class SumOutDisplay extends SumDisplayBase {
+import org.jcurl.core.base.Zoomer;
 
-    private static final long serialVersionUID = 2862725525779204760L;
+interface WCLayer {
 
-    public SumOutDisplay() {
-        super();
-    }
+    public abstract Point2D wc2dc(final Point2D wc, Point2D dc);
 
-    public SumOutDisplay(final PositionSet model) {
-        super(model);
-    }
+    public abstract void setZoom(final Zoomer zoom);
 
-    @Override
-    protected int computeMask(final PositionSet rocks) {
-        return PositionSet.getOutRocks(rocks);
-    }
+    public abstract Zoomer getZoom();
+
+    public abstract Point2D dc2wc(final Point2D dc, Point2D wc);
+
 }

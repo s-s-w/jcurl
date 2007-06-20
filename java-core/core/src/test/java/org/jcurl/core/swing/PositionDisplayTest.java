@@ -23,7 +23,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.TestShowBase;
 import org.jcurl.core.model.FixpointZoomer;
 
 public class PositionDisplayTest extends TestShowBase {

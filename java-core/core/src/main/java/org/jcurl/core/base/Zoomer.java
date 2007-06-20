@@ -26,6 +26,7 @@ import org.jcurl.core.helpers.MutableObject;
 /**
  * Smart handler for creating wc to dc transformations.
  * 
+ * @deprecated Can we get rid of this?
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CenteredZoomer.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */

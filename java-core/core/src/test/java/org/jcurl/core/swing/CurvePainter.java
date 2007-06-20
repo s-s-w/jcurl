@@ -40,7 +40,7 @@ import org.jcurl.math.R1RNFunction;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurvePainter implements Strategy {
+class CurvePainter implements Strategy {
     private static final Log log = JCLoggerFactory
             .getLogger(CurvePainter.class);
 

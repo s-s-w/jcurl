@@ -24,9 +24,9 @@ import java.awt.geom.Point2D;
 import org.jcurl.core.base.Curler;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.TestShowBase;
 import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.swing.TestShowBase;
 import org.jcurl.math.Polynome;
 
 public class CurlerNoCurlTest extends TestShowBase {

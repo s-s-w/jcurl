@@ -45,7 +45,7 @@ import org.jcurl.core.model.NewtonCollissionDetector;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.reflection.Sun14ReflectionProvider;
 
-public class XStreamIOTest extends TestShowBase {
+public class XStreamIOTest extends TestBase {
     public static ComputedTrajectorySet initHammy(ComputedTrajectorySet te) {
         if (te == null)
             te = new CurveManager();
@@ -530,130 +530,6 @@ public class XStreamIOTest extends TestShowBase {
                         + "  </curve>\n"
                         + "  <stopper class=\"org.jcurl.core.model.NewtonStopDetector\"/>\n"
                         + "</org.jcurl.core.model.CurveStoreImpl>", x);
-    }
-
-    public void testHammy() {
-        final CurveManager te;
-        {
-            final JCurlSerializer xs = new XStreamSerializer();
-            final String x = xs.write(xs.wrap(null, initHammy(null)));
-            // System.out.println(x);
-            assertEquals(
-                    "<org.jcurl.container.2007>\n"
-                            + "  <annotations/>\n"
-                            + "  <trajectories>\n"
-                            + "    <CurveManager>\n"
-                            + "      <annotations>\n"
-                            + "        <entry>\n"
-                            + "          <string>org.jcurl.core.Light.Team</string>\n"
-                            + "          <string>Canada</string>\n"
-                            + "        </entry>\n"
-                            + "        <entry>\n"
-                            + "          <string>org.jcurl.core.Game</string>\n"
-                            + "          <string>Semifinal</string>\n"
-                            + "        </entry>\n"
-                            + "        <entry>\n"
-                            + "          <string>org.jcurl.core.Hammer</string>\n"
-                            + "          <string>Dark</string>\n"
-                            + "        </entry>\n"
-                            + "        <entry>\n"
-                            + "          <string>org.jcurl.core.Location</string>\n"
-                            + "          <string>Garmisch</string>\n"
-                            + "        </entry>\n"
-                            + "        <entry>\n"
-                            + "          <string>org.jcurl.core.Dark.Team</string>\n"
-                            + "          <string>Scotland</string>\n"
-                            + "        </entry>\n"
-                            + "        <entry>\n"
-                            + "          <string>org.jcurl.core.Event</string>\n"
-                            + "          <string>World Curling Championships</string>\n"
-                            + "        </entry>\n"
-                            + "        <entry>\n"
-                            + "          <string>org.jcurl.core.Date</string>\n"
-                            + "          <string>1992</string>\n"
-                            + "        </entry>\n"
-                            + "      </annotations>\n"
-                            + "      <collider class=\"CollissionSpin\">\n"
-                            + "        <params>\n"
-                            + "          <entry>\n"
-                            + "            <string>loss</string>\n"
-                            + "            <DimVal>0.0 J</DimVal>\n"
-                            + "          </entry>\n"
-                            + "          <entry>\n"
-                            + "            <string>frictionRockRock</string>\n"
-                            + "            <DimVal>0.5 </DimVal>\n"
-                            + "          </entry>\n"
-                            + "        </params>\n"
-                            + "      </collider>\n"
-                            + "      <collissionDetector class=\"NewtonCollissionDetector\"/>\n"
-                            + "      <curler class=\"NoCurlCurler\">\n"
-                            + "        <params>\n"
-                            + "          <entry>\n"
-                            + "            <string>drawToTeeTime</string>\n"
-                            + "            <DimVal>24.0 s</DimVal>\n"
-                            + "          </entry>\n"
-                            + "          <entry>\n"
-                            + "            <string>drawToTeeCurl</string>\n"
-                            + "            <DimVal>0.0 m</DimVal>\n"
-                            + "          </entry>\n"
-                            + "        </params>\n"
-                            + "      </curler>\n"
-                            + "      <initialPos>\n"
-                            + "        <dark>\n"
-                            + "          <Rock>-0.7620000243186951 -2.4384000301361084 0.0</Rock>\n"
-                            + "          <Rock>-0.9448800086975098 -2.8041601181030273 0.0</Rock>\n"
-                            + "          <Rock>0.26762932538986206 4.371277809143066 0.0</Rock>\n"
-                            + "          <Rock>-0.8028876781463623 4.014439105987549 0.0</Rock>\n"
-                            + "          <Rock>1.3827511072158813 -0.1338145136833191 0.0</Rock>\n"
-                            + "          <Rock>0.22302429378032684 -1.204331874847412 0.0</Rock>\n"
-                            + "          <Rock>-0.8474927544593811 -1.3381463289260864 0.0</Rock>\n"
-                            + "          <Rock>1.188692569732666 6.4008002281188965 0.0</Rock>\n"
-                            + "        </dark>\n"
-                            + "        <light>\n"
-                            + "          <Rock>0.7620000243186951 -2.4384000301361084 0.0</Rock>\n"
-                            + "          <Rock>-0.356839120388031 4.683512210845947 0.0</Rock>\n"
-                            + "          <Rock>0.08920978009700775 2.676292657852173 0.0</Rock>\n"
-                            + "          <Rock>0.6690731644630432 3.657599925994873 0.0</Rock>\n"
-                            + "          <Rock>0.44604888558387756 1.7395901679992676 0.0</Rock>\n"
-                            + "          <Rock>0.44604888558387756 -0.8474927544593811 0.0</Rock>\n"
-                            + "          <Rock>-0.1338145136833191 -1.6949855089187622 0.0</Rock>\n"
-                            + "          <Rock>-0.5352586507797241 -0.4906536340713501 0.0</Rock>\n"
-                            + "        </light>\n"
-                            + "      </initialPos>\n"
-                            + "      <initialSpeed>\n"
-                            + "        <dark>\n"
-                            + "          <Rock>0.0 0.0 0.0</Rock>\n"
-                            + "          <Rock>0.0 0.0 0.0</Rock>\n"
-                            + "          <Rock>0.0 0.0 0.0</Rock>\n"
-                            + "          <Rock>0.0 0.0 0.0</Rock>\n"
-                            + "          <Rock>0.0 0.0 0.0</Rock>\n"
-                            + "          <Rock>0.0 0.0 0.0</Rock>\n"
-                            + "          <Rock>0.0 0.0 0.0</Rock>\n"
-                            + "          <Rock>0.0 -3.0 1.7453292519943295</Rock>\n"
-                            + "        </dark>\n" + "        <light>\n"
-                            + "          <Rock>0.0 0.0 0.0</Rock>\n"
-                            + "          <Rock>0.0 0.0 0.0</Rock>\n"
-                            + "          <Rock>0.0 0.0 0.0</Rock>\n"
-                            + "          <Rock>0.0 0.0 0.0</Rock>\n"
-                            + "          <Rock>0.0 0.0 0.0</Rock>\n"
-                            + "          <Rock>0.0 0.0 0.0</Rock>\n"
-                            + "          <Rock>0.0 0.0 0.0</Rock>\n"
-                            + "          <Rock>0.0 0.0 0.0</Rock>\n"
-                            + "        </light>\n" + "      </initialSpeed>\n"
-                            + "    </CurveManager>\n" + "  </trajectories>\n"
-                            + "</org.jcurl.container.2007>", x);
-            te = (CurveManager) xs.read(x).getTrajectories()[0];
-        }
-        te.setCurrentTime(10);
-        // with Display:
-        showPositionDisplay(te.getCurrentPos(), FixpointZoomer.HOUSE, 7500,
-                new TimeRunnable() {
-                    @Override
-                    public void run(final double t) throws InterruptedException {
-                        te.setCurrentTime(t);
-                        Thread.sleep(1000 / 50);
-                    }
-                });
     }
 
     public void testPattern() {

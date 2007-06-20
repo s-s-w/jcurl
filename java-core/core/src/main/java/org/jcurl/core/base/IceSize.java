@@ -18,10 +18,12 @@
  */
 package org.jcurl.core.base;
 
+import java.awt.Shape;
+
 import org.jcurl.core.helpers.Dim;
 
 /**
- * IceSize dimensions.
+ * Ice dimensions. TODO Should here be {@link Shape}s?
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:IceSize.java 378 2007-01-24 01:18:35Z mrohrmoser $
