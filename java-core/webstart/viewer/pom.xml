@@ -48,7 +48,7 @@
 						</resources>
 						<outputFile>launch.jnlp</outputFile>
 						<mainClass>
-							  org.jcurl.mr.gui.Webstart
+							  org.jcurl.demo.tactics.MainApp
 						</mainClass>
 					</jnlp>
 					<!-- SIGNING -->
