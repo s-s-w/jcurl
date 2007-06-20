@@ -23,8 +23,6 @@ import javax.swing.JFrame;
 /**
  * A simple editor that brings all together.
  * 
- * @see org.jcurl.core.swing.PositionDisplay
- * @see org.jcurl.demo.editor.LocationController
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:EditorApp.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */

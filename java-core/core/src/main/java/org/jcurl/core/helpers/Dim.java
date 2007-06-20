@@ -22,7 +22,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Various units of measurement incl. conversion.
+ * Various units of measurement plus conversion.
+ * 
+ * Similar to <code>javax.measure.unit.Unit</code> from <a
+ * href="http://www.jcp.org/en/jsr/detail?id=275">JSR-275</a>.
  * 
  * @see org.jcurl.core.helpers.DimVal
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

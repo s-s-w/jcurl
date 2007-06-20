@@ -27,7 +27,7 @@ import javax.imageio.ImageIO;
 
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Zoomer;
-import org.jcurl.core.swing.PositionDisplay;
+import org.jcurl.core.helpers.NotImplementedYetException;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -47,12 +47,14 @@ public class IconGenerator {
         final BufferedImage img = new BufferedImage(1024, 768,
                 BufferedImage.TYPE_INT_ARGB);
         final Graphics g = img.getGraphics();
-        final PositionDisplay jp = new PositionDisplay();
-        jp.setPos(loc);
-        jp.setZoom(zoom);
-        jp.setSize(img.getWidth(), img.getHeight());
-        jp.paint(g);
+        // FIXME !!!
+//        final PositionDisplay jp = new PositionDisplay();
+//        jp.setPos(loc);
+//        jp.setZoom(zoom);
+//        jp.setSize(img.getWidth(), img.getHeight());
+//        jp.paint(g);
         g.dispose();
         ImageIO.write(img, "png", dst);
+        throw new NotImplementedYetException();
     }
 }

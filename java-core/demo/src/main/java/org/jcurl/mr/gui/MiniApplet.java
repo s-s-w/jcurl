@@ -20,17 +20,15 @@ package org.jcurl.mr.gui;
 
 import javax.swing.JApplet;
 
-import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.swing.PositionDisplay;
-
 public class MiniApplet extends JApplet {
     private static final long serialVersionUID = 3824028361032089717L;
 
     public MiniApplet() {
-        final PositionDisplay p = new PositionDisplay();
-        getContentPane().add(p);
-        // p.setPos(PositionSet.allOut());
-        TacticsApplet.initHammy(p.getPos(), new SpeedSet());
+        // FIXME make functional again.
+//        final PositionDisplay p = new PositionDisplay();
+//        getContentPane().add(p);
+//        // p.setPos(PositionSet.allOut());
+//        TacticsApplet.initHammy(p.getPos(), new SpeedSet());
     }
 
     @Override

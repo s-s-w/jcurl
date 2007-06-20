@@ -24,6 +24,9 @@ import java.util.regex.Pattern;
 /**
  * A value with attached unit of measurement {@link Dim}.
  * 
+ * Similar to <code>javax.measure.Measure</code> from <a
+ * href="http://www.jcp.org/en/jsr/detail?id=275">JSR-275</a>.
+ * 
  * @see org.jcurl.core.helpers.Dim
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
