@@ -53,7 +53,7 @@ public final class PropModelHelper {
 
     public static double get(final Map<CharSequence, Measure> p,
             final CharSequence key, final Unit dim) {
-        return p.get(key).to(dim).quantity;
+        return p.get(key).to(dim).value;
     }
 
     public static double getDrawToTeeCurl(final Map<CharSequence, Measure> p) {

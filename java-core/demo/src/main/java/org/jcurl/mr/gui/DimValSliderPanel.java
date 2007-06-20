@@ -100,7 +100,7 @@ public class DimValSliderPanel extends JPanel implements ChangeListener,
         slider.setOrientation(SwingConstants.VERTICAL);
 
         final int max = (int) (new Measure(IceSize.SIDE_2_CENTER, dim.BaseUnit)
-                .to(dim).quantity * Granularity);
+                .to(dim).value * Granularity);
         slider.setMaximum((int) (Granularity * Math.ceil((double) max
                 / Granularity)));
         // slider.setMaximum(2500);
@@ -144,10 +144,10 @@ public class DimValSliderPanel extends JPanel implements ChangeListener,
                 final Measure raw = (Measure) arg0.getNewValue();
                 final Measure val;
                 if (raw.unit == Unit.NONE)
-                    val = new Measure(raw.quantity, dim);
+                    val = new Measure(raw.value, dim);
                 else
                     val = raw.to(dim);
-                slider.setValue((int) (val.quantity * Granularity));
+                slider.setValue((int) (val.value * Granularity));
                 text.setText(val.toString());
             }
     }

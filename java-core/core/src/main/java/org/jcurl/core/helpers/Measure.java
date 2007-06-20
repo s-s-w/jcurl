@@ -59,10 +59,10 @@ public class Measure {
 
     public final Unit unit;
 
-    public final double quantity;
+    public final double value;
 
-    public Measure(final double quantity, final Unit unit) {
-        this.quantity = quantity;
+    public Measure(final double value, final Unit unit) {
+        this.value = value;
         this.unit = unit;
     }
 
@@ -73,7 +73,7 @@ public class Measure {
         final Measure b = (Measure) o;
         if (!unit.equals(b.unit))
             return false;
-        if (quantity == b.quantity)
+        if (value == b.value)
             return true;
         return false;
     }
@@ -87,8 +87,8 @@ public class Measure {
         hash *= fact;
         hash += unit.hashCode();
         hash *= fact;
-        final long tmp = quantity == 0.0 ? 0L : java.lang.Double
-                .doubleToLongBits(quantity);
+        final long tmp = value == 0.0 ? 0L : java.lang.Double
+                .doubleToLongBits(value);
         hash += (int) (tmp ^ tmp >>> 32);
         return hash;
     }
@@ -98,13 +98,13 @@ public class Measure {
             throw new IllegalArgumentException("Units are not convertible ("
                     + unit.toString() + "->" + dst.toString() + ")");
         // this -> si -> dst
-        return new Measure(quantity * unit.Factor / dst.Factor, dst);
+        return new Measure(value * unit.Factor / dst.Factor, dst);
     }
 
     @Override
     public String toString() {
         if (unit == null)
-            return Double.toString(quantity);
-        return Double.toString(quantity) + unit.toString();
+            return Double.toString(value);
+        return Double.toString(value) + unit.toString();
     }
 }

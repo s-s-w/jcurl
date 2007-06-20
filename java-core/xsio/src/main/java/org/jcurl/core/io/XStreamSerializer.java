@@ -82,7 +82,7 @@ public class XStreamSerializer implements JCurlSerializer {
                 final MarshallingContext arg2) {
             final Measure d = (Measure) arg0;
             final StringBuffer s = new StringBuffer();
-            s.append(d.quantity).append(" ").append(d.unit);
+            s.append(d.value).append(" ").append(d.unit);
             arg1.setValue(s.toString());
         }
 

@@ -168,13 +168,13 @@ public class Model extends MutableObject {
     public void setDrawCurl(final Measure drawCurl) {
         propChange.firePropertyChange("drawCurl", getDrawCurl(), drawCurl);
         getTrajectory().getCurler()
-                .setDrawToTeeCurl(drawCurl.to(Unit.METER).quantity);
+                .setDrawToTeeCurl(drawCurl.to(Unit.METER).value);
     }
 
     public void setDrawTime(final Measure drawTime) {
         propChange.firePropertyChange("drawTime", getDrawTime(), drawTime);
         getTrajectory().getCurler().setDrawToTeeTime(
-                drawTime.to(Unit.SECOND).quantity);
+                drawTime.to(Unit.SECOND).value);
     }
 
     public void setInitialPos(final PositionSet initialPos) {

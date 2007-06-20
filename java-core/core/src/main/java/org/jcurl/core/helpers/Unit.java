@@ -164,22 +164,22 @@ public class Unit extends EnumBase {
     }
 
     static double toMeter(final Measure v) {
-        return v.to(METER).quantity;
+        return v.to(METER).value;
     }
 
     static double toRadians(final Measure v) {
-        return v.to(RADIANT).quantity;
+        return v.to(RADIANT).value;
     }
 
     static double toSecHogHog(final Measure v) {
-        final double ret = v.quantity;
+        final double ret = v.value;
         if (SEC_HOG_HOG.equals(v.unit))
             return ret;
         throw new IllegalArgumentException("Not convertible");
     }
 
     static double toSecHogTee(final Measure v) {
-        final double ret = v.quantity;
+        final double ret = v.value;
         if (SEC_HOG_TEE.equals(v.unit))
             return ret;
         throw new IllegalArgumentException("Not convertible");
