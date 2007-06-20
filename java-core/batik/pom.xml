@@ -83,7 +83,7 @@
 		<site>
 			<id>jcurl-website</id>
 			<url>
-				scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/site/${pom.artifactId}/${pom.version}
+				${scpsitebase}/${pom.artifactId}/${pom.version}
 			</url>
 		</site>
 	</distributionManagement>

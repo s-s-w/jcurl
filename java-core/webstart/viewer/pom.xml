@@ -85,4 +85,23 @@
 			<version>${version}</version>
 		</dependency>
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>jcurl-repository</id>
+			<name>JCurl Maven Repository</name>
+			<layout>default</layout>
+			<url>http://www.jcurl.org/m2/repo</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<distributionManagement>
+		<site>
+			<id>jcurl-website</id>
+			<url>
+				${scpsitebase}/${pom.artifactId}/${pom.version}
+			</url>
+		</site>
+	</distributionManagement>
 </project>
