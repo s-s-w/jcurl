@@ -24,13 +24,8 @@ import junit.framework.TestCase;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class DimValTest extends TestCase {
-
-    public static void main(final String[] args) {
-        junit.textui.TestRunner.run(DimValTest.class);
-    }
-
-    public void test010_Convert() {
+public class MeasureTest extends TestCase {
+    public void testConvert() {
         final Measure in = new Measure(12, Unit.INCH);
         final Measure ft = new Measure(1, Unit.FOOT);
         final Measure m = new Measure(0.3048, Unit.METER);
