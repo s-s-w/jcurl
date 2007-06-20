@@ -47,7 +47,6 @@
 		<module>xsio</module>
 		<module>zui</module>
 		<module>demo</module>
-		<module>batik</module>
 		<module>webstart</module>
 	</modules>
 </project>
