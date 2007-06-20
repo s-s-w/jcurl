@@ -62,7 +62,7 @@ import edu.umd.cs.piccolo.util.PPaintContext;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class TacticsApp extends JFrame {
+public class MainApp extends JFrame {
     /**
      * Set draw-to-tee time and curl via {@link JSlider}s.
      * 
@@ -405,7 +405,7 @@ public class TacticsApp extends JFrame {
     public static void main(final String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                final TacticsApp application = new TacticsApp();
+                final MainApp application = new MainApp();
                 application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 application.setSize(800, 600);
                 application.setVisible(true);
@@ -418,7 +418,7 @@ public class TacticsApp extends JFrame {
 
     private final MainPanel p;
 
-    public TacticsApp() {
+    public MainApp() {
         m = new MainMod();
         m.setCurrentTime(30);
         p = new MainPanel(m);
