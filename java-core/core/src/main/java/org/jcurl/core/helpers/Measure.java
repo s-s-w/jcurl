@@ -46,7 +46,7 @@ public class Measure {
             final String val = mat.group(1);
             final String dim = mat.group(4);
             try {
-                return new Measure(Double.parseDouble(val), Unit.find(dim));
+                return new Measure(Double.parseDouble(val), Unit.getInstance(dim));
             } catch (final RuntimeException e) {
                 final IllegalArgumentException a = new IllegalArgumentException(
                         "Not a measure: [" + measure + "]");

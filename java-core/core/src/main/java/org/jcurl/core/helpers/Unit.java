@@ -121,7 +121,7 @@ public class Unit extends EnumBase {
         return (float) (f * 0.3048);
     }
 
-    public static final Unit find(final String txt) {
+    public static final Unit getInstance(final String txt) {
         if (txt == null)
             return null;
         final Unit ret = _names.get(txt);
@@ -196,23 +196,23 @@ public class Unit extends EnumBase {
         Factor = factor;
     }
 
-    public boolean isAngle() {
+    boolean isAngle() {
         return Unit.isAngle(this);
     }
 
-    public boolean isLength() {
+    boolean isLength() {
         return Unit.isLength(this);
     }
 
-    public boolean isSpeed() {
+    boolean isSpeed() {
         return Unit.isSpeed(this);
     }
 
-    public boolean isSpin() {
+    boolean isSpin() {
         return Unit.isSpin(this);
     }
 
-    public boolean isTime() {
+    boolean isTime() {
         return Unit.isTime(this);
     }
 }
