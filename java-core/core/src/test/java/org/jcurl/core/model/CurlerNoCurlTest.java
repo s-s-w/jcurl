@@ -25,7 +25,7 @@ import org.jcurl.core.base.Curler;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Zoomer;
-import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.helpers.Unit;
 import org.jcurl.core.swing.TestShowBase;
 import org.jcurl.math.Polynome;
 
@@ -145,7 +145,7 @@ public class CurlerNoCurlTest extends TestShowBase {
         assertEquals(-0.5, x.getX());
         assertEquals(-1, x.getY() - IceSize.FAR_HOG_2_TEE);
 
-        s.releaseRc2Wc(m, Dim.f2m(14), 0);
+        s.releaseRc2Wc(m, Unit.f2m(14), 0);
         // System.out.println(new AffineTransform(
         // new double[] { 1, 2, 3, 4, 5, 6 })
         // + "\n" + m);
@@ -158,7 +158,7 @@ public class CurlerNoCurlTest extends TestShowBase {
         assertEquals(-1.2249733953800335, x.getX() + 0.5);
         assertEquals(0.061332027536110445, x.getY() - IceSize.FAR_HOG_2_TEE + 1);
 
-        s.releaseRc2Wc(m, Dim.f2m(-7), 0);
+        s.releaseRc2Wc(m, Unit.f2m(-7), 0);
         // System.out.println(new AffineTransform(
         // new double[] { 1, 2, 3, 4, 5, 6 })
         // + "\n" + m);

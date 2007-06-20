@@ -26,8 +26,8 @@ import junit.framework.TestCase;
 import org.jcurl.core.base.PropModel;
 import org.jcurl.core.base.PropModelHelper;
 import org.jcurl.core.base.PropModelImpl;
-import org.jcurl.core.helpers.Dim;
-import org.jcurl.core.helpers.DimVal;
+import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.helpers.Measure;
 import org.jcurl.core.model.CollissionSimple;
 import org.jcurl.core.model.CurlerNoCurl;
 import org.xml.sax.SAXException;
@@ -45,13 +45,13 @@ public class SetupSaxSerTest extends TestCase {
     }
 
     public void testModel() throws SAXException {
-        Map<CharSequence, DimVal> p = PropModelHelper.create();
-        p.put("none", new DimVal(1, Dim.NONE));
-        p.put("meter", new DimVal(1, Dim.METER));
-        p.put("second", new DimVal(1, Dim.SECOND));
+        Map<CharSequence, Measure> p = PropModelHelper.create();
+        p.put("none", new Measure(1, Unit.NONE));
+        p.put("meter", new Measure(1, Unit.METER));
+        p.put("second", new Measure(1, Unit.SECOND));
         PropModel m = new PropModelImpl() {
 
-            public void init(Map<CharSequence, DimVal> params) {
+            public void init(Map<CharSequence, Measure> params) {
                 internalInit(params);
             }
         };

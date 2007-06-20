@@ -31,8 +31,8 @@ import org.jcurl.core.base.Curler;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockSetProps;
-import org.jcurl.core.helpers.Dim;
-import org.jcurl.core.helpers.DimVal;
+import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.helpers.Measure;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -40,14 +40,14 @@ import org.jcurl.core.helpers.DimVal;
  */
 public class Config {
 
-    static DimVal getDim(final String token) {
+    static Measure getDim(final String token) {
         if ("HACK".equals(token))
-            return new DimVal(IceSize.FAR_HACK_2_TEE, Dim.METER);
+            return new Measure(IceSize.FAR_HACK_2_TEE, Unit.METER);
         if ("FHOG".equals(token))
-            return new DimVal(IceSize.HOG_2_HOG + IceSize.HOG_2_TEE, Dim.METER);
+            return new Measure(IceSize.HOG_2_HOG + IceSize.HOG_2_TEE, Unit.METER);
         if ("NHOG".equals(token))
-            return new DimVal(IceSize.HOG_2_TEE, Dim.METER);
-        return DimVal.parse(token);
+            return new Measure(IceSize.HOG_2_TEE, Unit.METER);
+        return Measure.parse(token);
     }
 
     public static Config load(final File in) throws FileNotFoundException {

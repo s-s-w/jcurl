@@ -40,7 +40,7 @@ import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.StoredTrajectorySet;
 import org.jcurl.core.base.TrajectorySet;
-import org.jcurl.core.helpers.DimVal;
+import org.jcurl.core.helpers.Measure;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerNoCurl;
 import org.jcurl.core.model.CurveManager;
@@ -74,21 +74,21 @@ public class XStreamSerializer implements JCurlSerializer {
     static class DimValConverter implements Converter {
 
         public boolean canConvert(final Class arg0) {
-            return DimVal.class.isAssignableFrom(arg0);
+            return Measure.class.isAssignableFrom(arg0);
         }
 
         public void marshal(final Object arg0,
                 final HierarchicalStreamWriter arg1,
                 final MarshallingContext arg2) {
-            final DimVal d = (DimVal) arg0;
+            final Measure d = (Measure) arg0;
             final StringBuffer s = new StringBuffer();
-            s.append(d.val).append(" ").append(d.dim);
+            s.append(d.quantity).append(" ").append(d.unit);
             arg1.setValue(s.toString());
         }
 
         public Object unmarshal(final HierarchicalStreamReader arg0,
                 final UnmarshallingContext arg1) {
-            return DimVal.parse(arg0.getValue());
+            return Measure.parse(arg0.getValue());
         }
     }
 
@@ -216,7 +216,7 @@ public class XStreamSerializer implements JCurlSerializer {
      * Make the aliases upper- or camelcase to distinguish them from properties.
      */
     protected XStream registerAliases(final XStream xs) {
-        xs.alias("DimVal", DimVal.class);
+        xs.alias("measure", Measure.class);
         xs.alias("Rock", RockDouble.class);
         // 
         xs.alias("org.jcurl.container.2007", Payload2007.class);

@@ -28,7 +28,7 @@ import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.AnnoHelp;
-import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.helpers.Unit;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.swing.TestShowBase;
 import org.jcurl.math.R1RNFunction;
@@ -61,23 +61,23 @@ public class CurveManagerTest extends TestShowBase {
         PositionSet.allOut(p);
         // te.getInitialPos().getLight(1-1).setLocation(
         p.getLight(2 - 1)
-                .setLocation(Dim.f2m(-1.170732), Dim.f2m(15.365854), 0);
-        p.getLight(3 - 1).setLocation(Dim.f2m(0.292683), Dim.f2m(8.780488), 0);
-        p.getLight(4 - 1).setLocation(Dim.f2m(2.195122), Dim.f2m(12), 0);
-        p.getLight(5 - 1).setLocation(Dim.f2m(1.463415), Dim.f2m(5.707317), 0);
-        p.getLight(6 - 1).setLocation(Dim.f2m(1.463415), Dim.f2m(-2.780488), 0);
+                .setLocation(Unit.f2m(-1.170732), Unit.f2m(15.365854), 0);
+        p.getLight(3 - 1).setLocation(Unit.f2m(0.292683), Unit.f2m(8.780488), 0);
+        p.getLight(4 - 1).setLocation(Unit.f2m(2.195122), Unit.f2m(12), 0);
+        p.getLight(5 - 1).setLocation(Unit.f2m(1.463415), Unit.f2m(5.707317), 0);
+        p.getLight(6 - 1).setLocation(Unit.f2m(1.463415), Unit.f2m(-2.780488), 0);
         p.getLight(7 - 1)
-                .setLocation(Dim.f2m(-0.439024), Dim.f2m(-5.560976), 0);
+                .setLocation(Unit.f2m(-0.439024), Unit.f2m(-5.560976), 0);
         p.getLight(8 - 1)
-                .setLocation(Dim.f2m(-1.756098), Dim.f2m(-1.609756), 0);
+                .setLocation(Unit.f2m(-1.756098), Unit.f2m(-1.609756), 0);
         // p.getDark(1-1).setLocation(
         // p.getDark(2-1).setLocation(
-        p.getDark(3 - 1).setLocation(Dim.f2m(0.878049), Dim.f2m(14.341463), 0);
-        p.getDark(4 - 1).setLocation(Dim.f2m(-2.634146), Dim.f2m(13.170732), 0);
-        p.getDark(5 - 1).setLocation(Dim.f2m(4.536585), Dim.f2m(-0.439024), 0);
-        p.getDark(6 - 1).setLocation(Dim.f2m(0.731707), Dim.f2m(-3.95122), 0);
-        p.getDark(7 - 1).setLocation(Dim.f2m(-2.780488), Dim.f2m(-4.390244), 0);
-        p.getDark(8 - 1).setLocation(Dim.f2m(3.89991), IceSize.HOG_2_TEE, 0);
+        p.getDark(3 - 1).setLocation(Unit.f2m(0.878049), Unit.f2m(14.341463), 0);
+        p.getDark(4 - 1).setLocation(Unit.f2m(-2.634146), Unit.f2m(13.170732), 0);
+        p.getDark(5 - 1).setLocation(Unit.f2m(4.536585), Unit.f2m(-0.439024), 0);
+        p.getDark(6 - 1).setLocation(Unit.f2m(0.731707), Unit.f2m(-3.95122), 0);
+        p.getDark(7 - 1).setLocation(Unit.f2m(-2.780488), Unit.f2m(-4.390244), 0);
+        p.getDark(8 - 1).setLocation(Unit.f2m(3.89991), IceSize.HOG_2_TEE, 0);
         RockSet.allZero(s);
         s.getDark(7).setLocation(0, -3, 100 * Math.PI / 180);
         p.notifyChange();

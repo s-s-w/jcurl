@@ -26,7 +26,7 @@ import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.helpers.Unit;
 
 /**
  * {@link JSlider} plus {@link JTextField} for Broom direction, Interval Time,
@@ -53,19 +53,19 @@ public class ControlPanel extends JTabbedPane {
         final JPanel p0 = new JPanel();
         // FIXME leads to Rock-Numbering Shift!!!
         p0.setLayout(new GridLayout(0, 2));
-        p0.add(p = new DimValSliderPanel(model, "Broom", "broomX", Dim.FOOT));
+        p0.add(p = new DimValSliderPanel(model, "Broom", "broomX", Unit.FOOT));
         p0.add(p = new DimValSliderPanel(model, "Interval", "interval",
-                Dim.SECOND));
+                Unit.SECOND));
         p.setMinimum(1000);
         p.setMaximum(4000);
         this.addTab("Rock", p0);
 
         final JPanel p1 = new JPanel();
         p1.setLayout(p0.getLayout());
-        p1.add(p = new DimValSliderPanel(model, "Curl", "drawCurl", Dim.FOOT));
+        p1.add(p = new DimValSliderPanel(model, "Curl", "drawCurl", Unit.FOOT));
         p1
                 .add(p = new DimValSliderPanel(model, "Time", "drawTime",
-                        Dim.SECOND));
+                        Unit.SECOND));
         p.setMinimum(15000);
         p.setMaximum(30000);
         this.addTab("Ice", p1);

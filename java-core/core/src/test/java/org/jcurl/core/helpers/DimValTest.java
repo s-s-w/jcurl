@@ -31,12 +31,12 @@ public class DimValTest extends TestCase {
     }
 
     public void test010_Convert() {
-        final DimVal in = new DimVal(12, Dim.INCH);
-        final DimVal ft = new DimVal(1, Dim.FOOT);
-        final DimVal m = new DimVal(0.3048, Dim.METER);
+        final Measure in = new Measure(12, Unit.INCH);
+        final Measure ft = new Measure(1, Unit.FOOT);
+        final Measure m = new Measure(0.3048, Unit.METER);
 
-        assertEquals(m, m.to(Dim.METER));
-        assertEquals(m, in.to(Dim.METER));
-        assertEquals(m, ft.to(Dim.METER));
+        assertEquals(m, m.to(Unit.METER));
+        assertEquals(m, in.to(Unit.METER));
+        assertEquals(m, ft.to(Unit.METER));
     }
 }

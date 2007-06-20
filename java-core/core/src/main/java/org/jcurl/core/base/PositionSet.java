@@ -20,7 +20,7 @@ package org.jcurl.core.base;
 
 import java.awt.geom.Point2D;
 
-import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.helpers.Unit;
 
 /**
  * A {@link org.jcurl.core.base.RockSet}&nbsp;with location semantics.
@@ -34,7 +34,7 @@ public class PositionSet extends RockSet {
 
     private static final double MaxScoreDistSq = sqr(RockProps.DEFAULT
             .getRadius()
-            + Dim.f2m(6));
+            + Unit.f2m(6));
 
     private static final double RR = sqr(RockProps.DEFAULT.getRadius());
 

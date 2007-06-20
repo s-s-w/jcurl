@@ -22,7 +22,7 @@ import java.util.Map;
 
 import org.jcurl.core.base.ColliderBase;
 import org.jcurl.core.base.Rock;
-import org.jcurl.core.helpers.DimVal;
+import org.jcurl.core.helpers.Measure;
 
 /**
  * A very simple hit-model using conservation of energy and momentum.
@@ -36,7 +36,7 @@ import org.jcurl.core.helpers.DimVal;
  */
 public class CollissionSimple extends ColliderBase {
 
-    public void init(final Map<CharSequence, DimVal> params) {
+    public void init(final Map<CharSequence, Measure> params) {
         internalInit(params);
     }
 
@@ -44,7 +44,7 @@ public class CollissionSimple extends ColliderBase {
 
     }
 
-    public CollissionSimple(final Map<CharSequence, DimVal> ice) {
+    public CollissionSimple(final Map<CharSequence, Measure> ice) {
         init(ice);
     }
 

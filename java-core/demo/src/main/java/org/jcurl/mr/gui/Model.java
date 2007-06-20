@@ -22,8 +22,8 @@ import org.jcurl.core.base.Collider;
 import org.jcurl.core.base.ComputedTrajectorySet;
 import org.jcurl.core.base.Curler;
 import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.helpers.Dim;
-import org.jcurl.core.helpers.DimVal;
+import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.helpers.Measure;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.model.CollissionSimple;
 import org.jcurl.core.model.CurlerNoCurl;
@@ -43,9 +43,9 @@ public class Model extends MutableObject {
 
     private int activeRock;
 
-    private DimVal broomX = null;
+    private Measure broomX = null;
 
-    private DimVal interval;
+    private Measure interval;
 
     private ComputedTrajectorySet trajectory;
 
@@ -90,7 +90,7 @@ public class Model extends MutableObject {
         return activeRock;
     }
 
-    public DimVal getBroomX() {
+    public Measure getBroomX() {
         return broomX;
     }
 
@@ -102,21 +102,21 @@ public class Model extends MutableObject {
         return getTrajectory().getCurler();
     }
 
-    public DimVal getDrawCurl() {
-        return new DimVal(getTrajectory().getCurler().getDrawToTeeCurl(),
-                Dim.METER);
+    public Measure getDrawCurl() {
+        return new Measure(getTrajectory().getCurler().getDrawToTeeCurl(),
+                Unit.METER);
     }
 
-    public DimVal getDrawTime() {
-        return new DimVal(getTrajectory().getCurler().getDrawToTeeTime(),
-                Dim.SECOND);
+    public Measure getDrawTime() {
+        return new Measure(getTrajectory().getCurler().getDrawToTeeTime(),
+                Unit.SECOND);
     }
 
     public PositionSet getInitialPos() {
         return getTrajectory().getInitialPos();
     }
 
-    public DimVal getInterval() {
+    public Measure getInterval() {
         return interval;
     }
 
@@ -142,7 +142,7 @@ public class Model extends MutableObject {
         this.activeRock = activeRock & 0xF;
     }
 
-    public void setBroomX(final DimVal broomX) {
+    public void setBroomX(final Measure broomX) {
         if (broomX == null)
             return;
         if (this.broomX == broomX)
@@ -165,16 +165,16 @@ public class Model extends MutableObject {
         getTrajectory().setCurler(curler);
     }
 
-    public void setDrawCurl(final DimVal drawCurl) {
+    public void setDrawCurl(final Measure drawCurl) {
         propChange.firePropertyChange("drawCurl", getDrawCurl(), drawCurl);
         getTrajectory().getCurler()
-                .setDrawToTeeCurl(drawCurl.to(Dim.METER).val);
+                .setDrawToTeeCurl(drawCurl.to(Unit.METER).quantity);
     }
 
-    public void setDrawTime(final DimVal drawTime) {
+    public void setDrawTime(final Measure drawTime) {
         propChange.firePropertyChange("drawTime", getDrawTime(), drawTime);
         getTrajectory().getCurler().setDrawToTeeTime(
-                drawTime.to(Dim.SECOND).val);
+                drawTime.to(Unit.SECOND).quantity);
     }
 
     public void setInitialPos(final PositionSet initialPos) {
@@ -185,9 +185,9 @@ public class Model extends MutableObject {
         getTrajectory().setInitialPos(initialPos);
     }
 
-    public void setInterval(final DimVal interval) {
+    public void setInterval(final Measure interval) {
         propChange.firePropertyChange("interval", getInterval(), interval);
-        this.interval = interval.to(Dim.SECOND);
+        this.interval = interval.to(Unit.SECOND);
     }
 
     public void setTrajectory(final ComputedTrajectorySet trajectory) {

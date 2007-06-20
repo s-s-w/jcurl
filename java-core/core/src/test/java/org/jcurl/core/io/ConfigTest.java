@@ -20,7 +20,7 @@ package org.jcurl.core.io;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.helpers.Unit;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -29,7 +29,7 @@ import org.jcurl.core.helpers.Dim;
 public class ConfigTest extends TestCase {
 
     public void test010_ToDim() {
-        assertEquals(Dim.METER_PER_SEC, Config.getDim("-1.4e-3m/s").dim);
-        assertEquals(Dim.METER_PER_SEC, Config.getDim("-1.4e-3 m/s").dim);
+        assertEquals(Unit.METER_PER_SEC, Config.getDim("-1.4e-3m/s").unit);
+        assertEquals(Unit.METER_PER_SEC, Config.getDim("-1.4e-3 m/s").unit);
     }
 }

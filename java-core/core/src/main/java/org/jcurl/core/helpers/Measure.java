@@ -22,21 +22,22 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A value with attached unit of measurement {@link Dim}.
+ * A scalar value with attached {@link Unit} of measurement.
  * 
  * Similar to <code>javax.measure.Measure</code> from <a
- * href="http://www.jcp.org/en/jsr/detail?id=275">JSR-275</a>.
+ * href="http://www.jcp.org/en/jsr/detail?id=275">JSR-275</a> but faaaar
+ * simpler.
  * 
- * @see org.jcurl.core.helpers.Dim
+ * @see org.jcurl.core.helpers.Unit
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class DimVal {
+public class Measure {
 
     public static final Pattern pat = Pattern
             .compile("^(-?[0-9]+([.][0-9]+)?(e-?[0-9]+)?)[ \t]*([\\S]*)$");
 
-    public static DimVal parse(final String txt) {
+    public static Measure parse(final String txt) {
         // split the string
         final Matcher mat = pat.matcher(txt);
         if (mat.matches()) {
@@ -45,34 +46,34 @@ public class DimVal {
             final String val = mat.group(1);
             final String dim = mat.group(4);
             try {
-                return new DimVal(Double.parseDouble(val), Dim.find(dim));
+                return new Measure(Double.parseDouble(val), Unit.find(dim));
             } catch (final RuntimeException e) {
                 final IllegalArgumentException a = new IllegalArgumentException(
-                        "Not a dimension: [" + txt + "]");
+                        "Not a measure: [" + txt + "]");
                 a.initCause(e);
                 throw a;
             }
         }
-        throw new IllegalArgumentException("Not a dimension: [" + txt + "]");
+        throw new IllegalArgumentException("Not a measure: [" + txt + "]");
     }
 
-    public final Dim dim;
+    public final Unit unit;
 
-    public final double val;
+    public final double quantity;
 
-    public DimVal(final double value, final Dim dim) {
-        val = value;
-        this.dim = dim;
+    public Measure(final double value, final Unit dim) {
+        quantity = value;
+        this.unit = dim;
     }
 
     @Override
     public boolean equals(final Object o) {
-        if (o == null || !(o instanceof DimVal))
+        if (o == null || !(o instanceof Measure))
             return false;
-        final DimVal b = (DimVal) o;
-        if (!dim.equals(b.dim))
+        final Measure b = (Measure) o;
+        if (!unit.equals(b.unit))
             return false;
-        if (val == b.val)
+        if (quantity == b.quantity)
             return true;
         return false;
     }
@@ -84,26 +85,26 @@ public class DimVal {
         int hash = 17;
         final int fact = 59;
         hash *= fact;
-        hash += dim.hashCode();
+        hash += unit.hashCode();
         hash *= fact;
-        final long tmp = val == 0.0 ? 0L : java.lang.Double
-                .doubleToLongBits(val);
+        final long tmp = quantity == 0.0 ? 0L : java.lang.Double
+                .doubleToLongBits(quantity);
         hash += (int) (tmp ^ tmp >>> 32);
         return hash;
     }
 
-    public DimVal to(final Dim dst) {
-        if (dim.BaseDim.intValue() != dst.BaseDim.intValue())
+    public Measure to(final Unit dst) {
+        if (unit.BaseUnit.intValue() != dst.BaseUnit.intValue())
             throw new IllegalArgumentException("Units are not convertible ("
-                    + dim.toString() + "->" + dst.toString() + ")");
+                    + unit.toString() + "->" + dst.toString() + ")");
         // this -> si -> dst
-        return new DimVal(val * dim.Factor / dst.Factor, dst);
+        return new Measure(quantity * unit.Factor / dst.Factor, dst);
     }
 
     @Override
     public String toString() {
-        if (dim == null)
-            return Double.toString(val);
-        return Double.toString(val) + dim.toString();
+        if (unit == null)
+            return Double.toString(quantity);
+        return Double.toString(quantity) + unit.toString();
     }
 }

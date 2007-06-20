@@ -34,8 +34,8 @@ import org.jcurl.core.base.PropModel;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.helpers.Dim;
-import org.jcurl.core.helpers.DimVal;
+import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.helpers.Measure;
 import org.jcurl.core.helpers.XmlSerializer;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
@@ -71,12 +71,12 @@ public class SetupSaxSer {
     }
 
     private static void part(final ContentHandler xml, final double val,
-            final Dim src, final String label, final Dim dst)
+            final Unit src, final String label, final Unit dst)
             throws SAXException {
         final AttributesImpl atts = new AttributesImpl();
-        final DimVal tmp = new DimVal(val, src).to(dst);
-        atts.addAttribute(NS, null, "val", null, Double.toString(tmp.val));
-        atts.addAttribute(NS, null, "dim", null, tmp.dim.toString());
+        final Measure tmp = new Measure(val, src).to(dst);
+        atts.addAttribute(NS, null, "val", null, Double.toString(tmp.quantity));
+        atts.addAttribute(NS, null, "dim", null, tmp.unit.toString());
         xml.startElement(NS, null, label, atts);
         xml.endElement(NS, null, label);
     }
@@ -108,14 +108,14 @@ public class SetupSaxSer {
                     .getName());
             xml.startElement(NS, null, "model", atts);
         }
-        for (final Entry<CharSequence, DimVal> element : model) {
+        for (final Entry<CharSequence, Measure> element : model) {
             final AttributesImpl atts = new AttributesImpl();
             atts.addAttribute(NS, null, "name", null, element.getKey()
                     .toString());
             {
                 atts.addAttribute(NS, null, "val", null, Double
-                        .toString(element.getValue().val));
-                atts.addAttribute(NS, null, "dim", null, element.getValue().dim
+                        .toString(element.getValue().quantity));
+                atts.addAttribute(NS, null, "dim", null, element.getValue().unit
                         .toString());
             }
             xml.startElement(NS, null, "param", atts);
@@ -159,9 +159,9 @@ public class SetupSaxSer {
         atts.addAttribute(NS, null, "no", null, Integer.toString(1 + i));
         xml.startElement(NS, null, "rock", atts);
 
-        part(xml, r.getX(), Dim.METER, "x", Dim.FOOT);
-        part(xml, r.getY(), Dim.METER, "y", Dim.FOOT);
-        part(xml, r.getA(), Dim.RADIANT, "a", Dim.DEGREE);
+        part(xml, r.getX(), Unit.METER, "x", Unit.FOOT);
+        part(xml, r.getY(), Unit.METER, "y", Unit.FOOT);
+        part(xml, r.getA(), Unit.RADIANT, "a", Unit.DEGREE);
 
         xml.endElement(NS, null, "rock");
     }
@@ -181,9 +181,9 @@ public class SetupSaxSer {
         atts.addAttribute(NS, null, "no", null, Integer.toString(1 + i));
         xml.startElement(NS, null, "rock", atts);
 
-        part(xml, r.getX(), Dim.METER_PER_SEC, "x", Dim.METER_PER_SEC);
-        part(xml, r.getY(), Dim.METER_PER_SEC, "y", Dim.METER_PER_SEC);
-        part(xml, r.getA(), Dim.RAD_PER_SEC, "spin", Dim.HERTZ);
+        part(xml, r.getX(), Unit.METER_PER_SEC, "x", Unit.METER_PER_SEC);
+        part(xml, r.getY(), Unit.METER_PER_SEC, "y", Unit.METER_PER_SEC);
+        part(xml, r.getA(), Unit.RAD_PER_SEC, "spin", Unit.HERTZ);
 
         xml.endElement(NS, null, "rock");
     }

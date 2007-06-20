@@ -31,7 +31,7 @@ import java.awt.geom.Rectangle2D;
 import org.jcurl.core.base.Factory;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.RockProps;
-import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.helpers.Unit;
 
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.nodes.PPath;
@@ -148,10 +148,10 @@ public abstract class PIceFactory implements Factory {
         final float hy = IceSize.FAR_HACK_2_TEE;
         final float dx = IceSize.SIDE_2_CENTER;
         final float by = IceSize.BACK_2_TEE;
-        final float c1 = Dim.f2m(0.5);
-        final float c4 = Dim.f2m(2.0);
-        final float c8 = Dim.f2m(4.0);
-        final float c12 = Dim.f2m(6.0);
+        final float c1 = Unit.f2m(0.5);
+        final float c4 = Unit.f2m(2.0);
+        final float c8 = Unit.f2m(4.0);
+        final float c12 = Unit.f2m(6.0);
 
         hog2hog = new Rectangle2D.Float(-dx, nhy, 2 * dx, fhy - nhy);
         hog2tee = new Rectangle2D.Float(-dx, 0, 2 * dx, nhy);

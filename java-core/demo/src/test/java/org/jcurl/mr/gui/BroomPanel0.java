@@ -34,8 +34,8 @@ import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.IceSize;
-import org.jcurl.core.helpers.Dim;
-import org.jcurl.core.helpers.DimVal;
+import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.helpers.Measure;
 import org.jcurl.core.log.JCLoggerFactory;
 
 public class BroomPanel0 extends JPanel implements ChangeListener,
@@ -45,7 +45,7 @@ public class BroomPanel0 extends JPanel implements ChangeListener,
 
     private static final long serialVersionUID = 9008976409239381440L;
 
-    private final Dim dim = Dim.FOOT;
+    private final Unit dim = Unit.FOOT;
 
     private final int Granularity = 1000;
 
@@ -73,8 +73,8 @@ public class BroomPanel0 extends JPanel implements ChangeListener,
         this.add(slider = new JSlider(), "Center");
         slider.setOrientation(SwingConstants.VERTICAL);
 
-        final int max = (int) (new DimVal(IceSize.SIDE_2_CENTER, Dim.METER)
-                .to(dim).val * Granularity);
+        final int max = (int) (new Measure(IceSize.SIDE_2_CENTER, Unit.METER)
+                .to(dim).quantity * Granularity);
         slider.setMaximum((int) (Granularity * Math.ceil((double) max
                 / Granularity)));
         // slider.setMaximum(2500);
@@ -94,14 +94,14 @@ public class BroomPanel0 extends JPanel implements ChangeListener,
         text.selectAll();
 
         this.setSize(50, 100);
-        model.setBroomX(new DimVal(0, dim));
+        model.setBroomX(new Measure(0, dim));
         setVisible(true);
     }
 
     public void actionPerformed(final ActionEvent arg0) {
         if (arg0.getSource() == text)
             try {
-                model.setBroomX(DimVal.parse(text.getText()));
+                model.setBroomX(Measure.parse(text.getText()));
             } catch (final NumberFormatException e) {
                 ;// model. setBroomX(getBroomX());
             }
@@ -111,20 +111,20 @@ public class BroomPanel0 extends JPanel implements ChangeListener,
         log.debug(arg0);
         if (model == arg0.getSource())
             if ("broomX".equals(arg0.getPropertyName())) {
-                final DimVal raw = (DimVal) arg0.getNewValue();
-                final DimVal val;
-                if (raw.dim == Dim.NONE)
-                    val = new DimVal(raw.val, dim);
+                final Measure raw = (Measure) arg0.getNewValue();
+                final Measure val;
+                if (raw.unit == Unit.NONE)
+                    val = new Measure(raw.quantity, dim);
                 else
                     val = raw.to(dim);
-                slider.setValue((int) (val.val * Granularity));
+                slider.setValue((int) (val.quantity * Granularity));
                 text.setText(val.toString());
             }
     }
 
     public void stateChanged(final ChangeEvent arg0) {
         if (arg0.getSource() == slider)
-            model.setBroomX(new DimVal(
+            model.setBroomX(new Measure(
                     (double) slider.getValue() / Granularity, dim));
     }
 }

@@ -22,7 +22,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.jcurl.core.helpers.DimVal;
+import org.jcurl.core.helpers.Measure;
 
 import sun.misc.Service;
 
@@ -34,12 +34,12 @@ import sun.misc.Service;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface PropModel extends Iterable<Entry<CharSequence, DimVal>> {
+public interface PropModel extends Iterable<Entry<CharSequence, Measure>> {
 
-    public abstract DimVal getProp(final CharSequence key);
+    public abstract Measure getProp(final CharSequence key);
 
-    public abstract void init(final Map<CharSequence, DimVal> props);
+    public abstract void init(final Map<CharSequence, Measure> props);
 
-    public abstract Iterator<Entry<CharSequence, DimVal>> iterator();
+    public abstract Iterator<Entry<CharSequence, Measure>> iterator();
 
 }

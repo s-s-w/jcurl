@@ -26,7 +26,7 @@ import org.jcurl.core.base.CurveRockAnalytic;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PropModelHelper;
 import org.jcurl.core.base.RockProps;
-import org.jcurl.core.helpers.DimVal;
+import org.jcurl.core.helpers.Measure;
 import org.jcurl.core.helpers.Physics;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.Polynome;
@@ -68,7 +68,7 @@ public class CurlerDenny extends CurlerBase {
      *            should be &gt; 0
      */
     public CurlerDenny(final double drawToTeeTime, final double drawToTeeCurl) {
-        final Map<CharSequence, DimVal> t = PropModelHelper.create();
+        final Map<CharSequence, Measure> t = PropModelHelper.create();
         PropModelHelper.setDrawToTeeTime(t, drawToTeeTime);
         PropModelHelper.setDrawToTeeCurl(t, drawToTeeCurl);
         init(t);
@@ -136,7 +136,7 @@ public class CurlerDenny extends CurlerBase {
         return tmp;
     }
 
-    public void init(final Map<CharSequence, DimVal> ice) {
+    public void init(final Map<CharSequence, Measure> ice) {
         internalInit(ice);
         setDrawToTeeCurl(PropModelHelper.getDrawToTeeCurl(params));
         setDrawToTeeTime(PropModelHelper.getDrawToTeeTime(params));

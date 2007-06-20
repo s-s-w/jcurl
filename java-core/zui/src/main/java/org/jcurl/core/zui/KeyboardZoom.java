@@ -23,7 +23,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.RockProps;
-import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.helpers.Unit;
 
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
@@ -55,7 +55,7 @@ public class KeyboardZoom extends PBasicInputEventHandler {
         final double x = IceSize.SIDE_2_CENTER + r2;
         houseP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_TEE + r2), 2 * x,
                 IceSize.HOG_2_TEE + IceSize.BACK_2_TEE + 3 * r2 + 2 * r2);
-        final double c12 = r2 + Dim.f2m(6.0);
+        final double c12 = r2 + Unit.f2m(6.0);
         twelveP = new Rectangle2D.Double(-c12, -c12, 2 * c12, 2 * c12);
         sheetP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_HOG
                 + IceSize.HOG_2_TEE + r2), 2 * x, IceSize.HOG_2_HOG

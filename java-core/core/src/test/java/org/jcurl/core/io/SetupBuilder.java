@@ -29,8 +29,8 @@ import org.jcurl.core.base.PropModel;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.helpers.Dim;
-import org.jcurl.core.helpers.DimVal;
+import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.helpers.Measure;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.MathVec;
 
@@ -53,11 +53,11 @@ public class SetupBuilder {
 
         public int speedFlag = Coords;
 
-        public DimVal to_x, to_y, speed;
+        public Measure to_x, to_y, speed;
 
-        public DimVal vx, vy, spin;
+        public Measure vx, vy, spin;
 
-        public DimVal x0, y0, a0;
+        public Measure x0, y0, a0;
     }
 
     private static final int Coords = 0;
@@ -115,11 +115,11 @@ public class SetupBuilder {
                     break;
                 case Coords:
                     if (rocks[i].x0 != null)
-                        x.setX(rocks[i].x0.to(Dim.METER).val);
+                        x.setX(rocks[i].x0.to(Unit.METER).quantity);
                     if (rocks[i].y0 != null)
-                        x.setY(rocks[i].y0.to(Dim.METER).val);
+                        x.setY(rocks[i].y0.to(Unit.METER).quantity);
                     if (rocks[i].a0 != null)
-                        x.setA(rocks[i].a0.to(Dim.RADIANT).val);
+                        x.setA(rocks[i].a0.to(Unit.RADIANT).quantity);
                     break;
                 case Release:
                     log.info("TODO"); // TODO compute projection
@@ -130,17 +130,17 @@ public class SetupBuilder {
                 }
                 // Speed stuff
                 if (rocks[i].spin != null)
-                    v.setA(rocks[i].spin.to(Dim.RAD_PER_SEC).val);
+                    v.setA(rocks[i].spin.to(Unit.RAD_PER_SEC).quantity);
                 switch (rocks[i].speedFlag) {
                 case SpeedTo:
                     // check dimension
-                    if (!Dim.SEC_HOG_HOG.equals(rocks[i].speed.dim))
+                    if (!Unit.SEC_HOG_HOG.equals(rocks[i].speed.unit))
                         throw new IllegalArgumentException(
-                                "Expected something like " + Dim.SEC_HOG_HOG
-                                        + ", not " + rocks[i].speed.dim);
+                                "Expected something like " + Unit.SEC_HOG_HOG
+                                        + ", not " + rocks[i].speed.unit);
                     // v = v0 * (to - x) / |to - x|
-                    v.setLocation(rocks[i].to_x.to(Dim.METER).val,
-                            rocks[i].to_y.to(Dim.METER).val);
+                    v.setLocation(rocks[i].to_x.to(Unit.METER).quantity,
+                            rocks[i].to_y.to(Unit.METER).quantity);
                     MathVec.sub(v, x, v);
                     throw new NotImplementedException();
                     // MathVec.mult(slideStrat.getInitialSpeed(x.getY(),
@@ -149,9 +149,9 @@ public class SetupBuilder {
                     // break;
                 case Coords:
                     if (rocks[i].vx != null)
-                        v.setX(rocks[i].vx.to(Dim.METER_PER_SEC).val);
+                        v.setX(rocks[i].vx.to(Unit.METER_PER_SEC).quantity);
                     if (rocks[i].vy != null)
-                        v.setY(rocks[i].vy.to(Dim.METER_PER_SEC).val);
+                        v.setY(rocks[i].vy.to(Unit.METER_PER_SEC).quantity);
                     break;
                 default:
                     throw new IllegalStateException("Illegal speedFlag "
@@ -189,19 +189,19 @@ public class SetupBuilder {
         return speed;
     }
 
-    void setAngle(final int idx, final DimVal val) {
+    void setAngle(final int idx, final Measure val) {
         log.debug(val);
         freezeCheck();
-        if (!val.dim.isAngle())
+        if (!val.unit.isAngle())
             throw new IllegalArgumentException("Expected something like "
-                    + Dim.RADIANT + ", not " + val.dim);
+                    + Unit.RADIANT + ", not " + val.unit);
         rocks[idx].a0 = val;
     }
 
     void setPosNHog(final int idx) {
         log.debug("-");
         freezeCheck();
-        setPosY(idx, new DimVal(IceSize.HOG_2_TEE, Dim.METER));
+        setPosY(idx, new Measure(IceSize.HOG_2_TEE, Unit.METER));
     }
 
     void setPosOut(final int idx) {
@@ -216,78 +216,78 @@ public class SetupBuilder {
         rocks[idx].positionFlag = Release;
     }
 
-    void setPosX(final int idx, final DimVal val) {
+    void setPosX(final int idx, final Measure val) {
         log.debug(idx + " " + val);
         freezeCheck();
-        if (!val.dim.isLength())
+        if (!val.unit.isLength())
             throw new IllegalArgumentException("Expected something like "
-                    + Dim.METER + ", not " + val.dim);
+                    + Unit.METER + ", not " + val.unit);
         rocks[idx].x0 = val;
         rocks[idx].positionFlag = Coords;
     }
 
-    void setPosY(final int idx, final DimVal val) {
+    void setPosY(final int idx, final Measure val) {
         log.debug(idx + " " + val);
         freezeCheck();
-        if (!val.dim.isLength())
+        if (!val.unit.isLength())
             throw new IllegalArgumentException("Expected something like "
-                    + Dim.METER + ", not " + val.dim);
+                    + Unit.METER + ", not " + val.unit);
         rocks[idx].y0 = val;
         rocks[idx].positionFlag = Coords;
     }
 
-    void setSpeed(final int idx, final DimVal val) {
+    void setSpeed(final int idx, final Measure val) {
         log.debug(idx + " " + val);
         freezeCheck();
         rocks[idx].speed = val;
         rocks[idx].speedFlag = SpeedTo;
     }
 
-    void setSpeedX(final int idx, final DimVal val) {
+    void setSpeedX(final int idx, final Measure val) {
         log.debug(idx + " " + val);
         freezeCheck();
-        if (!val.dim.isSpeed())
+        if (!val.unit.isSpeed())
             throw new IllegalArgumentException("Expected something like "
-                    + Dim.METER_PER_SEC + ", not " + val.dim);
+                    + Unit.METER_PER_SEC + ", not " + val.unit);
         rocks[idx].vx = val;
         rocks[idx].speedFlag = Coords;
     }
 
-    void setSpeedY(final int idx, final DimVal val) {
+    void setSpeedY(final int idx, final Measure val) {
         log.debug(idx + " " + val);
         freezeCheck();
-        if (!val.dim.isSpeed())
+        if (!val.unit.isSpeed())
             throw new IllegalArgumentException("Expected something like "
-                    + Dim.METER_PER_SEC + ", not " + val.dim);
+                    + Unit.METER_PER_SEC + ", not " + val.unit);
         rocks[idx].vy = val;
         rocks[idx].speedFlag = Coords;
     }
 
-    void setSpin(final int idx, final DimVal val) {
+    void setSpin(final int idx, final Measure val) {
         log.debug(idx + " " + val);
         freezeCheck();
-        if (!val.dim.isSpin())
+        if (!val.unit.isSpin())
             throw new IllegalArgumentException("Expected something like "
-                    + Dim.RAD_PER_SEC + ", not " + val.dim);
+                    + Unit.RAD_PER_SEC + ", not " + val.unit);
         rocks[idx].spin = val;
     }
 
-    void setToX(final int idx, final DimVal val) {
+    void setToX(final int idx, final Measure val) {
         log.debug(idx + " " + val);
         freezeCheck();
-        if (!val.dim.isLength())
+        if (!val.unit.isLength())
             throw new IllegalArgumentException("Expected something like "
-                    + Dim.METER + ", not " + val.dim);
+                    + Unit.METER + ", not " + val.unit);
         rocks[idx].to_x = val;
         rocks[idx].speedFlag = SpeedTo;
     }
 
-    void setToY(final int idx, final DimVal val) {
+    void setToY(final int idx, final Measure val) {
         log.debug(idx + " " + val);
         freezeCheck();
-        if (!val.dim.isLength())
+        if (!val.unit.isLength())
             throw new IllegalArgumentException("Expected something like "
-                    + Dim.METER + ", not " + val.dim);
+                    + Unit.METER + ", not " + val.unit);
         rocks[idx].to_y = val;
         rocks[idx].speedFlag = SpeedTo;
     }

@@ -21,8 +21,8 @@ package org.jcurl.core.base;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jcurl.core.helpers.Dim;
-import org.jcurl.core.helpers.DimVal;
+import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.helpers.Measure;
 
 /**
  * Help accessing {@link PropModel} properties.
@@ -41,23 +41,23 @@ public final class PropModelHelper {
 
     private static final long serialVersionUID = -5959858338365408866L;
 
-    public static Map<CharSequence, DimVal> create() {
+    public static Map<CharSequence, Measure> create() {
         return create(null);
     }
 
-    public static Map<CharSequence, DimVal> create(
-            final Map<CharSequence, DimVal> m) {
-        return m == null ? new HashMap<CharSequence, DimVal>()
-                : new HashMap<CharSequence, DimVal>(m);
+    public static Map<CharSequence, Measure> create(
+            final Map<CharSequence, Measure> m) {
+        return m == null ? new HashMap<CharSequence, Measure>()
+                : new HashMap<CharSequence, Measure>(m);
     }
 
-    public static double get(final Map<CharSequence, DimVal> p,
-            final CharSequence key, final Dim dim) {
-        return p.get(key).to(dim).val;
+    public static double get(final Map<CharSequence, Measure> p,
+            final CharSequence key, final Unit dim) {
+        return p.get(key).to(dim).quantity;
     }
 
-    public static double getDrawToTeeCurl(final Map<CharSequence, DimVal> p) {
-        return get(p, DrawToTeeCurl, Dim.METER);
+    public static double getDrawToTeeCurl(final Map<CharSequence, Measure> p) {
+        return get(p, DrawToTeeCurl, Unit.METER);
     }
 
     /**
@@ -65,26 +65,26 @@ public final class PropModelHelper {
      * @param p
      * @return may be {@link Double#POSITIVE_INFINITY}
      */
-    public static double getDrawToTeeTime(final Map<CharSequence, DimVal> p) {
-        return get(p, DrawToTeeTime, Dim.SECOND);
+    public static double getDrawToTeeTime(final Map<CharSequence, Measure> p) {
+        return get(p, DrawToTeeTime, Unit.SECOND);
     }
 
-    public static double getFrictionRockRock(final Map<CharSequence, DimVal> p) {
-        return get(p, FrictionRockRock, Dim.NONE);
+    public static double getFrictionRockRock(final Map<CharSequence, Measure> p) {
+        return get(p, FrictionRockRock, Unit.NONE);
     }
 
-    public static double getLoss(final Map<CharSequence, DimVal> p) {
-        return get(p, Loss, Dim.JOULE);
+    public static double getLoss(final Map<CharSequence, Measure> p) {
+        return get(p, Loss, Unit.JOULE);
     }
 
-    public static void put(final Map<CharSequence, DimVal> p,
-            final CharSequence key, final double val, final Dim dim) {
-        p.put(key, new DimVal(val, dim));
+    public static void put(final Map<CharSequence, Measure> p,
+            final CharSequence key, final double val, final Unit dim) {
+        p.put(key, new Measure(val, dim));
     }
 
-    public static void setDrawToTeeCurl(final Map<CharSequence, DimVal> p,
+    public static void setDrawToTeeCurl(final Map<CharSequence, Measure> p,
             final double drawToTeeCurl) {
-        put(p, DrawToTeeCurl, drawToTeeCurl, Dim.METER);
+        put(p, DrawToTeeCurl, drawToTeeCurl, Unit.METER);
     }
 
     /**
@@ -93,14 +93,14 @@ public final class PropModelHelper {
      * @param drawToTeeTime
      *            may be {@link Double#POSITIVE_INFINITY}
      */
-    public static void setDrawToTeeTime(final Map<CharSequence, DimVal> p,
+    public static void setDrawToTeeTime(final Map<CharSequence, Measure> p,
             final double drawToTeeTime) {
-        put(p, DrawToTeeTime, drawToTeeTime, Dim.SECOND);
+        put(p, DrawToTeeTime, drawToTeeTime, Unit.SECOND);
     }
 
-    public static void setFrictionRockRock(final Map<CharSequence, DimVal> p,
+    public static void setFrictionRockRock(final Map<CharSequence, Measure> p,
             final double frictionRockRock) {
-        put(p, FrictionRockRock, frictionRockRock, Dim.NONE);
+        put(p, FrictionRockRock, frictionRockRock, Unit.NONE);
     }
 
     /**
@@ -109,9 +109,9 @@ public final class PropModelHelper {
      * @param loss
      *            may be {@link Double#POSITIVE_INFINITY}
      */
-    public static void setLoss(final Map<CharSequence, DimVal> p,
+    public static void setLoss(final Map<CharSequence, Measure> p,
             final double loss) {
-        put(p, Loss, loss, Dim.JOULE);
+        put(p, Loss, loss, Unit.JOULE);
     }
 
     private PropModelHelper() {

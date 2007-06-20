@@ -35,8 +35,8 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.RockSet;
-import org.jcurl.core.helpers.Dim;
-import org.jcurl.core.helpers.DimVal;
+import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.helpers.Measure;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -81,10 +81,10 @@ public class SetupSaxDeSer extends DefaultHandler {
 
     private static SAXParserFactory spf = null;
 
-    private static DimVal getDim(final Attributes atts) {
+    private static Measure getDim(final Attributes atts) {
         final String val = atts.getValue("val");
-        final Dim dim = Dim.find(atts.getValue("dim"));
-        return new DimVal(Double.parseDouble(val), dim);
+        final Unit dim = Unit.find(atts.getValue("dim"));
+        return new Measure(Double.parseDouble(val), dim);
     }
 
     private static synchronized SAXParser newParser() throws SAXException {
@@ -296,8 +296,8 @@ public class SetupSaxDeSer extends DefaultHandler {
                     final String val = atts.getValue("val");
                     final String dim = atts.getValue("dim");
                     if (dim != null)
-                        modelProps.put(key, new DimVal(Double.parseDouble(val),
-                                Dim.find(dim)));
+                        modelProps.put(key, new Measure(Double.parseDouble(val),
+                                Unit.find(dim)));
                     else
                         modelProps.put(key, val);
                 } else if ("rock".equals(elem))

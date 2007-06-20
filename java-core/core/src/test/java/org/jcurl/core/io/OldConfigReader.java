@@ -29,8 +29,8 @@ import java.io.Reader;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.RockSet;
-import org.jcurl.core.helpers.Dim;
-import org.jcurl.core.helpers.DimVal;
+import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.helpers.Measure;
 import org.jcurl.core.log.JCLoggerFactory;
 
 /**
@@ -67,9 +67,9 @@ public class OldConfigReader {
         return ret;
     }
 
-    private static DimVal parseDim(final String s) {
-        final DimVal ret = DimVal.parse(s);
-        if (ret.dim == null)
+    private static Measure parseDim(final String s) {
+        final Measure ret = Measure.parse(s);
+        if (ret.unit == null)
             log.debug("DIMENSION NULL!");
         return ret;
     }
@@ -224,33 +224,33 @@ public class OldConfigReader {
     public final SetupBuilder setup = new SetupBuilder();
 
     private void setAngle(final boolean isDark, final int no, final String a) {
-        final DimVal angle = parseDim(a);
+        final Measure angle = parseDim(a);
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + angle);
         setup.setAngle(RockSet.toIdx16(isDark, no), angle);
     }
 
     private void setDraw(final String speed, final String curl) {
-        final DimVal v = parseDim(speed);
-        final DimVal c = parseDim(curl);
+        final Measure v = parseDim(speed);
+        final Measure c = parseDim(curl);
         log.debug(v + ", " + c);
-        if (!v.dim.equals(Dim.SEC_HOG_TEE))
+        if (!v.unit.equals(Unit.SEC_HOG_TEE))
             throw new IllegalArgumentException("Must be seconds hog/tee.");
         // slide.setDraw2Tee(v.val, c.to(Dim.METER).val);
     }
 
     private void setFrictionRockRock(final String type, final String amount) {
-        final DimVal a = parseDim(amount);
+        final Measure a = parseDim(amount);
         log.debug(a);
     }
 
     private void setFrom(final OldConfigReader ret, final boolean isDark,
             final int no, final String x, final String y) {
-        final DimVal _x = parseDim(x);
-        final DimVal _y;
+        final Measure _x = parseDim(x);
+        final Measure _y;
         if ("NHOG".equals(y))
-            _y = new DimVal(IceSize.HOG_2_TEE, Dim.METER);
+            _y = new Measure(IceSize.HOG_2_TEE, Unit.METER);
         else if ("HACK".equals(y))
-            _y = new DimVal(IceSize.FAR_HACK_2_TEE, Dim.METER);
+            _y = new Measure(IceSize.FAR_HACK_2_TEE, Unit.METER);
         else
             _y = parseDim(y);
         log
@@ -265,7 +265,7 @@ public class OldConfigReader {
     }
 
     private void setLoss(final String amount) {
-        final DimVal a = parseDim(amount);
+        final Measure a = parseDim(amount);
         log.debug(a);
     }
 
@@ -283,22 +283,22 @@ public class OldConfigReader {
 
     private void setSpeed(final OldConfigReader ret, final boolean isDark,
             final int no, final String v) {
-        final DimVal _v = parseDim(v);
+        final Measure _v = parseDim(v);
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + _v);
         setup.setSpeed(RockSet.toIdx16(isDark, no), _v);
     }
 
     private void setSpin(final OldConfigReader ret, final boolean isDark,
             final int no, final String v) {
-        final DimVal _v = parseDim(v);
+        final Measure _v = parseDim(v);
         log.debug((isDark ? "dark" : "light") + " " + no + ":" + _v);
         setup.setSpin(RockSet.toIdx16(isDark, no), _v);
     }
 
     private void setTo(final OldConfigReader ret, final boolean isDark,
             final int no, final String x, final String y) {
-        final DimVal _x = parseDim(x);
-        final DimVal _y = parseDim(y);
+        final Measure _x = parseDim(x);
+        final Measure _y = parseDim(y);
         log
                 .debug((isDark ? "dark" : "light") + " " + no + ":" + _x + ", "
                         + _y);

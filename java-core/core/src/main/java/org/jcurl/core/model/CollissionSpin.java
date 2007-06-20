@@ -24,7 +24,7 @@ import org.jcurl.core.base.ColliderBase;
 import org.jcurl.core.base.PropModelHelper;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockProps;
-import org.jcurl.core.helpers.DimVal;
+import org.jcurl.core.helpers.Measure;
 import org.jcurl.math.MathVec;
 
 /**
@@ -50,7 +50,7 @@ public class CollissionSpin extends ColliderBase {
     }
 
     public CollissionSpin(final double f, final double l) {
-        final Map<CharSequence, DimVal> t = PropModelHelper.create();
+        final Map<CharSequence, Measure> t = PropModelHelper.create();
         PropModelHelper.setFrictionRockRock(t, f);
         PropModelHelper.setLoss(t, l);
         init(t);
@@ -79,7 +79,7 @@ public class CollissionSpin extends ColliderBase {
         mu = fritionRockRock;
     }
 
-    public void init(final Map<CharSequence, DimVal> params) {
+    public void init(final Map<CharSequence, Measure> params) {
         internalInit(params);
         init(PropModelHelper.getFrictionRockRock(this.params), PropModelHelper
                 .getLoss(this.params));

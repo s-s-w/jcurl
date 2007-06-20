@@ -30,7 +30,7 @@ import java.awt.geom.Rectangle2D;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.RockProps;
 import org.jcurl.core.base.Strategy;
-import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.helpers.Unit;
 
 /**
  * Strategy to paint the ice sheet in world coordinates.
@@ -105,10 +105,10 @@ class IcePainter implements Strategy {
         final float hy = f * IceSize.FAR_HACK_2_TEE;
         final float dx = f * IceSize.SIDE_2_CENTER;
         final float by = f * IceSize.BACK_2_TEE;
-        final float c1 = f * Dim.f2m(0.5);
-        final float c4 = f * Dim.f2m(2.0);
-        final float c8 = f * Dim.f2m(4.0);
-        final float c12 = f * Dim.f2m(6.0);
+        final float c1 = f * Unit.f2m(0.5);
+        final float c4 = f * Unit.f2m(2.0);
+        final float c8 = f * Unit.f2m(4.0);
+        final float c12 = f * Unit.f2m(6.0);
 
         hog2hog = new Rectangle2D.Float(-dx, nhy, 2 * dx, fhy - nhy);
         hog2tee = new Rectangle2D.Float(-dx, 0, 2 * dx, nhy);

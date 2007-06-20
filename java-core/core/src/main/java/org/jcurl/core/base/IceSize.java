@@ -20,7 +20,7 @@ package org.jcurl.core.base;
 
 import java.awt.Shape;
 
-import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.helpers.Unit;
 
 /**
  * Ice dimensions. TODO Should here be {@link Shape}s?
@@ -31,31 +31,31 @@ import org.jcurl.core.helpers.Dim;
 public final class IceSize {
 
     /** Distance from Back-line to Hog. 21+6 feet (converted to meter) */
-    public static final float BACK_2_HOG = Dim.f2m(21 + 6);
+    public static final float BACK_2_HOG = Unit.f2m(21 + 6);
 
     /** Distance from Tee to Back-line. 6 feet (converted to meter) */
-    public static final float BACK_2_TEE = Dim.f2m(6);
+    public static final float BACK_2_TEE = Unit.f2m(6);
 
     /** Distance from Tee to Hack. 6+6+21+72+21 feet (converted to meter) */
-    public static final float FAR_HACK_2_TEE = Dim.f2m(6 + 6 + 21 + 72 + 21);
+    public static final float FAR_HACK_2_TEE = Unit.f2m(6 + 6 + 21 + 72 + 21);
 
     /**
      * Distance from Tee to Hog (on player's end). 21+72 feet (converted to
      * meter)
      */
-    public static final float FAR_HOG_2_TEE = Dim.f2m(21 + 72);
+    public static final float FAR_HOG_2_TEE = Unit.f2m(21 + 72);
 
     /** Distance from Hack to Back-line. 6 feet (converted to meter) */
-    public static final float HACK_2_BACK = Dim.f2m(6);
+    public static final float HACK_2_BACK = Unit.f2m(6);
 
     /** Distance from Hack to Hog. 6+6+21 feet (converted to meter) */
-    public static final float HACK_2_HOG = Dim.f2m(6 + 6 + 21);
+    public static final float HACK_2_HOG = Unit.f2m(6 + 6 + 21);
 
     /** Distance from far Hog-line to near Hog-line. 72 feet (converted to meter) */
-    public static final float HOG_2_HOG = Dim.f2m(72);
+    public static final float HOG_2_HOG = Unit.f2m(72);
 
     /** Distance from Tee to Hog (near the house). 21 feet (converted to meter) */
-    public static final float HOG_2_TEE = Dim.f2m(21);
+    public static final float HOG_2_TEE = Unit.f2m(21);
 
     private static final double outX;
 
@@ -64,10 +64,10 @@ public final class IceSize {
     private static final float rad;
 
     /** Distance from Center-line to edge. 6+1 feet (converted to meter) */
-    public static final float SIDE_2_CENTER = Dim.f2m(7);
+    public static final float SIDE_2_CENTER = Unit.f2m(7);
 
     static {
-        rad = Dim.f2m(0.5);
+        rad = Unit.f2m(0.5);
         outX = SIDE_2_CENTER + rad;
         outY = BACK_2_TEE + rad;
     }
@@ -137,7 +137,7 @@ public final class IceSize {
     public static void setHome(final Rock R, final boolean isDark, final int idx) {
         // R.setLocation((isDark ? -1 : 1) * Dim.f2m(5 + (idx % 2) * 1.2), Dim
         // .f2m(120 + 1.2 * (idx / 2)), 0);
-        R.setLocation((isDark ? -1 : 1) * Dim.f2m(7.25), Dim
+        R.setLocation((isDark ? -1 : 1) * Unit.f2m(7.25), Unit
                 .f2m(31 - 1.2 * idx), 0);
     }
 
@@ -154,7 +154,7 @@ public final class IceSize {
      *            index
      */
     public static void setOut(final Rock R, final boolean isDark, final int i) {
-        R.setLocation((isDark ? -1 : 1) * Dim.f2m(2.5 + 1.2 * i / 2), Dim
+        R.setLocation((isDark ? -1 : 1) * Unit.f2m(2.5 + 1.2 * i / 2), Unit
                 .f2m(i % 2 == 0 ? -8 : -9.2), 0);
     }
 

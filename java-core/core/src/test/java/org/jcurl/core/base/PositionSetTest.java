@@ -22,7 +22,7 @@ import java.awt.geom.Point2D;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.helpers.Unit;
 
 /**
  * JUnit Test
@@ -38,7 +38,7 @@ public class PositionSetTest extends TestCase {
         a.getRock(1).setLocation(0, 0);
         assertEquals(1, PositionSet.findRockIndexAtPos(a, new Point2D.Float(0,
                 0)));
-        assertEquals(1, PositionSet.findRockIndexAtPos(a, new Point2D.Float(Dim
+        assertEquals(1, PositionSet.findRockIndexAtPos(a, new Point2D.Float(Unit
                 .f2m(0.4), 0)));
     }
 

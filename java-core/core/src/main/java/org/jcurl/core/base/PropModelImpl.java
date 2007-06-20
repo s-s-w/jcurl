@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.jcurl.core.helpers.DimVal;
+import org.jcurl.core.helpers.Measure;
 
 /**
  * Help with post-constructor one-time initialisation.
@@ -33,24 +33,24 @@ import org.jcurl.core.helpers.DimVal;
  */
 public abstract class PropModelImpl implements PropModel {
 
-    protected Map<CharSequence, DimVal> params = null;
+    protected Map<CharSequence, Measure> params = null;
 
-    public DimVal getProp(final CharSequence key) {
+    public Measure getProp(final CharSequence key) {
         return params.get(key);
     }
 
-    protected void internalInit(final Map<CharSequence, DimVal> props) {
+    protected void internalInit(final Map<CharSequence, Measure> props) {
         if (params != null)
             throw new IllegalStateException();
         params = PropModelHelper.create(props);
     }
 
-    public Iterator<Entry<CharSequence, DimVal>> iterator() {
+    public Iterator<Entry<CharSequence, Measure>> iterator() {
         return params.entrySet().iterator();
     }
 
     protected Object readResolve() throws ObjectStreamException {
-        final Map<CharSequence, DimVal> params = this.params;
+        final Map<CharSequence, Measure> params = this.params;
         this.params = null;
         init(params);
         return this;

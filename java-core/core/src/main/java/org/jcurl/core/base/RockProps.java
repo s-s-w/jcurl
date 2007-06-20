@@ -18,7 +18,7 @@
  */
 package org.jcurl.core.base;
 
-import org.jcurl.core.helpers.Dim;
+import org.jcurl.core.helpers.Unit;
 
 /**
  * Rock properties like mass etc.
@@ -31,7 +31,7 @@ public class RockProps {
     static {
         DEFAULT = new RockProps();
         DEFAULT.mass = 20;
-        DEFAULT.radius = Dim.f2m(0.5);
+        DEFAULT.radius = Unit.f2m(0.5);
         DEFAULT.inertia = 0.186F; // [Kg*m*m]
     }
 
