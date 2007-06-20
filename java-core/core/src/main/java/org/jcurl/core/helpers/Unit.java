@@ -187,7 +187,7 @@ public class Unit extends EnumBase {
 
     public final Unit BaseUnit;
 
-    public final double Factor;
+    final double Factor;
 
     protected Unit(final String txt, final Unit base, final double factor) {
         super(_idx++, txt);
