@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.io;
+package org.jcurl.core.jnlp;
 
 import java.awt.Component;
 import java.io.File;
@@ -29,13 +29,15 @@ import javax.swing.filechooser.FileFilter;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.helpers.NotImplementedYetException;
-import org.jcurl.core.io.FileDialogService.Contents;
-import org.jcurl.core.io.FileDialogService.ContentsFile;
-import org.jcurl.core.io.FileDialogService.OpenService;
-import org.jcurl.core.io.FileDialogService.SaveService;
+import org.jcurl.core.jnlp.FileDialogService.Contents;
+import org.jcurl.core.jnlp.FileDialogService.ContentsFile;
+import org.jcurl.core.jnlp.FileDialogService.OpenService;
+import org.jcurl.core.jnlp.FileDialogService.SaveService;
 import org.jcurl.core.log.JCLoggerFactory;
 
 /**
+ * Swing based implementation to be used in trusted environments.
+ * 
  * http://www.koders.com/java/fid88589626EC469B9526AB5888794D34914322B7A9.aspx
  * http://ajax.sourceforge.net/apollo/crossref/apollo/dev/DevFileOpenService.java.html
  * 

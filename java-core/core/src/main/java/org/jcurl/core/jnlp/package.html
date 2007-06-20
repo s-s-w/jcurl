@@ -1,0 +1,20 @@
+<?xml version='1.0'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>JNLP &lt;-&gt; Swing File Dialog Bridges</title>
+</head>
+<body>
+<p>JNLP FileDialogService helpers.</p>
+<h3>Motivation</h3>
+<p>There are file open/save dialogs that can be used inside an
+untrusted webstart/jnlp sandbox. Sadly the are neither part of the
+standard jdk nor are they compatible with {@link
+javax.swing.JFileChooser}. The {@link
+org.jcurl.core.jnlp.FileDialogService} acts as an abstraction that can
+be used both in trusted and untrusted enviroments.</p>
+<h3>Approach</h3>
+<p>Calls are fully done by reflection based delegation and dynamic
+{@link java.lang.reflect.Proxy}s.</p>
+</body>
+</html>

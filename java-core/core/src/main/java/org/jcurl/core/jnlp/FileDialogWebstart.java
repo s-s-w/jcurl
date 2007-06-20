@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.io;
+package org.jcurl.core.jnlp;
 
 import java.awt.Component;
 import java.io.InputStream;
@@ -25,13 +25,14 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.io.FileDialogService.Contents;
-import org.jcurl.core.io.FileDialogService.OpenService;
-import org.jcurl.core.io.FileDialogService.SaveService;
+import org.jcurl.core.jnlp.FileDialogService.Contents;
+import org.jcurl.core.jnlp.FileDialogService.OpenService;
+import org.jcurl.core.jnlp.FileDialogService.SaveService;
 import org.jcurl.core.log.JCLoggerFactory;
 
 /**
- * Fully reflection based implementation to avoid dependency.
+ * Fully reflection based implementation for use in untrusted environments to
+ * avoid compile-time dependency.
  * 
  * https://java.sun.com/products/javawebstart/1.0.1/javadoc/javax/jnlp/FileOpenService.html
  * https://java.sun.com/products/javawebstart/1.0.1/javadoc/javax/jnlp/FileSaveService.html

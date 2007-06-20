@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.io;
+package org.jcurl.core.jnlp;
 
 import java.awt.Component;
 import java.io.ByteArrayInputStream;
@@ -39,7 +39,7 @@ import org.jcurl.core.log.JCLoggerFactory;
  * href="http://java.sun.com/javase/6/docs/jre/api/javaws/jnlp/javax/jnlp/FileSaveService.html">FileSaveService</a>
  * under the hood if available.
  * <p>
- * Does some tricks to be useable in unsigned Webstart Applications.
+ * Does some tricks to be useable in untrusted Webstart Applications.
  * </p>
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

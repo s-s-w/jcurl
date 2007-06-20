@@ -32,7 +32,7 @@ import org.jcurl.core.base.ComputedTrajectorySet;
 import org.jcurl.core.base.JCurlSerializer;
 import org.jcurl.core.base.JCurlSerializer.Payload;
 import org.jcurl.core.io.XStreamSerializer;
-import org.jcurl.core.io.FileDialogService.Contents;
+import org.jcurl.core.jnlp.FileDialogService.Contents;
 import org.jcurl.core.log.JCLoggerFactory;
 
 public class TacticsController {
