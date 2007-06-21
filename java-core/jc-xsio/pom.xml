@@ -28,7 +28,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.jcurl.core</groupId>
-			<artifactId>core</artifactId>
+			<artifactId>jc-core</artifactId>
 			<version>${version}</version>
 		</dependency>
 		<dependency>

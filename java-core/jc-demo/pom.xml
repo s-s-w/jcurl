@@ -48,12 +48,12 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jcurl.core</groupId>
-			<artifactId>zui</artifactId>
+			<artifactId>jc-zui</artifactId>
 			<version>${version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jcurl.core</groupId>
-			<artifactId>xsio</artifactId>
+			<artifactId>jc-xsio</artifactId>
 			<version>${version}</version>
 		</dependency>
 		<dependency>
