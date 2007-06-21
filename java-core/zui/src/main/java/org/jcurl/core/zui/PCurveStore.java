@@ -38,22 +38,20 @@ public class PCurveStore extends PNode {
     private final PTrajectoryFactory f;
 
     private final CurveStore cs;
-
-    public PCurveStore(final CurveStore cs, final PTrajectoryFactory f) {
+    
+    public PCurveStore(final CurveStore cs, final PTrajectoryFactory f, final double tmax) {
         this.cs = cs;
         this.f = f;
         int i = 0;
-        for (final Iterable<Entry<Double, R1RNFunction>> element : cs) {
-            final PNode c = f.newInstance(i, element.iterator());
-            c.addAttribute(PPositionSet.index16, i);
-            addChild(i++, c);
-        }
+        for (final Iterable<Entry<Double, R1RNFunction>> element : cs)
+            addChild(i++, new PNode());        
+        sync(tmax);
     }
 
-    public void sync() {
+    public void sync(final double tmax) {
         int i = 0;
         for (final Iterable<Entry<Double, R1RNFunction>> element : cs) {
-            final PNode c = f.newInstance(i, element.iterator());
+            final PNode c = f.newInstance(i, element.iterator(), tmax);
             c.addAttribute(PPositionSet.index16, i);
             this.removeChild(i);
             this.addChild(i++, c);

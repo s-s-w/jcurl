@@ -88,6 +88,29 @@ public abstract class PTrajectoryFactory implements Factory {
 
         private final double[] t4 = { 0, 0, 0 };
 
+        /**
+         * @param parent
+         * @param curr
+         * @param tmax
+         * @param isDark
+         */
+        private boolean addSegment(final PNode parent,
+                final Entry<Double, R1RNFunction> curr, final double tmax,
+                final boolean isDark) {
+            if (curr.getKey() >= tmax)
+                return false;
+            doSections(sections, curr.getKey(), tmax);
+            if (flog.isDebugEnabled()) {
+                final StringWriter wri = new StringWriter();
+                wri.write("t=");
+                toString(wri, sections);
+                wri.write(" c=" + curr.getValue());
+                flog.debug(wri.getBuffer());
+            }
+            parent.addChild(createNode(isDark, curr.getValue(), sections));
+            return true;
+        }
+
         private PNode createNode(final boolean isDark, final R1RNFunction curr,
                 final double[] sections) {
             final PPath c;
@@ -121,25 +144,20 @@ public abstract class PTrajectoryFactory implements Factory {
 
         @Override
         public PNode newInstance(final int i8, final boolean isDark,
-                final Iterator<Entry<Double, R1RNFunction>> path) {
+                final Iterator<Entry<Double, R1RNFunction>> path, final double tmax) {
             final PNode r = new PComposite();
             if (!path.hasNext())
                 return r;
             Entry<Double, R1RNFunction> curr = path.next();
             while (path.hasNext()) {
                 final Entry<Double, R1RNFunction> next = path.next();
-                doSections(sections, curr.getKey(), next.getKey());
-                if (flog.isDebugEnabled()) {
-                    final StringWriter wri = new StringWriter();
-                    wri.write("t=");
-                    toString(wri, sections);
-                    wri.write(" c=" + curr.getValue());
-                    flog.debug(wri.getBuffer());
-                }
-                r.addChild(createNode(isDark, curr.getValue(), sections));
+                if (!addSegment(r, curr, next.getKey(), isDark))
+                    break;
                 // step:
                 curr = next;
             }
+            // don't forget the tail (last segment):
+            addSegment(r, curr, tmax, isDark);
             r.setChildrenPickable(false);
             r.setPickable(false);
             return r;
@@ -150,10 +168,10 @@ public abstract class PTrajectoryFactory implements Factory {
             .getLogger(PTrajectoryFactory.Fancy.class);
 
     public abstract PNode newInstance(int i8, boolean isDark,
-            Iterator<Entry<Double, R1RNFunction>> t);
+            Iterator<Entry<Double, R1RNFunction>> t, double tmax);
 
     public PNode newInstance(final int i16,
-            final Iterator<Entry<Double, R1RNFunction>> t) {
-        return newInstance(i16 / 2, i16 % 2 == 0, t);
+            final Iterator<Entry<Double, R1RNFunction>> t, final double tmax) {
+        return newInstance(i16 / 2, i16 % 2 == 0, t, tmax);
     }
 }

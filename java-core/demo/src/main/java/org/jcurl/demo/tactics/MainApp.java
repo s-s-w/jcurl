@@ -114,11 +114,11 @@ public class MainApp extends JFrame {
             // te.getInitialPos().getLight(1-1).setLocation(
             p.getLight(2 - 1).setLocation(Unit.f2m(-1.170732),
                     Unit.f2m(15.365854), 0);
-            p.getLight(3 - 1).setLocation(Unit.f2m(0.292683), Unit.f2m(8.780488),
-                    0);
+            p.getLight(3 - 1).setLocation(Unit.f2m(0.292683),
+                    Unit.f2m(8.780488), 0);
             p.getLight(4 - 1).setLocation(Unit.f2m(2.195122), Unit.f2m(12), 0);
-            p.getLight(5 - 1).setLocation(Unit.f2m(1.463415), Unit.f2m(5.707317),
-                    0);
+            p.getLight(5 - 1).setLocation(Unit.f2m(1.463415),
+                    Unit.f2m(5.707317), 0);
             p.getLight(6 - 1).setLocation(Unit.f2m(1.463415),
                     Unit.f2m(-2.780488), 0);
             p.getLight(7 - 1).setLocation(Unit.f2m(-0.439024),
@@ -127,18 +127,18 @@ public class MainApp extends JFrame {
                     Unit.f2m(-1.609756), 0);
             // p.getDark(1-1).setLocation(
             // p.getDark(2-1).setLocation(
-            p.getDark(3 - 1).setLocation(Unit.f2m(0.878049), Unit.f2m(14.341463),
-                    0);
+            p.getDark(3 - 1).setLocation(Unit.f2m(0.878049),
+                    Unit.f2m(14.341463), 0);
             p.getDark(4 - 1).setLocation(Unit.f2m(-2.634146),
                     Unit.f2m(13.170732), 0);
-            p.getDark(5 - 1).setLocation(Unit.f2m(4.536585), Unit.f2m(-0.439024),
-                    0);
-            p.getDark(6 - 1).setLocation(Unit.f2m(0.731707), Unit.f2m(-3.95122),
-                    0);
+            p.getDark(5 - 1).setLocation(Unit.f2m(4.536585),
+                    Unit.f2m(-0.439024), 0);
+            p.getDark(6 - 1).setLocation(Unit.f2m(0.731707),
+                    Unit.f2m(-3.95122), 0);
             p.getDark(7 - 1).setLocation(Unit.f2m(-2.780488),
                     Unit.f2m(-4.390244), 0);
-            p.getDark(8 - 1)
-                    .setLocation(Unit.f2m(3.89991), IceSize.HOG_2_TEE, 0);
+            p.getDark(8 - 1).setLocation(Unit.f2m(3.89991), IceSize.HOG_2_TEE,
+                    0);
             RockSet.allZero(s);
             s.getDark(8 - 1).setLocation(0, -3, 100 * Math.PI / 180);
 
@@ -370,7 +370,7 @@ public class MainApp extends JFrame {
                     ice = new PIceFactory.Fancy().newInstance());
 
             final PCurveStore traj = new PCurveStore(model.getCurveStore(),
-                    new PTrajectoryFactory.Fancy());
+                    new PTrajectoryFactory.Fancy(), tmax);
             final PNode initial = new PPositionSet(model.getInitialPos(),
                     new PRockFactory.Fancy());
             initial.addInputEventListener(new PPositionSetDrag() {
@@ -383,7 +383,7 @@ public class MainApp extends JFrame {
                 @Override
                 public void mouseReleased(final PInputEvent event) {
                     super.mouseReleased(event);
-                    traj.sync();
+                    traj.sync(tmax);
                 }
             });
             final PNode current = new PPositionSet(model.getCurrentPos(),
@@ -401,6 +401,9 @@ public class MainApp extends JFrame {
     }
 
     private static final long serialVersionUID = 3398372625156897223L;
+
+    // FIXME What goes wrong if I put here 30?
+    private static final double tmax = 15;
 
     public static void main(final String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -420,7 +423,7 @@ public class MainApp extends JFrame {
 
     public MainApp() {
         m = new MainMod();
-        m.setCurrentTime(30);
+        m.setCurrentTime(tmax);
         p = new MainPanel(m);
         getContentPane().add(p);
         // this.setJMenuBar(new MenuFactory().menu(c, this));

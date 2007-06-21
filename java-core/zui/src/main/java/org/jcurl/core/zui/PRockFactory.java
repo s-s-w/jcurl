@@ -75,18 +75,12 @@ public abstract class PRockFactory implements Factory {
             fo = new Font("SansSerif", Font.BOLD, 1);
         }
 
-        protected static PNode node(final Shape s, final Paint p, final Stroke l) {
-            final PNode n = new PPath(s, l);
-            n.setPaint(p);
-            n.setPickable(false);
-            return n;
-        }
-
         @Override
         public PNode newInstance(final int i8, final boolean isDark) {
             final PNode r = new PComposite();
-            r.addChild(node(outer, colors.granite, null));
-            r.addChild(node(inner, isDark ? colors.dark : colors.light, null));
+            r.addChild(node(outer, colors.granite, null, null));
+            r.addChild(node(inner, isDark ? colors.dark : colors.light, null,
+                    null));
             {
                 final PText t = new PText(labels[i8]);
                 t.setFont(fo);
@@ -107,13 +101,14 @@ public abstract class PRockFactory implements Factory {
     }
 
     public static class Simple extends Fancy {
-        private static final Stroke s = new BasicStroke(0.010F);
+        private static final Stroke stroke = new BasicStroke(0.010F);
 
         @Override
         public PNode newInstance(final int i8, final boolean isDark) {
             // fill to also make the body, not only the edge
             // pickable:
-            final PNode r = node(outer, isDark ? colors.dark : colors.light, s);
+            final PNode r = node(outer, isDark ? colors.dark : colors.light,
+                    stroke, Color.BLACK);
             r.setPickable(true);
             return r;
         }
@@ -121,6 +116,15 @@ public abstract class PRockFactory implements Factory {
 
     protected static final String[] labels = { "1", "2", "3", "4", "5", "6",
             "7", "8" };
+
+    protected static PNode node(final Shape s, final Paint p, final Stroke str,
+            final Paint sp) {
+        final PPath n = new PPath(s, str);
+        n.setStrokePaint(sp);
+        n.setPaint(p);
+        n.setPickable(false);
+        return n;
+    }
 
     public PNode newInstance(final int i16) {
         return newInstance(i16 / 2, i16 % 2 == 0);

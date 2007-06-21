@@ -125,12 +125,13 @@ public class TrajectoryDisplayTest extends TestZuiBase {
     }
 
     public void testHammy() throws InterruptedException {
+        final double tmax = 30;
         final CurveManager cm = new CurveManager();
         initHammy(cm);
 
         // Raw throughput:
         final long t0 = System.currentTimeMillis();
-        cm.setCurrentTime(29.9);
+        cm.setCurrentTime(tmax);
         log.info("Initial computation took "
                 + (System.currentTimeMillis() - t0) + " millis");
         cm.setCurrentTime(0);
@@ -140,7 +141,7 @@ public class TrajectoryDisplayTest extends TestZuiBase {
         final PNode a = new PPositionSet(cm.getCurrentPos(),
                 new PRockFactory.Fancy());
         final PNode b = new PCurveStore(cm.getCurveStore(),
-                new PTrajectoryFactory.Fancy());
+                new PTrajectoryFactory.Fancy(), tmax);
         try {
             ice.addChild(b);
             ice.addChild(a);
@@ -179,9 +180,10 @@ public class TrajectoryDisplayTest extends TestZuiBase {
                         Math.PI / 2);
         }
 
+        final double tmax = 25;
         // Raw throughput:
         final long t0 = System.currentTimeMillis();
-        cm.setCurrentTime(25);
+        cm.setCurrentTime(tmax);
         log.info("Initial computation took "
                 + (System.currentTimeMillis() - t0) + " millis");
         cm.setCurrentTime(0);
@@ -191,7 +193,7 @@ public class TrajectoryDisplayTest extends TestZuiBase {
         final PNode a = new PPositionSet(cm.getCurrentPos(),
                 new PRockFactory.Fancy());
         final PNode b = new PCurveStore(cm.getCurveStore(),
-                new PTrajectoryFactory.Fancy());
+                new PTrajectoryFactory.Fancy(), tmax);
         try {
             ice.addChild(b);
             ice.addChild(a);
