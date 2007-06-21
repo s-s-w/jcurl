@@ -43,10 +43,10 @@
 		</site>
 	</distributionManagement>
 	<modules>
-		<module>core</module>
-		<module>xsio</module>
-		<module>zui</module>
-		<module>demo</module>
+		<module>jc-core</module>
+		<module>jc-xsio</module>
+		<module>jc-zui</module>
+		<module>jc-demo</module>
 		<module>webstart</module>
 	</modules>
 </project>

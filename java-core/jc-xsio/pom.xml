@@ -9,7 +9,7 @@
 		<version>0.7.3</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
-	<artifactId>xsio</artifactId>
+	<artifactId>jc-xsio</artifactId>
 	<name>JCurl XStream IO</name>
 	<url>
 		http://www.jcurl.org/m2/site/${pom.artifactId}/${pom.version}
