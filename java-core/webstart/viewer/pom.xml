@@ -104,4 +104,9 @@
 			</url>
 		</site>
 	</distributionManagement>
+	<properties>
+		<scpsitebase>
+			scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/site
+		</scpsitebase>
+	</properties>
 </project>
