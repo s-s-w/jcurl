@@ -1,5 +1,5 @@
 #!/bin/sh
-# kopiert Piccolo Jars in das jcurl Maven2 Repository
+# kopiert NCSA Portfolio Jars in das jcurl Maven2 Repository
 
 mvnRepo=http://www.jcurl.org/m2/repo
 mvnScp=scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/repo
@@ -17,19 +17,11 @@ function mvnup {
 
 function mvndeploy {
 	mvn deploy:deploy-file -DpomFile=$pomFile \
-        -Dfile=$srcFile \
+        -Dfile="$srcFile" \
         -DrepositoryId=jcurl-repository \
         -Durl=$mvnScp
 }
 
-srcFile=/home/m/tmp/piccolo-1.2/build/piccolo.jar
-pomFile=piccolo.pom.xml
-mvndeploy
-
-srcFile=/home/m/tmp/piccolo-1.2/build/piccolox.jar
-pomFile=piccolox.pom.xml
-mvndeploy
-
-srcFile=/home/m/tmp/piccolo-1.2/build/examples.jar
-pomFile=examples.pom.xml
+srcFile="/home/m/tmp/KGPJ Code/Tour3D/ncsa/portfolio.jar"
+pomFile=portfolio.pom.xml
 mvndeploy
