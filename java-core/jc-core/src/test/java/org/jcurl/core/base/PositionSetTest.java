@@ -43,7 +43,7 @@ public class PositionSetTest extends TestCase {
     }
 
     public void testGetShotRocks() {
-        final PositionSet a = new PositionSet();
+        final PositionSet a = PositionSet.allHome();
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             a.getRock(i).setLocation(0, i * 0.5);
         assertEquals(1, PositionSet.getShotRocks(a));

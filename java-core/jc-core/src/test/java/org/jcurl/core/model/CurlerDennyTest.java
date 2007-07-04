@@ -42,7 +42,7 @@ public class CurlerDennyTest extends TestShowBase {
         te.getInitialPos().getDark(0).setLocation(0, IceSize.FAR_HOG_2_TEE, 0);
         te.getInitialPos().getLight(0).setLocation(0, IceSize.BACK_2_TEE,
                 0.25 * Math.PI);
-        te.setInitialSpeed(new SpeedSet());
+        te.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
         if (true)
             te.getInitialSpeed().getDark(0).setLocation(-0.096,
                     -te.getCurler().computeV0(3.124), Math.PI / 2);

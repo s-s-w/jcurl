@@ -43,11 +43,11 @@ public abstract class RockSet extends MutableObject implements Cloneable,
         }
 
         public Integer getKey() {
-            return i;
+            return this.i;
         }
 
         public Rock getValue() {
-            return getRock(i);
+            return getRock(this.i);
         }
 
         public Rock setValue(final Rock value) {
@@ -79,21 +79,6 @@ public abstract class RockSet extends MutableObject implements Cloneable,
             dst.getRock(i).setLocation(0, 0, 0);
         dst.notifyChange();
         return dst;
-    }
-
-    /**
-     * Fast Boxing.
-     * 
-     * @param i
-     * @return {@link Integer}
-     */
-    private final Integer boxIdx16(final int i) {
-        if (idx == null) {
-            idx = new Integer[ROCKS_PER_SET];
-            for (int j = ROCKS_PER_SET - 1; j >= 0; j--)
-                idx[j] = j;
-        }
-        return idx[i];
     }
 
     public static RockSet copy(final RockSet src, final RockSet dst) {
@@ -168,27 +153,42 @@ public abstract class RockSet extends MutableObject implements Cloneable,
 
     protected final Rock[] light = new Rock[ROCKS_PER_COLOR];
 
-    public RockSet() {
-        this(true);
+    private RockSet() {
+        this(new RockDouble());
     }
 
-    protected RockSet(final boolean fill) {
-        if (fill)
+    public RockSet(final Rock seed) {
+        if (seed != null)
             for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
-                dark[i] = new RockDouble();
-                light[i] = new RockDouble();
+                this.dark[i] = (Rock) seed.clone();
+                this.light[i] = (Rock) seed.clone();
             }
     }
 
     /**
      * Copy constructor, useful e.g. for conversions position&lt;-&gt;speed.
-     * Makes a deep copy.
+     * Makes a deep (cloned) copy.
      * 
      * @param b
      */
     protected RockSet(final RockSet b) {
-        this(false);
+        this(b.getRock(0));
         copy(b, this);
+    }
+
+    /**
+     * Fast Boxing.
+     * 
+     * @param i
+     * @return {@link Integer}
+     */
+    private final Integer boxIdx16(final int i) {
+        if (idx == null) {
+            idx = new Integer[ROCKS_PER_SET];
+            for (int j = ROCKS_PER_SET - 1; j >= 0; j--)
+                idx[j] = j;
+        }
+        return idx[i];
     }
 
     @Override
@@ -204,28 +204,28 @@ public abstract class RockSet extends MutableObject implements Cloneable,
             return false;
         final RockSet b = (RockSet) obj;
         for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
-            if (!dark[i].equals(b.dark[i]))
+            if (!this.dark[i].equals(b.dark[i]))
                 return false;
-            if (!light[i].equals(b.light[i]))
+            if (!this.light[i].equals(b.light[i]))
                 return false;
         }
         return true;
     }
 
     public Rock getDark(final int i8) {
-        return dark[i8];
+        return this.dark[i8];
     }
 
     public long getLastChanged() {
-        return lastChanged;
+        return this.lastChanged;
     }
 
     public Rock getLight(final int i8) {
-        return light[i8];
+        return this.light[i8];
     }
 
     public Rock getRock(final int i16) {
-        return i16 % 2 == 0 ? dark[i16 / 2] : light[i16 / 2];
+        return i16 % 2 == 0 ? this.dark[i16 / 2] : this.light[i16 / 2];
     }
 
     @Override
@@ -236,9 +236,9 @@ public abstract class RockSet extends MutableObject implements Cloneable,
         final int fact = 59;
         for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
             hash *= fact;
-            hash += dark[i].hashCode();
+            hash += this.dark[i].hashCode();
             hash *= fact;
-            hash += light[i].hashCode();
+            hash += this.light[i].hashCode();
         }
         return hash;
     }
@@ -253,11 +253,11 @@ public abstract class RockSet extends MutableObject implements Cloneable,
             int current = 0;
 
             public boolean hasNext() {
-                return current < RockSet.ROCKS_PER_SET;
+                return this.current < RockSet.ROCKS_PER_SET;
             }
 
             public Entry<Integer, Rock> next() {
-                return new REntry(current++);
+                return new REntry(this.current++);
             }
 
             public void remove() {
@@ -301,11 +301,11 @@ public abstract class RockSet extends MutableObject implements Cloneable,
             int current = 0;
 
             public boolean hasNext() {
-                return current < RockSet.ROCKS_PER_SET;
+                return this.current < RockSet.ROCKS_PER_SET;
             }
 
             public Integer next() {
-                return boxIdx16(current++);
+                return boxIdx16(this.current++);
             }
 
             public void remove() {
@@ -324,11 +324,11 @@ public abstract class RockSet extends MutableObject implements Cloneable,
             int current = 0;
 
             public boolean hasNext() {
-                return current < RockSet.ROCKS_PER_SET;
+                return this.current < RockSet.ROCKS_PER_SET;
             }
 
             public Rock next() {
-                return getRock(current++);
+                return getRock(this.current++);
             }
 
             public void remove() {
@@ -338,8 +338,8 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     }
 
     public void notifyChange() {
-        propChange.firePropertyChange("rock", null, this);
-        lastChanged = System.currentTimeMillis();
+        this.propChange.firePropertyChange("rock", null, this);
+        this.lastChanged = System.currentTimeMillis();
     }
 
     public RockSet setLocation(final RockSet src) {

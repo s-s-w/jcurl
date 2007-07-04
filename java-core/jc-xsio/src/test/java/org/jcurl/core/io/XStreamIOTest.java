@@ -53,7 +53,7 @@ public class XStreamIOTest extends TestBase {
         te.setCollissionDetector(new NewtonCollissionDetector());
         te.setCurler(new CurlerNoCurl(24, 0));
         te.setInitialPos(PositionSet.allOut());
-        te.setInitialSpeed(new SpeedSet());
+        te.setInitialSpeed(new SpeedSet(new RockDouble()));
         te.getAnnotations().put(AnnoHelp.HammerK, AnnoHelp.HammerVDark);
         te.getAnnotations().put(AnnoHelp.DarkTeamK, "Scotland");
         te.getAnnotations().put(AnnoHelp.LightTeamK, "Canada");
@@ -222,7 +222,7 @@ public class XStreamIOTest extends TestBase {
         te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
         te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
                 0.25 * Math.PI);
-        te.setInitialSpeed(new SpeedSet());
+        te.setInitialSpeed(new SpeedSet(new RockDouble()));
         te.getInitialSpeed().getDark(0).setLocation(0,
                 -te.getCurler().computeV0(5), Math.PI / 2);
         te.setCurrentTime(20);
@@ -558,7 +558,7 @@ public class XStreamIOTest extends TestBase {
         te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
         te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
                 0.25 * Math.PI);
-        te.setInitialSpeed(new SpeedSet());
+        te.setInitialSpeed(new SpeedSet(new RockDouble()));
         te.getInitialSpeed().getDark(0).setLocation(0,
                 -te.getCurler().computeV0(5), Math.PI / 2);
 
@@ -661,7 +661,7 @@ public class XStreamIOTest extends TestBase {
         te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
         te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
                 0.25 * Math.PI);
-        te.setInitialSpeed(new SpeedSet());
+        te.setInitialSpeed(new SpeedSet(new RockDouble()));
         te.getInitialSpeed().getDark(0).setLocation(0,
                 -te.getCurler().computeV0(5), Math.PI / 2);
         te.setCurrentTime(20);
@@ -951,7 +951,7 @@ public class XStreamIOTest extends TestBase {
         te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
         te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
                 0.25 * Math.PI);
-        te.setInitialSpeed(new SpeedSet());
+        te.setInitialSpeed(new SpeedSet(new RockDouble()));
         te.getInitialSpeed().getDark(0).setLocation(0,
                 -te.getCurler().computeV0(5), Math.PI / 2);
 

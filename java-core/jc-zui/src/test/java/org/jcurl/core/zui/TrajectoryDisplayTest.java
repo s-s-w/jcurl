@@ -26,6 +26,7 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.base.ComputedTrajectorySet;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.TrajectorySet;
@@ -50,7 +51,7 @@ public class TrajectoryDisplayTest extends TestZuiBase {
         te.setCollissionDetector(new NewtonCollissionDetector());
         te.setCurler(new CurlerDenny(24, 1));
         te.setInitialPos(PositionSet.allOut());
-        te.setInitialSpeed(new SpeedSet());
+        te.setInitialSpeed(new SpeedSet(new RockDouble()));
         te.getAnnotations().put(AnnoHelp.HammerK, AnnoHelp.HammerVDark);
         te.getAnnotations().put(AnnoHelp.DarkTeamK, "Scotland");
         te.getAnnotations().put(AnnoHelp.LightTeamK, "Canada");
@@ -171,7 +172,7 @@ public class TrajectoryDisplayTest extends TestZuiBase {
                     0);
             cm.getInitialPos().getLight(0).setLocation(0, IceSize.BACK_2_TEE,
                     0.25 * Math.PI);
-            cm.setInitialSpeed(new SpeedSet());
+            cm.setInitialSpeed(new SpeedSet(new RockDouble()));
             if (true)
                 cm.getInitialSpeed().getDark(0).setLocation(-0.095,
                         -cm.getCurler().computeV0(3.124), Math.PI / 2);

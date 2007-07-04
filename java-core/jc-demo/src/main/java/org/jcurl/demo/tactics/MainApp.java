@@ -36,6 +36,7 @@ import org.jcurl.core.base.CurveStore;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
+import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.AnnoHelp;
@@ -56,6 +57,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PInputEvent;
+import edu.umd.cs.piccolo.util.PDebug;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
 /**
@@ -96,7 +98,7 @@ public class MainApp extends JFrame {
             te.setCollissionDetector(new NewtonCollissionDetector());
             te.setCurler(new CurlerDenny(24, 1));
             te.setInitialPos(PositionSet.allOut());
-            te.setInitialSpeed(new SpeedSet());
+            te.setInitialSpeed(new SpeedSet(new RockDouble()));
             te.getAnnotations().put(AnnoHelp.HammerK, AnnoHelp.HammerVDark);
             te.getAnnotations().put(AnnoHelp.DarkTeamK, "Scotland");
             te.getAnnotations().put(AnnoHelp.LightTeamK, "Canada");
@@ -406,6 +408,10 @@ public class MainApp extends JFrame {
     private static final double tmax = 15;
 
     public static void main(final String[] args) {
+        PDebug.debugBounds = true;
+        PDebug.debugPrintUsedMemory = true;
+        PDebug.debugPrintFrameRate = true;
+        PDebug.debugPaintCalls = true;
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 final MainApp application = new MainApp();

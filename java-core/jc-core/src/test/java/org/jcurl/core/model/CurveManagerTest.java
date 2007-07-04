@@ -25,6 +25,7 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.base.ComputedTrajectorySet;
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.AnnoHelp;
@@ -45,7 +46,7 @@ public class CurveManagerTest extends TestShowBase {
         te.setCollissionDetector(new NewtonCollissionDetector());
         te.setCurler(new CurlerNoCurl(24, 0));
         te.setInitialPos(PositionSet.allOut());
-        te.setInitialSpeed(new SpeedSet());
+        te.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
         te.getAnnotations().put(AnnoHelp.HammerK, AnnoHelp.HammerVDark);
         te.getAnnotations().put(AnnoHelp.DarkTeamK, "Scotland");
         te.getAnnotations().put(AnnoHelp.LightTeamK, "Canada");
@@ -60,23 +61,30 @@ public class CurveManagerTest extends TestShowBase {
     public static void initHammy(final PositionSet p, final SpeedSet s) {
         PositionSet.allOut(p);
         // te.getInitialPos().getLight(1-1).setLocation(
-        p.getLight(2 - 1)
-                .setLocation(Unit.f2m(-1.170732), Unit.f2m(15.365854), 0);
-        p.getLight(3 - 1).setLocation(Unit.f2m(0.292683), Unit.f2m(8.780488), 0);
+        p.getLight(2 - 1).setLocation(Unit.f2m(-1.170732), Unit.f2m(15.365854),
+                0);
+        p.getLight(3 - 1)
+                .setLocation(Unit.f2m(0.292683), Unit.f2m(8.780488), 0);
         p.getLight(4 - 1).setLocation(Unit.f2m(2.195122), Unit.f2m(12), 0);
-        p.getLight(5 - 1).setLocation(Unit.f2m(1.463415), Unit.f2m(5.707317), 0);
-        p.getLight(6 - 1).setLocation(Unit.f2m(1.463415), Unit.f2m(-2.780488), 0);
-        p.getLight(7 - 1)
-                .setLocation(Unit.f2m(-0.439024), Unit.f2m(-5.560976), 0);
-        p.getLight(8 - 1)
-                .setLocation(Unit.f2m(-1.756098), Unit.f2m(-1.609756), 0);
+        p.getLight(5 - 1)
+                .setLocation(Unit.f2m(1.463415), Unit.f2m(5.707317), 0);
+        p.getLight(6 - 1).setLocation(Unit.f2m(1.463415), Unit.f2m(-2.780488),
+                0);
+        p.getLight(7 - 1).setLocation(Unit.f2m(-0.439024), Unit.f2m(-5.560976),
+                0);
+        p.getLight(8 - 1).setLocation(Unit.f2m(-1.756098), Unit.f2m(-1.609756),
+                0);
         // p.getDark(1-1).setLocation(
         // p.getDark(2-1).setLocation(
-        p.getDark(3 - 1).setLocation(Unit.f2m(0.878049), Unit.f2m(14.341463), 0);
-        p.getDark(4 - 1).setLocation(Unit.f2m(-2.634146), Unit.f2m(13.170732), 0);
-        p.getDark(5 - 1).setLocation(Unit.f2m(4.536585), Unit.f2m(-0.439024), 0);
+        p.getDark(3 - 1)
+                .setLocation(Unit.f2m(0.878049), Unit.f2m(14.341463), 0);
+        p.getDark(4 - 1).setLocation(Unit.f2m(-2.634146), Unit.f2m(13.170732),
+                0);
+        p.getDark(5 - 1)
+                .setLocation(Unit.f2m(4.536585), Unit.f2m(-0.439024), 0);
         p.getDark(6 - 1).setLocation(Unit.f2m(0.731707), Unit.f2m(-3.95122), 0);
-        p.getDark(7 - 1).setLocation(Unit.f2m(-2.780488), Unit.f2m(-4.390244), 0);
+        p.getDark(7 - 1).setLocation(Unit.f2m(-2.780488), Unit.f2m(-4.390244),
+                0);
         p.getDark(8 - 1).setLocation(Unit.f2m(3.89991), IceSize.HOG_2_TEE, 0);
         RockSet.allZero(s);
         s.getDark(7).setLocation(0, -3, 100 * Math.PI / 180);
@@ -94,7 +102,7 @@ public class CurveManagerTest extends TestShowBase {
         te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
         te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
                 0.25 * Math.PI);
-        te.setInitialSpeed(new SpeedSet());
+        te.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
         te.getInitialSpeed().getDark(0).setLocation(0,
                 -te.getCurler().computeV0(5), Math.PI / 2);
         return te;
@@ -110,7 +118,7 @@ public class CurveManagerTest extends TestShowBase {
         te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
         te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
                 0.25 * Math.PI);
-        te.setInitialSpeed(new SpeedSet());
+        te.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
         te.getInitialSpeed().getDark(0).setLocation(0,
                 -te.getCurler().computeV0(5), Math.PI / 2);
         return te;
@@ -133,9 +141,10 @@ public class CurveManagerTest extends TestShowBase {
         te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
         te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
                 0.25 * Math.PI);
-        te.setInitialSpeed(new SpeedSet());
+        te.setInitialSpeed(new SpeedSet(new RockDouble()));
         te.getInitialSpeed().getDark(0).setLocation(0,
                 -te.getCurler().computeV0(5), Math.PI / 2);
+        te.setCurrentTime(0);
 
         assertFalse(Double.isNaN(te.doGetNextHit().t));
         assertFalse((1 > te.doGetNextHit().t));
@@ -193,7 +202,7 @@ public class CurveManagerTest extends TestShowBase {
         te.setInitialPos(PositionSet.allHome());
         te.getInitialPos().getDark(0)
                 .setLocation(0, IceSize.HOG_2_TEE, Math.PI);
-        te.setInitialSpeed(new SpeedSet());
+        te.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
         te.getInitialSpeed().getDark(0).setLocation(0,
                 -te.getCurler().computeV0(9), Math.PI / 2);
 

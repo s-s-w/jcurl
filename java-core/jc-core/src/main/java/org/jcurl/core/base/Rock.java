@@ -110,9 +110,9 @@ public abstract class Rock extends Point2D implements Cloneable {
         dirty = false;
     }
 
-    public abstract void setX(double z);
+    public abstract void setX(double x);
 
-    public abstract void setY(double z);
+    public abstract void setY(double y);
 
     @Override
     public String toString() {

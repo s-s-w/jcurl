@@ -36,9 +36,10 @@ public class StoredTrajectorySet extends MutableObject implements TrajectorySet 
 
     private final Map<String, Object> annotations = new HashMap<String, Object>();
 
-    private transient final PositionSet currentPos = new PositionSet();
+    private transient final PositionSet currentPos = PositionSet.allHome();
 
-    private transient final SpeedSet currentSpeed = new SpeedSet();
+    private transient final SpeedSet currentSpeed = new SpeedSet(PositionSet
+            .allHome());
 
     private transient double currentTime = 0;
 

@@ -77,9 +77,10 @@ public class CurveManager extends MutableObject implements
 
     private Curler curler = null;
 
-    private transient final PositionSet currentPos = new PositionSet();
+    private transient final PositionSet currentPos = PositionSet.allHome();
 
-    private transient final SpeedSet currentSpeed = new SpeedSet();
+    private transient final SpeedSet currentSpeed = new SpeedSet(PositionSet
+            .allHome());
 
     private transient double currentTime = 0;
 
@@ -90,7 +91,7 @@ public class CurveManager extends MutableObject implements
 
     private final PositionSet initialPos = PositionSet.allHome();
 
-    private final SpeedSet initialSpeed = new SpeedSet();
+    private final SpeedSet initialSpeed = new SpeedSet(PositionSet.allHome());
 
     public CurveManager() {
         initialPos.addPropertyChangeListener(this);

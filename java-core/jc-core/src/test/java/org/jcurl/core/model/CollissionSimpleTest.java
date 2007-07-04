@@ -52,7 +52,7 @@ public class CollissionSimpleTest extends TestCase {
 
     public CollissionSimpleTest() {
         pos = PositionSet.allHome();
-        speed = new SpeedSet();
+        speed = new SpeedSet(pos);
         ax = pos.getDark(0);
         bx = pos.getLight(0);
         av = speed.getDark(0);

@@ -28,12 +28,8 @@ public class SpeedSet extends RockSet {
 
     private static final long serialVersionUID = 7650353293030622027L;
 
-    public SpeedSet() {
-        super();
-    }
-
-    protected SpeedSet(final boolean fill) {
-        super(fill);
+    public SpeedSet(final Rock seed) {
+        super(seed);
     }
 
     public SpeedSet(final RockSet b) {

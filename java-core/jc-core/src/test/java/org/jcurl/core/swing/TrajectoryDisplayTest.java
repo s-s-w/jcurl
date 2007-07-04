@@ -50,7 +50,7 @@ public class TrajectoryDisplayTest extends TestShowBase {
         te.setCollissionDetector(new NewtonCollissionDetector());
         te.setCurler(new CurlerDenny(24, 1));
         te.setInitialPos(PositionSet.allOut());
-        te.setInitialSpeed(new SpeedSet());
+        te.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
         te.getAnnotations().put(AnnoHelp.HammerK, AnnoHelp.HammerVDark);
         te.getAnnotations().put(AnnoHelp.DarkTeamK, "Scotland");
         te.getAnnotations().put(AnnoHelp.LightTeamK, "Canada");
@@ -187,7 +187,7 @@ public class TrajectoryDisplayTest extends TestShowBase {
                     0);
             ti.getInitialPos().getLight(0).setLocation(0, IceSize.BACK_2_TEE,
                     0.25 * Math.PI);
-            ti.setInitialSpeed(new SpeedSet());
+            ti.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
             if (true)
                 ti.getInitialSpeed().getDark(0).setLocation(-0.095,
                         -ti.getCurler().computeV0(3.124), Math.PI / 2);

@@ -30,8 +30,6 @@ import org.jcurl.core.helpers.Unit;
  */
 public class PositionSet extends RockSet {
 
-    private static final long serialVersionUID = -4106725355290612312L;
-
     private static final double MaxScoreDistSq = sqr(RockProps.DEFAULT
             .getRadius()
             + Unit.f2m(6));
@@ -40,12 +38,15 @@ public class PositionSet extends RockSet {
 
     private static final double RR4 = RR * 4;
 
+    private static final long serialVersionUID = -4106725355290612312L;
+
     public static PositionSet allHome() {
-        return allHome(null);
+        return allHome(new PositionSet(new RockDouble()));
     }
 
-    public static PositionSet allHome(PositionSet ret) {
-        ret = ret != null ? ret : new PositionSet();
+    public static PositionSet allHome(final PositionSet ret) {
+        if (ret == null)
+            return null;
         for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
             IceSize.setHome(ret.dark[i], true, i);
             IceSize.setHome(ret.light[i], false, i);
@@ -55,11 +56,12 @@ public class PositionSet extends RockSet {
     }
 
     public static PositionSet allOut() {
-        return allOut(null);
+        return allOut(new PositionSet(new RockDouble()));
     }
 
-    public static PositionSet allOut(PositionSet ret) {
-        ret = ret != null ? ret : new PositionSet();
+    public static PositionSet allOut(final PositionSet ret) {
+        if (ret == null)
+            return null;
         for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
             IceSize.setOut(ret.dark[i], true, i);
             IceSize.setOut(ret.light[i], false, i);
@@ -181,12 +183,8 @@ public class PositionSet extends RockSet {
         return ret;
     }
 
-    public PositionSet() {
-        super();
-    }
-
-    protected PositionSet(final boolean fill) {
-        super(fill);
+    public PositionSet(final Rock seed) {
+        super(seed);
     }
 
     public PositionSet(final RockSet b) {

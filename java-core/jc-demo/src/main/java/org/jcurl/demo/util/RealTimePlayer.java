@@ -19,6 +19,7 @@
 package org.jcurl.demo.util;
 
 import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.TrajectorySet;
@@ -65,7 +66,7 @@ public class RealTimePlayer implements Runnable {
     public void run() {
         try {
             final PositionSet pos = PositionSet.allHome(null);
-            final SpeedSet speed = new SpeedSet();
+            final SpeedSet speed = new SpeedSet(new RockDouble());
             final long start = System.currentTimeMillis();
             for (;;) {
                 final long dt = System.currentTimeMillis() - start;
