@@ -20,14 +20,17 @@ package org.jcurl.core.j3d;
 
 import junit.framework.TestCase;
 
+import org.jcurl.core.base.CurveRock;
+import org.jcurl.core.base.CurveRockAnalytic;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
+import org.jcurl.math.PolynomeCurve;
 
 public class RockBridgeTest extends TestCase {
 
     public void testClone() {
-        Rock r0 = new RockBridge().rock;
-        Rock r1 = (Rock) r0.clone();
+        final Rock r0 = new RockBridge().rock;
+        final Rock r1 = (Rock) r0.clone();
         // Instances differ:
         assertFalse(r0 == r1);
         // Backing Data also differs:
@@ -37,8 +40,17 @@ public class RockBridgeTest extends TestCase {
     }
 
     public void testPositionSet() {
-        PositionSet p = new PositionSet(new RockBridge().rock);
+        final PositionSet p = new PositionSet(new RockBridge().rock);
         assertEquals(RockBridge.class.getName() + "$1", p.getRock(0).getClass()
                 .getName());
+    }
+
+    public void testR1RNFunction() {
+        final double[][] p = { { 1 }, { 2 }, { 3 } };
+        final CurveRock f = new CurveRockAnalytic(new PolynomeCurve(p));
+
+        final RockBridge r = new RockBridge();
+        f.at(0, 1, r.rock);
+        assertTrue(r.x > 0 && r.y > 0 && r.w > 0);
     }
 }

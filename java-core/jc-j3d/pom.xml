@@ -11,6 +11,7 @@
 	</parent>
 	<artifactId>jc-j3d</artifactId>
 	<name>JCurl Java3D Bridge</name>
+	<description>Unite the Java2D-based jc-core and Java3D</description>
 	<url>
 		http://www.jcurl.org/m2/site/${pom.artifactId}/${pom.version}
 	</url>
@@ -41,6 +42,7 @@
 			<groupId>java3d</groupId>
 			<artifactId>vecmath</artifactId>
 			<version>1.3.1</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<repositories>
