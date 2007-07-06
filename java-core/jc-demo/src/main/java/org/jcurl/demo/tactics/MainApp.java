@@ -57,7 +57,6 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PInputEvent;
-import edu.umd.cs.piccolo.util.PDebug;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
 /**
@@ -408,10 +407,10 @@ public class MainApp extends JFrame {
     private static final double tmax = 15;
 
     public static void main(final String[] args) {
-        PDebug.debugBounds = true;
-        PDebug.debugPrintUsedMemory = true;
-        PDebug.debugPrintFrameRate = true;
-        PDebug.debugPaintCalls = true;
+//        PDebug.debugBounds = true;
+//        PDebug.debugPrintUsedMemory = true;
+//        PDebug.debugPrintFrameRate = true;
+//        PDebug.debugPaintCalls = true;
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 final MainApp application = new MainApp();
