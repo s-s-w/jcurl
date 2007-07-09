@@ -11,8 +11,6 @@ Next
 
 	* Check post-collission rotation (CollissionSpin)
 
-	* Make PositionDisplay fast
-
 	* Design rework
 
 	* Package structure rework
@@ -28,6 +26,8 @@ Postponed
 	* Realistic collission model including loss of energy
 
 Finished
+
+	* Split into well-defined modules (jars)
 
 	* Denny curl model
 

@@ -9,19 +9,8 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>jc-demo</artifactId>
   <name>JCurl Demo Apps</name>
-  <url>http://www.jcurl.org/m2/site/${pom.artifactId}/${pom.version}</url>
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>**/SaxParserTest.java</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+  <description>Some demo applications.</description>
+  <url>${httpsitebase}/${pom.artifactId}/${pom.version}</url>
   <repositories>
     <repository>
       <snapshots>
@@ -33,12 +22,6 @@
     </repository>
   </repositories>
   <dependencies>
-    <dependency>
-      <groupId>net.java.dev.swing-layout</groupId>
-      <artifactId>swing-layout</artifactId>
-      <version>1.0.1</version>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>org.jcurl.core</groupId>
       <artifactId>jc-zui</artifactId>
@@ -53,6 +36,12 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.java.dev.swing-layout</groupId>
+      <artifactId>swing-layout</artifactId>
+      <version>1.0.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>

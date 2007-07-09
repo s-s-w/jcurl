@@ -16,7 +16,7 @@
 	</url>
 	<description>
 		Java core library for rock trajectory computation and
-		persistence
+		persistence.
 	</description>
 	<scm>
 		<connection>

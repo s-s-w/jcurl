@@ -12,8 +12,16 @@
 		Java library and sample applications for rock trajectory
 		simulation, game filing, analysis and visualisation
 	</description>
+	<properties>
+		<scpsitebase>
+			scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/site
+		</scpsitebase>
+		<httpsitebase>
+			http://www.jcurl.org/m2/site
+		</httpsitebase>
+	</properties>
 	<url>
-		http://www.jcurl.org/m2/site/${pom.artifactId}/${pom.version}
+		${httpsitebase}/${pom.artifactId}/${pom.version}
 	</url>
 	<issueManagement>
 		<system>Bugzilla</system>
@@ -240,10 +248,5 @@
 			<url>${scpsitebase}/${pom.artifactId}/${pom.version}</url>
 		</site>
 	</distributionManagement>
-	<properties>
-		<scpsitebase>
-			scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/site
-		</scpsitebase>
-	</properties>
 </project>
 

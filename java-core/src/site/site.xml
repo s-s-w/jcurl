@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Maven">
+  <skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-default-skin</artifactId>
+  </skin>
   <bannerLeft>
     <name>JCurl</name>
     <!-- src>images/jcurl-banner-left.png</src -->
@@ -24,17 +28,24 @@
       <item name="Scientific Resources" href="science/index.html"/>
       <item name="Links" href="links.html"/>
       
-      <!-- item name="Release Notes" href="release-notes.html" />
-      <item name="General Information" href="about.html"/>
-      <item name="For Maven 1.0 Users" href="maven1.html"/>
-      <item name="Road Map" href="roadmap.html" / -->
-      
       <item name="Todos" href="todos.html" />
     </menu>
 
     <menu name="Community">
       <item name="Forum" href="http://developer.berlios.de/forum/?group_id=3203"/>      
       <!-- item name="Mailing Lists" href="mail-lists.html"/ -->
+    </menu>
+
+	<!--
+     ${modules} or <menu ref="modules" /> doesn't work:
+     http://jira.codehaus.org/browse/MSITE-236
+	-->
+
+    <menu name="Modules">
+      <item name="JC Core" href="../../jc-core/0.7.3"/>
+      <item name="JC XSIO" href="../../jc-xsio/0.7.3"/>
+      <item name="JC ZUI" href="../../jc-zui/0.7.3"/>
+      <item name="JC Demo" href="../../jc-demo/0.7.3"/>
     </menu>
 
     ${reports}

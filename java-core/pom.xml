@@ -9,8 +9,13 @@
 		<relativePath>./parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>java-core</artifactId>
+	<version>0.7.3</version>
 	<packaging>pom</packaging>
-	<name>JCurl Core Components</name>
+	<name>JCurl Framework</name>
+	<description>
+		Java library and sample applications for rock trajectory
+		simulation, game filing, analysis and visualisation
+	</description>
 	<url>http://www.jcurl.org/</url>
 	<scm>
 		<connection>
