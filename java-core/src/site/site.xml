@@ -47,5 +47,6 @@
       <item name="JC ZUI" href="../../jc-zui/0.7.3"/>
       <item name="JC Demo" href="../../jc-demo/0.7.3"/>
     </menu>
+    <menu ref="reports" />
   </body>
 </project>

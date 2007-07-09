@@ -24,9 +24,7 @@
 		<developerConnection>
 			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/java-core
 		</developerConnection>
-		<url>
-			http://svn.berlios.de/wsvn/jcurl/trunk/java-core
-		</url>
+		<url>http://svn.berlios.de/wsvn/jcurl/trunk/java-core</url>
 	</scm>
 	<repositories>
 		<repository>
@@ -42,11 +40,29 @@
 	<distributionManagement>
 		<site>
 			<id>jcurl-website</id>
-			<url>
-				${scpsitebase}/${pom.artifactId}/${pom.version}
-			</url>
+			<url>${scpsitebase}/${pom.artifactId}/${pom.version}</url>
 		</site>
 	</distributionManagement>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>
+					maven-project-info-reports-plugin
+				</artifactId>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>project-team</report>
+							<report>mailing-list</report>
+							<report>issue-tracking</report>
+							<report>license</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
 	<modules>
 		<module>jc-core</module>
 		<module>jc-xsio</module>
