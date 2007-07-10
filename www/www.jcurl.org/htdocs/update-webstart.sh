@@ -7,7 +7,7 @@ modules="viewer tactics"
 
 srczipbase=$HOME/.m2/repository
 srczipbase=$HOME/org.jcurl.www/m2/repo
-dstwebbase=$HOME/jnlp
+dstwebbase=$HOME/org.jcurl.www/jnlp
 
 for m in $modules ; do
 	src=$srczipbase/${groupId//.//}/$m/$version/$m-$version.zip
