@@ -3,7 +3,7 @@
 
 Welcome to JCurl Curling Framework
 
- This open source project aims to provide free tools to build {{{http://java.sun.com} java}}-based 
+ This open source project provides tools to build {{{http://java.sun.com} java}}-based 
 applications concerning the winter olympics {{{http://en.wikipedia.org/wiki/Curling}sport of curling}}.
 
  Possible topics are e.g.
@@ -23,7 +23,7 @@ easily develop such.
 
 * Project Information
 
- The project is hosted by {{{http://developer.berlios.de/projects/jcurl/} Berlios }}, 
+ The project is hosted at {{{http://developer.berlios.de/projects/jcurl/} Berlios }}, 
  is completely open (licensed under the {{{license.html} Gnu Public License}}) and 
  contribution in any form is highly appreciated.
  
