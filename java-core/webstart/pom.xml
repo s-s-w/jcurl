@@ -24,7 +24,7 @@
 		<url>http://svn.berlios.de/wsvn/jcurl/trunk/${pom.artifactId}</url>
 	</scm>
 	<modules>
+		<module>tactics</module>
 		<module>viewer</module>
-		<module>piccolo</module>
 	</modules>
 </project>
