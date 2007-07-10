@@ -8,6 +8,7 @@
 		<version>0.7.3</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
+	<groupId>org.jcurl.demo</groupId>
 	<artifactId>webstart</artifactId>
 	<packaging>pom</packaging>
 	<name>JCurl Webstart Demos</name>
@@ -15,16 +16,33 @@
 	<url>http://www.jcurl.org/</url>
 	<scm>
 		<connection>
-			scm:svn:svn://svn.berlios.de/jcurl/trunk/${pom.artifactId}
+			scm:svn:svn://svn.berlios.de/jcurl/trunk/java-core/${pom.artifactId}
 		</connection>
 		<developerConnection>
-			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/${pom.artifactId}
+			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/java-core/${pom.artifactId}
 		</developerConnection>
 		<tag />
-		<url>http://svn.berlios.de/wsvn/jcurl/trunk/${pom.artifactId}</url>
+		<url>http://svn.berlios.de/wsvn/jcurl/trunk/java-core/${pom.artifactId}</url>
 	</scm>
 	<modules>
 		<module>tactics</module>
 		<module>viewer</module>
 	</modules>
+	<repositories>
+		<repository>
+			<id>jcurl-repository</id>
+			<name>JCurl Maven Repository</name>
+			<layout>default</layout>
+			<url>http://www.jcurl.org/m2/repo</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<distributionManagement>
+		<site>
+			<id>jcurl-website</id>
+			<url>${scpsitebase}/${pom.artifactId}/${pom.version}</url>
+		</site>
+	</distributionManagement>
 </project>

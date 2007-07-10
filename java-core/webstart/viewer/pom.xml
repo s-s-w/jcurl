@@ -11,11 +11,27 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jcurl.core</groupId>
+	<parent>
+		<artifactId>parent</artifactId>
+		<groupId>org.jcurl.core</groupId>
+		<version>0.7.3</version>
+		<relativePath>../../parent/pom.xml</relativePath>
+	</parent>
+	<groupId>org.jcurl.demo</groupId>
 	<artifactId>viewer</artifactId>
 	<version>0.7.3</version>
 	<packaging>pom</packaging>
 	<name>JCurl Viewer Demo</name>
+	<scm>
+		<connection>
+			scm:svn:svn://svn.berlios.de/jcurl/trunk/java-core/webstart/${pom.artifactId}
+		</connection>
+		<developerConnection>
+			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/java-core/webstart/${pom.artifactId}
+		</developerConnection>
+		<tag />
+		<url>http://svn.berlios.de/wsvn/jcurl/trunk/java-core/webstart/${pom.artifactId}</url>
+	</scm>
 	<build>
 		<plugins>
 			<plugin>
@@ -99,14 +115,7 @@
 	<distributionManagement>
 		<site>
 			<id>jcurl-website</id>
-			<url>
-				${scpsitebase}/${pom.artifactId}/${pom.version}
-			</url>
+			<url>${scpsitebase}/${pom.artifactId}/${pom.version}</url>
 		</site>
 	</distributionManagement>
-	<properties>
-		<scpsitebase>
-			scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/site
-		</scpsitebase>
-	</properties>
 </project>
