@@ -3,7 +3,7 @@
 
 groupId=org.jcurl.demo
 version=0.7.3
-modules="viewer tactics"
+modules="tactics viewer"
 
 srczipbase=$HOME/.m2/repository
 srczipbase=$HOME/org.jcurl.www/m2/repo
