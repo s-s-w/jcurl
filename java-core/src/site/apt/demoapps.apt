@@ -3,7 +3,7 @@
 
 {{{http://java.sun.com/products/javawebstart/} Java Web Start 1.5+}} 
 	
-	  * {{{http://www.jcurl.org/jnlp/org/jcurl/demo/viewer/0.7.3/launch.jnlp} JCurl Demo}}
+	  * {{{http://www.jcurl.org/jws/org/jcurl/demo/viewer/0.7.3/launch.jnlp} JCurl Demo}}
 		Comes with a download of ca. 800K.
 
  If the link above doesn't launch Java Webstart visit {{{http://java.sun.com/products/javawebstart/demos.html} 
