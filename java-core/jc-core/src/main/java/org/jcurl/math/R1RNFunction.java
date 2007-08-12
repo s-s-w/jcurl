@@ -26,8 +26,6 @@ package org.jcurl.math;
  */
 public interface R1RNFunction {
 
-    public abstract int dim();
-
     /**
      * Compute the c'th derivative of all dimensions at <code>t</code>.
      * 
@@ -68,5 +66,7 @@ public interface R1RNFunction {
      * @return the c'th derivative at <code>t</code>
      */
     public abstract double at(int dim, int c, double t);
+
+    public abstract int dim();
 
 }

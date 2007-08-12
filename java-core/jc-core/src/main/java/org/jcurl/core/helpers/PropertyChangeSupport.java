@@ -66,21 +66,6 @@ import org.jcurl.core.log.JCLoggerFactory;
  */
 public class PropertyChangeSupport {
 
-    public void fireIndexedPropertyChange(final String propertyName,
-            final int index, final boolean oldValue, final boolean newValue) {
-        throw new NotImplementedYetException();
-    }
-
-    public void fireIndexedPropertyChange(final String propertyName,
-            final int index, final int oldValue, final int newValue) {
-        throw new NotImplementedYetException();
-    }
-
-    public void fireIndexedPropertyChange(final String propertyName,
-            final int index, final Object oldValue, final Object newValue) {
-        throw new NotImplementedYetException();
-    }
-
     /**
      * Holds the value used as the key for general listeners in the listener
      * map. This value is chosen because it would be illegal to name a property
@@ -159,6 +144,21 @@ public class PropertyChangeSupport {
         synchronized (listenerMap) {
             listenerMap.get(property).add(pcl);
         }
+    }
+
+    public void fireIndexedPropertyChange(final String propertyName,
+            final int index, final boolean oldValue, final boolean newValue) {
+        throw new NotImplementedYetException();
+    }
+
+    public void fireIndexedPropertyChange(final String propertyName,
+            final int index, final int oldValue, final int newValue) {
+        throw new NotImplementedYetException();
+    }
+
+    public void fireIndexedPropertyChange(final String propertyName,
+            final int index, final Object oldValue, final Object newValue) {
+        throw new NotImplementedYetException();
     }
 
     /**

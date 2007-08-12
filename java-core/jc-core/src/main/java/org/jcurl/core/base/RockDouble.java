@@ -26,7 +26,7 @@ import java.io.Serializable;
  * {@link org.jcurl.math.R1RNFunctionImpl#at(int, double, double[])}.
  * 
  * @see org.jcurl.core.base.PositionSet
- * @see org.jcurl.core.base.RockFloat
+ * @see org.jcurl.core.base.Rock
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:RockDouble.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
@@ -38,16 +38,6 @@ public class RockDouble extends Rock implements Serializable {
 
     public RockDouble() {
         this(0, 0, 0);
-    }
-
-    @Override
-    public void setLocation(final double[] pt) {
-        if (pt.length != 3)
-            throw new IllegalArgumentException();
-        if (pt[0] == x[0] && pt[1] == x[1] && pt[2] == x[2])
-            return;
-        System.arraycopy(pt, 0, x, 0, 3);
-        dirty = true;
     }
 
     public RockDouble(final double x, final double y, final double alpha) {
@@ -63,6 +53,11 @@ public class RockDouble extends Rock implements Serializable {
     }
 
     @Override
+    public double getA() {
+        return x[2];
+    }
+
+    @Override
     public double getX() {
         return x[0];
     }
@@ -70,11 +65,6 @@ public class RockDouble extends Rock implements Serializable {
     @Override
     public double getY() {
         return x[1];
-    }
-
-    @Override
-    public double getA() {
-        return x[2];
     }
 
     @Override
@@ -98,6 +88,14 @@ public class RockDouble extends Rock implements Serializable {
     }
 
     @Override
+    public void setA(final double alpha) {
+        if (alpha == x[2])
+            return;
+        x[2] = alpha;
+        dirty = true;
+    }
+
+    @Override
     public void setLocation(final double x, final double y) {
         if (x == this.x[0] && y == this.x[1])
             return;
@@ -117,6 +115,16 @@ public class RockDouble extends Rock implements Serializable {
     }
 
     @Override
+    public void setLocation(final double[] pt) {
+        if (pt.length != 3)
+            throw new IllegalArgumentException();
+        if (pt[0] == x[0] && pt[1] == x[1] && pt[2] == x[2])
+            return;
+        System.arraycopy(pt, 0, x, 0, 3);
+        dirty = true;
+    }
+
+    @Override
     public void setX(final double x) {
         if (x == this.x[0])
             return;
@@ -129,14 +137,6 @@ public class RockDouble extends Rock implements Serializable {
         if (y == x[1])
             return;
         x[1] = y;
-        dirty = true;
-    }
-
-    @Override
-    public void setA(final double alpha) {
-        if (alpha == x[2])
-            return;
-        x[2] = alpha;
         dirty = true;
     }
 }

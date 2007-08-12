@@ -31,13 +31,13 @@ public abstract class CollissionDetectorBase implements Strategy,
         CollissionDetector {
 
     public double compute(final double t0, final double tstop,
-            final R1RNFunction fa, final R1RNFunction fb) {
-        return compute(t0, tstop, fa, fb, CollissionDetector.RR2);
-    }
-
-    public double compute(final double t0, final double tstop,
             final R1RNFunction fa, final double ra, final R1RNFunction fb,
             final double rb) {
         return compute(t0, tstop, fa, fb, MathVec.sqr(ra + rb));
+    }
+
+    public double compute(final double t0, final double tstop,
+            final R1RNFunction fa, final R1RNFunction fb) {
+        return compute(t0, tstop, fa, fb, CollissionDetector.RR2);
     }
 }

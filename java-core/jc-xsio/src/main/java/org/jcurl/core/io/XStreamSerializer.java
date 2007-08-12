@@ -71,27 +71,6 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
  */
 public class XStreamSerializer implements JCurlSerializer {
 
-    static class MeasureConverter implements Converter {
-
-        public boolean canConvert(final Class arg0) {
-            return Measure.class.isAssignableFrom(arg0);
-        }
-
-        public void marshal(final Object arg0,
-                final HierarchicalStreamWriter arg1,
-                final MarshallingContext arg2) {
-            final Measure d = (Measure) arg0;
-            final StringBuffer s = new StringBuffer();
-            s.append(d.value).append(" ").append(d.unit);
-            arg1.setValue(s.toString());
-        }
-
-        public Object unmarshal(final HierarchicalStreamReader arg0,
-                final UnmarshallingContext arg1) {
-            return Measure.parse(arg0.getValue());
-        }
-    }
-
     static class DoubleArrayConverter implements Converter {
 
         public boolean canConvert(final Class arg0) {
@@ -118,10 +97,31 @@ public class XStreamSerializer implements JCurlSerializer {
         }
     }
 
+    static class MeasureConverter implements Converter {
+
+        public boolean canConvert(final Class arg0) {
+            return Measure.class.isAssignableFrom(arg0);
+        }
+
+        public void marshal(final Object arg0,
+                final HierarchicalStreamWriter arg1,
+                final MarshallingContext arg2) {
+            final Measure d = (Measure) arg0;
+            final StringBuffer s = new StringBuffer();
+            s.append(d.value).append(" ").append(d.unit);
+            arg1.setValue(s.toString());
+        }
+
+        public Object unmarshal(final HierarchicalStreamReader arg0,
+                final UnmarshallingContext arg1) {
+            return Measure.parse(arg0.getValue());
+        }
+    }
+
     private static class Payload2007 implements Payload {
         private final Map<String, Object> annotations = new HashMap<String, Object>();
 
-        private TrajectorySet[] trajectories;
+        private final TrajectorySet[] trajectories;
 
         private Payload2007(final Map<String, Object> annotations,
                 final TrajectorySet[] trajectories) {

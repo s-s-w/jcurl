@@ -144,7 +144,8 @@ public abstract class PTrajectoryFactory implements Factory {
 
         @Override
         public PNode newInstance(final int i8, final boolean isDark,
-                final Iterator<Entry<Double, R1RNFunction>> path, final double tmax) {
+                final Iterator<Entry<Double, R1RNFunction>> path,
+                final double tmax) {
             final PNode r = new PComposite();
             if (!path.hasNext())
                 return r;

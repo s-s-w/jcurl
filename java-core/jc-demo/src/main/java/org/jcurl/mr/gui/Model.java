@@ -167,8 +167,8 @@ public class Model extends MutableObject {
 
     public void setDrawCurl(final Measure drawCurl) {
         propChange.firePropertyChange("drawCurl", getDrawCurl(), drawCurl);
-        getTrajectory().getCurler()
-                .setDrawToTeeCurl(drawCurl.to(Unit.METER).value);
+        getTrajectory().getCurler().setDrawToTeeCurl(
+                drawCurl.to(Unit.METER).value);
     }
 
     public void setDrawTime(final Measure drawTime) {

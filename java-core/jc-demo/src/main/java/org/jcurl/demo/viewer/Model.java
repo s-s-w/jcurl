@@ -24,10 +24,12 @@ public class Model extends MutableObject {
 
     private static final long serialVersionUID = -8204694341039195931L;
 
-    public boolean equals(Object arg0) {
+    @Override
+    public boolean equals(final Object arg0) {
         return false;
     }
 
+    @Override
     public int hashCode() {
         return 0;
     }

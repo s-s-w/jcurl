@@ -48,11 +48,11 @@ public abstract class RockSet extends MutableObject implements Cloneable,
         }
 
         public Integer getKey() {
-            return this.i;
+            return i;
         }
 
         public Rock getValue() {
-            return getRock(this.i);
+            return getRock(i);
         }
 
         public Rock setValue(final Rock value) {
@@ -165,8 +165,8 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     public RockSet(final Rock seed) {
         if (seed != null)
             for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
-                this.dark[i] = (Rock) seed.clone();
-                this.light[i] = (Rock) seed.clone();
+                dark[i] = (Rock) seed.clone();
+                light[i] = (Rock) seed.clone();
             }
     }
 
@@ -209,28 +209,28 @@ public abstract class RockSet extends MutableObject implements Cloneable,
             return false;
         final RockSet b = (RockSet) obj;
         for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
-            if (!this.dark[i].equals(b.dark[i]))
+            if (!dark[i].equals(b.dark[i]))
                 return false;
-            if (!this.light[i].equals(b.light[i]))
+            if (!light[i].equals(b.light[i]))
                 return false;
         }
         return true;
     }
 
     public Rock getDark(final int i8) {
-        return this.dark[i8];
+        return dark[i8];
     }
 
     public long getLastChanged() {
-        return this.lastChanged;
+        return lastChanged;
     }
 
     public Rock getLight(final int i8) {
-        return this.light[i8];
+        return light[i8];
     }
 
     public Rock getRock(final int i16) {
-        return i16 % 2 == 0 ? this.dark[i16 / 2] : this.light[i16 / 2];
+        return i16 % 2 == 0 ? dark[i16 / 2] : light[i16 / 2];
     }
 
     @Override
@@ -241,9 +241,9 @@ public abstract class RockSet extends MutableObject implements Cloneable,
         final int fact = 59;
         for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
             hash *= fact;
-            hash += this.dark[i].hashCode();
+            hash += dark[i].hashCode();
             hash *= fact;
-            hash += this.light[i].hashCode();
+            hash += light[i].hashCode();
         }
         return hash;
     }
@@ -258,11 +258,11 @@ public abstract class RockSet extends MutableObject implements Cloneable,
             int current = 0;
 
             public boolean hasNext() {
-                return this.current < RockSet.ROCKS_PER_SET;
+                return current < RockSet.ROCKS_PER_SET;
             }
 
             public Entry<Integer, Rock> next() {
-                return new REntry(this.current++);
+                return new REntry(current++);
             }
 
             public void remove() {
@@ -306,11 +306,11 @@ public abstract class RockSet extends MutableObject implements Cloneable,
             int current = 0;
 
             public boolean hasNext() {
-                return this.current < RockSet.ROCKS_PER_SET;
+                return current < RockSet.ROCKS_PER_SET;
             }
 
             public Integer next() {
-                return boxIdx16(this.current++);
+                return boxIdx16(current++);
             }
 
             public void remove() {
@@ -329,11 +329,11 @@ public abstract class RockSet extends MutableObject implements Cloneable,
             int current = 0;
 
             public boolean hasNext() {
-                return this.current < RockSet.ROCKS_PER_SET;
+                return current < RockSet.ROCKS_PER_SET;
             }
 
             public Rock next() {
-                return getRock(this.current++);
+                return getRock(current++);
             }
 
             public void remove() {
@@ -343,8 +343,8 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     }
 
     public void notifyChange() {
-        this.propChange.firePropertyChange("rock", null, this);
-        this.lastChanged = System.currentTimeMillis();
+        propChange.firePropertyChange("rock", null, this);
+        lastChanged = System.currentTimeMillis();
     }
 
     public RockSet setLocation(final RockSet src) {

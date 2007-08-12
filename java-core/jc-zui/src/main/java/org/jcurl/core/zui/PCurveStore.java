@@ -35,16 +35,17 @@ public class PCurveStore extends PNode {
 
     private static final long serialVersionUID = -7570887991507166006L;
 
+    private final CurveStore cs;
+
     private final PTrajectoryFactory f;
 
-    private final CurveStore cs;
-    
-    public PCurveStore(final CurveStore cs, final PTrajectoryFactory f, final double tmax) {
+    public PCurveStore(final CurveStore cs, final PTrajectoryFactory f,
+            final double tmax) {
         this.cs = cs;
         this.f = f;
         int i = 0;
         for (final Iterable<Entry<Double, R1RNFunction>> element : cs)
-            addChild(i++, new PNode());        
+            addChild(i++, new PNode());
         sync(tmax);
     }
 

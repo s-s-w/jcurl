@@ -32,18 +32,6 @@ import java.io.Serializable;
  */
 class RockFloat extends Rock implements Serializable {
 
-    @Override
-    public void setLocation(final double[] pt) {
-        if (pt.length != 3)
-            throw new IllegalArgumentException();
-        if (pt[0] == x[0] && pt[1] == x[1] && pt[2] == x[2])
-            return;
-        setX(pt[0]);
-        setY(pt[0]);
-        setA(pt[0]);
-        // dirty = true;
-    }
-
     private static final long serialVersionUID = 3219049101239057245L;
 
     private final float[] x = new float[3];
@@ -65,6 +53,11 @@ class RockFloat extends Rock implements Serializable {
     }
 
     @Override
+    public double getA() {
+        return x[2];
+    }
+
+    @Override
     public double getX() {
         return x[0];
     }
@@ -72,11 +65,6 @@ class RockFloat extends Rock implements Serializable {
     @Override
     public double getY() {
         return x[1];
-    }
-
-    @Override
-    public double getA() {
-        return x[2];
     }
 
     @Override
@@ -98,6 +86,12 @@ class RockFloat extends Rock implements Serializable {
     }
 
     @Override
+    public void setA(final double alpha) {
+        x[2] = (float) alpha;
+        dirty = true;
+    }
+
+    @Override
     public void setLocation(final double x, final double y) {
         this.x[0] = (float) x;
         this.x[1] = (float) y;
@@ -113,6 +107,18 @@ class RockFloat extends Rock implements Serializable {
     }
 
     @Override
+    public void setLocation(final double[] pt) {
+        if (pt.length != 3)
+            throw new IllegalArgumentException();
+        if (pt[0] == x[0] && pt[1] == x[1] && pt[2] == x[2])
+            return;
+        setX(pt[0]);
+        setY(pt[0]);
+        setA(pt[0]);
+        // dirty = true;
+    }
+
+    @Override
     public void setX(final double x) {
         this.x[0] = (float) x;
         dirty = true;
@@ -121,12 +127,6 @@ class RockFloat extends Rock implements Serializable {
     @Override
     public void setY(final double y) {
         x[1] = (float) y;
-        dirty = true;
-    }
-
-    @Override
-    public void setA(final double alpha) {
-        x[2] = (float) alpha;
         dirty = true;
     }
 }

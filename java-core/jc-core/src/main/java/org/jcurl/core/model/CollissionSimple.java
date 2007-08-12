@@ -36,10 +36,6 @@ import org.jcurl.core.helpers.Measure;
  */
 public class CollissionSimple extends ColliderBase {
 
-    public void init(final Map<CharSequence, Measure> params) {
-        internalInit(params);
-    }
-
     public CollissionSimple() {
 
     }
@@ -53,5 +49,9 @@ public class CollissionSimple extends ColliderBase {
         final double tmp = va.getY();
         va.setLocation(va.getX(), vb.getY());
         vb.setLocation(vb.getX(), tmp);
+    }
+
+    public void init(final Map<CharSequence, Measure> params) {
+        internalInit(params);
     }
 }

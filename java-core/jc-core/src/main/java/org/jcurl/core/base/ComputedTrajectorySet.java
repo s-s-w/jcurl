@@ -32,16 +32,18 @@ public interface ComputedTrajectorySet extends TrajectorySet {
 
     public abstract CollissionDetector getCollissionDetector();
 
+    public abstract Curler getCurler();
+
     public abstract PositionSet getInitialPos();
 
     public abstract SpeedSet getInitialSpeed();
-
-    public abstract Curler getCurler();
 
     public abstract void setCollider(final Collider collider);
 
     public abstract void setCollissionDetector(
             final CollissionDetector collissionDetector);
+
+    public abstract void setCurler(final Curler curler);
 
     /**
      * Currently the internal reference MUST be final, so this updates via
@@ -60,7 +62,5 @@ public interface ComputedTrajectorySet extends TrajectorySet {
      * @param initialSpeed
      */
     public abstract void setInitialSpeed(final SpeedSet initialSpeed);
-
-    public abstract void setCurler(final Curler curler);
 
 }

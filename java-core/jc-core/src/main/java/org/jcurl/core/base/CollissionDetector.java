@@ -38,6 +38,34 @@ public interface CollissionDetector extends Strategy {
      * moving along <code>fa</code> and <code>rb</code> moving along
      * <code>fb</code> touch.
      * <p>
+     * Delegates to
+     * {@link #compute(double, double, R1RNFunction, R1RNFunction, double)}.
+     * </p>
+     * 
+     * @param t0
+     *            start time
+     * @param tstop
+     *            max. time
+     * @param fa
+     *            location of sphere <code>a</code>
+     * @param ra
+     *            radius of sphere <code>a</code>
+     * @param fb
+     *            location of sphere <code>b</code>
+     * @param rb
+     *            radius of sphere <code>b</code>
+     * @return time of next collission or {@link Double#NaN} if none.
+     */
+    public abstract double compute(final double t0, final double tstop,
+            final R1RNFunction fa, final double ra, final R1RNFunction fb,
+            final double rb);
+
+    /**
+     * Find the smallest <code>t</code> with
+     * <code>t0 &lt;= t &lt;= tmax</code> when the two spheres <code>ra</code>
+     * moving along <code>fa</code> and <code>rb</code> moving along
+     * <code>fb</code> touch.
+     * <p>
      * Assumes a curling rock's radius for the radii of the both spheres.
      * </p>
      * <p>
@@ -78,33 +106,5 @@ public interface CollissionDetector extends Strategy {
      */
     public abstract double compute(final double t0, final double tstop,
             final R1RNFunction fa, final R1RNFunction fb, final double distSq);
-
-    /**
-     * Find the smallest <code>t</code> with
-     * <code>t0 &lt;= t &lt;= tmax</code> when the two spheres <code>ra</code>
-     * moving along <code>fa</code> and <code>rb</code> moving along
-     * <code>fb</code> touch.
-     * <p>
-     * Delegates to
-     * {@link #compute(double, double, R1RNFunction, R1RNFunction, double)}.
-     * </p>
-     * 
-     * @param t0
-     *            start time
-     * @param tstop
-     *            max. time
-     * @param fa
-     *            location of sphere <code>a</code>
-     * @param ra
-     *            radius of sphere <code>a</code>
-     * @param fb
-     *            location of sphere <code>b</code>
-     * @param rb
-     *            radius of sphere <code>b</code>
-     * @return time of next collission or {@link Double#NaN} if none.
-     */
-    public abstract double compute(final double t0, final double tstop,
-            final R1RNFunction fa, final double ra, final R1RNFunction fb,
-            final double rb);
 
 }

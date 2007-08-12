@@ -28,6 +28,11 @@ import javax.swing.JFrame;
  */
 public class EditorApp extends JFrame {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 4354107920909810947L;
+
     // private static final Cursor Cdefault = Cursor
     // .getPredefinedCursor(Cursor.DEFAULT_CURSOR);
     //

@@ -48,11 +48,11 @@ public class IconGenerator {
                 BufferedImage.TYPE_INT_ARGB);
         final Graphics g = img.getGraphics();
         // FIXME !!!
-//        final PositionDisplay jp = new PositionDisplay();
-//        jp.setPos(loc);
-//        jp.setZoom(zoom);
-//        jp.setSize(img.getWidth(), img.getHeight());
-//        jp.paint(g);
+        // final PositionDisplay jp = new PositionDisplay();
+        // jp.setPos(loc);
+        // jp.setZoom(zoom);
+        // jp.setSize(img.getWidth(), img.getHeight());
+        // jp.paint(g);
         g.dispose();
         ImageIO.write(img, "png", dst);
         throw new NotImplementedYetException();

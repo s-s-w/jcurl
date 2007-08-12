@@ -28,8 +28,6 @@ package org.jcurl.math;
  */
 public class CSplineInterpolator extends R1R1Function {
 
-    private static final long serialVersionUID = -3630835719496788354L;
-
     private static final int a = 0;
 
     private static final float arrayFill = 0.80F;
@@ -39,6 +37,8 @@ public class CSplineInterpolator extends R1R1Function {
     private static final int c = 2;
 
     private static final int d = 3;
+
+    private static final long serialVersionUID = -3630835719496788354L;
 
     /**
      * Compute the spline coefficients for the given points. The numerical
@@ -148,7 +148,6 @@ public class CSplineInterpolator extends R1R1Function {
      * Convenience wrapper.
      * 
      * @see #at(int, int, double)
-     * @see #findSplineIndex(double)
      * @param C
      *            n'th derivative (0=value,1=incline,2=acceleration)
      * @param x

@@ -45,12 +45,12 @@ import org.jcurl.math.R1RNFunction;
  */
 public class CurveShapeDemo extends JFrame {
 
-    private static final long serialVersionUID = 1596300831419412317L;
-
     private static final Log log = JCLoggerFactory
             .getLogger(CurveShapeDemo.class);
 
-    public static void main(String[] args) {
+    private static final long serialVersionUID = 1596300831419412317L;
+
+    public static void main(final String[] args) {
         log.info("Version: " + Version.find());
         final R1RNFunction c;
         {
@@ -73,7 +73,8 @@ public class CurveShapeDemo extends JFrame {
             final Stroke st = new BasicStroke(20, BasicStroke.CAP_ROUND,
                     BasicStroke.JOIN_ROUND, 0);
 
-            public void paintComponent(Graphics g) {
+            @Override
+            public void paintComponent(final Graphics g) {
                 setBackground(new Color(255, 255, 255));
                 super.paintComponent(g);
                 setBackground(new Color(255, 255, 255));

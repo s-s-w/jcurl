@@ -36,6 +36,7 @@ import org.jcurl.core.helpers.NotImplementedYetException;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CenteredZoomer.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
+@Deprecated
 public class FixpointZoomer extends Zoomer {
 
     private static final float _dia = 2 * RockProps.DEFAULT.getRadius();

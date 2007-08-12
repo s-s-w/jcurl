@@ -137,6 +137,22 @@ public class DimValSliderPanel extends JPanel implements ChangeListener,
             }
     }
 
+    public int getMajorTickSpacing() {
+        return slider.getMajorTickSpacing();
+    }
+
+    public int getMaximum() {
+        return slider.getMaximum();
+    }
+
+    public int getMinimum() {
+        return slider.getMinimum();
+    }
+
+    public int getMinorTickSpacing() {
+        return slider.getMinorTickSpacing();
+    }
+
     public void propertyChange(final PropertyChangeEvent arg0) {
         log.debug(arg0);
         if (model == arg0.getSource())
@@ -150,6 +166,22 @@ public class DimValSliderPanel extends JPanel implements ChangeListener,
                 slider.setValue((int) (val.value * Granularity));
                 text.setText(val.toString());
             }
+    }
+
+    public void setMajorTickSpacing(final int arg0) {
+        slider.setMajorTickSpacing(arg0);
+    }
+
+    public void setMaximum(final int arg0) {
+        slider.setMaximum(arg0);
+    }
+
+    public void setMinimum(final int arg0) {
+        slider.setMinimum(arg0);
+    }
+
+    public void setMinorTickSpacing(final int arg0) {
+        slider.setMinorTickSpacing(arg0);
     }
 
     public void setValue(final Measure value) {
@@ -167,37 +199,5 @@ public class DimValSliderPanel extends JPanel implements ChangeListener,
     public void stateChanged(final ChangeEvent arg0) {
         if (arg0.getSource() == slider)
             setValue(new Measure((double) slider.getValue() / Granularity, dim));
-    }
-
-    public int getMajorTickSpacing() {
-        return slider.getMajorTickSpacing();
-    }
-
-    public int getMaximum() {
-        return slider.getMaximum();
-    }
-
-    public int getMinimum() {
-        return slider.getMinimum();
-    }
-
-    public int getMinorTickSpacing() {
-        return slider.getMinorTickSpacing();
-    }
-
-    public void setMajorTickSpacing(final int arg0) {
-        slider.setMajorTickSpacing(arg0);
-    }
-
-    public void setMaximum(final int arg0) {
-        slider.setMaximum(arg0);
-    }
-
-    public void setMinimum(final int arg0) {
-        slider.setMinimum(arg0);
-    }
-
-    public void setMinorTickSpacing(final int arg0) {
-        slider.setMinorTickSpacing(arg0);
     }
 }

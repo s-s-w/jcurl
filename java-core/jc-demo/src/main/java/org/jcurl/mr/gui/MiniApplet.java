@@ -25,10 +25,10 @@ public class MiniApplet extends JApplet {
 
     public MiniApplet() {
         // FIXME make functional again.
-//        final PositionDisplay p = new PositionDisplay();
-//        getContentPane().add(p);
-//        // p.setPos(PositionSet.allOut());
-//        TacticsApplet.initHammy(p.getPos(), new SpeedSet());
+        // final PositionDisplay p = new PositionDisplay();
+        // getContentPane().add(p);
+        // // p.setPos(PositionSet.allOut());
+        // TacticsApplet.initHammy(p.getPos(), new SpeedSet());
     }
 
     @Override

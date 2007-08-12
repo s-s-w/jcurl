@@ -35,6 +35,12 @@ public class RockProps {
         DEFAULT.inertia = 0.186F; // [Kg*m*m]
     }
 
+    private float inertia;
+
+    private float mass;
+
+    private float radius;
+
     public float getInertia() {
         return inertia;
     }
@@ -46,10 +52,4 @@ public class RockProps {
     public float getRadius() {
         return radius;
     }
-
-    private float inertia;
-
-    private float mass;
-
-    private float radius;
 }

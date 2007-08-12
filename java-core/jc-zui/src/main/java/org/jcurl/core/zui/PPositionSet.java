@@ -71,7 +71,7 @@ public class PPositionSet extends PNode implements PropertyChangeListener {
 
     public void propertyChange(final PropertyChangeEvent evt) {
         sync(p, this);
-        this.repaint();
+        repaint();
     }
 
     private void sync(final PositionSet src, final PPositionSet dst) {

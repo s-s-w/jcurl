@@ -30,6 +30,7 @@ import org.jcurl.core.helpers.MutableObject;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CenteredZoomer.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
+@Deprecated
 public abstract class Zoomer extends MutableObject {
 
     /**

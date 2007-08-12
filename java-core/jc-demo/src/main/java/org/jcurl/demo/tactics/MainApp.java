@@ -26,6 +26,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import org.jcurl.core.base.Collider;
@@ -74,14 +75,14 @@ public class MainApp extends JFrame {
         private static final long serialVersionUID = -3381158569292004932L;
 
         public IceControl(final Curler model) {
-            this.setLayout(new BorderLayout());
-            JLabel l = new JLabel("Ice");
+            setLayout(new BorderLayout());
+            final JLabel l = new JLabel("Ice");
             this.add(l, BorderLayout.NORTH);
             JSlider s = new JSlider();
-            s.setOrientation(JSlider.VERTICAL);
+            s.setOrientation(SwingConstants.VERTICAL);
             this.add(s, BorderLayout.WEST);
             s = new JSlider();
-            s.setOrientation(JSlider.VERTICAL);
+            s.setOrientation(SwingConstants.VERTICAL);
             this.add(s, BorderLayout.CENTER);
         }
     }
@@ -301,17 +302,17 @@ public class MainApp extends JFrame {
         private static final long serialVersionUID = 1286753237795097988L;
 
         public RockControl(final RockMod model) {
-            this.setLayout(new BorderLayout());
-            JLabel l = new JLabel("Rock");
+            setLayout(new BorderLayout());
+            final JLabel l = new JLabel("Rock");
             this.add(l, BorderLayout.NORTH);
             JSlider s = new JSlider();
-            s.setOrientation(JSlider.VERTICAL);
+            s.setOrientation(SwingConstants.VERTICAL);
             this.add(s, BorderLayout.WEST);
             s = new JSlider();
-            s.setOrientation(JSlider.VERTICAL);
+            s.setOrientation(SwingConstants.VERTICAL);
             this.add(s, BorderLayout.CENTER);
             s = new JSlider();
-            s.setOrientation(JSlider.VERTICAL);
+            s.setOrientation(SwingConstants.VERTICAL);
             this.add(s, BorderLayout.EAST);
         }
     }
@@ -407,10 +408,10 @@ public class MainApp extends JFrame {
     private static final double tmax = 15;
 
     public static void main(final String[] args) {
-//        PDebug.debugBounds = true;
-//        PDebug.debugPrintUsedMemory = true;
-//        PDebug.debugPrintFrameRate = true;
-//        PDebug.debugPaintCalls = true;
+        // PDebug.debugBounds = true;
+        // PDebug.debugPrintUsedMemory = true;
+        // PDebug.debugPrintFrameRate = true;
+        // PDebug.debugPaintCalls = true;
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 final MainApp application = new MainApp();

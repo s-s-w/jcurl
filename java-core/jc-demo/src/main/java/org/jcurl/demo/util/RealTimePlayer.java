@@ -35,15 +35,15 @@ public class RealTimePlayer implements Runnable {
 
     private final TrajectorySet src;
 
-    private final double t0Start;
-
-    private double tNow;
-
     private double t0Last;
+
+    private final double t0Start;
 
     private volatile double timeScale;
 
     private final long timeSleep = 25;
+
+    private double tNow;
 
     public RealTimePlayer(final double t0, final double scale,
             final TrajectorySet src) {

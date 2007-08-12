@@ -34,8 +34,6 @@ import java.util.TreeMap;
  */
 public class Unit extends EnumBase {
 
-    private static final long serialVersionUID = 6779663806431722367L;
-
     private static int _idx = 0;
 
     private static final Map<String, Unit> _names = new TreeMap<String, Unit>();
@@ -81,6 +79,8 @@ public class Unit extends EnumBase {
     public static final Unit SEC_HOG_TEE;
 
     public static final Unit SECOND;
+
+    private static final long serialVersionUID = 6779663806431722367L;
 
     @Deprecated
     static final Unit thh;
