@@ -34,7 +34,7 @@ import org.jcurl.core.helpers.Unit;
  * 
  * @see DimValSliderPanel
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: ControlPanel.java 564 2007-04-19 22:14:15Z mrohrmoser $
+ * @version $Id$
  */
 public class ControlPanel extends JTabbedPane {
 

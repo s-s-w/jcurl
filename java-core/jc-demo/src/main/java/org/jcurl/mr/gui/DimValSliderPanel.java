@@ -47,7 +47,7 @@ import org.jcurl.core.log.JCLoggerFactory;
 /**
  * @see BoundedRangeModel
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: DimValSliderPanel.java 564 2007-04-19 22:14:15Z mrohrmoser $
+ * @version $Id$
  */
 public class DimValSliderPanel extends JPanel implements ChangeListener,
         ActionListener, PropertyChangeListener {

@@ -22,7 +22,7 @@ import javax.swing.JFrame;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: Driver.java 483 2007-03-30 17:56:46Z mrohrmoser $
+ * @version $Id$
  */
 public class Driver {
     // private static final ULogger log =
