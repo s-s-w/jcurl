@@ -61,7 +61,7 @@ public class Version {
         return find(Version.class);
     }
 
-    public static final Version find(final Class clz) {
+    public static final Version find(final Class<?> clz) {
         return find(clz.getClassLoader());
     }
 
@@ -78,15 +78,15 @@ public class Version {
 
     static final Manifest findManifest(final ClassLoader clz,
             final String marker) throws IOException {
-        for (final Enumeration enu = clz.getResources("META-INF/MANIFEST.MF"); enu
-                .hasMoreElements();) {
-            final URL url = (URL) enu.nextElement();
+        for (final Enumeration<URL> enu = clz
+                .getResources("META-INF/MANIFEST.MF"); enu.hasMoreElements();) {
+            final URL url = enu.nextElement();
             if (url.getPath().indexOf(marker) >= 0)
                 return new Manifest(url.openStream());
         }
         log.info("Manifest not found in");
-        for (final Enumeration enu = clz.getResources("META-INF/MANIFEST.MF"); enu
-                .hasMoreElements();)
+        for (final Enumeration<URL> enu = clz
+                .getResources("META-INF/MANIFEST.MF"); enu.hasMoreElements();)
             log.info("url=" + enu.nextElement());
         return new Manifest(new File("config/jcurl.jar/"
                 + "META-INF/MANIFEST.MF").toURL().openStream());

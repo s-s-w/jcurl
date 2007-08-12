@@ -41,6 +41,7 @@ public abstract class TransferObject implements Serializable {
      * 
      * @return all properties' values
      */
+    @SuppressWarnings("unchecked")
     @Override
     public String toString() { // inspired by Hardcore Java (O'reilly, page
         // 228)

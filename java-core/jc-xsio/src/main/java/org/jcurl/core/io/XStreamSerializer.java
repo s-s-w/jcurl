@@ -73,6 +73,7 @@ public class XStreamSerializer implements JCurlSerializer {
 
     static class DoubleArrayConverter implements Converter {
 
+        @SuppressWarnings("unchecked")
         public boolean canConvert(final Class arg0) {
             return double[].class.isAssignableFrom(arg0);
         }
@@ -99,6 +100,7 @@ public class XStreamSerializer implements JCurlSerializer {
 
     static class MeasureConverter implements Converter {
 
+        @SuppressWarnings("unchecked")
         public boolean canConvert(final Class arg0) {
             return Measure.class.isAssignableFrom(arg0);
         }
@@ -146,6 +148,7 @@ public class XStreamSerializer implements JCurlSerializer {
         static final Pattern p = Pattern.compile("(" + num + ") (" + num
                 + ") (" + num + ")");
 
+        @SuppressWarnings("unchecked")
         public boolean canConvert(final Class arg0) {
             return Rock.class.isAssignableFrom(arg0);
         }

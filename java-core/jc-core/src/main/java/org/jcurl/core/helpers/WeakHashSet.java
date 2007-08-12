@@ -156,6 +156,7 @@ public class WeakHashSet<E> extends AbstractSet<E> {
         return backingStore.containsKey(o);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean containsAll(final Collection c) {
         return backingStore.keySet().containsAll(c);
@@ -217,11 +218,13 @@ public class WeakHashSet<E> extends AbstractSet<E> {
         return backingStore.keySet().remove(o);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean removeAll(final Collection c) {
         return backingStore.keySet().removeAll(c);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean retainAll(final Collection c) {
         return backingStore.keySet().retainAll(c);
