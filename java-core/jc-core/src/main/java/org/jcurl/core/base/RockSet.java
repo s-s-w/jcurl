@@ -158,10 +158,6 @@ public abstract class RockSet extends MutableObject implements Cloneable,
 
     protected final Rock[] light = new Rock[ROCKS_PER_COLOR];
 
-    private RockSet() {
-        this(new RockDouble());
-    }
-
     public RockSet(final Rock seed) {
         if (seed != null)
             for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {

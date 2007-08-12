@@ -59,7 +59,7 @@ class FileDialogWebstart implements OpenService, SaveService {
      *            destination interface type
      * @return target interface instance.
      */
-    static Object wrap(final Object src, final Class dstT) {
+    static Object wrap(final Object src, final Class<?> dstT) {
         if (log.isDebugEnabled())
             log.debug("wrap(" + src + ", " + dstT + ")");
         if (src == null)
@@ -70,7 +70,7 @@ class FileDialogWebstart implements OpenService, SaveService {
                     public Object invoke(final Object proxy,
                             final Method method, final Object[] args)
                             throws Throwable {
-                        final Class srcT = src.getClass();
+                        final Class<?> srcT = src.getClass();
                         // Wrap ALL Methods (also getClass, equals, toString,
                         // ...)
                         final Method dstM = srcT.getMethod(method.getName(),
@@ -100,7 +100,7 @@ class FileDialogWebstart implements OpenService, SaveService {
 
     private final Method saveAs;
 
-    private final Class tco;
+    private final Class<?> tco;
 
     FileDialogWebstart() {
         try {

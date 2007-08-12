@@ -55,7 +55,7 @@ public final class JCLoggerFactory {
      * @param clz
      * @return the logger.
      */
-    public static Log getLogger(final Class clz) {
+    public static Log getLogger(final Class<?> clz) {
         if (!fallback)
             return LogFactory.getLog(clz);
         // if (false) {

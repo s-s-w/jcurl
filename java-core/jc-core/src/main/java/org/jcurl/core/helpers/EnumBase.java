@@ -32,13 +32,15 @@ import java.util.TreeMap;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class EnumBase extends Number implements Comparable,
+public abstract class EnumBase extends Number implements Comparable<EnumBase>,
         Serializable {
 
     /** Simple comparator based on the hash-value. */
-    private static class HashCodeComp implements Comparator<Class> {
+    private static class HashCodeComp implements
+            Comparator<Class<? extends EnumBase>> {
 
-        public int compare(final Class o1, final Class o2) {
+        public int compare(final Class<? extends EnumBase> o1,
+                final Class<? extends EnumBase> o2) {
             if (o1 == null && o2 == null)
                 return 0;
             if (o1 == null)
@@ -55,7 +57,7 @@ public abstract class EnumBase extends Number implements Comparable,
         }
     }
 
-    private static final Map<Class, Map<Integer, EnumBase>> types = new TreeMap<Class, Map<Integer, EnumBase>>(
+    private static final Map<Class<? extends EnumBase>, Map<Integer, EnumBase>> types = new TreeMap<Class<? extends EnumBase>, Map<Integer, EnumBase>>(
             new HashCodeComp());
 
     /**
@@ -67,7 +69,8 @@ public abstract class EnumBase extends Number implements Comparable,
      * @throws IllegalArgumentException
      *             if the given state wasn't found.
      */
-    public static EnumBase lookup(final Class type, final Integer state) {
+    public static EnumBase lookup(final Class<? extends EnumBase> type,
+            final Integer state) {
         if (state == null)
             return null;
         Map<Integer, EnumBase> values = types.get(type);
@@ -95,7 +98,7 @@ public abstract class EnumBase extends Number implements Comparable,
     protected EnumBase(final int state, final String text) {
         this.state = new Integer(state);
         this.text = text;
-        final Class clazz = getClass();
+        final Class<? extends EnumBase> clazz = getClass();
         // register the value.
         Map<Integer, EnumBase> values = types.get(clazz);
         if (values == null)
@@ -110,9 +113,8 @@ public abstract class EnumBase extends Number implements Comparable,
         }
     }
 
-    public int compareTo(final Object o) {
-        final EnumBase b = (EnumBase) o;
-        return state.compareTo(b.state);
+    public int compareTo(final EnumBase o) {
+        return state.compareTo(o.state);
     }
 
     /**
