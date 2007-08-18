@@ -14,12 +14,12 @@
 	<parent>
 		<artifactId>parent</artifactId>
 		<groupId>org.jcurl.core</groupId>
-		<version>0.7.3</version>
+		<version>0.7-SNAPSHOT</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 	<groupId>org.jcurl.demo</groupId>
 	<artifactId>tactics</artifactId>
-	<version>0.7.3</version>
+	<version>0.7-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>JCurl Tactics Demo</name>
 	<scm>

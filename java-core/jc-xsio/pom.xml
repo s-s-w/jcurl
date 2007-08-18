@@ -6,7 +6,7 @@
 	<parent>
 		<artifactId>parent</artifactId>
 		<groupId>org.jcurl.core</groupId>
-		<version>0.7.3</version>
+		<version>0.7-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>jc-xsio</artifactId>

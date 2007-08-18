@@ -7,7 +7,7 @@
 	<artifactId>parent</artifactId>
 	<packaging>pom</packaging>
 	<name>JCurl Curling Framework</name>
-	<version>0.7.3</version>
+	<version>0.7-SNAPSHOT</version>
 	<description>
 		Java library and sample applications for rock trajectory
 		simulation, game filing, analysis and visualisation
@@ -16,13 +16,9 @@
 		<scpsitebase>
 			scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/site
 		</scpsitebase>
-		<httpsitebase>
-			http://www.jcurl.org/m2/site
-		</httpsitebase>
+		<httpsitebase>http://www.jcurl.org/m2/site</httpsitebase>
 	</properties>
-	<url>
-		${httpsitebase}/${pom.artifactId}/${pom.version}
-	</url>
+	<url>${httpsitebase}/${pom.artifactId}/${pom.version}</url>
 	<issueManagement>
 		<system>Bugzilla</system>
 		<url>http://developer.berlios.de/bugs/?group_id=3203</url>
@@ -217,6 +213,25 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jdepend-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<configuration>
+					<!--      <xmlOutput>true|false</xmlOutput>
+						<xmlOutputDirectory>directory location of xml findbugs report</xmlOutputDirectory>
+						<threshold>High|Normal|Low|Exp|Ignore</threshold>
+						<effort>Min|Default|Max</effort>
+						<excludeFilterFile>findbugs-exclude.xml</excludeFilterFile>
+						<includeFilterFile>findbugs-include.xml</includeFilterFile>
+						<visitors>FindDeadLocalStores,UnreadFields</visitors>
+						<omitVisitors>FindDeadLocalStores,UnreadFields</omitVisitors>
+						<onlyAnalyze>org.codehaus.mojo.findbugs.*</onlyAnalyze>
+						<pluginList>/libs/fb-contrib/fb-contrib-2.8.0.jar</pluginList>
+						<debug>true|false</debug>
+						<relaxed>true|false</relaxed>
+					-->
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
