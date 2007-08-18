@@ -37,8 +37,6 @@ import javax.swing.KeyStroke;
  */
 public class MenuDemo extends JFrame {
 
-    private static final long serialVersionUID = -2968454290313186955L;
-
     private static class MyAboutDialog extends JDialog {
 
         private static final long serialVersionUID = -7533904080833071647L;
@@ -59,6 +57,8 @@ public class MenuDemo extends JFrame {
             super.setVisible(b);
         }
     }
+
+    private static final long serialVersionUID = -2968454290313186955L;
 
     public static void main(final String[] args) {
         JFrame.setDefaultLookAndFeelDecorated(true);

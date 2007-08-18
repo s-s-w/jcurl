@@ -35,6 +35,11 @@ public class FunctionBridgeTest extends TestCase {
     public static abstract class FunctionBridge extends R1R1Function implements
             DifferentiableUnivariateRealFunction {
         private static class Curl2Jakarta extends FunctionBridge {
+            /**
+             * 
+             */
+            private static final long serialVersionUID = -4049534201469372830L;
+
             private final int diff;
 
             private final R1R1Function root;
@@ -72,6 +77,11 @@ public class FunctionBridgeTest extends TestCase {
         }
 
         private static class Jakarta2Curl extends FunctionBridge {
+            /**
+             * 
+             */
+            private static final long serialVersionUID = -6473767870800545411L;
+
             private final UnivariateRealFunction base;
 
             private Jakarta2Curl deriv = null;

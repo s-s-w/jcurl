@@ -124,7 +124,7 @@ public class BroomPanel0 extends JPanel implements ChangeListener,
 
     public void stateChanged(final ChangeEvent arg0) {
         if (arg0.getSource() == slider)
-            model.setBroomX(new Measure(
-                    (double) slider.getValue() / Granularity, dim));
+            model.setBroomX(new Measure((double) slider.getValue()
+                    / Granularity, dim));
     }
 }

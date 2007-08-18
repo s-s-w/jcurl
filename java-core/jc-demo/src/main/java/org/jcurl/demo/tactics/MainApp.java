@@ -54,7 +54,6 @@ import org.jcurl.core.zui.PPositionSetDrag;
 import org.jcurl.core.zui.PRockFactory;
 import org.jcurl.core.zui.PTrajectoryFactory;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PInputEvent;
@@ -65,6 +64,7 @@ import edu.umd.cs.piccolo.util.PPaintContext;
  * @version $Id$
  */
 public class MainApp extends JFrame {
+
     /**
      * Set draw-to-tee time and curl via {@link JSlider}s.
      * 
@@ -288,6 +288,10 @@ public class MainApp extends JFrame {
         public void center() {
             p.center();
         }
+    }
+
+    static class NotImplementedException extends UnsupportedOperationException {
+        private static final long serialVersionUID = -197175504513188177L;
     }
 
     /**

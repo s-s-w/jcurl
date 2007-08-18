@@ -35,9 +35,9 @@ import javax.swing.JPanel;
  */
 public class MouseRectPanel extends JPanel implements MouseMotionListener {
 
-    private static final long serialVersionUID = 3946069203465871809L;
-
     private static final int MAXNSQUARES = 10;
+
+    private static final long serialVersionUID = 3946069203465871809L;
 
     private static final int SQUARELENGTH = 10;
 

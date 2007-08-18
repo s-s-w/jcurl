@@ -39,30 +39,15 @@ import org.jcurl.core.log.JCLoggerFactory;
  */
 public class MouseSketchPanel extends JPanel implements KeyListener {
 
-    private static final long serialVersionUID = -4606015027709328552L;
+    private static final Log log = JCLoggerFactory
+            .getLogger(MouseSketchPanel.class);
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.swing.JComponent#printComponent(java.awt.Graphics)
-     */
-    @Override
-    protected void paintComponent(final Graphics g) {
-        super.paintComponent(g);
-        g.drawLine(100, 110, 100, 90);
-        g.drawLine(110, 100, 90, 100);
-        circle(g, 100, 100, 10, 10);
-        g.drawArc(100, 100, 20, 20, 0, 360);
-        g.drawArc(100, 100, -20, -20, 0, 360);
-    }
+    private static final long serialVersionUID = -4606015027709328552L;
 
     private static void circle(final Graphics g, final int x, final int y,
             final int rx, final int ry) {
         g.drawArc(x - rx, y - ry, 2 * rx, 2 * ry, 0, 360);
     }
-
-    private static final Log log = JCLoggerFactory
-            .getLogger(MouseSketchPanel.class);
 
     /**
      * Paint the given curve.
@@ -148,5 +133,20 @@ public class MouseSketchPanel extends JPanel implements KeyListener {
             g.dispose();
         }
         curve.add(current = p);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see javax.swing.JComponent#printComponent(java.awt.Graphics)
+     */
+    @Override
+    protected void paintComponent(final Graphics g) {
+        super.paintComponent(g);
+        g.drawLine(100, 110, 100, 90);
+        g.drawLine(110, 100, 90, 100);
+        circle(g, 100, 100, 10, 10);
+        g.drawArc(100, 100, 20, 20, 0, 360);
+        g.drawArc(100, 100, -20, -20, 0, 360);
     }
 }
