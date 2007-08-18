@@ -21,7 +21,8 @@ package org.jcurl.core.base;
 import java.util.Iterator;
 
 import junit.framework.TestCase;
-import sun.misc.Service;
+
+import org.jcurl.core.helpers.Service;
 
 public class PluginTest extends TestCase {
 

@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
  * @author $LastChangedBy$
  * @version $Id$
  */
-class Service {
+public class Service {
 
     private static final Pattern pat = Pattern.compile("\\s*([^# ]+).*");
 

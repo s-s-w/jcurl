@@ -24,15 +24,13 @@ import java.util.Map.Entry;
 
 import org.jcurl.core.helpers.Measure;
 
-import sun.misc.Service;
-
 /**
  * Interface for all classes that have <code>key=value</code> parameters and
  * support post-constructor initialisation as required by
- * {@link Service#providers(Class)}.
+ * <code>Service#providers(Class)</code>.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:PropModel.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public interface PropModel extends Iterable<Entry<CharSequence, Measure>> {
 
