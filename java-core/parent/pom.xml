@@ -171,6 +171,22 @@
 							<head>To Do:</head>
 						</tag>
 					</tags>
+					<doclet>
+						gr.spinellis.umlgraph.doclet.UmlGraphDoc
+					</doclet>
+					<docletArtifact>
+						<groupId>gr.spinellis</groupId>
+						<artifactId>UmlGraph</artifactId>
+						<version>4.4</version>
+					</docletArtifact>
+					<!-- http://www.spinellis.gr/sw/umlgraph/doc/cd-opt.html -->
+					<additionalparam>
+						-inferrel -inferdep -quiet -hide java.*
+						-collpackages java.util.* -qualify
+						-postfixpackage -nodefontsize 9
+						-nodefontpackagesize 7
+						-visibility -operations
+					</additionalparam>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -217,6 +233,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>1.1.1</version>
 				<configuration>
 					<!--      <xmlOutput>true|false</xmlOutput>
 						<xmlOutputDirectory>directory location of xml findbugs report</xmlOutputDirectory>
