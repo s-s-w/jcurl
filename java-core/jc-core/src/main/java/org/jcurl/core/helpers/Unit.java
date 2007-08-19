@@ -30,7 +30,7 @@ import java.util.TreeMap;
  * 
  * @see org.jcurl.core.helpers.Measure
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:Unit.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class Unit extends EnumBase {
 
@@ -72,21 +72,10 @@ public class Unit extends EnumBase {
 
     public static final Unit RPM;
 
-    @Deprecated
-    public static final Unit SEC_HOG_HOG;
-
-    @Deprecated
-    public static final Unit SEC_HOG_TEE;
-
     public static final Unit SECOND;
 
     private static final long serialVersionUID = 6779663806431722367L;
 
-    @Deprecated
-    static final Unit thh;
-
-    @Deprecated
-    static final Unit tht;
     static {
         // Base Units
         NONE = new Unit("", null, 0);
@@ -109,12 +98,6 @@ public class Unit extends EnumBase {
         MILLISEC = new Unit("ms", SECOND, 1e-3);
         MINUTE = new Unit("min", SECOND, 60);
         NANOSEC = new Unit("ns", SECOND, 1e-9);
-
-        // curling stuff. remove?
-        SEC_HOG_HOG = new Unit("shh", METER_PER_SEC, 1.0 / f2m(72.0));
-        SEC_HOG_TEE = new Unit("sht", METER_PER_SEC, 1.0 / f2m(21.0));
-        thh = new Unit("thh", null, 1.0);
-        tht = new Unit("tht", null, 1.0);
     }
 
     public static final float f2m(final double f) {
@@ -143,14 +126,6 @@ public class Unit extends EnumBase {
         return METER.equals(dim.BaseUnit);
     }
 
-    static boolean isRockTime(final Unit dim) {
-        if (SEC_HOG_HOG.equals(dim))
-            return true;
-        if (SEC_HOG_TEE.equals(dim))
-            return true;
-        return false;
-    }
-
     static boolean isSpeed(final Unit dim) {
         return METER_PER_SEC.equals(dim.BaseUnit);
     }
@@ -169,20 +144,6 @@ public class Unit extends EnumBase {
 
     static double toRadians(final Measure v) {
         return v.to(RADIANT).value;
-    }
-
-    static double toSecHogHog(final Measure v) {
-        final double ret = v.value;
-        if (SEC_HOG_HOG.equals(v.unit))
-            return ret;
-        throw new IllegalArgumentException("Not convertible");
-    }
-
-    static double toSecHogTee(final Measure v) {
-        final double ret = v.value;
-        if (SEC_HOG_TEE.equals(v.unit))
-            return ret;
-        throw new IllegalArgumentException("Not convertible");
     }
 
     public final Unit BaseUnit;
