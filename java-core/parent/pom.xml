@@ -267,6 +267,18 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		<repository>
+			<id>jcurl-snapshot</id>
+			<name>JCurl Maven Snapshots</name>
+			<layout>default</layout>
+			<url>http://www.jcurl.org/m2/snap</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
 	</repositories>
 	<distributionManagement>
 		<repository>
@@ -275,6 +287,13 @@
 				scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/repo
 			</url>
 		</repository>
+		<snapshotRepository>
+			<id>jcurl-snapshots</id>
+			<url>
+				scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/snap
+			</url>
+			<uniqueVersion>true</uniqueVersion>
+		</snapshotRepository>
 		<site>
 			<id>jcurl-website</id>
 			<url>${scpsitebase}/${pom.artifactId}/${pom.version}</url>
