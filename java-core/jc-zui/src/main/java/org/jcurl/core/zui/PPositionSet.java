@@ -21,9 +21,12 @@ package org.jcurl.core.zui;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
+import org.jcurl.math.MathVec;
 
 import edu.umd.cs.piccolo.PNode;
 
@@ -37,10 +40,17 @@ public class PPositionSet extends PNode implements PropertyChangeListener {
 
     public static final Object index16 = "index16";
 
+    private static final Log log = LogFactory.getLog(PPositionSet.class);
+
     private static final long serialVersionUID = 6564103045992326633L;
 
+    private static final double eps = 1e-11;
+
     static boolean sync(final Rock src, final PNode dst) {
-        // TUNE check if it's changed at all?
+        // check if it's changed either location or angle:
+        if (src.distanceSq(dst.getOffset()) < eps
+                && Math.abs(src.getA() - dst.getRotation()) < eps)
+            return false;
         dst.setRotation(src.getA());
         dst.setOffset(src.getX(), src.getY());
         dst.invalidatePaint();
@@ -70,6 +80,8 @@ public class PPositionSet extends PNode implements PropertyChangeListener {
     }
 
     public void propertyChange(final PropertyChangeEvent evt) {
+        if (log.isDebugEnabled())
+            log.debug(evt);
         sync(p, this);
         repaint();
     }

@@ -172,7 +172,7 @@ public class CollissionSpinLoss extends ColliderBase {
             cost0 = 0.0;
         assert cost0 <= 1.0;
 
-        final Point2D dv = new Point2D.Double(MathVec.sgn(Veff) * mu, 1.0);
+        final Point2D dv = new Point2D.Double(Math.signum(Veff) * mu, 1.0);
         // sint1 is the time when the Hook-force equals the friction.
         double sint1;
 
@@ -195,13 +195,13 @@ public class CollissionSpinLoss extends ColliderBase {
             assert 0.0 <= sint1;
 
             // the loss of momentum in perp. direction:
-            dv.setLocation(-MathVec.sgn(Veff) * mu * va.getY()
+            dv.setLocation(-Math.signum(Veff) * mu * va.getY()
                     * fabs(cost0 - 1.0), va.getY()
                     * (Math.sqrt(1.0 - MathVec.sqr(sint1)) - 1.0));
         } else
             MathVec.mult(va.getY()
                     * (Math.sqrt(1.0 - MathVec.sqr(sint1)) - 1.0), dv, dv);
-        assert MathVec.sgn(dv.getX()) == -MathVec.sgn(Veff);
+        assert Math.signum(dv.getX()) == -Math.signum(Veff);
         assert dv.getY() <= 0.0;
 
         MathVec.add(va, dv, va);
@@ -220,7 +220,7 @@ public class CollissionSpinLoss extends ColliderBase {
 
         double X = -Veff / I;
         if (fabs(X) > (tmp = mu * MASS * fabs(tmp)))
-            X = -MathVec.sgn(Veff) * tmp;
+            X = -Math.signum(Veff) * tmp;
 
         // apply the x-change:
         tmp = X / MASS;

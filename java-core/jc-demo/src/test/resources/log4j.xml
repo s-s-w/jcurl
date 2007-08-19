@@ -18,11 +18,11 @@
 				value="%-5p %m%n"/ -->
 		</layout>
 	</appender>
-	<!-- category name="jcurl.core.io">
-		<level value="INFO"/>
-	</category -->
-	<category name="jcurl.core.io.OldConfigReader">
-		<level value="WARN"/>
+	<category name="org.jcurl.core.zui.PPositionSet">
+		<level value="DEBUG"/>
+	</category>
+	<category name="org.jcurl.demo.tactics">
+		<level value="DEBUG"/>
 	</category>
 	<!-- ======================= -->
 	<!-- Setup the Root category -->

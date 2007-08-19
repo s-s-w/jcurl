@@ -44,7 +44,7 @@ public class PCurveStore extends PNode {
         this.cs = cs;
         this.f = f;
         int i = 0;
-        for(final Iterable<Entry<Double, R1RNFunction>> element : cs)
+        for (final Iterable<Entry<Double, R1RNFunction>> element : cs)
             addChild(i++, new PNode());
         sync(tmax);
     }

@@ -19,6 +19,7 @@
 package org.jcurl.core.zui;
 
 import java.awt.event.InputEvent;
+import java.awt.geom.Point2D;
 
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
@@ -50,9 +51,13 @@ public class PPositionSetDrag extends PBasicInputEventHandler {
         final PositionSet pp = (PositionSet) node
                 .getAttribute(PositionSet.class);
         final Rock r = pp.getRock(i16);
-        // TODO Add overlap/collission detection!
-        r.setLocation(node.getParent().globalToLocal(event.getPosition()));
+        final Point2D p = node.getParent().globalToLocal(event.getPosition());
+        // FIXME Add overlap/collission detection!
         event.setHandled(true);
+        // any move at all?
+        if (p.distanceSq(r) < 1e-11)
+            return;
+        r.setLocation(p);
         PPositionSet.sync(r, node);
     }
 

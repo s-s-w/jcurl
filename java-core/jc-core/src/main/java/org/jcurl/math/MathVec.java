@@ -24,7 +24,7 @@ import java.awt.geom.Point2D;
  * Helper class that brings some (2D-)vector artihmetics.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:MathVec.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public final class MathVec {
     public static double abs2D(final Point2D a) {
@@ -202,15 +202,7 @@ public final class MathVec {
         return a.getX() * b.getX() + a.getY() * b.getY();
     }
 
-    public static byte sgn(final double a) {
-        if (a < 0)
-            return -1;
-        if (a > 0)
-            return 1;
-        return 0;
-    }
-
-    public static double sqr(final double a) {
+    public static final double sqr(final double a) {
         return a * a;
     }
 

@@ -5,6 +5,7 @@ import java.awt.Color;
 
 import javax.swing.JComponent;
 
+import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.zui.KeyboardZoom;
 import org.jcurl.core.zui.PCurveStore;
 import org.jcurl.core.zui.PIceFactory;
@@ -45,15 +46,26 @@ class ZuiPanel extends JComponent {
         final PNode initial = new PPositionSet(model.getInitialPos(),
                 new PRockFactory.Fancy());
         initial.addInputEventListener(new PPositionSetDrag() {
+            private PositionSet before = null;
+
             @Override
             public void mouseDragged(final PInputEvent event) {
-                // TODO add undo/redo!
+                if (before == null)
+                    before = (PositionSet) model.getInitialPos().clone();
                 super.mouseDragged(event);
             }
 
             @Override
             public void mouseReleased(final PInputEvent event) {
+                if (before == null)
+                    return;
                 super.mouseReleased(event);
+                final PositionSet after = (PositionSet) model.getInitialPos()
+                        .clone();
+                model.getUndoer().addEdit(
+                        new MainMod.UndoableMove(model.getInitialPos(), before,
+                                after));
+                before = null;
                 traj.sync(MainApp.tmax);
             }
         });

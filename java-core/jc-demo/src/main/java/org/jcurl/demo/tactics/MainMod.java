@@ -2,6 +2,13 @@ package org.jcurl.demo.tactics;
 
 import java.util.Map;
 
+import javax.swing.undo.AbstractUndoableEdit;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jcurl.core.base.Collider;
 import org.jcurl.core.base.CollissionDetector;
 import org.jcurl.core.base.ComputedTrajectorySet;
@@ -25,6 +32,60 @@ import org.jcurl.core.model.NewtonCollissionDetector;
  * Data model for {@link MainPanel}
  */
 class MainMod implements ZuiMod, RockMod {
+    /**
+     * http://www.javaworld.com/javaworld/jw-06-1998/jw-06-undoredo.html
+     * 
+     * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+     * @version $Id$
+     */
+    public static class UndoableMove extends AbstractUndoableEdit {
+        private static final Log log = LogFactory.getLog(UndoableMove.class);
+        private static final long serialVersionUID = 1L;
+        private final PositionSet after;
+        private final PositionSet before;
+        private final PositionSet ref;
+
+        public UndoableMove(final PositionSet ref, final PositionSet before,
+                final PositionSet after) {
+            if (ref == null)
+                throw new NullPointerException("ref mustn't be null.");
+            if (before == null)
+                throw new NullPointerException("before mustn't be null.");
+            if (before == after)
+                throw new IllegalArgumentException(
+                        "before must be different from after.");
+            if (ref == before || ref == after)
+                throw new IllegalArgumentException(
+                        "ref must be different from both, before and after.");
+            this.ref = ref;
+            this.before = before;
+            this.after = after;
+            log.debug("done");
+        }
+
+        @Override
+        public boolean canRedo() {
+            return after != null;
+        }
+
+        @Override
+        public boolean canUndo() {
+            return before != null;
+        }
+
+        @Override
+        public void redo() throws CannotRedoException {
+            ref.setLocation(after);
+            log.debug("done");
+        }
+
+        @Override
+        public void undo() throws CannotUndoException {
+            ref.setLocation(before);
+            log.debug("done");
+        }
+    }
+
     static ComputedTrajectorySet initHammy(ComputedTrajectorySet te) {
         if (te == null)
             te = new CurveManager();
@@ -86,6 +147,8 @@ class MainMod implements ZuiMod, RockMod {
 
     private final CurveManager ts = new CurveManager();
 
+    private final UndoManager undoer = new UndoManager();
+
     public MainMod() {
         initHammy(ts);
     }
@@ -145,6 +208,10 @@ class MainMod implements ZuiMod, RockMod {
 
     public double getSplitTime() {
         throw new NotImplementedYetException();
+    }
+
+    public UndoManager getUndoer() {
+        return undoer;
     }
 
     @Override

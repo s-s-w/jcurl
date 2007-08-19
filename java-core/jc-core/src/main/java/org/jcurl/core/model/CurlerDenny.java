@@ -76,7 +76,7 @@ public class CurlerDenny extends CurlerBase {
 
     public CurveRock computeRc(final double a0, final double v0,
             final double omega0, final double sweepFactor) {
-        final double f = -MathVec.sgn(omega0) * b * g * mu / (48 * eps * _R);
+        final double f = -Math.signum(omega0) * b * g * mu / (48 * eps * _R);
         final Polynome x = new Polynome(new double[] { 0, 0, 0, -4 * v0 * f,
                 3 * g * mu * f });
         final Polynome y = new Polynome(new double[] { 0, v0, -g * mu / 2 });

@@ -1,0 +1,68 @@
+#!/usr/bin/dot -Tsvg -o TaticsApplet.svg
+/*
+    $Id: deployment.dot 12872 2006-10-31 16:59:40Z rohrmoser $
+
+        See http://www.graphviz.org/Documentation.php
+*/
+digraph G {
+        rankdir=TB;
+		fontname="Helvetica";
+		
+#        edge [fontname="Helvetica",fontsize=10, fontcolor="black", labelfontname="Helvetica",labelfontsize=10, color="red"];
+#        node [fontname="Helvetica",fontsize=10, fontcolor="black", shape=record, color="red", style=filled, fillcolor="#FFFFCC"];
+		 edge [arrowhead=open];
+         node [style=filled, fillcolor="lightblue"];
+#        compound=true;
+
+PRoot [fillcolor=white];
+PCanvas [fillcolor=white];
+PInputManager [fillcolor=white];
+PLayer [fillcolor=white];
+PCamera [fillcolor=white];
+
+ZuiPanel -> PCanvas; 
+PCanvas -> PRoot;
+PRoot -> PCamera;
+PRoot -> PLayer;
+PCamera -> PLayer;
+PRoot -> PInputManager;  
+PInputManager -> KeyboardZoom;
+KeyboardZoom -> PCamera [style=dashed];
+PLayer -> PIce;
+PIce -> PCurveStore;
+PIce -> PPositionSet [headlabel=2];
+
+PositionSet [shape=record];
+CurveStore [shape=record];
+CurveManager [shape=record];
+Timer [shape=record]
+UndoManager [shape=record,fillcolor=white];
+
+ZuiPanel -> UndoManager; 
+UndoableMove [shape=record];
+PPositionSetDrag -> UndoableMove [style=dashed,label=create];
+
+UndoManager -> UndoableMove; 
+Timer -> CurveManager;
+Timer -> CurveManager [style=dashed];
+
+PPositionSet -> PRock [headlabel=16];
+PPositionSet -> PPositionSetDrag;
+PInputManager -> PPositionSetDrag [style=dashed];
+PPositionSetDrag -> PRock [style=dashed];
+PPositionSetDrag -> PCurveStore [label=sync, style=dashed, color=red];
+PRock -> PositionSet;
+PRock -> PositionSet [style=dashed]; 
+PositionSet -> PRock [style=dashed]; 
+UndoableMove -> PositionSet [headlabel=3];
+UndoableMove -> PositionSet [style=dashed];
+
+PCurveStore -> CurveStore;
+CurveStore -> PCurveStore [style=dashed, color=blue]; 
+
+CurveManager -> PositionSet;
+CurveManager -> CurveStore;
+CurveManager -> CurveStore [style=dashed, color=blue];
+PositionSet -> CurveManager [style=dashed];
+
+}
