@@ -13,10 +13,11 @@
 		simulation, game filing, analysis and visualisation
 	</description>
 	<properties>
-		<scpsitebase>
-			scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/site
-		</scpsitebase>
-		<httpsitebase>http://www.jcurl.org/m2/site</httpsitebase>
+		<scpbase>
+			scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2
+		</scpbase>
+		<httpbase>http://www.jcurl.org/m2</httpbase>
+		<httpsitebase>${httpbase}/site</httpsitebase>
 	</properties>
 	<url>${httpsitebase}/${pom.artifactId}/${pom.version}</url>
 	<issueManagement>
@@ -133,13 +134,13 @@
 					<show>package</show>
 					<links>
 						<link>
-							http://www.jcurl.org/m2/site/jc-core/${pom.version}/apidocs/
+							${httpsitebase}/jc-core/${pom.version}/apidocs/
 						</link>
 						<link>
-							http://www.jcurl.org/m2/site/jc-zui/${pom.version}/apidocs/
+							${httpsitebase}/jc-zui/${pom.version}/apidocs/
 						</link>
 						<link>
-							http://www.jcurl.org/m2/site/jc-xsio/${pom.version}/apidocs/
+							${httpsitebase}/jc-xsio/${pom.version}/apidocs/
 						</link>
 						<link>
 							http://java.sun.com/j2se/1.5.0/docs/api/
@@ -184,8 +185,7 @@
 						-inferrel -inferdep -quiet -hide java.*
 						-collpackages java.util.* -qualify
 						-postfixpackage -nodefontsize 9
-						-nodefontpackagesize 7
-						-visibility -operations
+						-nodefontpackagesize 7 -visibility -operations
 					</additionalparam>
 				</configuration>
 			</plugin>
@@ -262,41 +262,37 @@
 			<id>jcurl-repository</id>
 			<name>JCurl Maven Repository</name>
 			<layout>default</layout>
-			<url>http://www.jcurl.org/m2/repo</url>
+			<url>${httpbase}/repo</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
 		<repository>
-			<id>jcurl-snapshot</id>
+			<id>jcurl-snapshots</id>
 			<name>JCurl Maven Snapshots</name>
 			<layout>default</layout>
-			<url>http://www.jcurl.org/m2/snap</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
+			<url>${httpbase}/snap</url>
 			<releases>
 				<enabled>false</enabled>
 			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 		</repository>
 	</repositories>
 	<distributionManagement>
 		<repository>
-			<id>jcurl-repository</id>
-			<url>
-				scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/repo
-			</url>
+			<id>dist-jcurl-repository</id>
+			<url>${scpbase}/repo</url>
 		</repository>
 		<snapshotRepository>
-			<id>jcurl-snapshots</id>
-			<url>
-				scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2/snap
-			</url>
+			<id>dist-jcurl-snapshots</id>
+			<url>${scpbase}/snap</url>
 			<uniqueVersion>true</uniqueVersion>
 		</snapshotRepository>
 		<site>
-			<id>jcurl-website</id>
-			<url>${scpsitebase}/${pom.artifactId}/${pom.version}</url>
+			<id>dist-jcurl-sites</id>
+			<url>${scpbase}/site/${pom.artifactId}/${pom.version}</url>
 		</site>
 	</distributionManagement>
 </project>
