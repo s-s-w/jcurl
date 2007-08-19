@@ -28,7 +28,7 @@ import org.jcurl.core.helpers.Unit;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:PositionSet.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class PositionSet extends RockSet implements Cloneable {
+public class PositionSet extends RockSet {
 
     private static final double MaxScoreDistSq = sqr(RockProps.DEFAULT
             .getRadius()

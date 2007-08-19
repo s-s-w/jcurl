@@ -19,8 +19,11 @@
 package org.jcurl.core.base;
 
 import java.io.Serializable;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
+
+import javax.swing.undo.StateEditable;
 
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.math.MathVec;
@@ -37,7 +40,7 @@ import org.jcurl.math.MathVec;
  * @version $Id:RockSet.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public abstract class RockSet extends MutableObject implements Cloneable,
-        Serializable {
+        Serializable, StateEditable {
 
     private class REntry implements Entry<Integer, Rock> {
 
@@ -74,6 +77,8 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     static Integer[] idx;
 
     public static final int LIGHT_MASK = 0x5555;
+
+    private static final Object mark = "allrocks";
 
     public static final int ROCKS_PER_COLOR = 8;
 
@@ -191,9 +196,6 @@ public abstract class RockSet extends MutableObject implements Cloneable,
         }
         return idx[i];
     }
-
-    @Override
-    public abstract Object clone();
 
     @Override
     public boolean equals(final Object obj) {
@@ -343,10 +345,31 @@ public abstract class RockSet extends MutableObject implements Cloneable,
         lastChanged = System.currentTimeMillis();
     }
 
+    public void restoreState(final Hashtable<?, ?> state) {
+        final double[] arr = (double[]) state.get(mark);
+        for (byte i16 = ROCKS_PER_SET - 1; i16 >= 0; i16--) {
+            final int o = i16 * 3;
+            getRock(i16).setLocation(arr[o], arr[o + 1], arr[o + 2]);
+        }
+        notifyChange();
+    }
+
     public RockSet setLocation(final RockSet src) {
         for (int i = ROCKS_PER_SET - 1; i >= 0; i--)
             getRock(i).setLocation(src.getRock(i));
         notifyChange();
         return this;
+    }
+
+    public void storeState(final Hashtable<Object, Object> state) {
+        final double[] arr = new double[ROCKS_PER_SET * 3];
+        for (byte i16 = ROCKS_PER_SET - 1; i16 >= 0; i16--) {
+            final int o = i16 * 3;
+            final Rock r = getRock(i16);
+            arr[o] = r.getX();
+            arr[o + 1] = r.getY();
+            arr[o + 2] = r.getA();
+        }
+        state.put(mark, arr);
     }
 }

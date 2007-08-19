@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.JComponent;
+import javax.swing.undo.StateEdit;
 
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.zui.KeyboardZoom;
@@ -46,26 +47,22 @@ class ZuiPanel extends JComponent {
         final PNode initial = new PPositionSet(model.getInitialPos(),
                 new PRockFactory.Fancy());
         initial.addInputEventListener(new PPositionSetDrag() {
-            private PositionSet before = null;
+            private StateEdit edit = null;
 
             @Override
             public void mouseDragged(final PInputEvent event) {
-                if (before == null)
-                    before = (PositionSet) model.getInitialPos().clone();
+                if (edit == null)
+                    edit = new StateEdit(model.getInitialPos());
                 super.mouseDragged(event);
             }
 
             @Override
             public void mouseReleased(final PInputEvent event) {
-                if (before == null)
+                if (edit == null)
                     return;
                 super.mouseReleased(event);
-                final PositionSet after = (PositionSet) model.getInitialPos()
-                        .clone();
-                model.getUndoer().addEdit(
-                        new MainMod.UndoableMove(model.getInitialPos(), before,
-                                after));
-                before = null;
+                model.getUndoer().addEdit(edit);
+                edit = null;
                 traj.sync(MainApp.tmax);
             }
         });
