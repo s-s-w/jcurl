@@ -74,7 +74,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
 
     public static final int DARK_MASK = 0xAAAA;
 
-    static Integer[] idx;
+    private static Integer[] idx;
 
     public static final int LIGHT_MASK = 0x5555;
 
@@ -183,7 +183,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
     }
 
     /**
-     * Fast Boxing.
+     * Fast Boxing. Is this faster than {@link Integer#valueOf(int)}?
      * 
      * @param i
      * @return {@link Integer}

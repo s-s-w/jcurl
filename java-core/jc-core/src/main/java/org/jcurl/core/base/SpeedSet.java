@@ -19,7 +19,7 @@
 package org.jcurl.core.base;
 
 /**
- * A {@link org.jcurl.core.base.RockSet}&nbsp;with speed semantics.
+ * A {@link RockSet} with speed semantics.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:SpeedSet.java 378 2007-01-24 01:18:35Z mrohrmoser $
