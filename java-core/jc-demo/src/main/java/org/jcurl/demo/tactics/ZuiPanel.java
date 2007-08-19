@@ -6,7 +6,6 @@ import java.awt.Color;
 import javax.swing.JComponent;
 import javax.swing.undo.StateEdit;
 
-import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.zui.KeyboardZoom;
 import org.jcurl.core.zui.PCurveStore;
 import org.jcurl.core.zui.PIceFactory;
@@ -61,6 +60,7 @@ class ZuiPanel extends JComponent {
                 if (edit == null)
                     return;
                 super.mouseReleased(event);
+                edit.end();
                 model.getUndoer().addEdit(edit);
                 edit = null;
                 traj.sync(MainApp.tmax);
