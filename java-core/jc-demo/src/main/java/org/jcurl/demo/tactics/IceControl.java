@@ -13,7 +13,7 @@ import org.jcurl.core.base.Curler;
  * Set draw-to-tee time and curl via {@link JSlider}s.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: MainApp.java 685 2007-08-18 20:18:00Z mrohrmoser $
+ * @version $Id$
  */
 class IceControl extends JComponent {
     private static final long serialVersionUID = -3381158569292004932L;

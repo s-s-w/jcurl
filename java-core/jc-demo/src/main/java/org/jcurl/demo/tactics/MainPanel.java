@@ -8,7 +8,7 @@ import javax.swing.JComponent;
  * Aggregate {@link IceControl}, {@link ZuiPanel}, {@link RockControl}.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: MainApp.java 685 2007-08-18 20:18:00Z mrohrmoser $
+ * @version $Id$
  */
 class MainPanel extends JComponent {
     private static final long serialVersionUID = -3700593329890044115L;

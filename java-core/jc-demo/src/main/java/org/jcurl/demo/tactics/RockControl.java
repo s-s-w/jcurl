@@ -12,7 +12,7 @@ import javax.swing.SwingConstants;
  * etc.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id: MainApp.java 685 2007-08-18 20:18:00Z mrohrmoser $
+ * @version $Id$
  */
 class RockControl extends JComponent {
 
