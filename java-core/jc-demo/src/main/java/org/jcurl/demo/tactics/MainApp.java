@@ -54,22 +54,140 @@ public class MainApp extends JFrame {
             JMenuItem i = ret.add(new JMenuItem(new UndoRedoAction(model
                     .getUndoer(), true)));
             i.setText("Undo");
+            i.setMnemonic('U');
             i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
                     InputEvent.CTRL_MASK));
 
             i = ret.add(new JMenuItem(new UndoRedoAction(model.getUndoer(),
                     false)));
             i.setText("Redo");
+            i.setMnemonic('R');
             i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,
                     InputEvent.CTRL_MASK));
+
+            ret.addSeparator();
+
+            i = ret.add(new JMenuItem());
+            i.setText("Properties");
+            // i.setMnemonic('P');
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
+                    InputEvent.CTRL_MASK));
+            i.setEnabled(false);
+
+            return ret;
+        }
+
+        public JMenu fileMenu() {
+            final JMenu ret = new JMenu("File");
+            ret.setMnemonic('F');
+
+            JMenuItem i = ret.add(new JMenuItem());
+            i.setText("New");
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+                    InputEvent.CTRL_MASK));
+            i.setMnemonic('N');
+            i.setEnabled(false);
+
+            i = ret.add(new JMenuItem());
+            i.setText("Open");
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0,
+                    InputEvent.CTRL_MASK));
+            i.setMnemonic('O');
+            i.setEnabled(false);
+
+            ret.addSeparator();
+
+            i = ret.add(new JMenuItem());
+            i.setText("Save");
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
+                    InputEvent.CTRL_MASK));
+            i.setMnemonic('S');
+            i.setEnabled(false);
+
+            i = ret.add(new JMenuItem());
+            i.setText("Save As");
+            i.setMnemonic('A');
+            i.setEnabled(false);
+
+            ret.addSeparator();
+
+            i = ret.add(new JMenuItem());
+            i.setText("Screenshot");
+            i.setMnemonic('c');
+            i
+                    .setAccelerator(KeyStroke.getKeyStroke(
+                            KeyEvent.VK_PRINTSCREEN, 0));
+            i.setEnabled(false);
+
+            ret.addSeparator();
+
+            i = ret.add(new JMenuItem());
+            i.setText("Exit");
+            i.setMnemonic('x');
+            i.setEnabled(false);
+
+            return ret;
+        }
+
+        public JMenu helpMenu() {
+            final JMenu ret = new JMenu("Help");
+            ret.setMnemonic('H');
+
+            final JMenuItem i = ret.add(new JMenuItem());
+            i.setText("About");
+            i.setMnemonic('A');
+            i.setEnabled(false);
 
             return ret;
         }
 
         public JMenuBar menu() {
             final JMenuBar mb = new JMenuBar();
+            mb.add(fileMenu());
             mb.add(editMenu());
+            mb.add(zoomMenu());
+            mb.add(helpMenu());
             return mb;
+        }
+
+        public JMenu zoomMenu() {
+            final JMenu ret = new JMenu("Zoom");
+            ret.setMnemonic('Z');
+
+            JMenuItem i = ret.add(new JMenuItem());
+            i.setText("Sheet");
+            i.setMnemonic('S');
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME, 0));
+            i.setEnabled(false);
+
+            i = ret.add(new JMenuItem());
+            i.setText("House");
+            i.setMnemonic('H');
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END, 0));
+            i.setEnabled(false);
+
+            i = ret.add(new JMenuItem());
+            i.setText("12-foot");
+            i.setMnemonic('1');
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END,
+                    InputEvent.CTRL_MASK));
+            i.setEnabled(false);
+
+            ret.addSeparator();
+
+            i = ret.add(new JMenuItem());
+            i.setText("In");
+            i.setMnemonic('I');
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, 0));
+            i.setEnabled(false);
+
+            i = ret.add(new JMenuItem());
+            i.setText("Out");
+            i.setMnemonic('O');
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, 0));
+            i.setEnabled(false);
+
+            return ret;
         }
     }
 
