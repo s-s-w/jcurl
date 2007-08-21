@@ -66,23 +66,30 @@ public class TrajectoryDisplayTest extends TestZuiBase {
     static void initHammy(final PositionSet p, final SpeedSet s) {
         PositionSet.allOut(p);
         // te.getInitialPos().getLight(1-1).setLocation(
-        p.getLight(2 - 1)
-                .setLocation(Unit.f2m(-1.170732), Unit.f2m(15.365854), 0);
-        p.getLight(3 - 1).setLocation(Unit.f2m(0.292683), Unit.f2m(8.780488), 0);
+        p.getLight(2 - 1).setLocation(Unit.f2m(-1.170732), Unit.f2m(15.365854),
+                0);
+        p.getLight(3 - 1)
+                .setLocation(Unit.f2m(0.292683), Unit.f2m(8.780488), 0);
         p.getLight(4 - 1).setLocation(Unit.f2m(2.195122), Unit.f2m(12), 0);
-        p.getLight(5 - 1).setLocation(Unit.f2m(1.463415), Unit.f2m(5.707317), 0);
-        p.getLight(6 - 1).setLocation(Unit.f2m(1.463415), Unit.f2m(-2.780488), 0);
-        p.getLight(7 - 1)
-                .setLocation(Unit.f2m(-0.439024), Unit.f2m(-5.560976), 0);
-        p.getLight(8 - 1)
-                .setLocation(Unit.f2m(-1.756098), Unit.f2m(-1.609756), 0);
+        p.getLight(5 - 1)
+                .setLocation(Unit.f2m(1.463415), Unit.f2m(5.707317), 0);
+        p.getLight(6 - 1).setLocation(Unit.f2m(1.463415), Unit.f2m(-2.780488),
+                0);
+        p.getLight(7 - 1).setLocation(Unit.f2m(-0.439024), Unit.f2m(-5.560976),
+                0);
+        p.getLight(8 - 1).setLocation(Unit.f2m(-1.756098), Unit.f2m(-1.609756),
+                0);
         // p.getDark(1-1).setLocation(
         // p.getDark(2-1).setLocation(
-        p.getDark(3 - 1).setLocation(Unit.f2m(0.878049), Unit.f2m(14.341463), 0);
-        p.getDark(4 - 1).setLocation(Unit.f2m(-2.634146), Unit.f2m(13.170732), 0);
-        p.getDark(5 - 1).setLocation(Unit.f2m(4.536585), Unit.f2m(-0.439024), 0);
+        p.getDark(3 - 1)
+                .setLocation(Unit.f2m(0.878049), Unit.f2m(14.341463), 0);
+        p.getDark(4 - 1).setLocation(Unit.f2m(-2.634146), Unit.f2m(13.170732),
+                0);
+        p.getDark(5 - 1)
+                .setLocation(Unit.f2m(4.536585), Unit.f2m(-0.439024), 0);
         p.getDark(6 - 1).setLocation(Unit.f2m(0.731707), Unit.f2m(-3.95122), 0);
-        p.getDark(7 - 1).setLocation(Unit.f2m(-2.780488), Unit.f2m(-4.390244), 0);
+        p.getDark(7 - 1).setLocation(Unit.f2m(-2.780488), Unit.f2m(-4.390244),
+                0);
         p.getDark(8 - 1).setLocation(Unit.f2m(3.89991), IceSize.HOG_2_TEE, 0);
         RockSet.allZero(s);
         s.getDark(8 - 1).setLocation(0, -3, 100 * Math.PI / 180);
@@ -117,12 +124,11 @@ public class TrajectoryDisplayTest extends TestZuiBase {
                 jp.paint(g);
             }
         });
-        if (frame != null) {
+        if (frame != null)
             System.out.println(getClass().getName() + " frequency: " + frames
                     * 1000L / (double) dt + " frames per second");
-            // System.out.println(frames + " computations took " + dt
-            // + " millis, i.e. " + frames * 1000L / dt + " per second.");
-        }
+        // System.out.println(frames + " computations took " + dt
+        // + " millis, i.e. " + frames * 1000L / dt + " per second.");
     }
 
     public void testHammy() throws InterruptedException {
@@ -140,7 +146,7 @@ public class TrajectoryDisplayTest extends TestZuiBase {
         if (frame == null)
             return;
         final PNode a = new PPositionSet(cm.getCurrentPos(),
-                new PRockFactory.Fancy());
+                new PRockFactory.Fancy(10));
         final PNode b = new PCurveStore(cm.getCurveStore(),
                 new PTrajectoryFactory.Fancy(), tmax);
         try {
@@ -192,7 +198,7 @@ public class TrajectoryDisplayTest extends TestZuiBase {
         if (frame == null)
             return;
         final PNode a = new PPositionSet(cm.getCurrentPos(),
-                new PRockFactory.Fancy());
+                new PRockFactory.Fancy(10));
         final PNode b = new PCurveStore(cm.getCurveStore(),
                 new PTrajectoryFactory.Fancy(), tmax);
         try {

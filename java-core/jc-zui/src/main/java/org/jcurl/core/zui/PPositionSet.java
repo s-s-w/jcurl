@@ -26,7 +26,6 @@ import org.apache.commons.logging.LogFactory;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
-import org.jcurl.math.MathVec;
 
 import edu.umd.cs.piccolo.PNode;
 
@@ -38,13 +37,13 @@ import edu.umd.cs.piccolo.PNode;
  */
 public class PPositionSet extends PNode implements PropertyChangeListener {
 
+    private static final double eps = 1e-11;
+
     public static final Object index16 = "index16";
 
     private static final Log log = LogFactory.getLog(PPositionSet.class);
 
     private static final long serialVersionUID = 6564103045992326633L;
-
-    private static final double eps = 1e-11;
 
     static boolean sync(final Rock src, final PNode dst) {
         // check if it's changed either location or angle:

@@ -44,7 +44,7 @@ class ZuiPanel extends JComponent {
         final PCurveStore traj = new PCurveStore(model.getCurveStore(),
                 new PTrajectoryFactory.Fancy(), MainApp.tmax);
         final PNode initial = new PPositionSet(model.getInitialPos(),
-                new PRockFactory.Fancy());
+                new PRockFactory.Fancy(255));
         initial.addInputEventListener(new PPositionSetDrag() {
             private StateEdit edit = null;
 
@@ -67,7 +67,7 @@ class ZuiPanel extends JComponent {
             }
         });
         final PNode current = new PPositionSet(model.getCurrentPos(),
-                new PRockFactory.Simple());
+                new PRockFactory.Fancy(64));
 
         ice.addChild(traj);
         ice.addChild(current);

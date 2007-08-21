@@ -34,7 +34,7 @@ public class PiccoloBasicTest extends TestZuiBase {
         ice.addChild(initial);
         initial.addInputEventListener(new PPositionSetDrag());
         ice.addChild(new PPositionSet(PositionSet.allOut(),
-                new PRockFactory.Fancy()));
+                new PRockFactory.Fancy(10)));
 
         frame.setVisible(true);
         while (frame.isVisible())

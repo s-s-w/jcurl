@@ -21,8 +21,6 @@ package org.jcurl.core.zui;
 import java.awt.Color;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.log.JCLoggerFactory;
 
 import edu.umd.cs.piccolo.PCamera;
@@ -44,7 +42,7 @@ public abstract class TestZuiBase extends TestShowBase {
         this(800, 600);
     }
 
-    public TestZuiBase(int dx, int dy) {
+    public TestZuiBase(final int dx, final int dy) {
         super(dx, dy);
         if (frame != null) {
             frame.getContentPane().add(pico = new PCanvas());

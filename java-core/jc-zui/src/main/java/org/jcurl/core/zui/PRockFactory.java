@@ -46,15 +46,15 @@ public abstract class PRockFactory implements Factory {
     public static class Fancy extends PRockFactory {
         /** Rock colors */
         protected static class ColorSet {
-            public Paint contour = Color.BLACK;
+            public Color contour = Color.BLACK;
 
-            public Paint dark = new Color(0xFF0000);
+            public Color dark = new Color(0xFF0000);
 
-            public Paint granite = new Color(0x565755);
+            public Color granite = new Color(0x565755);
 
-            public Paint label = Color.BLACK;
+            public Color label = Color.BLACK;
 
-            public Paint light = new Color(0xFFFF00);
+            public Color light = new Color(0xFFFF00);
         }
 
         protected static final ColorSet colors = new ColorSet();
@@ -75,16 +75,27 @@ public abstract class PRockFactory implements Factory {
             fo = new Font("SansSerif", Font.BOLD, 1);
         }
 
+        static Color alpha(final Color base, final int alpha) {
+            return new Color(base.getRed(), base.getGreen(), base.getBlue(),
+                    alpha);
+        }
+
+        private final int alpha;
+
+        public Fancy(final int alpha) {
+            this.alpha = alpha;
+        }
+
         @Override
         public PNode newInstance(final int i8, final boolean isDark) {
             final PNode r = new PComposite();
-            r.addChild(node(outer, colors.granite, null, null));
-            r.addChild(node(inner, isDark ? colors.dark : colors.light, null,
-                    null));
+            r.addChild(node(outer, alpha(colors.granite, alpha), null, null));
+            r.addChild(node(inner, alpha(isDark ? colors.dark : colors.light,
+                    alpha), null, null));
             {
                 final PText t = new PText(labels[i8]);
                 t.setFont(fo);
-                t.setTextPaint(colors.label);
+                t.setTextPaint(alpha(colors.label, alpha));
                 // Make coord-sys left-handed again, as the ice is assumed to be
                 // right-handed:
                 t.setTransform(AffineTransform.getScaleInstance(1, -1));
@@ -102,6 +113,10 @@ public abstract class PRockFactory implements Factory {
 
     public static class Simple extends Fancy {
         private static final Stroke stroke = new BasicStroke(0.010F);
+
+        public Simple() {
+            super(128);
+        }
 
         @Override
         public PNode newInstance(final int i8, final boolean isDark) {

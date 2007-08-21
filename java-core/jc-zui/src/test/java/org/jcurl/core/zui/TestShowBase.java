@@ -23,8 +23,6 @@ import java.awt.Component;
 import javax.swing.JFrame;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.Zoomer;
 import org.jcurl.core.log.JCLoggerFactory;
 
 public abstract class TestShowBase extends TestBase {
@@ -60,12 +58,12 @@ public abstract class TestShowBase extends TestBase {
         this(800, 600);
     }
 
-    public TestShowBase(int dx, int dy) {
+    public TestShowBase(final int dx, final int dy) {
         frame = showGui ? new JFrame() : null;
         if (frame != null) {
             frame.setBounds(0, 0, dx, dy);
             frame.setTitle(getClass().getName());
-        } 
+        }
     }
 
     @Override
