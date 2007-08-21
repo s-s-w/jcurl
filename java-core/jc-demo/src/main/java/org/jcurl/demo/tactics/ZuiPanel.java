@@ -2,11 +2,11 @@ package org.jcurl.demo.tactics;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.geom.Rectangle2D;
 
 import javax.swing.JComponent;
 import javax.swing.undo.StateEdit;
 
-import org.jcurl.core.zui.KeyboardZoom;
 import org.jcurl.core.zui.PCurveStore;
 import org.jcurl.core.zui.PIceFactory;
 import org.jcurl.core.zui.PPositionSet;
@@ -36,8 +36,8 @@ class ZuiPanel extends JComponent {
         pico.setBackground(new Color(0xE8E8FF));
         pico.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
         pico.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-        pico.getRoot().getDefaultInputManager().setKeyboardFocus(
-                new KeyboardZoom(pico.getCamera()));
+        // pico.getRoot().getDefaultInputManager().setKeyboardFocus(
+        // new KeyboardZoom(pico.getCamera()));
 
         pico.getLayer().addChild(ice = new PIceFactory.Fancy().newInstance());
 
@@ -74,8 +74,7 @@ class ZuiPanel extends JComponent {
         ice.addChild(initial);
     }
 
-    public void center() {
-        pico.getCamera()
-                .animateViewToCenterBounds(KeyboardZoom.houseP, true, 1);
+    public void zoom(final Rectangle2D r) {
+        pico.getCamera().animateViewToCenterBounds(r, true, 500);
     }
 }

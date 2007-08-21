@@ -15,18 +15,12 @@ class MainPanel extends JComponent {
 
     private final IceControl i;
 
-    private final ZuiPanel p;
-
     private final RockControl r;
 
-    public MainPanel(final MainMod model) {
+    public MainPanel(final MainMod model, final ZuiPanel p) {
         setLayout(new BorderLayout());
-        this.add(p = new ZuiPanel(model), BorderLayout.CENTER);
+        this.add(p, BorderLayout.CENTER);
         this.add(r = new RockControl(model), BorderLayout.EAST);
         this.add(i = new IceControl(model.getCurler()), BorderLayout.WEST);
-    }
-
-    public void center() {
-        p.center();
     }
 }

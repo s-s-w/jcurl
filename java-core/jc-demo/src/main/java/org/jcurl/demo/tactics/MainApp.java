@@ -18,48 +18,49 @@
  */
 package org.jcurl.demo.tactics;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
-import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
-import javax.swing.undo.UndoManager;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.jcurl.demo.tactics.Controller.MainController;
+import org.jcurl.demo.tactics.Controller.ZuiController;
 
 /**
+ * Create menues and wire them up with {@link Action}s from
+ * {@link MainController} and {@link ZuiController}.
+ * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public class MainApp extends JFrame {
 
     static class Menufactory {
-        private final MainMod model;
+        private final MainController mainc;
+        private final ZuiController zuic;
 
-        public Menufactory(final MainMod model) {
-            this.model = model;
+        public Menufactory(final MainController mainc, final ZuiController zuic) {
+            this.mainc = mainc;
+            this.zuic = zuic;
         }
 
         public JMenu editMenu() {
             final JMenu ret = new JMenu("Edit");
             ret.setMnemonic('E');
 
-            JMenuItem i = ret.add(new JMenuItem(new UndoRedoAction(model
-                    .getUndoer(), true)));
+            JMenuItem i = ret.add(new JMenuItem(mainc.editUndo));
             i.setText("Undo");
             i.setMnemonic('U');
             i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
                     InputEvent.CTRL_MASK));
 
-            i = ret.add(new JMenuItem(new UndoRedoAction(model.getUndoer(),
-                    false)));
+            i = ret.add(new JMenuItem(mainc.editRedo));
             i.setText("Redo");
             i.setMnemonic('R');
             i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,
@@ -154,24 +155,21 @@ public class MainApp extends JFrame {
             final JMenu ret = new JMenu("Zoom");
             ret.setMnemonic('Z');
 
-            JMenuItem i = ret.add(new JMenuItem());
+            JMenuItem i = ret.add(new JMenuItem(zuic.zoomSheet));
             i.setText("Sheet");
             i.setMnemonic('S');
-            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME, 0));
-            i.setEnabled(false);
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END, 0));
 
-            i = ret.add(new JMenuItem());
+            i = ret.add(new JMenuItem(zuic.zoomHouse));
             i.setText("House");
             i.setMnemonic('H');
-            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END, 0));
-            i.setEnabled(false);
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME, 0));
 
-            i = ret.add(new JMenuItem());
+            i = ret.add(new JMenuItem(zuic.zoom12Foot));
             i.setText("12-foot");
             i.setMnemonic('1');
-            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END,
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME,
                     InputEvent.CTRL_MASK));
-            i.setEnabled(false);
 
             ret.addSeparator();
 
@@ -188,35 +186,6 @@ public class MainApp extends JFrame {
             i.setEnabled(false);
 
             return ret;
-        }
-    }
-
-    /**
-     * http://www.javaworld.com/javaworld/jw-06-1998/jw-06-undoredo.html
-     * 
-     * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
-     * @version $Id$
-     */
-    static class UndoRedoAction extends AbstractAction {
-        private static final Log log = LogFactory.getLog(UndoRedoAction.class);
-        private static final long serialVersionUID = -4468864007790523205L;
-        private final boolean undo;
-        private final UndoManager undoer;
-
-        public UndoRedoAction(final UndoManager undoer, final boolean undo) {
-            this.undoer = undoer;
-            this.undo = undo;
-        }
-
-        public void actionPerformed(final ActionEvent e) {
-            try {
-                if (undo)
-                    undoer.undo();
-                else
-                    undoer.redo();
-            } catch (final RuntimeException ex) {
-                log.error("", ex);
-            }
         }
     }
 
@@ -241,19 +210,21 @@ public class MainApp extends JFrame {
         });
     }
 
-    private final MainMod m;
-
-    private final MainPanel p;
+    final MainController mainc;
+    final ZuiController zuic;
 
     public MainApp() {
-        m = new MainMod();
+        final MainMod m = new MainMod();
         m.setCurrentTime(tmax);
-        p = new MainPanel(m);
+        final ZuiPanel zui = new ZuiPanel(m);
+        final MainPanel p = new MainPanel(m, zui);
         getContentPane().add(p);
-        setJMenuBar(new Menufactory(m).menu());
+        mainc = new MainController(p, m);
+        zuic = new ZuiController(zui, m);
+        setJMenuBar(new Menufactory(mainc, zuic).menu());
     }
 
     public void center() {
-        p.center();
+        zuic.zoomHouse.actionPerformed(null);
     }
 }
