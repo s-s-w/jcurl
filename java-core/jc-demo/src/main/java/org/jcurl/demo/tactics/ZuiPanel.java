@@ -73,7 +73,7 @@ class ZuiPanel extends JComponent {
         ice.addChild(initial);
     }
 
-    public void zoom(final Rectangle2D r) {
-        pico.getCamera().animateViewToCenterBounds(r, true, 500);
+    public void zoom(final Rectangle2D r, final int millis) {
+        pico.getCamera().animateViewToCenterBounds(r, true, millis);
     }
 }

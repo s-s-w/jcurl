@@ -211,28 +211,28 @@ class Controller {
                 private static final long serialVersionUID = -4680813072205075958L;
 
                 public void actionPerformed(final ActionEvent e) {
-                    view.zoom(completeP);
+                    view.zoom(completeP, 333);
                 }
             };
             viewSheet = new AbstractAction() {
                 private static final long serialVersionUID = -4680813072205075958L;
 
                 public void actionPerformed(final ActionEvent e) {
-                    view.zoom(sheetP);
+                    view.zoom(sheetP, 333);
                 }
             };
             viewHouse = new AbstractAction() {
                 private static final long serialVersionUID = -4680813072205075958L;
 
                 public void actionPerformed(final ActionEvent e) {
-                    view.zoom(houseP);
+                    view.zoom(houseP, 333);
                 }
             };
             view12Foot = new AbstractAction() {
                 private static final long serialVersionUID = -4680813072205075958L;
 
                 public void actionPerformed(final ActionEvent e) {
-                    view.zoom(twelveP);
+                    view.zoom(twelveP, 333);
                 }
             };
             zoomIn = null;
