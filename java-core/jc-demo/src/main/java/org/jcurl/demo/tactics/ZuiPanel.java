@@ -23,11 +23,10 @@ import edu.umd.cs.piccolo.util.PPaintContext;
  * Graphical display for {@link ZuiMod}.
  */
 class ZuiPanel extends JComponent {
-
     private static final long serialVersionUID = -4648771240323713217L;
-
     private final PNode ice;
-
+    private final int major = 255;
+    private final int minor = 64;
     private final PCanvas pico;
 
     public ZuiPanel(final ZuiMod model) {
@@ -44,7 +43,7 @@ class ZuiPanel extends JComponent {
         final PCurveStore traj = new PCurveStore(model.getCurveStore(),
                 new PTrajectoryFactory.Fancy(), MainApp.tmax);
         final PNode initial = new PPositionSet(model.getInitialPos(),
-                new PRockFactory.Fancy(255));
+                new PRockFactory.Fancy(minor));
         initial.addInputEventListener(new PPositionSetDrag() {
             private StateEdit edit = null;
 
@@ -67,7 +66,7 @@ class ZuiPanel extends JComponent {
             }
         });
         final PNode current = new PPositionSet(model.getCurrentPos(),
-                new PRockFactory.Fancy(64));
+                new PRockFactory.Fancy(major));
 
         ice.addChild(traj);
         ice.addChild(current);

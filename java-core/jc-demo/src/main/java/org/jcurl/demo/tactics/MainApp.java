@@ -20,6 +20,8 @@ package org.jcurl.demo.tactics;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.Action;
 import javax.swing.JFrame;
@@ -28,6 +30,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 import org.jcurl.demo.tactics.Controller.MainController;
 import org.jcurl.demo.tactics.Controller.ZuiController;
@@ -122,10 +125,9 @@ public class MainApp extends JFrame {
 
             ret.addSeparator();
 
-            i = ret.add(new JMenuItem());
+            i = ret.add(new JMenuItem(mainc.fileExit));
             i.setText("Exit");
             i.setMnemonic('x');
-            i.setEnabled(false);
 
             return ret;
         }
@@ -146,28 +148,34 @@ public class MainApp extends JFrame {
             final JMenuBar mb = new JMenuBar();
             mb.add(fileMenu());
             mb.add(editMenu());
-            mb.add(zoomMenu());
+            mb.add(viewMenu());
             mb.add(helpMenu());
             return mb;
         }
 
-        public JMenu zoomMenu() {
-            final JMenu ret = new JMenu("Zoom");
-            ret.setMnemonic('Z');
+        public JMenu viewMenu() {
+            final JMenu ret = new JMenu("View");
+            ret.setMnemonic('V');
 
-            JMenuItem i = ret.add(new JMenuItem(zuic.zoomSheet));
-            i.setText("Sheet");
-            i.setMnemonic('S');
+            JMenuItem i = ret.add(new JMenuItem(zuic.viewComplete));
+            i.setText("Complete");
+            i.setMnemonic('C');
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END,
+                    InputEvent.CTRL_MASK));
+
+            i = ret.add(new JMenuItem(zuic.viewSheet));
+            i.setText("Active");
+            i.setMnemonic('A');
             i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END, 0));
 
-            i = ret.add(new JMenuItem(zuic.zoomHouse));
+            i = ret.add(new JMenuItem(zuic.viewHouse));
             i.setText("House");
             i.setMnemonic('H');
             i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME, 0));
 
-            i = ret.add(new JMenuItem(zuic.zoom12Foot));
+            i = ret.add(new JMenuItem(zuic.view12Foot));
             i.setText("12-foot");
-            i.setMnemonic('1');
+            i.setMnemonic('2');
             i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME,
                     InputEvent.CTRL_MASK));
 
@@ -183,6 +191,32 @@ public class MainApp extends JFrame {
             i.setText("Out");
             i.setMnemonic('O');
             i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, 0));
+            i.setEnabled(false);
+
+            ret.addSeparator();
+
+            i = ret.add(new JMenuItem());
+            i.setText("North");
+            i.setMnemonic('N');
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0));
+            i.setEnabled(false);
+
+            i = ret.add(new JMenuItem());
+            i.setText("South");
+            i.setMnemonic('S');
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
+            i.setEnabled(false);
+
+            i = ret.add(new JMenuItem());
+            i.setText("West");
+            i.setMnemonic('W');
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0));
+            i.setEnabled(false);
+
+            i = ret.add(new JMenuItem());
+            i.setText("East");
+            i.setMnemonic('E');
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0));
             i.setEnabled(false);
 
             return ret;
@@ -202,7 +236,8 @@ public class MainApp extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 final MainApp application = new MainApp();
-                application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                application
+                        .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
                 application.setSize(800, 600);
                 application.setVisible(true);
                 application.center();
@@ -219,12 +254,18 @@ public class MainApp extends JFrame {
         final ZuiPanel zui = new ZuiPanel(m);
         final MainPanel p = new MainPanel(m, zui);
         getContentPane().add(p);
-        mainc = new MainController(p, m);
+        mainc = new MainController(p, m, this);
         zuic = new ZuiController(zui, m);
         setJMenuBar(new Menufactory(mainc, zuic).menu());
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(final WindowEvent e) {
+                mainc.shutDown();
+            }
+        });
     }
 
-    public void center() {
-        zuic.zoomHouse.actionPerformed(null);
+    void center() {
+        zuic.viewHouse.actionPerformed(null);
     }
 }
