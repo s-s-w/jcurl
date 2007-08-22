@@ -17,6 +17,9 @@
 			scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2
 		</scpbase>
 		<httpbase>http://www.jcurl.org/m2</httpbase>
+		<scpsitebase>
+			${scpbase}/site
+		</scpsitebase>
 		<httpsitebase>${httpbase}/site</httpsitebase>
 	</properties>
 	<url>${httpsitebase}/${pom.artifactId}/${pom.version}</url>
@@ -292,7 +295,7 @@
 		</snapshotRepository>
 		<site>
 			<id>dist-jcurl-sites</id>
-			<url>${scpbase}/site/${pom.artifactId}/${pom.version}</url>
+			<url>${scpsitebase}/${pom.artifactId}/${pom.version}</url>
 		</site>
 	</distributionManagement>
 </project>

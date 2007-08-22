@@ -68,10 +68,8 @@
 	</repositories>
 	<distributionManagement>
 		<site>
-			<id>jcurl-website</id>
-			<url>
-				${scpsitebase}/${pom.artifactId}/${pom.version}
-			</url>
+			<id>dist-jcurl-sites</id>
+			<url>${scpsitebase}/${pom.artifactId}/${pom.version}</url>
 		</site>
 	</distributionManagement>
 </project>
