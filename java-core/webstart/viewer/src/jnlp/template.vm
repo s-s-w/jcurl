@@ -5,7 +5,7 @@
   codebase="http://www.jcurl.org/jws/org/jcurl/demo/viewer/0.7-SNAPSHOT"
   href="$outputFile">
   <information>
-    <title>JCurl Demo 0.7-SNAPSHOT</title>
+    <title>JCurl Viewer Demo 0.7-SNAPSHOT</title>
     <vendor>M. Rohrmoser</vendor>
     <homepage href="http://www.jcurl.org/index.html"/>
     <description>JCurl Viewer Demo Application</description>
