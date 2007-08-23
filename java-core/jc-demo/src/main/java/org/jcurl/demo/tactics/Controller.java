@@ -18,14 +18,23 @@
  */
 package org.jcurl.demo.tactics;
 
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -124,6 +133,8 @@ class Controller {
         public final Action editProperties;
         public final Action editRedo;
         public final Action editUndo;
+        final JFileChooser fcJcx;
+        final JFileChooser fcPng;
         public final Action fileExit;
         public final Action fileNew;
         public final Action fileOpen;
@@ -140,11 +151,83 @@ class Controller {
             this.view = view;
             this.model = model;
             this.frame = frame;
+            fcJcx = new JFileChooser(model.getCurrentFile());
+            fcJcx.setName("Open");
+            fcJcx.setMultiSelectionEnabled(false);
+            fcJcx.setAcceptAllFileFilterUsed(true);
+            fcJcx.setFileFilter(new FileFilter() {
+                @Override
+                public boolean accept(final File f) {
+                    if (f == null)
+                        return false;
+                    return f.isDirectory() || f.getName().endsWith(".jcx")
+                            || f.getName().endsWith(".jcz");
+                }
+
+                @Override
+                public String getDescription() {
+                    return "JCurl Setup Files (.jcx) (.jcz)";
+                }
+            });
+            fcPng = new JFileChooser(new File("."));
+            fcPng.setName("Save Screenshot");
+            fcPng.setMultiSelectionEnabled(false);
+            fcPng.setAcceptAllFileFilterUsed(true);
+            fcPng.setFileFilter(new FileFilter() {
+                @Override
+                public boolean accept(final File f) {
+                    if (f == null)
+                        return false;
+                    return f.isDirectory() || f.getName().endsWith(".png");
+                }
+
+                @Override
+                public String getDescription() {
+                    return "Png Bitmap Images (.png)";
+                }
+            });
+
             fileSave = null;
-            fileSaveAs = null;
-            fileOpen = null;
+            fileSaveAs = new AbstractAction() {
+                private static final long serialVersionUID = -5150063929213996925L;
+
+                public void actionPerformed(final ActionEvent e) {
+                    if (JFileChooser.APPROVE_OPTION == fcJcx
+                            .showSaveDialog(view))
+                        model.save(fcJcx.getSelectedFile());
+                }
+
+            };
+            fileOpen = new AbstractAction() {
+                private static final long serialVersionUID = -5150063929213996925L;
+
+                public void actionPerformed(final ActionEvent e) {
+                    if (JFileChooser.APPROVE_OPTION == fcJcx
+                            .showOpenDialog(view))
+                        model.open(fcJcx.getSelectedFile());
+                }
+
+            };
             fileNew = null;
-            fileScreenshot = null;
+            fileScreenshot = new AbstractAction() {
+                private static final long serialVersionUID = -4623064479688132611L;
+
+                public void actionPerformed(final ActionEvent e) {
+                    log.debug("-");
+                    if (JFileChooser.APPROVE_OPTION == fcPng
+                            .showSaveDialog(view)) {
+                        final File dst = fcPng.getSelectedFile();
+                        try {
+                            // this.setCursor(Cwait);
+                            exportPng(dst, view);
+                        } catch (final Exception e1) {
+                            log.error("", e1);
+                        } finally {
+                            // this.setCursor(Cdefault);
+                        }
+                    }
+                }
+            };
             fileExit = new AbstractAction() {
                 private static final long serialVersionUID = -4680813072205075958L;
 
@@ -152,14 +235,41 @@ class Controller {
                     shutDown();
                 }
             };
+
             editUndo = new UndoRedoAction(true);
             editRedo = new UndoRedoAction(false);
             editProperties = null;
             helpAbout = null;
         }
 
+        private boolean discardUnsavedChanges() {
+            // if (mod_locations.getLastChanged() <= lastSaved
+            // && mod_speeds.getLastChanged() <= lastSaved)
+            // return true;
+            if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(view,
+                    "Discard unsaved changes?", "Warning",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE))
+                return true;
+            return false;
+        }
+
+        void exportPng(File dst, final JComponent view) throws IOException {
+            final BufferedImage img = new BufferedImage(view.getWidth(), view
+                    .getHeight(), BufferedImage.TYPE_INT_ARGB);
+            final Graphics g = img.getGraphics();
+            try {
+                view.paintAll(g);
+            } finally {
+                g.dispose();
+            }
+            if (!dst.getName().endsWith(".png"))
+                dst = new File(dst.getAbsoluteFile() + ".png");
+            ImageIO.write(img, "png", dst);
+        }
+
         public void shutDown() {
-            // TODO Ask to save unchanged stuff!!!
+            if (!discardUnsavedChanges())
+                fileSave.actionPerformed(null);
             tighten(frame, 10, 200);
             System.exit(0);
         }

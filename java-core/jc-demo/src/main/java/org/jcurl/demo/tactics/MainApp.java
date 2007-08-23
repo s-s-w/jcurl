@@ -92,12 +92,11 @@ public class MainApp extends JFrame {
             i.setMnemonic('N');
             i.setEnabled(false);
 
-            i = ret.add(new JMenuItem());
+            i = ret.add(new JMenuItem(mainc.fileOpen));
             i.setText("Open");
             i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0,
                     InputEvent.CTRL_MASK));
             i.setMnemonic('O');
-            i.setEnabled(false);
 
             ret.addSeparator();
 
@@ -108,20 +107,18 @@ public class MainApp extends JFrame {
             i.setMnemonic('S');
             i.setEnabled(false);
 
-            i = ret.add(new JMenuItem());
+            i = ret.add(new JMenuItem(mainc.fileSaveAs));
             i.setText("Save As");
             i.setMnemonic('A');
-            i.setEnabled(false);
 
             ret.addSeparator();
 
-            i = ret.add(new JMenuItem());
+            i = ret.add(new JMenuItem(mainc.fileScreenshot));
             i.setText("Screenshot");
             i.setMnemonic('c');
             i
                     .setAccelerator(KeyStroke.getKeyStroke(
                             KeyEvent.VK_PRINTSCREEN, 0));
-            i.setEnabled(false);
 
             ret.addSeparator();
 

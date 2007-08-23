@@ -1,23 +1,30 @@
 package org.jcurl.demo.tactics;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 import javax.swing.undo.UndoManager;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jcurl.core.base.Collider;
 import org.jcurl.core.base.CollissionDetector;
 import org.jcurl.core.base.ComputedTrajectorySet;
 import org.jcurl.core.base.Curler;
 import org.jcurl.core.base.CurveStore;
 import org.jcurl.core.base.IceSize;
+import org.jcurl.core.base.JCurlSerializer;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
+import org.jcurl.core.base.JCurlSerializer.Payload;
 import org.jcurl.core.helpers.AnnoHelp;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.io.XStreamSerializer;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerDenny;
 import org.jcurl.core.model.CurveManager;
@@ -27,6 +34,8 @@ import org.jcurl.core.model.NewtonCollissionDetector;
  * Data model for {@link MainPanel}
  */
 class MainMod implements ZuiMod, RockMod {
+
+    private static final Log log = LogFactory.getLog(MainMod.class);
 
     static ComputedTrajectorySet initHammy(ComputedTrajectorySet te) {
         if (te == null)
@@ -120,6 +129,10 @@ class MainMod implements ZuiMod, RockMod {
         return ts.getCurler();
     }
 
+    File getCurrentFile() {
+        return new File(".");
+    }
+
     public PositionSet getCurrentPos() {
         return ts.getCurrentPos();
     }
@@ -159,6 +172,33 @@ class MainMod implements ZuiMod, RockMod {
     @Override
     public int hashCode() {
         return ts.hashCode();
+    }
+
+    void open(final File src) {
+        if (src.getName().endsWith(".jcz") || src.getName().endsWith(".jcx")) {
+            log.debug(src);
+            final JCurlSerializer xs = new XStreamSerializer();
+            try {
+                xs.read(src.toURL(), xs.wrap(null, ts));
+            } catch (final IOException e) {
+                log.error("", e);
+            }
+        } else
+            open(new File(src.getAbsoluteFile() + ".jcz"));
+    }
+
+    void save(final File dst) {
+        if (dst.getName().endsWith(".jcz") || dst.getName().endsWith(".jcx")) {
+            log.debug(dst);
+            final JCurlSerializer xs = new XStreamSerializer();
+            final Payload pl = xs.wrap(null, ts);
+            try {
+                xs.write(pl, dst);
+            } catch (final IOException e) {
+                log.error("", e);
+            }
+        } else
+            save(new File(dst.getAbsoluteFile() + ".jcz"));
     }
 
     public void setBroom(final Rock b) {
