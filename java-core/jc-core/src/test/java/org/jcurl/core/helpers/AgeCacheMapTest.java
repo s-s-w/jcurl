@@ -23,12 +23,12 @@ import java.util.TreeMap;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.helpers.AgeCache.AgeItem;
+import org.jcurl.core.helpers.AgeCacheMap.AgeItem;
 
-public class AgeCacheTest extends TestCase {
+public class AgeCacheMapTest extends TestCase {
     public void testExpirer4h() {
-        final AgeCache<Integer, String> m = new AgeCache<Integer, String>(
-                new TreeMap<Integer, String>(), 4 * 60 * 60 * 1000L);
+        final AgeCacheMap<Integer, String> m = new AgeCacheMap<Integer, String>(
+                4 * 60 * 60 * 1000L);
         m.put(1, "1", 1);
         m.put(2, "2", 2);
         m.put(3, "3", 2);
@@ -43,7 +43,7 @@ public class AgeCacheTest extends TestCase {
     }
 
     public void testExpirer4hComparator() {
-        final Comparator<? super AgeItem<Integer>> comp = new AgeCache<Integer, String>(
+        final Comparator<? super AgeItem<Integer>> comp = new AgeCacheMap<Integer, String>(
                 new TreeMap<Integer, String>(), 4 * 60 * 60 * 1000L)
                 .comparator();
         assertEquals(-1, comp.compare(new AgeItem<Integer>(1, 1),

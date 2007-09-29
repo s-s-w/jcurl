@@ -18,6 +18,7 @@
  */
 package org.jcurl.core.helpers;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,27 +26,18 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 /**
  * Thread-less age based cache.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
- * @param <K> 
- * @param <V> 
+ * @param <K>
+ * @param <V>
  */
-public class AgeCache<K, V> implements Map<K, V> {
-    public static class AgeItem<K> {
-        private final K key;
-        public final long time;
-
-        public AgeItem(final K key, final long time) {
-            this.time = time;
-            this.key = key;
-        }
-    }
-
-    public static class AgeExpirer<K, V> {
+public class AgeCacheMap<K, V> implements Map<K, V> {
+    protected static class AgeExpirer<K, V> {
         private final long dt;
 
         public AgeExpirer(final long dt) {
@@ -57,23 +49,36 @@ public class AgeCache<K, V> implements Map<K, V> {
         }
     }
 
-    Comparator<AgeItem<K>> comparator() {
-        return comp;
+    static class AgeItem<K> {
+        public final long time;
+        private final WeakReference<K> wkey;
+
+        public AgeItem(final K key, final long time) {
+            this.time = time;
+            this.wkey = new WeakReference<K>(key);
+        }
+
+        public K getKey() {
+            return wkey == null ? null : wkey.get();
+        }
     }
 
-    private final Comparator<AgeItem<K>> comp;
+    private final List<AgeItem<K>> ageList;
+    private final Comparator<AgeItem<K>> descComp;
     private final AgeExpirer<K, V> exp;
-    private final List<AgeItem<K>> list;
     private final Map<K, V> store;
 
-    public AgeCache(final Map<K, V> store, final long dt) {
+    public AgeCacheMap(final long dt) {
+        this(new WeakHashMap<K, V>(), dt);
+    }
+
+    public AgeCacheMap(final Map<K, V> store, final long dt) {
         this(store, dt, System.currentTimeMillis());
     }
 
-    AgeCache(final Map<K, V> store, final long dt, final long time) {
+    AgeCacheMap(final Map<K, V> store, final long dt, final long time) {
         this.store = store;
-        this.exp = new AgeExpirer<K, V>(dt);
-        this.comp = new Comparator<AgeItem<K>>() {
+        this.descComp = new Comparator<AgeItem<K>>() {
             public int compare(final AgeItem<K> o1, final AgeItem<K> o2) {
                 if (o1.time > o2.time)
                     return 1;
@@ -82,15 +87,20 @@ public class AgeCache<K, V> implements Map<K, V> {
                 return 0;
             }
         };
-        this.list = new ArrayList<AgeItem<K>>();
+        this.exp = new AgeExpirer<K, V>(dt);
+        this.ageList = new ArrayList<AgeItem<K>>();
         for (final Entry<K, V> elem : store.entrySet())
-            list.add(new AgeItem<K>(elem.getKey(), time));
-        Collections.sort(list, comp);
+            ageList.add(new AgeItem<K>(elem.getKey(), time));
+        Collections.sort(ageList, descComp);
     }
 
     public void clear() {
         store.clear();
-        list.clear();
+        ageList.clear();
+    }
+
+    Comparator<AgeItem<K>> comparator() {
+        return descComp;
     }
 
     public boolean containsKey(final Object key) {
@@ -104,11 +114,16 @@ public class AgeCache<K, V> implements Map<K, V> {
     }
 
     int doExpire(final long time) {
+        // when to clean out zombies?
         int i = 0;
-        for (final AgeItem<K> elem : list) {
+        for (final AgeItem<K> elem : ageList) {
+            if (elem.getKey() == null) {
+                ageList.remove(i);
+                continue;
+            }
             if (!exp.hasExpired(elem, time))
                 break;
-            store.remove(elem.key);
+            store.remove(elem.getKey());
             i++;
         }
         return i;
@@ -158,8 +173,8 @@ public class AgeCache<K, V> implements Map<K, V> {
         doExpire(time);
         final V ret = store.put(key, value);
         // TODO if ret != null remove from list.
-        list.add(new AgeItem<K>(key, time));
-        Collections.sort(list, comp);
+        ageList.add(new AgeItem<K>(key, time));
+        Collections.sort(ageList, descComp);
         return ret;
     }
 
@@ -168,8 +183,8 @@ public class AgeCache<K, V> implements Map<K, V> {
         doExpire(time);
         store.putAll(t);
         for (final Entry<? extends K, ? extends V> elem : t.entrySet())
-            list.add(new AgeItem<K>(elem.getKey(), time));
-        Collections.sort(list, comp);
+            ageList.add(new AgeItem<K>(elem.getKey(), time));
+        Collections.sort(ageList, descComp);
     }
 
     public V remove(final Object key) {
