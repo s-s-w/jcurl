@@ -23,7 +23,7 @@ import java.awt.event.KeyEvent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jcurl.demo.tactics.MainMultiApp.Controller;
+import org.jcurl.demo.tactics.MainMultiPanel.Controller;
 import org.jcurl.demo.tactics.Menu.JCMenu;
 
 /**

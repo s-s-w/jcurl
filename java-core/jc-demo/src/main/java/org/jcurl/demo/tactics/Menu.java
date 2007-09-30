@@ -79,6 +79,10 @@ abstract class Menu {
     private static int compile(final Menu o,
             final SortedMap<Integer, Action> actions,
             final Map<Method, Action> m2a, final Map<String, Method> n2m) {
+        if (n2m != null)
+            n2m.clear();
+        if (m2a != null)
+            m2a.clear();
         final Class<? extends Menu> c = o.getClass();
         int max = 0;
         for (final Method m : c.getMethods()) {

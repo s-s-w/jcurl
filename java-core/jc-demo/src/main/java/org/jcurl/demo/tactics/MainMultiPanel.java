@@ -18,12 +18,11 @@
  */
 package org.jcurl.demo.tactics;
 
+import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -37,18 +36,14 @@ import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.UndoableEditEvent;
@@ -63,13 +58,15 @@ import org.jcurl.core.helpers.AnnoHelp;
 import org.jcurl.core.io.XStreamSerializer;
 import org.jcurl.core.model.CurveManager;
 
-public class MainMultiApp extends JFrame {
+class MainMultiPanel extends JPanel {
 
-    public static class Controller implements ChangeListener,
+    static class Controller implements ChangeListener,
             UndoableEditListener {
+        private final static double ENDTIME = 30.0;
+
         private static final Log log = LogFactory.getLog(Controller.class);
 
-        public final Action aEditProperties = null;
+        final Action aEditProperties = null;
 
         // http://www.javaworld.com/javaworld/jw-06-1998/jw-06-undoredo.html
         public final Action aEditRedo = new AbstractAction() {
@@ -119,11 +116,13 @@ public class MainMultiApp extends JFrame {
                 if (JFileChooser.APPROVE_OPTION == zJcx.showOpenDialog(view))
                     try {
                         view.setCursor(cWait);
+                        Thread.yield();
                         for (final CurveManager elem : model.load(zJcx
                                 .getSelectedFile()))
-                            addWindow(elem);
+                            windowAdd(elem);
                     } finally {
                         view.setCursor(cDefa);
+                        Thread.yield();
                     }
             }
         };
@@ -135,17 +134,20 @@ public class MainMultiApp extends JFrame {
                 try {
                     if (model.currentFile != null) {
                         view.setCursor(cWait);
+                        Thread.yield();
                         model.save(model.currentFile);
                         return;
                     }
                     if (JFileChooser.APPROVE_OPTION == zJcx
                             .showSaveDialog(view)) {
                         view.setCursor(cWait);
+                        Thread.yield();
                         model.save(zJcx.getSelectedFile());
                         return;
                     }
                 } finally {
                     view.setCursor(cDefa);
+                    Thread.yield();
                 }
             }
         };
@@ -157,12 +159,13 @@ public class MainMultiApp extends JFrame {
                 if (JFileChooser.APPROVE_OPTION == zJcx.showSaveDialog(view))
                     try {
                         view.setCursor(cWait);
+                        Thread.yield();
                         model.save(zJcx.getSelectedFile());
                     } finally {
                         view.setCursor(cDefa);
+                        Thread.yield();
                     }
             }
-
         };
 
         public final Action aHelpAbout = null;
@@ -203,7 +206,13 @@ public class MainMultiApp extends JFrame {
             private static final long serialVersionUID = -4623064479688132611L;
 
             public void actionPerformed(final ActionEvent e) {
-                addWindow(MainMod.initHammy(null));
+                try {
+                    view.setCursor(cWait);
+                    Thread.yield();
+                    windowAdd(MainMod.initHammy(null));
+                } finally {
+                    view.setCursor(cDefa);
+                }
             }
         };
 
@@ -211,7 +220,7 @@ public class MainMultiApp extends JFrame {
             private static final long serialVersionUID = -4623064479688132611L;
 
             public void actionPerformed(final ActionEvent e) {
-                deleteCurrentWindow();
+                windowDeleteCurrent();
             }
         };
 
@@ -234,13 +243,12 @@ public class MainMultiApp extends JFrame {
 
         private final Cursor cDefa = new Cursor(Cursor.DEFAULT_CURSOR);
         private final Cursor cWait = new Cursor(Cursor.WAIT_CURSOR);
-
         private final JTabbedPane desk;
-        public final JMenu editMenu;
         private final FileController fico;
+        public final JMenu menuEdit;
+        public final JMenu menuView;
         private final Model<TrajectorySet> model = new Model<TrajectorySet>();
-        private final MainMultiApp view;
-        public final JMenu viewMenu;
+        private final MainMultiPanel view;
 
         private final JFileChooser zJcx = new JFileChooser(model
                 .getCurrentFile()) {
@@ -288,33 +296,24 @@ public class MainMultiApp extends JFrame {
             }
         };
 
-        public Controller(final MainMultiApp frame) {
+        public Controller(final MainMultiPanel frame, final Container root,
+                final JMenuBar mb) {
             view = frame;
             view.setCursor(cWait);
 
             // Set up the view:
-            view.setTitle("JCurl Tactics Demo");
             {
-                final JMenuBar mb = new JMenuBar();
                 final Menufactory mf = new Menufactory(this);
                 mb.add((fico = new FileController(this)).menu());
                 mb.add(mf.fileMenu());
                 mb.add(mf.windowMenu());
-                mb.add(editMenu = mf.editMenu());
-                mb.add(viewMenu = mf.viewMenu());
+                mb.add(menuEdit = mf.editMenu());
+                mb.add(menuView = mf.viewMenu());
                 mb.add(mf.helpMenu());
-                view.setJMenuBar(mb);
             }
             desk = new JTabbedPane(SwingConstants.TOP);
             desk.addChangeListener(this);
-            view.getContentPane().add(desk);
-            view.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-            view.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(final WindowEvent e) {
-                    aFileExit.actionPerformed(null);
-                }
-            });
+            root.add(desk);
             view.setCursor(cDefa);
             stateChanged(new ChangeEvent(desk));
         }
@@ -345,7 +344,7 @@ public class MainMultiApp extends JFrame {
                         view.setCursor(cWait);
                         for (final CurveManager elem : model.load(zJcx
                                 .getSelectedFile()))
-                            addWindow(elem);
+                            windowAdd(elem);
                     } finally {
                         view.setCursor(cDefa);
                     }
@@ -381,16 +380,7 @@ public class MainMultiApp extends JFrame {
                 }
         }
 
-        public void addWindow(final CurveManager elem) {
-            model.add(elem);
-            final TacticsPanel c = new TacticsPanel(elem);
-            desk.add(buildTitle(elem.getAnnotations()), c);
-            desk.setSelectedComponent(c);
-            c.getModel().addUndoableEditListener(this);
-            zoom(TacticsPanel.houseP);
-        }
-
-        public String buildTitle(final Map<String, Object> m) {
+        private String buildTitle(final Map<String, Object> m) {
             final StringBuffer buf = new StringBuffer();
             final String[] keys = { AnnoHelp.DateK, AnnoHelp.EventK,
                     AnnoHelp.GameK, AnnoHelp.EndK };
@@ -401,15 +391,6 @@ public class MainMultiApp extends JFrame {
                 buf.append(val.toString()).append(" ");
             }
             return buf.toString();
-        }
-
-        public void deleteCurrentWindow() {
-            view.setCursor(cWait);
-            final TacticsPanel t = getCurrentWindow();
-            model.remove(t.getModel().getModel());
-            t.getModel().removeUndoableEditListener(this);
-            desk.remove(t);
-            view.setCursor(cDefa);
         }
 
         private void exportPng(final JComponent src, File dst)
@@ -442,10 +423,10 @@ public class MainMultiApp extends JFrame {
             log.info(e);
             if (e.getSource() == desk) {
                 final boolean active = desk.getSelectedIndex() >= 0;
-                editMenu.setEnabled(active);
+                menuEdit.setEnabled(active);
                 aWindowDeleteCurrent.setEnabled(active);
                 aWindowScreenshot.setEnabled(active);
-                viewMenu.setEnabled(active);
+                menuView.setEnabled(active);
                 aFileSave.setEnabled(active);
                 aFileSaveAs.setEnabled(active);
                 // view12Foot.setEnabled(active);
@@ -468,10 +449,34 @@ public class MainMultiApp extends JFrame {
             }
         }
 
+        private void windowAdd(final CurveManager elem) {
+            elem.setCurrentTime(ENDTIME);
+            model.add(elem);
+            final TacticsPanel c = new TacticsPanel(elem);
+            desk.add(buildTitle(elem.getAnnotations()), c);
+            desk.setSelectedComponent(c);
+            c.getModel().addUndoableEditListener(this);
+            // TODO greift nicht:
+            zoom(TacticsPanel.houseP);
+            // TODO greift nicht:
+            c.zoom(TacticsPanel.houseP, 333);
+        }
+
+        private void windowDeleteCurrent() {
+            view.setCursor(cWait);
+            final TacticsPanel t = getCurrentWindow();
+            model.remove(t.getModel().getModel());
+            t.getModel().removeUndoableEditListener(this);
+            desk.remove(t);
+            view.setCursor(cDefa);
+        }
+
         private void zoom(final Rectangle2D r) {
+            Thread.yield();
             final TacticsPanel t = getCurrentWindow();
             if (t != null)
                 t.zoom(r, 333);
+            Thread.yield();
         }
     }
 
@@ -567,7 +572,7 @@ public class MainMultiApp extends JFrame {
         }
     }
 
-    public static class Model<T extends TrajectorySet> {
+    static class Model<T extends TrajectorySet> {
         private static final Log log = LogFactory.getLog(Controller.class);
 
         private File currentFile = null;
@@ -633,35 +638,9 @@ public class MainMultiApp extends JFrame {
 
     private static final long serialVersionUID = 5907776225462882883L;
 
-    public static void main(final String[] args) {
-        // PDebug.debugBounds = true;
-        // PDebug.debugPrintUsedMemory = true;
-        // PDebug.debugPrintFrameRate = true;
-        // PDebug.debugPaintCalls = true;
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                final MainMultiApp application = new MainMultiApp();
-                application.setSize(800, 600);
-                application.setVisible(true);
-            }
-        });
-    }
+    final Controller con;
 
-    public final Controller con;
-
-    MainMultiApp() {
-        if (true)
-            con = new Controller(this);
-        else {
-            final JDesktopPane desktop = new JDesktopPane();
-            getContentPane().add(desktop);
-            for (int i = 0; i < 4; i++) {
-                final JInternalFrame f = new JInternalFrame("Frame" + i, true,
-                        true, true, true);
-                f.setSize(200, 50);
-                f.setVisible(true);
-                desktop.add(f);
-            }
-        }
+    MainMultiPanel(final JMenuBar mb, final Container root) {
+        con = new Controller(this, root, mb);
     }
 }
