@@ -72,14 +72,14 @@ class Controller {
             public void actionPerformed(final ActionEvent e) {
                 try {
                     if (undo)
-                        model.getUndoer().undo();
+                        model.undo();
                     else
-                        model.getUndoer().redo();
+                        model.redo();
                 } catch (final RuntimeException ex) {
                     log.error("", ex);
                 }
-                editUndo.setEnabled(model.getUndoer().canUndo());
-                editRedo.setEnabled(model.getUndoer().canRedo());
+                editUndo.setEnabled(model.canUndo());
+                editRedo.setEnabled(model.canRedo());
             }
         }
 

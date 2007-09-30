@@ -26,7 +26,10 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -126,19 +129,22 @@ public class XStreamSerializer implements JCurlSerializer {
         private final TrajectorySet[] trajectories;
 
         private Payload2007(final Map<String, Object> annotations,
-                final TrajectorySet[] trajectories) {
+                final Iterable<TrajectorySet> trajectories) {
             this.annotations.clear();
             if (annotations != null)
                 this.annotations.putAll(annotations);
-            this.trajectories = trajectories;
+            final Collection<TrajectorySet> tmp = new LinkedList<TrajectorySet>();
+            for (final TrajectorySet elem : trajectories)
+                tmp.add(elem);
+            this.trajectories = tmp.toArray(new TrajectorySet[tmp.size()]);
         }
 
         public Map<String, Object> getAnnotations() {
             return annotations;
         }
 
-        public TrajectorySet[] getTrajectories() {
-            return trajectories;
+        public Iterable<TrajectorySet> getTrajectories() {
+            return Arrays.asList(trajectories);
         }
     }
 
@@ -248,13 +254,15 @@ public class XStreamSerializer implements JCurlSerializer {
     }
 
     public Payload wrap(final Map<String, Object> annotations,
-            final TrajectorySet t) {
-        return wrap(null, new TrajectorySet[] { t });
+            final Iterable<TrajectorySet> trajectories) {
+        return new Payload2007(annotations, trajectories);
     }
 
     public Payload wrap(final Map<String, Object> annotations,
-            final TrajectorySet[] trajectories) {
-        return new Payload2007(annotations, trajectories);
+            final TrajectorySet t) {
+        final Collection<TrajectorySet> tmp = new LinkedList<TrajectorySet>();
+        tmp.add(t);
+        return wrap(null, tmp);
     }
 
     public String write(final Payload src) {

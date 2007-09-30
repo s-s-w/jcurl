@@ -60,7 +60,7 @@ class ZuiPanel extends JComponent {
                     return;
                 super.mouseReleased(event);
                 edit.end();
-                model.getUndoer().addEdit(edit);
+                model.addEdit(edit);
                 edit = null;
                 traj.sync(MainApp.tmax);
             }

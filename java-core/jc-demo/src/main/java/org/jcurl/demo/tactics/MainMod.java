@@ -4,13 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.swing.undo.UndoManager;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.UndoableEdit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jcurl.core.base.Collider;
 import org.jcurl.core.base.CollissionDetector;
-import org.jcurl.core.base.ComputedTrajectorySet;
 import org.jcurl.core.base.Curler;
 import org.jcurl.core.base.CurveStore;
 import org.jcurl.core.base.IceSize;
@@ -37,7 +37,7 @@ class MainMod implements ZuiMod, RockMod {
 
     private static final Log log = LogFactory.getLog(MainMod.class);
 
-    static ComputedTrajectorySet initHammy(ComputedTrajectorySet te) {
+    static CurveManager initHammy(CurveManager te) {
         if (te == null)
             te = new CurveManager();
         te.setCollider(new CollissionSpin(0.5, 0.0));
@@ -98,10 +98,26 @@ class MainMod implements ZuiMod, RockMod {
 
     private final CurveManager ts = new CurveManager();
 
-    private final UndoManager undoer = new UndoManager();
+    private final UndoRedoDocumentBase undo = new UndoRedoDocumentBase();
 
     public MainMod() {
         initHammy(ts);
+    }
+
+    public boolean addEdit(final UndoableEdit anEdit) {
+        return undo.addEdit(anEdit);
+    }
+
+    public void addUndoableEditListener(final UndoableEditListener l) {
+        undo.addUndoableEditListener(l);
+    }
+
+    public boolean canRedo() {
+        return undo.canRedo();
+    }
+
+    public boolean canUndo() {
+        return undo.canUndo();
     }
 
     @Override
@@ -165,8 +181,9 @@ class MainMod implements ZuiMod, RockMod {
         throw new NotImplementedYetException();
     }
 
-    public UndoManager getUndoer() {
-        return undoer;
+    public Iterable<UndoableEditListener> getUndoableEditListeners() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
@@ -185,6 +202,14 @@ class MainMod implements ZuiMod, RockMod {
             }
         } else
             open(new File(src.getAbsoluteFile() + ".jcz"));
+    }
+
+    public void redo() {
+        undo.redo();
+    }
+
+    public void removeUndoableEditListener(final UndoableEditListener l) {
+        undo.removeUndoableEditListener(l);
     }
 
     void save(final File dst) {
@@ -240,5 +265,9 @@ class MainMod implements ZuiMod, RockMod {
 
     public void setSplitTime(final double s) {
         throw new NotImplementedYetException();
+    }
+
+    public void undo() {
+        undo.undo();
     }
 }

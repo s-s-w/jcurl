@@ -31,7 +31,7 @@ import java.util.Map;
  * Read and write JCurl data.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:JCurlSerializer.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public interface JCurlSerializer {
 
@@ -39,7 +39,7 @@ public interface JCurlSerializer {
 
         public Map<String, Object> getAnnotations();
 
-        public TrajectorySet[] getTrajectories();
+        public Iterable<TrajectorySet> getTrajectories();
 
     };
 
@@ -72,7 +72,7 @@ public interface JCurlSerializer {
      * @return the payload
      */
     public Payload wrap(Map<String, Object> annotations,
-            TrajectorySet[] trajectories);
+            Iterable<TrajectorySet> trajectories);
 
     public String write(Payload src);
 
