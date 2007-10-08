@@ -266,6 +266,9 @@
 			<name>JCurl Maven Repository</name>
 			<layout>default</layout>
 			<url>${httpbase}/repo</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>

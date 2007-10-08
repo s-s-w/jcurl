@@ -86,12 +86,16 @@
 	</dependencies>
 	<repositories>
 		<repository>
-			<id>jcurl-repository</id>
-			<name>JCurl Maven Repository</name>
+			<!-- Bootstrap parent pom  -->
+			<id>jcurl-snapshots</id>
+			<name>JCurl Maven Snapshots</name>
 			<layout>default</layout>
-			<url>http://www.jcurl.org/m2/repo</url>
-			<snapshots>
+			<url>http://www.jcurl.org/m2/snap</url>
+			<releases>
 				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
 			</snapshots>
 		</repository>
 	</repositories>
