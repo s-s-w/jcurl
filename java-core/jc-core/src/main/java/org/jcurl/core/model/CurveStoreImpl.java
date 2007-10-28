@@ -18,6 +18,8 @@
  */
 package org.jcurl.core.model;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -27,6 +29,7 @@ import org.jcurl.core.base.CurveRockAnalytic;
 import org.jcurl.core.base.CurveStill;
 import org.jcurl.core.base.CurveStore;
 import org.jcurl.core.base.StopDetector;
+import org.jcurl.core.helpers.PropertyChangeSupport;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.CurveCombined;
 import org.jcurl.math.R1RNFunction;
@@ -39,19 +42,17 @@ import org.jcurl.math.R1RNFunction;
  * 
  * @see CurveCombined
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:CurveStoreImpl.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class CurveStoreImpl implements Serializable, CurveStore {
 
     private static final byte DIM = 3;
-
     private static final Log log = JCLoggerFactory
             .getLogger(CurveStoreImpl.class);
-
     private static final long serialVersionUID = -1485170570756670720L;
-
     private final CurveCombined[] curve;
-
+    private final transient PropertyChangeSupport pcs = new PropertyChangeSupport(
+            this);
     private final StopDetector stopper;
 
     /**
@@ -88,10 +89,74 @@ public class CurveStoreImpl implements Serializable, CurveStore {
                     log.debug(i + "  t=" + t + " Still");
             }
         }
+        fireIndexedPropertyChange("curve", i, null, curve[i]);
+    }
+
+    public void addPropertyChangeListener(final PropertyChangeListener pcl) {
+        pcs.addPropertyChangeListener(pcl);
+    }
+
+    public void addPropertyChangeListener(final String property,
+            final PropertyChangeListener pcl) {
+        pcs.addPropertyChangeListener(property, pcl);
+    }
+
+    public void fireIndexedPropertyChange(final String propertyName,
+            final int index, final boolean oldValue, final boolean newValue) {
+        pcs.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
+    }
+
+    public void fireIndexedPropertyChange(final String propertyName,
+            final int index, final int oldValue, final int newValue) {
+        pcs.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
+    }
+
+    public void fireIndexedPropertyChange(final String property,
+            final int index, final Object old, final Object neo) {
+        if (log.isDebugEnabled())
+            log.debug(property + " " + pcs.hasListeners(property));
+        pcs.fireIndexedPropertyChange(property, index, old, neo);
+    }
+
+    public void firePropertyChange(final PropertyChangeEvent event) {
+        pcs.firePropertyChange(event);
+    }
+
+    public void firePropertyChange(final String property, final boolean old,
+            final boolean neo) {
+        pcs.firePropertyChange(property, old, neo);
+    }
+
+    public void firePropertyChange(final String property, final double old,
+            final double neo) {
+        pcs.firePropertyChange(property, old, neo);
+    }
+
+    public void firePropertyChange(final String property, final int old,
+            final int neo) {
+        pcs.firePropertyChange(property, old, neo);
+    }
+
+    public void firePropertyChange(final String property, final Object old,
+            final Object neo) {
+        pcs.firePropertyChange(property, old, neo);
     }
 
     public R1RNFunction getCurve(final int i) {
         return curve[i];
+    }
+
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    public PropertyChangeListener[] getPropertyChangeListeners(
+            final String property) {
+        return pcs.getPropertyChangeListeners(property);
+    }
+
+    public boolean hasListeners(final String property) {
+        return pcs.hasListeners(property);
     }
 
     public Iterator<Iterable<Entry<Double, R1RNFunction>>> iterator() {
@@ -116,7 +181,17 @@ public class CurveStoreImpl implements Serializable, CurveStore {
         return curve[i].iterator();
     }
 
+    public void removePropertyChangeListener(final PropertyChangeListener pcl) {
+        pcs.removePropertyChangeListener(pcl);
+    }
+
+    public void removePropertyChangeListener(final String property,
+            final PropertyChangeListener pcl) {
+        pcs.removePropertyChangeListener(property, pcl);
+    }
+
     public void reset(final int i) {
         curve[i].clear();
+        fireIndexedPropertyChange("curve", i, curve[i], curve[i]);
     }
 }

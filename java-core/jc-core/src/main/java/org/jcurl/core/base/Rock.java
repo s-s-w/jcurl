@@ -20,6 +20,9 @@ package org.jcurl.core.base;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.beans.PropertyChangeListener;
+
+import org.jcurl.core.helpers.PropertyChangeSupport;
 
 /**
  * Base class for rock information (either location or speed). The "Z" component
@@ -30,10 +33,37 @@ import java.awt.geom.Point2D;
  * @version $Id:Rock.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public abstract class Rock extends Point2D implements Cloneable {
-
     protected transient boolean dirty = true;
 
+    /** Utility field used by bound properties. */
+    protected final transient PropertyChangeSupport propChange = new PropertyChangeSupport(
+            this);
+
     protected transient AffineTransform trafo;
+
+    /**
+     * Adds a PropertyChangeListener to the listener list.
+     * 
+     * @param listener
+     *            The listener to add.
+     */
+    public void addPropertyChangeListener(final PropertyChangeListener listener) {
+        propChange.addPropertyChangeListener(listener);
+    }
+
+    /**
+     * Adds a PropertyChangeListener to the listener list for a specific
+     * property.
+     * 
+     * @param property
+     *            The property to listen to.
+     * @param listener
+     *            The listener to add.
+     */
+    public void addPropertyChangeListener(final String property,
+            final PropertyChangeListener listener) {
+        propChange.addPropertyChangeListener(property, listener);
+    }
 
     @Override
     public abstract Object clone();
@@ -77,6 +107,35 @@ public abstract class Rock extends Point2D implements Cloneable {
      * @return whether x or y are non-zero
      */
     public abstract boolean nonZero();
+
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    // public abstract int hashCode();
+    /**
+     * Removes a PropertyChangeListener to the listener list.
+     * 
+     * @param listener
+     *            The listener to add.
+     */
+    public void removePropertyChangeListener(
+            final PropertyChangeListener listener) {
+        propChange.removePropertyChangeListener(listener);
+    }
+
+    /**
+     * Removes a PropertyChangeListener to the listener list for a specific
+     * property.
+     * 
+     * @param property
+     *            The property to listen to.
+     * @param listener
+     *            The listener to add.
+     */
+    public void removePropertyChangeListener(final String property,
+            final PropertyChangeListener listener) {
+        propChange.removePropertyChangeListener(property, listener);
+    }
 
     public abstract void setA(double a);
 

@@ -22,10 +22,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
+import org.jcurl.core.log.JCLoggerFactory;
 
 import edu.umd.cs.piccolo.PNode;
 
@@ -38,11 +38,9 @@ import edu.umd.cs.piccolo.PNode;
 public class PPositionSet extends PNode implements PropertyChangeListener {
 
     private static final double eps = 1e-11;
-
     public static final Object index16 = "index16";
-
-    private static final Log log = LogFactory.getLog(PPositionSet.class);
-
+    private static final Log log = JCLoggerFactory
+            .getLogger(PPositionSet.class);
     private static final long serialVersionUID = 6564103045992326633L;
 
     static boolean sync(final Rock src, final PNode dst) {
@@ -53,6 +51,8 @@ public class PPositionSet extends PNode implements PropertyChangeListener {
         dst.setRotation(src.getA());
         dst.setOffset(src.getX(), src.getY());
         dst.invalidatePaint();
+        // Why is this necessary?
+        dst.repaint();
         return true;
     }
 
@@ -79,14 +79,12 @@ public class PPositionSet extends PNode implements PropertyChangeListener {
     }
 
     public void propertyChange(final PropertyChangeEvent evt) {
-        if (log.isDebugEnabled())
-            log.debug(evt);
+        log.debug(evt);
         sync(p, this);
-        repaint();
+        // repaint();
     }
 
     private void sync(final PositionSet src, final PPositionSet dst) {
-        // TODO check if it's changed at all!
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             sync(src.getRock(i), dst.getChild(i));
     }

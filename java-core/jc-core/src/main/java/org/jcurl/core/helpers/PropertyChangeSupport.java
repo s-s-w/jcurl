@@ -19,6 +19,7 @@
 package org.jcurl.core.helpers;
 
 import java.beans.BeanInfo;
+import java.beans.IndexedPropertyChangeEvent;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyChangeEvent;
@@ -60,11 +61,11 @@ import org.jcurl.core.log.JCLoggerFactory;
  * </p>
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:PropertyChangeSupport.java 682 2007-08-12 21:25:04Z mrohrmoser $
  * @see java.lang.ref.WeakReference
  * @see java.beans.PropertyChangeSupport
  */
-public class PropertyChangeSupport {
+public class PropertyChangeSupport implements IPropertyChangeSupport {
 
     /**
      * Holds the value used as the key for general listeners in the listener
@@ -117,12 +118,10 @@ public class PropertyChangeSupport {
         }
     }
 
-    /**
-     * Add a non-specific {@link PropertyChangeListener}. Adds a listener that
-     * will recieve events on all properties.
+    /*
+     * (non-Javadoc)
      * 
-     * @param pcl
-     *            The {@link PropertyChangeListener} add.
+     * @see org.jcurl.core.helpers.IPropertyChangeSupport#addPropertyChangeListener(java.beans.PropertyChangeListener)
      */
     public void addPropertyChangeListener(final PropertyChangeListener pcl) {
         synchronized (listenerMap) {
@@ -130,14 +129,6 @@ public class PropertyChangeSupport {
         }
     }
 
-    /**
-     * Add a {@link PropertyChangeListener} for a specific property.
-     * 
-     * @param property
-     *            The name of the relevant property.
-     * @param pcl
-     *            The listener to add.
-     */
     public void addPropertyChangeListener(final String property,
             final PropertyChangeListener pcl) {
         validateNamedProperty(property);
@@ -146,39 +137,24 @@ public class PropertyChangeSupport {
         }
     }
 
-    public void fireIndexedPropertyChange(final String propertyName,
-            final int index, final boolean oldValue, final boolean newValue) {
-        throw new NotImplementedYetException();
+    public void fireIndexedPropertyChange(final String property,
+            final int index, final boolean old, final boolean neo) {
+        firePropertyChange(new IndexedPropertyChangeEvent(producer, property,
+                old, neo, index));
     }
 
-    public void fireIndexedPropertyChange(final String propertyName,
-            final int index, final int oldValue, final int newValue) {
-        throw new NotImplementedYetException();
+    public void fireIndexedPropertyChange(final String property,
+            final int index, final int old, final int neo) {
+        firePropertyChange(new IndexedPropertyChangeEvent(producer, property,
+                old, neo, index));
     }
 
-    public void fireIndexedPropertyChange(final String propertyName,
-            final int index, final Object oldValue, final Object newValue) {
-        throw new NotImplementedYetException();
+    public void fireIndexedPropertyChange(final String property,
+            final int index, final Object old, final Object neo) {
+        firePropertyChange(new IndexedPropertyChangeEvent(producer, property,
+                old, neo, index));
     }
 
-    /**
-     * Fire a property change event to all of the listeners.
-     * <p>
-     * This method is called by all the fire methods to perform the firing of
-     * the events.
-     * </p>
-     * <p>
-     * The firing will go to the listeners that are registered for the specific
-     * property as well as general purpose listeners.
-     * </p>
-     * <p>
-     * If the old and new values for the event are the same, by the
-     * <tt>equals()</tt> method, the event will not be fired.
-     * </p>
-     * 
-     * @param event
-     *            The event to fire to the listeners.
-     */
     public void firePropertyChange(final PropertyChangeEvent event) {
         validateNamedProperty(event.getPropertyName());
         {
@@ -206,16 +182,6 @@ public class PropertyChangeSupport {
         }
     }
 
-    /**
-     * Shortcut for firing an event on boolean properties.
-     * 
-     * @param property
-     *            the name of the property which changed.
-     * @param old
-     *            The old value.
-     * @param neo
-     *            The new value.
-     */
     public void firePropertyChange(final String property, final boolean old,
             final boolean neo) {
         final PropertyChangeEvent event = new PropertyChangeEvent(producer,
@@ -223,16 +189,6 @@ public class PropertyChangeSupport {
         this.firePropertyChange(event);
     }
 
-    /**
-     * Shortcut for firing an event on double properties.
-     * 
-     * @param property
-     *            the name of the property which changed.
-     * @param old
-     *            The old value.
-     * @param neo
-     *            The new value.
-     */
     public void firePropertyChange(final String property, final double old,
             final double neo) {
         final PropertyChangeEvent event = new PropertyChangeEvent(producer,
@@ -240,16 +196,6 @@ public class PropertyChangeSupport {
         this.firePropertyChange(event);
     }
 
-    /**
-     * Shortcut for firing an event on integer properties.
-     * 
-     * @param property
-     *            the name of the property which changed.
-     * @param old
-     *            The old value.
-     * @param neo
-     *            The new value.
-     */
     public void firePropertyChange(final String property, final int old,
             final int neo) {
         final PropertyChangeEvent event = new PropertyChangeEvent(producer,
@@ -257,16 +203,6 @@ public class PropertyChangeSupport {
         this.firePropertyChange(event);
     }
 
-    /**
-     * Notify listeners that an object type property has changed
-     * 
-     * @param property
-     *            the name of the property which changed.
-     * @param old
-     *            The old value.
-     * @param neo
-     *            The new value.
-     */
     public void firePropertyChange(final String property, final Object old,
             final Object neo) {
         final PropertyChangeEvent event = new PropertyChangeEvent(producer,
@@ -274,14 +210,6 @@ public class PropertyChangeSupport {
         this.firePropertyChange(event);
     }
 
-    /**
-     * Returns an array of all the listeners that were added to the
-     * {@link PropertyChangeSupport} object with addPropertyChangeListener().
-     * The array is computed as late as possible to give as much cleanout time
-     * as neded.
-     * 
-     * @return An array of all listeners.
-     */
     public PropertyChangeListener[] getPropertyChangeListeners() {
         final Set<PropertyChangeListener> all = new WeakHashSet<PropertyChangeListener>();
         synchronized (listenerMap) {
@@ -294,14 +222,6 @@ public class PropertyChangeSupport {
         return all.toArray(pcls);
     }
 
-    /**
-     * Returns an array of all the listeners which have been associated with the
-     * named property.
-     * 
-     * @param property
-     *            The name of the relevant property.
-     * @return An array of listeners listening to the specified property.
-     */
     public PropertyChangeListener[] getPropertyChangeListeners(
             final String property) {
         validateNamedProperty(property);
@@ -315,13 +235,6 @@ public class PropertyChangeSupport {
         return namedListeners.toArray(pcls);
     }
 
-    /**
-     * Check if there are any listeners interested in a specific property.
-     * 
-     * @param property
-     *            The relvant property name.
-     * @return true If there are listeners for the given property
-     */
     public boolean hasListeners(final String property) {
         validateNamedProperty(property);
         synchronized (listenerMap) {
@@ -329,27 +242,12 @@ public class PropertyChangeSupport {
         }
     }
 
-    /**
-     * Remove a PropertyChangeListener from the listener list. This removes a
-     * PropertyChangeListener that was registered for all properties.
-     * 
-     * @param pcl
-     *            The {@link PropertyChangeListener} to be removed
-     */
     public void removePropertyChangeListener(final PropertyChangeListener pcl) {
         synchronized (listenerMap) {
             listenerMap.get(ALL_PROPERTIES).remove(pcl);
         }
     }
 
-    /**
-     * Remove a {@link PropertyChangeListener} for a specific property.
-     * 
-     * @param property
-     *            The name of the relevant property.
-     * @param pcl
-     *            The listener to remove.
-     */
     public void removePropertyChangeListener(final String property,
             final PropertyChangeListener pcl) {
         validateNamedProperty(property);

@@ -18,6 +18,7 @@
  */
 package org.jcurl.core.helpers;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
@@ -25,10 +26,11 @@ import java.beans.PropertyChangeListener;
  * means to notify others upon propery changes.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:MutableObject.java 682 2007-08-12 21:25:04Z mrohrmoser $
  * 
  */
-public abstract class MutableObject extends TransferObject {
+public abstract class MutableObject extends TransferObject implements
+        IPropertyChangeSupport {
     /** Utility field used by bound properties. */
     protected final transient PropertyChangeSupport propChange = new PropertyChangeSupport(
             this);
@@ -69,12 +71,60 @@ public abstract class MutableObject extends TransferObject {
     @Override
     public abstract boolean equals(Object obj);
 
-    protected void fire(final String property) {
+    public void fireIndexedPropertyChange(final String property,
+            final int index, final boolean old, final boolean neo) {
+        propChange.fireIndexedPropertyChange(property, index, old, neo);
+    }
 
+    public void fireIndexedPropertyChange(final String property,
+            final int index, final int old, final int neo) {
+        propChange.fireIndexedPropertyChange(property, index, old, neo);
+    }
+
+    public void fireIndexedPropertyChange(final String property,
+            final int index, final Object old, final Object neo) {
+        propChange.fireIndexedPropertyChange(property, index, old, neo);
+    }
+
+    public void firePropertyChange(final PropertyChangeEvent event) {
+        propChange.firePropertyChange(event);
+    }
+
+    public void firePropertyChange(final String property, final boolean old,
+            final boolean neo) {
+        propChange.firePropertyChange(property, old, neo);
+    }
+
+    public void firePropertyChange(final String property, final double old,
+            final double neo) {
+        propChange.firePropertyChange(property, old, neo);
+    }
+
+    public void firePropertyChange(final String property, final int old,
+            final int neo) {
+        propChange.firePropertyChange(property, old, neo);
+    }
+
+    public void firePropertyChange(final String property, final Object old,
+            final Object neo) {
+        propChange.firePropertyChange(property, old, neo);
+    }
+
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return propChange.getPropertyChangeListeners();
+    }
+
+    public PropertyChangeListener[] getPropertyChangeListeners(
+            final String property) {
+        return propChange.getPropertyChangeListeners(property);
     }
 
     @Override
     public abstract int hashCode();
+
+    public boolean hasListeners(final String property) {
+        return propChange.hasListeners(property);
+    }
 
     /**
      * @see java.lang.Object#hashCode()

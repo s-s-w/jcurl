@@ -58,21 +58,21 @@ public interface JCurlSerializer {
      * {@link Payload} factory.
      * 
      * @param annotations
-     * @param trajectory
-     * @return the payload
-     */
-    public Payload wrap(Map<String, Object> annotations,
-            TrajectorySet trajectory);
-
-    /**
-     * {@link Payload} factory.
-     * 
-     * @param annotations
      * @param trajectories
      * @return the payload
      */
     public Payload wrap(Map<String, Object> annotations,
             Iterable<TrajectorySet> trajectories);
+
+    /**
+     * {@link Payload} factory.
+     * 
+     * @param annotations
+     * @param trajectory
+     * @return the payload
+     */
+    public Payload wrap(Map<String, Object> annotations,
+            TrajectorySet trajectory);
 
     public String write(Payload src);
 

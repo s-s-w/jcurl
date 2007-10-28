@@ -87,22 +87,31 @@ class RockFloat extends Rock implements Serializable {
 
     @Override
     public void setA(final double alpha) {
+        if (alpha == x[2])
+            return;
+        propChange.firePropertyChange("a", x[2], alpha);
         x[2] = (float) alpha;
         dirty = true;
     }
 
     @Override
     public void setLocation(final double x, final double y) {
+        if (x == this.x[0] && y == this.x[1])
+            return;
         this.x[0] = (float) x;
         this.x[1] = (float) y;
+        propChange.firePropertyChange(null, null, null);
         dirty = true;
     }
 
     @Override
-    public void setLocation(final double x, final double y, final double z) {
+    public void setLocation(final double x, final double y, final double a) {
+        if (x == this.x[0] && y == this.x[1] && a == this.x[2])
+            return;
         this.x[0] = (float) x;
         this.x[1] = (float) y;
-        this.x[2] = (float) z;
+        this.x[2] = (float) a;
+        propChange.firePropertyChange(null, null, null);
         dirty = true;
     }
 
@@ -110,22 +119,23 @@ class RockFloat extends Rock implements Serializable {
     public void setLocation(final double[] pt) {
         if (pt.length != 3)
             throw new IllegalArgumentException();
-        if (pt[0] == x[0] && pt[1] == x[1] && pt[2] == x[2])
-            return;
-        setX(pt[0]);
-        setY(pt[0]);
-        setA(pt[0]);
-        // dirty = true;
+        setLocation(pt[0], pt[1], pt[2]);
     }
 
     @Override
     public void setX(final double x) {
+        if (x == this.x[0])
+            return;
         this.x[0] = (float) x;
+        propChange.firePropertyChange("x", this.x[0], x);
         dirty = true;
     }
 
     @Override
     public void setY(final double y) {
+        if (y == x[1])
+            return;
+        propChange.firePropertyChange("y", x[1], y);
         x[1] = (float) y;
         dirty = true;
     }

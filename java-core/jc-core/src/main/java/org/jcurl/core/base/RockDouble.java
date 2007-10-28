@@ -91,6 +91,7 @@ public class RockDouble extends Rock implements Serializable {
     public void setA(final double alpha) {
         if (alpha == x[2])
             return;
+        propChange.firePropertyChange("a", x[2], alpha);
         x[2] = alpha;
         dirty = true;
     }
@@ -101,6 +102,7 @@ public class RockDouble extends Rock implements Serializable {
             return;
         this.x[0] = x;
         this.x[1] = y;
+        // FIXME propChange.firePropertyChange(null, null, null);
         dirty = true;
     }
 
@@ -111,6 +113,7 @@ public class RockDouble extends Rock implements Serializable {
         this.x[0] = x;
         this.x[1] = y;
         this.x[2] = a;
+        // FIXME propChange.firePropertyChange(null, null, null);
         dirty = true;
     }
 
@@ -121,6 +124,7 @@ public class RockDouble extends Rock implements Serializable {
         if (pt[0] == x[0] && pt[1] == x[1] && pt[2] == x[2])
             return;
         System.arraycopy(pt, 0, x, 0, 3);
+        // FIXME propChange.firePropertyChange(null, null, null);
         dirty = true;
     }
 
@@ -128,6 +132,7 @@ public class RockDouble extends Rock implements Serializable {
     public void setX(final double x) {
         if (x == this.x[0])
             return;
+        propChange.firePropertyChange("x", this.x[0], x);
         this.x[0] = x;
         dirty = true;
     }
@@ -136,6 +141,7 @@ public class RockDouble extends Rock implements Serializable {
     public void setY(final double y) {
         if (y == x[1])
             return;
+        propChange.firePropertyChange("y", x[1], y);
         x[1] = y;
         dirty = true;
     }

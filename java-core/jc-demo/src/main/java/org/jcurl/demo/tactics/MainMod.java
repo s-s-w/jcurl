@@ -22,6 +22,7 @@ import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.JCurlSerializer.Payload;
 import org.jcurl.core.helpers.AnnoHelp;
+import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.helpers.Unit;
 import org.jcurl.core.io.XStreamSerializer;
@@ -33,9 +34,10 @@ import org.jcurl.core.model.NewtonCollissionDetector;
 /**
  * Data model for {@link MainPanel}
  */
-class MainMod implements ZuiMod, RockMod {
+class MainMod extends MutableObject implements ZuiMod, RockMod {
 
     private static final Log log = LogFactory.getLog(MainMod.class);
+    private static final long serialVersionUID = 4796273188307263927L;
 
     static CurveManager initHammy(CurveManager te) {
         if (te == null)
@@ -248,6 +250,8 @@ class MainMod implements ZuiMod, RockMod {
     }
 
     public void setCurveStore(final CurveStore curveStore) {
+        propChange.firePropertyChange("curveStore", ts.getCurveStore(),
+                curveStore);
         ts.setCurveStore(curveStore);
     }
 

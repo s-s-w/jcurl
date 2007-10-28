@@ -35,15 +35,15 @@ import javax.swing.WindowConstants;
 import org.jcurl.demo.tactics.Controller.MainController;
 import org.jcurl.demo.tactics.Controller.ZuiController;
 
-/**
- * Create menues and wire them up with {@link Action}s from
- * {@link MainController} and {@link ZuiController}.
- * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
- */
 public class MainApp extends JFrame {
 
+    /**
+     * Create menues and wire them up with {@link Action}s from
+     * {@link MainController} and {@link ZuiController}.
+     * 
+     * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+     * @version $Id$
+     */
     static class Menufactory {
         private final MainController mainc;
         private final ZuiController zuic;
@@ -230,9 +230,9 @@ public class MainApp extends JFrame {
         // PDebug.debugPrintUsedMemory = true;
         // PDebug.debugPrintFrameRate = true;
         // PDebug.debugPaintCalls = true;
+        final MainApp application = new MainApp();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                final MainApp application = new MainApp();
                 application
                         .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
                 application.setSize(800, 600);
@@ -240,14 +240,25 @@ public class MainApp extends JFrame {
                 application.center();
             }
         });
+        final long dt = 20;
+        while (application.m.getCurrentTime() < tmax) {
+            // application.repaint();
+            try {
+                Thread.sleep(dt);
+            } catch (final InterruptedException e1) {
+                break;
+            }
+            application.m.setCurrentTime(application.m.getCurrentTime() + dt
+                    * 1e-3);
+        }
     }
 
+    final MainMod m;
     final MainController mainc;
     final ZuiController zuic;
 
     public MainApp() {
-        final MainMod m = new MainMod();
-        m.setCurrentTime(tmax);
+        m = new MainMod();
         final ZuiPanel zui = new ZuiPanel(m);
         final MainPanel p = new MainPanel(m, zui);
         getContentPane().add(p);

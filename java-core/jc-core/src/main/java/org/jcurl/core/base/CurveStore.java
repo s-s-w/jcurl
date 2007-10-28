@@ -21,6 +21,7 @@ package org.jcurl.core.base;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import org.jcurl.core.helpers.IPropertyChangeSupport;
 import org.jcurl.math.R1RNFunction;
 
 /**
@@ -30,10 +31,10 @@ import org.jcurl.math.R1RNFunction;
  * </p>
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:CurveStore.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public interface CurveStore extends
-        Iterable<Iterable<Entry<Double, R1RNFunction>>> {
+        Iterable<Iterable<Entry<Double, R1RNFunction>>>, IPropertyChangeSupport {
 
     public abstract void add(final int i, final double t, final R1RNFunction f,
             final double tstop);

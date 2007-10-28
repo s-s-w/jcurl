@@ -3,10 +3,13 @@ package org.jcurl.demo.tactics;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JComponent;
 import javax.swing.undo.StateEdit;
 
+import org.jcurl.core.base.CurveStore;
 import org.jcurl.core.zui.PCurveStore;
 import org.jcurl.core.zui.PIceFactory;
 import org.jcurl.core.zui.PPositionSet;
@@ -22,14 +25,17 @@ import edu.umd.cs.piccolo.util.PPaintContext;
 /**
  * Graphical display for {@link ZuiMod}.
  */
-class ZuiPanel extends JComponent {
+class ZuiPanel extends JComponent implements PropertyChangeListener {
     private static final long serialVersionUID = -4648771240323713217L;
+
     private final PNode ice;
     private final int major = 255;
     private final int minor = 64;
     private final PCanvas pico;
+    private final PCurveStore traj;
 
     public ZuiPanel(final ZuiMod model) {
+        model.addPropertyChangeListener("curveStore", this);
         setLayout(new BorderLayout());
         this.add(pico = new PCanvas(), BorderLayout.CENTER);
         pico.setBackground(new Color(0xE8E8FF));
@@ -40,7 +46,7 @@ class ZuiPanel extends JComponent {
 
         pico.getLayer().addChild(ice = new PIceFactory.Fancy().newInstance());
 
-        final PCurveStore traj = new PCurveStore(model.getCurveStore(),
+        traj = new PCurveStore(model.getCurveStore(),
                 new PTrajectoryFactory.Fancy(), MainApp.tmax);
         final PNode initial = new PPositionSet(model.getInitialPos(),
                 new PRockFactory.Fancy(minor));
@@ -62,7 +68,7 @@ class ZuiPanel extends JComponent {
                 edit.end();
                 model.addEdit(edit);
                 edit = null;
-                traj.sync(MainApp.tmax);
+                // FIXME traj.sync(MainApp.tmax);
             }
         });
         final PNode current = new PPositionSet(model.getCurrentPos(),
@@ -71,6 +77,14 @@ class ZuiPanel extends JComponent {
         ice.addChild(traj);
         ice.addChild(current);
         ice.addChild(initial);
+    }
+
+    public void propertyChange(final PropertyChangeEvent evt) {
+        final Object src = evt.getSource();
+        final CurveStore cs = (CurveStore) src;
+        traj.replaceWith(new PCurveStore(cs, new PTrajectoryFactory.Fancy(),
+                MainApp.tmax));
+        traj.invalidatePaint();
     }
 
     public void zoom(final Rectangle2D r, final int millis) {

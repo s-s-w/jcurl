@@ -60,8 +60,7 @@ import org.jcurl.core.model.CurveManager;
 
 class MainMultiPanel extends JPanel {
 
-    static class Controller implements ChangeListener,
-            UndoableEditListener {
+    static class Controller implements ChangeListener, UndoableEditListener {
         private final static double ENDTIME = 30.0;
 
         private static final Log log = LogFactory.getLog(Controller.class);

@@ -28,6 +28,11 @@ import org.jcurl.math.R1RNFunction;
 
 public class NewtonStopDetector implements StopDetector {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -366297770889979398L;
+
     private static final Log log = JCLoggerFactory
             .getLogger(NewtonStopDetector.class);
 

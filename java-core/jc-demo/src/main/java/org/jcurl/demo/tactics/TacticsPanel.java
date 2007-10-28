@@ -20,6 +20,8 @@ package org.jcurl.demo.tactics;
 
 import java.awt.BorderLayout;
 import java.awt.geom.Rectangle2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JPanel;
 
@@ -47,6 +49,60 @@ public class TacticsPanel extends JPanel {
             model = cm;
         }
 
+        public void addPropertyChangeListener(final PropertyChangeListener pcl) {
+        }
+
+        public void addPropertyChangeListener(final String property,
+                final PropertyChangeListener pcl) {
+        }
+
+        public void fireIndexedPropertyChange(final String property,
+                final int index, final boolean old, final boolean neo) {
+            // TODO Auto-generated method stub
+
+        }
+
+        public void fireIndexedPropertyChange(final String property,
+                final int index, final int old, final int neo) {
+            // TODO Auto-generated method stub
+
+        }
+
+        public void fireIndexedPropertyChange(final String property,
+                final int index, final Object old, final Object neo) {
+            // TODO Auto-generated method stub
+
+        }
+
+        public void firePropertyChange(final PropertyChangeEvent event) {
+            // TODO Auto-generated method stub
+
+        }
+
+        public void firePropertyChange(final String property,
+                final boolean old, final boolean neo) {
+            // TODO Auto-generated method stub
+
+        }
+
+        public void firePropertyChange(final String property, final double old,
+                final double neo) {
+            // TODO Auto-generated method stub
+
+        }
+
+        public void firePropertyChange(final String property, final int old,
+                final int neo) {
+            // TODO Auto-generated method stub
+
+        }
+
+        public void firePropertyChange(final String property, final Object old,
+                final Object neo) {
+            // TODO Auto-generated method stub
+
+        }
+
         public PositionSet getCurrentPos() {
             return model.getCurrentPos();
         }
@@ -61,6 +117,34 @@ public class TacticsPanel extends JPanel {
 
         public ComputedTrajectorySet getModel() {
             return model;
+        }
+
+        public PropertyChangeListener[] getPropertyChangeListeners() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public PropertyChangeListener[] getPropertyChangeListeners(
+                final String property) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public boolean hasListeners(final String property) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        public void removePropertyChangeListener(
+                final PropertyChangeListener pcl) {
+            // TODO Auto-generated method stub
+
+        }
+
+        public void removePropertyChangeListener(final String property,
+                final PropertyChangeListener pcl) {
+            // TODO Auto-generated method stub
+
         }
     }
 
