@@ -181,7 +181,7 @@
 					<docletArtifact>
 						<groupId>gr.spinellis</groupId>
 						<artifactId>UmlGraph</artifactId>
-						<version>4.4</version>
+						<version>4.6</version>
 					</docletArtifact>
 					<!-- http://www.spinellis.gr/sw/umlgraph/doc/cd-opt.html -->
 					<additionalparam>
@@ -189,6 +189,17 @@
 						-collpackages java.util.* -qualify
 						-postfixpackage -nodefontsize 9
 						-nodefontpackagesize 7 -visibility -operations
+						-link ${httpsitebase}/jc-core/${pom.version}/apidocs/
+						-link ${httpsitebase}/jc-zui/${pom.version}/apidocs/
+						-link ${httpsitebase}/jc-xsio/${pom.version}/apidocs/
+						-link http://java.sun.com/j2se/1.5.0/docs/api/
+						-link http://jakarta.apache.org/commons/logging/commons-logging-1.1/apidocs/
+						-link http://xstream.codehaus.org/javadoc/
+						-link http://www.cs.umd.edu/hcil/jazz/learn/piccolo/doc-1.2/api/
+						-link http://download.java.net/media/java3d/javadoc/1.5.0-latest
+						-link http://www.picocontainer.org/versions/1.0/apidocs/
+						-link http://jakarta.apache.org/commons/math/api-1.1/
+						-link http://geosoft.no/graphics/G/docs/
 					</additionalparam>
 				</configuration>
 			</plugin>
