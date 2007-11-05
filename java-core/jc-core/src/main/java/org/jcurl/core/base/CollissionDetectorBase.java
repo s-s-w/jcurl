@@ -25,10 +25,9 @@ import org.jcurl.math.R1RNFunction;
  * Find Collissions of two spheres moving along curves.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:CollissionDetectorBase.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
-public abstract class CollissionDetectorBase implements Strategy,
-        CollissionDetector {
+public abstract class CollissionDetectorBase implements CollissionDetector {
 
     public double compute(final double t0, final double tstop,
             final R1RNFunction fa, final double ra, final R1RNFunction fb,

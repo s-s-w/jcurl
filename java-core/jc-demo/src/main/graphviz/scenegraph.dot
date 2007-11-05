@@ -1,4 +1,4 @@
-#!/usr/bin/dot -Tsvg -o TaticsApplet.svg
+#!/usr/bin/dot -Tpdf -o scenegraph.pdf
 /*
     $Id: deployment.dot 12872 2006-10-31 16:59:40Z rohrmoser $
 

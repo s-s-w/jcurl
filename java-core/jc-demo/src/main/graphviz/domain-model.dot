@@ -1,0 +1,168 @@
+#!/usr/bin/dot -Tpdf -o domain-model.pdf
+/*
+    $Id: deployment.dot 12872 2006-10-31 16:59:40Z rohrmoser $
+
+        See http://www.graphviz.org/Documentation.php
+*/
+digraph G {
+	rankdir=BT;
+	fontname="Helvetica";
+
+#	edge [fontname="Helvetica",fontsize=10, fontcolor="black", labelfontname="Helvetica",labelfontsize=10, color="red"];
+	node [fontname="Helvetica",fontsize=10, fontcolor="black", shape=record, color="red", style=filled, fillcolor="#FFFFCC", labeljust="r"];
+	edge [arrowhead=open];
+#	node [style=filled, fillcolor="lightblue"];
+#	compound=true;
+
+subgraph cluster_model {
+	label="Model";
+
+#	JDK
+	List [
+		label = "{ \<\<Interface\>\>\n java.util.List||}"
+	];
+	Point2D [
+		label = "{ \<\<Interface\>\>\n java.awt.geom.Point2D||}"
+	];
+
+#	JCurl
+
+	PropModel [
+		label = "{ \<\<Interface\>\>\n PropModel||}"
+	];
+
+	Rock [
+		label = "{ \<\<Class\>\>\n Rock|| }"
+	];
+
+	TrajectorySet [
+		label = "{ \<\<Interface\>\>\n TrajectorySet| \
+		currentTime | \
+		getCurrentPos \n \
+		getCurrentSpeed \n \
+		getCurves \n \
+		... }"
+	];
+
+	ComputedTrajectorySet [
+		label = "{ \<\<Interface\>\>\n ComputedTrajectorySet| \
+		curler \n \
+		collider \n \
+		initialPos \n \
+		initialSpeed | \
+		getCurves \n \
+		... }"
+	];
+
+	StoredTrajectorySet [
+		label = "{ \<\<Interface\>\>\n StoredTrajectorySet|| getCurves }"
+	];
+
+	Volume [
+		label = "{ \<\<Interface\>\>\n TrajectoryVolume||}"
+	];
+
+	Curler [
+		label = "{ \<\<Interface\>\>\n Curler| \
+		drawToTeeTime \n \
+		drawToTeeCurl | \
+		computeCurve \n \
+		... }"
+	];
+
+	Collider [
+		label = "{ \<\<Interface\>\>\n Collider| | \
+		computeHit \n \
+		... }"
+	];
+
+	CollissionDetector [
+		label = "{ \<\<Interface\>\>\n CollissionDetector | | }"
+	];
+
+	StopDetector [
+		label = "{ \<\<Interface\>\>\n StopDetector | | }"
+	];
+
+	CurveStore [
+		label = "{ \<\<Class\>\>\n CurveStore|| }"
+	];
+
+	CurveManager [
+		label = "{ \<\<Class\>\>\n CurveManager|| }"
+	];
+
+	Broom [
+		label = "{ \<\<Class\>\>\n Broom|splitTime| }"
+	];
+
+#	Inheritance
+	Rock -> Point2D;
+	Volume -> List;
+	Volume -> PropModel;
+	TrajectorySet -> PropModel;
+	StoredTrajectorySet -> TrajectorySet;
+	CurveStore -> StoredTrajectorySet;
+	ComputedTrajectorySet -> TrajectorySet;
+	CurveManager -> ComputedTrajectorySet;
+	Curler -> PropModel;
+	Collider -> PropModel;
+	Broom -> Rock;
+
+#	Aggregation
+	Volume -> TrajectorySet [arrowhead=diamond];
+	ComputedTrajectorySet -> Curler [arrowhead=diamond];
+	ComputedTrajectorySet -> Collider [arrowhead=diamond];
+	CurveManager -> CollissionDetector [arrowhead=diamond];
+	CurveManager -> StopDetector [arrowhead=diamond];
+	CurveManager -> CurveStore [arrowhead=diamond];
+}
+
+subgraph cluster_view {
+	label="View";
+
+	JPanel [
+		label = "{ \<\<Class\>\>\n PropPanel|| }"
+	];
+
+	PCanvas [
+		label = "{ \<\<Class\>\>\n PCanvas|| }"
+	];
+
+	PropPanel [
+		label = "{ \<\<Class\>\>\n PropPanel|| }"
+	];
+
+	BroomPanel [
+		label = "{ \<\<Class\>\>\n BroomPanel|| }"
+	];
+
+	VolumeBrowser [
+		label = "{ \<\<Class\>\>\n VolumeBrowser|| }"
+	];
+
+	IcePropPanel [
+		label = "{ \<\<Class\>\>\n IcePropPanel|| }"
+	];
+
+	TacticsZui [
+		label = "{ \<\<Class\>\>\n TacticsZui|| }"
+	];
+
+	PropPanel -> JPanel;
+	BroomPanel -> JPanel;
+	VolumeBrowser -> JPanel;
+	PCanvas -> JPanel;
+	TacticsZui -> PCanvas;
+
+	IcePropPanel -> PropPanel [arrowhead=diamond];
+	IcePropPanel -> PropPanel [arrowhead=diamond];
+}
+
+PropPanel -> PropModel [arrowhead=diamond];
+VolumeBrowser -> Volume [arrowhead=diamond];
+TacticsZui -> ComputedTrajectorySet [arrowhead=diamond];
+TacticsZui -> Broom [arrowhead=diamond];
+BroomPanel -> Broom [arrowhead=diamond];
+IcePropPanel -> ComputedTrajectorySet [arrowhead=diamond];
+}
