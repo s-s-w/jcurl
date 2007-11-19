@@ -105,25 +105,27 @@ public class BroomPrompt {
     }
 
     static PNode createBroomPrompt(final Paint sp) {
+        final int angle = 50;
         final float ro = RockProps.DEFAULT.getRadius();
         final float ri = 0.5F * ro;
-        final Shape outer = new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 0, 270,
-                Arc2D.OPEN);
-        final Shape inner = new Arc2D.Float(-ri, -ri, 2 * ri, 2 * ri, 0, 270,
-                Arc2D.OPEN);
+
         final Font fo = new Font("SansSerif", Font.BOLD, 1);
         final PNode p = new PComposite();
-        p.setTransform(AffineTransform.getScaleInstance(1, -1));
+        
+        // outturn: p.setTransform(AffineTransform.getScaleInstance(-1, 1));
         final Stroke st = new BasicStroke(0.01f);
-        p.addChild(node(outer, st, sp));
-        p.addChild(node(inner, st, sp));
+        // (full) inner circle:
+        p.addChild(node(new Arc2D.Float(-ri, -ri, 2 * ri, 2 * ri, 0, 270,
+                Arc2D.OPEN), st, sp));
+        // (partial) outer circle:
+        p.addChild(node(new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 0,
+                270 + angle, Arc2D.OPEN), st, sp));
+        // y-axis:
         p.addChild(node(new Line2D.Float(0, 1.2f * ro, 0, -5 * ro), st, sp));
+        // x-axis:
         p.addChild(node(new Line2D.Float(-1.2f * ro, 0, 1.2f * ro, 0), st, sp));
 
-        final int angle = 50;
-        p.addChild(node(new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 270, angle,
-                Arc2D.OPEN), st, sp));
-
+        // arrow:
         float f = ro / 20;
         PPath s = node(createArrowHead(f, 3 * f, 0.5f * f), st, sp);
         double ar = Math.PI * (angle + 6) / 180;
@@ -196,6 +198,9 @@ public class BroomPrompt {
                 pc
                         .setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
                 pc.setBackground(new Color(0xE8E8FF));
+                // make right-handed and upright:
+                pc.getLayer().setTransform(
+                        AffineTransform.getScaleInstance(1, -1));
                 pc.getLayer().addChild(createBroomPrompt(Color.BLACK));
                 application.getContentPane().add(pc);
                 application.setSize(800, 600);
