@@ -105,26 +105,22 @@ public class BroomPrompt {
     }
 
     static PNode createBroomPrompt(final Paint sp) {
-        final int angle = 50;
         final float ro = RockProps.DEFAULT.getRadius();
         final float ri = 0.5F * ro;
 
         final Font fo = new Font("SansSerif", Font.BOLD, 1);
-        final PNode p = new PComposite();
+        final PNode bp = new PComposite();
         
-        // outturn: p.setTransform(AffineTransform.getScaleInstance(-1, 1));
+        final PNode handle = new PNode();
+        final int angle = 50;
+        // outturn: handle.setTransform(AffineTransform.getScaleInstance(-1, 1));
         final Stroke st = new BasicStroke(0.01f);
         // (full) inner circle:
-        p.addChild(node(new Arc2D.Float(-ri, -ri, 2 * ri, 2 * ri, 0, 270,
+        handle.addChild(node(new Arc2D.Float(-ri, -ri, 2 * ri, 2 * ri, 0, 270,
                 Arc2D.OPEN), st, sp));
         // (partial) outer circle:
-        p.addChild(node(new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 0,
+        handle.addChild(node(new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 0,
                 270 + angle, Arc2D.OPEN), st, sp));
-        // y-axis:
-        p.addChild(node(new Line2D.Float(0, 1.2f * ro, 0, -5 * ro), st, sp));
-        // x-axis:
-        p.addChild(node(new Line2D.Float(-1.2f * ro, 0, 1.2f * ro, 0), st, sp));
-
         // arrow:
         float f = ro / 20;
         PPath s = node(createArrowHead(f, 3 * f, 0.5f * f), st, sp);
@@ -132,14 +128,21 @@ public class BroomPrompt {
         s.translate(ro * Math.sin(ar), ro * Math.cos(ar));
         ar = Math.PI * angle / 180;
         s.rotate(-ar);
-        p.addChild(s);
+        handle.addChild(s);
+        bp.addChild(handle);
 
+        // y-axis:
+        bp.addChild(node(new Line2D.Float(0, 1.2f * ro, 0, -5 * ro), st, sp));
+        // x-axis:
+        bp.addChild(node(new Line2D.Float(-1.2f * ro, 0, 1.2f * ro, 0), st, sp));
+
+        // slider
         f = 3.5f / 5.0f;
         s = node(createSlider(0.4f * ro), null, null);
         s.setPaint(interpolateRGB(Color.BLUE, Color.RED, f));
         s.translate(0, -5 * f * ro);
-        p.addChild(s);
-        return p;
+        bp.addChild(s);
+        return bp;
     }
 
     private static Shape createSlider(final float f) {
