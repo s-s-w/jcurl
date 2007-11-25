@@ -72,7 +72,6 @@ public class KeyboardZoom extends PBasicInputEventHandler {
     public void keyPressed(final PInputEvent event) {
         switch (event.getKeyCode()) {
         case KeyEvent.VK_HOME:
-        case KeyEvent.VK_H:
             event.setHandled(true);
             if (event.isControlDown())
                 cam.animateViewToCenterBounds(twelveP, true, _500);

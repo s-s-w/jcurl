@@ -104,44 +104,205 @@ public class BroomPrompt {
         return gp;
     }
 
-    static PNode createBroomPrompt(final Paint sp) {
+    static PNode createBroomPrompt01(final Paint sp) {
         final float ro = RockProps.DEFAULT.getRadius();
         final float ri = 0.5F * ro;
-
         final Font fo = new Font("SansSerif", Font.BOLD, 1);
-        final PNode bp = new PComposite();
-        
-        final PNode handle = new PNode();
-        final int angle = 50;
-        // outturn: handle.setTransform(AffineTransform.getScaleInstance(-1, 1));
+        final PNode bp = new PNode(); // PComposite();
+        bp.setPickable(true);
         final Stroke st = new BasicStroke(0.01f);
-        // (full) inner circle:
-        handle.addChild(node(new Arc2D.Float(-ri, -ri, 2 * ri, 2 * ri, 0, 270,
-                Arc2D.OPEN), st, sp));
-        // (partial) outer circle:
-        handle.addChild(node(new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 0,
-                270 + angle, Arc2D.OPEN), st, sp));
-        // arrow:
-        float f = ro / 20;
-        PPath s = node(createArrowHead(f, 3 * f, 0.5f * f), st, sp);
-        double ar = Math.PI * (angle + 6) / 180;
-        s.translate(ro * Math.sin(ar), ro * Math.cos(ar));
-        ar = Math.PI * angle / 180;
-        s.rotate(-ar);
-        handle.addChild(s);
-        bp.addChild(handle);
 
-        // y-axis:
-        bp.addChild(node(new Line2D.Float(0, 1.2f * ro, 0, -5 * ro), st, sp));
-        // x-axis:
-        bp.addChild(node(new Line2D.Float(-1.2f * ro, 0, 1.2f * ro, 0), st, sp));
+        final PNode handle = new PNode();
+        { // opaque Background
+            float f = 1.0f;
+            PNode bg = node(new Arc2D.Float(-f * ro, -f * ro, 2 * f * ro, 2 * f
+                    * ro, 0, 360, Arc2D.OPEN), null, null);
+            bg.setPaint(new Color(1, 1, 1, 0.65f));
+            handle.addChild(bg);
+        }
+        {
+            final int angle = 75;
+            // outturn: handle.setTransform(AffineTransform.getScaleInstance(-1,
+            // 1));
+            // (partial) inner circle:
+            handle.addChild(node(new Arc2D.Float(-ri, -ri, 2 * ri, 2 * ri, 0,
+                    270, Arc2D.OPEN), st, sp));
+            // (partial) outer circle:
+            handle.addChild(node(new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 0,
+                    270 + angle, Arc2D.OPEN), st, sp));
+            // arrow:
+            float f = ro / 20;
+            PPath s = node(createArrowHead(f, 3 * f, 0.5f * f), st, sp);
+            double ar = Math.PI * (angle + 6) / 180;
+            s.translate(ro * Math.sin(ar), ro * Math.cos(ar));
+            ar = Math.PI * angle / 180;
+            s.rotate(-ar);
+            handle.addChild(s);
+            bp.addChild(handle);
+        }
+        {
+            // y-axis:
+            bp
+                    .addChild(node(new Line2D.Float(0, 1.2f * ro, 0, -5 * ro),
+                            st, sp));
+            // x-axis:
+            bp.addChild(node(new Line2D.Float(-1.2f * ro, 0, 1.2f * ro, 0), st,
+                    sp));
+        }
+        {
+            // slider
+            float f = 3.5f / 5.0f;
+            PPath s = node(createSlider(0.4f * ro), null, null);
+            s.setPaint(interpolateRGB(Color.BLUE, Color.RED, f));
+            s.translate(0, -5 * f * ro);
+            bp.addChild(s);
+        }
+        return bp;
+    }
 
-        // slider
-        f = 3.5f / 5.0f;
-        s = node(createSlider(0.4f * ro), null, null);
-        s.setPaint(interpolateRGB(Color.BLUE, Color.RED, f));
-        s.translate(0, -5 * f * ro);
-        bp.addChild(s);
+    static PNode createBroomPrompt02(final Paint sp) {
+        final int turn = 150; // >0: counterclockwise / out-turn
+        final Color rc = Color.YELLOW;
+        final float slider = 4.0f / 5.0f;
+
+        final Stroke st = new BasicStroke(0.01f, BasicStroke.CAP_BUTT,
+                BasicStroke.JOIN_BEVEL);
+        final Color bgc = new Color(1, 1, 1, 0.65f);
+        final Font fo = new Font("SansSerif", Font.BOLD, 1);
+        final float ro = RockProps.DEFAULT.getRadius();
+        final float ri = 0.5F * ro;
+        final PNode bp = new PNode(); // PComposite();
+        bp.setPickable(true);
+        final PNode handle = new PNode();
+        { // opaque Background
+            float f = 1.2f;
+            PNode bg = node(new Arc2D.Float(-f * ro, -f * ro, 2 * f * ro, 2 * f
+                    * ro, 0, 360, Arc2D.OPEN), null, null);
+            bg.setPaint(bgc);
+            bg.setPickable(true);
+            handle.addChild(bg);
+        }
+        {
+            final int angle;
+            if (turn > 0) {
+                handle.setTransform(AffineTransform.getScaleInstance(-1, 1));
+                angle = -turn;
+            } else
+                angle = turn;
+            if (rc != null) {
+                // (1/4+angle) pie:
+                PPath pie = node(new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, -90,
+                        -angle, Arc2D.PIE), null, null);
+                pie.setPaint(rc);
+                handle.addChild(pie);
+            }
+            // (3/4) inner circle:
+            handle.addChild(node(new Arc2D.Float(-ri, -ri, 2 * ri, 2 * ri, 90,
+                    180 - angle, Arc2D.OPEN), st, sp));
+            // (3/4+angle) outer circle:
+            handle.addChild(node(new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 90,
+                    180 - angle - 12, Arc2D.OPEN), st, sp));
+            // arrow:
+            float f = ro / 10;
+            PPath s = node(createArrowHead(f, 3 * f, 0.5f * f), null, null);
+            s.setPaint(sp);
+            double ar = Math.PI * angle / 180.0;
+            s.translate(-ro * Math.sin(ar), ro * Math.cos(ar));
+            s.rotate(Math.PI * (angle + 8) / 180.0);
+            handle.addChild(s);
+            bp.addChild(handle);
+        }
+        {
+            // y-axis:
+            bp
+                    .addChild(node(new Line2D.Float(0, 1.2f * ro, 0, -5 * ro),
+                            st, sp));
+            // x-axis:
+            bp.addChild(node(new Line2D.Float(-1.2f * ro, 0, 1.2f * ro, 0), st,
+                    sp));
+        }
+        {
+            // slider
+            PPath s = node(createSlider(0.4f * ro), st, sp);
+            s.setPaint(interpolateRGB(Color.BLUE, Color.RED, slider));
+            s.translate(0, -5 * slider * ro);
+            s.setPickable(true);
+            bp.addChild(s);
+        }
+        return bp;
+    }
+
+    static PNode createBroomPrompt03(final Paint sp) {
+        final int turn = 180; // >0: counterclockwise / out-turn
+        final Color rc = Color.YELLOW;
+        final float slider = 4.0f / 5.0f;
+
+        final Stroke st = new BasicStroke(0.01f, BasicStroke.CAP_BUTT,
+                BasicStroke.JOIN_BEVEL);
+        final Color bgc = new Color(1, 1, 1, 0.65f);
+        final Font fo = new Font("SansSerif", Font.BOLD, 1);
+        final float ro = RockProps.DEFAULT.getRadius();
+        final float ri = 0.5F * ro;
+        final PNode bp = new PNode(); // PComposite();
+        bp.setPickable(true);
+        final PNode handle = new PNode();
+        { // opaque Background
+            float f = 1.2f;
+            PNode bg = node(new Arc2D.Float(-f * ro, -f * ro, 2 * f * ro, 2 * f
+                    * ro, 0, 360, Arc2D.OPEN), null, null);
+            bg.setPaint(bgc);
+            bg.setPickable(true);
+            handle.addChild(bg);
+        }
+        {
+            final int off = 90;
+            final int pieOff = 180;
+            final int angle;
+            if (turn > 0) {
+                handle.setTransform(AffineTransform.getScaleInstance(-1, 1));
+                angle = turn;
+            } else
+                angle = -turn;
+            if (rc != null) {
+                // (1/4+angle) pie:
+                PPath pie = node(new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, off
+                        - pieOff, angle, Arc2D.PIE), null, null);
+                pie.setPaint(rc);
+                handle.addChild(pie);
+            }
+            // (3/4) inner circle:
+            handle.addChild(node(new Arc2D.Float(-ri, -ri, 2 * ri, 2 * ri, off,
+                    pieOff + angle, Arc2D.OPEN), st, sp));
+            // (3/4+angle) outer circle:
+            handle.addChild(node(new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, off,
+                    pieOff + angle - 12, Arc2D.OPEN), st, sp));
+            // arrow:
+            float f = ro / 10;
+            PPath s = node(createArrowHead(f, 3 * f, 0.5f * f), null, null);
+            s.setPaint(sp);
+            double ar = Math.PI * (off+angle) / 180.0;
+            s.translate(-ro * Math.cos(ar), ro * Math.sin(ar));
+            s.rotate(Math.PI * (90 -off - angle + 8) / 180.0);
+            handle.addChild(s);
+            bp.addChild(handle);
+        }
+        {
+            // y-axis:
+            bp
+                    .addChild(node(new Line2D.Float(0, 1.2f * ro, 0, -5 * ro),
+                            st, sp));
+            // x-axis:
+            bp.addChild(node(new Line2D.Float(-1.2f * ro, 0, 1.2f * ro, 0), st,
+                    sp));
+        }
+        {
+            // slider
+            PPath s = node(createSlider(0.4f * ro), st, sp);
+            s.setPaint(interpolateRGB(Color.BLUE, Color.RED, slider));
+            s.translate(0, -5 * slider * ro);
+            s.setPickable(true);
+            bp.addChild(s);
+        }
         return bp;
     }
 
@@ -200,15 +361,19 @@ public class BroomPrompt {
                         .setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
                 pc
                         .setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+                pc.getRoot().getDefaultInputManager().setKeyboardFocus(
+                        new KeyboardZoom(pc.getCamera()));
                 pc.setBackground(new Color(0xE8E8FF));
-                // make right-handed and upright:
-                pc.getLayer().setTransform(
-                        AffineTransform.getScaleInstance(1, -1));
-                pc.getLayer().addChild(createBroomPrompt(Color.BLACK));
+
+                final PNode ice = new PIceFactory.Fancy().newInstance();
+                pc.getLayer().addChild(ice);
+                PNode bp = createBroomPrompt03(Color.BLACK);
+                bp.translate(0.25, -0.5);
+                ice.addChild(bp);
                 application.getContentPane().add(pc);
-                application.setSize(800, 600);
+                application.setSize(500, 800);
                 application.setVisible(true);
-                animateToBounds(pc.getCamera(), houseP, 500);
+                animateToBounds(pc.getCamera(), twelveP, 500);
             }
         });
     }
@@ -217,6 +382,7 @@ public class BroomPrompt {
         final PPath s = new PPath(sh);
         s.setStroke(st);
         s.setStrokePaint(sp);
+        s.setPickable(false);
         return s;
     }
 }
