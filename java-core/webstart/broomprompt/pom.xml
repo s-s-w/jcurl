@@ -1,0 +1,121 @@
+<!-- Test project which creates and signs a jar artifact -->
+<!-- you'll need the maven-webstart plugin:
+	$ svn co  https://svn.codehaus.org/mojo/tags/webstart-maven-plugin-parent-1.0-alpha-1 webstart-maven-plugin
+	$ cd webstart-maven-plugin
+	$ mvn clean install
+	$ scp $HOME/.m2/repository/org/jcurl/demo/viewer/0.7.2/viewer-0.7.2.zip jcurl.org:~/org.jcurl.www/webstart/viewer/0.7.2
+	$ ssh jcurl.org "cd org.jcurl.www/webstart/viewer/0.7.2;unzip viewer-0.7.2.zip"
+	$ javaws http://www.jcurl.org/webstart/viewer/0.7.2/launch.jnlp
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>parent</artifactId>
+		<groupId>org.jcurl.core</groupId>
+		<version>0.7-SNAPSHOT</version>
+		<relativePath>../../parent/pom.xml</relativePath>
+	</parent>
+	<groupId>org.jcurl.demo</groupId>
+	<artifactId>broomprompt</artifactId>
+	<version>0.7-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>JCurl BroomPrompt Demo</name>
+	<scm>
+		<connection>
+			scm:svn:svn://svn.berlios.de/jcurl/trunk/java-core/webstart/${pom.artifactId}
+		</connection>
+		<developerConnection>
+			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/java-core/webstart/${pom.artifactId}
+		</developerConnection>
+		<tag />
+		<url>http://svn.berlios.de/wsvn/jcurl/trunk/java-core/webstart/${pom.artifactId}</url>
+	</scm>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>webstart-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jnlp</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<dependencies>
+						<excludes>
+							<exclude>avalon-framework:avalon-framework</exclude>
+							<exclude>log4j:log4j</exclude>
+							<exclude>logkit:logkit</exclude>
+							<exclude>javax.servlet:servlet-api</exclude>
+						</excludes>
+					</dependencies>
+					<jnlp>
+						<!-- we play with the resource path and template relative path to test MOJO-391 -->
+						<!-- inputTemplateResourcePath>
+							${project.basedir}/src/
+						</inputTemplateResourcePath -->
+						<!--  inputTemplate>viewerdemo.jnlp</inputTemplate -->
+						<resources>
+							${project.basedir}/src/jnlp/resources
+						</resources>
+						<outputFile>launch.jnlp</outputFile>
+						<mainClass>
+							  org.jcurl.demo.zui.BroomPromptDemo
+						</mainClass>
+					</jnlp>
+					<!-- SIGNING -->
+					<!-- defining this will automatically sign the jar and its dependencies -->
+					<sign>
+						<keystore>/tmp/keystore</keystore>
+						<keypass>m2m2m2</keypass>
+						<storepass>m2m2m2</storepass>
+						<!--sigfile>m2m2m2</sigfile-->
+						<alias>mrohrmoser</alias>
+						<validity>30</validity>
+
+						<dnameCn>M. Rohrmoser (http://www.mrohrmoser.de)</dnameCn>
+						<dnameOu>None</dnameOu>
+						<dnameO>M. Rohrmoser</dnameO>
+						<dnameL>Munich</dnameL>
+						<dnameSt></dnameSt>
+						<dnameC>Germany</dnameC>
+						<verify>true</verify>
+					</sign>
+					<keystore>
+						<delete>true</delete>
+						<gen>true</gen>
+					</keystore>
+					<verbose>false</verbose>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>org.jcurl.core</groupId>
+			<artifactId>jc-demo</artifactId>
+			<version>${version}</version>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>jcurl-repository</id>
+			<name>JCurl Maven Repository</name>
+			<layout>default</layout>
+			<url>http://www.jcurl.org/m2/repo</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<distributionManagement>
+		<site>
+			<id>dist-jcurl-sites</id>
+			<url>${scpsitebase}/${pom.artifactId}/${pom.version}</url>
+		</site>
+	</distributionManagement>
+</project>
