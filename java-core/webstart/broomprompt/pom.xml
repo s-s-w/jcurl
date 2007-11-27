@@ -51,6 +51,9 @@
 							<exclude>log4j:log4j</exclude>
 							<exclude>logkit:logkit</exclude>
 							<exclude>javax.servlet:servlet-api</exclude>
+							<exclude>org.jcurl.core:jc-xsio</exclude>
+							<exclude>com.thoughtworks.xstream:xstream</exclude>
+							<exclude>xpp3:xpp3_min</exclude>
 						</excludes>
 					</dependencies>
 					<jnlp>
