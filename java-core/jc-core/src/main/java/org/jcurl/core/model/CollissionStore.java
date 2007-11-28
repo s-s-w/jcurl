@@ -30,7 +30,7 @@ import org.jcurl.core.log.JCLoggerFactory;
  * purpose.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:CollissionStore.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 class CollissionStore {
 
@@ -125,13 +125,13 @@ class CollissionStore {
     /**
      * @param t
      *            may be {@link Double#NaN} (will be sorted last).
-     * @param a
+     * @param a16
      *            0-15
-     * @param b
+     * @param b16
      *            0-15
      */
-    public void add(final double t, final int a, final int b) {
-        final Tupel o = new Tupel(t, a, b);
+    public void add(final double t, final int a16, final int b16) {
+        final Tupel o = new Tupel(t, a16, b16);
         if (log.isDebugEnabled())
             log.debug("collission " + o);
         if (!m.add(o))

@@ -42,6 +42,7 @@ import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CollissionStore.Tupel;
 import org.jcurl.math.MathVec;
+import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.R1RNFunctionImpl;
 
 /**
@@ -100,17 +101,17 @@ public class CurveManager extends MutableObject implements
     /**
      * Internal. Compute one rock curve segment and don't change internal state.
      * 
-     * @param i
+     * @param i16
      *            which rock
      * @param t0
      *            starttime
      * @param sweepFactor
      * @return the new Curve in world coordinates.
      */
-    R1RNFunctionImpl doComputeCurve(final int i, final double t0,
+    R1RNFunctionImpl doComputeCurve(final int i16, final double t0,
             final PositionSet p, final SpeedSet s, final double sweepFactor) {
-        final Rock x = p.getRock(i);
-        final Rock v = s.getRock(i);
+        final Rock x = p.getRock(i16);
+        final Rock v = s.getRock(i16);
         final R1RNFunctionImpl wc;
         if (v.distanceSq(0, 0) == 0)
             wc = CurveStill.newInstance(x);
@@ -122,7 +123,7 @@ public class CurveManager extends MutableObject implements
                     .getA(), sweepFactor), CurveTransformed.createRc2Wc(x, v,
                     new AffineTransform()), t0);
         if (log.isDebugEnabled())
-            log.debug(i + " " + wc);
+            log.debug(i16 + " " + wc);
         return wc;
     }
 
@@ -145,18 +146,19 @@ public class CurveManager extends MutableObject implements
             return;
         final double t0 = 0.0;
         // initial curves:
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            curveStore.reset(i);
-            curveStore.add(i, t0, doComputeCurve(i, t0, initialPos,
+        for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--) {
+            curveStore.reset(i16);
+            curveStore.add(i16, t0, doComputeCurve(i16, t0, initialPos,
                     initialSpeed, NoSweep), _30);
         }
         // initial collission detection:
         collissionStore.clear();
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
-            for (int j = i - 1; j >= 0; j--)
+        for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--)
+            for (int j16 = i16 - 1; j16 >= 0; j16--)
                 // log.info("collissionDetect " + i + ", " + j);
                 collissionStore.add(collissionDetector.compute(t0, _30,
-                        curveStore.getCurve(i), curveStore.getCurve(j)), i, j);
+                        curveStore.getCurve(i16), curveStore.getCurve(j16)),
+                        i16, j16);
         dirty = false;
     }
 
@@ -169,24 +171,25 @@ public class CurveManager extends MutableObject implements
      */
     int doRecomputeCurvesAndCollissionTimes(final int hitMask, double t0) {
         int computedMask = 0;
-        // first computed the new curves:
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            if (!RockSet.isSet(hitMask, i))
+        // first compute the new curves:
+        for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--) {
+            if (!RockSet.isSet(hitMask, i16))
                 continue;
-            curveStore.add(i, t0, doComputeCurve(i, t0, currentPos,
+            curveStore.add(i16, t0, doComputeCurve(i16, t0, currentPos,
                     currentSpeed, NoSweep), _30);
-            computedMask |= 1 << i;
+            computedMask |= 1 << i16;
         }
-        // then and all combinations of potential collissions
+        // then add all combinations of potential collissions
         t0 += hitDt;
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-            if (!RockSet.isSet(computedMask, i))
+        for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--) {
+            if (!RockSet.isSet(computedMask, i16))
                 continue;
-            for (int j = RockSet.ROCKS_PER_SET - 1; j >= 0; j--) {
-                if (i == j || i > j && RockSet.isSet(computedMask, j))
+            for (int j16 = RockSet.ROCKS_PER_SET - 1; j16 >= 0; j16--) {
+                if (i16 == j16 || i16 > j16 && RockSet.isSet(computedMask, j16))
                     continue;
                 collissionStore.replace(collissionDetector.compute(t0, _30,
-                        curveStore.getCurve(i), curveStore.getCurve(j)), i, j);
+                        curveStore.getCurve(i16), curveStore.getCurve(j16)),
+                        i16, j16);
             }
         }
         return computedMask;
@@ -197,6 +200,8 @@ public class CurveManager extends MutableObject implements
      * 
      * @param currentTime
      * @param tmp
+     *            buffer to reduce instanciations. See
+     *            {@link R1RNFunction#at(int, double, double[])}.
      */
     void doUpdatePosAndSpeed(final double currentTime, final double[] tmp) {
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {

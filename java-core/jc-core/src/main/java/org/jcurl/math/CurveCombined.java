@@ -43,7 +43,8 @@ public class CurveCombined extends R1RNFunctionImpl implements
     private static final long serialVersionUID = 5955065096153576747L;
 
     /**
-     * Search only part of an array.
+     * Search only part of an array. Could be more general operating with
+     * {@link Comparable} and {@link Object}s.
      * 
      * @see java.util.Arrays#binarySearch(double[], double)
      * @param a
@@ -123,7 +124,8 @@ public class CurveCombined extends R1RNFunctionImpl implements
     }
 
     /**
-     * Binary search.
+     * Binary search. Could be more general operating with {@link Comparable}
+     * and {@link Object}s.
      * 
      * @param t
      * @return the curve index
@@ -134,8 +136,7 @@ public class CurveCombined extends R1RNFunctionImpl implements
         if (t < parts.get(0).getKey().doubleValue())
             throw new IllegalArgumentException("t < tmin");
         // find the correct index
-        final int idx = CurveCombined.binarySearch(parts, t, 0,
-                parts.size() - 1);
+        final int idx = binarySearch(parts, t, 0, parts.size() - 1);
         if (idx >= 0)
             return idx;
         if (idx == -1)

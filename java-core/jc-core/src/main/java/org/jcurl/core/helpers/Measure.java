@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
  * 
  * @see org.jcurl.core.helpers.Unit
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:Measure.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class Measure {
 
@@ -49,10 +49,8 @@ public class Measure {
                 return new Measure(Double.parseDouble(val), Unit
                         .getInstance(dim));
             } catch (final RuntimeException e) {
-                final IllegalArgumentException a = new IllegalArgumentException(
-                        "Not a measure: [" + measure + "]");
-                a.initCause(e);
-                throw a;
+                throw new IllegalArgumentException("Not a measure: [" + measure
+                        + "]", e);
             }
         }
         throw new IllegalArgumentException("Not a measure: [" + measure + "]");

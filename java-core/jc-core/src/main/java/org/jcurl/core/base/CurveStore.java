@@ -36,10 +36,10 @@ import org.jcurl.math.R1RNFunction;
 public interface CurveStore extends
         Iterable<Iterable<Entry<Double, R1RNFunction>>>, IPropertyChangeSupport {
 
-    public abstract void add(final int i, final double t, final R1RNFunction f,
-            final double tstop);
+    public abstract void add(final int i16, final double t,
+            final R1RNFunction f, final double tstop);
 
-    public abstract R1RNFunction getCurve(final int i);
+    public abstract R1RNFunction getCurve(final int i16);
 
     /**
      * Ascending iterator over the curves returning each segment.
@@ -48,8 +48,8 @@ public interface CurveStore extends
      */
     public abstract Iterator<Iterable<Entry<Double, R1RNFunction>>> iterator();
 
-    public Iterator<Entry<Double, R1RNFunction>> iterator(int i);
+    public Iterator<Entry<Double, R1RNFunction>> iterator(int i16);
 
-    public abstract void reset(final int i);
+    public abstract void reset(final int i16);
 
 }

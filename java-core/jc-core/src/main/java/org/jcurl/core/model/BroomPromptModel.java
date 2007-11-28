@@ -23,6 +23,13 @@ import java.awt.geom.Point2D;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.helpers.MutableObject;
 
+/**
+ * Data model for broom location, rock index, rotation (counter-/clockwise) and
+ * speed (in percent).
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public class BroomPromptModel extends MutableObject {
     private static final long serialVersionUID = 4808528753885429987L;
     private Point2D broom = new Point2D.Float(0, 0);

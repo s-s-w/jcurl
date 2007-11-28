@@ -21,10 +21,10 @@ package org.jcurl.core.base;
 import org.jcurl.math.R1RNFunction;
 
 /**
- * {@link R1RNFunction} based trajectory set.
+ * {@link R1RNFunction} based set of {@link RockSet#ROCKS_PER_SET} trajectories.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:ComputedTrajectorySet.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public interface ComputedTrajectorySet extends TrajectorySet {
 
