@@ -37,6 +37,7 @@ end
 o = DeployWebstart.new "/home/m/.m2/repository", nil, "/home/m/tmp"
 o = DeployWebstart.new
 
+o.deploy "org.jcurl.demo", "broomprompt", "0.7-SNAPSHOT"
 o.deploy "org.jcurl.demo", "tactics", "0.7-SNAPSHOT"
 o.deploy "org.jcurl.demo", "tactics", "0.7.3"
 o.deploy "org.jcurl.demo", "viewer", "0.7-SNAPSHOT"
