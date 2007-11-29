@@ -18,6 +18,7 @@
  */
 package org.jcurl.core.zui;
 
+import java.awt.Cursor;
 import java.awt.event.InputEvent;
 import java.awt.geom.Point2D;
 
@@ -39,6 +40,8 @@ import edu.umd.cs.piccolo.event.PInputEventFilter;
  */
 public class PPositionSetDrag extends PBasicInputEventHandler {
 
+    private static final Cursor CURSOR = new Cursor(Cursor.HAND_CURSOR);
+
     public PPositionSetDrag() {
         setEventFilter(new PInputEventFilter(InputEvent.BUTTON1_MASK));
     }
@@ -59,6 +62,18 @@ public class PPositionSetDrag extends PBasicInputEventHandler {
             return;
         r.setLocation(p);
         PPositionSet.sync(r, node);
+    }
+
+    @Override
+    public void mouseEntered(final PInputEvent arg0) {
+        super.mouseEntered(arg0);
+        arg0.pushCursor(CURSOR);
+    }
+
+    @Override
+    public void mouseExited(final PInputEvent arg0) {
+        super.mouseExited(arg0);
+        arg0.popCursor();
     }
 
     @Override

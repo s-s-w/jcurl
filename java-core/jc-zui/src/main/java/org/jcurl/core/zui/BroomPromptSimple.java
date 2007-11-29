@@ -43,7 +43,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
     private static final Color slow = Color.BLUE;
 
     /**
-     * Pointing along the positive X-axis, ending at 0,0
+     * Pointing along the positive X-axis, tip ending at 0,0
      * 
      * @param wingWidth
      * @param length
@@ -60,7 +60,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
         return gp;
     }
 
-    static PNode createBroomPrompt01(final Paint sp) {
+    private static PNode createBroomPrompt01(final Paint sp) {
         final float ro = RockProps.DEFAULT.getRadius();
         final float ri = 0.5F * ro;
         final Font fo = new Font("SansSerif", Font.BOLD, 1);
@@ -239,11 +239,11 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
                 return false;
             }
         };
-        final PNode bg;
         { // opaque Background
-            float f = 1.2f;
-            bg = node(new Arc2D.Float(-f * outer, -f * outer, 2 * f * outer, 2
-                    * f * outer, 0, 360, Arc2D.OPEN), null, null, scale0);
+            final float f = 1.2f;
+            final PNode bg = node(new Arc2D.Float(-f * outer, -f * outer, 2 * f
+                    * outer, 2 * f * outer, 0, 360, Arc2D.OPEN), null, null,
+                    scale0);
             bg.setPaint(bgc);
             bg.setPickable(true);
             handle.addChild(bg);
@@ -333,6 +333,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
                 self.getModel().setSlider(-(float) p.getY() / slideMax);
             }
         });
+        // wire up the model
         setModel(model);
     }
 
