@@ -2,6 +2,7 @@ package org.jcurl.core.zui;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Paint;
 import java.awt.Shape;
@@ -25,17 +26,21 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PDragEventHandler;
 import edu.umd.cs.piccolo.event.PInputEvent;
 import edu.umd.cs.piccolo.nodes.PPath;
+import edu.umd.cs.piccolo.util.PPaintContext;
 import edu.umd.cs.piccolo.util.PPickPath;
 
 /** Piccolo View + Controller for {@link BroomPromptModel}s. */
 public class BroomPromptSimple extends PNode implements PropertyChangeListener {
-    private static final Color cold = Color.BLUE;
+    private static final Cursor CURSOR = new Cursor(Cursor.HAND_CURSOR);
     private static final Color dark = Color.RED;
-    private static final Color hot = Color.RED;
+    private static final Color fast = Color.RED;
     private static final Color light = Color.YELLOW;
     private static final Log log = JCLoggerFactory
             .getLogger(BroomPromptSimple.class);
+    private static final double scale0 = 0;
     private static final long serialVersionUID = 3115716478135484000L;
+
+    private static final Color slow = Color.BLUE;
 
     /**
      * Pointing along the positive X-axis, ending at 0,0
@@ -67,7 +72,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
         { // opaque Background
             float f = 1.0f;
             final PNode bg = node(new Arc2D.Float(-f * ro, -f * ro, 2 * f * ro,
-                    2 * f * ro, 0, 360, Arc2D.OPEN), null, null);
+                    2 * f * ro, 0, 360, Arc2D.OPEN), null, null, scale0);
             bg.setPaint(new Color(1, 1, 1, 0.65f));
             handle.addChild(bg);
         }
@@ -77,13 +82,14 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
             // 1));
             // (partial) inner circle:
             handle.addChild(node(new Arc2D.Float(-ri, -ri, 2 * ri, 2 * ri, 0,
-                    270, Arc2D.OPEN), st, sp));
+                    270, Arc2D.OPEN), st, sp, scale0));
             // (partial) outer circle:
             handle.addChild(node(new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 0,
-                    270 + angle, Arc2D.OPEN), st, sp));
+                    270 + angle, Arc2D.OPEN), st, sp, scale0));
             // arrow:
             final float f = ro / 20;
-            final PPath s = node(createArrowHead(f, 3 * f, 0.5f * f), st, sp);
+            final PPath s = node(createArrowHead(f, 3 * f, 0.5f * f), st, sp,
+                    scale0);
             double ar = Math.PI * (angle + 6) / 180;
             s.translate(ro * Math.sin(ar), ro * Math.cos(ar));
             ar = Math.PI * angle / 180;
@@ -93,17 +99,16 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
         }
         {
             // y-axis:
-            bp
-                    .addChild(node(new Line2D.Float(0, 1.2f * ro, 0, -5 * ro),
-                            st, sp));
+            bp.addChild(node(new Line2D.Float(0, 1.2f * ro, 0, -5 * ro), st,
+                    sp, scale0));
             // x-axis:
             bp.addChild(node(new Line2D.Float(-1.2f * ro, 0, 1.2f * ro, 0), st,
-                    sp));
+                    sp, scale0));
         }
         {
             // slider
             final float f = 3.5f / 5.0f;
-            final PPath s = node(createSlider(0.4f * ro), null, null);
+            final PPath s = node(createSlider(0.4f * ro), null, null, scale0);
             s.setPaint(interpolateRGB(Color.BLUE, Color.RED, f));
             s.translate(0, -5 * f * ro);
             bp.addChild(s);
@@ -152,8 +157,27 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
                         .getBlue(), b.getBlue(), ratio));
     }
 
-    static PPath node(final Shape sh, final Stroke st, final Paint sp) {
-        final PPath s = new PPath(sh);
+    /**
+     * @param sh
+     * @param st
+     * @param sp
+     * @param minScale
+     *            Threshold for <a
+     *            href="http://www.cs.umd.edu/hcil/jazz/learn/patterns.shtml#Semantic%20Zooming">semantic
+     *            zooming</a>
+     */
+    static PPath node(final Shape sh, final Stroke st, final Paint sp,
+            final double minScale) {
+        final PPath s = new PPath(sh) {
+            private static final long serialVersionUID = 5255259239579383074L;
+
+            @Override
+            public void paint(final PPaintContext aPaintContext) {
+                if (aPaintContext.getScale() < minScale)
+                    return;
+                super.paint(aPaintContext);
+            }
+        };
         s.setStroke(st);
         s.setStrokePaint(sp);
         s.setPickable(false);
@@ -175,7 +199,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
     }
 
     public BroomPromptSimple(final BroomPromptModel model) {
-        final int pieAngle = 180;
+        final int pieAngle = 150;
         final Stroke st = new BasicStroke(0.01f, BasicStroke.CAP_BUTT,
                 BasicStroke.JOIN_MITER);
         final Color sp = Color.BLACK;
@@ -215,10 +239,11 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
                 return false;
             }
         };
+        final PNode bg;
         { // opaque Background
             float f = 1.2f;
-            final PNode bg = node(new Arc2D.Float(-f * outer, -f * outer, 2 * f
-                    * outer, 2 * f * outer, 0, 360, Arc2D.OPEN), null, null);
+            bg = node(new Arc2D.Float(-f * outer, -f * outer, 2 * f * outer, 2
+                    * f * outer, 0, 360, Arc2D.OPEN), null, null, scale0);
             bg.setPaint(bgc);
             bg.setPickable(true);
             handle.addChild(bg);
@@ -228,23 +253,27 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
             final int pieOff = 180;
             // (1/4+angle) pie:
             pie = node(new Arc2D.Float(-outer, -outer, 2 * outer, 2 * outer,
-                    off - pieOff, pieAngle, Arc2D.PIE), null, null);
+                    off - pieOff, pieAngle, Arc2D.PIE), null, null, scale0);
             handle.addChild(pie);
             // (3/4) inner circle:
-            handle.addChild(node(new Arc2D.Float(-inner, -inner, 2 * inner,
-                    2 * inner, off, pieOff + pieAngle, Arc2D.OPEN), st, sp));
-            // (3/4+angle) outer circle:
             handle
-                    .addChild(node(
-                            new Arc2D.Float(-outer, -outer, 2 * outer,
-                                    2 * outer, off, pieOff + pieAngle - 12,
-                                    Arc2D.OPEN), st, sp));
+                    .addChild(node(new Arc2D.Float(-inner, -inner, 2 * inner,
+                            2 * inner, off, pieOff + pieAngle, Arc2D.OPEN), st,
+                            sp, 50));
+            // (3/4+angle) outer circle:
+            handle.addChild(node(new Arc2D.Float(-outer, -outer, 2 * outer,
+                    2 * outer, off, pieOff + pieAngle - 12, Arc2D.OPEN), st,
+                    sp, scale0));
+            final double ar = Math.PI * (off + pieAngle) / 180.0;
+            // chord ?
+            if (pieAngle % 90 != 0)
+                handle.addChild(node(new Line2D.Double(0, 0, -outer
+                        * Math.cos(ar), outer * Math.sin(ar)), st, sp, scale0));
             // arrow:
             final float f = outer / 10;
             final PPath s = node(createArrowHead(f, 3 * f, 0.5f * f), null,
-                    null);
+                    null, 50);
             s.setPaint(sp);
-            final double ar = Math.PI * (off + pieAngle) / 180.0;
             s.translate(-outer * Math.cos(ar), outer * Math.sin(ar));
             s.rotate(Math.PI * (90 - off - pieAngle + 8) / 180.0);
             handle.addChild(s);
@@ -252,10 +281,10 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
         }
         { // y-axis:
             handle.addChild(node(new Line2D.Float(0, 1.2f * outer, 0, -5
-                    * outer), st, sp));
+                    * outer), st, sp, scale0));
             // x-axis:
             handle.addChild(node(new Line2D.Float(-1.2f * outer, 0,
-                    1.2f * outer, 0), st, sp));
+                    1.2f * outer, 0), st, sp, scale0));
         }
         { // slider
             slider = new PPath(createSlider(0.4f * outer), st);
@@ -281,6 +310,18 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
                 arg0.setHandled(true);
                 getModel().setBroom(
                         arg0.getPositionRelativeTo(self.getParent()));
+            }
+
+            @Override
+            public void mouseEntered(final PInputEvent arg0) {
+                super.mouseEntered(arg0);
+                arg0.pushCursor(CURSOR);
+            }
+
+            @Override
+            public void mouseExited(final PInputEvent arg0) {
+                super.mouseExited(arg0);
+                arg0.popCursor();
             }
         });
         slider.addInputEventListener(new PDragEventHandler() {
@@ -350,7 +391,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
     }
 
     private void setSlider(final double s) {
-        slider.setPaint(interpolateRGB(cold, hot, s));
+        slider.setPaint(interpolateRGB(slow, fast, s));
         slider.getTransformReference(true).setToTranslation(0, -slideMax * s);
         slider.invalidateFullBounds();
         slider.invalidatePaint();
