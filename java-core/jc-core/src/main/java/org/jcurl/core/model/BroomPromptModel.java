@@ -20,12 +20,16 @@ package org.jcurl.core.model;
 
 import java.awt.geom.Point2D;
 
+import javax.swing.BoundedRangeModel;
+
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.helpers.MutableObject;
 
 /**
  * Data model for broom location, rock index, rotation (counter-/clockwise) and
  * speed (in percent).
+ * 
+ * Maybe implement the {@link BoundedRangeModel} for the speed slider?
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
