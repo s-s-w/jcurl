@@ -282,7 +282,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
             public void mouseDragged(final PInputEvent arg0) {
                 arg0.setHandled(true);
                 final Point2D p = arg0.getPositionRelativeTo(self);
-                final BoundedRangeModel r = self.getModel().getSlider();
+                final BoundedRangeModel r = self.getModel().getSplitTimeMillis();
                 if (r == null)
                     return;
                 r.setValue(ratio2value(p.getY() / stickLength, r));
@@ -350,14 +350,14 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
     public void setModel(final BroomPromptModel model) {
         if (this.model != null) {
             this.model.removePropertyChangeListener(this);
-            if (this.model.getSlider() != null)
-                this.model.getSlider().removeChangeListener(this);
+            if (this.model.getSplitTimeMillis() != null)
+                this.model.getSplitTimeMillis().removeChangeListener(this);
         }
         this.model = model == null ? new BroomPromptModel() : model;
         setBroom(this.model.getBroom());
         setIdx16(this.model.getIdx16());
         setOutTurn(this.model.getOutTurn());
-        setSlider(this.model.getSlider());
+        setSlider(this.model.getSplitTimeMillis());
         this.model.addPropertyChangeListener(this);
     }
 

@@ -84,7 +84,7 @@ public class BroomPromptModel extends MutableObject {
         return outTurn;
     }
 
-    public BoundedRangeModel getSlider() {
+    public BoundedRangeModel getSplitTimeMillis() {
         return splitTimeMillis;
     }
 
