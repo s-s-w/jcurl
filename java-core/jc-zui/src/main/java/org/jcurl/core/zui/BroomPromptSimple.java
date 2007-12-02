@@ -313,7 +313,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
             setIdx16((Integer) evt.getNewValue());
         else if ("outTurn".equals(evt.getPropertyName()))
             setOutTurn((Boolean) evt.getNewValue());
-        else if ("slider".equals(evt.getPropertyName())) {
+        else if ("splitTimeMillis".equals(evt.getPropertyName())) {
             final BoundedRangeModel os = (BoundedRangeModel) evt.getOldValue();
             if (os != null)
                 os.removeChangeListener(this);
