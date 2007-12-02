@@ -139,25 +139,27 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 
     private final PNode pie;
 
-    private final float slideMax;
-
     private final PPath slider;
+
+    private final float stickLength;
 
     public BroomPromptSimple() {
         this(null);
     }
 
     public BroomPromptSimple(final BroomPromptModel model) {
+        final boolean stickUp = false;
+        final boolean bothSides = true;
         final int pieAngle = 150;
+        final Color sp = Color.BLACK;
+        final Color bgc = new Color(1, 1, 1, 0.65f);
         final Stroke fine = new BasicStroke(0.01f, BasicStroke.CAP_BUTT,
                 BasicStroke.JOIN_MITER);
         final Stroke bold = new BasicStroke(0.03f, BasicStroke.CAP_ROUND,
                 BasicStroke.JOIN_MITER);
-        final Color sp = Color.BLACK;
-        final Color bgc = new Color(1, 1, 1, 0.65f);
         // final Font fo = new Font("SansSerif", Font.BOLD, 1);
         final float outer = RockProps.DEFAULT.getRadius();
-        slideMax = -5 * outer;
+        stickLength = (stickUp ? 1 : -1) * 5 * outer;
         final float inner = 0.5F * outer;
         setPickable(false);
         final BroomPromptSimple self = this;
@@ -202,20 +204,20 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
         { // Cross-hair circles and pie
             final int off = 90;
             final int pieOff = 180;
-            // (1/4+angle) pie:
+            // colored pie:
             pie = node(new Arc2D.Float(-outer, -outer, 2 * outer, 2 * outer,
                     off - pieOff, pieAngle, Arc2D.PIE), null, null, scale0);
             handle.addChild(pie);
-            // (3/4) inner circle:
+            // inner circle:
             handle.addChild(node(new Arc2D.Float(-inner, -inner, 2 * inner,
                     2 * inner, off, pieOff + pieAngle, Arc2D.OPEN), fine, sp,
                     50));
-            // (3/4+angle) outer circle:
+            // outer circle:
             handle.addChild(node(new Arc2D.Float(-outer, -outer, 2 * outer,
                     2 * outer, off, pieOff + pieAngle - 12, Arc2D.OPEN), fine,
                     sp, scale0));
             final double ar = Math.PI * (off + pieAngle) / 180.0;
-            // chord ?
+            // radius
             // if (pieAngle % 90 != 0)
             handle.addChild(node(new Line2D.Double(0, 0, -outer * Math.cos(ar),
                     outer * Math.sin(ar)), bold, sp, scale0));
@@ -230,14 +232,14 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
             this.addChild(handle);
         }
         { // y-axis:
-            handle.addChild(node(new Line2D.Float(0, 1.2f * outer, 0, -5
-                    * outer), fine, sp, scale0));
+            handle.addChild(node(new Line2D.Float(0, -Math.signum(stickLength)
+                    * 1.2f * outer, 0, stickLength), fine, sp, scale0));
             // x-axis:
             handle.addChild(node(new Line2D.Float(-1.2f * outer, 0,
                     1.2f * outer, 0), fine, sp, scale0));
         }
         { // slider
-            slider = new PPath(createSlider(0.4f * outer, true), fine);
+            slider = new PPath(createSlider(0.4f * outer, bothSides), fine);
             slider.setStrokePaint(sp);
             slider.setPickable(true);
             this.addChild(slider);
@@ -283,10 +285,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
                 final BoundedRangeModel r = self.getModel().getSlider();
                 if (r == null)
                     return;
-                r
-                        .setValue(r.getMaximum()
-                                + (int) ((r.getMinimum() - r.getMaximum())
-                                        * p.getY() / slideMax));
+                r.setValue(ratio2value(p.getY() / stickLength, r));
             }
         });
         // wire up the model
@@ -294,12 +293,10 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
     }
 
     private void adjustSlider(final BoundedRangeModel r) {
-        log.info(r.getValue() + "/" + r.getMaximum());
+        // log.info(r.getValue() + "/" + r.getMaximum());
         slider.setPaint(sliderColor(r));
-        slider.getTransformReference(true).setToTranslation(
-                0,
-                slideMax * (double) (r.getValue() - r.getMaximum())
-                        / (r.getMinimum() - r.getMaximum()));
+        slider.getTransformReference(true).setToTranslation(0,
+                stickLength * value2ratio(r));
         slider.invalidateFullBounds();
         slider.invalidatePaint();
     }
@@ -322,6 +319,10 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
                 os.removeChangeListener(this);
             setSlider((BoundedRangeModel) evt.getNewValue());
         }
+    }
+
+    private int ratio2value(final double ra, final BoundedRangeModel r) {
+        return r.getMaximum() + (int) ((r.getMinimum() - r.getMaximum()) * ra);
     }
 
     /** adjust position + rotation */
@@ -383,5 +384,10 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
         // log.info(e);
         if (e.getSource() instanceof BoundedRangeModel)
             adjustSlider((BoundedRangeModel) e.getSource());
+    }
+
+    private double value2ratio(final BoundedRangeModel r) {
+        return (double) (r.getValue() - r.getMaximum())
+                / (r.getMinimum() - r.getMaximum());
     }
 }
