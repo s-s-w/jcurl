@@ -3,7 +3,6 @@ package org.jcurl.core.zui;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Font;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
@@ -14,6 +13,10 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import javax.swing.BoundedRangeModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.IceSize;
@@ -30,7 +33,8 @@ import edu.umd.cs.piccolo.util.PPaintContext;
 import edu.umd.cs.piccolo.util.PPickPath;
 
 /** Piccolo View + Controller for {@link BroomPromptModel}s. */
-public class BroomPromptSimple extends PNode implements PropertyChangeListener {
+public class BroomPromptSimple extends PNode implements PropertyChangeListener,
+        ChangeListener {
     private static final Cursor CURSOR = new Cursor(Cursor.HAND_CURSOR);
     private static final Color dark = Color.RED;
     private static final Color fast = Color.RED;
@@ -39,7 +43,6 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
             .getLogger(BroomPromptSimple.class);
     private static final double scale0 = 0;
     private static final long serialVersionUID = 3115716478135484000L;
-
     private static final Color slow = Color.BLUE;
 
     /**
@@ -60,73 +63,19 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
         return gp;
     }
 
-    private static PNode createBroomPrompt01(final Paint sp) {
-        final float ro = RockProps.DEFAULT.getRadius();
-        final float ri = 0.5F * ro;
-        final Font fo = new Font("SansSerif", Font.BOLD, 1);
-        final PNode bp = new PNode(); // PComposite();
-        bp.setPickable(true);
-        final Stroke fine = new BasicStroke(0.01f);
-
-        final PNode handle = new PNode();
-        { // opaque Background
-            float f = 1.0f;
-            final PNode bg = node(new Arc2D.Float(-f * ro, -f * ro, 2 * f * ro,
-                    2 * f * ro, 0, 360, Arc2D.OPEN), null, null, scale0);
-            bg.setPaint(new Color(1, 1, 1, 0.65f));
-            handle.addChild(bg);
-        }
-        {
-            final int angle = 75;
-            // outturn: handle.setTransform(AffineTransform.getScaleInstance(-1,
-            // 1));
-            // (partial) inner circle:
-            handle.addChild(node(new Arc2D.Float(-ri, -ri, 2 * ri, 2 * ri, 0,
-                    270, Arc2D.OPEN), fine, sp, scale0));
-            // (partial) outer circle:
-            handle.addChild(node(new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 0,
-                    270 + angle, Arc2D.OPEN), fine, sp, scale0));
-            // arrow:
-            final float f = ro / 20;
-            final PPath s = node(createArrowHead(f, 3 * f, 0.5f * f), fine, sp,
-                    scale0);
-            double ar = Math.PI * (angle + 6) / 180;
-            s.translate(ro * Math.sin(ar), ro * Math.cos(ar));
-            ar = Math.PI * angle / 180;
-            s.rotate(-ar);
-            handle.addChild(s);
-            bp.addChild(handle);
-        }
-        {
-            // y-axis:
-            bp.addChild(node(new Line2D.Float(0, 1.2f * ro, 0, -5 * ro), fine,
-                    sp, scale0));
-            // x-axis:
-            bp.addChild(node(new Line2D.Float(-1.2f * ro, 0, 1.2f * ro, 0),
-                    fine, sp, scale0));
-        }
-        {
-            // slider
-            final float f = 3.5f / 5.0f;
-            final PPath s = node(createSlider(0.4f * ro), null, null, scale0);
-            s.setPaint(interpolateRGB(Color.BLUE, Color.RED, f));
-            s.translate(0, -5 * f * ro);
-            bp.addChild(s);
-        }
-        return bp;
-    }
-
-    static Shape createSlider(final float f) {
+    static Shape createSlider(final float f, final boolean bothSides) {
         final GeneralPath gp = new GeneralPath();
         gp.moveTo(0, 0);
-        gp.lineTo(f, f);
-        gp.lineTo(4 * f, f);
-        gp.lineTo(4 * f, -f);
-        gp.lineTo(f, -f);
         gp.lineTo(-f, f);
         gp.lineTo(-4 * f, f);
         gp.lineTo(-4 * f, -f);
         gp.lineTo(-f, -f);
+        if (bothSides) {
+            gp.lineTo(f, f);
+            gp.lineTo(4 * f, f);
+            gp.lineTo(4 * f, -f);
+            gp.lineTo(f, -f);
+        }
         gp.closePath();
         return gp;
     }
@@ -202,13 +151,13 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
         final int pieAngle = 150;
         final Stroke fine = new BasicStroke(0.01f, BasicStroke.CAP_BUTT,
                 BasicStroke.JOIN_MITER);
-        final Stroke bold = new BasicStroke(0.02f, BasicStroke.CAP_ROUND,
+        final Stroke bold = new BasicStroke(0.03f, BasicStroke.CAP_ROUND,
                 BasicStroke.JOIN_MITER);
         final Color sp = Color.BLACK;
         final Color bgc = new Color(1, 1, 1, 0.65f);
         // final Font fo = new Font("SansSerif", Font.BOLD, 1);
         final float outer = RockProps.DEFAULT.getRadius();
-        slideMax = 5 * outer;
+        slideMax = -5 * outer;
         final float inner = 0.5F * outer;
         setPickable(false);
         final BroomPromptSimple self = this;
@@ -267,11 +216,9 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
                     sp, scale0));
             final double ar = Math.PI * (off + pieAngle) / 180.0;
             // chord ?
-//            if (pieAngle % 90 != 0)
-                handle
-                        .addChild(node(new Line2D.Double(0, 0, -outer
-                                * Math.cos(ar), outer * Math.sin(ar)), bold,
-                                sp, scale0));
+            // if (pieAngle % 90 != 0)
+            handle.addChild(node(new Line2D.Double(0, 0, -outer * Math.cos(ar),
+                    outer * Math.sin(ar)), bold, sp, scale0));
             // arrow:
             final float f = outer / 10;
             final PPath s = node(createArrowHead(f, 3 * f, 0.5f * f), null,
@@ -290,7 +237,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
                     1.2f * outer, 0), fine, sp, scale0));
         }
         { // slider
-            slider = new PPath(createSlider(0.4f * outer), fine);
+            slider = new PPath(createSlider(0.4f * outer, true), fine);
             slider.setStrokePaint(sp);
             slider.setPickable(true);
             this.addChild(slider);
@@ -333,11 +280,28 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
             public void mouseDragged(final PInputEvent arg0) {
                 arg0.setHandled(true);
                 final Point2D p = arg0.getPositionRelativeTo(self);
-                self.getModel().setSlider(-(float) p.getY() / slideMax);
+                final BoundedRangeModel r = self.getModel().getSlider();
+                if (r == null)
+                    return;
+                r
+                        .setValue(r.getMaximum()
+                                + (int) ((r.getMinimum() - r.getMaximum())
+                                        * p.getY() / slideMax));
             }
         });
         // wire up the model
         setModel(model);
+    }
+
+    private void adjustSlider(final BoundedRangeModel r) {
+        log.info(r.getValue() + "/" + r.getMaximum());
+        slider.setPaint(sliderColor(r));
+        slider.getTransformReference(true).setToTranslation(
+                0,
+                slideMax * (double) (r.getValue() - r.getMaximum())
+                        / (r.getMinimum() - r.getMaximum()));
+        slider.invalidateFullBounds();
+        slider.invalidatePaint();
     }
 
     public BroomPromptModel getModel() {
@@ -352,8 +316,12 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
             setIdx16((Integer) evt.getNewValue());
         else if ("outTurn".equals(evt.getPropertyName()))
             setOutTurn((Boolean) evt.getNewValue());
-        else if ("slider".equals(evt.getPropertyName()))
-            setSlider((Double) evt.getNewValue());
+        else if ("slider".equals(evt.getPropertyName())) {
+            final BoundedRangeModel os = (BoundedRangeModel) evt.getOldValue();
+            if (os != null)
+                os.removeChangeListener(this);
+            setSlider((BoundedRangeModel) evt.getNewValue());
+        }
     }
 
     /** adjust position + rotation */
@@ -379,8 +347,11 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
     }
 
     public void setModel(final BroomPromptModel model) {
-        if (this.model != null)
+        if (this.model != null) {
             this.model.removePropertyChangeListener(this);
+            if (this.model.getSlider() != null)
+                this.model.getSlider().removeChangeListener(this);
+        }
         this.model = model == null ? new BroomPromptModel() : model;
         setBroom(this.model.getBroom());
         setIdx16(this.model.getIdx16());
@@ -394,10 +365,23 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener {
         handle.invalidatePaint();
     }
 
-    private void setSlider(final double s) {
-        slider.setPaint(interpolateRGB(slow, fast, s));
-        slider.getTransformReference(true).setToTranslation(0, -slideMax * s);
-        slider.invalidateFullBounds();
-        slider.invalidatePaint();
+    private void setSlider(final BoundedRangeModel s) {
+        slider.setVisible(s != null);
+        if (s == null)
+            return;
+        s.addChangeListener(this);
+        adjustSlider(s);
+    }
+
+    protected Color sliderColor(final BoundedRangeModel r) {
+        return interpolateRGB(slow, fast, (double) (r.getValue() - r
+                .getMaximum())
+                / (r.getMinimum() - r.getMaximum()));
+    }
+
+    public void stateChanged(final ChangeEvent e) {
+        // log.info(e);
+        if (e.getSource() instanceof BoundedRangeModel)
+            adjustSlider((BoundedRangeModel) e.getSource());
     }
 }

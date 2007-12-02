@@ -21,6 +21,7 @@ package org.jcurl.core.model;
 import java.awt.geom.Point2D;
 
 import javax.swing.BoundedRangeModel;
+import javax.swing.DefaultBoundedRangeModel;
 
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.helpers.MutableObject;
@@ -39,7 +40,11 @@ public class BroomPromptModel extends MutableObject {
     private Point2D broom = new Point2D.Float(0, 0);
     private int idx16 = -1;
     private boolean outTurn = true;
-    private float slider = 0.5f;
+    private BoundedRangeModel slider = null;
+
+    public BroomPromptModel() {
+        setSlider(new DefaultBoundedRangeModel(2000, 0, 1000, 3000));
+    }
 
     @Override
     public boolean equals(final Object obj) {
@@ -47,7 +52,7 @@ public class BroomPromptModel extends MutableObject {
             return true;
         if (obj == null)
             return false;
-        if (this.getClass() != obj.getClass())
+        if (getClass() != obj.getClass())
             return false;
         final BroomPromptModel other = (BroomPromptModel) obj;
         if (broom == null) {
@@ -59,7 +64,10 @@ public class BroomPromptModel extends MutableObject {
             return false;
         if (outTurn != other.outTurn)
             return false;
-        if (Float.floatToIntBits(slider) != Float.floatToIntBits(other.slider))
+        if (slider == null) {
+            if (other.slider != null)
+                return false;
+        } else if (!slider.equals(other.slider))
             return false;
         return true;
     }
@@ -76,7 +84,7 @@ public class BroomPromptModel extends MutableObject {
         return outTurn;
     }
 
-    public float getSlider() {
+    public BoundedRangeModel getSlider() {
         return slider;
     }
 
@@ -87,7 +95,7 @@ public class BroomPromptModel extends MutableObject {
         result = prime * result + (broom == null ? 0 : broom.hashCode());
         result = prime * result + idx16;
         result = prime * result + (outTurn ? 1231 : 1237);
-        result = prime * result + Float.floatToIntBits(slider);
+        result = prime * result + (slider == null ? 0 : slider.hashCode());
         return result;
     }
 
@@ -108,11 +116,7 @@ public class BroomPromptModel extends MutableObject {
         this.outTurn = outTurn;
     }
 
-    public void setSlider(float slider) {
-        if (slider <= 0)
-            slider = 0;
-        if (slider >= 1)
-            slider = 1;
+    public void setSlider(final BoundedRangeModel slider) {
         firePropertyChange("slider", this.slider, slider);
         this.slider = slider;
     }

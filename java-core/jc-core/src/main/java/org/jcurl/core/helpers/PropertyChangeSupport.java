@@ -163,13 +163,6 @@ public class PropertyChangeSupport implements IPropertyChangeSupport {
             if (a != null && a.equals(b) || a == null && b == null)
                 return;
         }
-        // if (event.getOldValue() == null) {
-        // if (event.getOldValue() == null) {
-        // return;
-        // }
-        // } else if (event.getOldValue().equals(event.getNewValue())) {
-        // return;
-        // }
         // validated that an event must be thrown; now throw it.
         synchronized (listenerMap) {
             // First gets the list of listeners and stores them in strong
