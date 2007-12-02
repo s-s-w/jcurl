@@ -38,9 +38,11 @@ import edu.umd.cs.piccolo.event.PInputEvent;
 public class KeyboardZoom extends PBasicInputEventHandler {
     private static final int _500 = 500;
 
+    /** All from back to back */
+    static final Rectangle2D completeP;
+
     /** House area plus 1 rock margin plus "out" rock space. */
     public static final Rectangle2D houseP;
-
     /**
      * Inter-hog area area plus house area plus 1 rock margin plus "out" rock
      * space.
@@ -60,6 +62,9 @@ public class KeyboardZoom extends PBasicInputEventHandler {
         sheetP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_HOG
                 + IceSize.HOG_2_TEE + r2), 2 * x, IceSize.HOG_2_HOG
                 + IceSize.HOG_2_TEE + IceSize.BACK_2_TEE + 3 * r2 + 2 * r2);
+        completeP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_TEE
+                + IceSize.HOG_2_HOG + IceSize.HACK_2_HOG + r2), 2 * x,
+                IceSize.HOG_2_HOG + 2 * IceSize.HACK_2_HOG);
     }
 
     private final PCamera cam;
@@ -74,13 +79,16 @@ public class KeyboardZoom extends PBasicInputEventHandler {
         case KeyEvent.VK_HOME:
             event.setHandled(true);
             if (event.isControlDown())
-                cam.animateViewToCenterBounds(twelveP, true, _500);
+                cam.animateViewToCenterBounds(sheetP, true, _500);
             else
-                cam.animateViewToCenterBounds(houseP, true, _500);
+                cam.animateViewToCenterBounds(twelveP, true, _500);
             break;
         case KeyEvent.VK_END:
             event.setHandled(true);
-            cam.animateViewToCenterBounds(sheetP, true, _500);
+            if (event.isControlDown())
+                cam.animateViewToCenterBounds(completeP, true, _500);
+            else
+                cam.animateViewToCenterBounds(houseP, true, _500);
             break;
         default:
             ;
