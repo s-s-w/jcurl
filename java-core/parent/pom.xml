@@ -113,8 +113,8 @@
 					<verbose>true</verbose>
 					<fork>true</fork>
 					<encoding>utf-8</encoding>
-					<optimize>true</optimize>
-					<debug>false</debug>
+					<optimize>false</optimize>
+					<debug>true</debug>
 					<compilerVersion>1.5</compilerVersion>
 					<source>1.5</source>
 					<target>1.5</target>
