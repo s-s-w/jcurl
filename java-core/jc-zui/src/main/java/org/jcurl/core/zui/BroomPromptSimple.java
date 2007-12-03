@@ -117,7 +117,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
      */
     static PPath node(final Shape sh, final Stroke st, final Paint sp,
             final double minScale) {
-        final PPath s = new PPath(sh) {
+        final PPath s = new PPath(sh, st) {
             private static final long serialVersionUID = 5255259239579383074L;
 
             @Override
@@ -127,7 +127,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
                 super.paint(aPaintContext);
             }
         };
-        s.setStroke(st);
+//        s.setStroke(st);
         s.setStrokePaint(sp);
         s.setPickable(false);
         return s;
