@@ -282,7 +282,8 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
             public void mouseDragged(final PInputEvent arg0) {
                 arg0.setHandled(true);
                 final Point2D p = arg0.getPositionRelativeTo(self);
-                final BoundedRangeModel r = self.getModel().getSplitTimeMillis();
+                final BoundedRangeModel r = self.getModel()
+                        .getSplitTimeMillis();
                 if (r == null)
                     return;
                 r.setValue(ratio2value(p.getY() / stickLength, r));

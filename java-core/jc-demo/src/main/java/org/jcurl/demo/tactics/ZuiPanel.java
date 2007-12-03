@@ -31,7 +31,7 @@ class ZuiPanel extends JComponent implements PropertyChangeListener {
     private final PNode ice;
     private final int major = 255;
     private final int minor = 64;
-    private final PCanvas pico;
+    final PCanvas pico;
     private final PCurveStore traj;
 
     public ZuiPanel(final ZuiMod model) {

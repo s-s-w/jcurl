@@ -22,7 +22,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -38,9 +37,7 @@ import javax.swing.filechooser.FileFilter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jcurl.core.base.IceSize;
-import org.jcurl.core.base.RockProps;
-import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.zui.KeyboardZoom;
 
 /**
  * ...home of the {@link Action}s
@@ -276,34 +273,6 @@ class Controller {
     }
 
     static class ZuiController {
-        /** All from back to back */
-        static final Rectangle2D completeP;
-        /** House area plus 1 rock margin plus "out" rock space. */
-        static final Rectangle2D houseP;
-        /**
-         * Inter-hog area area plus house area plus 1 rock margin plus "out"
-         * rock space.
-         */
-        static final Rectangle2D sheetP;
-        /** 12-foot circle plus 1 rock */
-        static final Rectangle2D twelveP;
-
-        static {
-            final double r2 = 2 * RockProps.DEFAULT.getRadius();
-            final double x = IceSize.SIDE_2_CENTER + r2;
-            houseP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_TEE + r2),
-                    2 * x, IceSize.HOG_2_TEE + IceSize.BACK_2_TEE + 3 * r2 + 2
-                            * r2);
-            final double c12 = r2 + Unit.f2m(6.0);
-            twelveP = new Rectangle2D.Double(-c12, -c12, 2 * c12, 2 * c12);
-            sheetP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_HOG
-                    + IceSize.HOG_2_TEE + r2), 2 * x, IceSize.HOG_2_HOG
-                    + IceSize.HOG_2_TEE + IceSize.BACK_2_TEE + 3 * r2 + 2 * r2);
-            completeP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_TEE
-                    + IceSize.HOG_2_HOG + IceSize.HACK_2_HOG + r2), 2 * x,
-                    IceSize.HOG_2_HOG + 2 * IceSize.HACK_2_HOG);
-        }
-
         private final ZuiMod model;
         private final ZuiPanel view;
         public final Action view12Foot;
@@ -316,35 +285,11 @@ class Controller {
         public ZuiController(final ZuiPanel view, final ZuiMod model) {
             this.view = view;
             this.model = model;
-
-            viewComplete = new AbstractAction() {
-                private static final long serialVersionUID = -4680813072205075958L;
-
-                public void actionPerformed(final ActionEvent e) {
-                    view.zoom(completeP, 333);
-                }
-            };
-            viewSheet = new AbstractAction() {
-                private static final long serialVersionUID = -4680813072205075958L;
-
-                public void actionPerformed(final ActionEvent e) {
-                    view.zoom(sheetP, 333);
-                }
-            };
-            viewHouse = new AbstractAction() {
-                private static final long serialVersionUID = -4680813072205075958L;
-
-                public void actionPerformed(final ActionEvent e) {
-                    view.zoom(houseP, 333);
-                }
-            };
-            view12Foot = new AbstractAction() {
-                private static final long serialVersionUID = -4680813072205075958L;
-
-                public void actionPerformed(final ActionEvent e) {
-                    view.zoom(twelveP, 333);
-                }
-            };
+            final KeyboardZoom k = new KeyboardZoom(view.pico.getCamera());
+            viewComplete = k.ZoomComplete;
+            viewSheet = k.ZoomSheet;
+            viewHouse = k.ZoomHouse;
+            view12Foot = k.Zoom12Foot;
             zoomIn = null;
             zoomOut = null;
         }

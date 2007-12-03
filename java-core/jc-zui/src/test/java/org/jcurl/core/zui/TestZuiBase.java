@@ -60,7 +60,7 @@ public abstract class TestZuiBase extends TestShowBase {
 
             frame.setVisible(true);
             // start with a sensible viewport:
-            cam.animateViewToCenterBounds(KeyboardZoom.houseP, true, 1);
+            cam.animateViewToCenterBounds(KeyboardZoom.HousePlus, true, 1);
             frame.setVisible(false);
         } else {
             pico = null;

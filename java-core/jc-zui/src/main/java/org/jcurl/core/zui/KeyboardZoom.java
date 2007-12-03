@@ -18,8 +18,12 @@
  */
 package org.jcurl.core.zui;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 
 import org.jcurl.core.base.IceSize;
 import org.jcurl.core.base.RockProps;
@@ -39,38 +43,70 @@ public class KeyboardZoom extends PBasicInputEventHandler {
     private static final int _500 = 500;
 
     /** All from back to back */
-    static final Rectangle2D completeP;
+    public static final Rectangle2D CompletePlus;
 
     /** House area plus 1 rock margin plus "out" rock space. */
-    public static final Rectangle2D houseP;
+    public static final Rectangle2D HousePlus;
     /**
      * Inter-hog area area plus house area plus 1 rock margin plus "out" rock
      * space.
      */
-    private static final Rectangle2D sheetP;
+    private static final Rectangle2D SheetPlus;
 
     /** 12-foot circle plus 1 rock */
-    private static final Rectangle2D twelveP;
+    private static final Rectangle2D TwelvePlus;
 
     static {
         final double r2 = 2 * RockProps.DEFAULT.getRadius();
         final double x = IceSize.SIDE_2_CENTER + r2;
-        houseP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_TEE + r2), 2 * x,
-                IceSize.HOG_2_TEE + IceSize.BACK_2_TEE + 3 * r2 + 2 * r2);
+        HousePlus = new Rectangle2D.Double(-x, -(IceSize.HOG_2_TEE + r2),
+                2 * x, IceSize.HOG_2_TEE + IceSize.BACK_2_TEE + 3 * r2 + 2 * r2);
         final double c12 = r2 + Unit.f2m(6.0);
-        twelveP = new Rectangle2D.Double(-c12, -c12, 2 * c12, 2 * c12);
-        sheetP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_HOG
+        TwelvePlus = new Rectangle2D.Double(-c12, -c12, 2 * c12, 2 * c12);
+        SheetPlus = new Rectangle2D.Double(-x, -(IceSize.HOG_2_HOG
                 + IceSize.HOG_2_TEE + r2), 2 * x, IceSize.HOG_2_HOG
                 + IceSize.HOG_2_TEE + IceSize.BACK_2_TEE + 3 * r2 + 2 * r2);
-        completeP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_TEE
+        CompletePlus = new Rectangle2D.Double(-x, -(IceSize.HOG_2_TEE
                 + IceSize.HOG_2_HOG + IceSize.HACK_2_HOG + r2), 2 * x,
                 IceSize.HOG_2_HOG + 2 * IceSize.HACK_2_HOG);
     }
-
     private final PCamera cam;
+    public final Action Zoom12Foot;
+    public final Action ZoomComplete;
+    public final Action ZoomHouse;
+    public final Action ZoomSheet;
 
     public KeyboardZoom(final PCamera cam) {
         this.cam = cam;
+
+        ZoomComplete = new AbstractAction() {
+            private static final long serialVersionUID = -4680813072205075958L;
+
+            public void actionPerformed(final ActionEvent e) {
+                zoom(CompletePlus);
+            }
+        };
+        ZoomSheet = new AbstractAction() {
+            private static final long serialVersionUID = -4680813072205075958L;
+
+            public void actionPerformed(final ActionEvent e) {
+                zoom(SheetPlus);
+            }
+        };
+        ZoomHouse = new AbstractAction() {
+            private static final long serialVersionUID = -4680813072205075958L;
+
+            public void actionPerformed(final ActionEvent e) {
+                zoom(HousePlus);
+            }
+        };
+        Zoom12Foot = new AbstractAction() {
+            private static final long serialVersionUID = -4680813072205075958L;
+
+            public void actionPerformed(final ActionEvent e) {
+                zoom(TwelvePlus);
+            }
+        };
     }
 
     @Override
@@ -79,19 +115,23 @@ public class KeyboardZoom extends PBasicInputEventHandler {
         case KeyEvent.VK_HOME:
             event.setHandled(true);
             if (event.isControlDown())
-                cam.animateViewToCenterBounds(sheetP, true, _500);
+                ZoomComplete.actionPerformed(null);
             else
-                cam.animateViewToCenterBounds(twelveP, true, _500);
+                ZoomHouse.actionPerformed(null);
             break;
         case KeyEvent.VK_END:
             event.setHandled(true);
             if (event.isControlDown())
-                cam.animateViewToCenterBounds(completeP, true, _500);
+                ZoomSheet.actionPerformed(null);
             else
-                cam.animateViewToCenterBounds(houseP, true, _500);
+                Zoom12Foot.actionPerformed(null);
             break;
         default:
             ;
         }
+    }
+
+    private void zoom(final Rectangle2D a) {
+        cam.animateViewToCenterBounds(a, true, 333);
     }
 }
