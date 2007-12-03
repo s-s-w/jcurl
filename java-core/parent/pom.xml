@@ -13,14 +13,20 @@
 		simulation, game filing, analysis and visualisation
 	</description>
 	<properties>
+		<httpbase>http://www.jcurl.org/m2</httpbase>
+		<httpsitebase>${httpbase}/site</httpsitebase>
+		<ftpbase>
+			ftp://jcurl.org
+		</ftpbase>
+		<ftpsitebase>
+			ftp://jcurl.org/site
+		</ftpsitebase>
 		<scpbase>
 			scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2
 		</scpbase>
-		<httpbase>http://www.jcurl.org/m2</httpbase>
 		<scpsitebase>
 			${scpbase}/site
 		</scpsitebase>
-		<httpsitebase>${httpbase}/site</httpsitebase>
 	</properties>
 	<url>${httpsitebase}/${pom.artifactId}/${pom.version}</url>
 	<issueManagement>
@@ -94,6 +100,12 @@
 		<url>http://www.jcurl.org</url>
 	</organization>
 	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+			</extension>
+		</extensions>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -101,7 +113,8 @@
 					<verbose>true</verbose>
 					<fork>true</fork>
 					<encoding>utf-8</encoding>
-					<optimize>false</optimize>
+					<optimize>true</optimize>
+					<debug>false</debug>
 					<compilerVersion>1.5</compilerVersion>
 					<source>1.5</source>
 					<target>1.5</target>
@@ -299,17 +312,17 @@
 	</repositories>
 	<distributionManagement>
 		<repository>
-			<id>dist-jcurl-repository</id>
-			<url>${scpbase}/repo</url>
+			<id>ftp-jcurl-repo</id>
+			<url>${ftpbase}/repo</url>
 		</repository>
 		<snapshotRepository>
-			<id>dist-jcurl-snapshots</id>
-			<url>${scpbase}/snap</url>
+			<id>ftp-jcurl-snap</id>
+			<url>${ftpbase}/snap</url>
 			<uniqueVersion>true</uniqueVersion>
 		</snapshotRepository>
 		<site>
-			<id>dist-jcurl-sites</id>
-			<url>${scpsitebase}/${pom.artifactId}/${pom.version}</url>
+			<id>ftp-jcurl-site</id>
+			<url>${ftpsitebase}/${pom.artifactId}/${pom.version}</url>
 		</site>
 	</distributionManagement>
 </project>
