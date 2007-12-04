@@ -22,19 +22,16 @@ import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.JCurlSerializer.Payload;
 import org.jcurl.core.helpers.AnnoHelp;
-import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.helpers.Unit;
 import org.jcurl.core.io.XStreamSerializer;
+import org.jcurl.core.model.BroomPromptModel;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerDenny;
 import org.jcurl.core.model.CurveManager;
 import org.jcurl.core.model.NewtonCollissionDetector;
 
-/**
- * Data model for {@link MainPanel}
- */
-class MainMod extends MutableObject implements ZuiMod, RockMod {
+class MainMod extends BroomPromptModel {
 
     private static final Log log = LogFactory.getLog(MainMod.class);
     private static final long serialVersionUID = 4796273188307263927L;
@@ -100,7 +97,7 @@ class MainMod extends MutableObject implements ZuiMod, RockMod {
 
     private final CurveManager ts = new CurveManager();
 
-    private final UndoRedoDocumentBase undo = new UndoRedoDocumentBase();
+    final UndoRedoDocumentBase undo = new UndoRedoDocumentBase();
 
     public MainMod() {
         initHammy(ts);
@@ -131,6 +128,7 @@ class MainMod extends MutableObject implements ZuiMod, RockMod {
         return ts.getAnnotations();
     }
 
+    @Override
     public Rock getBroom() {
         throw new NotImplementedYetException();
     }

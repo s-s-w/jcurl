@@ -2,14 +2,12 @@ package org.jcurl.demo.tactics;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.geom.Rectangle2D;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.JComponent;
 import javax.swing.undo.StateEdit;
 
 import org.jcurl.core.base.CurveStore;
+import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.zui.PCurveStore;
 import org.jcurl.core.zui.PIceFactory;
 import org.jcurl.core.zui.PPositionSet;
@@ -22,20 +20,19 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PInputEvent;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
-/**
- * Graphical display for {@link ZuiMod}.
- */
-class ZuiPanel extends JComponent implements PropertyChangeListener {
+class ZuiPanel extends JComponent {
     private static final long serialVersionUID = -4648771240323713217L;
 
+    private final PPositionSet current;
     private final PNode ice;
+    private final PPositionSet initial;
     private final int major = 255;
     private final int minor = 64;
     final PCanvas pico;
+
     private final PCurveStore traj;
 
-    public ZuiPanel(final ZuiMod model) {
-        model.addPropertyChangeListener("curveStore", this);
+    public ZuiPanel(final UndoRedoDocumentBase undo) {
         setLayout(new BorderLayout());
         this.add(pico = new PCanvas(), BorderLayout.CENTER);
         pico.setBackground(new Color(0xE8E8FF));
@@ -46,17 +43,15 @@ class ZuiPanel extends JComponent implements PropertyChangeListener {
 
         pico.getLayer().addChild(ice = new PIceFactory.Fancy().newInstance());
 
-        traj = new PCurveStore(model.getCurveStore(),
-                new PTrajectoryFactory.Fancy(), MainApp.tmax);
-        final PNode initial = new PPositionSet(model.getInitialPos(),
-                new PRockFactory.Fancy(minor));
+        traj = new PCurveStore(new PTrajectoryFactory.Fancy(), MainApp.tmax);
+        initial = new PPositionSet(new PRockFactory.Fancy(minor));
         initial.addInputEventListener(new PPositionSetDrag() {
             private StateEdit edit = null;
 
             @Override
             public void mouseDragged(final PInputEvent event) {
                 if (edit == null)
-                    edit = new StateEdit(model.getInitialPos());
+                    edit = new StateEdit(getInitialPos());
                 super.mouseDragged(event);
             }
 
@@ -66,28 +61,35 @@ class ZuiPanel extends JComponent implements PropertyChangeListener {
                     return;
                 super.mouseReleased(event);
                 edit.end();
-                model.addEdit(edit);
+                undo.addEdit(edit);
                 edit = null;
                 // FIXME traj.sync(MainApp.tmax);
             }
         });
-        final PNode current = new PPositionSet(model.getCurrentPos(),
-                new PRockFactory.Fancy(major));
+        current = new PPositionSet(new PRockFactory.Fancy(major));
 
         ice.addChild(traj);
         ice.addChild(current);
         ice.addChild(initial);
     }
 
-    public void propertyChange(final PropertyChangeEvent evt) {
-        final Object src = evt.getSource();
-        final CurveStore cs = (CurveStore) src;
-        traj.replaceWith(new PCurveStore(cs, new PTrajectoryFactory.Fancy(),
-                MainApp.tmax));
-        traj.invalidatePaint();
+    public PositionSet getCurrentPos() {
+        return current.getPositionSet();
     }
 
-    public void zoom(final Rectangle2D r, final int millis) {
-        pico.getCamera().animateViewToCenterBounds(r, true, millis);
+    public PositionSet getInitialPos() {
+        return initial.getPositionSet();
+    }
+
+    public void setCurrentPos(final PositionSet current) {
+        this.current.setPositionSet(current);
+    }
+
+    public void setCurveStore(final CurveStore cs) {
+        traj.setCurveStore(cs);
+    }
+
+    public void setInitialPos(final PositionSet initial) {
+        this.initial.setPositionSet(initial);
     }
 }

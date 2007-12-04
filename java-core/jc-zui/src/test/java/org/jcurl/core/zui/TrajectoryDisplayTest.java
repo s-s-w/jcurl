@@ -145,10 +145,11 @@ public class TrajectoryDisplayTest extends TestZuiBase {
 
         if (frame == null)
             return;
-        final PNode a = new PPositionSet(cm.getCurrentPos(),
-                new PRockFactory.Fancy(10));
-        final PNode b = new PCurveStore(cm.getCurveStore(),
-                new PTrajectoryFactory.Fancy(), tmax);
+        final PPositionSet a = new PPositionSet(new PRockFactory.Fancy(255));
+        a.setPositionSet(cm.getCurrentPos());
+        final PCurveStore b = new PCurveStore(new PTrajectoryFactory.Fancy(),
+                tmax);
+        b.setCurveStore(cm.getCurveStore());
         try {
             ice.addChild(b);
             ice.addChild(a);
@@ -197,10 +198,11 @@ public class TrajectoryDisplayTest extends TestZuiBase {
 
         if (frame == null)
             return;
-        final PNode a = new PPositionSet(cm.getCurrentPos(),
-                new PRockFactory.Fancy(10));
-        final PNode b = new PCurveStore(cm.getCurveStore(),
-                new PTrajectoryFactory.Fancy(), tmax);
+        final PPositionSet a = new PPositionSet(new PRockFactory.Fancy(255));
+        a.setPositionSet(cm.getCurrentPos());
+        final PCurveStore b = new PCurveStore(new PTrajectoryFactory.Fancy(),
+                tmax);
+        b.setCurveStore(cm.getCurveStore());
         try {
             ice.addChild(b);
             ice.addChild(a);

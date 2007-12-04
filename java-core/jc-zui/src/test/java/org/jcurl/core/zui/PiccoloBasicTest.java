@@ -29,12 +29,13 @@ public class PiccoloBasicTest extends TestZuiBase {
             return;
 
         // add some curling stuff:
-        final PPositionSet initial = new PPositionSet(PositionSet.allHome(),
-                new PRockFactory.Simple());
+        final PPositionSet initial = new PPositionSet(new PRockFactory.Simple());
+        initial.setPositionSet(PositionSet.allHome());
         ice.addChild(initial);
         initial.addInputEventListener(new PPositionSetDrag());
-        ice.addChild(new PPositionSet(PositionSet.allOut(),
-                new PRockFactory.Fancy(10)));
+        final PPositionSet end = new PPositionSet(new PRockFactory.Fancy(10));
+        end.setPositionSet(PositionSet.allOut());
+        ice.addChild(end);
 
         frame.setVisible(true);
         while (frame.isVisible())

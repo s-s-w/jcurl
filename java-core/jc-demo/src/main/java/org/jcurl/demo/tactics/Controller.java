@@ -39,6 +39,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jcurl.core.zui.KeyboardZoom;
 
+import edu.umd.cs.piccolo.PCamera;
+
 /**
  * ...home of the {@link Action}s
  * 
@@ -141,11 +143,11 @@ class Controller {
         private final JFrame frame;
         public final Action helpAbout;
         private final MainMod model;
-        private final MainPanel view;
+        final JComponent zui;
 
-        public MainController(final MainPanel view, final MainMod model,
+        public MainController(final JComponent zui, final MainMod model,
                 final JFrame frame) {
-            this.view = view;
+            this.zui = zui;
             this.model = model;
             this.frame = frame;
             fcJcx = new JFileChooser(model.getCurrentFile());
@@ -190,7 +192,7 @@ class Controller {
 
                 public void actionPerformed(final ActionEvent e) {
                     if (JFileChooser.APPROVE_OPTION == fcJcx
-                            .showSaveDialog(view))
+                            .showSaveDialog(frame))
                         model.save(fcJcx.getSelectedFile());
                 }
 
@@ -200,7 +202,7 @@ class Controller {
 
                 public void actionPerformed(final ActionEvent e) {
                     if (JFileChooser.APPROVE_OPTION == fcJcx
-                            .showOpenDialog(view))
+                            .showOpenDialog(frame))
                         model.open(fcJcx.getSelectedFile());
                 }
 
@@ -212,11 +214,11 @@ class Controller {
                 public void actionPerformed(final ActionEvent e) {
                     log.debug("-");
                     if (JFileChooser.APPROVE_OPTION == fcPng
-                            .showSaveDialog(view)) {
+                            .showSaveDialog(frame)) {
                         final File dst = fcPng.getSelectedFile();
                         try {
                             // this.setCursor(Cwait);
-                            exportPng(dst, view);
+                            exportPng(dst, zui);
                         } catch (final Exception e1) {
                             log.error("", e1);
                         } finally {
@@ -243,7 +245,7 @@ class Controller {
             // if (mod_locations.getLastChanged() <= lastSaved
             // && mod_speeds.getLastChanged() <= lastSaved)
             // return true;
-            if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(view,
+            if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(frame,
                     "Discard unsaved changes?", "Warning",
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE))
                 return true;
@@ -272,26 +274,10 @@ class Controller {
         }
     }
 
-    static class ZuiController {
-        private final ZuiMod model;
-        private final ZuiPanel view;
-        public final Action view12Foot;
-        public final Action viewComplete;
-        public final Action viewHouse;
-        public final Action viewSheet;
-        public final Action zoomIn;
-        public final Action zoomOut;
+    static class ZuiController extends KeyboardZoom {
 
-        public ZuiController(final ZuiPanel view, final ZuiMod model) {
-            this.view = view;
-            this.model = model;
-            final KeyboardZoom k = new KeyboardZoom(view.pico.getCamera());
-            viewComplete = k.ZoomComplete;
-            viewSheet = k.ZoomSheet;
-            viewHouse = k.ZoomHouse;
-            view12Foot = k.Zoom12Foot;
-            zoomIn = null;
-            zoomOut = null;
+        public ZuiController(final PCamera cam) {
+            super(cam);
         }
     }
 }

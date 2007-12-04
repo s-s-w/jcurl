@@ -56,35 +56,47 @@ public class PPositionSet extends PNode implements PropertyChangeListener {
         return true;
     }
 
-    private final PositionSet p;
+    private final PRockFactory f;
+    private PositionSet positionSet = null;
 
     /**
      * Create a pickable child node for each rock and set it's attributes
      * {@link #index16} and {@link PositionSet#getClass()} - yes the class
      * object is the key.
      * 
-     * @param p
      * @param f
      */
-    public PPositionSet(final PositionSet p, final PRockFactory f) {
-        this.p = p;
-        for (int i = 0; i < RockSet.ROCKS_PER_SET; i++) {
-            final PNode c = f.newInstance(i);
-            c.addAttribute(index16, i);
-            c.addAttribute(p.getClass(), p);
-            addChild(i, c);
-        }
-        p.addPropertyChangeListener(this);
-        sync(this.p, this);
+    public PPositionSet(final PRockFactory f) {
+        this.f = f;
+    }
+
+    public PositionSet getPositionSet() {
+        return positionSet;
     }
 
     public void propertyChange(final PropertyChangeEvent evt) {
         log.debug(evt);
-        sync(p, this);
-        // repaint();
+        sync(positionSet, this);
+    }
+
+    public void setPositionSet(final PositionSet positionSet) {
+        if (this.positionSet != null)
+            positionSet.removePropertyChangeListener(this);
+        this.positionSet = positionSet;
+        removeAllChildren();
+        for (int i = 0; i < RockSet.ROCKS_PER_SET; i++) {
+            final PNode c = f.newInstance(i);
+            c.addAttribute(index16, i);
+            c.addAttribute(positionSet.getClass(), positionSet);
+            addChild(i, c);
+        }
+        sync(this.positionSet, this);
+        positionSet.addPropertyChangeListener(this);
     }
 
     private void sync(final PositionSet src, final PPositionSet dst) {
+        if (src == null)
+            return;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             sync(src.getRock(i), dst.getChild(i));
     }

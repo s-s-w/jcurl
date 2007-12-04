@@ -37,39 +37,52 @@ import edu.umd.cs.piccolo.PNode;
  * @version $Id$
  */
 public class PCurveStore extends PNode implements PropertyChangeListener {
-
     private static final Log log = JCLoggerFactory.getLogger(PCurveStore.class);
     private static final long serialVersionUID = -7570887991507166006L;
-    private final CurveStore cs;
+    private CurveStore curveStore;
     private final PTrajectoryFactory f;
-
     private final double tmax;
 
-    public PCurveStore(final CurveStore cs, final PTrajectoryFactory f,
-            final double tmax) {
+    public PCurveStore(final PTrajectoryFactory f, final double tmax) {
         this.tmax = tmax;
-        this.cs = cs;
         this.f = f;
-        int i = 0;
-        for (final Iterable<Entry<Double, R1RNFunction>> element : cs) {
-            addChild(i, new PNode());
-            // ensure initial rendering
-            sync(i++, tmax);
-        }
-        cs.addPropertyChangeListener("curve", this);
+        setCurveStore(curveStore);
+    }
+
+    public CurveStore getCurveStore() {
+        return curveStore;
     }
 
     public void propertyChange(final PropertyChangeEvent evt) {
-        log.debug(evt);
-        if (evt instanceof IndexedPropertyChangeEvent) {
-            final IndexedPropertyChangeEvent e = (IndexedPropertyChangeEvent) evt;
-            sync(e.getIndex(), tmax);
-            return;
+        if (evt instanceof IndexedPropertyChangeEvent)
+            sync(((IndexedPropertyChangeEvent) evt).getIndex());
+    }
+
+    public void setCurveStore(final CurveStore curveStore) {
+        if (this.curveStore != null)
+            this.curveStore.removePropertyChangeListener(this);
+        this.curveStore = curveStore;
+        if (this.curveStore != null) {
+            sync();
+            curveStore.addPropertyChangeListener("curve", this);
         }
     }
 
-    private void sync(final int i16, final double tmax) {
-        final PNode c = f.newInstance(i16, cs.iterator(i16), tmax);
+    private void sync() {
+        if(this.curveStore == null)
+            return;
+        int i = 0;
+        for (final Iterable<Entry<Double, R1RNFunction>> element : curveStore) {
+            addChild(i, new PNode());
+            // ensure initial rendering
+            sync(i++);
+        }
+    }
+
+    private void sync(final int i16) {
+        if (curveStore == null)
+            return;
+        final PNode c = f.newInstance(i16, curveStore.iterator(i16), tmax);
         c.addAttribute(PPositionSet.index16, i16);
         getChild(i16).replaceWith(c);
     }

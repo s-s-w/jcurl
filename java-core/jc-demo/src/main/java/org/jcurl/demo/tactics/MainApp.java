@@ -154,24 +154,24 @@ public class MainApp extends JFrame {
             final JMenu ret = new JMenu("View");
             ret.setMnemonic('V');
 
-            JMenuItem i = ret.add(new JMenuItem(zuic.viewComplete));
+            JMenuItem i = ret.add(new JMenuItem(zuic.ZoomComplete));
             i.setText("Complete");
             i.setMnemonic('C');
             i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME,
                     InputEvent.CTRL_MASK));
 
-            i = ret.add(new JMenuItem(zuic.viewSheet));
+            i = ret.add(new JMenuItem(zuic.ZoomSheet));
             i.setText("Active");
             i.setMnemonic('A');
             i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END,
                     InputEvent.CTRL_MASK));
 
-            i = ret.add(new JMenuItem(zuic.viewHouse));
+            i = ret.add(new JMenuItem(zuic.ZoomHouse));
             i.setText("House");
             i.setMnemonic('H');
             i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME, 0));
 
-            i = ret.add(new JMenuItem(zuic.view12Foot));
+            i = ret.add(new JMenuItem(zuic.Zoom12Foot));
             i.setText("12-foot");
             i.setMnemonic('2');
             i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END, 0));
@@ -259,11 +259,10 @@ public class MainApp extends JFrame {
 
     public MainApp() {
         m = new MainMod();
-        final ZuiPanel zui = new ZuiPanel(m);
-        final MainPanel p = new MainPanel(m, zui);
-        getContentPane().add(p);
-        mainc = new MainController(p, m, this);
-        zuic = new ZuiController(zui, m);
+        final ZuiPanel zui = new ZuiPanel(m.undo);
+        getContentPane().add(zui);
+        mainc = new MainController(zui, m, this);
+        zuic = new ZuiController(zui.pico.getCamera());
         setJMenuBar(new Menufactory(mainc, zuic).menu());
         addWindowListener(new WindowAdapter() {
             @Override
@@ -271,9 +270,13 @@ public class MainApp extends JFrame {
                 mainc.shutDown();
             }
         });
+        // connect the data models:
+        zui.setCurveStore(m.getCurveStore());
+        zui.setInitialPos(m.getInitialPos());
+        zui.setCurrentPos(m.getCurrentPos());
     }
 
     void center() {
-        zuic.viewHouse.actionPerformed(null);
+        zuic.ZoomHouse.actionPerformed(null);
     }
 }
