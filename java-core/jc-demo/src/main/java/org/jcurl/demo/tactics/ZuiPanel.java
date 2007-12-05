@@ -25,7 +25,7 @@ import edu.umd.cs.piccolo.util.PPaintContext;
 class ZuiPanel extends JComponent {
     private static final long serialVersionUID = -4648771240323713217L;
 
-    private final BroomPromptSimple broomPrompt;
+    private final BroomPromptSimple broom;
     private final PPositionSet current;
     private final PNode ice;
     private final PPositionSet initial;
@@ -70,48 +70,44 @@ class ZuiPanel extends JComponent {
             }
         });
         current = new PPositionSet(new PRockFactory.Fancy(major));
-        broomPrompt = new BroomPromptSimple();
+        broom = new BroomPromptSimple();
 
         traj.setVisible(false);
         current.setVisible(false);
         initial.setVisible(false);
-        broomPrompt.setVisible(false);
+        broom.setVisible(false);
 
         ice.addChild(traj);
         ice.addChild(current);
         ice.addChild(initial);
-        ice.addChild(broomPrompt);
+        ice.addChild(broom);
     }
 
     public BroomPromptModel getBroomPrompt() {
-        return broomPrompt.getModel();
+        return broom.getModel();
     }
 
     public PositionSet getCurrentPos() {
-        return current.getPositionSet();
+        return current.getModel();
     }
 
     public PositionSet getInitialPos() {
-        return initial.getPositionSet();
+        return initial.getModel();
     }
 
     public void setBroomPrompt(final BroomPromptModel broomPrompt) {
-        this.broomPrompt.setModel(broomPrompt);
-        this.broomPrompt.setVisible(broomPrompt != null);
+        broom.setModel(broomPrompt);
     }
 
     public void setCurrentPos(final PositionSet current) {
-        this.current.setPositionSet(current);
-        this.current.setVisible(current != null);
+        this.current.setModel(current);
     }
 
     public void setCurveStore(final CurveStore cs) {
-        traj.setCurveStore(cs);
-        traj.setVisible(cs != null);
+        traj.setModel(cs);
     }
 
     public void setInitialPos(final PositionSet initial) {
-        this.initial.setPositionSet(initial);
-        this.initial.setVisible(initial != null);
+        this.initial.setModel(initial);
     }
 }

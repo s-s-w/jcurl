@@ -30,11 +30,11 @@ public class PiccoloBasicTest extends TestZuiBase {
 
         // add some curling stuff:
         final PPositionSet initial = new PPositionSet(new PRockFactory.Simple());
-        initial.setPositionSet(PositionSet.allHome());
+        initial.setModel(PositionSet.allHome());
         ice.addChild(initial);
         initial.addInputEventListener(new PPositionSetDrag());
         final PPositionSet end = new PPositionSet(new PRockFactory.Fancy(10));
-        end.setPositionSet(PositionSet.allOut());
+        end.setModel(PositionSet.allOut());
         ice.addChild(end);
 
         frame.setVisible(true);

@@ -353,12 +353,15 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
             if (this.model.getSplitTimeMillis() != null)
                 this.model.getSplitTimeMillis().removeChangeListener(this);
         }
-        this.model = model == null ? new BroomPromptModel() : model;
-        setBroom(this.model.getBroom());
-        setIdx16(this.model.getIdx16());
-        setOutTurn(this.model.getOutTurn());
-        setSlider(this.model.getSplitTimeMillis());
-        this.model.addPropertyChangeListener(this);
+        this.model = model;
+        setVisible(this.model != null);
+        if (this.model != null) {
+            setBroom(this.model.getBroom());
+            setIdx16(this.model.getIdx16());
+            setOutTurn(this.model.getOutTurn());
+            setSlider(this.model.getSplitTimeMillis());
+            this.model.addPropertyChangeListener(this);
+        }
     }
 
     private void setOutTurn(final boolean ot) {

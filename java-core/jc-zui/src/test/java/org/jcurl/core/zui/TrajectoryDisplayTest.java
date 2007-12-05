@@ -146,10 +146,10 @@ public class TrajectoryDisplayTest extends TestZuiBase {
         if (frame == null)
             return;
         final PPositionSet a = new PPositionSet(new PRockFactory.Fancy(255));
-        a.setPositionSet(cm.getCurrentPos());
+        a.setModel(cm.getCurrentPos());
         final PCurveStore b = new PCurveStore(new PTrajectoryFactory.Fancy(),
                 tmax);
-        b.setCurveStore(cm.getCurveStore());
+        b.setModel(cm.getCurveStore());
         try {
             ice.addChild(b);
             ice.addChild(a);
@@ -199,10 +199,10 @@ public class TrajectoryDisplayTest extends TestZuiBase {
         if (frame == null)
             return;
         final PPositionSet a = new PPositionSet(new PRockFactory.Fancy(255));
-        a.setPositionSet(cm.getCurrentPos());
+        a.setModel(cm.getCurrentPos());
         final PCurveStore b = new PCurveStore(new PTrajectoryFactory.Fancy(),
                 tmax);
-        b.setCurveStore(cm.getCurveStore());
+        b.setModel(cm.getCurveStore());
         try {
             ice.addChild(b);
             ice.addChild(a);

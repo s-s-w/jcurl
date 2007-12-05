@@ -57,7 +57,7 @@ public class PPositionSet extends PNode implements PropertyChangeListener {
     }
 
     private final PRockFactory f;
-    private PositionSet positionSet = null;
+    private PositionSet model = null;
 
     /**
      * Create a pickable child node for each rock and set it's attributes
@@ -70,28 +70,31 @@ public class PPositionSet extends PNode implements PropertyChangeListener {
         this.f = f;
     }
 
-    public PositionSet getPositionSet() {
-        return positionSet;
+    public PositionSet getModel() {
+        return model;
     }
 
     public void propertyChange(final PropertyChangeEvent evt) {
         log.debug(evt);
-        sync(positionSet, this);
+        sync(model, this);
     }
 
-    public void setPositionSet(final PositionSet positionSet) {
-        if (this.positionSet != null)
+    public void setModel(final PositionSet positionSet) {
+        if (model != null)
             positionSet.removePropertyChangeListener(this);
-        this.positionSet = positionSet;
-        removeAllChildren();
-        for (int i = 0; i < RockSet.ROCKS_PER_SET; i++) {
-            final PNode c = f.newInstance(i);
-            c.addAttribute(index16, i);
-            c.addAttribute(positionSet.getClass(), positionSet);
-            addChild(i, c);
+        model = positionSet;
+        setVisible(model != null);
+        if (model != null) {
+            removeAllChildren();
+            for (int i = 0; i < RockSet.ROCKS_PER_SET; i++) {
+                final PNode c = f.newInstance(i);
+                c.addAttribute(index16, i);
+                c.addAttribute(positionSet.getClass(), positionSet);
+                addChild(i, c);
+            }
+            sync(model, this);
+            positionSet.addPropertyChangeListener(this);
         }
-        sync(this.positionSet, this);
-        positionSet.addPropertyChangeListener(this);
     }
 
     private void sync(final PositionSet src, final PPositionSet dst) {

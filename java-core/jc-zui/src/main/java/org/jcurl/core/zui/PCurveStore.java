@@ -39,18 +39,18 @@ import edu.umd.cs.piccolo.PNode;
 public class PCurveStore extends PNode implements PropertyChangeListener {
     private static final Log log = JCLoggerFactory.getLogger(PCurveStore.class);
     private static final long serialVersionUID = -7570887991507166006L;
-    private CurveStore curveStore;
     private final PTrajectoryFactory f;
+    private CurveStore model;
     private final double tmax;
 
     public PCurveStore(final PTrajectoryFactory f, final double tmax) {
         this.tmax = tmax;
         this.f = f;
-        setCurveStore(curveStore);
+        setModel(model);
     }
 
-    public CurveStore getCurveStore() {
-        return curveStore;
+    public CurveStore getModel() {
+        return model;
     }
 
     public void propertyChange(final PropertyChangeEvent evt) {
@@ -58,21 +58,22 @@ public class PCurveStore extends PNode implements PropertyChangeListener {
             sync(((IndexedPropertyChangeEvent) evt).getIndex());
     }
 
-    public void setCurveStore(final CurveStore curveStore) {
-        if (this.curveStore != null)
-            this.curveStore.removePropertyChangeListener(this);
-        this.curveStore = curveStore;
-        if (this.curveStore != null) {
+    public void setModel(final CurveStore curveStore) {
+        if (model != null)
+            model.removePropertyChangeListener(this);
+        model = curveStore;
+        setVisible(model != null);
+        if (model != null) {
             sync();
             curveStore.addPropertyChangeListener("curve", this);
         }
     }
 
     private void sync() {
-        if (curveStore == null)
+        if (model == null)
             return;
         int i = 0;
-        for (final Iterable<Entry<Double, R1RNFunction>> element : curveStore) {
+        for (final Iterable<Entry<Double, R1RNFunction>> element : model) {
             addChild(i, new PNode());
             // ensure initial rendering
             sync(i++);
@@ -80,9 +81,9 @@ public class PCurveStore extends PNode implements PropertyChangeListener {
     }
 
     private void sync(final int i16) {
-        if (curveStore == null)
+        if (model == null)
             return;
-        final PNode c = f.newInstance(i16, curveStore.iterator(i16), tmax);
+        final PNode c = f.newInstance(i16, model.iterator(i16), tmax);
         c.addAttribute(PPositionSet.index16, i16);
         getChild(i16).replaceWith(c);
     }

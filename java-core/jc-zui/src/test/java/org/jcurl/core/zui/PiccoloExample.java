@@ -93,7 +93,7 @@ public class PiccoloExample {
         final PNode ice = new PIceFactory.Fancy().newInstance();
         pico.getLayer().addChild(ice);
         final PPositionSet pos = new PPositionSet(new PRockFactory.Fancy(100));
-        pos.setPositionSet(PositionSet.allOut());
+        pos.setModel(PositionSet.allOut());
         ice.addChild(pos);
         pos.addInputEventListener(new PPositionSetDrag());
 

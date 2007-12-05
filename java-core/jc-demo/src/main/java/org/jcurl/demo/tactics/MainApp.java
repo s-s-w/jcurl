@@ -154,18 +154,7 @@ public class MainApp extends JFrame {
         public JMenu viewMenu() {
             final JMenu ret = new JMenu("View");
             ret.setMnemonic('V');
-
-            JMenuItem i = ret.add(new JMenuItem(zuic.ZoomComplete));
-            i.setText("Complete");
-            i.setMnemonic('C');
-            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME,
-                    InputEvent.CTRL_MASK));
-
-            i = ret.add(new JMenuItem(zuic.ZoomSheet));
-            i.setText("Active");
-            i.setMnemonic('A');
-            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END,
-                    InputEvent.CTRL_MASK));
+            JMenuItem i = null;
 
             i = ret.add(new JMenuItem(zuic.ZoomHouse));
             i.setText("House");
@@ -176,6 +165,18 @@ public class MainApp extends JFrame {
             i.setText("12-foot");
             i.setMnemonic('2');
             i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END, 0));
+
+            i = ret.add(new JMenuItem(zuic.ZoomComplete));
+            i.setText("Complete");
+            i.setMnemonic('C');
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME,
+                    InputEvent.CTRL_MASK));
+
+            i = ret.add(new JMenuItem(zuic.ZoomSheet));
+            i.setText("Active");
+            i.setMnemonic('A');
+            i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END,
+                    InputEvent.CTRL_MASK));
 
             ret.addSeparator();
 
