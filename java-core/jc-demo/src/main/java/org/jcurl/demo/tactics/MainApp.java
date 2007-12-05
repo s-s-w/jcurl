@@ -34,6 +34,7 @@ import javax.swing.WindowConstants;
 
 import org.jcurl.core.model.BroomPromptModel;
 import org.jcurl.demo.tactics.Controller.MainController;
+import org.jcurl.demo.tactics.Controller.UndoRedoCon;
 import org.jcurl.demo.tactics.Controller.ZuiController;
 
 public class MainApp extends JFrame {
@@ -46,25 +47,28 @@ public class MainApp extends JFrame {
      * @version $Id$
      */
     static class Menufactory {
+        private final UndoRedoCon undoc;
         private final MainController mainc;
         private final ZuiController zuic;
 
-        public Menufactory(final MainController mainc, final ZuiController zuic) {
+        public Menufactory(final MainController mainc,
+                final ZuiController zuic, final UndoRedoCon undoc) {
             this.mainc = mainc;
             this.zuic = zuic;
+            this.undoc = undoc;
         }
 
         public JMenu editMenu() {
             final JMenu ret = new JMenu("Edit");
             ret.setMnemonic('E');
 
-            JMenuItem i = ret.add(new JMenuItem(mainc.editUndo));
+            JMenuItem i = ret.add(new JMenuItem(undoc.editUndo));
             i.setText("Undo");
             i.setMnemonic('U');
             i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
                     InputEvent.CTRL_MASK));
 
-            i = ret.add(new JMenuItem(mainc.editRedo));
+            i = ret.add(new JMenuItem(undoc.editRedo));
             i.setText("Redo");
             i.setMnemonic('R');
             i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,
@@ -237,6 +241,7 @@ public class MainApp extends JFrame {
             public void run() {
                 application
                         .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+                application.pack();
                 application.setSize(800, 600);
                 application.setVisible(true);
                 application.center();
@@ -262,12 +267,14 @@ public class MainApp extends JFrame {
     public MainApp() {
         m = new MainMod();
         final BroomPromptModel bpm = new BroomPromptModel();
+        final UndoRedoCon undoc = new UndoRedoCon();
+        undoc.setModel(m.undo);
         bpm.setIdx16(14);
         final ZuiPanel zui = new ZuiPanel(m.undo);
         getContentPane().add(zui);
         mainc = new MainController(zui, m, this);
         zuic = new ZuiController(zui.pico.getCamera());
-        setJMenuBar(new Menufactory(mainc, zuic).menu());
+        setJMenuBar(new Menufactory(mainc, zuic, undoc).menu());
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(final WindowEvent e) {

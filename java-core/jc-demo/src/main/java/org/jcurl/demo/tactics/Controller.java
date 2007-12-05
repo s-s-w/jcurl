@@ -33,7 +33,10 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.undo.UndoableEdit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -50,37 +53,6 @@ import edu.umd.cs.piccolo.PCamera;
 class Controller {
 
     static class MainController {
-        /**
-         * Non-static to enable cross-usage and initialisation of the according
-         * {@link Action}s.
-         * 
-         * http://www.javaworld.com/javaworld/jw-06-1998/jw-06-undoredo.html
-         * 
-         * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
-         * @version $Id: MainApp.java 701 2007-08-21 00:22:00Z mrohrmoser $
-         */
-        class UndoRedoAction extends AbstractAction {
-            private static final long serialVersionUID = -4468864007790523205L;
-            private final boolean undo;
-
-            public UndoRedoAction(final boolean undo) {
-                this.undo = undo;
-                setEnabled(true);
-            }
-
-            public void actionPerformed(final ActionEvent e) {
-                try {
-                    if (undo)
-                        model.undo();
-                    else
-                        model.redo();
-                } catch (final RuntimeException ex) {
-                    log.error("", ex);
-                }
-                editUndo.setEnabled(model.canUndo());
-                editRedo.setEnabled(model.canRedo());
-            }
-        }
 
         private static final Log log = LogFactory.getLog(MainController.class);
 
@@ -130,8 +102,6 @@ class Controller {
         }
 
         public final Action editProperties;
-        public final Action editRedo;
-        public final Action editUndo;
         final JFileChooser fcJcx;
         final JFileChooser fcPng;
         public final Action fileExit;
@@ -142,13 +112,11 @@ class Controller {
         public final Action fileScreenshot;
         private final JFrame frame;
         public final Action helpAbout;
-        private final MainMod model;
         final JComponent zui;
 
         public MainController(final JComponent zui, final MainMod model,
                 final JFrame frame) {
             this.zui = zui;
-            this.model = model;
             this.frame = frame;
             fcJcx = new JFileChooser(model.getCurrentFile());
             fcJcx.setName("Open");
@@ -235,8 +203,6 @@ class Controller {
                 }
             };
 
-            editUndo = new UndoRedoAction(true);
-            editRedo = new UndoRedoAction(false);
             editProperties = null;
             helpAbout = null;
         }
@@ -271,6 +237,72 @@ class Controller {
                 fileSave.actionPerformed(null);
             tighten(frame, 10, 200);
             System.exit(0);
+        }
+    }
+
+    static class UndoRedoCon implements UndoableEditListener {
+        /**
+         * Non-static to enable cross-usage and initialisation of the according
+         * {@link Action}s.
+         * 
+         * http://www.javaworld.com/javaworld/jw-06-1998/jw-06-undoredo.html
+         * 
+         * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+         * @version $Id: MainApp.java 701 2007-08-21 00:22:00Z mrohrmoser $
+         */
+        class UndoRedoAction extends AbstractAction {
+            private static final long serialVersionUID = -4468864007790523205L;
+            private final boolean undo;
+
+            public UndoRedoAction(final boolean undo) {
+                this.undo = undo;
+                setEnabled(false);
+            }
+
+            public void actionPerformed(final ActionEvent e) {
+                if (model == null)
+                    return;
+                try {
+                    if (undo)
+                        model.undo();
+                    else
+                        model.redo();
+                } catch (final RuntimeException ex) {
+                    lo.error("", ex);
+                }
+                editUndo.setEnabled(model.canUndo());
+                editRedo.setEnabled(model.canRedo());
+            }
+        }
+
+        private static final Log lo = LogFactory.getLog(UndoRedoCon.class);
+        public final Action editRedo;
+        public final Action editUndo;
+        private UndoRedoDocument model;
+
+        public UndoRedoCon() {
+            editUndo = new UndoRedoAction(true);
+            editRedo = new UndoRedoAction(false);
+        }
+
+        public UndoRedoDocument getModel() {
+            return model;
+        }
+
+        public void setModel(final UndoRedoDocument model) {
+            if (this.model != null)
+                this.model.removeUndoableEditListener(this);
+            this.model = model;
+            if (this.model != null)
+                this.model.addUndoableEditListener(this);
+        }
+
+        public void undoableEditHappened(final UndoableEditEvent e) {
+            final UndoableEdit ed = e.getEdit();
+            if (model == null || ed == null)
+                return;
+            editUndo.setEnabled(ed.canUndo());
+            editRedo.setEnabled(ed.canRedo());
         }
     }
 
