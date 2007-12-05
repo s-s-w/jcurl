@@ -127,7 +127,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
                 super.paint(aPaintContext);
             }
         };
-//        s.setStroke(st);
+        // s.setStroke(st);
         s.setStrokePaint(sp);
         s.setPickable(false);
         return s;
@@ -152,13 +152,14 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
         final boolean bothSides = true;
         final int pieAngle = 150;
         final Color sp = Color.BLACK;
-        final Color bgc = new Color(1, 1, 1, 0.65f);
+        final Color bgc = new Color(1, 1, 1, 0.5f);
         final Stroke fine = new BasicStroke(0.01f, BasicStroke.CAP_BUTT,
                 BasicStroke.JOIN_MITER);
         final Stroke bold = new BasicStroke(0.03f, BasicStroke.CAP_ROUND,
                 BasicStroke.JOIN_MITER);
         // final Font fo = new Font("SansSerif", Font.BOLD, 1);
-        final float outer = RockProps.DEFAULT.getRadius();
+        final float halo = RockProps.DEFAULT.getRadius();
+        final float outer = 0.8f * RockProps.DEFAULT.getRadius();
         stickLength = (stickUp ? 1 : -1) * 5 * outer;
         final float inner = 0.5F * outer;
         setPickable(false);
@@ -193,10 +194,8 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
             }
         };
         { // opaque Background
-            final float f = 1.2f;
-            final PNode bg = node(new Arc2D.Float(-f * outer, -f * outer, 2 * f
-                    * outer, 2 * f * outer, 0, 360, Arc2D.OPEN), null, null,
-                    scale0);
+            final PNode bg = node(new Arc2D.Float(-halo, -halo, 2 * halo,
+                    2 * halo, 0, 360, Arc2D.OPEN), null, null, scale0);
             bg.setPaint(bgc);
             bg.setPickable(true);
             handle.addChild(bg);
@@ -233,10 +232,10 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
         }
         { // y-axis:
             handle.addChild(node(new Line2D.Float(0, -Math.signum(stickLength)
-                    * 1.2f * outer, 0, stickLength), fine, sp, scale0));
+                    * halo, 0, stickLength), fine, sp, scale0));
             // x-axis:
-            handle.addChild(node(new Line2D.Float(-1.2f * outer, 0,
-                    1.2f * outer, 0), fine, sp, scale0));
+            handle.addChild(node(new Line2D.Float(-halo, 0, halo, 0), fine, sp,
+                    scale0));
         }
         { // slider
             slider = new PPath(createSlider(0.4f * outer, bothSides), fine);

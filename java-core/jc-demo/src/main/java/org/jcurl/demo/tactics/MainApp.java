@@ -32,6 +32,7 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
+import org.jcurl.core.model.BroomPromptModel;
 import org.jcurl.demo.tactics.Controller.MainController;
 import org.jcurl.demo.tactics.Controller.ZuiController;
 
@@ -259,6 +260,8 @@ public class MainApp extends JFrame {
 
     public MainApp() {
         m = new MainMod();
+        final BroomPromptModel bpm = new BroomPromptModel();
+        bpm.setIdx16(14);
         final ZuiPanel zui = new ZuiPanel(m.undo);
         getContentPane().add(zui);
         mainc = new MainController(zui, m, this);
@@ -274,6 +277,7 @@ public class MainApp extends JFrame {
         zui.setCurveStore(m.getCurveStore());
         zui.setInitialPos(m.getInitialPos());
         zui.setCurrentPos(m.getCurrentPos());
+        zui.setBroomPrompt(bpm);
     }
 
     void center() {

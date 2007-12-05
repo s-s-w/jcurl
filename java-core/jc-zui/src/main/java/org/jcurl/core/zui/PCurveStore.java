@@ -69,7 +69,7 @@ public class PCurveStore extends PNode implements PropertyChangeListener {
     }
 
     private void sync() {
-        if(this.curveStore == null)
+        if (curveStore == null)
             return;
         int i = 0;
         for (final Iterable<Entry<Double, R1RNFunction>> element : curveStore) {

@@ -8,6 +8,8 @@ import javax.swing.undo.StateEdit;
 
 import org.jcurl.core.base.CurveStore;
 import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.model.BroomPromptModel;
+import org.jcurl.core.zui.BroomPromptSimple;
 import org.jcurl.core.zui.PCurveStore;
 import org.jcurl.core.zui.PIceFactory;
 import org.jcurl.core.zui.PPositionSet;
@@ -23,6 +25,7 @@ import edu.umd.cs.piccolo.util.PPaintContext;
 class ZuiPanel extends JComponent {
     private static final long serialVersionUID = -4648771240323713217L;
 
+    private final BroomPromptSimple broomPrompt;
     private final PPositionSet current;
     private final PNode ice;
     private final PPositionSet initial;
@@ -67,10 +70,21 @@ class ZuiPanel extends JComponent {
             }
         });
         current = new PPositionSet(new PRockFactory.Fancy(major));
+        broomPrompt = new BroomPromptSimple();
+
+        traj.setVisible(false);
+        current.setVisible(false);
+        initial.setVisible(false);
+        broomPrompt.setVisible(false);
 
         ice.addChild(traj);
         ice.addChild(current);
         ice.addChild(initial);
+        ice.addChild(broomPrompt);
+    }
+
+    public BroomPromptModel getBroomPrompt() {
+        return broomPrompt.getModel();
     }
 
     public PositionSet getCurrentPos() {
@@ -81,15 +95,23 @@ class ZuiPanel extends JComponent {
         return initial.getPositionSet();
     }
 
+    public void setBroomPrompt(final BroomPromptModel broomPrompt) {
+        this.broomPrompt.setModel(broomPrompt);
+        this.broomPrompt.setVisible(broomPrompt != null);
+    }
+
     public void setCurrentPos(final PositionSet current) {
         this.current.setPositionSet(current);
+        this.current.setVisible(current != null);
     }
 
     public void setCurveStore(final CurveStore cs) {
         traj.setCurveStore(cs);
+        traj.setVisible(cs != null);
     }
 
     public void setInitialPos(final PositionSet initial) {
         this.initial.setPositionSet(initial);
+        this.initial.setVisible(initial != null);
     }
 }
