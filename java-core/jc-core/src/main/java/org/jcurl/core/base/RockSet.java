@@ -78,7 +78,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
 
     public static final int LIGHT_MASK = 0x5555;
 
-    private static final Object mark = "allrocks";
+    private static final Object mark = RockSet.class.getName() + ":allrocks";
 
     public static final int ROCKS_PER_COLOR = 8;
 
@@ -95,7 +95,7 @@ public abstract class RockSet extends MutableObject implements Cloneable,
         return dst.setLocation(src);
     }
 
-    public static int countBits(int a) {
+    public static final int countBits(int a) {
         int ret = 0;
         for (; a != 0; a >>= 1)
             if ((a & 1) == 1)

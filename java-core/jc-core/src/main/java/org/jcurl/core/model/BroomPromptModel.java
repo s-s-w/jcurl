@@ -28,9 +28,7 @@ import org.jcurl.core.helpers.MutableObject;
 
 /**
  * Data model for broom location, rock index, rotation (counter-/clockwise) and
- * speed (in percent).
- * 
- * Maybe implement the {@link BoundedRangeModel} for the speed slider?
+ * initial speed.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$

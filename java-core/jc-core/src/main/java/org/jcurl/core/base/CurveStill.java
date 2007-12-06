@@ -22,10 +22,9 @@ package org.jcurl.core.base;
  * Curve implementation for rocks NOT in motion.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:CurveStill.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class CurveStill extends CurveRock {
-
     private static final long serialVersionUID = -8031863193302315171L;
 
     public static CurveStill newInstance(final double x, final double y,
@@ -42,18 +41,16 @@ public class CurveStill extends CurveRock {
     }
 
     private final double a;
-
     private final double x;
-
     private final double y;
 
-    CurveStill(final double x, final double y, final double a) {
+    private CurveStill(final double x, final double y, final double a) {
         this.x = x;
         this.y = y;
         this.a = a;
     }
 
-    CurveStill(final Rock x) {
+    private CurveStill(final Rock x) {
         this(x.getX(), x.getY(), x.getA());
     }
 
@@ -69,7 +66,7 @@ public class CurveStill extends CurveRock {
         case 2:
             return a;
         default:
-            throw new RuntimeException();
+            throw new IllegalArgumentException();
         }
     }
 
@@ -83,5 +80,4 @@ public class CurveStill extends CurveRock {
         buf.append(']');
         return buf.toString();
     }
-
 }

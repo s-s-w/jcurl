@@ -242,7 +242,7 @@ public class MainApp extends JFrame {
                 application
                         .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
                 application.pack();
-                application.setSize(800, 600);
+                application.setSize(600, 800);
                 application.setVisible(true);
                 application.center();
             }
@@ -260,9 +260,9 @@ public class MainApp extends JFrame {
         }
     }
 
-    final MainMod m;
-    final MainController mainc;
-    final ZuiController zuic;
+    private final MainMod m;
+    private final MainController mainc;
+    private final ZuiController zuic;
 
     public MainApp() {
         m = new MainMod();
@@ -288,7 +288,7 @@ public class MainApp extends JFrame {
         zui.setBroomPrompt(bpm);
     }
 
-    void center() {
-        zuic.ZoomHouse.actionPerformed(null);
+    private void center() {
+        zuic.ZoomComplete.actionPerformed(null);
     }
 }

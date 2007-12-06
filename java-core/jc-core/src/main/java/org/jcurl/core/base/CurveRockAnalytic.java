@@ -33,7 +33,7 @@ public class CurveRockAnalytic extends CurveRock {
 
     private static final long serialVersionUID = 6879559446969142018L;
 
-    final R1RNFunction curve;
+    private final R1RNFunction curve;
 
     public CurveRockAnalytic(final R1R1Function x, final R1R1Function y,
             final R1R1Function a) {

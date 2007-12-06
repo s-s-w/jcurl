@@ -25,12 +25,11 @@ import org.jcurl.math.R1RNFunction;
  * Find Collissions of two spheres moving along curves.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:CollissionDetector.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public interface CollissionDetector extends Strategy {
 
-    public static final double RR2 = MathVec.sqr(2 * RockProps.DEFAULT
-            .getRadius());
+    public static double RR2 = MathVec.sqr(2 * RockProps.DEFAULT.getRadius());
 
     /**
      * Find the smallest <code>t</code> with
@@ -56,9 +55,8 @@ public interface CollissionDetector extends Strategy {
      *            radius of sphere <code>b</code>
      * @return time of next collission or {@link Double#NaN} if none.
      */
-    public abstract double compute(final double t0, final double tstop,
-            final R1RNFunction fa, final double ra, final R1RNFunction fb,
-            final double rb);
+    public double compute(double t0, double tstop, R1RNFunction fa, double ra,
+            R1RNFunction fb, double rb);
 
     /**
      * Find the smallest <code>t</code> with
@@ -83,8 +81,8 @@ public interface CollissionDetector extends Strategy {
      *            location of sphere <code>b</code>
      * @return time of next collission or {@link Double#NaN} if none.
      */
-    public abstract double compute(final double t0, final double tstop,
-            final R1RNFunction fa, final R1RNFunction fb);
+    public double compute(double t0, double tstop, R1RNFunction fa,
+            R1RNFunction fb);
 
     /**
      * Find the smallest <code>t</code> with
@@ -104,7 +102,6 @@ public interface CollissionDetector extends Strategy {
      *            square of sum of both spheres radii
      * @return time of next collission or {@link Double#NaN} if none.
      */
-    public abstract double compute(final double t0, final double tstop,
-            final R1RNFunction fa, final R1RNFunction fb, final double distSq);
-
+    public double compute(double t0, double tstop, R1RNFunction fa,
+            R1RNFunction fb, double distSq);
 }

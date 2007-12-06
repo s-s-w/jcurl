@@ -27,7 +27,7 @@ import org.jcurl.core.helpers.Measure;
  * Compute rock collissions.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:Collider.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public interface Collider extends PropModel, Strategy {
 
@@ -49,8 +49,8 @@ public interface Collider extends PropModel, Strategy {
      *            <code>null</code> creates a new instance.
      * @return bitmask of the changed rocks
      */
-    public abstract int compute(final PositionSet pos, final SpeedSet speed,
+    public abstract int compute(PositionSet pos, SpeedSet speed,
             AffineTransform tr);
 
-    public void init(final Map<CharSequence, Measure> ice);
+    public void init(Map<CharSequence, Measure> ice);
 }

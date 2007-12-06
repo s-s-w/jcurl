@@ -25,10 +25,11 @@ import java.io.ObjectStreamException;
 import org.jcurl.math.R1RNFunction;
 
 /**
- * Decorator to apply an rc -&gt; wc {@link AffineTransform} and a time-shift.
+ * Decorator to apply an rc -&gt; wc {@link AffineTransform} and a time-shift to
+ * a {@link CurveRock}.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:CurveTransformed.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class CurveTransformed extends CurveRock {
 
@@ -83,11 +84,11 @@ public class CurveTransformed extends CurveRock {
                 .getY());
     }
 
-    final R1RNFunction base;
+    private final R1RNFunction base;
 
-    final transient double rot;
+    private final transient double rot;
 
-    final double t0;
+    private final double t0;
 
     private final double[] trafo = new double[6];
 
@@ -95,7 +96,7 @@ public class CurveTransformed extends CurveRock {
             final R1RNFunction base, final double t0) {
         this.t0 = t0;
         if (base instanceof CurveRockAnalytic)
-            this.base = ((CurveRockAnalytic) base).curve;
+            this.base = ((CurveRockAnalytic) base).getCurve();
         else
             this.base = base;
         trafo.getMatrix(this.trafo);
@@ -123,7 +124,7 @@ public class CurveTransformed extends CurveRock {
      * @param v0_wc
      * @param t0
      */
-    CurveTransformed(final CurveRock c, final Point2D x0_wc,
+    private CurveTransformed(final CurveRock c, final Point2D x0_wc,
             final Point2D v0_wc, final double t0) {
         this(c, createRc2Wc(x0_wc, v0_wc, null), t0);
     }
@@ -177,7 +178,7 @@ public class CurveTransformed extends CurveRock {
         throw new UnsupportedOperationException("Not supported.");
     }
 
-    double getT0() {
+    private double getT0() {
         return t0;
     }
 

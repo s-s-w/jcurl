@@ -38,7 +38,5 @@ public interface StopDetector extends Strategy, Serializable {
      * @param tmax
      * @return {@link Double#NaN} if not stopping within [tmin, tmax]
      */
-    public abstract double compute(final R1RNFunction f, double tmin,
-            double tmax);
-
+    public abstract double compute(R1RNFunction f, double tmin, double tmax);
 }
