@@ -21,6 +21,8 @@ import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.helpers.Annotations;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.io.IODocument;
+import org.jcurl.core.io.IOTrajectories;
 import org.jcurl.core.io.JCurlSerializer;
 import org.jcurl.core.io.JDKSerializer;
 import org.jcurl.core.model.BroomPromptModel;
@@ -217,8 +219,12 @@ class MainMod extends BroomPromptModel {
         if (dst.getName().endsWith(".jcz") || dst.getName().endsWith(".jcx")) {
             log.debug(dst);
             final JCurlSerializer xs = new JDKSerializer();
+            IODocument src = new IODocument();
+            IOTrajectories l = new IOTrajectories();
+            src.setRoot(l);
+            l.trajectories().add(ts);
             try {
-                throw new IOException("Not implemented yet");
+                xs.write(src, dst);
             } catch (final IOException e) {
                 log.error("", e);
             }

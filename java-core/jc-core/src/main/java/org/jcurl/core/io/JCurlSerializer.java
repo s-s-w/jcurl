@@ -47,16 +47,24 @@ public abstract class JCurlSerializer {
 
     public IODocument read(final URL src) throws IOException {
         InputStream is = src.openStream();
-        if (isGzipped(src.getFile()))
-            is = new GZIPInputStream(is);
-        return read(is);
+        try {
+            if (isGzipped(src.getFile()))
+                is = new GZIPInputStream(is);
+            return read(is);
+        } finally {
+            is.close();
+        }
     }
 
     public void write(final IODocument src, final File dst) throws IOException {
-        OutputStream is = new FileOutputStream(dst);
-        if (isGzipped(dst.getName()))
-            is = new GZIPOutputStream(is);
-        write(src, is);
+        OutputStream os = new FileOutputStream(dst);
+        try {
+            if (isGzipped(dst.getName()))
+                os = new GZIPOutputStream(os);
+            write(src, os);
+        } finally {
+            os.close();
+        }
     }
 
     public abstract void write(final IODocument src, final OutputStream dst)

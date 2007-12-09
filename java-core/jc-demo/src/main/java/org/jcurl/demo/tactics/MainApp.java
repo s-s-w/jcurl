@@ -28,6 +28,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JTree;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
@@ -271,7 +272,9 @@ public class MainApp extends JFrame {
         undoc.setModel(m.undo);
         bpm.setIdx16(14);
         final ZuiPanel zui = new ZuiPanel(m.undo);
-        getContentPane().add(zui);
+        final JTree tree = new JTree();        
+        getContentPane().add(tree, "West");
+        getContentPane().add(zui, "Center");
         mainc = new MainController(zui, m, this);
         zuic = new ZuiController(zui.pico.getCamera());
         setJMenuBar(new Menufactory(mainc, zuic, undoc).menu());
