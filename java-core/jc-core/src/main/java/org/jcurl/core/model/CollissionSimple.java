@@ -36,6 +36,11 @@ import org.jcurl.core.helpers.Measure;
  */
 public class CollissionSimple extends ColliderBase {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5423884872114753286L;
+
     public CollissionSimple() {
 
     }

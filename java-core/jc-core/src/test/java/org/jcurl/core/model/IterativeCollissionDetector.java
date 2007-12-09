@@ -23,6 +23,11 @@ import org.jcurl.math.R1RNFunction;
 
 class IterativeCollissionDetector extends CollissionDetectorBase {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4590502684198222747L;
+
     public double compute(final double t0, final double tmax,
             final R1RNFunction fa, final R1RNFunction fb, final double rb) {
         throw new UnsupportedOperationException("Not implemented.");

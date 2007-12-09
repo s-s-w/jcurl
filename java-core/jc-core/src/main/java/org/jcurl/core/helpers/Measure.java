@@ -18,6 +18,7 @@
  */
 package org.jcurl.core.helpers;
 
+import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,10 +33,12 @@ import java.util.regex.Pattern;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:Measure.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
-public class Measure {
+public class Measure implements Serializable {
 
     private static final Pattern pat = Pattern
             .compile("^(-?[0-9]+([.][0-9]+)?(e-?[0-9]+)?)[ \t]*([\\S]*)$");
+
+    private static final long serialVersionUID = -958212044733309378L;
 
     public static Measure parse(final CharSequence measure) {
         // split the string

@@ -63,7 +63,7 @@ public abstract class TestShowBase extends TestBase {
         this(800, 600);
     }
 
-    public TestShowBase(int dx, int dy) {
+    public TestShowBase(final int dx, final int dy) {
         frame = showGui ? new JFrame() : null;
         if (frame != null) {
             display = new PositionDisplay();

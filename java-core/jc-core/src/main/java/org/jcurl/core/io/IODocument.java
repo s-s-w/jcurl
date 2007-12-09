@@ -16,28 +16,33 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.base;
+package org.jcurl.core.io;
 
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
-import junit.framework.TestCase;
+import org.jcurl.core.base.TrajectorySet;
+import org.jcurl.core.helpers.Annotations;
 
-import org.jcurl.core.helpers.Service;
+public class IODocument extends Annotations implements
+        Iterable<Map.Entry<IOGroup, TrajectorySet>>, Serializable {
+    public static final String CreatedByProgram = "org.jcurl.core.io.CreatedByProgram";
+    public static final String CreatedByUser = "org.jcurl.core.io.CreatedByUser";
+    private static final long serialVersionUID = -3564287932163612226L;
+    private IONode root;
 
-public class PluginTest extends TestCase {
-
-    public void testCollider() {
-        final Iterator it = Service.providers(Collider.class);
-        assertNotNull(it.next());
+    public IONode getRoot() {
+        return root;
     }
 
-    public void testCollissionDetector() {
-        final Iterator it = Service.providers(CollissionDetector.class);
-        assertNotNull(it.next());
+    public Iterator<java.util.Map.Entry<IOGroup, TrajectorySet>> iterator() {
+        return new HashMap<IOGroup, TrajectorySet>().entrySet().iterator();
     }
 
-    public void testSlider() {
-        final Iterator it = Service.providers(Curler.class);
-        assertNotNull(it.next());
+    public void setRoot(final IONode root) {
+        this.root = root;
     }
+
 }

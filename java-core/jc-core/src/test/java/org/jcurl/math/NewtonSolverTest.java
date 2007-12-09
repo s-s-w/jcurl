@@ -22,17 +22,6 @@ import junit.framework.TestCase;
 
 public class NewtonSolverTest extends TestCase {
 
-    public void testStraightLine() throws MathException {
-        final Polynome p = new Polynome(new double[] { -1, 0.5 });
-        assertEquals("", -1.0, p.at(0), 1e-9);
-        assertEquals("", -0.5, p.at(1.0), 1e-9);
-        assertEquals("", 0, p.at(2.0), 1e-9);
-        assertEquals("", 0.5, p.at(3.0), 1e-9);
-
-        final R1R1Solver s = new NewtonSolver(p);
-        assertEquals("", 2.0, s.solve(0, -1, 3, -0.99), 1e-9);
-    }
-
     public void testParabolic() throws MathException {
         final Polynome p = new Polynome(new double[] { 0, 0, 1 });
         assertEquals("", 1.0, p.at(-1), 1e-9);
@@ -42,5 +31,16 @@ public class NewtonSolverTest extends TestCase {
         final R1R1Solver s = new NewtonSolver(p);
         s.setAbsoluteAccuracy(1e-6);
         assertEquals("", 0.0, s.solve(0, -1, 3, -0.99), 1e-6);
+    }
+
+    public void testStraightLine() throws MathException {
+        final Polynome p = new Polynome(new double[] { -1, 0.5 });
+        assertEquals("", -1.0, p.at(0), 1e-9);
+        assertEquals("", -0.5, p.at(1.0), 1e-9);
+        assertEquals("", 0, p.at(2.0), 1e-9);
+        assertEquals("", 0.5, p.at(3.0), 1e-9);
+
+        final R1R1Solver s = new NewtonSolver(p);
+        assertEquals("", 2.0, s.solve(0, -1, 3, -0.99), 1e-9);
     }
 }

@@ -45,11 +45,10 @@ public class PositionDisplayTest extends TestShowBase {
                         jp.paint(g);
                     }
                 });
-        if (frame != null) {
+        if (frame != null)
             System.out.println(getClass().getName() + " frequency: " + frames
                     * 1000L / (double) dt + " frames per second");
-            // System.out.println(frames + " computations took " + dt
-            // + " millis, i.e. " + frames * 1000L / dt + " per second.");
-        }
+        // System.out.println(frames + " computations took " + dt
+        // + " millis, i.e. " + frames * 1000L / dt + " per second.");
     }
 }

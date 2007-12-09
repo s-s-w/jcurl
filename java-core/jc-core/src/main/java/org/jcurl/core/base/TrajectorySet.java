@@ -18,18 +18,18 @@
  */
 package org.jcurl.core.base;
 
-import java.util.Map;
+import org.jcurl.core.helpers.Annotations;
 
 /**
  * "Read-only" trajectories of a whole set of {@link RockSet#ROCKS_PER_SET}
  * rocks.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:TrajectorySet.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public interface TrajectorySet {
 
-    public Map<String, Object> getAnnotations();
+    public Annotations getAnnotations();
 
     public abstract PositionSet getCurrentPos();
 

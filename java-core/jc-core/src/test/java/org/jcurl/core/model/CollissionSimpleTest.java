@@ -38,17 +38,23 @@ import org.jcurl.math.MathVec;
  */
 public class CollissionSimpleTest extends TestCase {
 
-    final PositionSet pos;
+    private static final CollissionSimple hit = new CollissionSimple();
 
-    final SpeedSet speed;
-
-    final Rock ax;
-
-    final Rock bx;
+    public static void main(final String[] args) {
+        junit.textui.TestRunner.run(CollissionSimpleTest.class);
+    }
 
     final Rock av;
 
+    final Rock ax;
+
     final Rock bv;
+
+    final Rock bx;
+
+    final PositionSet pos;
+
+    final SpeedSet speed;
 
     public CollissionSimpleTest() {
         pos = PositionSet.allHome();
@@ -57,30 +63,6 @@ public class CollissionSimpleTest extends TestCase {
         bx = pos.getLight(0);
         av = speed.getDark(0);
         bv = speed.getLight(0);
-    }
-
-    @Override
-    public void setUp() {
-        PositionSet.allHome(pos);
-        RockSet.allZero(speed);
-    }
-
-    private static final CollissionSimple hit = new CollissionSimple();
-
-    public static void main(final String[] args) {
-        junit.textui.TestRunner.run(CollissionSimpleTest.class);
-    }
-
-    public void test005_math() {
-        final Point2D a = new Point2D.Double(1, 1);
-        final Point2D b = new Point2D.Double(0.3, 0);
-
-        final double scal = MathVec.scal(a, b);
-        final double bb = MathVec.scal(b, b);
-
-        MathVec.mult(scal / bb, b, b);
-        assertEquals("", 1, b.getX(), 1e-6);
-        assertEquals("", 0, b.getY(), 1e-6);
     }
 
     public void _test010_straight() {
@@ -99,6 +81,24 @@ public class CollissionSimpleTest extends TestCase {
         assertEquals("a.x.y", -0.3048, ax.getY(), 1e-6);
         assertEquals("buf.x.x", 0.0, bx.getX(), 1e-6);
         assertEquals("buf.x.y", 0.0, bx.getY(), 1e-6);
+    }
+
+    @Override
+    public void setUp() {
+        PositionSet.allHome(pos);
+        RockSet.allZero(speed);
+    }
+
+    public void test005_math() {
+        final Point2D a = new Point2D.Double(1, 1);
+        final Point2D b = new Point2D.Double(0.3, 0);
+
+        final double scal = MathVec.scal(a, b);
+        final double bb = MathVec.scal(b, b);
+
+        MathVec.mult(scal / bb, b, b);
+        assertEquals("", 1, b.getX(), 1e-6);
+        assertEquals("", 0, b.getY(), 1e-6);
     }
 
     public void test020_45() {

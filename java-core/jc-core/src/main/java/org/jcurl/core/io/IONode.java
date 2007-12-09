@@ -16,20 +16,26 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.swing;
+package org.jcurl.core.io;
 
-import java.awt.geom.Point2D;
+import java.io.Serializable;
 
-import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.helpers.Annotations;
 
-interface WCLayer {
+public abstract class IONode implements Serializable {
+    private static final long serialVersionUID = -4734020637823903908L;
+    private final Annotations annotations;
 
-    public abstract Point2D dc2wc(final Point2D dc, Point2D wc);
+    public IONode() {
+        this(null);
+    }
 
-    public abstract Zoomer getZoom();
+    public IONode(final Annotations annotations) {
+        this.annotations = annotations == null ? new Annotations()
+                : annotations;
+    }
 
-    public abstract void setZoom(final Zoomer zoom);
-
-    public abstract Point2D wc2dc(final Point2D wc, Point2D dc);
-
+    public Annotations annotations() {
+        return annotations;
+    }
 }

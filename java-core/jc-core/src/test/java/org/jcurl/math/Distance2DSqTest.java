@@ -30,6 +30,11 @@ public class Distance2DSqTest extends TestBase {
 
     static CurveRock createPoint2D(final double x, final double y) {
         return new CurveRock() {
+            /**
+             * 
+             */
+            private static final long serialVersionUID = -6310106969704482207L;
+
             @Override
             public double at(final int component, final int derivative,
                     final double t) {
@@ -46,6 +51,10 @@ public class Distance2DSqTest extends TestBase {
 
     static CurveRock createPoly(final double[] c) {
         return new CurveRock() {
+            /**
+             * 
+             */
+            private static final long serialVersionUID = -4095623981968751102L;
             private final Polynome p = new Polynome(c);
 
             @Override

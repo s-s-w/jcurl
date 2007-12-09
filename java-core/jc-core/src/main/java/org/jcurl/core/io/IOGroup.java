@@ -16,20 +16,32 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.swing;
+package org.jcurl.core.io;
 
-import java.awt.geom.Point2D;
+import java.io.ObjectStreamException;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.helpers.Annotations;
 
-interface WCLayer {
+public class IOGroup extends IONode {
+    private static final long serialVersionUID = 6594185597261724279L;
+    private final List<IONode> children;
 
-    public abstract Point2D dc2wc(final Point2D dc, Point2D wc);
+    public IOGroup() {
+        this(null, null);
+    }
 
-    public abstract Zoomer getZoom();
+    protected IOGroup(final Annotations annotations, final List<IONode> children) {
+        super(annotations);
+        this.children = children == null ? new ArrayList<IONode>() : children;
+    }
 
-    public abstract void setZoom(final Zoomer zoom);
+    public List<IONode> children() {
+        return children;
+    }
 
-    public abstract Point2D wc2dc(final Point2D wc, Point2D dc);
-
+    protected Object readResolve() throws ObjectStreamException {
+        return new IOGroup(annotations(), children());
+    }
 }

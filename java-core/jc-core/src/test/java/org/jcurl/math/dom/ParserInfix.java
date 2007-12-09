@@ -79,8 +79,6 @@ class ParserInfix {
 
     private static final int RP = ')';
 
-    private int pos = 0;
-
     public static MathDom.Node parse(final PushbackReader cin)
             throws IOException, ParseException {
         return new ParserInfix(cin).parseInfix();
@@ -104,6 +102,8 @@ class ParserInfix {
     private int curr_tok = NONE;
 
     private double number_value = 0;
+
+    private int pos = 0;
 
     private final StringBuffer string_value = new StringBuffer();
 

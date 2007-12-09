@@ -43,8 +43,7 @@ import org.jcurl.core.model.FixpointZoomer;
  * @version $Id: RockLocationDisplayBase.java 230 2006-02-19 12:34:18Z
  *          mrohrmoser $
  */
-class PositionDisplay extends WCComponent implements
-        PropertyChangeListener {
+class PositionDisplay extends WCComponent implements PropertyChangeListener {
 
     private static final Map<Object, Object> hints = new HashMap<Object, Object>();
 

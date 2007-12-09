@@ -468,7 +468,7 @@ public class MiniSvg extends Graphics2D {
     public void setStroke(final Stroke s) {
         stroke = (BasicStroke) s;
         endElement("g");
-        AttributesImpl a = new AttributesImpl();
+        final AttributesImpl a = new AttributesImpl();
         aa(a, "stroke-width", stroke.getLineWidth());
         startElement("g", a);
     }

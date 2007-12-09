@@ -49,6 +49,11 @@ public class CurlerDenny extends CurlerBase {
 
     private static final double g = Physics.g;
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 9048729754646886751L;
+
     private transient double b;
 
     private transient double mu;

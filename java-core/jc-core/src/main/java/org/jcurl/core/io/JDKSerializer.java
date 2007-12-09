@@ -18,17 +18,30 @@
  */
 package org.jcurl.core.io;
 
-import junit.framework.TestCase;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 
-public abstract class TestBase extends TestCase {
+public class JDKSerializer extends JCurlSerializer {
 
-    protected void assertEquals(final double expected, final double found) {
-        final double precision = 1e-9;
-        assertEquals("expected:<" + expected + "> +/-:<" + precision
-                + "> but was:<" + found + ">", expected, found, precision);
+    public JDKSerializer() {
     }
 
-    protected double rad2deg(final double rad) {
-        return 180 * rad / Math.PI;
+    @Override
+    public IODocument read(final InputStream src) throws IOException {
+        try {
+            return (IODocument) new ObjectInputStream(src).readObject();
+        } catch (final ClassNotFoundException e) {
+            throw new RuntimeException("Unhandled", e);
+        }
+    }
+
+    @Override
+    public void write(final IODocument src, final OutputStream dst)
+            throws IOException {
+        src.put(IODocument.CreatedByUser, System.getProperty("user.name"));
+        new ObjectOutputStream(dst).writeObject(src);
     }
 }

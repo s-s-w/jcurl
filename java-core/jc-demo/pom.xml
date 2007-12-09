@@ -45,11 +45,11 @@
 			<artifactId>jc-zui</artifactId>
 			<version>${version}</version>
 		</dependency>
-		<dependency>
+		<!-- dependency>
 			<groupId>org.jcurl.core</groupId>
 			<artifactId>jc-xsio</artifactId>
 			<version>${version}</version>
-		</dependency>
+		</dependency -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

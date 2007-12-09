@@ -2,7 +2,6 @@ package org.jcurl.demo.tactics;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
 import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.UndoableEdit;
@@ -14,17 +13,16 @@ import org.jcurl.core.base.CollissionDetector;
 import org.jcurl.core.base.Curler;
 import org.jcurl.core.base.CurveStore;
 import org.jcurl.core.base.IceSize;
-import org.jcurl.core.base.JCurlSerializer;
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.base.JCurlSerializer.Payload;
-import org.jcurl.core.helpers.AnnoHelp;
+import org.jcurl.core.helpers.Annotations;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.helpers.Unit;
-import org.jcurl.core.io.XStreamSerializer;
+import org.jcurl.core.io.JCurlSerializer;
+import org.jcurl.core.io.JDKSerializer;
 import org.jcurl.core.model.BroomPromptModel;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerDenny;
@@ -44,13 +42,14 @@ class MainMod extends BroomPromptModel {
         te.setCurler(new CurlerDenny(24, 1));
         te.setInitialPos(PositionSet.allOut());
         te.setInitialSpeed(new SpeedSet(new RockDouble()));
-        te.getAnnotations().put(AnnoHelp.HammerK, AnnoHelp.HammerVDark);
-        te.getAnnotations().put(AnnoHelp.DarkTeamK, "Scotland");
-        te.getAnnotations().put(AnnoHelp.LightTeamK, "Canada");
-        te.getAnnotations().put(AnnoHelp.GameK, "Semifinal");
-        te.getAnnotations().put(AnnoHelp.EventK, "World Curling Championships");
-        te.getAnnotations().put(AnnoHelp.DateK, "1992");
-        te.getAnnotations().put(AnnoHelp.LocationK, "Garmisch");
+        te.getAnnotations().put(Annotations.HammerK, Annotations.HammerVDark);
+        te.getAnnotations().put(Annotations.DarkTeamK, "Scotland");
+        te.getAnnotations().put(Annotations.LightTeamK, "Canada");
+        te.getAnnotations().put(Annotations.GameK, "Semifinal");
+        te.getAnnotations().put(Annotations.EventK,
+                "World Curling Championships");
+        te.getAnnotations().put(Annotations.DateK, "1992");
+        te.getAnnotations().put(Annotations.LocationK, "Garmisch");
         initHammy(te.getInitialPos(), te.getInitialSpeed());
         return te;
     }
@@ -124,7 +123,7 @@ class MainMod extends BroomPromptModel {
         return ts.equals(obj);
     }
 
-    public Map<String, Object> getAnnotations() {
+    public Annotations getAnnotations() {
         return ts.getAnnotations();
     }
 
@@ -194,9 +193,11 @@ class MainMod extends BroomPromptModel {
     void open(final File src) {
         if (src.getName().endsWith(".jcz") || src.getName().endsWith(".jcx")) {
             log.debug(src);
-            final JCurlSerializer xs = new XStreamSerializer();
+            final JCurlSerializer xs = new JDKSerializer();
             try {
-                xs.read(src.toURL(), xs.wrap(null, ts));
+                throw new IOException("Not implemented yet"); // xs.read(src.toURL(),
+                                                                // xs.wrap(null,
+                                                                // ts));
             } catch (final IOException e) {
                 log.error("", e);
             }
@@ -215,10 +216,9 @@ class MainMod extends BroomPromptModel {
     void save(final File dst) {
         if (dst.getName().endsWith(".jcz") || dst.getName().endsWith(".jcx")) {
             log.debug(dst);
-            final JCurlSerializer xs = new XStreamSerializer();
-            final Payload pl = xs.wrap(null, ts);
+            final JCurlSerializer xs = new JDKSerializer();
             try {
-                xs.write(pl, dst);
+                throw new IOException("Not implemented yet");
             } catch (final IOException e) {
                 log.error("", e);
             }

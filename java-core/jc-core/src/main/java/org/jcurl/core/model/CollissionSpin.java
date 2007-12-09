@@ -43,6 +43,11 @@ public class CollissionSpin extends ColliderBase {
 
     private static final double R = RockProps.DEFAULT.getRadius();
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8103077481042211458L;
+
     private transient double mu;
 
     public CollissionSpin() {

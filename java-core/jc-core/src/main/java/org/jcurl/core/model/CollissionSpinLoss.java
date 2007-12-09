@@ -51,6 +51,11 @@ public class CollissionSpinLoss extends ColliderBase {
 
     private static final double RADIUS = RockProps.DEFAULT.getRadius();
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8282468221793955034L;
+
     protected static double fabs(final double a) {
         return Math.abs(a);
     }

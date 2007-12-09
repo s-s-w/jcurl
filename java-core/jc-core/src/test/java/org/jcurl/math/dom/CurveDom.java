@@ -32,9 +32,14 @@ import org.jcurl.math.R1RNFunctionImpl;
  * 
  * @see org.jcurl.math.dom.MathDom
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:CurveDom.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class CurveDom extends R1RNFunctionImpl {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5253564389287453902L;
 
     /** Internal helper - mutable number implementation */
     private static final class Num extends Number {

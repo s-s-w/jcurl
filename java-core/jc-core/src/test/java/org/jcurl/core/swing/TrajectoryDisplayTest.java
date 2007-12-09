@@ -30,7 +30,7 @@ import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.TrajectorySet;
 import org.jcurl.core.base.Zoomer;
-import org.jcurl.core.helpers.AnnoHelp;
+import org.jcurl.core.helpers.Annotations;
 import org.jcurl.core.helpers.Unit;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CollissionSpin;
@@ -51,13 +51,14 @@ public class TrajectoryDisplayTest extends TestShowBase {
         te.setCurler(new CurlerDenny(24, 1));
         te.setInitialPos(PositionSet.allOut());
         te.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
-        te.getAnnotations().put(AnnoHelp.HammerK, AnnoHelp.HammerVDark);
-        te.getAnnotations().put(AnnoHelp.DarkTeamK, "Scotland");
-        te.getAnnotations().put(AnnoHelp.LightTeamK, "Canada");
-        te.getAnnotations().put(AnnoHelp.GameK, "Semifinal");
-        te.getAnnotations().put(AnnoHelp.EventK, "World Curling Championships");
-        te.getAnnotations().put(AnnoHelp.DateK, "1992");
-        te.getAnnotations().put(AnnoHelp.LocationK, "Garmisch");
+        te.getAnnotations().put(Annotations.HammerK, Annotations.HammerVDark);
+        te.getAnnotations().put(Annotations.DarkTeamK, "Scotland");
+        te.getAnnotations().put(Annotations.LightTeamK, "Canada");
+        te.getAnnotations().put(Annotations.GameK, "Semifinal");
+        te.getAnnotations().put(Annotations.EventK,
+                "World Curling Championships");
+        te.getAnnotations().put(Annotations.DateK, "1992");
+        te.getAnnotations().put(Annotations.LocationK, "Garmisch");
         initHammy(te.getInitialPos(), te.getInitialSpeed());
         return te;
     }
@@ -65,23 +66,30 @@ public class TrajectoryDisplayTest extends TestShowBase {
     static void initHammy(final PositionSet p, final SpeedSet s) {
         PositionSet.allOut(p);
         // te.getInitialPos().getLight(1-1).setLocation(
-        p.getLight(2 - 1)
-                .setLocation(Unit.f2m(-1.170732), Unit.f2m(15.365854), 0);
-        p.getLight(3 - 1).setLocation(Unit.f2m(0.292683), Unit.f2m(8.780488), 0);
+        p.getLight(2 - 1).setLocation(Unit.f2m(-1.170732), Unit.f2m(15.365854),
+                0);
+        p.getLight(3 - 1)
+                .setLocation(Unit.f2m(0.292683), Unit.f2m(8.780488), 0);
         p.getLight(4 - 1).setLocation(Unit.f2m(2.195122), Unit.f2m(12), 0);
-        p.getLight(5 - 1).setLocation(Unit.f2m(1.463415), Unit.f2m(5.707317), 0);
-        p.getLight(6 - 1).setLocation(Unit.f2m(1.463415), Unit.f2m(-2.780488), 0);
-        p.getLight(7 - 1)
-                .setLocation(Unit.f2m(-0.439024), Unit.f2m(-5.560976), 0);
-        p.getLight(8 - 1)
-                .setLocation(Unit.f2m(-1.756098), Unit.f2m(-1.609756), 0);
+        p.getLight(5 - 1)
+                .setLocation(Unit.f2m(1.463415), Unit.f2m(5.707317), 0);
+        p.getLight(6 - 1).setLocation(Unit.f2m(1.463415), Unit.f2m(-2.780488),
+                0);
+        p.getLight(7 - 1).setLocation(Unit.f2m(-0.439024), Unit.f2m(-5.560976),
+                0);
+        p.getLight(8 - 1).setLocation(Unit.f2m(-1.756098), Unit.f2m(-1.609756),
+                0);
         // p.getDark(1-1).setLocation(
         // p.getDark(2-1).setLocation(
-        p.getDark(3 - 1).setLocation(Unit.f2m(0.878049), Unit.f2m(14.341463), 0);
-        p.getDark(4 - 1).setLocation(Unit.f2m(-2.634146), Unit.f2m(13.170732), 0);
-        p.getDark(5 - 1).setLocation(Unit.f2m(4.536585), Unit.f2m(-0.439024), 0);
+        p.getDark(3 - 1)
+                .setLocation(Unit.f2m(0.878049), Unit.f2m(14.341463), 0);
+        p.getDark(4 - 1).setLocation(Unit.f2m(-2.634146), Unit.f2m(13.170732),
+                0);
+        p.getDark(5 - 1)
+                .setLocation(Unit.f2m(4.536585), Unit.f2m(-0.439024), 0);
         p.getDark(6 - 1).setLocation(Unit.f2m(0.731707), Unit.f2m(-3.95122), 0);
-        p.getDark(7 - 1).setLocation(Unit.f2m(-2.780488), Unit.f2m(-4.390244), 0);
+        p.getDark(7 - 1).setLocation(Unit.f2m(-2.780488), Unit.f2m(-4.390244),
+                0);
         p.getDark(8 - 1).setLocation(Unit.f2m(3.89991), IceSize.HOG_2_TEE, 0);
         RockSet.allZero(s);
         s.getDark(8 - 1).setLocation(0, -3, 100 * Math.PI / 180);
@@ -124,12 +132,11 @@ public class TrajectoryDisplayTest extends TestShowBase {
                         jp.paint(g);
                     }
                 });
-        if (frame != null) {
+        if (frame != null)
             System.out.println(getClass().getName() + " frequency: " + frames
                     * 1000L / (double) dt + " frames per second");
-            // System.out.println(frames + " computations took " + dt
-            // + " millis, i.e. " + frames * 1000L / dt + " per second.");
-        }
+        // System.out.println(frames + " computations took " + dt
+        // + " millis, i.e. " + frames * 1000L / dt + " per second.");
     }
 
     public int showTrajectoryDisplay(final TrajectorySet p, final Zoomer zoom,
@@ -178,7 +185,7 @@ public class TrajectoryDisplayTest extends TestShowBase {
     public void testOneHit() throws InterruptedException {
         final ComputedTrajectorySet te;
         {
-            CurveManager ti = new CurveManager();
+            final CurveManager ti = new CurveManager();
             ti.setCollider(new CollissionSpin(0.5, 0.0));
             ti.setCollissionDetector(new NewtonCollissionDetector());
             ti.setCurler(new CurlerDenny(23, 1));

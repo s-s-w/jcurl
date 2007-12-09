@@ -56,13 +56,11 @@ class ParserInfixRegExp {
 
     private static final int ASSIGN = '=';
 
+    private static final Pattern binaryPat = Pattern.compile("[-+/*^=]");
+
     private static final int DIV = '/';
 
     private static final int END = 3;
-
-    private static final Pattern unaryPat = Pattern.compile("-");
-
-    private static final Pattern binaryPat = Pattern.compile("[-+/*^=]");
 
     private static final Pattern floatPat = Pattern
             .compile("-?[0-9]+(.[0-9]*(e-?[0-9]+)?)?");
@@ -83,7 +81,7 @@ class ParserInfixRegExp {
 
     private static final int RP = ')';
 
-    private int pos = 0;
+    private static final Pattern unaryPat = Pattern.compile("-");
 
     public static MathDom.Node parse(final PushbackReader cin)
             throws IOException, ParseException {
@@ -108,6 +106,8 @@ class ParserInfixRegExp {
     private int curr_tok = NONE;
 
     private double number_value = 0;
+
+    private int pos = 0;
 
     private final StringBuffer string_value = new StringBuffer();
 

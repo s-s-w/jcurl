@@ -47,8 +47,8 @@ public class MainApp extends JFrame {
      * @version $Id$
      */
     static class Menufactory {
-        private final UndoRedoCon undoc;
         private final MainController mainc;
+        private final UndoRedoCon undoc;
         private final ZuiController zuic;
 
         public Menufactory(final MainController mainc,

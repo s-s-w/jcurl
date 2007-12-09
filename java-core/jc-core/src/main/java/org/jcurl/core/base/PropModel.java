@@ -18,6 +18,7 @@
  */
 package org.jcurl.core.base;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -32,7 +33,8 @@ import org.jcurl.core.helpers.Measure;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:PropModel.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
-public interface PropModel extends Iterable<Entry<CharSequence, Measure>> {
+public interface PropModel extends Iterable<Entry<CharSequence, Measure>>,
+        Serializable {
 
     public abstract Measure getProp(final CharSequence key);
 

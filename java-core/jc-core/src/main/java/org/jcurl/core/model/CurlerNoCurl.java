@@ -35,9 +35,14 @@ import org.jcurl.math.PolynomeCurve;
  * and implementation of others.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:CurlerNoCurl.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class CurlerNoCurl extends CurlerBase {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1818914036355517122L;
 
     transient double beta;
 

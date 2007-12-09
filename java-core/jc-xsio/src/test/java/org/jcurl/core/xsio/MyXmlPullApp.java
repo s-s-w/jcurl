@@ -1,4 +1,4 @@
-package org.jcurl.core.io;
+package org.jcurl.core.xsio;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -22,82 +22,80 @@ public class MyXmlPullApp {
             + "<l>Violets are blue;</l>\n" + "<l>Sugar is sweet,</l>\n"
             + "<l>And I love you.</l>\n" + "</poem>";
 
-    public static void main(String args[]) throws XmlPullParserException,
+    public static void main(final String args[]) throws XmlPullParserException,
             IOException {
         // XmlPullParserFactory factory = XmlPullParserFactory.newInstance(
         // System.getProperty(XmlPullParserFactory.PROPERTY_NAME), null);
         // //factory.setNamespaceAware(true);
         // factory.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, true);
 
-        XmlPullParser xpp = new MXParser();
+        final XmlPullParser xpp = new MXParser();
         xpp.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, true);
         System.out.println("parser implementation class is " + xpp.getClass());
 
-        MyXmlPullApp app = new MyXmlPullApp();
+        final MyXmlPullApp app = new MyXmlPullApp();
 
         if (args.length == 0) {
             System.out.println("Parsing simple sample XML");// :\n"+
             // SAMPLE_XML);
             xpp.setInput(new StringReader(SAMPLE_XML));
             app.processDocument(xpp);
-        } else {
-            for (int i = 0; i < args.length; i++) {
-                System.out.println("Parsing file: " + args[i]);
-                xpp.setInput(new FileReader(args[i]));
+        } else
+            for (final String element : args) {
+                System.out.println("Parsing file: " + element);
+                xpp.setInput(new FileReader(element));
                 // xpp.setInput ( new InputStreamReader( new FileInputStream (
                 // args [i] ) ) );
                 // xpp.setInput ( new FileInputStream ( args [i] ), "UTF8" );
                 app.processDocument(xpp);
             }
-        }
     }
 
-    public void processDocument(XmlPullParser xpp)
+    int holderForStartAndLength[] = new int[2];
+
+    public void processDocument(final XmlPullParser xpp)
             throws XmlPullParserException, IOException {
         int eventType = xpp.getEventType();
         do {
-            if (eventType == XmlPullParser.START_DOCUMENT) {
+            if (eventType == XmlPullParser.START_DOCUMENT)
                 System.out.println("Start document");
-            } else if (eventType == XmlPullParser.END_DOCUMENT) {
+            else if (eventType == XmlPullParser.END_DOCUMENT)
                 System.out.println("End document");
-            } else if (eventType == XmlPullParser.START_TAG) {
+            else if (eventType == XmlPullParser.START_TAG)
                 processStartElement(xpp);
-            } else if (eventType == XmlPullParser.END_TAG) {
+            else if (eventType == XmlPullParser.END_TAG)
                 processEndElement(xpp);
-            } else if (eventType == XmlPullParser.TEXT) {
+            else if (eventType == XmlPullParser.TEXT)
                 processText(xpp);
-            }
             eventType = xpp.next();
         } while (eventType != XmlPullParser.END_DOCUMENT);
     }
 
-    public void processStartElement(XmlPullParser xpp) {
-        String name = xpp.getName();
-        String uri = xpp.getNamespace();
-        if ("".equals(uri)) {
-            System.out.println("Start element: " + name);
-        } else {
-            System.out.println("Start element: {" + uri + "}" + name);
-        }
-    }
-
-    public void processEndElement(XmlPullParser xpp) {
-        String name = xpp.getName();
-        String uri = xpp.getNamespace();
+    public void processEndElement(final XmlPullParser xpp) {
+        final String name = xpp.getName();
+        final String uri = xpp.getNamespace();
         if ("".equals(uri))
             System.out.println("End element: " + name);
         else
             System.out.println("End element:   {" + uri + "}" + name);
     }
 
-    int holderForStartAndLength[] = new int[2];
+    public void processStartElement(final XmlPullParser xpp) {
+        final String name = xpp.getName();
+        final String uri = xpp.getNamespace();
+        if ("".equals(uri))
+            System.out.println("Start element: " + name);
+        else
+            System.out.println("Start element: {" + uri + "}" + name);
+    }
 
-    public void processText(XmlPullParser xpp) throws XmlPullParserException {
-        char ch[] = xpp.getTextCharacters(holderForStartAndLength);
-        int start = holderForStartAndLength[0];
-        int length = holderForStartAndLength[1];
+    public void processText(final XmlPullParser xpp)
+            throws XmlPullParserException {
+        final char ch[] = xpp.getTextCharacters(holderForStartAndLength);
+        final int start = holderForStartAndLength[0];
+        final int length = holderForStartAndLength[1];
         System.out.print("Characters:    \"");
-        for (int i = start; i < start + length; i++) {
+        for (int i = start; i < start + length; i++)
             switch (ch[i]) {
             case '\\':
                 System.out.print("\\\\");
@@ -118,7 +116,6 @@ public class MyXmlPullApp {
                 System.out.print(ch[i]);
                 break;
             }
-        }
         System.out.print("\"\n");
     }
 }

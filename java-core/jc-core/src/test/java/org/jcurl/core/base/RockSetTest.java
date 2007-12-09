@@ -28,13 +28,6 @@ public class RockSetTest extends TestCase {
         assertEquals(8, RockSet.countBits(RockSet.LIGHT_MASK));
     }
 
-    public void testToIdx16() {
-        for (int i = RockSet.ROCKS_PER_COLOR - 1; i >= 0; i--) {
-            assertEquals(2 * i, RockSet.toIdx16(true, i));
-            assertEquals(2 * i + 1, RockSet.toIdx16(false, i));
-        }
-    }
-
     public void testIterators() throws InterruptedException {
         final PositionSet p = PositionSet.allHome();
         final int loops = 500000;
@@ -85,5 +78,12 @@ public class RockSetTest extends TestCase {
             }
         System.out.println(txt + ": " + (System.currentTimeMillis() - t0));
         assertTrue(v != 0);
+    }
+
+    public void testToIdx16() {
+        for (int i = RockSet.ROCKS_PER_COLOR - 1; i >= 0; i--) {
+            assertEquals(2 * i, RockSet.toIdx16(true, i));
+            assertEquals(2 * i + 1, RockSet.toIdx16(false, i));
+        }
     }
 }

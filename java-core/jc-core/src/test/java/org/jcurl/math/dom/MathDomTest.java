@@ -39,9 +39,42 @@ import org.jcurl.mr.math.Calc1;
  * @see org.jcurl.math.dom.DomWalkerPostfix
  * @see org.jcurl.math.dom.DomWalkerEval
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:MathDomTest.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class MathDomTest extends TestCase {
+
+    public void _test050_Loop() throws ParseException {
+        // parsing
+        int loop = 100000;
+        long start = System.currentTimeMillis();
+        for (int i = loop - 1; i >= 0; i--)
+            ParserInfix.parse(" 2 * 4 +3 ");
+        long dt = System.currentTimeMillis() - start;
+        long cps = loop * 1000 / dt;
+        assertTrue("MatDom creation was too slow, only " + cps
+                + " calls per second", cps > 50000);
+
+        // evaluation
+        final MathDom.Node n = ParserInfix.parse(" 2 * 4 +3 ");
+        final DomWalkerEval de = new DomWalkerEval();
+        start = System.currentTimeMillis();
+        for (int i = loop - 1; i >= 0; i--)
+            de.walk(n);
+        dt = System.currentTimeMillis() - start;
+        cps = loop * 1000 / dt;
+        assertTrue("MatDom evaluation was too slow, only " + cps
+                + " calls per second", cps > 2000000);
+
+        // hard coded arithmetics
+        loop *= 100;
+        start = System.currentTimeMillis();
+        for (int i = loop - 1; i >= 0; i--) {
+        }
+        dt = System.currentTimeMillis() - start;
+        cps = loop * 1000 / dt;
+        assertTrue("Built-in math evaluation was too slow, only " + cps
+                + " calls per second", cps > 18000000);
+    }
 
     public void test010_0() throws IOException {
         Calc0 c = new Calc0(" 2 * 4 +3 ");
@@ -101,38 +134,5 @@ public class MathDomTest extends TestCase {
 
         n = ParserInfix.parse("sqrt2 * sqrt2");
         assertEquals("", 2, DomWalkerEval.eval(n, p), 1e-9);
-    }
-
-    public void _test050_Loop() throws ParseException {
-        // parsing
-        int loop = 100000;
-        long start = System.currentTimeMillis();
-        for (int i = loop - 1; i >= 0; i--)
-            ParserInfix.parse(" 2 * 4 +3 ");
-        long dt = System.currentTimeMillis() - start;
-        long cps = loop * 1000 / dt;
-        assertTrue("MatDom creation was too slow, only " + cps
-                + " calls per second", cps > 50000);
-
-        // evaluation
-        final MathDom.Node n = ParserInfix.parse(" 2 * 4 +3 ");
-        final DomWalkerEval de = new DomWalkerEval();
-        start = System.currentTimeMillis();
-        for (int i = loop - 1; i >= 0; i--)
-            de.walk(n);
-        dt = System.currentTimeMillis() - start;
-        cps = loop * 1000 / dt;
-        assertTrue("MatDom evaluation was too slow, only " + cps
-                + " calls per second", cps > 2000000);
-
-        // hard coded arithmetics
-        loop *= 100;
-        start = System.currentTimeMillis();
-        for (int i = loop - 1; i >= 0; i--) {
-        }
-        dt = System.currentTimeMillis() - start;
-        cps = loop * 1000 / dt;
-        assertTrue("Built-in math evaluation was too slow, only " + cps
-                + " calls per second", cps > 18000000);
     }
 }

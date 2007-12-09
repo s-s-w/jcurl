@@ -18,7 +18,9 @@
  */
 package org.jcurl.core.helpers;
 
-public interface AnnoHelp {
+import java.util.HashMap;
+
+public class Annotations extends HashMap<String, String> {
 
     public static final String DarkCoachK = "org.jcurl.core.Dark.Coach";
 
@@ -49,4 +51,6 @@ public interface AnnoHelp {
     public static final String LightTeamK = "org.jcurl.core.Light.Team";
 
     public static final String LocationK = "org.jcurl.core.Location";
+
+    private static final long serialVersionUID = -3984022788311559488L;
 }

@@ -48,8 +48,7 @@ import org.jcurl.core.model.FixpointZoomer;
  * @version $Id: RockLocationDisplayBase.java 230 2006-02-19 12:34:18Z
  *          mrohrmoser $
  */
-class TrajectoryDisplay extends WCComponent implements
-        PropertyChangeListener {
+class TrajectoryDisplay extends WCComponent implements PropertyChangeListener {
 
     private static final Map<Object, Object> hints = new HashMap<Object, Object>();
 
@@ -76,6 +75,8 @@ class TrajectoryDisplay extends WCComponent implements
         // RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
     }
 
+    private CurvePainter curvePainter = null;
+
     private IcePainter icePainter = null; // @jve:decl-index=0:
 
     private BufferedImage img = null;
@@ -83,8 +84,6 @@ class TrajectoryDisplay extends WCComponent implements
     private TrajectorySet pos = null;
 
     private RockPainter rockPainter = null;
-
-    private CurvePainter curvePainter = null;
 
     public TrajectoryDisplay() {
         initialize();

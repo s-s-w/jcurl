@@ -33,66 +33,6 @@ import org.jcurl.core.base.RockSet;
 
 public class CollissionStoreTest extends TestCase {
 
-    public void testCount() {
-        int k = 0;
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
-            for (int j = i - 1; j >= 0; j--)
-                k++;
-        assertEquals(120, k);
-    }
-
-    public void testSortedSet() {
-        final SortedSet<CollissionStore.Tupel> s = new TreeSet<CollissionStore.Tupel>(
-                new CollissionStore.TupelComp());
-        s.add(new CollissionStore.Tupel(2, 3, 4));
-        s.add(new CollissionStore.Tupel(1, 1, 2));
-        assertEquals(2, s.size());
-        assertEquals(2, (s.first()).a);
-
-        assertTrue(s.remove(s.first()));
-        assertTrue(s.add(new CollissionStore.Tupel(Double.NaN, 1, 2)));
-        // assertFalse(s.add(new CollissionStore.Tupel(Double.NaN, 1, 2)));
-        assertEquals(2, s.size());
-        assertEquals(4, (s.first()).a, 1e-9);
-    }
-
-    public void testSortedList() {
-        final Comparator<CollissionStore.Tupel> co = new CollissionStore.TupelComp();
-        final LinkedList<CollissionStore.Tupel> s = new LinkedList<CollissionStore.Tupel>();
-
-        s.add(new CollissionStore.Tupel(2, 3, 4));
-        s.add(new CollissionStore.Tupel(1, 1, 2));
-        assertEquals(2, s.size());
-        Collections.sort(s, co);
-        assertEquals(2, (s.getFirst()).a);
-
-        final CollissionStore.Tupel o = new CollissionStore.Tupel(Double.NaN,
-                1, 2);
-        s.removeFirst();
-        s.add(o);
-        Collections.sort(s, co);
-
-        assertEquals(2, s.size());
-        assertEquals(4, (s.getFirst()).a);
-    }
-
-    public void testTupel() {
-        final CollissionStore.Tupel[] a = new CollissionStore.Tupel[2];
-        a[0] = new CollissionStore.Tupel(2, 3, 4);
-        a[1] = new CollissionStore.Tupel(1, 1, 2);
-        Arrays.sort(a, new CollissionStore.TupelComp());
-        assertEquals(2, a[0].a);
-        assertEquals(4, a[1].a);
-
-        final SortedMap<CollissionStore.Tupel, CollissionStore.Tupel> m = new TreeMap<CollissionStore.Tupel, CollissionStore.Tupel>(
-                new CollissionStore.TupelComp());
-        m.put(a[1], a[1]);
-        m.put(a[0], a[0]);
-        m.put(a[1], a[1]);
-        assertEquals(2, m.size());
-        assertEquals(a[0], m.firstKey());
-    }
-
     public void testAdd() {
         final CollissionStore s = new CollissionStore();
         s.add(2, 3, 4);
@@ -120,5 +60,65 @@ public class CollissionStoreTest extends TestCase {
         s.replace(Double.NaN, 3, 4);
         assertEquals(3, s.m.size());
         assertEquals("", Double.NaN, s.first().t, 1e-9);
+    }
+
+    public void testCount() {
+        int k = 0;
+        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+            for (int j = i - 1; j >= 0; j--)
+                k++;
+        assertEquals(120, k);
+    }
+
+    public void testSortedList() {
+        final Comparator<CollissionStore.Tupel> co = new CollissionStore.TupelComp();
+        final LinkedList<CollissionStore.Tupel> s = new LinkedList<CollissionStore.Tupel>();
+
+        s.add(new CollissionStore.Tupel(2, 3, 4));
+        s.add(new CollissionStore.Tupel(1, 1, 2));
+        assertEquals(2, s.size());
+        Collections.sort(s, co);
+        assertEquals(2, (s.getFirst()).a);
+
+        final CollissionStore.Tupel o = new CollissionStore.Tupel(Double.NaN,
+                1, 2);
+        s.removeFirst();
+        s.add(o);
+        Collections.sort(s, co);
+
+        assertEquals(2, s.size());
+        assertEquals(4, (s.getFirst()).a);
+    }
+
+    public void testSortedSet() {
+        final SortedSet<CollissionStore.Tupel> s = new TreeSet<CollissionStore.Tupel>(
+                new CollissionStore.TupelComp());
+        s.add(new CollissionStore.Tupel(2, 3, 4));
+        s.add(new CollissionStore.Tupel(1, 1, 2));
+        assertEquals(2, s.size());
+        assertEquals(2, (s.first()).a);
+
+        assertTrue(s.remove(s.first()));
+        assertTrue(s.add(new CollissionStore.Tupel(Double.NaN, 1, 2)));
+        // assertFalse(s.add(new CollissionStore.Tupel(Double.NaN, 1, 2)));
+        assertEquals(2, s.size());
+        assertEquals(4, (s.first()).a, 1e-9);
+    }
+
+    public void testTupel() {
+        final CollissionStore.Tupel[] a = new CollissionStore.Tupel[2];
+        a[0] = new CollissionStore.Tupel(2, 3, 4);
+        a[1] = new CollissionStore.Tupel(1, 1, 2);
+        Arrays.sort(a, new CollissionStore.TupelComp());
+        assertEquals(2, a[0].a);
+        assertEquals(4, a[1].a);
+
+        final SortedMap<CollissionStore.Tupel, CollissionStore.Tupel> m = new TreeMap<CollissionStore.Tupel, CollissionStore.Tupel>(
+                new CollissionStore.TupelComp());
+        m.put(a[1], a[1]);
+        m.put(a[0], a[0]);
+        m.put(a[1], a[1]);
+        assertEquals(2, m.size());
+        assertEquals(a[0], m.firstKey());
     }
 }

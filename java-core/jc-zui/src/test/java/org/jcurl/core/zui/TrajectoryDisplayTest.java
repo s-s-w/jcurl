@@ -30,15 +30,13 @@ import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.TrajectorySet;
-import org.jcurl.core.helpers.AnnoHelp;
+import org.jcurl.core.helpers.Annotations;
 import org.jcurl.core.helpers.Unit;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerDenny;
 import org.jcurl.core.model.CurveManager;
 import org.jcurl.core.model.NewtonCollissionDetector;
-
-import edu.umd.cs.piccolo.PNode;
 
 public class TrajectoryDisplayTest extends TestZuiBase {
     static final Log log = JCLoggerFactory
@@ -52,13 +50,14 @@ public class TrajectoryDisplayTest extends TestZuiBase {
         te.setCurler(new CurlerDenny(24, 1));
         te.setInitialPos(PositionSet.allOut());
         te.setInitialSpeed(new SpeedSet(new RockDouble()));
-        te.getAnnotations().put(AnnoHelp.HammerK, AnnoHelp.HammerVDark);
-        te.getAnnotations().put(AnnoHelp.DarkTeamK, "Scotland");
-        te.getAnnotations().put(AnnoHelp.LightTeamK, "Canada");
-        te.getAnnotations().put(AnnoHelp.GameK, "Semifinal");
-        te.getAnnotations().put(AnnoHelp.EventK, "World Curling Championships");
-        te.getAnnotations().put(AnnoHelp.DateK, "1992");
-        te.getAnnotations().put(AnnoHelp.LocationK, "Garmisch");
+        te.getAnnotations().put(Annotations.HammerK, Annotations.HammerVDark);
+        te.getAnnotations().put(Annotations.DarkTeamK, "Scotland");
+        te.getAnnotations().put(Annotations.LightTeamK, "Canada");
+        te.getAnnotations().put(Annotations.GameK, "Semifinal");
+        te.getAnnotations().put(Annotations.EventK,
+                "World Curling Championships");
+        te.getAnnotations().put(Annotations.DateK, "1992");
+        te.getAnnotations().put(Annotations.LocationK, "Garmisch");
         initHammy(te.getInitialPos(), te.getInitialSpeed());
         return te;
     }

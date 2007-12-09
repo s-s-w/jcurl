@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.io;
+package org.jcurl.core.xsio;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,11 +26,6 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
@@ -38,12 +33,12 @@ import java.util.zip.GZIPOutputStream;
 
 import org.jcurl.core.base.CurveStill;
 import org.jcurl.core.base.CurveTransformed;
-import org.jcurl.core.base.JCurlSerializer;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.StoredTrajectorySet;
-import org.jcurl.core.base.TrajectorySet;
 import org.jcurl.core.helpers.Measure;
+import org.jcurl.core.io.IODocument;
+import org.jcurl.core.io.JCurlSerializer;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerNoCurl;
 import org.jcurl.core.model.CurveManager;
@@ -72,7 +67,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class XStreamSerializer implements JCurlSerializer {
+public class XStreamSerializer extends JCurlSerializer {
 
     static class DoubleArrayConverter implements Converter {
 
@@ -123,31 +118,6 @@ public class XStreamSerializer implements JCurlSerializer {
         }
     }
 
-    private static class Payload2007 implements Payload {
-        private final Map<String, Object> annotations = new HashMap<String, Object>();
-
-        private final TrajectorySet[] trajectories;
-
-        private Payload2007(final Map<String, Object> annotations,
-                final Iterable<TrajectorySet> trajectories) {
-            this.annotations.clear();
-            if (annotations != null)
-                this.annotations.putAll(annotations);
-            final Collection<TrajectorySet> tmp = new LinkedList<TrajectorySet>();
-            for (final TrajectorySet elem : trajectories)
-                tmp.add(elem);
-            this.trajectories = tmp.toArray(new TrajectorySet[tmp.size()]);
-        }
-
-        public Map<String, Object> getAnnotations() {
-            return annotations;
-        }
-
-        public Iterable<TrajectorySet> getTrajectories() {
-            return Arrays.asList(trajectories);
-        }
-    }
-
     public static class RockConverter implements Converter {
         static final String num = "-?[0-9]+(?:[.][0-9]+)?(?:e-?[0-9]+)?";
 
@@ -188,30 +158,32 @@ public class XStreamSerializer implements JCurlSerializer {
         registerAliases(xs);
     }
 
-    boolean isZipped(final String name) {
-        return name != null && name.endsWith(".jcz");
+    @Override
+    public IODocument read(final InputStream src) throws IOException {
+        return (IODocument) xs.fromXML(src);
     }
 
-    public Payload read(final InputStream src, final Payload dst) {
-        return (Payload) xs.fromXML(src, dst);
-    }
-
-    public Payload read(InputStream src, final String name, final Payload dst)
-            throws IOException {
-        if (isZipped(name))
-            src = new GZIPInputStream(src);
-        return read(src, dst);
+    public IODocument read(final InputStream src, final IODocument dst) {
+        return (IODocument) xs.fromXML(src, dst);
     };
 
-    public Payload read(final Reader src, final Payload dst) {
-        return (Payload) xs.fromXML(src, dst);
+    public IODocument read(InputStream src, final String name,
+            final IODocument dst) throws IOException {
+        if (isGzipped(name))
+            src = new GZIPInputStream(src);
+        return read(src, dst);
     }
 
-    public Payload read(final String s) {
-        return (Payload) xs.fromXML(s);
+    public IODocument read(final Reader src, final IODocument dst) {
+        return (IODocument) xs.fromXML(src, dst);
     }
 
-    public Payload read(final URL src, final Payload dst) throws IOException {
+    public IODocument read(final String s) {
+        return (IODocument) xs.fromXML(s);
+    }
+
+    public IODocument read(final URL src, final IODocument dst)
+            throws IOException {
         final InputStream s = src.openStream();
         try {
             return read(s, src.getFile(), dst);
@@ -228,7 +200,7 @@ public class XStreamSerializer implements JCurlSerializer {
         xs.alias("measure", Measure.class);
         xs.alias("Rock", RockDouble.class);
         // 
-        xs.alias("org.jcurl.container.2007", Payload2007.class);
+        // xs.alias("org.jcurl.container.2007", Payload2007.class);
         // 
         xs.alias("StoredTrajectory", StoredTrajectorySet.class);
         xs.alias("CombinedCurve", CurveCombined.class);
@@ -253,26 +225,15 @@ public class XStreamSerializer implements JCurlSerializer {
         return xs;
     }
 
-    public Payload wrap(final Map<String, Object> annotations,
-            final Iterable<TrajectorySet> trajectories) {
-        return new Payload2007(annotations, trajectories);
-    }
-
-    public Payload wrap(final Map<String, Object> annotations,
-            final TrajectorySet t) {
-        final Collection<TrajectorySet> tmp = new LinkedList<TrajectorySet>();
-        tmp.add(t);
-        return wrap(null, tmp);
-    }
-
-    public String write(final Payload src) {
+    public String write(final IODocument src) {
         return xs.toXML(src);
     }
 
-    public void write(final Payload src, final File dst) throws IOException {
+    @Override
+    public void write(final IODocument src, final File dst) throws IOException {
         OutputStream d = new FileOutputStream(dst);
         try {
-            if (isZipped(dst.getName()))
+            if (isGzipped(dst.getName()))
                 d = new GZIPOutputStream(d);
             write(src, d);
         } finally {
@@ -280,11 +241,12 @@ public class XStreamSerializer implements JCurlSerializer {
         }
     }
 
-    public void write(final Payload src, final OutputStream dst) {
+    @Override
+    public void write(final IODocument src, final OutputStream dst) {
         xs.toXML(src, dst);
     }
 
-    public void write(final Payload src, final Writer dst) {
+    public void write(final IODocument src, final Writer dst) {
         xs.toXML(src, dst);
     }
 }

@@ -46,11 +46,11 @@ public class Calc0 {
 
     private static final int MUL = '*';
 
+    private static final int NAME = 0;
+
     private static final int NONE = 2;
 
     private static final int NUMBER = 1;
-
-    private static final int NAME = 0;
 
     private static final int PLUS = '+';
 

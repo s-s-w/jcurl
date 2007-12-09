@@ -35,6 +35,24 @@ public class CurveTransformedTest extends TestShowBase {
         assertEquals(txt, z, p.getA(), delta);
     }
 
+    public void testAffineTrafoLayout() {
+        // { m00 m10 m01 m11 [m02 m12]}.
+        final double[] t = { 0, 1, 2, 3, 4, 5 };
+        final AffineTransform at = new AffineTransform(t);
+        final double m00 = at.getScaleX();
+        final double m10 = at.getShearY();
+        final double m01 = at.getShearX();
+        final double m11 = at.getScaleY();
+        final double m02 = at.getTranslateX();
+        final double m12 = at.getTranslateY();
+        assertEquals(0, m00, 1e-9);
+        assertEquals(1, m10, 1e-9);
+        assertEquals(2, m01, 1e-9);
+        assertEquals(3, m11, 1e-9);
+        assertEquals(4, m02, 1e-9);
+        assertEquals(5, m12, 1e-9);
+    }
+
     public void testAffineTransformMemoryLayout() {
         Rock r = new RockDouble(1, 2, 3);
         AffineTransform at = new AffineTransform();
@@ -192,52 +210,6 @@ public class CurveTransformedTest extends TestShowBase {
         assertEquals(17.36159358309492, rad2deg(ang));
     }
 
-    public void testValueC0() {
-        Rock ret = null;
-        final AffineTransform at = AffineTransform.getScaleInstance(0.75, 1.25);
-        final CurveTransformed cw = new CurveTransformed(new CurveRock() {
-            @Override
-            public double at(int component, int derivative, double t) {
-                switch (component) {
-                case 0:
-                    return t * 2.0;
-                case 1:
-                    return t * 1.5;
-                case 2:
-                    return t * 0.5;
-                default:
-                    throw new IllegalArgumentException();
-                }
-            }
-        }, at, 0);
-        ret = cw.at(0, 0, ret);
-        assertEquals(0, 0, 0, ret, 1e-9);
-        ret = cw.at(0, 0.5, ret);
-        assertEquals(0.75, 0.9375, 0.25, ret, 1e-9);
-        ret = cw.at(0, 1.0, ret);
-        assertEquals(1.5, 1.875, 0.5, ret, 1e-9);
-        ret = cw.at(0, 1.5, ret);
-        assertEquals(2.25, 2.8125, 0.75, ret, 1e-9);
-    }
-
-    public void testAffineTrafoLayout() {
-        // { m00 m10 m01 m11 [m02 m12]}.
-        double[] t = { 0, 1, 2, 3, 4, 5 };
-        final AffineTransform at = new AffineTransform(t);
-        final double m00 = at.getScaleX();
-        final double m10 = at.getShearY();
-        final double m01 = at.getShearX();
-        final double m11 = at.getScaleY();
-        final double m02 = at.getTranslateX();
-        final double m12 = at.getTranslateY();
-        assertEquals(0, m00, 1e-9);
-        assertEquals(1, m10, 1e-9);
-        assertEquals(2, m01, 1e-9);
-        assertEquals(3, m11, 1e-9);
-        assertEquals(4, m02, 1e-9);
-        assertEquals(5, m12, 1e-9);
-    }
-
     public void testPoly() {
         final double[] tr = { -0.9687816430468471, -0.24791556646457572,
                 0.24791556646457572, -0.9687816430468471, 0.1,
@@ -312,5 +284,38 @@ public class CurveTransformedTest extends TestShowBase {
         assertEquals(0.25, 2, 0.25 * Math.PI, p.getRock(4), 1e-6);
         assertEquals(0.5, 2, 0.25 * Math.PI, p.getRock(5), 1e-6);
 
+    }
+
+    public void testValueC0() {
+        Rock ret = null;
+        final AffineTransform at = AffineTransform.getScaleInstance(0.75, 1.25);
+        final CurveTransformed cw = new CurveTransformed(new CurveRock() {
+            /**
+             * 
+             */
+            private static final long serialVersionUID = 5104903233015705634L;
+
+            @Override
+            public double at(int component, int derivative, double t) {
+                switch (component) {
+                case 0:
+                    return t * 2.0;
+                case 1:
+                    return t * 1.5;
+                case 2:
+                    return t * 0.5;
+                default:
+                    throw new IllegalArgumentException();
+                }
+            }
+        }, at, 0);
+        ret = cw.at(0, 0, ret);
+        assertEquals(0, 0, 0, ret, 1e-9);
+        ret = cw.at(0, 0.5, ret);
+        assertEquals(0.75, 0.9375, 0.25, ret, 1e-9);
+        ret = cw.at(0, 1.0, ret);
+        assertEquals(1.5, 1.875, 0.5, ret, 1e-9);
+        ret = cw.at(0, 1.5, ret);
+        assertEquals(2.25, 2.8125, 0.75, ret, 1e-9);
     }
 }

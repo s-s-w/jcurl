@@ -16,20 +16,19 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.swing;
+package org.jcurl.core.xsio;
 
-import java.awt.geom.Point2D;
+import junit.framework.TestCase;
 
-import org.jcurl.core.base.Zoomer;
+public abstract class TestBase extends TestCase {
 
-interface WCLayer {
+    protected void assertEquals(final double expected, final double found) {
+        final double precision = 1e-9;
+        assertEquals("expected:<" + expected + "> +/-:<" + precision
+                + "> but was:<" + found + ">", expected, found, precision);
+    }
 
-    public abstract Point2D dc2wc(final Point2D dc, Point2D wc);
-
-    public abstract Zoomer getZoom();
-
-    public abstract void setZoom(final Zoomer zoom);
-
-    public abstract Point2D wc2dc(final Point2D wc, Point2D dc);
-
+    protected double rad2deg(final double rad) {
+        return 180 * rad / Math.PI;
+    }
 }

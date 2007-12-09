@@ -85,6 +85,8 @@ class IcePainter implements Strategy {
 
     protected static final Line2D.Float centerRight;
 
+    protected static final ColorSet colors = new ColorSet();
+
     protected static final Line2D.Float farHog;
 
     protected static final Rectangle2D.Float hog2hog;
@@ -128,8 +130,6 @@ class IcePainter implements Strategy {
         centerLeft = new Line2D.Float(-dx, fhy, -dx, -by);
         centerRight = new Line2D.Float(dx, fhy, dx, -by);
     }
-
-    protected static final ColorSet colors = new ColorSet();
 
     public void paintIceWC(final Graphics2D g) {
         g.setStroke(colors.stroke);

@@ -34,6 +34,11 @@ import org.jcurl.math.R1RNFunction;
  */
 public class NewtonCollissionDetector extends CollissionDetectorBase {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3370270087945653006L;
+
     public double compute(final double t0, final double tmax,
             final R1RNFunction fa, final R1RNFunction fb, final double distSq) {
         return NewtonSimpleSolver.computeNewtonValue(

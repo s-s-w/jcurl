@@ -29,7 +29,7 @@ import org.jcurl.core.helpers.Unit;
  * 
  * @see org.jcurl.core.base.PositionSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:PositionSetTest.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class PositionSetTest extends TestCase {
 
@@ -38,8 +38,8 @@ public class PositionSetTest extends TestCase {
         a.getRock(1).setLocation(0, 0);
         assertEquals(1, PositionSet.findRockIndexAtPos(a, new Point2D.Float(0,
                 0)));
-        assertEquals(1, PositionSet.findRockIndexAtPos(a, new Point2D.Float(Unit
-                .f2m(0.4), 0)));
+        assertEquals(1, PositionSet.findRockIndexAtPos(a, new Point2D.Float(
+                Unit.f2m(0.4), 0)));
     }
 
     public void testGetShotRocks() {

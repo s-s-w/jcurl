@@ -33,34 +33,6 @@ import org.jcurl.core.swing.TestShowBase;
  */
 public class CurlerDennyTest extends TestShowBase {
 
-    public void testDennyShow() throws InterruptedException {
-        final CurveManager te = new CurveManager();
-        te.setCollider(new CollissionSpin());
-        te.setCollissionDetector(new NewtonCollissionDetector());
-        te.setCurler(new CurlerDenny(23, 1));
-        te.setInitialPos(PositionSet.allHome());
-        te.getInitialPos().getDark(0).setLocation(0, IceSize.FAR_HOG_2_TEE, 0);
-        te.getInitialPos().getLight(0).setLocation(0, IceSize.BACK_2_TEE,
-                0.25 * Math.PI);
-        te.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
-        if (true)
-            te.getInitialSpeed().getDark(0).setLocation(-0.096,
-                    -te.getCurler().computeV0(3.124), Math.PI / 2);
-        else
-            te.getInitialSpeed().getDark(0).setLocation(0, -2.455, Math.PI / 2);
-
-        // with Display:
-        showPositionDisplay(te.getCurrentPos(), FixpointZoomer.HOUSE, 10000,
-                new TimeRunnable() {
-                    @Override
-                    public void run(final double t) throws InterruptedException {
-                        te.setCurrentTime(14 + t);
-                        Thread.sleep(1000 / 50);
-                    }
-                });
-        // showPaths(te.getCurveStore().iterator(), 0, 10);
-    }
-
     void showTrajectory(final CurveRock p, final Zoomer zoom, final int millis,
             final int dt) {
         final PositionSet pos = PositionSet.allOut();
@@ -132,5 +104,33 @@ public class CurlerDennyTest extends TestShowBase {
         assertEquals(0.00694054653572247, ret.getX());
         assertEquals(-0.09842499759462145, ret.getY());
         assertEquals(-0.014659456820910044, ret.getA());
+    }
+
+    public void testDennyShow() throws InterruptedException {
+        final CurveManager te = new CurveManager();
+        te.setCollider(new CollissionSpin());
+        te.setCollissionDetector(new NewtonCollissionDetector());
+        te.setCurler(new CurlerDenny(23, 1));
+        te.setInitialPos(PositionSet.allHome());
+        te.getInitialPos().getDark(0).setLocation(0, IceSize.FAR_HOG_2_TEE, 0);
+        te.getInitialPos().getLight(0).setLocation(0, IceSize.BACK_2_TEE,
+                0.25 * Math.PI);
+        te.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
+        if (true)
+            te.getInitialSpeed().getDark(0).setLocation(-0.096,
+                    -te.getCurler().computeV0(3.124), Math.PI / 2);
+        else
+            te.getInitialSpeed().getDark(0).setLocation(0, -2.455, Math.PI / 2);
+
+        // with Display:
+        showPositionDisplay(te.getCurrentPos(), FixpointZoomer.HOUSE, 10000,
+                new TimeRunnable() {
+                    @Override
+                    public void run(final double t) throws InterruptedException {
+                        te.setCurrentTime(14 + t);
+                        Thread.sleep(1000 / 50);
+                    }
+                });
+        // showPaths(te.getCurveStore().iterator(), 0, 10);
     }
 }
