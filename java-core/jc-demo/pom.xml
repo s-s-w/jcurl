@@ -13,6 +13,17 @@
 	<name>JCurl Demo Apps</name>
 	<description>Some demo applications.</description>
 	<url>${httpsitebase}/${pom.artifactId}/${pom.version}</url>
+	<scm>
+		<connection>
+			scm:svn:svn://svn.berlios.de/jcurl/trunk/java-core/${pom.artifactId}
+		</connection>
+		<developerConnection>
+			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/java-core/${pom.artifactId}
+		</developerConnection>
+		<url>
+			http://svn.berlios.de/wsvn/jcurl/trunk/java-core/${pom.artifactId}
+		</url>
+	</scm>
 	<repositories>
 		<repository>
 			<!-- Bootstrap parent pom  -->
