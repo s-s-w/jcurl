@@ -29,7 +29,7 @@ import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.helpers.Annotations;
+import org.jcurl.core.helpers.AnnoHelper;
 import org.jcurl.core.helpers.Unit;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerDenny;
@@ -46,14 +46,14 @@ public class JDKSerializerTest extends TestCase {
         te.setCurler(new CurlerDenny(24, 1));
         te.setInitialPos(PositionSet.allOut());
         te.setInitialSpeed(new SpeedSet(new RockDouble()));
-        te.getAnnotations().put(Annotations.HammerK, Annotations.HammerVDark);
-        te.getAnnotations().put(Annotations.DarkTeamK, "Scotland");
-        te.getAnnotations().put(Annotations.LightTeamK, "Canada");
-        te.getAnnotations().put(Annotations.GameK, "Semifinal");
-        te.getAnnotations().put(Annotations.EventK,
+        te.getAnnotations().put(AnnoHelper.HammerK, AnnoHelper.HammerVDark);
+        te.getAnnotations().put(AnnoHelper.DarkTeamK, "Scotland");
+        te.getAnnotations().put(AnnoHelper.LightTeamK, "Canada");
+        te.getAnnotations().put(AnnoHelper.GameK, "Semifinal");
+        te.getAnnotations().put(AnnoHelper.EventK,
                 "World Curling Championships");
-        te.getAnnotations().put(Annotations.DateK, "1992");
-        te.getAnnotations().put(Annotations.LocationK, "Garmisch");
+        te.getAnnotations().put(AnnoHelper.DateK, "1992");
+        te.getAnnotations().put(AnnoHelper.LocationK, "Garmisch");
         initHammy(te.getInitialPos(), te.getInitialSpeed());
         return te;
     }
@@ -105,7 +105,7 @@ public class JDKSerializerTest extends TestCase {
         final IODocument d = io.read(new ByteArrayInputStream(bout
                 .toByteArray()));
         assertNull(d.getRoot());
-        assertNotNull(d.get(IODocument.CreatedByUser));
+        assertNotNull(d.annotations().get(IODocument.CreatedByUser));
     }
 
     public void testHammy() throws IOException {
@@ -114,7 +114,7 @@ public class JDKSerializerTest extends TestCase {
         IOTrajectories l;
         a.setRoot(l = new IOTrajectories());
         l.trajectories().add(initHammy(null));
-        a.put(IODocument.CreatedByProgram, "value");
+        a.annotations().put(IODocument.CreatedByProgram, "value");
 
         final ByteArrayOutputStream bout = new ByteArrayOutputStream();
         io.write(a, bout);

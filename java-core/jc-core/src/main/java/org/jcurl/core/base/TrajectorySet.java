@@ -18,7 +18,7 @@
  */
 package org.jcurl.core.base;
 
-import org.jcurl.core.helpers.Annotations;
+import java.util.Map;
 
 /**
  * "Read-only" trajectories of a whole set of {@link RockSet#ROCKS_PER_SET}
@@ -29,7 +29,7 @@ import org.jcurl.core.helpers.Annotations;
  */
 public interface TrajectorySet {
 
-    public Annotations getAnnotations();
+    public Map<CharSequence, CharSequence> getAnnotations();
 
     public abstract PositionSet getCurrentPos();
 

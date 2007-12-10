@@ -36,11 +36,6 @@ import org.jcurl.math.R1RNFunctionImpl;
  */
 public class CurveDom extends R1RNFunctionImpl {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 5253564389287453902L;
-
     /** Internal helper - mutable number implementation */
     private static final class Num extends Number {
 
@@ -69,6 +64,11 @@ public class CurveDom extends R1RNFunctionImpl {
         }
 
     }
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5253564389287453902L;
 
     private final MathDom.Node[][] c;
 

@@ -20,29 +20,33 @@ package org.jcurl.core.io;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
-import org.jcurl.core.base.TrajectorySet;
-import org.jcurl.core.helpers.Annotations;
-
-public class IODocument extends Annotations implements
-        Iterable<Map.Entry<IOGroup, TrajectorySet>>, Serializable {
+public class IODocument implements Serializable {
     public static final String CreatedByProgram = "org.jcurl.core.io.CreatedByProgram";
     public static final String CreatedByUser = "org.jcurl.core.io.CreatedByUser";
     private static final long serialVersionUID = -3564287932163612226L;
+    private final Map<CharSequence, CharSequence> annotations;
     private IONode root;
+
+    public IODocument() {
+        this(null);
+    }
+
+    private IODocument(final Map<CharSequence, CharSequence> annotations) {
+        this.annotations = annotations == null ? new HashMap<CharSequence, CharSequence>()
+                : annotations;
+    }
+
+    public Map<CharSequence, CharSequence> annotations() {
+        return annotations;
+    }
 
     public IONode getRoot() {
         return root;
     }
 
-    public Iterator<java.util.Map.Entry<IOGroup, TrajectorySet>> iterator() {
-        return new HashMap<IOGroup, TrajectorySet>().entrySet().iterator();
-    }
-
     public void setRoot(final IONode root) {
         this.root = root;
     }
-
 }

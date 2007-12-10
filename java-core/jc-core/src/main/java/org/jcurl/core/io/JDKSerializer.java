@@ -41,7 +41,8 @@ public class JDKSerializer extends JCurlSerializer {
     @Override
     public void write(final IODocument src, final OutputStream dst)
             throws IOException {
-        src.put(IODocument.CreatedByUser, System.getProperty("user.name"));
+        src.annotations().put(IODocument.CreatedByUser,
+                System.getProperty("user.name"));
         new ObjectOutputStream(dst).writeObject(src);
         dst.flush();
     }

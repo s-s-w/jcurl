@@ -51,10 +51,7 @@ import org.jcurl.math.PolynomeCurve;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.Converter;
-import com.thoughtworks.xstream.converters.MarshallingContext;
-import com.thoughtworks.xstream.converters.UnmarshallingContext;
-import com.thoughtworks.xstream.io.HierarchicalStreamReader;
-import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import com.thoughtworks.xstream.converters.SingleValueConverter;
 
 /**
  * Uses the great {@link XStream} for serialization.
@@ -65,60 +62,54 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
  * </p>
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:XStreamSerializer.java 752 2007-12-09 22:49:16Z mrohrmoser $
  */
 public class XStreamSerializer extends JCurlSerializer {
 
-    static class DoubleArrayConverter implements Converter {
+    private static class DoubleArrayConverter implements SingleValueConverter {
 
         @SuppressWarnings("unchecked")
         public boolean canConvert(final Class arg0) {
             return double[].class.isAssignableFrom(arg0);
         }
 
-        public void marshal(final Object arg0,
-                final HierarchicalStreamWriter arg1,
-                final MarshallingContext arg2) {
-            final double[] d = (double[]) arg0;
-            final StringBuffer s = new StringBuffer();
-            for (final double element : d)
-                s.append(element).append(' ');
-            arg1.setValue(s.toString().trim());
-        }
-
-        public Object unmarshal(final HierarchicalStreamReader arg0,
-                final UnmarshallingContext arg1) {
-            final String[] p = arg0.getValue().split(" ");
+        public Object fromString(final String s) {
+            final String[] p = s.split(" ");
             final double[] d = new double[p.length];
             for (int i = 0; i < d.length; i++)
                 d[i] = Double.parseDouble(p[i]);
             return d;
         }
+
+        public String toString(final Object obj) {
+            final double[] d = (double[]) obj;
+            final StringBuffer s = new StringBuffer();
+            for (final double element : d)
+                s.append(element).append(' ');
+            return s.toString().trim();
+        }
     }
 
-    static class MeasureConverter implements Converter {
+    static class MeasureConverter implements SingleValueConverter {
 
         @SuppressWarnings("unchecked")
         public boolean canConvert(final Class arg0) {
             return Measure.class.isAssignableFrom(arg0);
         }
 
-        public void marshal(final Object arg0,
-                final HierarchicalStreamWriter arg1,
-                final MarshallingContext arg2) {
-            final Measure d = (Measure) arg0;
-            final StringBuffer s = new StringBuffer();
-            s.append(d.value).append(" ").append(d.unit);
-            arg1.setValue(s.toString());
+        public Object fromString(final String s) {
+            return Measure.parse(s);
         }
 
-        public Object unmarshal(final HierarchicalStreamReader arg0,
-                final UnmarshallingContext arg1) {
-            return Measure.parse(arg0.getValue());
+        public String toString(final Object obj) {
+            final Measure d = (Measure) obj;
+            final StringBuffer s = new StringBuffer();
+            s.append(d.value).append(" ").append(d.unit);
+            return s.toString();
         }
     }
 
-    public static class RockConverter implements Converter {
+    static class RockConverter implements SingleValueConverter {
         static final String num = "-?[0-9]+(?:[.][0-9]+)?(?:e-?[0-9]+)?";
 
         static final Pattern p = Pattern.compile("(" + num + ") (" + num
@@ -129,24 +120,21 @@ public class XStreamSerializer extends JCurlSerializer {
             return Rock.class.isAssignableFrom(arg0);
         }
 
-        public void marshal(final Object arg0,
-                final HierarchicalStreamWriter arg1,
-                final MarshallingContext arg2) {
-            final Rock d = (Rock) arg0;
-            final StringBuffer s = new StringBuffer();
-            s.append(d.getX()).append(" ");
-            s.append(d.getY()).append(" ");
-            s.append(d.getA());
-            arg1.setValue(s.toString());
-        }
-
-        public Object unmarshal(final HierarchicalStreamReader arg0,
-                final UnmarshallingContext arg1) {
-            final Matcher m = p.matcher(arg0.getValue());
+        public Object fromString(final String s) {
+            final Matcher m = p.matcher(s);
             if (!m.matches())
                 throw new IllegalStateException();
             return new RockDouble(Double.parseDouble(m.group(1)), Double
                     .parseDouble(m.group(2)), Double.parseDouble(m.group(3)));
+        }
+
+        public String toString(final Object obj) {
+            final Rock d = (Rock) obj;
+            final StringBuffer s = new StringBuffer();
+            s.append(d.getX()).append(" ");
+            s.append(d.getY()).append(" ");
+            s.append(d.getA());
+            return s.toString();
         }
     }
 

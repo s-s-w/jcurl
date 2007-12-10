@@ -19,23 +19,23 @@
 package org.jcurl.core.io;
 
 import java.io.Serializable;
-
-import org.jcurl.core.helpers.Annotations;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class IONode implements Serializable {
     private static final long serialVersionUID = -4734020637823903908L;
-    private final Annotations annotations;
+    private final Map<CharSequence, CharSequence> annotations;
 
     public IONode() {
         this(null);
     }
 
-    public IONode(final Annotations annotations) {
-        this.annotations = annotations == null ? new Annotations()
+    public IONode(final Map<CharSequence, CharSequence> annotations) {
+        this.annotations = annotations == null ? new HashMap<CharSequence, CharSequence>()
                 : annotations;
     }
 
-    public Annotations annotations() {
+    public Map<CharSequence, CharSequence> annotations() {
         return annotations;
     }
 }

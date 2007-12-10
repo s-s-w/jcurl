@@ -22,6 +22,8 @@ import java.awt.geom.AffineTransform;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.ObjectStreamException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.Collider;
@@ -36,7 +38,6 @@ import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
 import org.jcurl.core.base.StopDetector;
-import org.jcurl.core.helpers.Annotations;
 import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.CollissionStore.Tupel;
@@ -67,7 +68,7 @@ public class CurveManager extends MutableObject implements
 
     private static final StopDetector stopper = new NewtonStopDetector();
 
-    private final Annotations annotations = new Annotations();
+    private final Map<CharSequence, CharSequence> annotations = new HashMap<CharSequence, CharSequence>();
 
     private Collider collider = null;
 
@@ -216,7 +217,7 @@ public class CurveManager extends MutableObject implements
         return false;
     }
 
-    public Annotations getAnnotations() {
+    public Map<CharSequence, CharSequence> getAnnotations() {
         return annotations;
     }
 

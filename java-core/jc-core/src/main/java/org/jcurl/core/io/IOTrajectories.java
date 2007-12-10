@@ -21,27 +21,28 @@ package org.jcurl.core.io;
 import java.io.ObjectStreamException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.jcurl.core.base.TrajectorySet;
-import org.jcurl.core.helpers.Annotations;
 
-public class IOTrajectories extends IONode {
+public class IOTrajectories extends IOGroup {
     private static final long serialVersionUID = -8243459215398281867L;
     private final List<TrajectorySet> trajectories;
 
     public IOTrajectories() {
-        this(null, null);
+        this(null, null, null);
     }
 
-    protected IOTrajectories(final Annotations annotations,
-            final List<TrajectorySet> children) {
-        super(annotations);
-        trajectories = children == null ? new ArrayList<TrajectorySet>()
-                : children;
+    protected IOTrajectories(final Map<CharSequence, CharSequence> annotations,
+            final List<IONode> children, final List<TrajectorySet> trajectories) {
+        super(annotations, children);
+        this.trajectories = trajectories == null ? new ArrayList<TrajectorySet>()
+                : trajectories;
     }
 
+    @Override
     protected Object readResolve() throws ObjectStreamException {
-        return new IOTrajectories(annotations(), trajectories());
+        return new IOTrajectories(annotations(), children(), trajectories());
     }
 
     public List<TrajectorySet> trajectories() {

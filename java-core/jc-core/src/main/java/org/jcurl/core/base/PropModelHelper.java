@@ -28,16 +28,16 @@ import org.jcurl.core.helpers.Measure;
  * Help accessing {@link PropModel} properties.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:PropModelHelper.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public final class PropModelHelper {
-    public static final CharSequence DrawToTeeCurl = "drawToTeeCurl";
+    public static final String DrawToTeeCurl = "drawToTeeCurl";
 
-    public static final CharSequence DrawToTeeTime = "drawToTeeTime";
+    public static final String DrawToTeeTime = "drawToTeeTime";
 
-    public static final CharSequence FrictionRockRock = "frictionRockRock";
+    public static final String FrictionRockRock = "frictionRockRock";
 
-    public static final CharSequence Loss = "loss";
+    public static final String Loss = "loss";
 
     private static final long serialVersionUID = -5959858338365408866L;
 
@@ -78,7 +78,7 @@ public final class PropModelHelper {
     }
 
     public static void put(final Map<CharSequence, Measure> p,
-            final CharSequence key, final double val, final Unit dim) {
+            final String key, final double val, final Unit dim) {
         p.put(key, new Measure(val, dim));
     }
 

@@ -21,8 +21,7 @@ package org.jcurl.core.io;
 import java.io.ObjectStreamException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.jcurl.core.helpers.Annotations;
+import java.util.Map;
 
 public class IOGroup extends IONode {
     private static final long serialVersionUID = 6594185597261724279L;
@@ -32,7 +31,8 @@ public class IOGroup extends IONode {
         this(null, null);
     }
 
-    protected IOGroup(final Annotations annotations, final List<IONode> children) {
+    protected IOGroup(final Map<CharSequence, CharSequence> annotations,
+            final List<IONode> children) {
         super(annotations);
         this.children = children == null ? new ArrayList<IONode>() : children;
     }

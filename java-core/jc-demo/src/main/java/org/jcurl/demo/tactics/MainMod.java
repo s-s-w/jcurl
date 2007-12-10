@@ -2,6 +2,7 @@ package org.jcurl.demo.tactics;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.UndoableEdit;
@@ -18,7 +19,7 @@ import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.helpers.Annotations;
+import org.jcurl.core.helpers.AnnoHelper;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.helpers.Unit;
 import org.jcurl.core.io.IODocument;
@@ -44,14 +45,14 @@ class MainMod extends BroomPromptModel {
         te.setCurler(new CurlerDenny(24, 1));
         te.setInitialPos(PositionSet.allOut());
         te.setInitialSpeed(new SpeedSet(new RockDouble()));
-        te.getAnnotations().put(Annotations.HammerK, Annotations.HammerVDark);
-        te.getAnnotations().put(Annotations.DarkTeamK, "Scotland");
-        te.getAnnotations().put(Annotations.LightTeamK, "Canada");
-        te.getAnnotations().put(Annotations.GameK, "Semifinal");
-        te.getAnnotations().put(Annotations.EventK,
+        te.getAnnotations().put(AnnoHelper.HammerK, AnnoHelper.HammerVDark);
+        te.getAnnotations().put(AnnoHelper.DarkTeamK, "Scotland");
+        te.getAnnotations().put(AnnoHelper.LightTeamK, "Canada");
+        te.getAnnotations().put(AnnoHelper.GameK, "Semifinal");
+        te.getAnnotations().put(AnnoHelper.EventK,
                 "World Curling Championships");
-        te.getAnnotations().put(Annotations.DateK, "1992");
-        te.getAnnotations().put(Annotations.LocationK, "Garmisch");
+        te.getAnnotations().put(AnnoHelper.DateK, "1992");
+        te.getAnnotations().put(AnnoHelper.LocationK, "Garmisch");
         initHammy(te.getInitialPos(), te.getInitialSpeed());
         return te;
     }
@@ -112,6 +113,10 @@ class MainMod extends BroomPromptModel {
         undo.addUndoableEditListener(l);
     }
 
+    public Map<CharSequence, CharSequence> annotations() {
+        return ts.getAnnotations();
+    }
+
     public boolean canRedo() {
         return undo.canRedo();
     }
@@ -123,10 +128,6 @@ class MainMod extends BroomPromptModel {
     @Override
     public boolean equals(final Object obj) {
         return ts.equals(obj);
-    }
-
-    public Annotations getAnnotations() {
-        return ts.getAnnotations();
     }
 
     @Override
@@ -198,8 +199,8 @@ class MainMod extends BroomPromptModel {
             final JCurlSerializer xs = new JDKSerializer();
             try {
                 throw new IOException("Not implemented yet"); // xs.read(src.toURL(),
-                                                                // xs.wrap(null,
-                                                                // ts));
+                // xs.wrap(null,
+                // ts));
             } catch (final IOException e) {
                 log.error("", e);
             }
@@ -219,8 +220,8 @@ class MainMod extends BroomPromptModel {
         if (dst.getName().endsWith(".jcz") || dst.getName().endsWith(".jcx")) {
             log.debug(dst);
             final JCurlSerializer xs = new JDKSerializer();
-            IODocument src = new IODocument();
-            IOTrajectories l = new IOTrajectories();
+            final IODocument src = new IODocument();
+            final IOTrajectories l = new IOTrajectories();
             src.setRoot(l);
             l.trajectories().add(ts);
             try {

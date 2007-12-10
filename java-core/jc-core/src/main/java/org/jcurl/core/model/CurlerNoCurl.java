@@ -39,9 +39,6 @@ import org.jcurl.math.PolynomeCurve;
  */
 public class CurlerNoCurl extends CurlerBase {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -1818914036355517122L;
 
     transient double beta;
