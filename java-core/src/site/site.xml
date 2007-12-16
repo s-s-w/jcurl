@@ -27,12 +27,12 @@
       <item name="Demo Applications" href="demoapps.html"/>
       <item name="Scientific Resources" href="science/index.html"/>
       <item name="Links" href="links.html"/>
-      
       <item name="Todos" href="todos.html" />
     </menu>
 
     <menu name="Community">
-      <item name="Forum" href="http://developer.berlios.de/forum/?group_id=3203"/>      
+      <item name="Wiki" href="http://wiki.jcurl.org"/>      
+      <!-- item name="Forum" href="http://developer.berlios.de/forum/?group_id=3203"/ -->      
       <!-- item name="Mailing Lists" href="mail-lists.html"/ -->
     </menu>
 
