@@ -48,6 +48,7 @@ public class MainApp extends JFrame {
      * @version $Id$
      */
     static class Menufactory {
+
         private final MainController mainc;
         private final UndoRedoCon undoc;
         private final ZuiController zuic;
@@ -122,9 +123,8 @@ public class MainApp extends JFrame {
             i = ret.add(new JMenuItem(mainc.fileScreenshot));
             i.setText("Screenshot");
             i.setMnemonic('c');
-            i
-                    .setAccelerator(KeyStroke.getKeyStroke(
-                            KeyEvent.VK_PRINTSCREEN, 0));
+            i.setAccelerator(KeyStroke.getKeyStroke(
+                    KeyEvent.VK_PRINTSCREEN, 0));
 
             ret.addSeparator();
 
@@ -226,7 +226,6 @@ public class MainApp extends JFrame {
             return ret;
         }
     }
-
     private static final long serialVersionUID = 3398372625156897223L;
 
     // FIXME What goes wrong if I put here 30?
@@ -239,9 +238,9 @@ public class MainApp extends JFrame {
         // PDebug.debugPaintCalls = true;
         final MainApp application = new MainApp();
         SwingUtilities.invokeLater(new Runnable() {
+
             public void run() {
-                application
-                        .setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+                application.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
                 application.pack();
                 application.setSize(600, 800);
                 application.setVisible(true);
@@ -256,11 +255,9 @@ public class MainApp extends JFrame {
             } catch (final InterruptedException e1) {
                 break;
             }
-            application.m.setCurrentTime(application.m.getCurrentTime() + dt
-                    * 1e-3);
+            application.m.setCurrentTime(application.m.getCurrentTime() + dt * 1e-3);
         }
     }
-
     private final MainMod m;
     private final MainController mainc;
     private final ZuiController zuic;
@@ -279,6 +276,7 @@ public class MainApp extends JFrame {
         zuic = new ZuiController(zui.pico.getCamera());
         setJMenuBar(new Menufactory(mainc, zuic, undoc).menu());
         addWindowListener(new WindowAdapter() {
+
             @Override
             public void windowClosing(final WindowEvent e) {
                 mainc.shutDown();
