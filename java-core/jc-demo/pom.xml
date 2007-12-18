@@ -138,11 +138,6 @@
 			<version>10.2.2.0</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-            <groupId>org.jcurl</groupId>
-            <artifactId>jcurl-core</artifactId>
-            <version>0.7.2</version>
-        </dependency>
 	</dependencies>
 	<distributionManagement>
 		<site>

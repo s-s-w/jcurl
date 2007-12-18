@@ -194,7 +194,7 @@ public class XStreamSerializer extends JCurlSerializer {
         // 
         xs.alias("StoredTrajectory", StoredTrajectorySet.class);
         xs.alias("CombinedCurve", CurveCombined.class);
-        xs.alias("Segment", Part.class);
+        xs.alias("part", Part.class);
         xs.alias("TransformedCurve", CurveTransformed.class);
         xs.alias("PolynomeCurve", PolynomeCurve.class);
         xs.alias("PointCurve", CurveStill.class);
