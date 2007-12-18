@@ -38,6 +38,7 @@ import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.StoredTrajectorySet;
 import org.jcurl.core.helpers.Measure;
 import org.jcurl.core.io.IODocument;
+import org.jcurl.core.io.IOTrajectories;
 import org.jcurl.core.io.JCurlSerializer;
 import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerNoCurl;
@@ -46,8 +47,8 @@ import org.jcurl.core.model.CurveStoreImpl;
 import org.jcurl.core.model.NewtonCollissionDetector;
 import org.jcurl.core.model.NewtonStopDetector;
 import org.jcurl.math.CurveCombined;
-import org.jcurl.math.CurvePart;
 import org.jcurl.math.PolynomeCurve;
+import org.jcurl.math.CurveCombined.Part;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.Converter;
@@ -186,13 +187,14 @@ public class XStreamSerializer extends JCurlSerializer {
      */
     protected XStream registerAliases(final XStream xs) {
         xs.alias("measure", Measure.class);
-        xs.alias("Rock", RockDouble.class);
+        xs.alias("rock", RockDouble.class);
         // 
-        // xs.alias("org.jcurl.container.2007", Payload2007.class);
+        xs.alias("IODocument", IODocument.class);
+        xs.alias("IOTrajectories", IOTrajectories.class);
         // 
         xs.alias("StoredTrajectory", StoredTrajectorySet.class);
         xs.alias("CombinedCurve", CurveCombined.class);
-        xs.alias("CurvePart", CurvePart.class);
+        xs.alias("Segment", Part.class);
         xs.alias("TransformedCurve", CurveTransformed.class);
         xs.alias("PolynomeCurve", PolynomeCurve.class);
         xs.alias("PointCurve", CurveStill.class);

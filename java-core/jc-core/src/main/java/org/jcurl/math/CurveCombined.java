@@ -36,6 +36,35 @@ import org.jcurl.core.log.JCLoggerFactory;
  */
 public class CurveCombined extends R1RNFunctionImpl implements
         Iterable<Entry<Double, R1RNFunction>>, Serializable {
+    public static class Part implements Entry<Double, R1RNFunction> {
+
+        private final R1RNFunction curve;
+
+        private final Double t0;
+
+        public Part(final double t0, final R1RNFunction f) {
+            this.t0 = new Double(t0);
+            curve = f;
+        }
+
+        public Double getKey() {
+            return t0;
+        }
+
+        public R1RNFunction getValue() {
+            return curve;
+        }
+
+        public R1RNFunction setValue(final R1RNFunction value) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public String toString() {
+            return new StringBuffer().append("[").append(getKey())
+                    .append(" : ").append(getValue()).append("]").toString();
+        }
+    }
 
     private static final Log log = JCLoggerFactory
             .getLogger(CurveCombined.class);
@@ -95,7 +124,7 @@ public class CurveCombined extends R1RNFunctionImpl implements
             for (int i = parts.size() - 1; i > idx; i--)
                 parts.remove(i);
         }
-        parts.add(new CurvePart(t0, fkt));
+        parts.add(new Part(t0, fkt));
     }
 
     /**
