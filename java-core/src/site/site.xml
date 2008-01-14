@@ -18,7 +18,7 @@
   <body>
     <menu name="JCurl">
       <item name="Home" href="http://www.jcurl.org/"/>
-      <item name="Demo Applications" href="../../jc-demo/${project.version}/index.html"/>
+      <item name="Demo Applications" href="http://wiki.jcurl.org/index.php5?title=Applications"/>
       <item name="Todos" href="http://wiki.jcurl.org/index.php5?title=Todos" />
       <!-- item name="Scientific Resources" href="../../java-core/${project.version}/science/index.html"/>
       <item name="Links" href="../../java-core/${project.version}/links.html"/>
