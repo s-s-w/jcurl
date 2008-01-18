@@ -275,7 +275,7 @@ public class MainApp extends JFrame {
         bpm.setIdx16(14);
         final ZuiPanel zui = new ZuiPanel(m.undo);
         final JTree tree = new JTree();
-        getContentPane().add(tree, "West");
+        //getContentPane().add(tree, "West");
         getContentPane().add(zui, "Center");
         mainc = new MainController(zui, m, this);
         zuic = new ZuiController(zui.pico.getCamera());
