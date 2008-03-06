@@ -248,7 +248,7 @@ class Controller {
          * http://www.javaworld.com/javaworld/jw-06-1998/jw-06-undoredo.html
          * 
          * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
-         * @version $Id: MainApp.java 701 2007-08-21 00:22:00Z mrohrmoser $
+         * @version $Id$
          */
         class UndoRedoAction extends AbstractAction {
             private static final long serialVersionUID = -4468864007790523205L;
