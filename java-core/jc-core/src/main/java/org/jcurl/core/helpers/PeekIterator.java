@@ -21,58 +21,26 @@ package org.jcurl.core.helpers;
 import java.util.Iterator;
 
 /**
- * Peek iterator with 1-step lookahead.
- * 
- * Very similar to {@link FilterIterator}.
+ * Decorator to peek iterators with 1-step lookahead.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:EnumBase.java 682 2007-08-12 21:25:04Z mrohrmoser $
  * @param <E>
  *            Iterator Element Type.
  */
-public class PeekIterator<E> implements Iterator<E> {
-
-    private final Iterator<E> base;
-
-    private E next = null;
-
-    private boolean start = true;
+public class PeekIterator<E> extends FilterIterator<E> {
 
     public PeekIterator(final Iterator<E> base) {
-        this.base = base;
+        super(base);
     }
 
-    private void doLookAhead() {
-        start = false;
-        if (base.hasNext())
-            next = base.next();
-        else
-            next = null;
+    @Override
+    protected boolean matches(final E item) {
+        return true;
     }
 
-    public boolean hasNext() {
-        if (start)
-            doLookAhead();
-        return next != null || base.hasNext();
-    }
-
-    public E next() {
-        if (start)
-            doLookAhead();
-        try {
-            return next;
-        } finally {
-            doLookAhead();
-        }
-    }
-
+    @Override
     public E peek() {
-        if (start)
-            doLookAhead();
-        return next;
-    }
-
-    public void remove() {
-        throw new UnsupportedOperationException("Not supported.");
+        return super.peek();
     }
 }

@@ -21,9 +21,7 @@ package org.jcurl.core.helpers;
 import java.util.Iterator;
 
 /**
- * Abstract Helper: Filtered iterator with 1-step lookahead.
- * 
- * Very similar to {@link PeekIterator}.
+ * Abstract Decorator: Filter iterators with 1-step lookahead.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:EnumBase.java 682 2007-08-12 21:25:04Z mrohrmoser $
@@ -36,14 +34,12 @@ public abstract class FilterIterator<E> implements Iterator<E> {
 
     private E next = null;
 
-    private boolean start = true;
-
     protected FilterIterator(final Iterator<E> base) {
         this.base = base;
+        doLookAhead();
     }
 
     private void doLookAhead() {
-        start = false;
         while (base.hasNext()) {
             next = base.next();
             if (matches(next))
@@ -53,8 +49,6 @@ public abstract class FilterIterator<E> implements Iterator<E> {
     }
 
     public boolean hasNext() {
-        if (start)
-            doLookAhead();
         return next != null || base.hasNext();
     }
 
@@ -67,13 +61,15 @@ public abstract class FilterIterator<E> implements Iterator<E> {
     protected abstract boolean matches(final E item);
 
     public E next() {
-        if (start)
-            doLookAhead();
         try {
             return next;
         } finally {
             doLookAhead();
         }
+    }
+
+    protected E peek() {
+        return next;
     }
 
     public void remove() {

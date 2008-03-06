@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Merge multiple iterators over arbitrary elements.
@@ -36,7 +35,7 @@ import java.util.List;
  *            Iterator Element Type.
  */
 public class MergedIterator<E> implements Iterator<E> {
-    private final List<PeekIterator<E>> base = new LinkedList<PeekIterator<E>>();
+    private final LinkedList<PeekIterator<E>> base = new LinkedList<PeekIterator<E>>();
     private final Comparator<PeekIterator<E>> comp;
 
     /**
@@ -73,17 +72,17 @@ public class MergedIterator<E> implements Iterator<E> {
     }
 
     public boolean hasNext() {
-        return base.size() > 0 && base.get(0).hasNext();
+        return !base.isEmpty() && base.getFirst().hasNext();
     }
 
     public E next() {
         if (!hasNext())
             return null;
         try {
-            return base.get(0).next();
+            return base.getFirst().next();
         } finally {
-            if (!base.get(0).hasNext())
-                base.remove(0);
+            if (!base.getFirst().hasNext())
+                base.removeFirst();
             Collections.sort(base, comp);
         }
     }
