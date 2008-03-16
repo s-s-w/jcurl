@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005 M. Rohrmoser
+ * Copyright (C) 2005-2008 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -49,9 +49,9 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class XmlSimpleWriterTest extends TestCase {
 
-    private static StringBuffer xmlEncode(final String s,
-            final StringBuffer buf0) {
-        final StringBuffer buf = buf0 != null ? buf0 : new StringBuffer(s
+    private static StringBuilder xmlEncode(final String s,
+            final StringBuilder buf0) {
+        final StringBuilder buf = buf0 != null ? buf0 : new StringBuilder(s
                 .length() * 2);
         final int len = s.length();
         for (int i = 0; i < len; i++) {
@@ -90,11 +90,11 @@ public class XmlSimpleWriterTest extends TestCase {
      * @throws UnsupportedEncodingException
      * @throws IOException
      */
-    private StringBuffer dumpStream(final InputStream stream,
-            final String encoding, StringBuffer buf)
+    private StringBuilder dumpStream(final InputStream stream,
+            final String encoding, StringBuilder buf)
             throws UnsupportedEncodingException, IOException {
         if (buf == null)
-            buf = new StringBuffer();
+            buf = new StringBuilder();
         final BufferedReader read = new BufferedReader(new InputStreamReader(
                 stream, encoding));
         for (;;) {
@@ -189,7 +189,7 @@ public class XmlSimpleWriterTest extends TestCase {
     }
 
     public void test008_TrivialDefaultEncoding() throws SAXException {
-        final StringBuffer exp = new StringBuffer();
+        final StringBuilder exp = new StringBuilder();
         final StringWriter writ = new StringWriter();
         final XmlSimpleWriter dst = new XmlSimpleWriter(writ);
 
@@ -212,7 +212,7 @@ public class XmlSimpleWriterTest extends TestCase {
         final String[] encodings = { "UTF-8", "ISO-8859-1" };
         for (int encIdx = encodings.length - 1; encIdx >= 0; encIdx--) {
             final String enc = encodings[encIdx];
-            final StringBuffer exp = new StringBuffer();
+            final StringBuilder exp = new StringBuilder();
             final ByteArrayOutputStream outStr = new ByteArrayOutputStream();
             final XmlSimpleWriter dst = new XmlSimpleWriter(outStr, enc, false);
 
@@ -229,13 +229,13 @@ public class XmlSimpleWriterTest extends TestCase {
 
             final InputStream iStream = new ByteArrayInputStream(outStr
                     .toByteArray());
-            final StringBuffer res = dumpStream(iStream, enc, null);
+            final StringBuilder res = dumpStream(iStream, enc, null);
             assertEquals(exp.toString(), res.toString());
         }
     }
 
     public void test010_NoNamespace() throws IOException, SAXException {
-        final StringBuffer exp = new StringBuffer();
+        final StringBuilder exp = new StringBuilder();
         final StringWriter writ = new StringWriter();
         final XmlSimpleWriter dst = new XmlSimpleWriter(writ);
 
@@ -318,7 +318,7 @@ public class XmlSimpleWriterTest extends TestCase {
     public void test030_DefaultNamespaces() throws SAXException {
         final String NS1 = "myNamespace1";
         final String NS2 = "myOtherNamespace2";
-        final StringBuffer exp = new StringBuffer();
+        final StringBuilder exp = new StringBuilder();
         final StringWriter writ = new StringWriter();
         final XmlSimpleWriter dst = new XmlSimpleWriter(writ);
 
@@ -380,7 +380,7 @@ public class XmlSimpleWriterTest extends TestCase {
         final String NS2 = "myOtherNamespace2";
         final String P1 = "p1";
         final String P2 = "p2";
-        final StringBuffer exp = new StringBuffer();
+        final StringBuilder exp = new StringBuilder();
         final StringWriter writ = new StringWriter();
         final XmlSimpleWriter dst = new XmlSimpleWriter(writ);
 

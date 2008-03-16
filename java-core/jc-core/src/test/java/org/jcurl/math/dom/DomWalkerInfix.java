@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005 M. Rohrmoser
+ * Copyright (C) 2005-2008 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -27,23 +27,23 @@ package org.jcurl.math.dom;
 public class DomWalkerInfix extends DomWalker {
 
     public static String toString(final MathDom.Node n) {
-        return toString(n, new StringBuffer()).toString();
+        return toString(n, new StringBuilder()).toString();
     }
 
-    public static StringBuffer toString(final MathDom.Node n,
-            final StringBuffer buf) {
+    public static StringBuilder toString(final MathDom.Node n,
+            final StringBuilder buf) {
         final DomWalkerInfix w = new DomWalkerInfix(buf);
         w.walk(n);
         return w.b;
     }
 
-    public final StringBuffer b;
+    public final StringBuilder b;
 
     public DomWalkerInfix() {
-        this(new StringBuffer());
+        this(new StringBuilder());
     }
 
-    public DomWalkerInfix(final StringBuffer b) {
+    public DomWalkerInfix(final StringBuilder b) {
         this.b = b;
     }
 

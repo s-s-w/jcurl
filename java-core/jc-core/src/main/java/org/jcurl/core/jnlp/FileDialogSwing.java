@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005-2007 M. Rohrmoser
+ * Copyright (C) 2005-2008 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -68,7 +68,7 @@ class FileDialogSwing implements OpenService, SaveService {
 
             @Override
             public String getDescription() {
-                final StringBuffer b = new StringBuffer();
+                final StringBuilder b = new StringBuilder();
                 for (final String element : extensions)
                     b.append("*.").append(element).append(", ");
                 if (b.length() > 0)

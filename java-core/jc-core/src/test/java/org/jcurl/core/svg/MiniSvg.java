@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005-2007 M. Rohrmoser
+ * Copyright (C) 2005-2008 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -143,7 +143,7 @@ public class MiniSvg extends Graphics2D {
         // <path d="M300,200 h-150 a150,150 0 1,0 150,-150 z"
         // fill="red" stroke="blue" stroke-width="5" />
         final AttributesImpl a = new AttributesImpl();
-        final StringBuffer d = new StringBuffer();
+        final StringBuilder d = new StringBuilder();
         d.append("M300,200 h-150 a150,150 0 1,0 150,-150 z");
         aa(a, "d", d);
         aa(a, "fill", "none");

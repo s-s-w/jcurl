@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005 M. Rohrmoser
+ * Copyright (C) 2005-2008 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -62,7 +62,7 @@ public class Calc0 {
 
     private double number_value = 0;
 
-    private final StringBuffer string_value = new StringBuffer();
+    private final StringBuilder string_value = new StringBuilder();
 
     public Calc0(final Reader cin) {
         this.cin = new PushbackReader(cin);

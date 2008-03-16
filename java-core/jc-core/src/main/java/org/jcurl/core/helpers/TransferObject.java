@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005 M. Rohrmoser
+ * Copyright (C) 2005-2008 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -49,7 +49,7 @@ public abstract class TransferObject implements Serializable {
             final BeanInfo info = Introspector.getBeanInfo(getClass(),
                     Object.class);
             final PropertyDescriptor[] props = info.getPropertyDescriptors();
-            final StringBuffer buf = new StringBuffer(500);
+            final StringBuilder buf = new StringBuilder(500);
             Object value = null;
             buf.append(getClass().getName());
             buf.append("@");

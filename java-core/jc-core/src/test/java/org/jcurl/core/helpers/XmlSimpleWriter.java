@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005 M. Rohrmoser
+ * Copyright (C) 2005-2008 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -75,7 +75,7 @@ public class XmlSimpleWriter extends DefaultHandler {
     }
 
     public static String getCurrentXPath(final List elemStack) {
-        final StringBuffer buf = new StringBuffer();
+        final StringBuilder buf = new StringBuilder();
         for (final Iterator it = elemStack.iterator(); it.hasNext();)
             buf.append('/').append((String) it.next());
         return buf.toString();

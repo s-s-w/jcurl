@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005-2007 M. Rohrmoser
+ * Copyright (C) 2005-2008 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -84,7 +84,7 @@ public class XStreamSerializer extends JCurlSerializer {
 
         public String toString(final Object obj) {
             final double[] d = (double[]) obj;
-            final StringBuffer s = new StringBuffer();
+            final StringBuilder s = new StringBuilder();
             for (final double element : d)
                 s.append(element).append(' ');
             return s.toString().trim();
@@ -104,7 +104,7 @@ public class XStreamSerializer extends JCurlSerializer {
 
         public String toString(final Object obj) {
             final Measure d = (Measure) obj;
-            final StringBuffer s = new StringBuffer();
+            final StringBuilder s = new StringBuilder();
             s.append(d.value).append(" ").append(d.unit);
             return s.toString();
         }
@@ -131,7 +131,7 @@ public class XStreamSerializer extends JCurlSerializer {
 
         public String toString(final Object obj) {
             final Rock d = (Rock) obj;
-            final StringBuffer s = new StringBuffer();
+            final StringBuilder s = new StringBuilder();
             s.append(d.getX()).append(" ");
             s.append(d.getY()).append(" ");
             s.append(d.getA());

@@ -1,5 +1,5 @@
 /*
- * jcurl curling simulation framework http://www.jcurl.orgCopyright (C) 2005 M. Rohrmoser
+ * jcurl curling simulation framework http://www.jcurl.orgCopyright (C) 2005-2008 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -214,7 +214,7 @@ public abstract class CurveShape {
         pc[0] = pa[0] + f * va[0];
         pc[1] = pa[1] + f * va[1];
         if (log.isDebugEnabled()) {
-            final StringBuffer b = new StringBuffer();
+            final StringBuilder b = new StringBuilder();
             b.append("pa=").append(toString(pa));
             b.append(" va=").append(toString(va));
             b.append(" pb=").append(toString(pb));
@@ -254,7 +254,7 @@ public abstract class CurveShape {
     }
 
     static String toString(final double[] arr) {
-        final StringBuffer w = new StringBuffer();
+        final StringBuilder w = new StringBuilder();
         if (arr == null)
             w.append("null");
         else {

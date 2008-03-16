@@ -1,6 +1,6 @@
 /*
  * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005 M. Rohrmoser
+ * Copyright (C) 2005-2008 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -105,7 +105,7 @@ class ParserInfix {
 
     private int pos = 0;
 
-    private final StringBuffer string_value = new StringBuffer();
+    private final StringBuilder string_value = new StringBuilder();
 
     public ParserInfix(final PushbackReader cin) {
         this.cin = cin;
