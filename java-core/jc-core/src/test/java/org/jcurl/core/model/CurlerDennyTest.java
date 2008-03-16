@@ -58,7 +58,7 @@ public class CurlerDennyTest extends TestShowBase {
         assertEquals(24, s.getDrawToTeeTime());
         assertEquals(1, s.getDrawToTeeCurl());
 
-        final CurveRock p = s.computeRc(0, s.computeV0(3.124), Math.PI / 2, 0);
+        final CurveRock p = s.computeRc(0, s.computeHogSpeed(3.124), Math.PI / 2, 0);
         final Rock ret = new RockDouble();
         try {
             p.at(3, 0, ret);
@@ -118,7 +118,7 @@ public class CurlerDennyTest extends TestShowBase {
         te.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
         if (true)
             te.getInitialSpeed().getDark(0).setLocation(-0.096,
-                    -te.getCurler().computeV0(3.124), Math.PI / 2);
+                    -te.getCurler().computeHogSpeed(3.124), Math.PI / 2);
         else
             te.getInitialSpeed().getDark(0).setLocation(0, -2.455, Math.PI / 2);
 

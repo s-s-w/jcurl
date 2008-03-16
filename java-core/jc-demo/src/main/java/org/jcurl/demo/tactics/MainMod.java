@@ -166,6 +166,9 @@ class MainMod extends BroomPromptModel {
     public CurveStore getCurveStore() {
         return ts.getCurveStore();
     }
+    public CurveManager getCurveManager() {
+        return ts;
+    }
 
     public PositionSet getInitialPos() {
         return ts.getInitialPos();

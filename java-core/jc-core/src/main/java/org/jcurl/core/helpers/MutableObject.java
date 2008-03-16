@@ -65,22 +65,6 @@ public abstract class MutableObject extends TransferObject implements
         propChange.addPropertyChangeListener(property, listener);
     }
 
-    /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public abstract boolean equals(Object obj);
-
-    public void fireIndexedPropertyChange(final String property,
-            final int index, final boolean old, final boolean neo) {
-        propChange.fireIndexedPropertyChange(property, index, old, neo);
-    }
-
-    public void fireIndexedPropertyChange(final String property,
-            final int index, final int old, final int neo) {
-        propChange.fireIndexedPropertyChange(property, index, old, neo);
-    }
-
     public void fireIndexedPropertyChange(final String property,
             final int index, final Object old, final Object neo) {
         propChange.fireIndexedPropertyChange(property, index, old, neo);
@@ -88,21 +72,6 @@ public abstract class MutableObject extends TransferObject implements
 
     public void firePropertyChange(final PropertyChangeEvent event) {
         propChange.firePropertyChange(event);
-    }
-
-    public void firePropertyChange(final String property, final boolean old,
-            final boolean neo) {
-        propChange.firePropertyChange(property, old, neo);
-    }
-
-    public void firePropertyChange(final String property, final double old,
-            final double neo) {
-        propChange.firePropertyChange(property, old, neo);
-    }
-
-    public void firePropertyChange(final String property, final int old,
-            final int neo) {
-        propChange.firePropertyChange(property, old, neo);
     }
 
     public void firePropertyChange(final String property, final Object old,
@@ -119,22 +88,12 @@ public abstract class MutableObject extends TransferObject implements
         return propChange.getPropertyChangeListeners(property);
     }
 
-    @Override
-    public abstract int hashCode();
-
     public boolean hasListeners(final String property) {
         return propChange.hasListeners(property);
     }
 
     /**
-     * @see java.lang.Object#hashCode()
-     */
-    // public abstract int hashCode();
-    /**
      * Removes a PropertyChangeListener to the listener list.
-     * 
-     * @param listener
-     *            The listener to add.
      */
     public void removePropertyChangeListener(
             final PropertyChangeListener listener) {
@@ -144,11 +103,6 @@ public abstract class MutableObject extends TransferObject implements
     /**
      * Removes a PropertyChangeListener to the listener list for a specific
      * property.
-     * 
-     * @param property
-     *            The property to listen to.
-     * @param listener
-     *            The listener to add.
      */
     public void removePropertyChangeListener(final String property,
             final PropertyChangeListener listener) {

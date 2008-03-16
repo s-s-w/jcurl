@@ -273,7 +273,7 @@ public class MainApp extends JFrame {
         final UndoRedoCon undoc = new UndoRedoCon();
         undoc.setModel(m.undo);
         bpm.setIdx16(14);
-        final ZuiPanel zui = new ZuiPanel(m.undo);
+        final TrajectoryPanel zui = new TrajectoryPanel(m.undo);
         final JTree tree = new JTree();
         //getContentPane().add(tree, "West");
         getContentPane().add(zui, "Center");
@@ -288,9 +288,7 @@ public class MainApp extends JFrame {
             }
         });
         // connect the data models:
-        zui.setCurveStore(m.getCurveStore());
-        zui.setInitialPos(m.getInitialPos());
-        zui.setCurrentPos(m.getCurrentPos());
+        zui.setModel(m.getCurveManager());
         zui.setBroomPrompt(bpm);
     }
 

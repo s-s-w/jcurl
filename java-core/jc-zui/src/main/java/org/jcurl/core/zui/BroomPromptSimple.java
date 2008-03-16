@@ -285,7 +285,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
                         .getSplitTimeMillis();
                 if (r == null)
                     return;
-                r.setValue(ratio2value(p.getY() / stickLength, r));
+                r.setValue(ratio2value(p.getY() / stickLength, r));                
             }
         });
         // wire up the model
@@ -299,6 +299,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
                 stickLength * value2ratio(r));
         slider.invalidateFullBounds();
         slider.invalidatePaint();
+        // FIXME getModel().firePropertyChange("splitTimeMillis", r, r);
     }
 
     public BroomPromptModel getModel() {
@@ -386,7 +387,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
     public void stateChanged(final ChangeEvent e) {
         // log.info(e);
         if (e.getSource() instanceof BoundedRangeModel)
-            adjustSlider((BoundedRangeModel) e.getSource());
+            adjustSlider((BoundedRangeModel) e.getSource());        
     }
 
     private double value2ratio(final BoundedRangeModel r) {

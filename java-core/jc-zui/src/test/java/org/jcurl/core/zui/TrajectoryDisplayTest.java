@@ -181,7 +181,7 @@ public class TrajectoryDisplayTest extends TestZuiBase {
             cm.setInitialSpeed(new SpeedSet(new RockDouble()));
             if (true)
                 cm.getInitialSpeed().getDark(0).setLocation(-0.095,
-                        -cm.getCurler().computeV0(3.124), Math.PI / 2);
+                        -cm.getCurler().computeHogSpeed(3.124), Math.PI / 2);
             else
                 cm.getInitialSpeed().getDark(0).setLocation(0, -2.455,
                         Math.PI / 2);

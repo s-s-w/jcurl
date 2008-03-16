@@ -45,12 +45,6 @@ public interface IPropertyChangeSupport {
             final PropertyChangeListener pcl);
 
     public abstract void fireIndexedPropertyChange(final String property,
-            final int index, final boolean old, final boolean neo);
-
-    public abstract void fireIndexedPropertyChange(final String property,
-            final int index, final int old, final int neo);
-
-    public abstract void fireIndexedPropertyChange(final String property,
             final int index, final Object old, final Object neo);
 
     /**
@@ -72,45 +66,6 @@ public interface IPropertyChangeSupport {
      *            The event to fire to the listeners.
      */
     public abstract void firePropertyChange(final PropertyChangeEvent event);
-
-    /**
-     * Shortcut for firing an event on boolean properties.
-     * 
-     * @param property
-     *            the name of the property which changed.
-     * @param old
-     *            The old value.
-     * @param neo
-     *            The new value.
-     */
-    public abstract void firePropertyChange(final String property,
-            final boolean old, final boolean neo);
-
-    /**
-     * Shortcut for firing an event on double properties.
-     * 
-     * @param property
-     *            the name of the property which changed.
-     * @param old
-     *            The old value.
-     * @param neo
-     *            The new value.
-     */
-    public abstract void firePropertyChange(final String property,
-            final double old, final double neo);
-
-    /**
-     * Shortcut for firing an event on integer properties.
-     * 
-     * @param property
-     *            the name of the property which changed.
-     * @param old
-     *            The old value.
-     * @param neo
-     *            The new value.
-     */
-    public abstract void firePropertyChange(final String property,
-            final int old, final int neo);
 
     /**
      * Notify listeners that an object type property has changed

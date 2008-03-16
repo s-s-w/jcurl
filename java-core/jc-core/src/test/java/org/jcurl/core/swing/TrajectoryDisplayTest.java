@@ -197,7 +197,7 @@ public class TrajectoryDisplayTest extends TestShowBase {
             ti.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
             if (true)
                 ti.getInitialSpeed().getDark(0).setLocation(-0.095,
-                        -ti.getCurler().computeV0(3.124), Math.PI / 2);
+                        -ti.getCurler().computeHogSpeed(3.124), Math.PI / 2);
             else
                 te.getInitialSpeed().getDark(0).setLocation(0, -2.455,
                         Math.PI / 2);

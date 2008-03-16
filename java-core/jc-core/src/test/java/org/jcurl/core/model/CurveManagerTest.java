@@ -105,7 +105,7 @@ public class CurveManagerTest extends TestShowBase {
                 0.25 * Math.PI);
         te.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
         te.getInitialSpeed().getDark(0).setLocation(0,
-                -te.getCurler().computeV0(5), Math.PI / 2);
+                -te.getCurler().computeHogSpeed(5), Math.PI / 2);
         return te;
     }
 
@@ -121,7 +121,7 @@ public class CurveManagerTest extends TestShowBase {
                 0.25 * Math.PI);
         te.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
         te.getInitialSpeed().getDark(0).setLocation(0,
-                -te.getCurler().computeV0(5), Math.PI / 2);
+                -te.getCurler().computeHogSpeed(5), Math.PI / 2);
         return te;
     }
 
@@ -144,7 +144,7 @@ public class CurveManagerTest extends TestShowBase {
                 0.25 * Math.PI);
         te.setInitialSpeed(new SpeedSet(new RockDouble()));
         te.getInitialSpeed().getDark(0).setLocation(0,
-                -te.getCurler().computeV0(5), Math.PI / 2);
+                -te.getCurler().computeHogSpeed(5), Math.PI / 2);
         te.setCurrentTime(0);
 
         assertFalse(Double.isNaN(te.doGetNextHit().t));
@@ -205,7 +205,7 @@ public class CurveManagerTest extends TestShowBase {
                 .setLocation(0, IceSize.HOG_2_TEE, Math.PI);
         te.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
         te.getInitialSpeed().getDark(0).setLocation(0,
-                -te.getCurler().computeV0(9), Math.PI / 2);
+                -te.getCurler().computeHogSpeed(9), Math.PI / 2);
 
         assertEquals(Double.NaN, te.doGetNextHit().t);
         assertFalse((1 > te.doGetNextHit().t));
