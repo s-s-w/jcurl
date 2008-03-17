@@ -18,57 +18,65 @@
  */
 package org.jcurl.core.base;
 
+import java.awt.geom.Point2D;
+
 /**
  * Create rock-coordinate curves for running rocks.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface Curler extends PropModel, Strategy, Factory {
+public interface Curler extends Factory, Strategy, PropModel {
+
+	/**
+	 * Compute the (absolute) speed at the hack for a rock released with given
+	 * interval time.
+	 * 
+	 * @param splitTime
+	 * @param broom
+	 *            location (WC)
+	 * @return the hack speed.
+	 */
+	double computeHackSpeed(double splitTime, Point2D broom);
+
+	double computeIntervalTime(final CurveRock wc);
+
+	/**
+	 * Release a rock.
+	 * 
+	 * @param broom
+	 *            location (WC)
+	 * @param splitTime
+	 * @param a0
+	 *            initial handle angle
+	 * @param omega0
+	 *            angular handle speed
+	 * @param sweepFactor
+	 * @return world coordinate curve.
+	 */
+	CurveRock computeWc(Point2D broom, double splitTime, double a0,
+			double omega0, double sweepFactor);
 
 	/**
 	 * Create rock-coordinate curves for running rocks.
 	 * 
 	 * @param a0
-	 *            Initial angle (RC).
+	 *            Initial handle angle (RC).
 	 * @param v0
 	 *            Initial Speed (RC or WC absolute)
 	 * @param omega0
-	 *            Initial angular Speed (either WC or RC)
+	 *            Initial angular handle speed (either WC or RC)
 	 * @param sweepFactor
 	 * @return trajectory (RC)
 	 */
-	public abstract CurveRock computeRc(double a0, double v0, double omega0,
-			double sweepFactor);
+	CurveRock computeRc(double a0, double v0, double omega0, double sweepFactor);
 
-	/**
-	 * Compute the (absolute) speed at the hog line for a rock released with
-	 * given interval time.
-	 * <p>
-	 * <code>v_0 = {@link IceSize#BACK_2_HOG} / intervalTime - {@link IceSize#FAR_HOG_2_TEE}
-	 / MathVec.sqr({@link #getDrawToTeeTime()}) * intervalTime</code>
-	 * </p>
-	 * 
-	 * @param intervalTime
-	 * @return the hog speed.
-	 */
-	public abstract double computeHogSpeed(double intervalTime);
+	double getDrawToTeeCurl();
 
-	/**
-	 * Solved {@link #computeHogSpeed(double)} for the interval time.
-	 * 
-	 * @param hogSpeed
-	 *            initial speed at the hog line.
-	 * @return the split time
-	 */
-	public abstract double computeIntervalTime(double hogSpeed);
+	double getDrawToTeeTime();
 
-	public abstract double getDrawToTeeCurl();
+	void setDrawToTeeCurl(double drawToTeeCurl);
 
-	public abstract double getDrawToTeeTime();
-
-	public abstract void setDrawToTeeCurl(double drawToTeeCurl);
-
-	public abstract void setDrawToTeeTime(double drawToTeeTime);
+	void setDrawToTeeTime(double drawToTeeTime);
 
 }

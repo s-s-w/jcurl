@@ -31,6 +31,7 @@ import org.jcurl.core.model.CollissionSpin;
 import org.jcurl.core.model.CurlerDenny;
 import org.jcurl.core.model.CurveManager;
 import org.jcurl.core.model.NewtonCollissionDetector;
+import org.jcurl.core.ui.UndoRedoDocumentBase;
 
 class MainMod extends BroomPromptModel {
 
@@ -93,8 +94,8 @@ class MainMod extends BroomPromptModel {
 
         p.getDark(8 - 1).setLocation(0, IceSize.FAR_HACK_2_TEE, 0);
         s.getDark(8 - 1).setLocation(0.1785, -4, -100 * Math.PI / 180);
-        p.notifyChange();
-        s.notifyChange();
+        p.fireStateChanged();
+        s.fireStateChanged();
     }
 
     private final CurveManager ts = new CurveManager();

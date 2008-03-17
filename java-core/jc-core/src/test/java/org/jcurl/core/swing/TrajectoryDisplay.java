@@ -27,10 +27,11 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
@@ -48,7 +49,7 @@ import org.jcurl.core.model.FixpointZoomer;
  * @version $Id: RockLocationDisplayBase.java 230 2006-02-19 12:34:18Z
  *          mrohrmoser $
  */
-class TrajectoryDisplay extends WCComponent implements PropertyChangeListener {
+class TrajectoryDisplay extends WCComponent implements ChangeListener {
 
     private static final Map<Object, Object> hints = new HashMap<Object, Object>();
 
@@ -268,8 +269,8 @@ class TrajectoryDisplay extends WCComponent implements PropertyChangeListener {
      * @param evt
      * @see #setPos(TrajectorySet)
      */
-    public void propertyChange(final PropertyChangeEvent evt) {
-        final Object tmp = evt.getNewValue();
+    public void stateChanged(final ChangeEvent evt) {
+        final Object tmp = evt.getSource();
         if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass()))
             ;// FIXME this.setPos((PositionSet) tmp);
     }
@@ -308,8 +309,8 @@ class TrajectoryDisplay extends WCComponent implements PropertyChangeListener {
     public void setPos(final TrajectorySet rocks, final int discontinuous) {
         if (pos != rocks) {
             if (pos != null)
-                pos.getCurrentPos().removePropertyChangeListener(this);
-            rocks.getCurrentPos().addPropertyChangeListener(this);
+                pos.getCurrentPos().removeChangeListener(this);
+            rocks.getCurrentPos().addChangeListener(this);
         }
         pos = rocks;
         this.repaint();

@@ -18,6 +18,7 @@
  */
 package org.jcurl.core.model;
 
+import java.awt.geom.Point2D;
 import java.util.Map;
 
 import org.jcurl.core.base.CurlerBase;
@@ -34,8 +35,35 @@ import org.jcurl.math.R1R1Function;
 
 /**
  * Mark Denny's curl-model. Motion of a curling rock acc. to "Curling rock
- * dynamics", Mark Denny, Canadian Journal of Physics, 1988, P. 295-304.
+ * dynamics", Mark Denny, Canadian Journal of Physics, 1988, P. 295-304:
  * <p>
+ * <code>tau = v0 * (mu * g)</code><br />
+ * <code>x(t) = - (b * v0^2 / (4 * e * R * tau)) * (t^3 / 3 - t^4 / (4 * tau))</code><br />
+ * <code>y(t) = v0 * (t - t^2 / (2 * tau))</code><br />
+ * <code>w(t) = w0 * (1 - t / tau)^(1 / e)</code>
+ * </p>
+ * <p>
+ * with
+ * <ul>
+ * <li><code>t [s]</code> time</li>
+ * <li><code>x [m]</code> curl</li>
+ * <li><code>y [m]</code> distance along the track</li>
+ * <li><code>b [1]</code> parameter for the curl's magnitude</li>
+ * <li><code>e [1]</code> parameter <code>I / (mR^2))</code></li>
+ * <li><code>tau [s]</code> total time until <code>v=0</code></li>
+ * <li><code>R [m]</code> radius of the touching area rock/ice, ca.
+ * <code>6.3e-2</code></li>
+ * <li><code>mu [1]</code> friction coefficient rock/ice</li>
+ * <li><code>I [m^2*Kg]</code> moment of inertia
+ * {@link RockProps#getInertia()}</li>
+ * <li><code>g [N/kg]</code> gravitation 9.81</li>
+ * </ul>
+ * </p>
+ * 
+ * <p>
+ * Integrating <code>w(t)</code> leads to<br />
+ * <code>a(t) = - w0 * e * (tau * ((tau-t)/tau)^(1/e) - t * ((tau-t)/tau)^(1/e) - tau) / (e + 1)</code>
+ * </p>
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:SlideDenny.java 378 2007-01-24 01:18:35Z mrohrmoser $
@@ -75,6 +103,50 @@ public class CurlerDenny extends CurlerBase {
 		init(t);
 	}
 
+	/**
+	 * Compute the (virtual) speed at the hack for a rock released with split
+	 * time {@link t} towards {@link broom.}
+	 * <p>
+	 * <a href="http://maxima.sourceforge.net">Maxima</a> Solution:
+	 * 
+	 * <pre>
+	 * y=(t-t&circ;2/(2*tau))*vo;
+	 * ratsubst(vo/(mu*g), tau, %);
+	 * solve([%], [vo]);
+	 * vo(t,y):=(2*y+g*mu*t&circ;2)/(2*t);
+	 * vo(th, hog) = vo(th-t, back);
+	 * solve([%], [th]);
+	 * th(t):=(sqrt(g&circ;2*mu&circ;2*t&circ;4+(4*g*hog+4*back*g)*mu*t&circ;2+4*hog&circ;2+(-8)*back*hog+4*back&circ;2)+g*mu*t&circ;2+(-2)*hog+2*back)/(2*g*mu*t)
+	 * vo(th(t), hog);
+	 * ratsimp(%);
+	 * (g*mu*t*((sqrt(g&circ;2*mu&circ;2*t&circ;4+(4*g*hog+4*back*g)*mu*t&circ;2+4*hog&circ;2-8*back*hog+4*back&circ;2)+g*mu*t&circ;2-2*hog+2*back)&circ;2/(4*g*mu*t&circ;2)+2*hog))/(sqrt(g&circ;2*mu&circ;2*t&circ;4+(4*g*hog+4*back*g)*mu*t&circ;2+4*hog&circ;2-8*back*hog+4*back&circ;2)+g*mu*t&circ;2-2*hog+2*back)
+	 * </pre>
+	 * 
+	 * @param t
+	 *            interval- or split-time
+	 * @param broom
+	 *            broom location (WC)
+	 * @return initial absolute speed at the hack.
+	 */
+	public double computeHackSpeed(final double t, final Point2D broom) {
+		final double x = broom.getX() / (IceSize.FAR_HACK_2_TEE - broom.getY());
+		final double f = Math.sqrt(1 + x * x);
+		final double back = IceSize.HACK_2_BACK * f;
+		final double hog = IceSize.HACK_2_HOG * f;
+		final double tmp = Math.sqrt(g * g * mu * mu * t * t * t * t
+				+ (4 * g * hog + 4 * back * g) * mu * t * t + 4 * hog * hog - 8
+				* back * hog + 4 * back * back)
+				+ g * mu * t * t - 2 * hog + 2 * back;
+		return g
+				* mu
+				* t
+				* (tmp * tmp / (4 * g * mu * t * t) + 2 * hog)
+				/ (Math.sqrt(g * g * mu * mu * t * t * t * t
+						+ (4 * g * hog + 4 * back * g) * mu * t * t + 4 * hog
+						* hog - 8 * back * hog + 4 * back * back)
+						+ g * mu * t * t - 2 * hog + 2 * back);
+	}
+
 	public CurveRock computeRc(final double a0, final double v0,
 			final double omega0, final double sweepFactor) {
 		final double f = -Math.signum(omega0) * b * g * mu / (48 * eps * _R);
@@ -99,6 +171,11 @@ public class CurlerDenny extends CurlerBase {
 					throw new IllegalArgumentException();
 				}
 			}
+
+			@Override
+			public String toString() {
+				return "";
+			}
 		};
 		return new CurveRockAnalytic(x, y, a);
 	}
@@ -120,7 +197,7 @@ public class CurlerDenny extends CurlerBase {
 	 *            from Hog to Hog. see ./doc/eiszeit.tex for details.
 	 * @return [meter/sec]
 	 */
-	double getInitialSpeed(final double y, final double t) {
+	private double getInitialSpeed(final double y, final double t) {
 		double tmp;
 
 		final double Y = IceSize.FAR_HOG_2_TEE - y;

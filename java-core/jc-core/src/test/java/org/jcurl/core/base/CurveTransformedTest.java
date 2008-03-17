@@ -270,7 +270,7 @@ public class CurveTransformedTest extends TestShowBase {
         showPositionDisplay(p, FixpointZoomer.C12, 5000, new TimeRunnable() {
             @Override
             public void run(final double t) throws InterruptedException {
-                p.notifyChange();
+                p.fireStateChanged();
                 Thread.sleep(1500);
             }
         });

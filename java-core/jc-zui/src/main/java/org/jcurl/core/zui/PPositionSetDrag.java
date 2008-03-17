@@ -79,6 +79,6 @@ public class PPositionSetDrag extends PBasicInputEventHandler {
     @Override
     public void mouseReleased(final PInputEvent event) {
         ((PositionSet) event.getPickedNode().getAttribute(PositionSet.class))
-                .notifyChange();
+                .fireStateChanged();
     }
 }

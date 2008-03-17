@@ -25,12 +25,12 @@ import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.RenderingHints;
 import java.awt.RenderingHints.Key;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JComponent;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.PositionSet;
@@ -44,7 +44,7 @@ import org.jcurl.core.swing.RockPainter.ColorSet;
  * @version $Id:SumDisplayBase.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 abstract class SumDisplayBase extends JComponent implements
-        PropertyChangeListener {
+        ChangeListener {
 
     private static final ColorSet colors = new ColorSet();
 
@@ -139,8 +139,8 @@ abstract class SumDisplayBase extends JComponent implements
                 (int) (2 * r), 0, 360);
     }
 
-    public void propertyChange(final PropertyChangeEvent evt) {
-        final Object tmp = evt.getNewValue();
+    public void stateChanged(final ChangeEvent evt) {
+        final Object tmp = evt.getSource();
         if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass()))
             this.setPos((PositionSet) tmp);
         else
@@ -149,8 +149,8 @@ abstract class SumDisplayBase extends JComponent implements
 
     public void setPos(final PositionSet rocks) {
         if (model != null && model != rocks)
-            model.removePropertyChangeListener(this);
-        rocks.addPropertyChangeListener(this);
+            model.removeChangeListener(this);
+        rocks.addChangeListener(this);
         model = rocks;
         showRocks(computeMask(model));
     }

@@ -20,6 +20,7 @@ package org.jcurl.core.zui;
 
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 import org.apache.commons.logging.Log;
@@ -98,8 +99,8 @@ public class TrajectoryDisplayTest extends TestZuiBase {
 
         p.getDark(8 - 1).setLocation(0, IceSize.FAR_HACK_2_TEE, 0);
         s.getDark(8 - 1).setLocation(0.1785, -4, -100 * Math.PI / 180);
-        p.notifyChange();
-        s.notifyChange();
+        p.fireStateChanged();
+        s.fireStateChanged();
     }
 
     public TrajectoryDisplayTest() {
@@ -166,6 +167,7 @@ public class TrajectoryDisplayTest extends TestZuiBase {
             ice.removeChild(b);
         }
     }
+	private static final Point2D tee = new Point2D.Double(0,0);
 
     public void testOneHit() throws InterruptedException {
         final CurveManager cm = new CurveManager();
@@ -181,7 +183,7 @@ public class TrajectoryDisplayTest extends TestZuiBase {
             cm.setInitialSpeed(new SpeedSet(new RockDouble()));
             if (true)
                 cm.getInitialSpeed().getDark(0).setLocation(-0.095,
-                        -cm.getCurler().computeHogSpeed(3.124), Math.PI / 2);
+                        -cm.getCurler().computeHackSpeed(3.124, tee), Math.PI / 2);
             else
                 cm.getInitialSpeed().getDark(0).setLocation(0, -2.455,
                         Math.PI / 2);

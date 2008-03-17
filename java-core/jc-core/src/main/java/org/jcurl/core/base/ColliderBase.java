@@ -80,7 +80,7 @@ public abstract class ColliderBase extends PropModelImpl implements Collider {
      * Does not change <code>pos</code>!
      * </p>
      * <p>
-     * Does not fire {@link SpeedSet#notifyChange()}!
+     * Does not fire {@link SpeedSet#fireStateChanged()}!
      * </p>
      * 
      * @see ColliderBase#computeWC(Rock, Rock, Rock, Rock, AffineTransform)

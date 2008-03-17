@@ -18,6 +18,7 @@
  */
 package org.jcurl.core.xsio;
 
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -95,8 +96,8 @@ public class XStreamIOTest extends TestBase {
         p.getDark(8 - 1).setLocation(Unit.f2m(3.89991), IceSize.HOG_2_TEE, 0);
         RockSet.allZero(s);
         s.getDark(7).setLocation(0, -3, 100 * Math.PI / 180);
-        p.notifyChange();
-        s.notifyChange();
+        p.fireStateChanged();
+        s.fireStateChanged();
     }
 
     static IODocument wrap(final TrajectorySet t) {
@@ -223,6 +224,8 @@ public class XStreamIOTest extends TestBase {
         assertEquals(x, xs.write(xs.read(f.toURL(), null)));
     }
 
+	private static final Point2D tee = new Point2D.Double(0,0);
+
     public void testCurveStoreRaw() {
         final CurveManager te = new CurveManager();
         te.setCollider(new CollissionSpin());
@@ -234,7 +237,7 @@ public class XStreamIOTest extends TestBase {
                 0.25 * Math.PI);
         te.setInitialSpeed(new SpeedSet(new RockDouble()));
         te.getInitialSpeed().getDark(0).setLocation(0,
-                -te.getCurler().computeHogSpeed(5), Math.PI / 2);
+                -te.getCurler().computeHackSpeed(5,tee), Math.PI / 2);
         te.setCurrentTime(20);
 
         final XStream xs = new XStream();
@@ -577,7 +580,7 @@ public class XStreamIOTest extends TestBase {
                 0.25 * Math.PI);
         te.setInitialSpeed(new SpeedSet(new RockDouble()));
         te.getInitialSpeed().getDark(0).setLocation(0,
-                -te.getCurler().computeHogSpeed(5), Math.PI / 2);
+                -te.getCurler().computeHackSpeed(5,tee), Math.PI / 2);
 
         final XStream xs = new XStream();
         xs.registerConverter(new XStreamSerializer.MeasureConverter());
@@ -680,7 +683,7 @@ public class XStreamIOTest extends TestBase {
                 0.25 * Math.PI);
         te.setInitialSpeed(new SpeedSet(new RockDouble()));
         te.getInitialSpeed().getDark(0).setLocation(0,
-                -te.getCurler().computeHogSpeed(5), Math.PI / 2);
+                -te.getCurler().computeHackSpeed(5,tee), Math.PI / 2);
         te.setCurrentTime(20);
 
         final XStreamSerializer xs = new XStreamSerializer();
@@ -970,7 +973,7 @@ public class XStreamIOTest extends TestBase {
                 0.25 * Math.PI);
         te.setInitialSpeed(new SpeedSet(new RockDouble()));
         te.getInitialSpeed().getDark(0).setLocation(0,
-                -te.getCurler().computeHogSpeed(5), Math.PI / 2);
+                -te.getCurler().computeHackSpeed(5,tee), Math.PI / 2);
 
         final XStreamSerializer xs = new XStreamSerializer();
         final String x = xs.write(wrap(te));

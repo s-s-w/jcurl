@@ -37,7 +37,7 @@ public interface Collider extends PropModel, Strategy {
      * Does not change <code>pos</code>!
      * </p>
      * <p>
-     * Does not fire {@link SpeedSet#notifyChange()}!
+     * Does not fire {@link SpeedSet#fireStateChanged()}!
      * </p>
      * 
      * @param pos

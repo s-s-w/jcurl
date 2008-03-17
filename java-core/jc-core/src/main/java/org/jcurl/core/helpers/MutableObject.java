@@ -21,6 +21,9 @@ package org.jcurl.core.helpers;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.jcurl.core.ui.IPropertyChangeSupport;
+import org.jcurl.core.ui.PropertyChangeSupport;
+
 /**
  * Base class for all mutable value Objects. Provides a generic toString and
  * means to notify others upon propery changes.

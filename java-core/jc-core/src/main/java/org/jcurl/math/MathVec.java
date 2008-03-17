@@ -18,6 +18,7 @@
  */
 package org.jcurl.math;
 
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 /**
@@ -27,11 +28,12 @@ import java.awt.geom.Point2D;
  * @version $Id:MathVec.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public final class MathVec {
-	public static double abs2D(final Point2D a) {
+	public static final double abs2D(final Point2D a) {
 		return a.distance(0, 0);
 	}
 
-	public static Point2D add(final Point2D a, final Point2D b, final Point2D c) {
+	public static final Point2D add(final Point2D a, final Point2D b,
+			final Point2D c) {
 		final Point2D ret = ensureInstance(a, c);
 		ret.setLocation(a.getX() + b.getX(), a.getY() + b.getY());
 		return ret;
@@ -46,7 +48,8 @@ public final class MathVec {
 	 * @return <code>c</code> or
 	 *         <code>template.getClass().newInstance()</code>
 	 */
-	public static Point2D ensureInstance(final Point2D template, final Point2D c) {
+	public static final Point2D ensureInstance(final Point2D template,
+			final Point2D c) {
 		if (c != null)
 			return c;
 		// try {
@@ -75,7 +78,7 @@ public final class MathVec {
 	 *            solution (max be null)
 	 * @return x solution of a*x=b
 	 */
-	public static double[] gauss(final double[][] a, final double[] b,
+	public static final double[] gauss(final double[][] a, final double[] b,
 			double[] x) {
 		final int n = a.length;
 		// check parameters
@@ -161,7 +164,7 @@ public final class MathVec {
 	 *            may <code>a &gt; b</code>?
 	 * @return is <code>x</code> within <code>a</code> and <code>b</code>?
 	 */
-	static boolean isInside(final double x, double a, double b,
+	static final boolean isInside(final double x, double a, double b,
 			final boolean allowSwap) {
 		if (Double.isNaN(x) || Double.isInfinite(x))
 			return false;
@@ -175,7 +178,8 @@ public final class MathVec {
 		return a <= x && x <= b;
 	}
 
-	public static double[] mult(final double fact, final double[] a, double[] b) {
+	public static final double[] mult(final double fact, final double[] a,
+			double[] b) {
 		if (b == null)
 			b = new double[a.length];
 		for (int i = a.length - 1; i >= 0; i--)
@@ -183,7 +187,8 @@ public final class MathVec {
 		return b;
 	}
 
-	public static Point2D mult(final double fact, final Point2D a, Point2D b) {
+	public static final Point2D mult(final double fact, final Point2D a,
+			Point2D b) {
 		b = ensureInstance(a, b);
 		b.setLocation(a.getX() * fact, a.getY() * fact);
 		return b;
@@ -193,7 +198,15 @@ public final class MathVec {
 		return mult(1.0 / abs2D(a), a, dst);
 	}
 
-	public static double scal(final double[] a, final double[] b) {
+	/**
+	 * TUNE JDK 1.6 brings an optimized {@link AffineTransform#rotate(double)}
+	 */
+	public static final void rotate(final AffineTransform t, final double vx,
+			final double vy) {
+		t.rotate(Math.atan2(vy, vx));
+	}
+
+	public static final double scal(final double[] a, final double[] b) {
 		if (a.length != b.length)
 			throw new IllegalArgumentException();
 		double ret = 0;
@@ -202,7 +215,7 @@ public final class MathVec {
 		return ret;
 	}
 
-	public static double scal(final Point2D a, final Point2D b) {
+	public static final double scal(final Point2D a, final Point2D b) {
 		return a.getX() * b.getX() + a.getY() * b.getY();
 	}
 
@@ -210,7 +223,8 @@ public final class MathVec {
 		return a * a;
 	}
 
-	public static Point2D sub(final Point2D a, final Point2D b, final Point2D dst) {
+	public static final Point2D sub(final Point2D a, final Point2D b,
+			final Point2D dst) {
 		final Point2D ret = ensureInstance(a, dst);
 		ret.setLocation(a.getX() - b.getX(), a.getY() - b.getY());
 		return ret;

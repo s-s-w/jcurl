@@ -18,6 +18,7 @@
  */
 package org.jcurl.core.model;
 
+import java.awt.geom.Point2D;
 import java.util.Map;
 
 import org.jcurl.core.base.CurlerBase;
@@ -136,4 +137,8 @@ public class CurlerNoCurl extends CurlerBase {
         }
         PropModelHelper.setDrawToTeeTime(params, drawToTeeTime);
     }
+
+	public double computeHackSpeed(double splitTime, Point2D broom) {
+		throw new UnsupportedOperationException();
+	}
 }

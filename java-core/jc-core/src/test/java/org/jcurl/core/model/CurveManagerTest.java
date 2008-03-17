@@ -18,6 +18,7 @@
  */
 package org.jcurl.core.model;
 
+import java.awt.geom.Point2D;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -89,9 +90,11 @@ public class CurveManagerTest extends TestShowBase {
         p.getDark(8 - 1).setLocation(Unit.f2m(3.89991), IceSize.HOG_2_TEE, 0);
         RockSet.allZero(s);
         s.getDark(7).setLocation(0, -3, 100 * Math.PI / 180);
-        p.notifyChange();
-        s.notifyChange();
+        p.fireStateChanged();
+        s.fireStateChanged();
     }
+
+	private static final Point2D tee = new Point2D.Double(0,0);
 
     public static ComputedTrajectorySet initOneHit(ComputedTrajectorySet te) {
         if (te == null)
@@ -105,7 +108,7 @@ public class CurveManagerTest extends TestShowBase {
                 0.25 * Math.PI);
         te.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
         te.getInitialSpeed().getDark(0).setLocation(0,
-                -te.getCurler().computeHogSpeed(5), Math.PI / 2);
+                -te.getCurler().computeHackSpeed(5,tee), Math.PI / 2);
         return te;
     }
 
@@ -121,7 +124,7 @@ public class CurveManagerTest extends TestShowBase {
                 0.25 * Math.PI);
         te.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
         te.getInitialSpeed().getDark(0).setLocation(0,
-                -te.getCurler().computeHogSpeed(5), Math.PI / 2);
+                -te.getCurler().computeHackSpeed(5,tee), Math.PI / 2);
         return te;
     }
 
@@ -144,7 +147,7 @@ public class CurveManagerTest extends TestShowBase {
                 0.25 * Math.PI);
         te.setInitialSpeed(new SpeedSet(new RockDouble()));
         te.getInitialSpeed().getDark(0).setLocation(0,
-                -te.getCurler().computeHogSpeed(5), Math.PI / 2);
+                -te.getCurler().computeHackSpeed(5,tee), Math.PI / 2);
         te.setCurrentTime(0);
 
         assertFalse(Double.isNaN(te.doGetNextHit().t));
@@ -205,7 +208,7 @@ public class CurveManagerTest extends TestShowBase {
                 .setLocation(0, IceSize.HOG_2_TEE, Math.PI);
         te.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
         te.getInitialSpeed().getDark(0).setLocation(0,
-                -te.getCurler().computeHogSpeed(9), Math.PI / 2);
+                -te.getCurler().computeHackSpeed(9,tee), Math.PI / 2);
 
         assertEquals(Double.NaN, te.doGetNextHit().t);
         assertFalse((1 > te.doGetNextHit().t));

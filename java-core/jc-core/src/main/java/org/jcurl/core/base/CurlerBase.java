@@ -22,6 +22,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import org.jcurl.math.MathVec;
+import org.jcurl.math.NewtonSimpleSolver;
 
 /**
  * Base implementation for {@link Curler}s.
@@ -31,7 +32,15 @@ import org.jcurl.math.MathVec;
  */
 public abstract class CurlerBase extends PropModelImpl implements Curler {
 
-	public double computeIntervalTime(double v0) {
+	public double computeIntervalTime(final CurveRock wc) {
+		final double back = NewtonSimpleSolver.computeNewtonValue(wc, 1, 0,
+				IceSize.BACK_2_HOG + IceSize.FAR_HOG_2_TEE, 0, 10);
+		final double hog = NewtonSimpleSolver.computeNewtonValue(wc, 1, 0,
+				IceSize.FAR_HOG_2_TEE, back, 15);
+		return hog - back;
+	}
+
+	private double computeIntervalTime(double v0) {
 		final double d = getDrawToTeeTime();
 		final double B = IceSize.BACK_2_HOG;
 		final double H = IceSize.FAR_HOG_2_TEE;
@@ -40,9 +49,16 @@ public abstract class CurlerBase extends PropModelImpl implements Curler {
 				* H;
 	}
 
-	public double computeHogSpeed(final double intervalTime) {
+	private double computeHogSpeed(final double intervalTime) {
 		return IceSize.BACK_2_HOG / intervalTime - IceSize.FAR_HOG_2_TEE
 				/ MathVec.sqr(getDrawToTeeTime()) * intervalTime;
+	}
+
+	public CurveRock computeWc(final Point2D broom, double split,
+			final double a0, final double omega0, final double sweepFactor) {
+		return new CurveTransformed(computeRc(a0,
+				computeHackSpeed(split, broom), omega0, sweepFactor),
+				hackRc2Wc(null, broom), 0);
 	}
 
 	/**
@@ -56,8 +72,9 @@ public abstract class CurlerBase extends PropModelImpl implements Curler {
 	 * @param broomY
 	 *            (world coordinates)
 	 * @return the transformation matrix
+	 * @deprecated
 	 */
-	public AffineTransform releaseRc2Wc(AffineTransform ret,
+	private AffineTransform releaseRc2Wc(AffineTransform ret,
 			final double broomX, final double broomY) {
 		if (ret == null)
 			ret = new AffineTransform();
@@ -85,9 +102,48 @@ public abstract class CurlerBase extends PropModelImpl implements Curler {
 	 *            (world coordinates)
 	 * @return the transformation matrix
 	 * @see #releaseRc2Wc(AffineTransform, double, double)
+	 * @deprecated
 	 */
-	public AffineTransform releaseRc2Wc(final AffineTransform ret,
+	private AffineTransform releaseRc2Wc(final AffineTransform ret,
 			final Point2D broom) {
 		return releaseRc2Wc(ret, broom.getX(), broom.getY());
+	}
+
+	/**
+	 * Compute the RC-&gt;WC transformation for a rock from the start (hack).
+	 * 
+	 * @param ret
+	 *            <code>null</code> creates a new one.
+	 * @param broomX
+	 *            (world coordinates)
+	 * @param broomY
+	 *            (world coordinates)
+	 * @return the transformation matrix
+	 * @see CurveTransformed#createRc2Wc(AffineTransform, double, double,
+	 *      double, double)
+	 */
+	public AffineTransform hackRc2Wc(final AffineTransform ret, final double broomX,
+			final double broomY) {
+		return CurveTransformed.createRc2Wc(ret, 0, IceSize.FAR_HACK_2_TEE,
+				broomX, broomY - IceSize.FAR_HACK_2_TEE);
+	}
+
+	/**
+	 * Compute the RC-&gt;WC transformation for a rock from the start (hack).
+	 * <p>
+	 * Convenience wrapper for
+	 * {@link #hackRc2Wc(AffineTransform, double, double)}.
+	 * </p>
+	 * 
+	 * @param ret
+	 *            <code>null</code> creates a new one.
+	 * @param broom
+	 *            (world coordinates)
+	 * @return the transformation matrix
+	 * @see #hackRc2Wc(AffineTransform, double, double)
+	 */
+	public AffineTransform hackRc2Wc(final AffineTransform ret,
+			final Point2D broom) {
+		return hackRc2Wc(ret, broom.getX(), broom.getY());
 	}
 }

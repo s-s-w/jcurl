@@ -18,8 +18,6 @@
  */
 package org.jcurl.core.base;
 
-import java.util.Iterator;
-
 import junit.framework.TestCase;
 
 public class RockSetTest extends TestCase {
@@ -49,33 +47,6 @@ public class RockSetTest extends TestCase {
         for (int l = 0; l < loops; l++)
             for (int i = 0; i < RockSet.ROCKS_PER_SET; i++)
                 v++;
-        System.out.println(txt + ": " + (System.currentTimeMillis() - t0));
-
-        txt = "itIdx Iterator";
-        t0 = System.currentTimeMillis();
-        for (int l = 0; l < loops; l++)
-            for (final Iterator it = p.itIdx(); it.hasNext();) {
-                it.next();
-                v++;
-            }
-        System.out.println(txt + ": " + (System.currentTimeMillis() - t0));
-
-        txt = "itRocks Iterator";
-        t0 = System.currentTimeMillis();
-        for (int l = 0; l < loops; l++)
-            for (final Iterator it = p.itRocks(); it.hasNext();) {
-                it.next();
-                v++;
-            }
-        System.out.println(txt + ": " + (System.currentTimeMillis() - t0));
-
-        txt = "itEntries Iterator";
-        t0 = System.currentTimeMillis();
-        for (int l = 0; l < loops; l++)
-            for (final Iterator it = p.itEntries(); it.hasNext();) {
-                it.next();
-                v++;
-            }
         System.out.println(txt + ": " + (System.currentTimeMillis() - t0));
         assertTrue(v != 0);
     }

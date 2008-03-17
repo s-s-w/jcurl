@@ -25,16 +25,16 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.jcurl.core.base.PositionSet;
 import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.model.FixpointZoomer;
-
 /**
  * Base for rock location displays. Does all the coordinate transformation math
  * and setters to delegate to {@link RockPainter} and {@link IcePainter} .
@@ -43,7 +43,7 @@ import org.jcurl.core.model.FixpointZoomer;
  * @version $Id: RockLocationDisplayBase.java 230 2006-02-19 12:34:18Z
  *          mrohrmoser $
  */
-class PositionDisplay extends WCComponent implements PropertyChangeListener {
+class PositionDisplay extends WCComponent implements ChangeListener {
 
     private static final Map<Object, Object> hints = new HashMap<Object, Object>();
 
@@ -249,8 +249,8 @@ class PositionDisplay extends WCComponent implements PropertyChangeListener {
      * @param evt
      * @see #setPos(PositionSet)
      */
-    public void propertyChange(final PropertyChangeEvent evt) {
-        final Object tmp = evt.getNewValue();
+    public void stateChanged(ChangeEvent evt) {
+        final Object tmp = evt.getSource();
         if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass()))
             this.setPos((PositionSet) tmp);
     }
@@ -289,8 +289,8 @@ class PositionDisplay extends WCComponent implements PropertyChangeListener {
     public void setPos(final PositionSet rocks, final int discontinuous) {
         if (pos != rocks) {
             if (pos != null)
-                pos.removePropertyChangeListener(this);
-            rocks.addPropertyChangeListener(this);
+                pos.removeChangeListener(this);
+            rocks.addChangeListener(this);
         }
         pos = rocks;
         this.repaint();

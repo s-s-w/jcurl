@@ -19,11 +19,12 @@
 package org.jcurl.core.model;
 
 import java.awt.geom.AffineTransform;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.ObjectStreamException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.base.Collider;
@@ -52,9 +53,9 @@ import org.jcurl.math.R1RNFunctionImpl;
  * @version $Id:CurveManager.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class CurveManager extends MutableObject implements
-        PropertyChangeListener, ComputedTrajectorySet {
+        ChangeListener, ComputedTrajectorySet {
 
-    private static final double _30 = 30.0;
+	private static final double _30 = 30.0;
 
     /** Time leap during a hit. */
     private static final double hitDt = 1e-6;
@@ -95,7 +96,8 @@ public class CurveManager extends MutableObject implements
     private final SpeedSet initialSpeed = new SpeedSet(PositionSet.allHome());
 
     public CurveManager() {
-        initialPos.addPropertyChangeListener(this);
+        initialPos.addChangeListener(this);
+        initialSpeed.addChangeListener(this);
     }
 
     /**
@@ -196,7 +198,7 @@ public class CurveManager extends MutableObject implements
     }
 
     /**
-     * Internal. Does not {@link RockSet#notifyChange()}!
+     * Internal. Does not {@link RockSet#fireStateChanged()}!
      * 
      * @param currentTime
      * @param tmp
@@ -268,7 +270,7 @@ public class CurveManager extends MutableObject implements
      * 
      * @param arg0
      */
-    public void propertyChange(final PropertyChangeEvent arg0) {
+    public void stateChanged(ChangeEvent arg0) {
         final Object src = arg0.getSource();
         if (src == initialPos || src == initialSpeed) {
             // force recomputation:
@@ -342,8 +344,8 @@ public class CurveManager extends MutableObject implements
         {
             final double ot = this.currentTime;
             this.currentTime = currentTime;
-            currentPos.notifyChange();
-            currentSpeed.notifyChange();
+            currentPos.fireStateChanged();
+            currentSpeed.fireStateChanged();
             propChange.firePropertyChange("currentTime", ot, currentTime);
             propChange.firePropertyChange("currentPos", currentPos, currentPos);
             propChange.firePropertyChange("currentSpeed", currentSpeed,

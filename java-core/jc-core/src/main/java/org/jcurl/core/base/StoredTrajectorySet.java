@@ -50,7 +50,7 @@ public class StoredTrajectorySet extends MutableObject implements TrajectorySet 
     }
 
     /**
-     * Internal. Does not {@link RockSet#notifyChange()}!
+     * Internal. Does not {@link RockSet#fireStateChanged()}!
      * 
      * @param currentTime
      * @param tmp
@@ -101,8 +101,8 @@ public class StoredTrajectorySet extends MutableObject implements TrajectorySet 
         {
             final double ot = this.currentTime;
             this.currentTime = currentTime;
-            currentPos.notifyChange();
-            currentSpeed.notifyChange();
+            currentPos.fireStateChanged();
+            currentSpeed.fireStateChanged();
             propChange.firePropertyChange("currentTime", ot, currentTime);
             propChange.firePropertyChange("currentPos", currentPos, currentPos);
             propChange.firePropertyChange("currentSpeed", currentSpeed,

@@ -34,9 +34,10 @@ import org.jcurl.core.base.Rock;
 import org.jcurl.core.base.RockDouble;
 import org.jcurl.core.base.RockSet;
 import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.helpers.IPropertyChangeSupport;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.BroomPromptModel;
+import org.jcurl.core.ui.IChangeSupport;
+import org.jcurl.core.ui.IPropertyChangeSupport;
 import org.jcurl.math.MathVec;
 
 class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
@@ -59,6 +60,10 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 	private void add(final IPropertyChangeSupport l) {
 		if (l != null)
 			l.addPropertyChangeListener(this);
+	}
+	private void add(final IChangeSupport l) {
+		if (l != null)
+			l.addChangeListener(this);
 	}
 
 	public BroomPromptModel getBroom() {
@@ -98,6 +103,11 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 	private void remove(final IPropertyChangeSupport l) {
 		if (l != null)
 			l.removePropertyChangeListener(this);
+	}
+
+	private void remove(final IChangeSupport l) {
+		if (l != null)
+			l.removeChangeListener(this);
 	}
 
 	public void setBroom(final BroomPromptModel broo) {
@@ -166,8 +176,8 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 		final int b = newV.intValue();
 		swap(position, a, b);
 		swap(speed, a, b);
-		position.notifyChange();
-		speed.notifyChange();
+		position.fireStateChanged();
+		speed.fireStateChanged();
 	}
 
 	synchronized public void updateSpeed() {
@@ -177,17 +187,17 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 		// set to initial pos
 		final Rock start = new RockDouble(0, IceSize.FAR_HACK_2_TEE, Math.PI);
 		position.getRock(broom.getIdx16()).setLocation(start);
-		position.notifyChange();
+		position.fireStateChanged();
 		// Compute direction
 		MathVec.sub(broom.getBroom(), start, start);
 		MathVec.norm(start, start);
 		// Compute initial Speed
-		final double v0 = curler.computeHogSpeed(broom.getSplitTimeMillis()
-				.getValue() * 1e-3);
+		final double v0 = curler.computeHackSpeed(broom.getSplitTimeMillis()
+				.getValue() * 1e-3, broom.getBroom());
 		MathVec.mult(v0, start, start);
 		// Handle
 		start.setA((broom.getOutTurn() ? 1 : -1) * 0.25);
 		speed.getRock(broom.getIdx16()).setLocation(start);
-		speed.notifyChange();
+		speed.fireStateChanged();
 	}
 }

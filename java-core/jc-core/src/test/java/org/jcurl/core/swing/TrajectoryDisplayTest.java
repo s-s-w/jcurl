@@ -20,6 +20,7 @@ package org.jcurl.core.swing;
 
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 import org.apache.commons.logging.Log;
@@ -99,8 +100,8 @@ public class TrajectoryDisplayTest extends TestShowBase {
 
         p.getDark(8 - 1).setLocation(0, IceSize.FAR_HACK_2_TEE, 0);
         s.getDark(8 - 1).setLocation(0.1785, -4, -100 * Math.PI / 180);
-        p.notifyChange();
-        s.notifyChange();
+        p.fireStateChanged();
+        s.fireStateChanged();
     }
 
     protected final TrajectoryDisplay display;
@@ -195,11 +196,11 @@ public class TrajectoryDisplayTest extends TestShowBase {
             ti.getInitialPos().getLight(0).setLocation(0, IceSize.BACK_2_TEE,
                     0.25 * Math.PI);
             ti.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
-            if (true)
+            if (false)
                 ti.getInitialSpeed().getDark(0).setLocation(-0.095,
-                        -ti.getCurler().computeHogSpeed(3.124), Math.PI / 2);
+                        -ti.getCurler().computeHackSpeed(3.124, new Point2D.Double(0,0)), Math.PI / 2);
             else
-                te.getInitialSpeed().getDark(0).setLocation(0, -2.455,
+                ti.getInitialSpeed().getDark(0).setLocation(0, -2.455,
                         Math.PI / 2);
             te = ti;
         }

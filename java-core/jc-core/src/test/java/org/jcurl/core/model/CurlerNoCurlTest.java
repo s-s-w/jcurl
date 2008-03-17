@@ -38,7 +38,7 @@ public class CurlerNoCurlTest extends TestShowBase {
             @Override
             public void run(final double t) throws InterruptedException {
                 pos.getRock(0).setLocation(p[0].at(t), p[1].at(t), p[2].at(t));
-                pos.notifyChange();
+                pos.fireStateChanged();
                 Thread.sleep(dt);
             }
         });
@@ -87,32 +87,34 @@ public class CurlerNoCurlTest extends TestShowBase {
         assertEquals(7.741592653589794, p[2].at(23));
     }
 
+	private static final Point2D tee = new Point2D.Double(0,0);
+
     public void testComputeV0() {
         Curler s = new CurlerNoCurl(17, 0);
         for (int i = 1; i <= 6; i++)
-            System.out.println(s.computeHogSpeed(i));
-        assertEquals(8.131515526029066, s.computeHogSpeed(1));
-        assertEquals(3.9186311230115, s.computeHogSpeed(2));
-        assertEquals(2.448946704226519, s.computeHogSpeed(3));
-        assertEquals(1.6650622814996845, s.computeHogSpeed(4));
-        assertEquals(1.1554978571961083, s.computeHogSpeed(5));
-        assertEquals(0.7830934321041613, s.computeHogSpeed(6));
+            System.out.println(s.computeHackSpeed(i, tee));
+        assertEquals(8.131515526029066, s.computeHackSpeed(1, tee));
+        assertEquals(3.9186311230115, s.computeHackSpeed(2,tee));
+        assertEquals(2.448946704226519, s.computeHackSpeed(3,tee));
+        assertEquals(1.6650622814996845, s.computeHackSpeed(4,tee));
+        assertEquals(1.1554978571961083, s.computeHackSpeed(5,tee));
+        assertEquals(0.7830934321041613, s.computeHackSpeed(6,tee));
 
         s = new CurlerNoCurl(23, 0);
-        assertEquals(8.176015076880644, s.computeHogSpeed(1));
-        assertEquals(4.007630224714657, s.computeHogSpeed(2));
-        assertEquals(2.5824453567812555, s.computeHogSpeed(3));
-        assertEquals(1.8430604849060002, s.computeHogSpeed(4));
-        assertEquals(1.3779956114540028, s.computeHogSpeed(5));
-        assertEquals(1.0500907372136346, s.computeHogSpeed(6));
+        assertEquals(8.176015076880644, s.computeHackSpeed(1,tee));
+        assertEquals(4.007630224714657, s.computeHackSpeed(2,tee));
+        assertEquals(2.5824453567812555, s.computeHackSpeed(3,tee));
+        assertEquals(1.8430604849060002, s.computeHackSpeed(4,tee));
+        assertEquals(1.3779956114540028, s.computeHackSpeed(5,tee));
+        assertEquals(1.0500907372136346, s.computeHackSpeed(6,tee));
 
         s = new CurlerNoCurl(26, 0);
-        assertEquals(8.187667409343833, s.computeHogSpeed(1));
-        assertEquals(4.030934889641034, s.computeHogSpeed(2));
-        assertEquals(2.61740235417082, s.computeHogSpeed(3));
-        assertEquals(1.8896698147587523, s.computeHogSpeed(4));
-        assertEquals(1.436257273769943, s.computeHogSpeed(5));
-        assertEquals(1.1200047319927628, s.computeHogSpeed(6));
+        assertEquals(8.187667409343833, s.computeHackSpeed(1,tee));
+        assertEquals(4.030934889641034, s.computeHackSpeed(2,tee));
+        assertEquals(2.61740235417082, s.computeHackSpeed(3,tee));
+        assertEquals(1.8896698147587523, s.computeHackSpeed(4,tee));
+        assertEquals(1.436257273769943, s.computeHackSpeed(5,tee));
+        assertEquals(1.1200047319927628, s.computeHackSpeed(6,tee));
     }
 
     public void testDrawToTeeV0() {
@@ -135,7 +137,7 @@ public class CurlerNoCurlTest extends TestShowBase {
         final CurlerNoCurl s = new CurlerNoCurl(23, 0);
         final AffineTransform m = new AffineTransform();
         final Point2D x = new Point2D.Double();
-        s.releaseRc2Wc(m, 0, 0);
+        s.hackRc2Wc(m, 0, 0);
         assertEquals(new AffineTransform(new double[] { -1, 0, 0, -1, 0,
                 28.346399307250977 }), m);
         assertEquals(AffineTransform.TYPE_TRANSLATION
@@ -145,7 +147,7 @@ public class CurlerNoCurlTest extends TestShowBase {
         assertEquals(-0.5, x.getX());
         assertEquals(-1, x.getY() - IceSize.FAR_HOG_2_TEE);
 
-        s.releaseRc2Wc(m, Unit.f2m(14), 0);
+        s.hackRc2Wc(m, Unit.f2m(14), 0);
         // System.out.println(new AffineTransform(
         // new double[] { 1, 2, 3, 4, 5, 6 })
         // + "\n" + m);
@@ -158,7 +160,7 @@ public class CurlerNoCurlTest extends TestShowBase {
         assertEquals(-1.2249733953800335, x.getX() + 0.5);
         assertEquals(0.061332027536110445, x.getY() - IceSize.FAR_HOG_2_TEE + 1);
 
-        s.releaseRc2Wc(m, Unit.f2m(-7), 0);
+        s.hackRc2Wc(m, Unit.f2m(-7), 0);
         // System.out.println(new AffineTransform(
         // new double[] { 1, 2, 3, 4, 5, 6 })
         // + "\n" + m);

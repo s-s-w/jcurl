@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.model.BroomPromptModel;
 import org.jcurl.core.model.CurveManager;
+import org.jcurl.core.ui.UndoRedoDocumentBase;
 import org.jcurl.core.zui.BroomPromptSimple;
 import org.jcurl.core.zui.PCurveStore;
 import org.jcurl.core.zui.PIceFactory;
@@ -30,17 +31,18 @@ class TrajectoryPanel extends JComponent {
 	private static final long serialVersionUID = -4648771240323713217L;
 	private final BroomPromptSimple broom;
 	private final PPositionSet current;
+	private CurveManager curves;
 	private final PNode ice;
 	private final PPositionSet initial;
 	private final int major = 255;
 	private final BroomSpeedMediator mediator = new BroomSpeedMediator();
 	private final int minor = 64;
-	private CurveManager model;
 	final PCanvas pico;
 
 	private final PCurveStore traj;
+	private UndoRedoDocumentBase undo;
 
-	public TrajectoryPanel(final UndoRedoDocumentBase undo) {
+	public TrajectoryPanel() {
 		setLayout(new BorderLayout());
 		this.add(pico = new PCanvas(), BorderLayout.CENTER);
 		pico.setBackground(new Color(0xE8E8FF));
@@ -59,7 +61,7 @@ class TrajectoryPanel extends JComponent {
 			@Override
 			synchronized public void mouseDragged(final PInputEvent event) {
 				if (edit == null)
-					edit = new StateEdit(model.getInitialPos());
+					edit = new StateEdit(curves.getInitialPos());
 				super.mouseDragged(event);
 			}
 
@@ -69,7 +71,7 @@ class TrajectoryPanel extends JComponent {
 					return;
 				super.mouseReleased(event);
 				edit.end();
-				undo.addEdit(edit);
+				getUndo().addEdit(edit);
 				edit = null;
 				// FIXME traj.sync(MainApp.tmax);
 			}
@@ -88,23 +90,27 @@ class TrajectoryPanel extends JComponent {
 		ice.addChild(broom);
 	}
 
-	public BroomPromptModel getBroomPrompt() {
+	public BroomPromptModel getBroom() {
 		return broom.getModel();
 	}
 
-	public CurveManager getModel() {
-		return model;
+	public CurveManager getCurves() {
+		return curves;
 	}
 
-	public void setBroomPrompt(final BroomPromptModel broomPrompt) {
-		broom.setModel(broomPrompt);
+	public UndoRedoDocumentBase getUndo() {
+		return undo;
+	}
+
+	public void setBroom(final BroomPromptModel broomPrompt) {
 		mediator.setBroom(broomPrompt);
+		broom.setModel(broomPrompt);
 	}
 
-	public void setModel(final CurveManager model) {
+	public void setCurves(final CurveManager model) {
 		// TODO PropertyChangeEvent
-		this.model = model;
-		if (this.model == null) {
+		curves = model;
+		if (curves == null) {
 			traj.setModel(null);
 			current.setModel(null);
 			initial.setModel(null);
@@ -112,12 +118,16 @@ class TrajectoryPanel extends JComponent {
 			mediator.setSpeed(null);
 			mediator.setCurler(null);
 		} else {
-			traj.setModel(this.model.getCurveStore());
-			current.setModel(this.model.getCurrentPos());
-			initial.setModel(this.model.getInitialPos());
-			mediator.setPosition(this.model.getInitialPos());
-			mediator.setSpeed(this.model.getInitialSpeed());
-			mediator.setCurler(this.model.getCurler());
+			traj.setModel(curves.getCurveStore());
+			current.setModel(curves.getCurrentPos());
+			initial.setModel(curves.getInitialPos());
+			mediator.setPosition(curves.getInitialPos());
+			mediator.setSpeed(curves.getInitialSpeed());
+			mediator.setCurler(curves.getCurler());
 		}
+	}
+
+	public void setUndo(final UndoRedoDocumentBase undo) {
+		this.undo = undo;
 	}
 }

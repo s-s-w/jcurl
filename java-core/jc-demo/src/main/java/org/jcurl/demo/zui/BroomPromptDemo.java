@@ -105,10 +105,10 @@ public class BroomPromptDemo {
 				application.setSize(500, 800);
 				application.setVisible(true);
 				animateToBounds(pc.getCamera(), twelveP, 500);
+				final BroomPromptSimple bp;
+				ice.addChild(bp = new BroomPromptSimple());
 				final BroomPromptModel bpm;
-				final PNode bp;
-				ice.addChild(bp = new BroomPromptSimple(
-						bpm = new BroomPromptModel()));
+				bp.setModel(bpm = new BroomPromptModel());
 				bpm.addPropertyChangeListener(new PropertyChangeListener() {
 					public void propertyChange(final PropertyChangeEvent evt) {
 						// FIXME why doesn't fire this?

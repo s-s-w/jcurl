@@ -51,7 +51,7 @@ public class PositionSet extends RockSet {
             IceSize.setHome(ret.dark[i], true, i);
             IceSize.setHome(ret.light[i], false, i);
         }
-        ret.notifyChange();
+        ret.fireStateChanged();
         return ret;
     }
 
@@ -66,7 +66,7 @@ public class PositionSet extends RockSet {
             IceSize.setOut(ret.dark[i], true, i);
             IceSize.setOut(ret.light[i], false, i);
         }
-        ret.notifyChange();
+        ret.fireStateChanged();
         return ret;
     }
 
