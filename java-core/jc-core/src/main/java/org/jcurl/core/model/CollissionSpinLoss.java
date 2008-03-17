@@ -71,15 +71,15 @@ public class CollissionSpinLoss extends ColliderBase {
         // vector from a's center to b's:
         final Point2D r = MathVec.sub(xb, xa, null);
         double tmp = MathVec.abs2D(r);
-        if (!(va.nonZero() || vb.nonZero())
+        if (!(va.isNotZero() || vb.isNotZero())
                 || tmp > RADIUS + RADIUS + HIT_MAX_DIST)
             return false;
         // boolean f;
         // if (true == (va.nonZero() ^ vb.nonZero()))
         // if (false != (f = vb.nonZero()))
         // tmp = -tmp;
-        if (true == (va.nonZero() ^ vb.nonZero()))
-            if (false != vb.nonZero())
+        if (true == (va.isNotZero() ^ vb.isNotZero()))
+            if (false != vb.isNotZero())
                 tmp = -tmp;
 
         // get the coordinate-system:
@@ -99,7 +99,7 @@ public class CollissionSpinLoss extends ColliderBase {
         mat.transform(vb, _vb);
         final double[] w = { va.getA(), vb.getA() };
 
-        if (va.nonZero() ^ vb.nonZero())
+        if (va.isNotZero() ^ vb.isNotZero())
             singleLoss(_va, _vb, w);
         singleNoLoss(_va, _vb, w);
 

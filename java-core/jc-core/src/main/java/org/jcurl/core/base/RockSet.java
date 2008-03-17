@@ -98,7 +98,7 @@ public abstract class RockSet extends ChangeSupport implements Cloneable,
 	public static int nonZero(final RockSet rocks) {
 		int ret = 0;
 		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
-			if (rocks.getRock(i).nonZero())
+			if (rocks.getRock(i).isNotZero())
 				ret |= 1 << i;
 		return ret;
 	}

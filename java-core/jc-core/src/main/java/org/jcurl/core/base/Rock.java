@@ -40,12 +40,12 @@ public abstract class Rock extends Point2D implements IChangeSupport,
 	private transient boolean dirty = true;
 
 	/** Utility field used by bound properties. */
-	protected final transient ChangeSupport propChange = new ChangeSupport(this);
+	protected final transient ChangeSupport change = new ChangeSupport(this);
 
 	private transient AffineTransform trafo;
 
 	public void addChangeListener(final ChangeListener l) {
-		propChange.addChangeListener(l);
+		change.addChangeListener(l);
 	}
 
 	@Override
@@ -68,13 +68,13 @@ public abstract class Rock extends Point2D implements IChangeSupport,
 
 	protected void fireStateChanged() {
 		dirty = true;
-		propChange.fireStateChanged();
+		change.fireStateChanged();
 	}
 
 	public abstract double getA();
 
 	public ChangeListener[] getChangeListeners() {
-		return propChange.getChangeListeners();
+		return change.getChangeListeners();
 	}
 
 	public AffineTransform getTrafo() {
@@ -95,10 +95,10 @@ public abstract class Rock extends Point2D implements IChangeSupport,
 	 * 
 	 * @return whether x or y are non-zero
 	 */
-	public abstract boolean nonZero();
+	public abstract boolean isNotZero();
 
 	public void removeChangeListener(final ChangeListener l) {
-		propChange.removeChangeListener(l);
+		change.removeChangeListener(l);
 	}
 
 	public abstract void setA(double a);

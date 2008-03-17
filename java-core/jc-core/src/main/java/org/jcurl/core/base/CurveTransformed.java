@@ -178,10 +178,6 @@ public class CurveTransformed extends CurveRock {
 		return tmp[component];
 	}
 
-	private double getT0() {
-		return t0;
-	}
-
 	protected Object readResolve() throws ObjectStreamException {
 		return new CurveTransformed(new AffineTransform(trafo), base, t0);
 	}

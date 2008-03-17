@@ -38,9 +38,9 @@ import org.jcurl.math.R1R1Function;
  * dynamics", Mark Denny, Canadian Journal of Physics, 1988, P. 295-304:
  * <p>
  * <code>tau = v0 * (mu * g)</code><br />
- * <code>x(t) = - (b * v0^2 / (4 * e * R * tau)) * (t^3 / 3 - t^4 / (4 * tau))</code><br />
- * <code>y(t) = v0 * (t - t^2 / (2 * tau))</code><br />
- * <code>w(t) = w0 * (1 - t / tau)^(1 / e)</code>
+ * <code>x(t) := - (b * v0^2 / (4 * e * R * tau)) * (t^3 / 3 - t^4 / (4 * tau))</code><br />
+ * <code>y(t) := v0 * (t - t^2 / (2 * tau))</code><br />
+ * <code>w(t) := w0 * (1 - t / tau)^(1 / e)</code>
  * </p>
  * <p>
  * with
@@ -105,46 +105,42 @@ public class CurlerDenny extends CurlerBase {
 
 	/**
 	 * Compute the (virtual) speed at the hack for a rock released with split
-	 * time {@link t} towards {@link broom.}
+	 * time <code>t</code> towards <code>broom</code>.
 	 * <p>
 	 * <a href="http://maxima.sourceforge.net">Maxima</a> Solution:
 	 * 
 	 * <pre>
-	 * y=(t-t&circ;2/(2*tau))*vo;
-	 * ratsubst(vo/(mu*g), tau, %);
-	 * solve([%], [vo]);
-	 * vo(t,y):=(2*y+g*mu*t&circ;2)/(2*t);
-	 * vo(th, hog) = vo(th-t, back);
-	 * solve([%], [th]);
-	 * th(t):=(sqrt(g&circ;2*mu&circ;2*t&circ;4+(4*g*hog+4*back*g)*mu*t&circ;2+4*hog&circ;2+(-8)*back*hog+4*back&circ;2)+g*mu*t&circ;2+(-2)*hog+2*back)/(2*g*mu*t)
-	 * vo(th(t), hog);
-	 * ratsimp(%);
-	 * (g*mu*t*((sqrt(g&circ;2*mu&circ;2*t&circ;4+(4*g*hog+4*back*g)*mu*t&circ;2+4*hog&circ;2-8*back*hog+4*back&circ;2)+g*mu*t&circ;2-2*hog+2*back)&circ;2/(4*g*mu*t&circ;2)+2*hog))/(sqrt(g&circ;2*mu&circ;2*t&circ;4+(4*g*hog+4*back*g)*mu*t&circ;2+4*hog&circ;2-8*back*hog+4*back&circ;2)+g*mu*t&circ;2-2*hog+2*back)
+	 * y(t) := (t-t*t/(2*tau))*v0
+	 * ratsubst(v0/(mu*g), tau, %);
+	 * remfunction(all);
+	 * y(t):=-((g*mu*t*t-2*v0*t)*v0)/(2*v0)
+	 * solve([y(tb)=back, y(tb+ti)=hog], [v0, tb]);
+	 * 
+	 * v0=sqrt(g&circ;2*mu&circ;2*ti&circ;4+4*g*hog*mu*ti&circ;2+4*back*g*mu*ti&circ;2+4*hog&circ;2-8*back*hog+4*back&circ;2)/(2*ti)
 	 * </pre>
 	 * 
-	 * @param t
+	 * @param ti
 	 *            interval- or split-time
 	 * @param broom
 	 *            broom location (WC)
 	 * @return initial absolute speed at the hack.
 	 */
-	public double computeHackSpeed(final double t, final Point2D broom) {
+	public double computeHackSpeed(final double ti, final Point2D broom) {
 		final double x = broom.getX() / (IceSize.FAR_HACK_2_TEE - broom.getY());
 		final double f = Math.sqrt(1 + x * x);
 		final double back = IceSize.HACK_2_BACK * f;
 		final double hog = IceSize.HACK_2_HOG * f;
-		final double tmp = Math.sqrt(g * g * mu * mu * t * t * t * t
-				+ (4 * g * hog + 4 * back * g) * mu * t * t + 4 * hog * hog - 8
-				* back * hog + 4 * back * back)
-				+ g * mu * t * t - 2 * hog + 2 * back;
-		return g
-				* mu
-				* t
-				* (tmp * tmp / (4 * g * mu * t * t) + 2 * hog)
-				/ (Math.sqrt(g * g * mu * mu * t * t * t * t
-						+ (4 * g * hog + 4 * back * g) * mu * t * t + 4 * hog
-						* hog - 8 * back * hog + 4 * back * back)
-						+ g * mu * t * t - 2 * hog + 2 * back);
+
+		final double g_2 = g * g;
+		final double mu_2 = mu * mu;
+		final double ti_2 = ti * ti;
+		final double ti_4 = ti_2 * ti_2;
+		final double hog_2 = hog * hog;
+		final double back_2 = back * back;
+
+		return Math.sqrt(g_2 * mu_2 * ti_4 + 4 * g * hog * mu * ti_2 + 4 * back
+				* g * mu * ti_2 + 4 * hog_2 - 8 * back * hog + 4 * back_2)
+				/ (2 * ti);
 	}
 
 	public CurveRock computeRc(final double a0, final double v0,
@@ -225,8 +221,29 @@ public class CurlerDenny extends CurlerBase {
 		PropModelHelper.setDrawToTeeCurl(params, drawToTeeCurl);
 	}
 
+	/**
+	 * Compute the friction coefficient from a draw-to-tee time. <a
+	 * href="http://maxima.sourceforge.net">Maxima</a> Solution:
+	 * 
+	 * <pre>
+	 * y(t) := v0 * t - mu * g * t * t / 2
+	 * diff(y(t),t);
+	 * v(t) := v0-g*mu*t
+	 * solve([y(th)=HACK_2_HOG, y(th+td)=HACK_2_TEE, v(th+td)=0], [th,v0,mu]);
+	 * </pre>
+	 * 
+	 * gives:
+	 * 
+	 * <pre>
+	 * mu = (2 * HACK_2_TEE - 2 * HACK_2_HOG) / (g * td * td)
+	 * </pre>
+	 */
 	public void setDrawToTeeTime(final double drawToTeeTime) {
-		mu = 2.0 * IceSize.FAR_HOG_2_TEE / (MathVec.sqr(drawToTeeTime) * g);
+		if (Double.isInfinite(drawToTeeTime) && drawToTeeTime > 0)
+			mu = 0;
+		else
+			mu = 2.0 * (IceSize.FAR_HACK_2_TEE - IceSize.HACK_2_HOG)
+					/ (g * drawToTeeTime * drawToTeeTime);
 		PropModelHelper.setDrawToTeeTime(params, drawToTeeTime);
 	}
 }

@@ -86,7 +86,7 @@ public class RockDouble extends Rock implements Serializable {
 	}
 
 	@Override
-	public boolean nonZero() {
+	public boolean isNotZero() {
 		return x[0] * x[0] + x[1] * x[1] > 1e-4;
 	}
 

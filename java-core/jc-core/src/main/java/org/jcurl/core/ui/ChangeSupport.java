@@ -17,7 +17,7 @@ public class ChangeSupport implements IChangeSupport {
 	protected transient ChangeEvent changeEvent = null;
 
 	/** The listeners waiting for model changes. */
-	protected EventListenerList listenerList = new EventListenerList();
+	protected transient EventListenerList listenerList = new EventListenerList();
 	private final IChangeSupport source;
 
 	protected ChangeSupport() {

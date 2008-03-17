@@ -167,7 +167,7 @@ public abstract class ColliderBase extends PropModelImpl implements Collider {
             throw new RuntimeException("Matrix must be invertible", e);
         }
         // check speed of approach
-        if (!_va.nonZero())
+        if (!_va.isNotZero())
             return false;
         if (log.isDebugEnabled())
             log.debug("hit!");
