@@ -28,9 +28,6 @@ package org.jcurl.math;
  */
 public class CurveFkt extends R1RNFunctionImpl {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 2112849212905068331L;
 
     private final R1R1Function[] fkt;

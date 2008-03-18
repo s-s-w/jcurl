@@ -18,13 +18,10 @@
  */
 package org.jcurl.core.impl;
 
-import java.awt.geom.Point2D;
 import java.util.Map;
 
 import org.jcurl.core.api.CurveRock;
-import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.Measure;
-import org.jcurl.core.api.Physics;
 import org.jcurl.core.helpers.PropModelHelper;
 import org.jcurl.math.Polynome;
 import org.jcurl.math.PolynomeCurve;
@@ -57,11 +54,9 @@ import org.jcurl.math.PolynomeCurve;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CurlerNoCurl.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
-public class CurlerNoCurl extends CurlerBase {
+public class CurlerNoCurl extends CoulombCurler {
 
 	private static final long serialVersionUID = -1818914036355517122L;
-	protected static final double g = Physics.g;
-	transient double mu;
 
 	public CurlerNoCurl() {}
 
@@ -80,43 +75,6 @@ public class CurlerNoCurl extends CurlerBase {
 	 */
 	public CurlerNoCurl(final Map<CharSequence, Measure> ice) {
 		init(ice);
-	}
-
-	/**
-	 * Compute the (virtual) speed at the hack for a rock released with split
-	 * time <code>ti</code> towards <code>broom</code>.
-	 * <p>
-	 * <a href="http://maxima.sourceforge.net">Maxima</a> Solution:
-	 * 
-	 * <pre>
-	 * y(t) := v0 * t - mu * g * t * t / 2;
-	 * solve([y(tb)=back, y(tb+ti)=hog], [v0, tb]);
-	 * 
-	 * v0=sqrt(g&circ;2*mu&circ;2*ti&circ;4+4*g*hog*mu*ti&circ;2+4*back*g*mu*ti&circ;2+4*hog&circ;2-8*back*hog+4*back&circ;2)/(2*ti)
-	 * </pre>
-	 * 
-	 * @param ti
-	 *            interval- or split-time
-	 * @param broom
-	 *            broom location (WC)
-	 * @return initial absolute speed at the hack.
-	 */
-	public double computeHackSpeed(final double ti, final Point2D broom) {
-		final double x = broom.getX() / (IceSize.FAR_HACK_2_TEE - broom.getY());
-		final double f = Math.sqrt(1 + x * x);
-		final double back = IceSize.HACK_2_BACK * f;
-		final double hog = IceSize.HACK_2_HOG * f;
-
-		final double g_2 = g * g;
-		final double mu_2 = mu * mu;
-		final double ti_2 = ti * ti;
-		final double ti_4 = ti_2 * ti_2;
-		final double hog_2 = hog * hog;
-		final double back_2 = back * back;
-
-		return Math.sqrt(g_2 * mu_2 * ti_4 + 4 * g * hog * mu * ti_2 + 4 * back
-				* g * mu * ti_2 + 4 * hog_2 - 8 * back * hog + 4 * back_2)
-				/ (2 * ti);
 	}
 
 	public CurveRock computeRc(final double a0, final double v0,
@@ -139,13 +97,6 @@ public class CurlerNoCurl extends CurlerBase {
 		return 0;
 	}
 
-	public double getDrawToTeeTime() {
-		if (mu <= 0)
-			return Double.POSITIVE_INFINITY;
-		return Math.sqrt(2 * (IceSize.FAR_HACK_2_TEE - IceSize.HACK_2_HOG)
-				/ (g * mu));
-	}
-
 	/**
 	 * @see #setDrawToTeeCurl(double)
 	 * @see #setDrawToTeeTime(double)
@@ -165,31 +116,5 @@ public class CurlerNoCurl extends CurlerBase {
 		if (drawToTeeCurl != 0)
 			throw new IllegalArgumentException("Curl must be zero!");
 		PropModelHelper.setDrawToTeeCurl(params, drawToTeeCurl);
-	}
-
-	/**
-	 * Compute the friction coefficient from a draw-to-tee time. <a
-	 * href="http://maxima.sourceforge.net">Maxima</a> Solution:
-	 * 
-	 * <pre>
-	 * y(t) := v0 * t - mu * g * t * t / 2
-	 * diff(y(t),t);
-	 * v(t) := v0-g*mu*t
-	 * solve([y(th)=HACK_2_HOG, y(th+td)=HACK_2_TEE, v(th+td)=0], [th,v0,mu]);
-	 * </pre>
-	 * 
-	 * gives:
-	 * 
-	 * <pre>
-	 * mu = (2 * HACK_2_TEE - 2 * HACK_2_HOG) / (g * td * td)
-	 * </pre>
-	 */
-	public void setDrawToTeeTime(final double drawToTeeTime) {
-		if (Double.isInfinite(drawToTeeTime) && drawToTeeTime > 0)
-			mu = 0;
-		else
-			mu = 2.0 * (IceSize.FAR_HACK_2_TEE - IceSize.HACK_2_HOG)
-					/ (g * drawToTeeTime * drawToTeeTime);
-		PropModelHelper.setDrawToTeeTime(params, drawToTeeTime);
 	}
 }

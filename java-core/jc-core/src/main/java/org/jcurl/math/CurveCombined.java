@@ -101,6 +101,43 @@ public class CurveCombined extends R1RNFunctionImpl implements
 	private static final long serialVersionUID = 5955065096153576747L;
 
 	/**
+	 * Search only part of an array.
+	 * 
+	 * @see java.util.Arrays#binarySearch(double[], double)
+	 * @param a
+	 * @param min
+	 * @param max
+	 * @param key
+	 * @return found index
+	 */
+	static int binarySearch(final double[] a, int min, int max, final double key) {
+		// if(true) {
+		// return Arrays.binarySearch(a, min, max, key);
+		// } else
+		for (;;) {
+			if (key == a[min])
+				return min;
+			if (key == a[max])
+				return max;
+			final int m = (max + min) / 2;
+			if (key == a[m])
+				return m;
+			if (min + 1 >= max) {
+				if (a[min] < key && key < a[max])
+					return -1 - max;
+				return -1;
+			}
+			if (key < a[m]) {
+				max = m;
+				continue;
+			} else if (key > a[m]) {
+				min = m;
+				continue;
+			}
+		}
+	}
+
+	/**
 	 * Search only part of a list.
 	 * 
 	 * @param a
@@ -109,8 +146,7 @@ public class CurveCombined extends R1RNFunctionImpl implements
 	 * @param key
 	 * @param comp
 	 * 
-	 * @see java.util.Arrays#binarySearch(Object[], int, int, Object,
-	 *      java.util.Comparator)
+	 * @see java.util.Arrays#binarySearch(Object[], int, int, Object, java.util.Comparator)
 	 * @return found index
 	 */
 	static <E> int binarySearch(final List<E> a, final int fromIndex,

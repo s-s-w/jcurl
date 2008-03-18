@@ -18,13 +18,11 @@
  */
 package org.jcurl.core.impl;
 
-import java.awt.geom.Point2D;
 import java.util.Map;
 
 import org.jcurl.core.api.CurveRock;
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.Measure;
-import org.jcurl.core.api.Physics;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.helpers.PropModelHelper;
 import org.jcurl.math.MathVec;
@@ -66,20 +64,16 @@ import org.jcurl.math.R1R1Function;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:SlideDenny.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class CurlerDenny extends CurlerBase {
+public class CurlerDenny extends CoulombCurler {
 
 	private static final double _R = RockProps.DEFAULT.getRadius();
 
 	private static final double eps = RockProps.DEFAULT.getInertia()
 			/ (RockProps.DEFAULT.getMass() * MathVec.sqr(_R));
 
-	private static final double g = Physics.g;
-
 	private static final long serialVersionUID = 9048729754646886751L;
 
 	private transient double b;
-
-	private transient double mu;
 
 	public CurlerDenny() {}
 
@@ -99,46 +93,6 @@ public class CurlerDenny extends CurlerBase {
 		PropModelHelper.setDrawToTeeTime(t, drawToTeeTime);
 		PropModelHelper.setDrawToTeeCurl(t, drawToTeeCurl);
 		init(t);
-	}
-
-	/**
-	 * Compute the (virtual) speed at the hack for a rock released with split
-	 * time <code>t</code> towards <code>broom</code>.
-	 * <p>
-	 * <a href="http://maxima.sourceforge.net">Maxima</a> Solution:
-	 * 
-	 * <pre>
-	 * y(t) := (t-t*t/(2*tau))*v0
-	 * ratsubst(v0/(mu*g), tau, %);
-	 * remfunction(all);
-	 * y(t):=-((g*mu*t*t-2*v0*t)*v0)/(2*v0)
-	 * solve([y(tb)=back, y(tb+ti)=hog], [v0, tb]);
-	 * 
-	 * v0=sqrt(g&circ;2*mu&circ;2*ti&circ;4+4*g*hog*mu*ti&circ;2+4*back*g*mu*ti&circ;2+4*hog&circ;2-8*back*hog+4*back&circ;2)/(2*ti)
-	 * </pre>
-	 * 
-	 * @param ti
-	 *            interval- or split-time
-	 * @param broom
-	 *            broom location (WC)
-	 * @return initial absolute speed at the hack.
-	 */
-	public double computeHackSpeed(final double ti, final Point2D broom) {
-		final double x = broom.getX() / (IceSize.FAR_HACK_2_TEE - broom.getY());
-		final double f = Math.sqrt(1 + x * x);
-		final double back = IceSize.HACK_2_BACK * f;
-		final double hog = IceSize.HACK_2_HOG * f;
-
-		final double g_2 = g * g;
-		final double mu_2 = mu * mu;
-		final double ti_2 = ti * ti;
-		final double ti_4 = ti_2 * ti_2;
-		final double hog_2 = hog * hog;
-		final double back_2 = back * back;
-
-		return Math.sqrt(g_2 * mu_2 * ti_4 + 4 * g * hog * mu * ti_2 + 4 * back
-				* g * mu * ti_2 + 4 * hog_2 - 8 * back * hog + 4 * back_2)
-				/ (2 * ti);
 	}
 
 	public CurveRock computeRc(final double a0, final double v0,
@@ -174,14 +128,6 @@ public class CurlerDenny extends CurlerBase {
 		return new CurveRockAnalytic(x, y, a);
 	}
 
-	public double getDrawToTeeCurl() {
-		return PropModelHelper.getDrawToTeeCurl(params);
-	}
-
-	public double getDrawToTeeTime() {
-		return PropModelHelper.getDrawToTeeTime(params);
-	}
-
 	public void init(final Map<CharSequence, Measure> ice) {
 		internalInit(ice);
 		setDrawToTeeCurl(PropModelHelper.getDrawToTeeCurl(params));
@@ -192,31 +138,5 @@ public class CurlerDenny extends CurlerBase {
 		b = -drawToTeeCurl * 12.0 * eps * _R
 				/ MathVec.sqr(IceSize.FAR_HOG_2_TEE);
 		PropModelHelper.setDrawToTeeCurl(params, drawToTeeCurl);
-	}
-
-	/**
-	 * Compute the friction coefficient from a draw-to-tee time. <a
-	 * href="http://maxima.sourceforge.net">Maxima</a> Solution:
-	 * 
-	 * <pre>
-	 * y(t) := v0 * t - mu * g * t * t / 2
-	 * diff(y(t),t);
-	 * v(t) := v0-g*mu*t
-	 * solve([y(th)=HACK_2_HOG, y(th+td)=HACK_2_TEE, v(th+td)=0], [th,v0,mu]);
-	 * </pre>
-	 * 
-	 * gives:
-	 * 
-	 * <pre>
-	 * mu = (2 * HACK_2_TEE - 2 * HACK_2_HOG) / (g * td * td)
-	 * </pre>
-	 */
-	public void setDrawToTeeTime(final double drawToTeeTime) {
-		if (Double.isInfinite(drawToTeeTime) && drawToTeeTime > 0)
-			mu = 0;
-		else
-			mu = 2.0 * (IceSize.FAR_HACK_2_TEE - IceSize.HACK_2_HOG)
-					/ (g * drawToTeeTime * drawToTeeTime);
-		PropModelHelper.setDrawToTeeTime(params, drawToTeeTime);
 	}
 }

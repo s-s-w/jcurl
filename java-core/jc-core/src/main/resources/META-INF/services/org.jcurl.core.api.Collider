@@ -1,1 +1,3 @@
 org.jcurl.core.impl.CollissionSimple
+org.jcurl.core.impl.CollissionSpin
+org.jcurl.core.impl.CollissionSpinLoss

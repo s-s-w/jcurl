@@ -74,11 +74,11 @@ public class CSplineInterpolatorTest extends TestCase {
 
     public void testBinarySearch() {
         final double[] a = { 0, 1, 2, 3, 4 };
-        assertEquals("", 0, CurveCombined1.binarySearch(a, 0, a.length - 1, 0));
-        assertEquals("", 1, CurveCombined1.binarySearch(a, 0, a.length - 1, 1));
-        assertEquals("", 4, CurveCombined1.binarySearch(a, 0, a.length - 1, 4));
-        assertEquals("", -1, CurveCombined1.binarySearch(a, 2, a.length - 1, 1));
-        assertEquals("", -2, CurveCombined1.binarySearch(a, 0, a.length - 1,
+        assertEquals("", 0, CurveCombined.binarySearch(a, 0, a.length - 1, 0));
+        assertEquals("", 1, CurveCombined.binarySearch(a, 0, a.length - 1, 1));
+        assertEquals("", 4, CurveCombined.binarySearch(a, 0, a.length - 1, 4));
+        assertEquals("", -1, CurveCombined.binarySearch(a, 2, a.length - 1, 1));
+        assertEquals("", -2, CurveCombined.binarySearch(a, 0, a.length - 1,
                 0.5));
     }
 }
