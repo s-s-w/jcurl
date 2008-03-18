@@ -25,8 +25,8 @@ import javax.swing.JFrame;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.TestBase;
-import org.jcurl.core.api.Zoomer;
 import org.jcurl.core.log.JCLoggerFactory;
+import org.jcurl.core.ui.Zoomer;
 
 public abstract class TestShowBase extends TestBase {
 

@@ -39,7 +39,7 @@ import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.TrajectorySet;
 import org.jcurl.core.impl.CurveManager;
-import org.jcurl.core.impl.FixpointZoomer;
+import org.jcurl.core.ui.FixpointZoomer;
 
 /**
  * Base for rock location displays. Does all the coordinate transformation math

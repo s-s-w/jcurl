@@ -16,8 +16,9 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.api;
+package org.jcurl.core.impl;
 
+import org.jcurl.core.api.CurveRock;
 import org.jcurl.math.CurveFkt;
 import org.jcurl.math.R1R1Function;
 import org.jcurl.math.R1RNFunction;
@@ -27,7 +28,7 @@ import org.jcurl.math.R1RNFunction;
  * {@link R1RNFunction}s.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:CurveRockAnalytic.java 780 2008-03-18 11:06:30Z mrohrmoser $
  */
 public class CurveRockAnalytic extends CurveRock {
 

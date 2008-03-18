@@ -32,7 +32,7 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-import org.jcurl.core.impl.BroomPromptModel;
+import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.demo.tactics.Controller.MainController;
 import org.jcurl.demo.tactics.Controller.UndoRedoCon;
 import org.jcurl.demo.tactics.Controller.ZuiController;

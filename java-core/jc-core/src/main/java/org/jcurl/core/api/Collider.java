@@ -21,7 +21,6 @@ package org.jcurl.core.api;
 import java.awt.geom.AffineTransform;
 import java.util.Map;
 
-import org.jcurl.core.helpers.Measure;
 
 /**
  * Compute rock collissions.

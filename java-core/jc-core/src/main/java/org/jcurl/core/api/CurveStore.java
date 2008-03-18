@@ -21,7 +21,6 @@ package org.jcurl.core.api;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import org.jcurl.core.ui.IPropertyChangeSupport;
 import org.jcurl.math.CurveCombined;
 import org.jcurl.math.R1RNFunction;
 

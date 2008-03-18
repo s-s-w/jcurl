@@ -21,12 +21,6 @@ package org.jcurl.core.api;
 import java.io.Serializable;
 
 /**
- * Either location or speed of a rock. This class is mostly for display and
- * storage means. The value array is accessible for direct use with e.g.
- * {@link org.jcurl.math.R1RNFunctionImpl#at(int, double, double[])}.
- * 
- * @see org.jcurl.core.api.PositionSet
- * @see org.jcurl.core.api.Rock
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:RockDouble.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */

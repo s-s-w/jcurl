@@ -24,8 +24,6 @@ import java.io.Serializable;
 
 import javax.swing.event.ChangeListener;
 
-import org.jcurl.core.ui.ChangeSupport;
-import org.jcurl.core.ui.IChangeSupport;
 
 /**
  * Base class for rock information (either location or speed). The "Z" component

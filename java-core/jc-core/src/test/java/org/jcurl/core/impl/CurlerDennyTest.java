@@ -21,22 +21,20 @@ package org.jcurl.core.impl;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
-import org.jcurl.core.api.CurlerBase;
 import org.jcurl.core.api.CurveRock;
-import org.jcurl.core.api.CurveTransformed;
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.SpeedSet;
-import org.jcurl.core.api.Zoomer;
 import org.jcurl.core.impl.CollissionSpin;
 import org.jcurl.core.impl.CurlerDenny;
 import org.jcurl.core.impl.CurlerNoCurl;
 import org.jcurl.core.impl.CurveManager;
-import org.jcurl.core.impl.FixpointZoomer;
 import org.jcurl.core.impl.NewtonCollissionDetector;
 import org.jcurl.core.swing.TestShowBase;
+import org.jcurl.core.ui.FixpointZoomer;
+import org.jcurl.core.ui.Zoomer;
 import org.jcurl.math.NewtonSimpleSolver;
 
 /**

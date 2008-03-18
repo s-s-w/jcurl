@@ -30,7 +30,7 @@ import java.awt.geom.Rectangle2D;
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.Strategy;
-import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.api.Unit;
 
 /**
  * Strategy to paint the ice sheet in world coordinates.

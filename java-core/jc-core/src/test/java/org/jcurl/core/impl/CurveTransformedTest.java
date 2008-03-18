@@ -16,20 +16,20 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.api;
+package org.jcurl.core.impl;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import org.jcurl.core.api.CurveRock;
-import org.jcurl.core.api.CurveRockAnalytic;
-import org.jcurl.core.api.CurveStill;
-import org.jcurl.core.api.CurveTransformed;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
-import org.jcurl.core.impl.FixpointZoomer;
+import org.jcurl.core.impl.CurveRockAnalytic;
+import org.jcurl.core.impl.CurveStill;
+import org.jcurl.core.impl.CurveTransformed;
 import org.jcurl.core.swing.TestShowBase;
+import org.jcurl.core.ui.FixpointZoomer;
 import org.jcurl.math.PolynomeCurve;
 
 public class CurveTransformedTest extends TestShowBase {

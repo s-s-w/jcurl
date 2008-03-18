@@ -23,7 +23,6 @@ import java.util.Hashtable;
 
 import javax.swing.undo.StateEditable;
 
-import org.jcurl.core.ui.ChangeSupport;
 import org.jcurl.math.MathVec;
 
 /**

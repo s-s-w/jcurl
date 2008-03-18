@@ -20,9 +20,8 @@ package org.jcurl.core.impl;
 
 import java.util.Map;
 
-import org.jcurl.core.api.ColliderBase;
+import org.jcurl.core.api.Measure;
 import org.jcurl.core.api.Rock;
-import org.jcurl.core.helpers.Measure;
 
 /**
  * A very simple hit-model using conservation of energy and momentum.

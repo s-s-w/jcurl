@@ -16,13 +16,19 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.api;
+package org.jcurl.core.impl;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.api.Collider;
+import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.Rock;
+import org.jcurl.core.api.RockProps;
+import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.SpeedSet;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.MathVec;
 

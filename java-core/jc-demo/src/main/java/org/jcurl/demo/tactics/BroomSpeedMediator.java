@@ -28,16 +28,16 @@ import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.Curler;
+import org.jcurl.core.api.IChangeSupport;
+import org.jcurl.core.api.IPropertyChangeSupport;
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.SpeedSet;
-import org.jcurl.core.impl.BroomPromptModel;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.ui.IChangeSupport;
-import org.jcurl.core.ui.IPropertyChangeSupport;
+import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.math.MathVec;
 
 class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {

@@ -18,7 +18,6 @@
  */
 package org.jcurl.core.impl;
 
-import org.jcurl.core.api.CollissionDetectorBase;
 import org.jcurl.math.Distance2DSq;
 import org.jcurl.math.NewtonSimpleSolver;
 import org.jcurl.math.R1RNFunction;

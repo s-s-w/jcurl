@@ -34,7 +34,7 @@ import javax.swing.event.ChangeListener;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockSet;
-import org.jcurl.core.impl.FixpointZoomer;
+import org.jcurl.core.ui.FixpointZoomer;
 /**
  * Base for rock location displays. Does all the coordinate transformation math
  * and setters to delegate to {@link RockPainter} and {@link IcePainter} .

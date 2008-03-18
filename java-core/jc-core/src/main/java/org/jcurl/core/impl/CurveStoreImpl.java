@@ -24,12 +24,10 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.api.CurveRockAnalytic;
-import org.jcurl.core.api.CurveStill;
 import org.jcurl.core.api.CurveStore;
+import org.jcurl.core.api.MutableObject;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.StopDetector;
-import org.jcurl.core.helpers.MutableObject;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.CurveCombined;
 import org.jcurl.math.R1RNFunction;

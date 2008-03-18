@@ -20,7 +20,6 @@ package org.jcurl.core.api;
 
 import java.awt.geom.Point2D;
 
-import org.jcurl.core.helpers.Unit;
 
 /**
  * A {@link RockSet} with location semantics.

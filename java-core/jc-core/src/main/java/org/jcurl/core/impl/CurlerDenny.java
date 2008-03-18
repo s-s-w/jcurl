@@ -21,14 +21,12 @@ package org.jcurl.core.impl;
 import java.awt.geom.Point2D;
 import java.util.Map;
 
-import org.jcurl.core.api.CurlerBase;
 import org.jcurl.core.api.CurveRock;
-import org.jcurl.core.api.CurveRockAnalytic;
 import org.jcurl.core.api.IceSize;
-import org.jcurl.core.api.PropModelHelper;
+import org.jcurl.core.api.Measure;
+import org.jcurl.core.api.Physics;
 import org.jcurl.core.api.RockProps;
-import org.jcurl.core.helpers.Measure;
-import org.jcurl.core.helpers.Physics;
+import org.jcurl.core.helpers.PropModelHelper;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.Polynome;
 import org.jcurl.math.R1R1Function;
@@ -182,31 +180,6 @@ public class CurlerDenny extends CurlerBase {
 
 	public double getDrawToTeeTime() {
 		return PropModelHelper.getDrawToTeeTime(params);
-	}
-
-	/**
-	 * UNUSED, see {@link #computeHogSpeed(double)}. Guess the initial speed.
-	 * 
-	 * @param y
-	 *            Start (distance to tee-line)
-	 * @param t
-	 *            from Hog to Hog. see ./doc/eiszeit.tex for details.
-	 * @return [meter/sec]
-	 */
-	private double getInitialSpeed(final double y, final double t) {
-		double tmp;
-
-		final double Y = IceSize.FAR_HOG_2_TEE - y;
-		tmp = mu * g * t + 2.0 * IceSize.HOG_2_HOG / t;
-		tmp *= tmp;
-		// tmp += 4.0 * _mu * g * IceSize.HOG_2_HOG;
-
-		assert Y <= tmp / (8.0 * g * mu); // ensure a positive sqrt-arg.
-
-		tmp -= 8.0 * g * mu * Y;
-		tmp = Math.sqrt(tmp) / 2.0;
-
-		return tmp;
 	}
 
 	public void init(final Map<CharSequence, Measure> ice) {

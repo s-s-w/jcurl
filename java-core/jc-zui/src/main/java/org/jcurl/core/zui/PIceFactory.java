@@ -31,7 +31,7 @@ import java.awt.geom.Rectangle2D;
 import org.jcurl.core.api.Factory;
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.RockProps;
-import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.api.Unit;
 
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.nodes.PPath;

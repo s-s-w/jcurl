@@ -72,12 +72,15 @@ class CurveCombined1 extends R1RNFunctionImpl implements
      * 
      * @see java.util.Arrays#binarySearch(double[], double)
      * @param a
-     * @param key
      * @param min
      * @param max
+     * @param key
      * @return found index
      */
-    static int binarySearch(final double[] a, final double key, int min, int max) {
+    static int binarySearch(final double[] a, int min, int max, final double key) {
+//    	if(true) {
+//    		return Arrays.binarySearch(a, min, max, key);
+//    	} else
         for (;;) {
             if (key == a[min])
                 return min;
@@ -169,7 +172,7 @@ class CurveCombined1 extends R1RNFunctionImpl implements
         if (t < t0[0])
             throw new IllegalArgumentException("t < tmin");
         // find the correct index
-        final int idx = CurveCombined1.binarySearch(t0, t, 0, parts - 1);
+        final int idx = CurveCombined1.binarySearch(t0, 0, parts - 1, t);
         if (idx >= 0)
             return idx;
         if (idx == -1)

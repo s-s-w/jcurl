@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.helpers;
+package org.jcurl.core.api;
 
 import java.io.Serializable;
 import java.util.regex.Matcher;
@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
  * href="http://www.jcp.org/en/jsr/detail?id=275">JSR-275</a> but faaaar
  * simpler.
  * 
- * @see org.jcurl.core.helpers.Unit
+ * @see org.jcurl.core.api.Unit
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:Measure.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */

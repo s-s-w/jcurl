@@ -16,28 +16,24 @@
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.impl;
+package org.jcurl.core.ui;
 
 import java.awt.geom.Point2D;
 
 import javax.swing.BoundedRangeModel;
 import javax.swing.DefaultBoundedRangeModel;
 
-import org.apache.commons.logging.Log;
+import org.jcurl.core.api.MutableObject;
 import org.jcurl.core.api.RockSet;
-import org.jcurl.core.helpers.MutableObject;
-import org.jcurl.core.log.JCLoggerFactory;
 
 /**
  * Data model for broom location, rock index, rotation (counter-/clockwise) and
  * initial speed.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:BroomPromptModel.java 780 2008-03-18 11:06:30Z mrohrmoser $
  */
 public class BroomPromptModel extends MutableObject {
-	private static final Log log = JCLoggerFactory
-			.getLogger(BroomPromptModel.class);
 	private static final long serialVersionUID = 4808528753885429987L;
 	private Point2D broom = new Point2D.Float(0, 0);
 	private int idx16 = -1;

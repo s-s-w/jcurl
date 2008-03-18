@@ -23,12 +23,11 @@ import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.util.Map;
 
-import org.jcurl.core.api.ColliderBase;
-import org.jcurl.core.api.PropModelHelper;
+import org.jcurl.core.api.Measure;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockProps;
-import org.jcurl.core.helpers.Measure;
+import org.jcurl.core.helpers.PropModelHelper;
 import org.jcurl.math.MathVec;
 
 /**

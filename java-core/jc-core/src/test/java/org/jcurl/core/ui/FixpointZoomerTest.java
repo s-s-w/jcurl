@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.impl;
+package org.jcurl.core.ui;
 
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
@@ -27,12 +27,12 @@ import junit.framework.TestCase;
 
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.Orientation;
-import org.jcurl.core.impl.FixpointZoomer;
+import org.jcurl.core.ui.FixpointZoomer;
 
 /**
  * JUnit test
  * 
- * @see org.jcurl.core.impl.FixpointZoomer
+ * @see org.jcurl.core.ui.FixpointZoomer
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:FixpointZoomerTest.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */

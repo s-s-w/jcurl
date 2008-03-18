@@ -16,12 +16,15 @@
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.api;
+package org.jcurl.core.impl;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.io.ObjectStreamException;
 
+import org.jcurl.core.api.CurveRock;
+import org.jcurl.core.api.Rock;
+import org.jcurl.core.api.RockDouble;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.R1RNFunction;
 
@@ -109,20 +112,6 @@ public class CurveTransformed extends CurveRock {
 	public CurveTransformed(final CurveRock base, final AffineTransform trafo,
 			final double t0) {
 		this(trafo, base, t0);
-	}
-
-	/**
-	 * See {@link #createRc2Wc(Point2D, Point2D, AffineTransform)} and
-	 * {@link #CurveTransformed(CurveRock, AffineTransform, double)}
-	 * 
-	 * @param c
-	 * @param x0_wc
-	 * @param v0_wc
-	 * @param t0
-	 */
-	private CurveTransformed(final CurveRock c, final Point2D x0_wc,
-			final Point2D v0_wc, final double t0) {
-		this(c, createRc2Wc(x0_wc, v0_wc, null), t0);
 	}
 
 	@Override

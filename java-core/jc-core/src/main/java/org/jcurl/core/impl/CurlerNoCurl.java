@@ -21,13 +21,11 @@ package org.jcurl.core.impl;
 import java.awt.geom.Point2D;
 import java.util.Map;
 
-import org.jcurl.core.api.CurlerBase;
 import org.jcurl.core.api.CurveRock;
-import org.jcurl.core.api.CurveRockAnalytic;
 import org.jcurl.core.api.IceSize;
-import org.jcurl.core.api.PropModelHelper;
-import org.jcurl.core.helpers.Measure;
-import org.jcurl.core.helpers.Physics;
+import org.jcurl.core.api.Measure;
+import org.jcurl.core.api.Physics;
+import org.jcurl.core.helpers.PropModelHelper;
 import org.jcurl.math.Polynome;
 import org.jcurl.math.PolynomeCurve;
 
@@ -157,10 +155,6 @@ public class CurlerNoCurl extends CurlerBase {
 		setDrawToTeeTime(drawToTeeTime);
 	}
 
-	/**
-	 * @see #internalInit(Map)
-	 * @see #init(double, double)
-	 */
 	public void init(final Map<CharSequence, Measure> ice) {
 		internalInit(ice);
 		init(PropModelHelper.getDrawToTeeTime(params), PropModelHelper

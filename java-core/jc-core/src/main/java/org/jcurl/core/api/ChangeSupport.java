@@ -1,9 +1,10 @@
-package org.jcurl.core.ui;
+package org.jcurl.core.api;
 
 import javax.swing.BoundedRangeModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
+
 
 /**
  * Inspired by {@link BoundedRangeModel}.

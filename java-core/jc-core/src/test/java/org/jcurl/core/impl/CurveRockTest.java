@@ -16,15 +16,15 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.api;
+package org.jcurl.core.impl;
 
 import junit.framework.TestCase;
 
 import org.jcurl.core.api.CurveRock;
-import org.jcurl.core.api.CurveRockAnalytic;
-import org.jcurl.core.api.CurveStill;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
+import org.jcurl.core.impl.CurveRockAnalytic;
+import org.jcurl.core.impl.CurveStill;
 import org.jcurl.math.Polynome;
 
 public class CurveRockTest extends TestCase {

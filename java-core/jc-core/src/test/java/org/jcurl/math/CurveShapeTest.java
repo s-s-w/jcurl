@@ -22,8 +22,8 @@ import java.awt.geom.AffineTransform;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.api.CurveRockAnalytic;
-import org.jcurl.core.api.CurveTransformed;
+import org.jcurl.core.impl.CurveRockAnalytic;
+import org.jcurl.core.impl.CurveTransformed;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

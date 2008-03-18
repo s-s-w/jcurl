@@ -18,25 +18,23 @@
  */
 package org.jcurl.core.api;
 
-import org.jcurl.math.MathVec;
-import org.jcurl.math.R1RNFunction;
+import org.jcurl.core.api.Measure;
+import org.jcurl.core.api.Unit;
+
+import junit.framework.TestCase;
 
 /**
- * Find Collissions of two spheres moving along curves.
- * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id:CollissionDetectorBase.java 682 2007-08-12 21:25:04Z mrohrmoser $
+ * @version $Id$
  */
-public abstract class CollissionDetectorBase implements CollissionDetector {
+public class MeasureTest extends TestCase {
+    public void testConvert() {
+        final Measure in = new Measure(12, Unit.INCH);
+        final Measure ft = new Measure(1, Unit.FOOT);
+        final Measure m = new Measure(0.3048, Unit.METER);
 
-    public double compute(final double t0, final double tstop,
-            final R1RNFunction fa, final double ra, final R1RNFunction fb,
-            final double rb) {
-        return compute(t0, tstop, fa, fb, MathVec.sqr(ra + rb));
-    }
-
-    public double compute(final double t0, final double tstop,
-            final R1RNFunction fa, final R1RNFunction fb) {
-        return compute(t0, tstop, fa, fb, CollissionDetector.RR2);
+        assertEquals(m, m.to(Unit.METER));
+        assertEquals(m, in.to(Unit.METER));
+        assertEquals(m, ft.to(Unit.METER));
     }
 }

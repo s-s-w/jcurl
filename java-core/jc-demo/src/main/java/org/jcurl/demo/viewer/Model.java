@@ -18,7 +18,7 @@
  */
 package org.jcurl.demo.viewer;
 
-import org.jcurl.core.helpers.MutableObject;
+import org.jcurl.core.api.MutableObject;
 
 public class Model extends MutableObject {
 

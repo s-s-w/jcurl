@@ -16,7 +16,10 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.api;
+package org.jcurl.core.impl;
+
+import org.jcurl.core.api.CurveRock;
+import org.jcurl.core.api.Rock;
 
 /**
  * Curve implementation for rocks NOT in motion.

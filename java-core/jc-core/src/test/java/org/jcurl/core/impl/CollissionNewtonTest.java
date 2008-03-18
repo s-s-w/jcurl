@@ -22,8 +22,6 @@ import junit.framework.TestCase;
 
 import org.jcurl.core.api.CollissionDetector;
 import org.jcurl.core.api.CurveRock;
-import org.jcurl.core.api.CurveRockAnalytic;
-import org.jcurl.core.api.CurveStill;
 import org.jcurl.core.impl.CurlerNoCurl;
 import org.jcurl.core.impl.NewtonCollissionDetector;
 import org.jcurl.math.Distance2DSq;

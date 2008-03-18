@@ -24,7 +24,6 @@ import junit.framework.TestCase;
 
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.RockSet;
-import org.jcurl.core.helpers.Unit;
 
 /**
  * JUnit Test

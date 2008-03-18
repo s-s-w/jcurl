@@ -23,7 +23,6 @@ import java.awt.geom.Point2D;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.api.ColliderBase;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockProps;

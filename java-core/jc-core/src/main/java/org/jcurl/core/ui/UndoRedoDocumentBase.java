@@ -23,7 +23,7 @@ import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
 
-import org.jcurl.core.helpers.WeakHashSet;
+import org.jcurl.core.api.WeakHashSet;
 
 /**
  * Abstract base.

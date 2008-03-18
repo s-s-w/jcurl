@@ -182,7 +182,7 @@ public class CSplineInterpolator extends R1R1Function {
             // compute the c3 values
             splines = computeSplines(points, this.x, y);
         // find the correct index
-        int idx = CurveCombined1.binarySearch(this.x, x, 0, points - 1);
+        int idx = CurveCombined1.binarySearch(this.x, 0, points - 1, x);
         if (idx < 0) {
             if (idx == -1)
                 return -1;

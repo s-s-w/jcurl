@@ -26,7 +26,7 @@ import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.api.Unit;
 
 /**
  * {@link JSlider} plus {@link JTextField} for Broom direction, Interval Time,

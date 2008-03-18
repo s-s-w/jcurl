@@ -18,7 +18,6 @@
  */
 package org.jcurl.core.api;
 
-import org.jcurl.core.helpers.EnumBase;
 
 /**
  * North, East, South, West.

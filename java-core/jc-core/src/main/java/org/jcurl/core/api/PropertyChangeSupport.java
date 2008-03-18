@@ -16,7 +16,7 @@
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.ui;
+package org.jcurl.core.api;
 
 import java.beans.BeanInfo;
 import java.beans.IndexedPropertyChangeEvent;
@@ -32,7 +32,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.helpers.WeakHashSet;
 import org.jcurl.core.log.JCLoggerFactory;
 
 /**

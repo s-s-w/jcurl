@@ -18,7 +18,6 @@
  */
 package org.jcurl.core.api;
 
-import org.jcurl.core.helpers.Unit;
 
 /**
  * Rock properties like mass etc.

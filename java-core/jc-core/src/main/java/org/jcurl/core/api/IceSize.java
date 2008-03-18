@@ -20,7 +20,6 @@ package org.jcurl.core.api;
 
 import java.awt.Shape;
 
-import org.jcurl.core.helpers.Unit;
 
 /**
  * Ice dimensions. TODO Should here be {@link Shape}s?

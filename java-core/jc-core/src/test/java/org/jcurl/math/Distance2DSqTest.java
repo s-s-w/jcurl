@@ -20,11 +20,11 @@ package org.jcurl.math;
 
 import org.jcurl.core.api.CollissionDetector;
 import org.jcurl.core.api.CurveRock;
-import org.jcurl.core.api.CurveRockAnalytic;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.TestBase;
+import org.jcurl.core.impl.CurveRockAnalytic;
 
 public class Distance2DSqTest extends TestBase {
 

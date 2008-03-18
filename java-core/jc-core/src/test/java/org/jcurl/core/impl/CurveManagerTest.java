@@ -29,17 +29,17 @@ import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.SpeedSet;
+import org.jcurl.core.api.Unit;
 import org.jcurl.core.helpers.AnnoHelper;
-import org.jcurl.core.helpers.Unit;
 import org.jcurl.core.impl.CollissionSimple;
 import org.jcurl.core.impl.CollissionSpin;
 import org.jcurl.core.impl.CurlerDenny;
 import org.jcurl.core.impl.CurlerNoCurl;
 import org.jcurl.core.impl.CurveManager;
-import org.jcurl.core.impl.FixpointZoomer;
 import org.jcurl.core.impl.NewtonCollissionDetector;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.swing.TestShowBase;
+import org.jcurl.core.ui.FixpointZoomer;
 import org.jcurl.math.R1RNFunction;
 
 public class CurveManagerTest extends TestShowBase {

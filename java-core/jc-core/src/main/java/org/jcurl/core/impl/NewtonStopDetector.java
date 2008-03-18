@@ -19,7 +19,6 @@
 package org.jcurl.core.impl;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.api.CurveStill;
 import org.jcurl.core.api.StopDetector;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.Distance2DSq;

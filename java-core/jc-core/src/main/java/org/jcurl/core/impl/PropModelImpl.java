@@ -16,14 +16,17 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.api;
+package org.jcurl.core.impl;
 
 import java.io.ObjectStreamException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.jcurl.core.helpers.Measure;
+import org.jcurl.core.api.Measure;
+import org.jcurl.core.api.PropModel;
+import org.jcurl.core.helpers.PropModelHelper;
+
 
 /**
  * Help with post-constructor one-time initialisation.

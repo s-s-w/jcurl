@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.jcurl.core.helpers.Measure;
 
 /**
  * Interface for all classes that have <code>key=value</code> parameters and

@@ -26,8 +26,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.jcurl.core.api.PositionSet;
-import org.jcurl.core.api.Zoomer;
 import org.jcurl.core.helpers.NotImplementedYetException;
+import org.jcurl.core.ui.Zoomer;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>

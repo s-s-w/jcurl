@@ -1,4 +1,4 @@
-package org.jcurl.core.ui;
+package org.jcurl.core.api;
 
 import javax.swing.event.ChangeListener;
 

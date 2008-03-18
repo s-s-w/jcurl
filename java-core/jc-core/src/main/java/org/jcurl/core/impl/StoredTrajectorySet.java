@@ -16,13 +16,19 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.api;
+package org.jcurl.core.impl;
 
 import java.io.ObjectStreamException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jcurl.core.helpers.MutableObject;
+import org.jcurl.core.api.CurveStore;
+import org.jcurl.core.api.MutableObject;
+import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.SpeedSet;
+import org.jcurl.core.api.TrajectorySet;
+
 
 /**
  * Trajectory wrapping a {@link CurveStore}.
