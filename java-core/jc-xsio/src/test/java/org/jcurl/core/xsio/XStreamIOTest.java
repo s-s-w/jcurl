@@ -194,15 +194,7 @@ public class XStreamIOTest extends TestBase {
                 "            <rock>-0.1338145136833191 -1.6949855089187622 0.0</rock>\n" + 
                 "            <rock>-0.5352586507797241 -0.4906536340713501 0.0</rock>\n" + 
                 "          </light>\n" + 
-                "          <listenerList serialization=\"custom\">\n" + 
-                "            <javax.swing.event.EventListenerList>\n" + 
-                "              <default/>\n" + 
-                "              <string>javax.swing.event.ChangeListener</string>\n" + 
-                "              <CurveManager reference=\"../../../..\"/>\n" + 
-                "              <null/>\n" + 
-                "            </javax.swing.event.EventListenerList>\n" + 
-                "          </listenerList>\n" + 
-                "          <source class=\"org.jcurl.core.base.PositionSet\" reference=\"..\"/>\n" + 
+                "          <source class=\"org.jcurl.core.api.PositionSet\" reference=\"..\"/>\n" + 
                 "        </initialPos>\n" + 
                 "        <initialSpeed>\n" + 
                 "          <dark>\n" + 
@@ -225,15 +217,7 @@ public class XStreamIOTest extends TestBase {
                 "            <rock>0.0 0.0 0.0</rock>\n" + 
                 "            <rock>0.0 0.0 0.0</rock>\n" + 
                 "          </light>\n" + 
-                "          <listenerList serialization=\"custom\">\n" + 
-                "            <javax.swing.event.EventListenerList>\n" + 
-                "              <default/>\n" + 
-                "              <string>javax.swing.event.ChangeListener</string>\n" + 
-                "              <CurveManager reference=\"../../../..\"/>\n" + 
-                "              <null/>\n" + 
-                "            </javax.swing.event.EventListenerList>\n" + 
-                "          </listenerList>\n" + 
-                "          <source class=\"org.jcurl.core.base.SpeedSet\" reference=\"..\"/>\n" + 
+                "          <source class=\"org.jcurl.core.api.SpeedSet\" reference=\"..\"/>\n" + 
                 "        </initialSpeed>\n" + 
                 "      </CurveManager>\n" + 
                 "    </trajectories>\n" + 
@@ -271,12 +255,12 @@ public class XStreamIOTest extends TestBase {
         final String x = xs.toXML(te.getCurveStore());
         // System.out.println(x);
         assertEquals(
-                "<org.jcurl.core.model.CurveStoreImpl>\n" + 
+                "<org.jcurl.core.impl.CurveStoreImpl>\n" + 
                 "  <curve>\n" + 
                 "    <org.jcurl.math.CurveCombined>\n" + 
                 "      <parts>\n" + 
                 "        <org.jcurl.math.CurveCombined_-Part>\n" + 
-                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "          <curve class=\"org.jcurl.core.impl.CurveStill\">\n" + 
                 "            <a>0.0</a>\n" + 
                 "            <x>0.0</x>\n" + 
                 "            <y>6.4008002281188965</y>\n" + 
@@ -288,7 +272,7 @@ public class XStreamIOTest extends TestBase {
                 "    <org.jcurl.math.CurveCombined>\n" + 
                 "      <parts>\n" + 
                 "        <org.jcurl.math.CurveCombined_-Part>\n" + 
-                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "          <curve class=\"org.jcurl.core.impl.CurveStill\">\n" + 
                 "            <a>0.7853981633974483</a>\n" + 
                 "            <x>0.1</x>\n" + 
                 "            <y>1.8287999629974365</y>\n" + 
@@ -300,7 +284,7 @@ public class XStreamIOTest extends TestBase {
                 "    <org.jcurl.math.CurveCombined>\n" + 
                 "      <parts>\n" + 
                 "        <org.jcurl.math.CurveCombined_-Part>\n" + 
-                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "          <curve class=\"org.jcurl.core.impl.CurveStill\">\n" + 
                 "            <a>0.0</a>\n" + 
                 "            <x>-2.2098000049591064</x>\n" + 
                 "            <y>9.083040237426758</y>\n" + 
@@ -312,7 +296,7 @@ public class XStreamIOTest extends TestBase {
                 "    <org.jcurl.math.CurveCombined>\n" + 
                 "      <parts>\n" + 
                 "        <org.jcurl.math.CurveCombined_-Part>\n" + 
-                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "          <curve class=\"org.jcurl.core.impl.CurveStill\">\n" + 
                 "            <a>0.0</a>\n" + 
                 "            <x>2.2098000049591064</x>\n" + 
                 "            <y>9.083040237426758</y>\n" + 
@@ -324,7 +308,7 @@ public class XStreamIOTest extends TestBase {
                 "    <org.jcurl.math.CurveCombined>\n" + 
                 "      <parts>\n" + 
                 "        <org.jcurl.math.CurveCombined_-Part>\n" + 
-                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "          <curve class=\"org.jcurl.core.impl.CurveStill\">\n" + 
                 "            <a>0.0</a>\n" + 
                 "            <x>-2.2098000049591064</x>\n" + 
                 "            <y>8.717280387878418</y>\n" + 
@@ -336,7 +320,7 @@ public class XStreamIOTest extends TestBase {
                 "    <org.jcurl.math.CurveCombined>\n" + 
                 "      <parts>\n" + 
                 "        <org.jcurl.math.CurveCombined_-Part>\n" + 
-                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "          <curve class=\"org.jcurl.core.impl.CurveStill\">\n" + 
                 "            <a>0.0</a>\n" + 
                 "            <x>2.2098000049591064</x>\n" + 
                 "            <y>8.717280387878418</y>\n" + 
@@ -348,7 +332,7 @@ public class XStreamIOTest extends TestBase {
                 "    <org.jcurl.math.CurveCombined>\n" + 
                 "      <parts>\n" + 
                 "        <org.jcurl.math.CurveCombined_-Part>\n" + 
-                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "          <curve class=\"org.jcurl.core.impl.CurveStill\">\n" + 
                 "            <a>0.0</a>\n" + 
                 "            <x>-2.2098000049591064</x>\n" + 
                 "            <y>8.351519584655762</y>\n" + 
@@ -360,7 +344,7 @@ public class XStreamIOTest extends TestBase {
                 "    <org.jcurl.math.CurveCombined>\n" + 
                 "      <parts>\n" + 
                 "        <org.jcurl.math.CurveCombined_-Part>\n" + 
-                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "          <curve class=\"org.jcurl.core.impl.CurveStill\">\n" + 
                 "            <a>0.0</a>\n" + 
                 "            <x>2.2098000049591064</x>\n" + 
                 "            <y>8.351519584655762</y>\n" + 
@@ -372,7 +356,7 @@ public class XStreamIOTest extends TestBase {
                 "    <org.jcurl.math.CurveCombined>\n" + 
                 "      <parts>\n" + 
                 "        <org.jcurl.math.CurveCombined_-Part>\n" + 
-                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "          <curve class=\"org.jcurl.core.impl.CurveStill\">\n" + 
                 "            <a>0.0</a>\n" + 
                 "            <x>-2.2098000049591064</x>\n" + 
                 "            <y>7.98576021194458</y>\n" + 
@@ -384,7 +368,7 @@ public class XStreamIOTest extends TestBase {
                 "    <org.jcurl.math.CurveCombined>\n" + 
                 "      <parts>\n" + 
                 "        <org.jcurl.math.CurveCombined_-Part>\n" + 
-                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "          <curve class=\"org.jcurl.core.impl.CurveStill\">\n" + 
                 "            <a>0.0</a>\n" + 
                 "            <x>2.2098000049591064</x>\n" + 
                 "            <y>7.98576021194458</y>\n" + 
@@ -396,7 +380,7 @@ public class XStreamIOTest extends TestBase {
                 "    <org.jcurl.math.CurveCombined>\n" + 
                 "      <parts>\n" + 
                 "        <org.jcurl.math.CurveCombined_-Part>\n" + 
-                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "          <curve class=\"org.jcurl.core.impl.CurveStill\">\n" + 
                 "            <a>0.0</a>\n" + 
                 "            <x>-2.2098000049591064</x>\n" + 
                 "            <y>7.619999885559082</y>\n" + 
@@ -408,7 +392,7 @@ public class XStreamIOTest extends TestBase {
                 "    <org.jcurl.math.CurveCombined>\n" + 
                 "      <parts>\n" + 
                 "        <org.jcurl.math.CurveCombined_-Part>\n" + 
-                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "          <curve class=\"org.jcurl.core.impl.CurveStill\">\n" + 
                 "            <a>0.0</a>\n" + 
                 "            <x>2.2098000049591064</x>\n" + 
                 "            <y>7.619999885559082</y>\n" + 
@@ -420,7 +404,7 @@ public class XStreamIOTest extends TestBase {
                 "    <org.jcurl.math.CurveCombined>\n" + 
                 "      <parts>\n" + 
                 "        <org.jcurl.math.CurveCombined_-Part>\n" + 
-                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "          <curve class=\"org.jcurl.core.impl.CurveStill\">\n" + 
                 "            <a>0.0</a>\n" + 
                 "            <x>-2.2098000049591064</x>\n" + 
                 "            <y>7.254240036010742</y>\n" + 
@@ -432,7 +416,7 @@ public class XStreamIOTest extends TestBase {
                 "    <org.jcurl.math.CurveCombined>\n" + 
                 "      <parts>\n" + 
                 "        <org.jcurl.math.CurveCombined_-Part>\n" + 
-                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "          <curve class=\"org.jcurl.core.impl.CurveStill\">\n" + 
                 "            <a>0.0</a>\n" + 
                 "            <x>2.2098000049591064</x>\n" + 
                 "            <y>7.254240036010742</y>\n" + 
@@ -444,7 +428,7 @@ public class XStreamIOTest extends TestBase {
                 "    <org.jcurl.math.CurveCombined>\n" + 
                 "      <parts>\n" + 
                 "        <org.jcurl.math.CurveCombined_-Part>\n" + 
-                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "          <curve class=\"org.jcurl.core.impl.CurveStill\">\n" + 
                 "            <a>0.0</a>\n" + 
                 "            <x>-2.2098000049591064</x>\n" + 
                 "            <y>6.888480186462402</y>\n" + 
@@ -456,7 +440,7 @@ public class XStreamIOTest extends TestBase {
                 "    <org.jcurl.math.CurveCombined>\n" + 
                 "      <parts>\n" + 
                 "        <org.jcurl.math.CurveCombined_-Part>\n" + 
-                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "          <curve class=\"org.jcurl.core.impl.CurveStill\">\n" + 
                 "            <a>0.0</a>\n" + 
                 "            <x>2.2098000049591064</x>\n" + 
                 "            <y>6.888480186462402</y>\n" + 
@@ -466,8 +450,8 @@ public class XStreamIOTest extends TestBase {
                 "      </parts>\n" + 
                 "    </org.jcurl.math.CurveCombined>\n" + 
                 "  </curve>\n" + 
-                "  <stopper class=\"org.jcurl.core.model.NewtonStopDetector\"/>\n" + 
-                "</org.jcurl.core.model.CurveStoreImpl>", x);
+                "  <stopper class=\"org.jcurl.core.impl.NewtonStopDetector\"/>\n" + 
+                "</org.jcurl.core.impl.CurveStoreImpl>", x);
     }
 
     public void testDefaultSettings() {
@@ -515,9 +499,9 @@ public class XStreamIOTest extends TestBase {
         final String x = xs.toXML(te);
         // System.out.println(x);
         assertEquals(
-                "<org.jcurl.core.model.CurveManager>\n" + 
+                "<org.jcurl.core.impl.CurveManager>\n" + 
                 "  <annotations/>\n" + 
-                "  <collider class=\"org.jcurl.core.model.CollissionSpin\">\n" + 
+                "  <collider class=\"org.jcurl.core.impl.CollissionSpin\">\n" + 
                 "    <params>\n" + 
                 "      <entry>\n" + 
                 "        <string>loss</string>\n" + 
@@ -529,8 +513,8 @@ public class XStreamIOTest extends TestBase {
                 "      </entry>\n" + 
                 "    </params>\n" + 
                 "  </collider>\n" + 
-                "  <collissionDetector class=\"org.jcurl.core.model.NewtonCollissionDetector\"/>\n" + 
-                "  <curler class=\"org.jcurl.core.model.CurlerNoCurl\">\n" + 
+                "  <collissionDetector class=\"org.jcurl.core.impl.NewtonCollissionDetector\"/>\n" + 
+                "  <curler class=\"org.jcurl.core.impl.CurlerNoCurl\">\n" + 
                 "    <params>\n" + 
                 "      <entry>\n" + 
                 "        <string>drawToTeeTime</string>\n" + 
@@ -563,19 +547,11 @@ public class XStreamIOTest extends TestBase {
                 "      <rock>2.2098000049591064 7.254240036010742 0.0</rock>\n" + 
                 "      <rock>2.2098000049591064 6.888480186462402 0.0</rock>\n" + 
                 "    </light>\n" + 
-                "    <listenerList serialization=\"custom\">\n" + 
-                "      <javax.swing.event.EventListenerList>\n" + 
-                "        <default/>\n" + 
-                "        <string>javax.swing.event.ChangeListener</string>\n" + 
-                "        <org.jcurl.core.model.CurveManager reference=\"../../../..\"/>\n" + 
-                "        <null/>\n" + 
-                "      </javax.swing.event.EventListenerList>\n" + 
-                "    </listenerList>\n" + 
-                "    <source class=\"org.jcurl.core.base.PositionSet\" reference=\"..\"/>\n" + 
+                "    <source class=\"org.jcurl.core.api.PositionSet\" reference=\"..\"/>\n" + 
                 "  </initialPos>\n" + 
                 "  <initialSpeed>\n" + 
                 "    <dark>\n" + 
-                "      <rock>0.0 -1.7412714637086057 1.5707963267948966</rock>\n" + 
+                "      <rock>0.0 -2.0136495784249293 1.5707963267948966</rock>\n" + 
                 "      <rock>0.0 0.0 0.0</rock>\n" + 
                 "      <rock>0.0 0.0 0.0</rock>\n" + 
                 "      <rock>0.0 0.0 0.0</rock>\n" + 
@@ -594,17 +570,9 @@ public class XStreamIOTest extends TestBase {
                 "      <rock>0.0 0.0 0.0</rock>\n" + 
                 "      <rock>0.0 0.0 0.0</rock>\n" + 
                 "    </light>\n" + 
-                "    <listenerList serialization=\"custom\">\n" + 
-                "      <javax.swing.event.EventListenerList>\n" + 
-                "        <default/>\n" + 
-                "        <string>javax.swing.event.ChangeListener</string>\n" + 
-                "        <org.jcurl.core.model.CurveManager reference=\"../../../..\"/>\n" + 
-                "        <null/>\n" + 
-                "      </javax.swing.event.EventListenerList>\n" + 
-                "    </listenerList>\n" + 
-                "    <source class=\"org.jcurl.core.base.SpeedSet\" reference=\"..\"/>\n" + 
+                "    <source class=\"org.jcurl.core.api.SpeedSet\" reference=\"..\"/>\n" + 
                 "  </initialSpeed>\n" + 
-                "</org.jcurl.core.model.CurveManager>", x);
+                "</org.jcurl.core.impl.CurveManager>", x);
 
         final CurveManager o = (CurveManager) xs.fromXML(x);
         assertNotNull(o);
@@ -930,19 +898,11 @@ public class XStreamIOTest extends TestBase {
                 "            <rock>2.2098000049591064 7.254240036010742 0.0</rock>\n" + 
                 "            <rock>2.2098000049591064 6.888480186462402 0.0</rock>\n" + 
                 "          </light>\n" + 
-                "          <listenerList serialization=\"custom\">\n" + 
-                "            <javax.swing.event.EventListenerList>\n" + 
-                "              <default/>\n" + 
-                "              <string>javax.swing.event.ChangeListener</string>\n" + 
-                "              <CurveManager reference=\"../../../..\"/>\n" + 
-                "              <null/>\n" + 
-                "            </javax.swing.event.EventListenerList>\n" + 
-                "          </listenerList>\n" + 
-                "          <source class=\"org.jcurl.core.base.PositionSet\" reference=\"..\"/>\n" + 
+                "          <source class=\"org.jcurl.core.api.PositionSet\" reference=\"..\"/>\n" + 
                 "        </initialPos>\n" + 
                 "        <initialSpeed>\n" + 
                 "          <dark>\n" + 
-                "            <rock>0.0 -1.7412714637086057 1.5707963267948966</rock>\n" + 
+                "            <rock>0.0 -2.0136495784249293 1.5707963267948966</rock>\n" + 
                 "            <rock>0.0 0.0 0.0</rock>\n" + 
                 "            <rock>0.0 0.0 0.0</rock>\n" + 
                 "            <rock>0.0 0.0 0.0</rock>\n" + 
@@ -961,15 +921,7 @@ public class XStreamIOTest extends TestBase {
                 "            <rock>0.0 0.0 0.0</rock>\n" + 
                 "            <rock>0.0 0.0 0.0</rock>\n" + 
                 "          </light>\n" + 
-                "          <listenerList serialization=\"custom\">\n" + 
-                "            <javax.swing.event.EventListenerList>\n" + 
-                "              <default/>\n" + 
-                "              <string>javax.swing.event.ChangeListener</string>\n" + 
-                "              <CurveManager reference=\"../../../..\"/>\n" + 
-                "              <null/>\n" + 
-                "            </javax.swing.event.EventListenerList>\n" + 
-                "          </listenerList>\n" + 
-                "          <source class=\"org.jcurl.core.base.SpeedSet\" reference=\"..\"/>\n" + 
+                "          <source class=\"org.jcurl.core.api.SpeedSet\" reference=\"..\"/>\n" + 
                 "        </initialSpeed>\n" + 
                 "      </CurveManager>\n" + 
                 "    </trajectories>\n" + 
