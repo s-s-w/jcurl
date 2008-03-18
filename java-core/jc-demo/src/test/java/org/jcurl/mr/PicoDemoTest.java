@@ -20,9 +20,9 @@ package org.jcurl.mr;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.base.Curler;
-import org.jcurl.core.model.CurlerDenny;
-import org.jcurl.core.model.CurlerNoCurl;
+import org.jcurl.core.api.Curler;
+import org.jcurl.core.impl.CurlerDenny;
+import org.jcurl.core.impl.CurlerNoCurl;
 import org.picocontainer.MutablePicoContainer;
 import org.picocontainer.PicoContainer;
 import org.picocontainer.defaults.DefaultPicoContainer;

@@ -33,13 +33,13 @@ import java.util.Map;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.Rock;
-import org.jcurl.core.base.RockProps;
-import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.TrajectorySet;
-import org.jcurl.core.model.CurveManager;
-import org.jcurl.core.model.FixpointZoomer;
+import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.Rock;
+import org.jcurl.core.api.RockProps;
+import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.TrajectorySet;
+import org.jcurl.core.impl.CurveManager;
+import org.jcurl.core.impl.FixpointZoomer;
 
 /**
  * Base for rock location displays. Does all the coordinate transformation math

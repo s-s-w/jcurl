@@ -25,8 +25,8 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 
-import org.jcurl.core.base.IceSize;
-import org.jcurl.core.base.RockProps;
+import org.jcurl.core.api.IceSize;
+import org.jcurl.core.api.RockProps;
 import org.jcurl.core.helpers.Unit;
 
 import edu.umd.cs.piccolo.PCamera;

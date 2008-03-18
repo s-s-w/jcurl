@@ -20,7 +20,7 @@ package org.jcurl.core.swing;
 
 import java.awt.geom.Point2D;
 
-import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.api.Zoomer;
 
 interface WCLayer {
 

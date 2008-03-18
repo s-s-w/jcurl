@@ -18,7 +18,7 @@
  */
 package org.jcurl.core.zui;
 
-import org.jcurl.core.base.PositionSet;
+import org.jcurl.core.api.PositionSet;
 
 public class PiccoloBasicTest extends TestZuiBase {
 

@@ -25,8 +25,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.Zoomer;
 import org.jcurl.core.helpers.NotImplementedYetException;
 
 /**

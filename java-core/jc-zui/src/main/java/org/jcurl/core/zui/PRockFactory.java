@@ -27,8 +27,8 @@ import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 
-import org.jcurl.core.base.Factory;
-import org.jcurl.core.base.RockProps;
+import org.jcurl.core.api.Factory;
+import org.jcurl.core.api.RockProps;
 
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.nodes.PPath;

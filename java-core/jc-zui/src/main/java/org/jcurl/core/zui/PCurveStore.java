@@ -24,7 +24,7 @@ import java.beans.PropertyChangeListener;
 import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.CurveStore;
+import org.jcurl.core.api.CurveStore;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.R1RNFunction;
 

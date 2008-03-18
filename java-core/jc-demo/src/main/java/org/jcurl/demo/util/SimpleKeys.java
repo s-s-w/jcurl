@@ -21,7 +21,7 @@ package org.jcurl.demo.util;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import org.jcurl.core.base.TrajectorySet;
+import org.jcurl.core.api.TrajectorySet;
 
 /**
  * A first, simple keyboard input class. Uses a

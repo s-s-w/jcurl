@@ -22,8 +22,8 @@ import java.awt.Cursor;
 import java.awt.event.InputEvent;
 import java.awt.geom.Point2D;
 
-import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.Rock;
+import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.Rock;
 
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PBasicInputEventHandler;

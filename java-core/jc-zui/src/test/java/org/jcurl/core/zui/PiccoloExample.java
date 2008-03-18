@@ -25,9 +25,9 @@ import java.awt.geom.Rectangle2D;
 
 import javax.swing.JFrame;
 
-import org.jcurl.core.base.IceSize;
-import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.RockProps;
+import org.jcurl.core.api.IceSize;
+import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockProps;
 
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PCanvas;

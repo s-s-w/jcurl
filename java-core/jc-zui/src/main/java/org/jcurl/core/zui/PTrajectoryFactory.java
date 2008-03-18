@@ -29,8 +29,8 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.Factory;
-import org.jcurl.core.base.RockProps;
+import org.jcurl.core.api.Factory;
+import org.jcurl.core.api.RockProps;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.CurveShape;
 import org.jcurl.math.R1RNFunction;

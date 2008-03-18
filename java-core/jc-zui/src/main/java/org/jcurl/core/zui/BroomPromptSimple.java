@@ -20,11 +20,11 @@ import javax.swing.event.ChangeListener;
 import javax.swing.undo.StateEdit;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.IceSize;
-import org.jcurl.core.base.RockProps;
-import org.jcurl.core.base.RockSet;
+import org.jcurl.core.api.IceSize;
+import org.jcurl.core.api.RockProps;
+import org.jcurl.core.api.RockSet;
+import org.jcurl.core.impl.BroomPromptModel;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.model.BroomPromptModel;
 import org.jcurl.core.ui.UndoRedoDocument;
 import org.jcurl.math.MathVec;
 

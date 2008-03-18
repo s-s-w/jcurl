@@ -26,19 +26,19 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
-import org.jcurl.core.base.IceSize;
-import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.RockDouble;
-import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.SpeedSet;
+import org.jcurl.core.api.IceSize;
+import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockDouble;
+import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.SpeedSet;
 import org.jcurl.core.helpers.AnnoHelper;
 import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.impl.CollissionSpin;
+import org.jcurl.core.impl.CurlerDenny;
+import org.jcurl.core.impl.CurveManager;
+import org.jcurl.core.impl.NewtonCollissionDetector;
 import org.jcurl.core.io.IODocument;
 import org.jcurl.core.io.IOTrajectories;
-import org.jcurl.core.model.CollissionSpin;
-import org.jcurl.core.model.CurlerDenny;
-import org.jcurl.core.model.CurveManager;
-import org.jcurl.core.model.NewtonCollissionDetector;
 
 public class MainApp extends JFrame {
 

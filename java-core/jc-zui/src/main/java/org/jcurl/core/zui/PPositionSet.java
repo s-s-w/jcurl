@@ -22,9 +22,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.Rock;
-import org.jcurl.core.base.RockSet;
+import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.Rock;
+import org.jcurl.core.api.RockSet;
 import org.jcurl.core.log.JCLoggerFactory;
 
 import edu.umd.cs.piccolo.PNode;

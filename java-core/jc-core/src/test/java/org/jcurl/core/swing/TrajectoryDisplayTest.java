@@ -24,21 +24,21 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.ComputedTrajectorySet;
-import org.jcurl.core.base.IceSize;
-import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.base.TrajectorySet;
-import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.api.ComputedTrajectorySet;
+import org.jcurl.core.api.IceSize;
+import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.SpeedSet;
+import org.jcurl.core.api.TrajectorySet;
+import org.jcurl.core.api.Zoomer;
 import org.jcurl.core.helpers.AnnoHelper;
 import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.impl.CollissionSpin;
+import org.jcurl.core.impl.CurlerDenny;
+import org.jcurl.core.impl.CurveManager;
+import org.jcurl.core.impl.FixpointZoomer;
+import org.jcurl.core.impl.NewtonCollissionDetector;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.model.CollissionSpin;
-import org.jcurl.core.model.CurlerDenny;
-import org.jcurl.core.model.CurveManager;
-import org.jcurl.core.model.FixpointZoomer;
-import org.jcurl.core.model.NewtonCollissionDetector;
 
 public class TrajectoryDisplayTest extends TestShowBase {
     private static final Log log = JCLoggerFactory

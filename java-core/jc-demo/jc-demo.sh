@@ -7,5 +7,5 @@ cp=$cp:$HOME/.m2/repository/org/jcurl/core/jc-xsio/0.7-SNAPSHOT/jc-xsio-0.7-SNAP
 cp=$cp:$HOME/.m2/repository/org/jcurl/core/jc-zui/0.7-SNAPSHOT/jc-zui-0.7-SNAPSHOT.jar
 cp=$cp:$HOME/.m2/repository/org/jcurl/core/jc-demo/0.7-SNAPSHOT/jc-demo-0.7-SNAPSHOT.jar
 cp=$cp:$HOME/.m2/repository/xpp3/xpp3_min/1.1.3.4.O/xpp3_min-1.1.3.4.O.jar
-java -cp $cp org.jcurl.demo.zui.BroomPromptDemo
-#java -cp $cp org.jcurl.demo.tactics.MainApp
+#java -Xprof -cp $cp org.jcurl.demo.zui.BroomPromptDemo
+java -Xfuture -cp $cp org.jcurl.demo.tactics.MainApp

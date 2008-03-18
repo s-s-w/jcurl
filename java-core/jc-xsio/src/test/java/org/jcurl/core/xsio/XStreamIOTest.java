@@ -24,23 +24,23 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jcurl.core.base.ComputedTrajectorySet;
-import org.jcurl.core.base.IceSize;
-import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.RockDouble;
-import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.SpeedSet;
-import org.jcurl.core.base.StoredTrajectorySet;
-import org.jcurl.core.base.TrajectorySet;
+import org.jcurl.core.api.ComputedTrajectorySet;
+import org.jcurl.core.api.IceSize;
+import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockDouble;
+import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.SpeedSet;
+import org.jcurl.core.api.StoredTrajectorySet;
+import org.jcurl.core.api.TrajectorySet;
 import org.jcurl.core.helpers.AnnoHelper;
 import org.jcurl.core.helpers.Measure;
 import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.impl.CollissionSpin;
+import org.jcurl.core.impl.CurlerNoCurl;
+import org.jcurl.core.impl.CurveManager;
+import org.jcurl.core.impl.NewtonCollissionDetector;
 import org.jcurl.core.io.IODocument;
 import org.jcurl.core.io.IOTrajectories;
-import org.jcurl.core.model.CollissionSpin;
-import org.jcurl.core.model.CurlerNoCurl;
-import org.jcurl.core.model.CurveManager;
-import org.jcurl.core.model.NewtonCollissionDetector;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.reflection.Sun14ReflectionProvider;
@@ -113,111 +113,134 @@ public class XStreamIOTest extends TestBase {
         final IODocument con = wrap(initHammy(null));
         final String x = xs.write(con);
         assertEquals(
-                "<IODocument>\n"
-                        + "  <annotations/>\n"
-                        + "  <root class=\"IOTrajectories\">\n"
-                        + "    <trajectories>\n"
-                        + "      <CurveManager>\n"
-                        + "        <annotations>\n"
-                        + "          <entry>\n"
-                        + "            <string>org.jcurl.core.Light.Team</string>\n"
-                        + "            <string>Canada</string>\n"
-                        + "          </entry>\n"
-                        + "          <entry>\n"
-                        + "            <string>org.jcurl.core.Game</string>\n"
-                        + "            <string>Semifinal</string>\n"
-                        + "          </entry>\n"
-                        + "          <entry>\n"
-                        + "            <string>org.jcurl.core.Hammer</string>\n"
-                        + "            <string>Dark</string>\n"
-                        + "          </entry>\n"
-                        + "          <entry>\n"
-                        + "            <string>org.jcurl.core.Location</string>\n"
-                        + "            <string>Garmisch</string>\n"
-                        + "          </entry>\n"
-                        + "          <entry>\n"
-                        + "            <string>org.jcurl.core.Dark.Team</string>\n"
-                        + "            <string>Scotland</string>\n"
-                        + "          </entry>\n"
-                        + "          <entry>\n"
-                        + "            <string>org.jcurl.core.Event</string>\n"
-                        + "            <string>World Curling Championships</string>\n"
-                        + "          </entry>\n"
-                        + "          <entry>\n"
-                        + "            <string>org.jcurl.core.Date</string>\n"
-                        + "            <string>1992</string>\n"
-                        + "          </entry>\n"
-                        + "        </annotations>\n"
-                        + "        <collider class=\"CollissionSpin\">\n"
-                        + "          <params>\n"
-                        + "            <entry>\n"
-                        + "              <string>loss</string>\n"
-                        + "              <measure>0.0 J</measure>\n"
-                        + "            </entry>\n"
-                        + "            <entry>\n"
-                        + "              <string>frictionRockRock</string>\n"
-                        + "              <measure>0.5 </measure>\n"
-                        + "            </entry>\n"
-                        + "          </params>\n"
-                        + "        </collider>\n"
-                        + "        <collissionDetector class=\"NewtonCollissionDetector\"/>\n"
-                        + "        <curler class=\"NoCurlCurler\">\n"
-                        + "          <params>\n"
-                        + "            <entry>\n"
-                        + "              <string>drawToTeeTime</string>\n"
-                        + "              <measure>24.0 s</measure>\n"
-                        + "            </entry>\n"
-                        + "            <entry>\n"
-                        + "              <string>drawToTeeCurl</string>\n"
-                        + "              <measure>0.0 m</measure>\n"
-                        + "            </entry>\n"
-                        + "          </params>\n"
-                        + "        </curler>\n"
-                        + "        <initialPos>\n"
-                        + "          <dark>\n"
-                        + "            <rock>-0.7620000243186951 -2.4384000301361084 0.0</rock>\n"
-                        + "            <rock>-0.9448800086975098 -2.8041601181030273 0.0</rock>\n"
-                        + "            <rock>0.26762932538986206 4.371277809143066 0.0</rock>\n"
-                        + "            <rock>-0.8028876781463623 4.014439105987549 0.0</rock>\n"
-                        + "            <rock>1.3827511072158813 -0.1338145136833191 0.0</rock>\n"
-                        + "            <rock>0.22302429378032684 -1.204331874847412 0.0</rock>\n"
-                        + "            <rock>-0.8474927544593811 -1.3381463289260864 0.0</rock>\n"
-                        + "            <rock>1.188692569732666 6.4008002281188965 0.0</rock>\n"
-                        + "          </dark>\n"
-                        + "          <light>\n"
-                        + "            <rock>0.7620000243186951 -2.4384000301361084 0.0</rock>\n"
-                        + "            <rock>-0.356839120388031 4.683512210845947 0.0</rock>\n"
-                        + "            <rock>0.08920978009700775 2.676292657852173 0.0</rock>\n"
-                        + "            <rock>0.6690731644630432 3.657599925994873 0.0</rock>\n"
-                        + "            <rock>0.44604888558387756 1.7395901679992676 0.0</rock>\n"
-                        + "            <rock>0.44604888558387756 -0.8474927544593811 0.0</rock>\n"
-                        + "            <rock>-0.1338145136833191 -1.6949855089187622 0.0</rock>\n"
-                        + "            <rock>-0.5352586507797241 -0.4906536340713501 0.0</rock>\n"
-                        + "          </light>\n"
-                        + "        </initialPos>\n"
-                        + "        <initialSpeed>\n"
-                        + "          <dark>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 -3.0 1.7453292519943295</rock>\n"
-                        + "          </dark>\n" + "          <light>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "          </light>\n" + "        </initialSpeed>\n"
-                        + "      </CurveManager>\n" + "    </trajectories>\n"
-                        + "    <children/>\n" + "    <annotations/>\n"
-                        + "  </root>\n" + "</IODocument>", x);
+                "<IODocument>\n" + 
+                "  <annotations/>\n" + 
+                "  <root class=\"IOTrajectories\">\n" + 
+                "    <trajectories>\n" + 
+                "      <CurveManager>\n" + 
+                "        <annotations>\n" + 
+                "          <entry>\n" + 
+                "            <string>org.jcurl.core.Light.Team</string>\n" + 
+                "            <string>Canada</string>\n" + 
+                "          </entry>\n" + 
+                "          <entry>\n" + 
+                "            <string>org.jcurl.core.Game</string>\n" + 
+                "            <string>Semifinal</string>\n" + 
+                "          </entry>\n" + 
+                "          <entry>\n" + 
+                "            <string>org.jcurl.core.Hammer</string>\n" + 
+                "            <string>Dark</string>\n" + 
+                "          </entry>\n" + 
+                "          <entry>\n" + 
+                "            <string>org.jcurl.core.Location</string>\n" + 
+                "            <string>Garmisch</string>\n" + 
+                "          </entry>\n" + 
+                "          <entry>\n" + 
+                "            <string>org.jcurl.core.Dark.Team</string>\n" + 
+                "            <string>Scotland</string>\n" + 
+                "          </entry>\n" + 
+                "          <entry>\n" + 
+                "            <string>org.jcurl.core.Event</string>\n" + 
+                "            <string>World Curling Championships</string>\n" + 
+                "          </entry>\n" + 
+                "          <entry>\n" + 
+                "            <string>org.jcurl.core.Date</string>\n" + 
+                "            <string>1992</string>\n" + 
+                "          </entry>\n" + 
+                "        </annotations>\n" + 
+                "        <collider class=\"CollissionSpin\">\n" + 
+                "          <params>\n" + 
+                "            <entry>\n" + 
+                "              <string>loss</string>\n" + 
+                "              <measure>0.0 J</measure>\n" + 
+                "            </entry>\n" + 
+                "            <entry>\n" + 
+                "              <string>frictionRockRock</string>\n" + 
+                "              <measure>0.5 </measure>\n" + 
+                "            </entry>\n" + 
+                "          </params>\n" + 
+                "        </collider>\n" + 
+                "        <collissionDetector class=\"NewtonCollissionDetector\"/>\n" + 
+                "        <curler class=\"NoCurlCurler\">\n" + 
+                "          <params>\n" + 
+                "            <entry>\n" + 
+                "              <string>drawToTeeTime</string>\n" + 
+                "              <measure>24.0 s</measure>\n" + 
+                "            </entry>\n" + 
+                "            <entry>\n" + 
+                "              <string>drawToTeeCurl</string>\n" + 
+                "              <measure>0.0 m</measure>\n" + 
+                "            </entry>\n" + 
+                "          </params>\n" + 
+                "        </curler>\n" + 
+                "        <initialPos>\n" + 
+                "          <dark>\n" + 
+                "            <rock>-0.7620000243186951 -2.4384000301361084 0.0</rock>\n" + 
+                "            <rock>-0.9448800086975098 -2.8041601181030273 0.0</rock>\n" + 
+                "            <rock>0.26762932538986206 4.371277809143066 0.0</rock>\n" + 
+                "            <rock>-0.8028876781463623 4.014439105987549 0.0</rock>\n" + 
+                "            <rock>1.3827511072158813 -0.1338145136833191 0.0</rock>\n" + 
+                "            <rock>0.22302429378032684 -1.204331874847412 0.0</rock>\n" + 
+                "            <rock>-0.8474927544593811 -1.3381463289260864 0.0</rock>\n" + 
+                "            <rock>1.188692569732666 6.4008002281188965 0.0</rock>\n" + 
+                "          </dark>\n" + 
+                "          <light>\n" + 
+                "            <rock>0.7620000243186951 -2.4384000301361084 0.0</rock>\n" + 
+                "            <rock>-0.356839120388031 4.683512210845947 0.0</rock>\n" + 
+                "            <rock>0.08920978009700775 2.676292657852173 0.0</rock>\n" + 
+                "            <rock>0.6690731644630432 3.657599925994873 0.0</rock>\n" + 
+                "            <rock>0.44604888558387756 1.7395901679992676 0.0</rock>\n" + 
+                "            <rock>0.44604888558387756 -0.8474927544593811 0.0</rock>\n" + 
+                "            <rock>-0.1338145136833191 -1.6949855089187622 0.0</rock>\n" + 
+                "            <rock>-0.5352586507797241 -0.4906536340713501 0.0</rock>\n" + 
+                "          </light>\n" + 
+                "          <listenerList serialization=\"custom\">\n" + 
+                "            <javax.swing.event.EventListenerList>\n" + 
+                "              <default/>\n" + 
+                "              <string>javax.swing.event.ChangeListener</string>\n" + 
+                "              <CurveManager reference=\"../../../..\"/>\n" + 
+                "              <null/>\n" + 
+                "            </javax.swing.event.EventListenerList>\n" + 
+                "          </listenerList>\n" + 
+                "          <source class=\"org.jcurl.core.base.PositionSet\" reference=\"..\"/>\n" + 
+                "        </initialPos>\n" + 
+                "        <initialSpeed>\n" + 
+                "          <dark>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 -3.0 1.7453292519943295</rock>\n" + 
+                "          </dark>\n" + 
+                "          <light>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "          </light>\n" + 
+                "          <listenerList serialization=\"custom\">\n" + 
+                "            <javax.swing.event.EventListenerList>\n" + 
+                "              <default/>\n" + 
+                "              <string>javax.swing.event.ChangeListener</string>\n" + 
+                "              <CurveManager reference=\"../../../..\"/>\n" + 
+                "              <null/>\n" + 
+                "            </javax.swing.event.EventListenerList>\n" + 
+                "          </listenerList>\n" + 
+                "          <source class=\"org.jcurl.core.base.SpeedSet\" reference=\"..\"/>\n" + 
+                "        </initialSpeed>\n" + 
+                "      </CurveManager>\n" + 
+                "    </trajectories>\n" + 
+                "    <children/>\n" + 
+                "    <annotations/>\n" + 
+                "  </root>\n" + 
+                "</IODocument>", x);
         final File f = new File("/tmp/hammy.jcz");
         f.deleteOnExit();
         xs.write(con, f);
@@ -248,301 +271,203 @@ public class XStreamIOTest extends TestBase {
         final String x = xs.toXML(te.getCurveStore());
         // System.out.println(x);
         assertEquals(
-                "<org.jcurl.core.model.CurveStoreImpl>\n"
-                        + "  <curve>\n"
-                        + "    <org.jcurl.math.CurveCombined>\n"
-                        + "      <parts>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveTransformed\">\n"
-                        + "            <base class=\"org.jcurl.math.PolynomeCurve\">\n"
-                        + "              <params>\n"
-                        + "                <double-array>\n"
-                        + "                  <double>0.0</double>\n"
-                        + "                </double-array>\n"
-                        + "                <double-array>\n"
-                        + "                  <double>0.0</double>\n"
-                        + "                  <double>1.3779956114540028</double>\n"
-                        + "                  <double>-0.0535848758171096</double>\n"
-                        + "                </double-array>\n"
-                        + "                <double-array>\n"
-                        + "                  <double>3.141592653589793</double>\n"
-                        + "                  <double>1.5707963267948966</double>\n"
-                        + "                </double-array>\n"
-                        + "              </params>\n"
-                        + "            </base>\n"
-                        + "            <t0>0.0</t0>\n"
-                        + "            <trafo>\n"
-                        + "              <double>-1.0</double>\n"
-                        + "              <double>-0.0</double>\n"
-                        + "              <double>0.0</double>\n"
-                        + "              <double>-1.0</double>\n"
-                        + "              <double>0.0</double>\n"
-                        + "              <double>6.4008002281188965</double>\n"
-                        + "            </trafo>\n"
-                        + "          </curve>\n"
-                        + "          <t0>0.0</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveTransformed\">\n"
-                        + "            <base class=\"org.jcurl.math.PolynomeCurve\">\n"
-                        + "              <params>\n"
-                        + "                <double-array>\n"
-                        + "                  <double>0.0</double>\n"
-                        + "                </double-array>\n"
-                        + "                <double-array>\n"
-                        + "                  <double>0.0</double>\n"
-                        + "                  <double>0.3248903202923696</double>\n"
-                        + "                  <double>-0.0535848758171096</double>\n"
-                        + "                </double-array>\n"
-                        + "                <double-array>\n"
-                        + "                  <double>3.7779198486645234</double>\n"
-                        + "                  <double>1.5707963267948966</double>\n"
-                        + "                </double-array>\n"
-                        + "              </params>\n"
-                        + "            </base>\n"
-                        + "            <t0>3.617904278509095</t0>\n"
-                        + "            <trafo>\n"
-                        + "              <double>-0.3280839854465329</double>\n"
-                        + "              <double>0.9446485581916266</double>\n"
-                        + "              <double>-0.9446485581916266</double>\n"
-                        + "              <double>-0.3280839854465329</double>\n"
-                        + "              <double>0.0</double>\n"
-                        + "              <double>2.116728847092748</double>\n"
-                        + "            </trafo>\n"
-                        + "          </curve>\n"
-                        + "          <t0>3.617904278509095</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveStill\">\n"
-                        + "            <a>10.444936298643487</a>\n"
-                        + "            <x>-0.46520201874501665</x>\n"
-                        + "            <y>1.9551604722467486</y>\n"
-                        + "          </curve>\n"
-                        + "          <t0>6.6494529688363055</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "      </parts>\n"
-                        + "    </org.jcurl.math.CurveCombined>\n"
-                        + "    <org.jcurl.math.CurveCombined>\n"
-                        + "      <parts>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveStill\">\n"
-                        + "            <a>0.7853981633974483</a>\n"
-                        + "            <x>0.1</x>\n"
-                        + "            <y>1.8287999629974365</y>\n"
-                        + "          </curve>\n"
-                        + "          <t0>0.0</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveTransformed\">\n"
-                        + "            <base class=\"org.jcurl.math.PolynomeCurve\">\n"
-                        + "              <params>\n"
-                        + "                <double-array>\n"
-                        + "                  <double>0.0</double>\n"
-                        + "                </double-array>\n"
-                        + "                <double-array>\n"
-                        + "                  <double>0.0</double>\n"
-                        + "                  <double>0.9354530737515032</double>\n"
-                        + "                  <double>-0.0535848758171096</double>\n"
-                        + "                </double-array>\n"
-                        + "                <double-array>\n"
-                        + "                  <double>3.5927162410690348</double>\n"
-                        + "                  <double>0.0</double>\n"
-                        + "                </double-array>\n"
-                        + "              </params>\n"
-                        + "            </base>\n"
-                        + "            <t0>3.617904278509095</t0>\n"
-                        + "            <trafo>\n"
-                        + "              <double>-0.9446485581916267</double>\n"
-                        + "              <double>-0.32808398544653294</double>\n"
-                        + "              <double>0.32808398544653294</double>\n"
-                        + "              <double>-0.9446485581916267</double>\n"
-                        + "              <double>0.1</double>\n"
-                        + "              <double>1.8287999629974365</double>\n"
-                        + "            </trafo>\n"
-                        + "          </curve>\n"
-                        + "          <t0>3.617904278509095</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveStill\">\n"
-                        + "            <a>0.7853981633974483</a>\n"
-                        + "            <x>1.4394509813613883</x>\n"
-                        + "            <y>-2.0278663006401088</y>\n"
-                        + "          </curve>\n"
-                        + "          <t0>12.346608594884449</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "      </parts>\n"
-                        + "    </org.jcurl.math.CurveCombined>\n"
-                        + "    <org.jcurl.math.CurveCombined>\n"
-                        + "      <parts>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveStill\">\n"
-                        + "            <a>0.0</a>\n"
-                        + "            <x>-2.2098000049591064</x>\n"
-                        + "            <y>9.083040237426758</y>\n"
-                        + "          </curve>\n"
-                        + "          <t0>0.0</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "      </parts>\n"
-                        + "    </org.jcurl.math.CurveCombined>\n"
-                        + "    <org.jcurl.math.CurveCombined>\n"
-                        + "      <parts>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveStill\">\n"
-                        + "            <a>0.0</a>\n"
-                        + "            <x>2.2098000049591064</x>\n"
-                        + "            <y>9.083040237426758</y>\n"
-                        + "          </curve>\n"
-                        + "          <t0>0.0</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "      </parts>\n"
-                        + "    </org.jcurl.math.CurveCombined>\n"
-                        + "    <org.jcurl.math.CurveCombined>\n"
-                        + "      <parts>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveStill\">\n"
-                        + "            <a>0.0</a>\n"
-                        + "            <x>-2.2098000049591064</x>\n"
-                        + "            <y>8.717280387878418</y>\n"
-                        + "          </curve>\n"
-                        + "          <t0>0.0</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "      </parts>\n"
-                        + "    </org.jcurl.math.CurveCombined>\n"
-                        + "    <org.jcurl.math.CurveCombined>\n"
-                        + "      <parts>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveStill\">\n"
-                        + "            <a>0.0</a>\n"
-                        + "            <x>2.2098000049591064</x>\n"
-                        + "            <y>8.717280387878418</y>\n"
-                        + "          </curve>\n"
-                        + "          <t0>0.0</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "      </parts>\n"
-                        + "    </org.jcurl.math.CurveCombined>\n"
-                        + "    <org.jcurl.math.CurveCombined>\n"
-                        + "      <parts>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveStill\">\n"
-                        + "            <a>0.0</a>\n"
-                        + "            <x>-2.2098000049591064</x>\n"
-                        + "            <y>8.351519584655762</y>\n"
-                        + "          </curve>\n"
-                        + "          <t0>0.0</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "      </parts>\n"
-                        + "    </org.jcurl.math.CurveCombined>\n"
-                        + "    <org.jcurl.math.CurveCombined>\n"
-                        + "      <parts>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveStill\">\n"
-                        + "            <a>0.0</a>\n"
-                        + "            <x>2.2098000049591064</x>\n"
-                        + "            <y>8.351519584655762</y>\n"
-                        + "          </curve>\n"
-                        + "          <t0>0.0</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "      </parts>\n"
-                        + "    </org.jcurl.math.CurveCombined>\n"
-                        + "    <org.jcurl.math.CurveCombined>\n"
-                        + "      <parts>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveStill\">\n"
-                        + "            <a>0.0</a>\n"
-                        + "            <x>-2.2098000049591064</x>\n"
-                        + "            <y>7.98576021194458</y>\n"
-                        + "          </curve>\n"
-                        + "          <t0>0.0</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "      </parts>\n"
-                        + "    </org.jcurl.math.CurveCombined>\n"
-                        + "    <org.jcurl.math.CurveCombined>\n"
-                        + "      <parts>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveStill\">\n"
-                        + "            <a>0.0</a>\n"
-                        + "            <x>2.2098000049591064</x>\n"
-                        + "            <y>7.98576021194458</y>\n"
-                        + "          </curve>\n"
-                        + "          <t0>0.0</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "      </parts>\n"
-                        + "    </org.jcurl.math.CurveCombined>\n"
-                        + "    <org.jcurl.math.CurveCombined>\n"
-                        + "      <parts>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveStill\">\n"
-                        + "            <a>0.0</a>\n"
-                        + "            <x>-2.2098000049591064</x>\n"
-                        + "            <y>7.619999885559082</y>\n"
-                        + "          </curve>\n"
-                        + "          <t0>0.0</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "      </parts>\n"
-                        + "    </org.jcurl.math.CurveCombined>\n"
-                        + "    <org.jcurl.math.CurveCombined>\n"
-                        + "      <parts>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveStill\">\n"
-                        + "            <a>0.0</a>\n"
-                        + "            <x>2.2098000049591064</x>\n"
-                        + "            <y>7.619999885559082</y>\n"
-                        + "          </curve>\n"
-                        + "          <t0>0.0</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "      </parts>\n"
-                        + "    </org.jcurl.math.CurveCombined>\n"
-                        + "    <org.jcurl.math.CurveCombined>\n"
-                        + "      <parts>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveStill\">\n"
-                        + "            <a>0.0</a>\n"
-                        + "            <x>-2.2098000049591064</x>\n"
-                        + "            <y>7.254240036010742</y>\n"
-                        + "          </curve>\n"
-                        + "          <t0>0.0</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "      </parts>\n"
-                        + "    </org.jcurl.math.CurveCombined>\n"
-                        + "    <org.jcurl.math.CurveCombined>\n"
-                        + "      <parts>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveStill\">\n"
-                        + "            <a>0.0</a>\n"
-                        + "            <x>2.2098000049591064</x>\n"
-                        + "            <y>7.254240036010742</y>\n"
-                        + "          </curve>\n"
-                        + "          <t0>0.0</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "      </parts>\n"
-                        + "    </org.jcurl.math.CurveCombined>\n"
-                        + "    <org.jcurl.math.CurveCombined>\n"
-                        + "      <parts>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveStill\">\n"
-                        + "            <a>0.0</a>\n"
-                        + "            <x>-2.2098000049591064</x>\n"
-                        + "            <y>6.888480186462402</y>\n"
-                        + "          </curve>\n"
-                        + "          <t0>0.0</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "      </parts>\n"
-                        + "    </org.jcurl.math.CurveCombined>\n"
-                        + "    <org.jcurl.math.CurveCombined>\n"
-                        + "      <parts>\n"
-                        + "        <org.jcurl.math.CurveCombined_-Part>\n"
-                        + "          <curve class=\"org.jcurl.core.base.CurveStill\">\n"
-                        + "            <a>0.0</a>\n"
-                        + "            <x>2.2098000049591064</x>\n"
-                        + "            <y>6.888480186462402</y>\n"
-                        + "          </curve>\n"
-                        + "          <t0>0.0</t0>\n"
-                        + "        </org.jcurl.math.CurveCombined_-Part>\n"
-                        + "      </parts>\n"
-                        + "    </org.jcurl.math.CurveCombined>\n"
-                        + "  </curve>\n"
-                        + "  <stopper class=\"org.jcurl.core.model.NewtonStopDetector\"/>\n"
-                        + "</org.jcurl.core.model.CurveStoreImpl>", x);
+                "<org.jcurl.core.model.CurveStoreImpl>\n" + 
+                "  <curve>\n" + 
+                "    <org.jcurl.math.CurveCombined>\n" + 
+                "      <parts>\n" + 
+                "        <org.jcurl.math.CurveCombined_-Part>\n" + 
+                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "            <a>0.0</a>\n" + 
+                "            <x>0.0</x>\n" + 
+                "            <y>6.4008002281188965</y>\n" + 
+                "          </curve>\n" + 
+                "          <t0>0.0</t0>\n" + 
+                "        </org.jcurl.math.CurveCombined_-Part>\n" + 
+                "      </parts>\n" + 
+                "    </org.jcurl.math.CurveCombined>\n" + 
+                "    <org.jcurl.math.CurveCombined>\n" + 
+                "      <parts>\n" + 
+                "        <org.jcurl.math.CurveCombined_-Part>\n" + 
+                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "            <a>0.7853981633974483</a>\n" + 
+                "            <x>0.1</x>\n" + 
+                "            <y>1.8287999629974365</y>\n" + 
+                "          </curve>\n" + 
+                "          <t0>0.0</t0>\n" + 
+                "        </org.jcurl.math.CurveCombined_-Part>\n" + 
+                "      </parts>\n" + 
+                "    </org.jcurl.math.CurveCombined>\n" + 
+                "    <org.jcurl.math.CurveCombined>\n" + 
+                "      <parts>\n" + 
+                "        <org.jcurl.math.CurveCombined_-Part>\n" + 
+                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "            <a>0.0</a>\n" + 
+                "            <x>-2.2098000049591064</x>\n" + 
+                "            <y>9.083040237426758</y>\n" + 
+                "          </curve>\n" + 
+                "          <t0>0.0</t0>\n" + 
+                "        </org.jcurl.math.CurveCombined_-Part>\n" + 
+                "      </parts>\n" + 
+                "    </org.jcurl.math.CurveCombined>\n" + 
+                "    <org.jcurl.math.CurveCombined>\n" + 
+                "      <parts>\n" + 
+                "        <org.jcurl.math.CurveCombined_-Part>\n" + 
+                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "            <a>0.0</a>\n" + 
+                "            <x>2.2098000049591064</x>\n" + 
+                "            <y>9.083040237426758</y>\n" + 
+                "          </curve>\n" + 
+                "          <t0>0.0</t0>\n" + 
+                "        </org.jcurl.math.CurveCombined_-Part>\n" + 
+                "      </parts>\n" + 
+                "    </org.jcurl.math.CurveCombined>\n" + 
+                "    <org.jcurl.math.CurveCombined>\n" + 
+                "      <parts>\n" + 
+                "        <org.jcurl.math.CurveCombined_-Part>\n" + 
+                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "            <a>0.0</a>\n" + 
+                "            <x>-2.2098000049591064</x>\n" + 
+                "            <y>8.717280387878418</y>\n" + 
+                "          </curve>\n" + 
+                "          <t0>0.0</t0>\n" + 
+                "        </org.jcurl.math.CurveCombined_-Part>\n" + 
+                "      </parts>\n" + 
+                "    </org.jcurl.math.CurveCombined>\n" + 
+                "    <org.jcurl.math.CurveCombined>\n" + 
+                "      <parts>\n" + 
+                "        <org.jcurl.math.CurveCombined_-Part>\n" + 
+                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "            <a>0.0</a>\n" + 
+                "            <x>2.2098000049591064</x>\n" + 
+                "            <y>8.717280387878418</y>\n" + 
+                "          </curve>\n" + 
+                "          <t0>0.0</t0>\n" + 
+                "        </org.jcurl.math.CurveCombined_-Part>\n" + 
+                "      </parts>\n" + 
+                "    </org.jcurl.math.CurveCombined>\n" + 
+                "    <org.jcurl.math.CurveCombined>\n" + 
+                "      <parts>\n" + 
+                "        <org.jcurl.math.CurveCombined_-Part>\n" + 
+                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "            <a>0.0</a>\n" + 
+                "            <x>-2.2098000049591064</x>\n" + 
+                "            <y>8.351519584655762</y>\n" + 
+                "          </curve>\n" + 
+                "          <t0>0.0</t0>\n" + 
+                "        </org.jcurl.math.CurveCombined_-Part>\n" + 
+                "      </parts>\n" + 
+                "    </org.jcurl.math.CurveCombined>\n" + 
+                "    <org.jcurl.math.CurveCombined>\n" + 
+                "      <parts>\n" + 
+                "        <org.jcurl.math.CurveCombined_-Part>\n" + 
+                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "            <a>0.0</a>\n" + 
+                "            <x>2.2098000049591064</x>\n" + 
+                "            <y>8.351519584655762</y>\n" + 
+                "          </curve>\n" + 
+                "          <t0>0.0</t0>\n" + 
+                "        </org.jcurl.math.CurveCombined_-Part>\n" + 
+                "      </parts>\n" + 
+                "    </org.jcurl.math.CurveCombined>\n" + 
+                "    <org.jcurl.math.CurveCombined>\n" + 
+                "      <parts>\n" + 
+                "        <org.jcurl.math.CurveCombined_-Part>\n" + 
+                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "            <a>0.0</a>\n" + 
+                "            <x>-2.2098000049591064</x>\n" + 
+                "            <y>7.98576021194458</y>\n" + 
+                "          </curve>\n" + 
+                "          <t0>0.0</t0>\n" + 
+                "        </org.jcurl.math.CurveCombined_-Part>\n" + 
+                "      </parts>\n" + 
+                "    </org.jcurl.math.CurveCombined>\n" + 
+                "    <org.jcurl.math.CurveCombined>\n" + 
+                "      <parts>\n" + 
+                "        <org.jcurl.math.CurveCombined_-Part>\n" + 
+                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "            <a>0.0</a>\n" + 
+                "            <x>2.2098000049591064</x>\n" + 
+                "            <y>7.98576021194458</y>\n" + 
+                "          </curve>\n" + 
+                "          <t0>0.0</t0>\n" + 
+                "        </org.jcurl.math.CurveCombined_-Part>\n" + 
+                "      </parts>\n" + 
+                "    </org.jcurl.math.CurveCombined>\n" + 
+                "    <org.jcurl.math.CurveCombined>\n" + 
+                "      <parts>\n" + 
+                "        <org.jcurl.math.CurveCombined_-Part>\n" + 
+                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "            <a>0.0</a>\n" + 
+                "            <x>-2.2098000049591064</x>\n" + 
+                "            <y>7.619999885559082</y>\n" + 
+                "          </curve>\n" + 
+                "          <t0>0.0</t0>\n" + 
+                "        </org.jcurl.math.CurveCombined_-Part>\n" + 
+                "      </parts>\n" + 
+                "    </org.jcurl.math.CurveCombined>\n" + 
+                "    <org.jcurl.math.CurveCombined>\n" + 
+                "      <parts>\n" + 
+                "        <org.jcurl.math.CurveCombined_-Part>\n" + 
+                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "            <a>0.0</a>\n" + 
+                "            <x>2.2098000049591064</x>\n" + 
+                "            <y>7.619999885559082</y>\n" + 
+                "          </curve>\n" + 
+                "          <t0>0.0</t0>\n" + 
+                "        </org.jcurl.math.CurveCombined_-Part>\n" + 
+                "      </parts>\n" + 
+                "    </org.jcurl.math.CurveCombined>\n" + 
+                "    <org.jcurl.math.CurveCombined>\n" + 
+                "      <parts>\n" + 
+                "        <org.jcurl.math.CurveCombined_-Part>\n" + 
+                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "            <a>0.0</a>\n" + 
+                "            <x>-2.2098000049591064</x>\n" + 
+                "            <y>7.254240036010742</y>\n" + 
+                "          </curve>\n" + 
+                "          <t0>0.0</t0>\n" + 
+                "        </org.jcurl.math.CurveCombined_-Part>\n" + 
+                "      </parts>\n" + 
+                "    </org.jcurl.math.CurveCombined>\n" + 
+                "    <org.jcurl.math.CurveCombined>\n" + 
+                "      <parts>\n" + 
+                "        <org.jcurl.math.CurveCombined_-Part>\n" + 
+                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "            <a>0.0</a>\n" + 
+                "            <x>2.2098000049591064</x>\n" + 
+                "            <y>7.254240036010742</y>\n" + 
+                "          </curve>\n" + 
+                "          <t0>0.0</t0>\n" + 
+                "        </org.jcurl.math.CurveCombined_-Part>\n" + 
+                "      </parts>\n" + 
+                "    </org.jcurl.math.CurveCombined>\n" + 
+                "    <org.jcurl.math.CurveCombined>\n" + 
+                "      <parts>\n" + 
+                "        <org.jcurl.math.CurveCombined_-Part>\n" + 
+                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "            <a>0.0</a>\n" + 
+                "            <x>-2.2098000049591064</x>\n" + 
+                "            <y>6.888480186462402</y>\n" + 
+                "          </curve>\n" + 
+                "          <t0>0.0</t0>\n" + 
+                "        </org.jcurl.math.CurveCombined_-Part>\n" + 
+                "      </parts>\n" + 
+                "    </org.jcurl.math.CurveCombined>\n" + 
+                "    <org.jcurl.math.CurveCombined>\n" + 
+                "      <parts>\n" + 
+                "        <org.jcurl.math.CurveCombined_-Part>\n" + 
+                "          <curve class=\"org.jcurl.core.base.CurveStill\">\n" + 
+                "            <a>0.0</a>\n" + 
+                "            <x>2.2098000049591064</x>\n" + 
+                "            <y>6.888480186462402</y>\n" + 
+                "          </curve>\n" + 
+                "          <t0>0.0</t0>\n" + 
+                "        </org.jcurl.math.CurveCombined_-Part>\n" + 
+                "      </parts>\n" + 
+                "    </org.jcurl.math.CurveCombined>\n" + 
+                "  </curve>\n" + 
+                "  <stopper class=\"org.jcurl.core.model.NewtonStopDetector\"/>\n" + 
+                "</org.jcurl.core.model.CurveStoreImpl>", x);
     }
 
     public void testDefaultSettings() {
@@ -590,75 +515,96 @@ public class XStreamIOTest extends TestBase {
         final String x = xs.toXML(te);
         // System.out.println(x);
         assertEquals(
-                "<org.jcurl.core.model.CurveManager>\n"
-                        + "  <annotations/>\n"
-                        + "  <collider class=\"org.jcurl.core.model.CollissionSpin\">\n"
-                        + "    <params>\n"
-                        + "      <entry>\n"
-                        + "        <string>loss</string>\n"
-                        + "        <dimval>0.0 J</dimval>\n"
-                        + "      </entry>\n"
-                        + "      <entry>\n"
-                        + "        <string>frictionRockRock</string>\n"
-                        + "        <dimval>0.5 </dimval>\n"
-                        + "      </entry>\n"
-                        + "    </params>\n"
-                        + "  </collider>\n"
-                        + "  <collissionDetector class=\"org.jcurl.core.model.NewtonCollissionDetector\"/>\n"
-                        + "  <curler class=\"org.jcurl.core.model.CurlerNoCurl\">\n"
-                        + "    <params>\n"
-                        + "      <entry>\n"
-                        + "        <string>drawToTeeTime</string>\n"
-                        + "        <dimval>23.0 s</dimval>\n"
-                        + "      </entry>\n"
-                        + "      <entry>\n"
-                        + "        <string>drawToTeeCurl</string>\n"
-                        + "        <dimval>0.0 m</dimval>\n"
-                        + "      </entry>\n"
-                        + "    </params>\n"
-                        + "  </curler>\n"
-                        + "  <initialPos>\n"
-                        + "    <dark>\n"
-                        + "      <rock>0.0 6.4008002281188965 0.0</rock>\n"
-                        + "      <rock>-2.2098000049591064 9.083040237426758 0.0</rock>\n"
-                        + "      <rock>-2.2098000049591064 8.717280387878418 0.0</rock>\n"
-                        + "      <rock>-2.2098000049591064 8.351519584655762 0.0</rock>\n"
-                        + "      <rock>-2.2098000049591064 7.98576021194458 0.0</rock>\n"
-                        + "      <rock>-2.2098000049591064 7.619999885559082 0.0</rock>\n"
-                        + "      <rock>-2.2098000049591064 7.254240036010742 0.0</rock>\n"
-                        + "      <rock>-2.2098000049591064 6.888480186462402 0.0</rock>\n"
-                        + "    </dark>\n"
-                        + "    <light>\n"
-                        + "      <rock>0.1 1.8287999629974365 0.7853981633974483</rock>\n"
-                        + "      <rock>2.2098000049591064 9.083040237426758 0.0</rock>\n"
-                        + "      <rock>2.2098000049591064 8.717280387878418 0.0</rock>\n"
-                        + "      <rock>2.2098000049591064 8.351519584655762 0.0</rock>\n"
-                        + "      <rock>2.2098000049591064 7.98576021194458 0.0</rock>\n"
-                        + "      <rock>2.2098000049591064 7.619999885559082 0.0</rock>\n"
-                        + "      <rock>2.2098000049591064 7.254240036010742 0.0</rock>\n"
-                        + "      <rock>2.2098000049591064 6.888480186462402 0.0</rock>\n"
-                        + "    </light>\n"
-                        + "  </initialPos>\n"
-                        + "  <initialSpeed>\n"
-                        + "    <dark>\n"
-                        + "      <rock>0.0 -1.3779956114540028 1.5707963267948966</rock>\n"
-                        + "      <rock>0.0 0.0 0.0</rock>\n"
-                        + "      <rock>0.0 0.0 0.0</rock>\n"
-                        + "      <rock>0.0 0.0 0.0</rock>\n"
-                        + "      <rock>0.0 0.0 0.0</rock>\n"
-                        + "      <rock>0.0 0.0 0.0</rock>\n"
-                        + "      <rock>0.0 0.0 0.0</rock>\n"
-                        + "      <rock>0.0 0.0 0.0</rock>\n" + "    </dark>\n"
-                        + "    <light>\n" + "      <rock>0.0 0.0 0.0</rock>\n"
-                        + "      <rock>0.0 0.0 0.0</rock>\n"
-                        + "      <rock>0.0 0.0 0.0</rock>\n"
-                        + "      <rock>0.0 0.0 0.0</rock>\n"
-                        + "      <rock>0.0 0.0 0.0</rock>\n"
-                        + "      <rock>0.0 0.0 0.0</rock>\n"
-                        + "      <rock>0.0 0.0 0.0</rock>\n"
-                        + "      <rock>0.0 0.0 0.0</rock>\n" + "    </light>\n"
-                        + "  </initialSpeed>\n"
-                        + "</org.jcurl.core.model.CurveManager>", x);
+                "<org.jcurl.core.model.CurveManager>\n" + 
+                "  <annotations/>\n" + 
+                "  <collider class=\"org.jcurl.core.model.CollissionSpin\">\n" + 
+                "    <params>\n" + 
+                "      <entry>\n" + 
+                "        <string>loss</string>\n" + 
+                "        <dimval>0.0 J</dimval>\n" + 
+                "      </entry>\n" + 
+                "      <entry>\n" + 
+                "        <string>frictionRockRock</string>\n" + 
+                "        <dimval>0.5 </dimval>\n" + 
+                "      </entry>\n" + 
+                "    </params>\n" + 
+                "  </collider>\n" + 
+                "  <collissionDetector class=\"org.jcurl.core.model.NewtonCollissionDetector\"/>\n" + 
+                "  <curler class=\"org.jcurl.core.model.CurlerNoCurl\">\n" + 
+                "    <params>\n" + 
+                "      <entry>\n" + 
+                "        <string>drawToTeeTime</string>\n" + 
+                "        <dimval>23.0 s</dimval>\n" + 
+                "      </entry>\n" + 
+                "      <entry>\n" + 
+                "        <string>drawToTeeCurl</string>\n" + 
+                "        <dimval>0.0 m</dimval>\n" + 
+                "      </entry>\n" + 
+                "    </params>\n" + 
+                "  </curler>\n" + 
+                "  <initialPos>\n" + 
+                "    <dark>\n" + 
+                "      <rock>0.0 6.4008002281188965 0.0</rock>\n" + 
+                "      <rock>-2.2098000049591064 9.083040237426758 0.0</rock>\n" + 
+                "      <rock>-2.2098000049591064 8.717280387878418 0.0</rock>\n" + 
+                "      <rock>-2.2098000049591064 8.351519584655762 0.0</rock>\n" + 
+                "      <rock>-2.2098000049591064 7.98576021194458 0.0</rock>\n" + 
+                "      <rock>-2.2098000049591064 7.619999885559082 0.0</rock>\n" + 
+                "      <rock>-2.2098000049591064 7.254240036010742 0.0</rock>\n" + 
+                "      <rock>-2.2098000049591064 6.888480186462402 0.0</rock>\n" + 
+                "    </dark>\n" + 
+                "    <light>\n" + 
+                "      <rock>0.1 1.8287999629974365 0.7853981633974483</rock>\n" + 
+                "      <rock>2.2098000049591064 9.083040237426758 0.0</rock>\n" + 
+                "      <rock>2.2098000049591064 8.717280387878418 0.0</rock>\n" + 
+                "      <rock>2.2098000049591064 8.351519584655762 0.0</rock>\n" + 
+                "      <rock>2.2098000049591064 7.98576021194458 0.0</rock>\n" + 
+                "      <rock>2.2098000049591064 7.619999885559082 0.0</rock>\n" + 
+                "      <rock>2.2098000049591064 7.254240036010742 0.0</rock>\n" + 
+                "      <rock>2.2098000049591064 6.888480186462402 0.0</rock>\n" + 
+                "    </light>\n" + 
+                "    <listenerList serialization=\"custom\">\n" + 
+                "      <javax.swing.event.EventListenerList>\n" + 
+                "        <default/>\n" + 
+                "        <string>javax.swing.event.ChangeListener</string>\n" + 
+                "        <org.jcurl.core.model.CurveManager reference=\"../../../..\"/>\n" + 
+                "        <null/>\n" + 
+                "      </javax.swing.event.EventListenerList>\n" + 
+                "    </listenerList>\n" + 
+                "    <source class=\"org.jcurl.core.base.PositionSet\" reference=\"..\"/>\n" + 
+                "  </initialPos>\n" + 
+                "  <initialSpeed>\n" + 
+                "    <dark>\n" + 
+                "      <rock>0.0 -1.7412714637086057 1.5707963267948966</rock>\n" + 
+                "      <rock>0.0 0.0 0.0</rock>\n" + 
+                "      <rock>0.0 0.0 0.0</rock>\n" + 
+                "      <rock>0.0 0.0 0.0</rock>\n" + 
+                "      <rock>0.0 0.0 0.0</rock>\n" + 
+                "      <rock>0.0 0.0 0.0</rock>\n" + 
+                "      <rock>0.0 0.0 0.0</rock>\n" + 
+                "      <rock>0.0 0.0 0.0</rock>\n" + 
+                "    </dark>\n" + 
+                "    <light>\n" + 
+                "      <rock>0.0 0.0 0.0</rock>\n" + 
+                "      <rock>0.0 0.0 0.0</rock>\n" + 
+                "      <rock>0.0 0.0 0.0</rock>\n" + 
+                "      <rock>0.0 0.0 0.0</rock>\n" + 
+                "      <rock>0.0 0.0 0.0</rock>\n" + 
+                "      <rock>0.0 0.0 0.0</rock>\n" + 
+                "      <rock>0.0 0.0 0.0</rock>\n" + 
+                "      <rock>0.0 0.0 0.0</rock>\n" + 
+                "    </light>\n" + 
+                "    <listenerList serialization=\"custom\">\n" + 
+                "      <javax.swing.event.EventListenerList>\n" + 
+                "        <default/>\n" + 
+                "        <string>javax.swing.event.ChangeListener</string>\n" + 
+                "        <org.jcurl.core.model.CurveManager reference=\"../../../..\"/>\n" + 
+                "        <null/>\n" + 
+                "      </javax.swing.event.EventListenerList>\n" + 
+                "    </listenerList>\n" + 
+                "    <source class=\"org.jcurl.core.base.SpeedSet\" reference=\"..\"/>\n" + 
+                "  </initialSpeed>\n" + 
+                "</org.jcurl.core.model.CurveManager>", x);
 
         final CurveManager o = (CurveManager) xs.fromXML(x);
         assertNotNull(o);
@@ -691,262 +637,215 @@ public class XStreamIOTest extends TestBase {
         final String x = xs.write(con);
         // System.out.println(x);
         assertEquals(
-                "<IODocument>\n"
-                        + "  <annotations/>\n"
-                        + "  <root class=\"IOTrajectories\">\n"
-                        + "    <trajectories>\n"
-                        + "      <StoredTrajectory>\n"
-                        + "        <annotations/>\n"
-                        + "        <store class=\"CurveStore\">\n"
-                        + "          <curve>\n"
-                        + "            <CombinedCurve>\n"
-                        + "              <parts>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"TransformedCurve\">\n"
-                        + "                    <base class=\"PolynomeCurve\">\n"
-                        + "                      <params>\n"
-                        + "                        <double-array>0.0</double-array>\n"
-                        + "                        <double-array>0.0 1.3779956114540028 -0.0535848758171096</double-array>\n"
-                        + "                        <double-array>3.141592653589793 1.5707963267948966</double-array>\n"
-                        + "                      </params>\n"
-                        + "                    </base>\n"
-                        + "                    <t0>0.0</t0>\n"
-                        + "                    <trafo>-1.0 -0.0 0.0 -1.0 0.0 6.4008002281188965</trafo>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>0.0</t0>\n"
-                        + "                </part>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"TransformedCurve\">\n"
-                        + "                    <base class=\"PolynomeCurve\">\n"
-                        + "                      <params>\n"
-                        + "                        <double-array>0.0</double-array>\n"
-                        + "                        <double-array>0.0 0.3248903202923696 -0.0535848758171096</double-array>\n"
-                        + "                        <double-array>3.7779198486645234 1.5707963267948966</double-array>\n"
-                        + "                      </params>\n"
-                        + "                    </base>\n"
-                        + "                    <t0>3.617904278509095</t0>\n"
-                        + "                    <trafo>-0.3280839854465329 0.9446485581916266 -0.9446485581916266 -0.3280839854465329 0.0 2.116728847092748</trafo>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>3.617904278509095</t0>\n"
-                        + "                </part>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"PointCurve\">\n"
-                        + "                    <a>10.444936298643487</a>\n"
-                        + "                    <x>-0.46520201874501665</x>\n"
-                        + "                    <y>1.9551604722467486</y>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>6.6494529688363055</t0>\n"
-                        + "                </part>\n"
-                        + "              </parts>\n"
-                        + "            </CombinedCurve>\n"
-                        + "            <CombinedCurve>\n"
-                        + "              <parts>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"PointCurve\">\n"
-                        + "                    <a>0.7853981633974483</a>\n"
-                        + "                    <x>0.1</x>\n"
-                        + "                    <y>1.8287999629974365</y>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>0.0</t0>\n"
-                        + "                </part>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"TransformedCurve\">\n"
-                        + "                    <base class=\"PolynomeCurve\">\n"
-                        + "                      <params>\n"
-                        + "                        <double-array>0.0</double-array>\n"
-                        + "                        <double-array>0.0 0.9354530737515032 -0.0535848758171096</double-array>\n"
-                        + "                        <double-array>3.5927162410690348 0.0</double-array>\n"
-                        + "                      </params>\n"
-                        + "                    </base>\n"
-                        + "                    <t0>3.617904278509095</t0>\n"
-                        + "                    <trafo>-0.9446485581916267 -0.32808398544653294 0.32808398544653294 -0.9446485581916267 0.1 1.8287999629974365</trafo>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>3.617904278509095</t0>\n"
-                        + "                </part>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"PointCurve\">\n"
-                        + "                    <a>0.7853981633974483</a>\n"
-                        + "                    <x>1.4394509813613883</x>\n"
-                        + "                    <y>-2.0278663006401088</y>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>12.346608594884449</t0>\n"
-                        + "                </part>\n"
-                        + "              </parts>\n"
-                        + "            </CombinedCurve>\n"
-                        + "            <CombinedCurve>\n"
-                        + "              <parts>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"PointCurve\">\n"
-                        + "                    <a>0.0</a>\n"
-                        + "                    <x>-2.2098000049591064</x>\n"
-                        + "                    <y>9.083040237426758</y>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>0.0</t0>\n"
-                        + "                </part>\n"
-                        + "              </parts>\n"
-                        + "            </CombinedCurve>\n"
-                        + "            <CombinedCurve>\n"
-                        + "              <parts>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"PointCurve\">\n"
-                        + "                    <a>0.0</a>\n"
-                        + "                    <x>2.2098000049591064</x>\n"
-                        + "                    <y>9.083040237426758</y>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>0.0</t0>\n"
-                        + "                </part>\n"
-                        + "              </parts>\n"
-                        + "            </CombinedCurve>\n"
-                        + "            <CombinedCurve>\n"
-                        + "              <parts>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"PointCurve\">\n"
-                        + "                    <a>0.0</a>\n"
-                        + "                    <x>-2.2098000049591064</x>\n"
-                        + "                    <y>8.717280387878418</y>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>0.0</t0>\n"
-                        + "                </part>\n"
-                        + "              </parts>\n"
-                        + "            </CombinedCurve>\n"
-                        + "            <CombinedCurve>\n"
-                        + "              <parts>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"PointCurve\">\n"
-                        + "                    <a>0.0</a>\n"
-                        + "                    <x>2.2098000049591064</x>\n"
-                        + "                    <y>8.717280387878418</y>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>0.0</t0>\n"
-                        + "                </part>\n"
-                        + "              </parts>\n"
-                        + "            </CombinedCurve>\n"
-                        + "            <CombinedCurve>\n"
-                        + "              <parts>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"PointCurve\">\n"
-                        + "                    <a>0.0</a>\n"
-                        + "                    <x>-2.2098000049591064</x>\n"
-                        + "                    <y>8.351519584655762</y>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>0.0</t0>\n"
-                        + "                </part>\n"
-                        + "              </parts>\n"
-                        + "            </CombinedCurve>\n"
-                        + "            <CombinedCurve>\n"
-                        + "              <parts>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"PointCurve\">\n"
-                        + "                    <a>0.0</a>\n"
-                        + "                    <x>2.2098000049591064</x>\n"
-                        + "                    <y>8.351519584655762</y>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>0.0</t0>\n"
-                        + "                </part>\n"
-                        + "              </parts>\n"
-                        + "            </CombinedCurve>\n"
-                        + "            <CombinedCurve>\n"
-                        + "              <parts>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"PointCurve\">\n"
-                        + "                    <a>0.0</a>\n"
-                        + "                    <x>-2.2098000049591064</x>\n"
-                        + "                    <y>7.98576021194458</y>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>0.0</t0>\n"
-                        + "                </part>\n"
-                        + "              </parts>\n"
-                        + "            </CombinedCurve>\n"
-                        + "            <CombinedCurve>\n"
-                        + "              <parts>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"PointCurve\">\n"
-                        + "                    <a>0.0</a>\n"
-                        + "                    <x>2.2098000049591064</x>\n"
-                        + "                    <y>7.98576021194458</y>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>0.0</t0>\n"
-                        + "                </part>\n"
-                        + "              </parts>\n"
-                        + "            </CombinedCurve>\n"
-                        + "            <CombinedCurve>\n"
-                        + "              <parts>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"PointCurve\">\n"
-                        + "                    <a>0.0</a>\n"
-                        + "                    <x>-2.2098000049591064</x>\n"
-                        + "                    <y>7.619999885559082</y>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>0.0</t0>\n"
-                        + "                </part>\n"
-                        + "              </parts>\n"
-                        + "            </CombinedCurve>\n"
-                        + "            <CombinedCurve>\n"
-                        + "              <parts>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"PointCurve\">\n"
-                        + "                    <a>0.0</a>\n"
-                        + "                    <x>2.2098000049591064</x>\n"
-                        + "                    <y>7.619999885559082</y>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>0.0</t0>\n"
-                        + "                </part>\n"
-                        + "              </parts>\n"
-                        + "            </CombinedCurve>\n"
-                        + "            <CombinedCurve>\n"
-                        + "              <parts>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"PointCurve\">\n"
-                        + "                    <a>0.0</a>\n"
-                        + "                    <x>-2.2098000049591064</x>\n"
-                        + "                    <y>7.254240036010742</y>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>0.0</t0>\n"
-                        + "                </part>\n"
-                        + "              </parts>\n"
-                        + "            </CombinedCurve>\n"
-                        + "            <CombinedCurve>\n"
-                        + "              <parts>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"PointCurve\">\n"
-                        + "                    <a>0.0</a>\n"
-                        + "                    <x>2.2098000049591064</x>\n"
-                        + "                    <y>7.254240036010742</y>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>0.0</t0>\n"
-                        + "                </part>\n"
-                        + "              </parts>\n"
-                        + "            </CombinedCurve>\n"
-                        + "            <CombinedCurve>\n"
-                        + "              <parts>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"PointCurve\">\n"
-                        + "                    <a>0.0</a>\n"
-                        + "                    <x>-2.2098000049591064</x>\n"
-                        + "                    <y>6.888480186462402</y>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>0.0</t0>\n"
-                        + "                </part>\n"
-                        + "              </parts>\n"
-                        + "            </CombinedCurve>\n"
-                        + "            <CombinedCurve>\n"
-                        + "              <parts>\n"
-                        + "                <part>\n"
-                        + "                  <curve class=\"PointCurve\">\n"
-                        + "                    <a>0.0</a>\n"
-                        + "                    <x>2.2098000049591064</x>\n"
-                        + "                    <y>6.888480186462402</y>\n"
-                        + "                  </curve>\n"
-                        + "                  <t0>0.0</t0>\n"
-                        + "                </part>\n"
-                        + "              </parts>\n"
-                        + "            </CombinedCurve>\n"
-                        + "          </curve>\n"
-                        + "          <stopper class=\"NewtonStopDetector\"/>\n"
-                        + "        </store>\n" + "      </StoredTrajectory>\n"
-                        + "    </trajectories>\n" + "    <children/>\n"
-                        + "    <annotations/>\n" + "  </root>\n"
-                        + "</IODocument>", x);
+                "<IODocument>\n" + 
+                "  <annotations/>\n" + 
+                "  <root class=\"IOTrajectories\">\n" + 
+                "    <trajectories>\n" + 
+                "      <StoredTrajectory>\n" + 
+                "        <annotations/>\n" + 
+                "        <store class=\"CurveStore\">\n" + 
+                "          <curve>\n" + 
+                "            <CombinedCurve>\n" + 
+                "              <parts>\n" + 
+                "                <part>\n" + 
+                "                  <curve class=\"PointCurve\">\n" + 
+                "                    <a>0.0</a>\n" + 
+                "                    <x>0.0</x>\n" + 
+                "                    <y>6.4008002281188965</y>\n" + 
+                "                  </curve>\n" + 
+                "                  <t0>0.0</t0>\n" + 
+                "                </part>\n" + 
+                "              </parts>\n" + 
+                "            </CombinedCurve>\n" + 
+                "            <CombinedCurve>\n" + 
+                "              <parts>\n" + 
+                "                <part>\n" + 
+                "                  <curve class=\"PointCurve\">\n" + 
+                "                    <a>0.7853981633974483</a>\n" + 
+                "                    <x>0.1</x>\n" + 
+                "                    <y>1.8287999629974365</y>\n" + 
+                "                  </curve>\n" + 
+                "                  <t0>0.0</t0>\n" + 
+                "                </part>\n" + 
+                "              </parts>\n" + 
+                "            </CombinedCurve>\n" + 
+                "            <CombinedCurve>\n" + 
+                "              <parts>\n" + 
+                "                <part>\n" + 
+                "                  <curve class=\"PointCurve\">\n" + 
+                "                    <a>0.0</a>\n" + 
+                "                    <x>-2.2098000049591064</x>\n" + 
+                "                    <y>9.083040237426758</y>\n" + 
+                "                  </curve>\n" + 
+                "                  <t0>0.0</t0>\n" + 
+                "                </part>\n" + 
+                "              </parts>\n" + 
+                "            </CombinedCurve>\n" + 
+                "            <CombinedCurve>\n" + 
+                "              <parts>\n" + 
+                "                <part>\n" + 
+                "                  <curve class=\"PointCurve\">\n" + 
+                "                    <a>0.0</a>\n" + 
+                "                    <x>2.2098000049591064</x>\n" + 
+                "                    <y>9.083040237426758</y>\n" + 
+                "                  </curve>\n" + 
+                "                  <t0>0.0</t0>\n" + 
+                "                </part>\n" + 
+                "              </parts>\n" + 
+                "            </CombinedCurve>\n" + 
+                "            <CombinedCurve>\n" + 
+                "              <parts>\n" + 
+                "                <part>\n" + 
+                "                  <curve class=\"PointCurve\">\n" + 
+                "                    <a>0.0</a>\n" + 
+                "                    <x>-2.2098000049591064</x>\n" + 
+                "                    <y>8.717280387878418</y>\n" + 
+                "                  </curve>\n" + 
+                "                  <t0>0.0</t0>\n" + 
+                "                </part>\n" + 
+                "              </parts>\n" + 
+                "            </CombinedCurve>\n" + 
+                "            <CombinedCurve>\n" + 
+                "              <parts>\n" + 
+                "                <part>\n" + 
+                "                  <curve class=\"PointCurve\">\n" + 
+                "                    <a>0.0</a>\n" + 
+                "                    <x>2.2098000049591064</x>\n" + 
+                "                    <y>8.717280387878418</y>\n" + 
+                "                  </curve>\n" + 
+                "                  <t0>0.0</t0>\n" + 
+                "                </part>\n" + 
+                "              </parts>\n" + 
+                "            </CombinedCurve>\n" + 
+                "            <CombinedCurve>\n" + 
+                "              <parts>\n" + 
+                "                <part>\n" + 
+                "                  <curve class=\"PointCurve\">\n" + 
+                "                    <a>0.0</a>\n" + 
+                "                    <x>-2.2098000049591064</x>\n" + 
+                "                    <y>8.351519584655762</y>\n" + 
+                "                  </curve>\n" + 
+                "                  <t0>0.0</t0>\n" + 
+                "                </part>\n" + 
+                "              </parts>\n" + 
+                "            </CombinedCurve>\n" + 
+                "            <CombinedCurve>\n" + 
+                "              <parts>\n" + 
+                "                <part>\n" + 
+                "                  <curve class=\"PointCurve\">\n" + 
+                "                    <a>0.0</a>\n" + 
+                "                    <x>2.2098000049591064</x>\n" + 
+                "                    <y>8.351519584655762</y>\n" + 
+                "                  </curve>\n" + 
+                "                  <t0>0.0</t0>\n" + 
+                "                </part>\n" + 
+                "              </parts>\n" + 
+                "            </CombinedCurve>\n" + 
+                "            <CombinedCurve>\n" + 
+                "              <parts>\n" + 
+                "                <part>\n" + 
+                "                  <curve class=\"PointCurve\">\n" + 
+                "                    <a>0.0</a>\n" + 
+                "                    <x>-2.2098000049591064</x>\n" + 
+                "                    <y>7.98576021194458</y>\n" + 
+                "                  </curve>\n" + 
+                "                  <t0>0.0</t0>\n" + 
+                "                </part>\n" + 
+                "              </parts>\n" + 
+                "            </CombinedCurve>\n" + 
+                "            <CombinedCurve>\n" + 
+                "              <parts>\n" + 
+                "                <part>\n" + 
+                "                  <curve class=\"PointCurve\">\n" + 
+                "                    <a>0.0</a>\n" + 
+                "                    <x>2.2098000049591064</x>\n" + 
+                "                    <y>7.98576021194458</y>\n" + 
+                "                  </curve>\n" + 
+                "                  <t0>0.0</t0>\n" + 
+                "                </part>\n" + 
+                "              </parts>\n" + 
+                "            </CombinedCurve>\n" + 
+                "            <CombinedCurve>\n" + 
+                "              <parts>\n" + 
+                "                <part>\n" + 
+                "                  <curve class=\"PointCurve\">\n" + 
+                "                    <a>0.0</a>\n" + 
+                "                    <x>-2.2098000049591064</x>\n" + 
+                "                    <y>7.619999885559082</y>\n" + 
+                "                  </curve>\n" + 
+                "                  <t0>0.0</t0>\n" + 
+                "                </part>\n" + 
+                "              </parts>\n" + 
+                "            </CombinedCurve>\n" + 
+                "            <CombinedCurve>\n" + 
+                "              <parts>\n" + 
+                "                <part>\n" + 
+                "                  <curve class=\"PointCurve\">\n" + 
+                "                    <a>0.0</a>\n" + 
+                "                    <x>2.2098000049591064</x>\n" + 
+                "                    <y>7.619999885559082</y>\n" + 
+                "                  </curve>\n" + 
+                "                  <t0>0.0</t0>\n" + 
+                "                </part>\n" + 
+                "              </parts>\n" + 
+                "            </CombinedCurve>\n" + 
+                "            <CombinedCurve>\n" + 
+                "              <parts>\n" + 
+                "                <part>\n" + 
+                "                  <curve class=\"PointCurve\">\n" + 
+                "                    <a>0.0</a>\n" + 
+                "                    <x>-2.2098000049591064</x>\n" + 
+                "                    <y>7.254240036010742</y>\n" + 
+                "                  </curve>\n" + 
+                "                  <t0>0.0</t0>\n" + 
+                "                </part>\n" + 
+                "              </parts>\n" + 
+                "            </CombinedCurve>\n" + 
+                "            <CombinedCurve>\n" + 
+                "              <parts>\n" + 
+                "                <part>\n" + 
+                "                  <curve class=\"PointCurve\">\n" + 
+                "                    <a>0.0</a>\n" + 
+                "                    <x>2.2098000049591064</x>\n" + 
+                "                    <y>7.254240036010742</y>\n" + 
+                "                  </curve>\n" + 
+                "                  <t0>0.0</t0>\n" + 
+                "                </part>\n" + 
+                "              </parts>\n" + 
+                "            </CombinedCurve>\n" + 
+                "            <CombinedCurve>\n" + 
+                "              <parts>\n" + 
+                "                <part>\n" + 
+                "                  <curve class=\"PointCurve\">\n" + 
+                "                    <a>0.0</a>\n" + 
+                "                    <x>-2.2098000049591064</x>\n" + 
+                "                    <y>6.888480186462402</y>\n" + 
+                "                  </curve>\n" + 
+                "                  <t0>0.0</t0>\n" + 
+                "                </part>\n" + 
+                "              </parts>\n" + 
+                "            </CombinedCurve>\n" + 
+                "            <CombinedCurve>\n" + 
+                "              <parts>\n" + 
+                "                <part>\n" + 
+                "                  <curve class=\"PointCurve\">\n" + 
+                "                    <a>0.0</a>\n" + 
+                "                    <x>2.2098000049591064</x>\n" + 
+                "                    <y>6.888480186462402</y>\n" + 
+                "                  </curve>\n" + 
+                "                  <t0>0.0</t0>\n" + 
+                "                </part>\n" + 
+                "              </parts>\n" + 
+                "            </CombinedCurve>\n" + 
+                "          </curve>\n" + 
+                "          <stopper class=\"NewtonStopDetector\"/>\n" + 
+                "        </store>\n" + 
+                "      </StoredTrajectory>\n" + 
+                "    </trajectories>\n" + 
+                "    <children/>\n" + 
+                "    <annotations/>\n" + 
+                "  </root>\n" + 
+                "</IODocument>", x);
         final TrajectorySet b = ((IOTrajectories) xs.read(x).getRoot())
                 .trajectories().get(0);
         b.setCurrentTime(11);
@@ -979,82 +878,105 @@ public class XStreamIOTest extends TestBase {
         final String x = xs.write(wrap(te));
         // System.out.println(x);
         assertEquals(
-                "<IODocument>\n"
-                        + "  <annotations/>\n"
-                        + "  <root class=\"IOTrajectories\">\n"
-                        + "    <trajectories>\n"
-                        + "      <CurveManager>\n"
-                        + "        <annotations/>\n"
-                        + "        <collider class=\"CollissionSpin\">\n"
-                        + "          <params>\n"
-                        + "            <entry>\n"
-                        + "              <string>loss</string>\n"
-                        + "              <measure>0.0 J</measure>\n"
-                        + "            </entry>\n"
-                        + "            <entry>\n"
-                        + "              <string>frictionRockRock</string>\n"
-                        + "              <measure>0.5 </measure>\n"
-                        + "            </entry>\n"
-                        + "          </params>\n"
-                        + "        </collider>\n"
-                        + "        <collissionDetector class=\"NewtonCollissionDetector\"/>\n"
-                        + "        <curler class=\"NoCurlCurler\">\n"
-                        + "          <params>\n"
-                        + "            <entry>\n"
-                        + "              <string>drawToTeeTime</string>\n"
-                        + "              <measure>23.0 s</measure>\n"
-                        + "            </entry>\n"
-                        + "            <entry>\n"
-                        + "              <string>drawToTeeCurl</string>\n"
-                        + "              <measure>0.0 m</measure>\n"
-                        + "            </entry>\n"
-                        + "          </params>\n"
-                        + "        </curler>\n"
-                        + "        <initialPos>\n"
-                        + "          <dark>\n"
-                        + "            <rock>0.0 6.4008002281188965 0.0</rock>\n"
-                        + "            <rock>-2.2098000049591064 9.083040237426758 0.0</rock>\n"
-                        + "            <rock>-2.2098000049591064 8.717280387878418 0.0</rock>\n"
-                        + "            <rock>-2.2098000049591064 8.351519584655762 0.0</rock>\n"
-                        + "            <rock>-2.2098000049591064 7.98576021194458 0.0</rock>\n"
-                        + "            <rock>-2.2098000049591064 7.619999885559082 0.0</rock>\n"
-                        + "            <rock>-2.2098000049591064 7.254240036010742 0.0</rock>\n"
-                        + "            <rock>-2.2098000049591064 6.888480186462402 0.0</rock>\n"
-                        + "          </dark>\n"
-                        + "          <light>\n"
-                        + "            <rock>0.1 1.8287999629974365 0.7853981633974483</rock>\n"
-                        + "            <rock>2.2098000049591064 9.083040237426758 0.0</rock>\n"
-                        + "            <rock>2.2098000049591064 8.717280387878418 0.0</rock>\n"
-                        + "            <rock>2.2098000049591064 8.351519584655762 0.0</rock>\n"
-                        + "            <rock>2.2098000049591064 7.98576021194458 0.0</rock>\n"
-                        + "            <rock>2.2098000049591064 7.619999885559082 0.0</rock>\n"
-                        + "            <rock>2.2098000049591064 7.254240036010742 0.0</rock>\n"
-                        + "            <rock>2.2098000049591064 6.888480186462402 0.0</rock>\n"
-                        + "          </light>\n"
-                        + "        </initialPos>\n"
-                        + "        <initialSpeed>\n"
-                        + "          <dark>\n"
-                        + "            <rock>0.0 -1.3779956114540028 1.5707963267948966</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "          </dark>\n" + "          <light>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "            <rock>0.0 0.0 0.0</rock>\n"
-                        + "          </light>\n" + "        </initialSpeed>\n"
-                        + "      </CurveManager>\n" + "    </trajectories>\n"
-                        + "    <children/>\n" + "    <annotations/>\n"
-                        + "  </root>\n" + "</IODocument>", x);
+                "<IODocument>\n" + 
+                "  <annotations/>\n" + 
+                "  <root class=\"IOTrajectories\">\n" + 
+                "    <trajectories>\n" + 
+                "      <CurveManager>\n" + 
+                "        <annotations/>\n" + 
+                "        <collider class=\"CollissionSpin\">\n" + 
+                "          <params>\n" + 
+                "            <entry>\n" + 
+                "              <string>loss</string>\n" + 
+                "              <measure>0.0 J</measure>\n" + 
+                "            </entry>\n" + 
+                "            <entry>\n" + 
+                "              <string>frictionRockRock</string>\n" + 
+                "              <measure>0.5 </measure>\n" + 
+                "            </entry>\n" + 
+                "          </params>\n" + 
+                "        </collider>\n" + 
+                "        <collissionDetector class=\"NewtonCollissionDetector\"/>\n" + 
+                "        <curler class=\"NoCurlCurler\">\n" + 
+                "          <params>\n" + 
+                "            <entry>\n" + 
+                "              <string>drawToTeeTime</string>\n" + 
+                "              <measure>23.0 s</measure>\n" + 
+                "            </entry>\n" + 
+                "            <entry>\n" + 
+                "              <string>drawToTeeCurl</string>\n" + 
+                "              <measure>0.0 m</measure>\n" + 
+                "            </entry>\n" + 
+                "          </params>\n" + 
+                "        </curler>\n" + 
+                "        <initialPos>\n" + 
+                "          <dark>\n" + 
+                "            <rock>0.0 6.4008002281188965 0.0</rock>\n" + 
+                "            <rock>-2.2098000049591064 9.083040237426758 0.0</rock>\n" + 
+                "            <rock>-2.2098000049591064 8.717280387878418 0.0</rock>\n" + 
+                "            <rock>-2.2098000049591064 8.351519584655762 0.0</rock>\n" + 
+                "            <rock>-2.2098000049591064 7.98576021194458 0.0</rock>\n" + 
+                "            <rock>-2.2098000049591064 7.619999885559082 0.0</rock>\n" + 
+                "            <rock>-2.2098000049591064 7.254240036010742 0.0</rock>\n" + 
+                "            <rock>-2.2098000049591064 6.888480186462402 0.0</rock>\n" + 
+                "          </dark>\n" + 
+                "          <light>\n" + 
+                "            <rock>0.1 1.8287999629974365 0.7853981633974483</rock>\n" + 
+                "            <rock>2.2098000049591064 9.083040237426758 0.0</rock>\n" + 
+                "            <rock>2.2098000049591064 8.717280387878418 0.0</rock>\n" + 
+                "            <rock>2.2098000049591064 8.351519584655762 0.0</rock>\n" + 
+                "            <rock>2.2098000049591064 7.98576021194458 0.0</rock>\n" + 
+                "            <rock>2.2098000049591064 7.619999885559082 0.0</rock>\n" + 
+                "            <rock>2.2098000049591064 7.254240036010742 0.0</rock>\n" + 
+                "            <rock>2.2098000049591064 6.888480186462402 0.0</rock>\n" + 
+                "          </light>\n" + 
+                "          <listenerList serialization=\"custom\">\n" + 
+                "            <javax.swing.event.EventListenerList>\n" + 
+                "              <default/>\n" + 
+                "              <string>javax.swing.event.ChangeListener</string>\n" + 
+                "              <CurveManager reference=\"../../../..\"/>\n" + 
+                "              <null/>\n" + 
+                "            </javax.swing.event.EventListenerList>\n" + 
+                "          </listenerList>\n" + 
+                "          <source class=\"org.jcurl.core.base.PositionSet\" reference=\"..\"/>\n" + 
+                "        </initialPos>\n" + 
+                "        <initialSpeed>\n" + 
+                "          <dark>\n" + 
+                "            <rock>0.0 -1.7412714637086057 1.5707963267948966</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "          </dark>\n" + 
+                "          <light>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "            <rock>0.0 0.0 0.0</rock>\n" + 
+                "          </light>\n" + 
+                "          <listenerList serialization=\"custom\">\n" + 
+                "            <javax.swing.event.EventListenerList>\n" + 
+                "              <default/>\n" + 
+                "              <string>javax.swing.event.ChangeListener</string>\n" + 
+                "              <CurveManager reference=\"../../../..\"/>\n" + 
+                "              <null/>\n" + 
+                "            </javax.swing.event.EventListenerList>\n" + 
+                "          </listenerList>\n" + 
+                "          <source class=\"org.jcurl.core.base.SpeedSet\" reference=\"..\"/>\n" + 
+                "        </initialSpeed>\n" + 
+                "      </CurveManager>\n" + 
+                "    </trajectories>\n" + 
+                "    <children/>\n" + 
+                "    <annotations/>\n" + 
+                "  </root>\n" + 
+                "</IODocument>", x);
 
         final IOTrajectories l = (IOTrajectories) xs.read(x).getRoot();
         final CurveManager o = (CurveManager) l.trajectories().get(0);

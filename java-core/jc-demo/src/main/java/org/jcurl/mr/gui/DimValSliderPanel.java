@@ -39,9 +39,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.IceSize;
-import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.api.IceSize;
 import org.jcurl.core.helpers.Measure;
+import org.jcurl.core.helpers.Unit;
 import org.jcurl.core.log.JCLoggerFactory;
 
 /**

@@ -25,9 +25,9 @@ import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.geom.Arc2D;
 
-import org.jcurl.core.base.RockProps;
-import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.Strategy;
+import org.jcurl.core.api.RockProps;
+import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.Strategy;
 
 /**
  * Strategy to paint one single rock at (0,0) with the handle pointing along the

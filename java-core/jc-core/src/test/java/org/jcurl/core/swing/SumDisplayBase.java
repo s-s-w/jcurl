@@ -33,8 +33,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.RockSet;
+import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSet;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.swing.RockPainter.ColorSet;
 

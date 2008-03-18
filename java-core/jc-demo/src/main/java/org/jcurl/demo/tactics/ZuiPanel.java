@@ -6,9 +6,9 @@ import java.awt.Color;
 import javax.swing.JComponent;
 import javax.swing.undo.StateEdit;
 
-import org.jcurl.core.base.CurveStore;
-import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.model.BroomPromptModel;
+import org.jcurl.core.api.CurveStore;
+import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.impl.BroomPromptModel;
 import org.jcurl.core.ui.UndoRedoDocumentBase;
 import org.jcurl.core.zui.BroomPromptSimple;
 import org.jcurl.core.zui.PCurveStore;

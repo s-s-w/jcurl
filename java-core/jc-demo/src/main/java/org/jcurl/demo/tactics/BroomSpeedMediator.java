@@ -27,15 +27,15 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.Curler;
-import org.jcurl.core.base.IceSize;
-import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.base.Rock;
-import org.jcurl.core.base.RockDouble;
-import org.jcurl.core.base.RockSet;
-import org.jcurl.core.base.SpeedSet;
+import org.jcurl.core.api.Curler;
+import org.jcurl.core.api.IceSize;
+import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.Rock;
+import org.jcurl.core.api.RockDouble;
+import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.SpeedSet;
+import org.jcurl.core.impl.BroomPromptModel;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.model.BroomPromptModel;
 import org.jcurl.core.ui.IChangeSupport;
 import org.jcurl.core.ui.IPropertyChangeSupport;
 import org.jcurl.math.MathVec;
@@ -52,18 +52,17 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 
 	private BroomPromptModel broom;
 	private Curler curler;
-
 	private PositionSet position;
-
 	private SpeedSet speed;
+
+	private void add(final IChangeSupport l) {
+		if (l != null)
+			l.addChangeListener(this);
+	}
 
 	private void add(final IPropertyChangeSupport l) {
 		if (l != null)
 			l.addPropertyChangeListener(this);
-	}
-	private void add(final IChangeSupport l) {
-		if (l != null)
-			l.addChangeListener(this);
 	}
 
 	public BroomPromptModel getBroom() {
@@ -100,14 +99,14 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 			log.warn("unconsumed source: " + src.getClass().getName());
 	}
 
-	private void remove(final IPropertyChangeSupport l) {
-		if (l != null)
-			l.removePropertyChangeListener(this);
-	}
-
 	private void remove(final IChangeSupport l) {
 		if (l != null)
 			l.removeChangeListener(this);
+	}
+
+	private void remove(final IPropertyChangeSupport l) {
+		if (l != null)
+			l.removePropertyChangeListener(this);
 	}
 
 	public void setBroom(final BroomPromptModel broo) {
@@ -143,10 +142,13 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 		final Object src = e.getSource();
 		if (src instanceof BoundedRangeModel)
 			updateSpeed();
+		if (src instanceof RockSet)
+			updateBroom();
 		else
 			log.warn("unconsumed source: " + src.getClass().getName());
 	}
 
+	/** Initialpos, speed or curler have changed */
 	synchronized public void updateBroom() {
 		if (position == null || speed == null || broom == null)
 			return;
@@ -180,9 +182,10 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 		speed.fireStateChanged();
 	}
 
+	/** Broom properties have changed */
 	synchronized public void updateSpeed() {
 		log.info(broom);
-		if (position == null || broom == null)
+		if (position == null || curler == null || broom == null)
 			return;
 		// set to initial pos
 		final Rock start = new RockDouble(0, IceSize.FAR_HACK_2_TEE, Math.PI);

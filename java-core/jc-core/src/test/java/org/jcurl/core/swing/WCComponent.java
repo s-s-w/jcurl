@@ -37,8 +37,8 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.Orientation;
-import org.jcurl.core.base.Zoomer;
+import org.jcurl.core.api.Orientation;
+import org.jcurl.core.api.Zoomer;
 import org.jcurl.core.log.JCLoggerFactory;
 
 abstract class WCComponent extends Component implements WCLayer {

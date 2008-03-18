@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.jcurl.core.base.TrajectorySet;
+import org.jcurl.core.api.TrajectorySet;
 
 public class IOTrajectories extends IOGroup {
     private static final long serialVersionUID = -8243459215398281867L;

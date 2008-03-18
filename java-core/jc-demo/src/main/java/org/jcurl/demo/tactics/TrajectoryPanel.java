@@ -7,9 +7,9 @@ import javax.swing.JComponent;
 import javax.swing.undo.StateEdit;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.impl.BroomPromptModel;
+import org.jcurl.core.impl.CurveManager;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.model.BroomPromptModel;
-import org.jcurl.core.model.CurveManager;
 import org.jcurl.core.ui.UndoRedoDocumentBase;
 import org.jcurl.core.zui.BroomPromptSimple;
 import org.jcurl.core.zui.PCurveStore;

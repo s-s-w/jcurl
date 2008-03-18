@@ -18,16 +18,16 @@
  */
 package org.jcurl.mr.gui;
 
-import org.jcurl.core.base.Collider;
-import org.jcurl.core.base.ComputedTrajectorySet;
-import org.jcurl.core.base.Curler;
-import org.jcurl.core.base.PositionSet;
-import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.api.Collider;
+import org.jcurl.core.api.ComputedTrajectorySet;
+import org.jcurl.core.api.Curler;
+import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.helpers.Measure;
 import org.jcurl.core.helpers.MutableObject;
-import org.jcurl.core.model.CollissionSimple;
-import org.jcurl.core.model.CurlerNoCurl;
-import org.jcurl.core.model.CurveManager;
+import org.jcurl.core.helpers.Unit;
+import org.jcurl.core.impl.CollissionSimple;
+import org.jcurl.core.impl.CurlerNoCurl;
+import org.jcurl.core.impl.CurveManager;
 
 /**
  * Higher level Data Model - more abstract than {@link ComputedTrajectorySet}.

@@ -28,8 +28,8 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.CurveStore;
-import org.jcurl.core.base.Strategy;
+import org.jcurl.core.api.CurveStore;
+import org.jcurl.core.api.Strategy;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.CurveShape;
 import org.jcurl.math.R1RNFunction;

@@ -26,8 +26,8 @@ import java.io.Writer;
 import junit.framework.TestCase;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.base.Rock;
-import org.jcurl.core.base.RockDouble;
+import org.jcurl.core.api.Rock;
+import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.log.JCLoggerFactory;
 
