@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jscience</groupId>
+	<artifactId>jsr-275</artifactId>
+	<version>4.3</version>
+	<name>Java Units and Measures</name>
+	<description>
+		Java packages for modeling and working with standard measures known as units. JScience.jar stripped down to javax.measure
+	</description>
+	<url>http://jcp.org/en/jsr/detail?id=275</url>
+	<licenses>
+		<license>
+			<name>JSCIENCE LICENSE</name>
+			<url>http://jscience.org/doc/license.txt</url>
+			<distribution>manual</distribution>
+		</license>
+	</licenses>
+	<organization>
+		<name>
+			JScience
+		</name>
+		<url>http://jscience.org/</url>
+	</organization>
+</project>
