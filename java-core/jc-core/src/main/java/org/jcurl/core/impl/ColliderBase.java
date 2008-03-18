@@ -28,7 +28,7 @@ import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.RockSet;
-import org.jcurl.core.api.SpeedSet;
+import org.jcurl.core.api.VelocitySet;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.MathVec;
 
@@ -86,7 +86,7 @@ public abstract class ColliderBase extends PropModelImpl implements Collider {
      * Does not change <code>pos</code>!
      * </p>
      * <p>
-     * Does not fire {@link SpeedSet#fireStateChanged()}!
+     * Does not fire {@link VelocitySet#fireStateChanged()}!
      * </p>
      * 
      * @see ColliderBase#computeWC(Rock, Rock, Rock, Rock, AffineTransform)
@@ -96,7 +96,7 @@ public abstract class ColliderBase extends PropModelImpl implements Collider {
      *            <code>null</code> creates a new instance.
      * @return bitmask of the changed rocks
      */
-    public int compute(final PositionSet pos, final SpeedSet speed,
+    public int compute(final PositionSet pos, final VelocitySet speed,
             AffineTransform tr) {
         if (log.isDebugEnabled())
             log.debug("compute()");

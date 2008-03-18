@@ -36,7 +36,7 @@ public interface ComputedTrajectorySet extends TrajectorySet {
 
     public abstract PositionSet getInitialPos();
 
-    public abstract SpeedSet getInitialSpeed();
+    public abstract VelocitySet getInitialSpeed();
 
     public abstract void setCollider(final Collider collider);
 
@@ -56,11 +56,11 @@ public interface ComputedTrajectorySet extends TrajectorySet {
 
     /**
      * Currently the internal reference MUST be final, so this updates via
-     * {@link SpeedSet#setLocation(RockSet)}. This is the case to simplify
+     * {@link VelocitySet#setLocation(RockSet)}. This is the case to simplify
      * event controllers.
      * 
      * @param initialSpeed
      */
-    public abstract void setInitialSpeed(final SpeedSet initialSpeed);
+    public abstract void setInitialSpeed(final VelocitySet initialSpeed);
 
 }

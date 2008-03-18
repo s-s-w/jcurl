@@ -35,7 +35,7 @@ import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
-import org.jcurl.core.api.SpeedSet;
+import org.jcurl.core.api.VelocitySet;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.math.MathVec;
@@ -53,7 +53,7 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 	private BroomPromptModel broom;
 	private Curler curler;
 	private PositionSet position;
-	private SpeedSet speed;
+	private VelocitySet speed;
 
 	private void add(final IChangeSupport l) {
 		if (l != null)
@@ -77,7 +77,7 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 		return position;
 	}
 
-	public SpeedSet getSpeed() {
+	public VelocitySet getSpeed() {
 		return speed;
 	}
 
@@ -91,7 +91,7 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 				updateSpeed();
 		} else if (src instanceof PositionSet)
 			updateBroom();
-		else if (src instanceof SpeedSet)
+		else if (src instanceof VelocitySet)
 			updateBroom();
 		else if (src instanceof Curler)
 			updateSpeed();
@@ -132,7 +132,7 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 		updateBroom();
 	}
 
-	public void setSpeed(final SpeedSet speed) {
+	public void setSpeed(final VelocitySet speed) {
 		remove(this.speed);
 		add(this.speed = speed);
 		updateBroom();

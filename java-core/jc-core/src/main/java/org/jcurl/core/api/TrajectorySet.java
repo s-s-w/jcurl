@@ -33,7 +33,7 @@ public interface TrajectorySet {
 
     public abstract PositionSet getCurrentPos();
 
-    public abstract SpeedSet getCurrentSpeed();
+    public abstract VelocitySet getCurrentSpeed();
 
     public abstract double getCurrentTime();
 

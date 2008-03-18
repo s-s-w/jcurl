@@ -19,25 +19,25 @@
 package org.jcurl.core.api;
 
 /**
- * A {@link RockSet} with speed semantics.
+ * A {@link RockSet} with velocity semantics.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:SpeedSet.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class SpeedSet extends RockSet {
+public class VelocitySet extends RockSet {
 
     private static final long serialVersionUID = 7650353293030622027L;
 
-    public SpeedSet(final Rock seed) {
+    public VelocitySet(final Rock seed) {
         super(seed);
     }
 
-    public SpeedSet(final RockSet b) {
+    public VelocitySet(final RockSet b) {
         super(b);
     }
 
     @Override
     public Object clone() {
-        return new SpeedSet(this);
+        return new VelocitySet(this);
     }
 }

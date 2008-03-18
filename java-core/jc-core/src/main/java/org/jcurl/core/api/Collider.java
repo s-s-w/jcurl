@@ -36,7 +36,7 @@ public interface Collider extends PropModel, Strategy {
      * Does not change <code>pos</code>!
      * </p>
      * <p>
-     * Does not fire {@link SpeedSet#fireStateChanged()}!
+     * Does not fire {@link VelocitySet#fireStateChanged()}!
      * </p>
      * 
      * @param pos
@@ -48,7 +48,7 @@ public interface Collider extends PropModel, Strategy {
      *            <code>null</code> creates a new instance.
      * @return bitmask of the changed rocks
      */
-    public abstract int compute(PositionSet pos, SpeedSet speed,
+    public abstract int compute(PositionSet pos, VelocitySet speed,
             AffineTransform tr);
 
     public void init(Map<CharSequence, Measure> ice);

@@ -27,7 +27,7 @@ import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.RockSet;
-import org.jcurl.core.api.SpeedSet;
+import org.jcurl.core.api.VelocitySet;
 import org.jcurl.core.impl.CollissionSimple;
 import org.jcurl.math.MathVec;
 
@@ -54,11 +54,11 @@ public class CollissionSimpleTest extends TestCase {
 
     final PositionSet pos;
 
-    final SpeedSet speed;
+    final VelocitySet speed;
 
     public CollissionSimpleTest() {
         pos = PositionSet.allHome();
-        speed = new SpeedSet(pos);
+        speed = new VelocitySet(pos);
         ax = pos.getDark(0);
         bx = pos.getLight(0);
         av = speed.getDark(0);

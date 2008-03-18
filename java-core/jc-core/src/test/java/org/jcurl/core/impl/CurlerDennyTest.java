@@ -26,7 +26,7 @@ import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
-import org.jcurl.core.api.SpeedSet;
+import org.jcurl.core.api.VelocitySet;
 import org.jcurl.core.impl.CollissionSpin;
 import org.jcurl.core.impl.CurlerDenny;
 import org.jcurl.core.impl.CurlerNoCurl;
@@ -54,7 +54,7 @@ public class CurlerDennyTest extends TestShowBase {
 		te.getInitialPos().getDark(0).setLocation(0, IceSize.FAR_HOG_2_TEE, 0);
 		te.getInitialPos().getLight(0).setLocation(0, IceSize.BACK_2_TEE,
 				0.25 * Math.PI);
-		te.setInitialSpeed(new SpeedSet(PositionSet.allHome()));
+		te.setInitialSpeed(new VelocitySet(PositionSet.allHome()));
 		if (false)
 			te.getInitialSpeed().getDark(0).setLocation(-0.096,
 					-te.getCurler().computeHackSpeed(3.124, tee), Math.PI / 2);

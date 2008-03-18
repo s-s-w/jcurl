@@ -26,7 +26,7 @@ import org.jcurl.core.api.CurveStore;
 import org.jcurl.core.api.MutableObject;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.RockSet;
-import org.jcurl.core.api.SpeedSet;
+import org.jcurl.core.api.VelocitySet;
 import org.jcurl.core.api.TrajectorySet;
 
 
@@ -44,7 +44,7 @@ public class StoredTrajectorySet extends MutableObject implements TrajectorySet 
 
     private transient final PositionSet currentPos = PositionSet.allHome();
 
-    private transient final SpeedSet currentSpeed = new SpeedSet(PositionSet
+    private transient final VelocitySet currentSpeed = new VelocitySet(PositionSet
             .allHome());
 
     private transient double currentTime = 0;
@@ -83,7 +83,7 @@ public class StoredTrajectorySet extends MutableObject implements TrajectorySet 
         return currentPos;
     }
 
-    public SpeedSet getCurrentSpeed() {
+    public VelocitySet getCurrentSpeed() {
         return currentSpeed;
     }
 

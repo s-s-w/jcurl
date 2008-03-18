@@ -36,7 +36,7 @@ import org.jcurl.core.api.MutableObject;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockSet;
-import org.jcurl.core.api.SpeedSet;
+import org.jcurl.core.api.VelocitySet;
 import org.jcurl.core.api.StopDetector;
 import org.jcurl.core.impl.CollissionStore.Tupel;
 import org.jcurl.core.log.JCLoggerFactory;
@@ -79,7 +79,7 @@ public class CurveManager extends MutableObject implements
 
     private transient final PositionSet currentPos = PositionSet.allHome();
 
-    private transient final SpeedSet currentSpeed = new SpeedSet(PositionSet
+    private transient final VelocitySet currentSpeed = new VelocitySet(PositionSet
             .allHome());
 
     private transient double currentTime = 0;
@@ -91,7 +91,7 @@ public class CurveManager extends MutableObject implements
 
     private final PositionSet initialPos = PositionSet.allHome();
 
-    private final SpeedSet initialSpeed = new SpeedSet(PositionSet.allHome());
+    private final VelocitySet initialSpeed = new VelocitySet(PositionSet.allHome());
 
     public CurveManager() {
         initialPos.addChangeListener(this);
@@ -109,7 +109,7 @@ public class CurveManager extends MutableObject implements
      * @return the new Curve in world coordinates.
      */
     R1RNFunctionImpl doComputeCurve(final int i16, final double t0,
-            final PositionSet p, final SpeedSet s, final double sweepFactor) {
+            final PositionSet p, final VelocitySet s, final double sweepFactor) {
         final Rock x = p.getRock(i16);
         final Rock v = s.getRock(i16);
         final R1RNFunctionImpl wc;
@@ -237,7 +237,7 @@ public class CurveManager extends MutableObject implements
         return currentPos;
     }
 
-    public SpeedSet getCurrentSpeed() {
+    public VelocitySet getCurrentSpeed() {
         return currentSpeed;
     }
 
@@ -253,7 +253,7 @@ public class CurveManager extends MutableObject implements
         return initialPos;
     }
 
-    public SpeedSet getInitialSpeed() {
+    public VelocitySet getInitialSpeed() {
         return initialSpeed;
     }
 
@@ -365,7 +365,7 @@ public class CurveManager extends MutableObject implements
         this.initialPos.setLocation(initialPos);
     }
 
-    public void setInitialSpeed(final SpeedSet initialSpeed) {
+    public void setInitialSpeed(final VelocitySet initialSpeed) {
         dirty = true;
         // propChange.firePropertyChange("initialSpeed", this.initialSpeed,
         // initialSpeed);
