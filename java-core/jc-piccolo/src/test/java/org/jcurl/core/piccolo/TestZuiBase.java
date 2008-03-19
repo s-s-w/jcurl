@@ -16,12 +16,14 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.zui;
+package org.jcurl.core.piccolo;
 
 import java.awt.Color;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
+import org.jcurl.core.piccolo.KeyboardZoom;
+import org.jcurl.core.piccolo.PIceFactory;
 
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PCanvas;

@@ -34,10 +34,10 @@ import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.Unit;
 import org.jcurl.core.log.JCLoggerFactory;
+import org.jcurl.core.piccolo.BroomPromptSimple;
+import org.jcurl.core.piccolo.KeyboardZoom;
+import org.jcurl.core.piccolo.PIceFactory;
 import org.jcurl.core.ui.BroomPromptModel;
-import org.jcurl.core.zui.BroomPromptSimple;
-import org.jcurl.core.zui.KeyboardZoom;
-import org.jcurl.core.zui.PIceFactory;
 
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PCanvas;

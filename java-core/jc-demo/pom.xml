@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
 		<artifactId>parent</artifactId>
 		<groupId>org.jcurl.core</groupId>
@@ -12,9 +14,15 @@
 	<description>Some demo applications.</description>
 	<url>${httpsitebase}/${pom.artifactId}/${pom.version}</url>
 	<scm>
-		<connection>scm:svn:svn://svn.berlios.de/jcurl/trunk/java-core/${pom.artifactId}</connection>
-		<developerConnection>scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/java-core/${pom.artifactId}</developerConnection>
-		<url>http://svn.berlios.de/wsvn/jcurl/trunk/java-core/${pom.artifactId}</url>
+		<connection>
+			scm:svn:svn://svn.berlios.de/jcurl/trunk/java-core/${pom.artifactId}
+		</connection>
+		<developerConnection>
+			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/java-core/${pom.artifactId}
+		</developerConnection>
+		<url>
+			http://svn.berlios.de/wsvn/jcurl/trunk/java-core/${pom.artifactId}
+		</url>
 	</scm>
 	<repositories>
 		<repository>
@@ -26,53 +34,59 @@
 			<releases>
 				<enabled>false</enabled>
 			</releases>
-			<snapshots>
-			</snapshots>
+			<snapshots />
+
 		</repository>
 	</repositories>
 	<profiles>
-        <profile>
-            <id>netbeans-public</id>
-            <activation>
-                <property>
-                    <name>netbeans.execution</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-jar-plugin</artifactId>
-                        <configuration>
-                            <archive>
-                                <manifest>
-                                    <addClasspath>true</addClasspath>
-                                    <classpathPrefix>lib</classpathPrefix>
-                                    <mainClass>org.jcurl.demo.tactics.MainApp</mainClass>
-                                </manifest>
-                            </archive>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-assembly-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>nb</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>directory</goal>
-                                </goals>
-                                <configuration>
-                                    <descriptor>${basedir}/src/main/assemblies/netbeans-run.xml</descriptor>
-                                    <finalName>executable</finalName>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+		<profile>
+			<id>netbeans-public</id>
+			<activation>
+				<property>
+					<name>netbeans.execution</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-jar-plugin</artifactId>
+						<configuration>
+							<archive>
+								<manifest>
+									<addClasspath>true</addClasspath>
+									<classpathPrefix>
+										lib
+									</classpathPrefix>
+									<mainClass>
+										org.jcurl.demo.tactics.MainApp
+									</mainClass>
+								</manifest>
+							</archive>
+						</configuration>
+					</plugin>
+					<plugin>
+						<artifactId>maven-assembly-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>nb</id>
+								<phase>package</phase>
+								<goals>
+									<goal>directory</goal>
+								</goals>
+								<configuration>
+									<descriptor>
+										${basedir}/src/main/assemblies/netbeans-run.xml
+									</descriptor>
+									<finalName>executable</finalName>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>org.jcurl.core</groupId>
@@ -83,11 +97,17 @@
 			<groupId>org.jcurl.core</groupId>
 			<artifactId>jc-xsio</artifactId>
 			<version>${version}</version>
-		</dependency -->
+			</dependency -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.java.dev.scenegraph</groupId>
+			<artifactId>scenario</artifactId>
+			<version>0.6</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

@@ -16,29 +16,19 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.zui;
+package org.jcurl.core.piccolo;
 
-import org.jcurl.core.api.PositionSet;
+import junit.framework.TestCase;
 
-public class PiccoloBasicTest extends TestZuiBase {
+public abstract class TestBase extends TestCase {
 
-    private static final long serialVersionUID = -8485372274509187133L;
+    protected void assertEquals(final double expected, final double found) {
+        final double precision = 1e-9;
+        assertEquals("expected:<" + expected + "> +/-:<" + precision
+                + "> but was:<" + found + ">", expected, found, precision);
+    }
 
-    public void testThroughPut() throws InterruptedException {
-        if (frame == null)
-            return;
-
-        // add some curling stuff:
-        final PPositionSet initial = new PPositionSet(new PRockFactory.Simple());
-        initial.setModel(PositionSet.allHome());
-        ice.addChild(initial);
-        initial.addInputEventListener(new PPositionSetDrag());
-        final PPositionSet end = new PPositionSet(new PRockFactory.Fancy(10));
-        end.setModel(PositionSet.allOut());
-        ice.addChild(end);
-
-        frame.setVisible(true);
-        while (frame.isVisible())
-            Thread.sleep(100);
+    protected double rad2deg(final double rad) {
+        return 180 * rad / Math.PI;
     }
 }

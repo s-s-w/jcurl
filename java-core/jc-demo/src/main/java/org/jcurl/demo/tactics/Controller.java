@@ -40,8 +40,8 @@ import javax.swing.undo.UndoableEdit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jcurl.core.piccolo.KeyboardZoom;
 import org.jcurl.core.ui.UndoRedoDocument;
-import org.jcurl.core.zui.KeyboardZoom;
 
 import edu.umd.cs.piccolo.PCamera;
 

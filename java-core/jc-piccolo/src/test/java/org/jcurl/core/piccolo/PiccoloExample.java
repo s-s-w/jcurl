@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.zui;
+package org.jcurl.core.piccolo;
 
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
@@ -28,6 +28,11 @@ import javax.swing.JFrame;
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.RockProps;
+import org.jcurl.core.piccolo.KeyboardZoom;
+import org.jcurl.core.piccolo.PIceFactory;
+import org.jcurl.core.piccolo.PPositionSet;
+import org.jcurl.core.piccolo.PPositionSetDrag;
+import org.jcurl.core.piccolo.PRockFactory;
 
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PCanvas;
