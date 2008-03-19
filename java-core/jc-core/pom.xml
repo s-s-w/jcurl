@@ -72,9 +72,15 @@
 			</exclusions>
 		</dependency>
 		<dependency>
+			<groupId>commons-math</groupId>
+			<artifactId>commons-math</artifactId>
+			<version>1.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.jscience</groupId>
-			<artifactId>jsr-275</artifactId>
-			<version>4.3</version>
+			<artifactId>jscience</artifactId>
+			<version>4.3.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

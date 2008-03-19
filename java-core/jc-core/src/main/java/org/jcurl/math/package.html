@@ -6,8 +6,40 @@
 </head>
 <body>
 <p>Generic math helpers without dependencies to other jcurl
-packages. Could even be a separate binary - therefore it's name is not <code>org.jcurl.core.math</code>
-</p>
+packages. Could even be a separate binary - therefore it's package name
+is not <code>org.jcurl.core.math</code></p>
+<h3>Why isn't math framework X used?</h3>
+<p>First of all every framework is likely to bring unneeded/unwanted
+stuff but this core library should remain slim anf fast, concerning both
+download and runtime. It should be useable within applets or java
+webstart over slow networks. Therefore it also has to have as few
+dependencies as possible.</p>
+
+<p>Second the requirements here are rather simple. <code>R^1
+-&gt; R^3</code> monotone, C1 continuous functions. That's all.</p>
+<p>Third I use a dirty trick to pack up 2D and angular
+position/speed into one 3D {@link org.jcurl.core.api.Rock}. This
+contradicts the JSR-275 measure concept, so jscience will not like this.</p>
+<p>But nevertheless the following frameworks were examined:</p>
+
+<h4><a href="http://commons.apache.org/math/">Jakarta Commons
+Math</a></h4>
+<ul>
+	<li>brings quite a bit unneeded stuff (jar of 331K),</li>
+	<li>Exceptions on function evaluation,</li>
+	<li>getting derivatives seems a bit a hassle (via the regular
+	Interfaces),</li>
+	<li>No interfaces for multi-dimensional functions</li>
+</ul>
+
+<h4><a href="http://www.jscience.org/">JScience</a></h4>
+<ul>
+	<li>brings a lot of unneeded stuff (jar of 680K),</li>
+	<li>heavy Boxing/Unboxing because of generics (maybe this isn't
+	critical?),</li>
+	<li>evaluating a functions changes inner state and therefore isn't
+	threadsafe.</li>
+</ul>
+<p>I admit that jscience is really tempting. I'll keep an eye on it.</p>
 </body>
 </html>
-</?xml>
