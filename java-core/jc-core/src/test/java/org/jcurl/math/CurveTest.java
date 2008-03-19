@@ -31,10 +31,6 @@ import junit.framework.TestCase;
  */
 public class CurveTest extends TestCase {
 
-    public static void main(final String[] args) {
-        junit.textui.TestRunner.run(CurveTest.class);
-    }
-
     public void test010() {
         final Polynome po = Polynome.getPoly(1.0, 2.0, 3.0, 4.0);
         assertEquals("", 2.0, po.at(0, 1.0), 1e-9);

@@ -69,7 +69,7 @@ public class Distance2DSqTest extends TestBase {
         };
     }
 
-    public void testPointStraightLine() throws MathException {
+    public void testPointStraightLine() {
         final Distance2DSq d = new Distance2DSq(createPoint2D(2, 1),
                 createPoly(new double[] { -1, 0.5 }), CollissionDetector.RR2);
         assertEquals(2.811956073217295, Math.sqrt(d.at(0)));
