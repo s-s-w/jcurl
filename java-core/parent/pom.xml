@@ -169,6 +169,7 @@
 						<link>
 							http://www.cs.umd.edu/hcil/jazz/learn/piccolo/doc-1.2/api/
 						</link>
+						<link>http://download.java.net/javadesktop/scenario/releases/0.6/javadoc/</link>
 						<link>
 							http://download.java.net/media/java3d/javadoc/1.5.0-latest
 						</link>
@@ -208,6 +209,7 @@
 						-link http://jakarta.apache.org/commons/logging/commons-logging-1.1/apidocs/
 						-link http://xstream.codehaus.org/javadoc/
 						-link http://www.cs.umd.edu/hcil/jazz/learn/piccolo/doc-1.2/api/
+						-link http://download.java.net/javadesktop/scenario/releases/0.6/javadoc/
 						-link http://download.java.net/media/java3d/javadoc/1.5.0-latest
 						-link http://www.picocontainer.org/versions/1.0/apidocs/
 						-link http://jakarta.apache.org/commons/math/api-1.1/
