@@ -9,8 +9,8 @@
 		<version>0.7-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
-	<artifactId>jc-zui</artifactId>
-	<name>JCurl ZUI</name>
+	<artifactId>jc-piccolo</artifactId>
+	<name>JCurl ZUI using piccolo</name>
 	<url>
 		http://www.jcurl.org/m2/site/${pom.artifactId}/${pom.version}
 	</url>
