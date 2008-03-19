@@ -36,7 +36,7 @@
     <menu name="Modules">
       <item name="JC Core" href="../../jc-core/0.7-SNAPSHOT"/>
       <item name="JC XSIO" href="../../jc-xsio/0.7-SNAPSHOT"/>
-      <item name="JC ZUI" href="../../jc-zui/0.7-SNAPSHOT"/>
+      <item name="JC Piccolo ZUI" href="../../jc-piccolo/0.7-SNAPSHOT"/>
       <item name="JC Demo" href="../../jc-demo/0.7-SNAPSHOT"/>
     </menu>
     <menu ref="reports" />

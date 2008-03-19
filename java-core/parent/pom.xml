@@ -152,7 +152,7 @@
 							${httpsitebase}/jc-core/${pom.version}/apidocs/
 						</link>
 						<link>
-							${httpsitebase}/jc-zui/${pom.version}/apidocs/
+							${httpsitebase}/jc-piccolo/${pom.version}/apidocs/
 						</link>
 						<link>
 							${httpsitebase}/jc-xsio/${pom.version}/apidocs/
@@ -202,7 +202,7 @@
 						-postfixpackage -nodefontsize 9
 						-nodefontpackagesize 7 -visibility -operations
 						-link ${httpsitebase}/jc-core/${pom.version}/apidocs/
-						-link ${httpsitebase}/jc-zui/${pom.version}/apidocs/
+						-link ${httpsitebase}/jc-piccolo/${pom.version}/apidocs/
 						-link ${httpsitebase}/jc-xsio/${pom.version}/apidocs/
 						-link http://java.sun.com/j2se/1.5.0/docs/api/
 						-link http://jakarta.apache.org/commons/logging/commons-logging-1.1/apidocs/

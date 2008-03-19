@@ -76,7 +76,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.jcurl.core</groupId>
-			<artifactId>jc-zui</artifactId>
+			<artifactId>jc-piccolo</artifactId>
 			<version>${version}</version>
 		</dependency>
 		<!-- dependency>

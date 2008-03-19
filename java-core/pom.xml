@@ -66,7 +66,7 @@
 	<modules>
 		<module>jc-core</module>
 		<module>jc-xsio</module>
-		<module>jc-zui</module>
+		<module>jc-piccolo</module>
 		<module>jc-demo</module>
 		<module>webstart</module>
 	</modules>
