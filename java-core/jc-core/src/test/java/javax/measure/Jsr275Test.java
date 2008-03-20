@@ -1,9 +1,7 @@
-package org.jcurl.core.api;
+package javax.measure;
 
 import java.awt.geom.Point2D;
 
-import javax.measure.Measure;
-import javax.measure.VectorMeasure;
 import javax.measure.quantity.Acceleration;
 import javax.measure.quantity.Angle;
 import javax.measure.quantity.AngularAcceleration;
@@ -18,6 +16,10 @@ import javax.measure.unit.NonSI;
 import javax.measure.unit.SI;
 
 import junit.framework.TestCase;
+
+import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.Rock;
+import org.jcurl.core.api.VelocitySet;
 
 /**
  * Demo for a possible use of <a

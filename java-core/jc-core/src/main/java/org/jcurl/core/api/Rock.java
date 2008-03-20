@@ -24,21 +24,42 @@ import java.io.Serializable;
 
 import javax.swing.event.ChangeListener;
 
+import org.jcurl.core.helpers.Service;
 
 /**
- * Base class for rock information (either location or speed). The "Z" component
+ * Base class for rock information (either location or speed). The 3rd component (<code>a</code>)
  * is the handle angle in radians.
+ * <h3>Why is this type not generic, e.g. Rock<T extends Number></h3>
+ * <p>
+ * Yes, this would be preferable, especially for a neat integration into <a
+ * href="http://www.jscience.org">JScience</a> calculus.
+ * </p>
+ * <p>
+ * But as {@link #setLocation(double, double)} &amp; co must be provided to
+ * satisfy the {@link Point2D} (settable via mouse interaction on a panel) there
+ * MUST be a way to convert {@link java.lang.Double}s to <code>T</code>s.
+ * {@link Service} factories (@link Double}-&gt;<code>T</code>) could be a
+ * solution.
+ * </p>
+ * <p>
+ * Looks like this absolutely central class is subject to major refactoring.
+ * </p>
+ * <h2>Possible ways out</h2>
+ * <ul>
+ * <li>don't extend {@link Point2D} but use a wrapper to communicate with
+ * displays.</li>
+ * </ul>
  * 
- * @see org.jcurl.core.api.PositionSet
+ * @see org.jcurl.core.api.RockSet
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:Rock.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public abstract class Rock extends Point2D implements IChangeSupport,
 		Cloneable, Serializable {
-	private transient boolean dirty = true;
-
 	/** Utility field used by bound properties. */
 	protected final transient ChangeSupport change = new ChangeSupport(this);
+
+	private transient boolean dirty = true;
 
 	private transient AffineTransform trafo;
 
@@ -71,11 +92,7 @@ public abstract class Rock extends Point2D implements IChangeSupport,
 
 	public abstract double getA();
 
-	public ChangeListener[] getChangeListeners() {
-		return change.getChangeListeners();
-	}
-
-	public AffineTransform getTrafo() {
+	public AffineTransform getAffineTransform() {
 		if (trafo != null && !dirty)
 			return trafo;
 		if (trafo == null)
@@ -83,9 +100,14 @@ public abstract class Rock extends Point2D implements IChangeSupport,
 		else
 			trafo.setToIdentity();
 		trafo.translate(getX(), getY());
+		// TUNE jdk 1.6 brings a non-trigonometric rotate!
 		trafo.rotate(getA());
 		dirty = false;
 		return trafo;
+	}
+
+	public ChangeListener[] getChangeListeners() {
+		return change.getChangeListeners();
 	}
 
 	/**

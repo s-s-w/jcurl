@@ -16,22 +16,26 @@
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.math;
+package org.apache.commons.math.analysis;
 
 import junit.framework.TestCase;
 
 import org.apache.commons.math.FunctionEvaluationException;
-import org.apache.commons.math.analysis.DifferentiableUnivariateRealFunction;
-import org.apache.commons.math.analysis.PolynomialFunction;
-import org.apache.commons.math.analysis.UnivariateRealFunction;
 import org.jcurl.math.Polynome;
 import org.jcurl.math.R1R1Function;
 
+/**
+ * Demonstrate how to interact with <a
+ * href="http://commons.apache.org/math/">Jakarta Commons Math</a>
+ * 
+ * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public class FunctionBridgeTest extends TestCase {
 
 	/**
-	 * Enable usage of {@link UnivariateRealFunction}s without implanting the
-	 * dependency into the jcurl core.
+	 * Enable usage of {@link DifferentiableUnivariateRealFunction}s without
+	 * implanting the dependency into the jcurl core.
 	 */
 	public static abstract class FunctionBridge extends R1R1Function implements
 			DifferentiableUnivariateRealFunction {

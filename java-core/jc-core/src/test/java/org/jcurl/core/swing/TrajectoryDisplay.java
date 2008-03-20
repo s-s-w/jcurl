@@ -254,7 +254,7 @@ class TrajectoryDisplay extends WCComponent implements ChangeListener {
             g.translate(rock.getX(), rock.getY());
             g.rotate(Math.PI + rock.getA());
         } else
-            g.transform(rock.getTrafo());
+            g.transform(rock.getAffineTransform());
 
         // make the right-handed coordinate system left handed again (for
         // un-flipped text display)
