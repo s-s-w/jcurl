@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.piccolo;
+package org.jcurl.zui.piccolo;
 
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
@@ -34,7 +34,7 @@ import edu.umd.cs.piccolo.PNode;
  * Manage a set of trajectories.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:PCurveStore.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
 public class PCurveStore extends PNode implements PropertyChangeListener {
     private static final Log log = JCLoggerFactory.getLogger(PCurveStore.class);

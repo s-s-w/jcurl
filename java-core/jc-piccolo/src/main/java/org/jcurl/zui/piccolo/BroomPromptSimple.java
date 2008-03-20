@@ -1,4 +1,4 @@
-package org.jcurl.core.piccolo;
+package org.jcurl.zui.piccolo;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

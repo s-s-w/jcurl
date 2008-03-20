@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.piccolo;
+package org.jcurl.zui.piccolo;
 
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
@@ -28,11 +28,11 @@ import javax.swing.JFrame;
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.RockProps;
-import org.jcurl.core.piccolo.KeyboardZoom;
-import org.jcurl.core.piccolo.PIceFactory;
-import org.jcurl.core.piccolo.PPositionSet;
-import org.jcurl.core.piccolo.PPositionSetDrag;
-import org.jcurl.core.piccolo.PRockFactory;
+import org.jcurl.zui.piccolo.KeyboardZoom;
+import org.jcurl.zui.piccolo.PIceFactory;
+import org.jcurl.zui.piccolo.PPositionSet;
+import org.jcurl.zui.piccolo.PPositionSetDrag;
+import org.jcurl.zui.piccolo.PRockFactory;
 
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PCanvas;
@@ -41,7 +41,7 @@ import edu.umd.cs.piccolo.util.PPaintContext;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:PiccoloExample.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
 public class PiccoloExample {
 

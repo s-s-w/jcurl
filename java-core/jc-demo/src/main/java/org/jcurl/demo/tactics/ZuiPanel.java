@@ -8,15 +8,15 @@ import javax.swing.undo.StateEdit;
 
 import org.jcurl.core.api.CurveStore;
 import org.jcurl.core.api.PositionSet;
-import org.jcurl.core.piccolo.BroomPromptSimple;
-import org.jcurl.core.piccolo.PCurveStore;
-import org.jcurl.core.piccolo.PIceFactory;
-import org.jcurl.core.piccolo.PPositionSet;
-import org.jcurl.core.piccolo.PPositionSetDrag;
-import org.jcurl.core.piccolo.PRockFactory;
-import org.jcurl.core.piccolo.PTrajectoryFactory;
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.UndoRedoDocumentBase;
+import org.jcurl.zui.piccolo.BroomPromptSimple;
+import org.jcurl.zui.piccolo.PCurveStore;
+import org.jcurl.zui.piccolo.PIceFactory;
+import org.jcurl.zui.piccolo.PPositionSet;
+import org.jcurl.zui.piccolo.PPositionSetDrag;
+import org.jcurl.zui.piccolo.PRockFactory;
+import org.jcurl.zui.piccolo.PTrajectoryFactory;
 
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PNode;

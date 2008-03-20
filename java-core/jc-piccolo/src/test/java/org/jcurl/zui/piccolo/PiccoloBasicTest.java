@@ -16,12 +16,12 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.piccolo;
+package org.jcurl.zui.piccolo;
 
 import org.jcurl.core.api.PositionSet;
-import org.jcurl.core.piccolo.PPositionSet;
-import org.jcurl.core.piccolo.PPositionSetDrag;
-import org.jcurl.core.piccolo.PRockFactory;
+import org.jcurl.zui.piccolo.PPositionSet;
+import org.jcurl.zui.piccolo.PPositionSetDrag;
+import org.jcurl.zui.piccolo.PRockFactory;
 
 public class PiccoloBasicTest extends TestZuiBase {
 

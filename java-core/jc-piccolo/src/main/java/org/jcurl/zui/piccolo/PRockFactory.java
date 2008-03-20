@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.piccolo;
+package org.jcurl.zui.piccolo;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -39,7 +39,7 @@ import edu.umd.cs.piccolo.nodes.PText;
  * parent coordinate system.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:PRockFactory.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
 public abstract class PRockFactory implements Factory {
 

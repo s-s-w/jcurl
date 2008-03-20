@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.piccolo;
+package org.jcurl.zui.piccolo;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -37,7 +37,7 @@ import edu.umd.cs.piccolo.event.PInputEvent;
  * Simple keyboard zoom to sheet, house and 12-foot.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:KeyboardZoom.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
 public class KeyboardZoom extends PBasicInputEventHandler {
     private static final int _500 = 500;

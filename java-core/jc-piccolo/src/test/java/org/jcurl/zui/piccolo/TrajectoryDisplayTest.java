@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.core.piccolo;
+package org.jcurl.zui.piccolo;
 
 import java.awt.Component;
 import java.awt.Graphics;
@@ -38,10 +38,10 @@ import org.jcurl.core.impl.CurlerDenny;
 import org.jcurl.core.impl.CurveManager;
 import org.jcurl.core.impl.NewtonCollissionDetector;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.piccolo.PCurveStore;
-import org.jcurl.core.piccolo.PPositionSet;
-import org.jcurl.core.piccolo.PRockFactory;
-import org.jcurl.core.piccolo.PTrajectoryFactory;
+import org.jcurl.zui.piccolo.PCurveStore;
+import org.jcurl.zui.piccolo.PPositionSet;
+import org.jcurl.zui.piccolo.PRockFactory;
+import org.jcurl.zui.piccolo.PTrajectoryFactory;
 
 public class TrajectoryDisplayTest extends TestZuiBase {
     static final Log log = JCLoggerFactory
