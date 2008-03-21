@@ -24,7 +24,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 
 import org.jcurl.core.api.IceSize;
-import org.jcurl.core.api.Orientation;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.helpers.NotImplementedYetException;
 

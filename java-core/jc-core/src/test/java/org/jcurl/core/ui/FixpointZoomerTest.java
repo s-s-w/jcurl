@@ -26,7 +26,6 @@ import java.awt.geom.Rectangle2D;
 import junit.framework.TestCase;
 
 import org.jcurl.core.api.IceSize;
-import org.jcurl.core.api.Orientation;
 import org.jcurl.core.ui.FixpointZoomer;
 
 /**
