@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.java.dev.scenegraph</groupId>
-	<artifactId>scenegraph</artifactId>
+	<artifactId>scenario</artifactId>
 	<packaging>jar</packaging>
 	<version>0.6</version>
 	<name>Java Swing/2D Scene Graph</name>
