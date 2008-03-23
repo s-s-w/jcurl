@@ -25,14 +25,12 @@ import java.awt.geom.Rectangle2D;
 
 import javax.swing.JFrame;
 
+import org.apache.commons.logging.Log;
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.RockProps;
-import org.jcurl.zui.piccolo.KeyboardZoom;
-import org.jcurl.zui.piccolo.PIceFactory;
-import org.jcurl.zui.piccolo.PPositionSet;
-import org.jcurl.zui.piccolo.PPositionSetDrag;
-import org.jcurl.zui.piccolo.PRockFactory;
+import org.jcurl.core.log.JCLoggerFactory;
+import org.jcurl.zui.piccolo.PRockNode.DragHandler;
 
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PCanvas;
@@ -44,69 +42,68 @@ import edu.umd.cs.piccolo.util.PPaintContext;
  * @version $Id:PiccoloExample.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
 public class PiccoloExample {
+	/** House area plus 1 rock margin plus "out" rock space. */
+	static final Rectangle2D houseP;
+	private static final Log log = JCLoggerFactory
+			.getLogger(PiccoloExample.class);
+	private static final long serialVersionUID = -8485372274509187133L;
 
-    /** House area plus 1 rock margin plus "out" rock space. */
-    static final Rectangle2D houseP;
+	/**
+	 * Inter-hog area area plus house area plus 1 rock margin plus "out" rock
+	 * space.
+	 */
+	static final Rectangle2D sheetP;
 
-    private static final long serialVersionUID = -8485372274509187133L;
+	static {
+		final double r2 = 2 * RockProps.DEFAULT.getRadius();
+		final double x = IceSize.SIDE_2_CENTER + r2;
+		houseP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_TEE + r2), 2 * x,
+				IceSize.HOG_2_TEE + IceSize.BACK_2_TEE + 3 * r2 + 2 * r2);
+		sheetP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_HOG
+				+ IceSize.HOG_2_TEE + r2), 2 * x, IceSize.HOG_2_HOG
+				+ IceSize.HOG_2_TEE + IceSize.BACK_2_TEE + 3 * r2 + 2 * r2);
+	}
 
-    /**
-     * Inter-hog area area plus house area plus 1 rock margin plus "out" rock
-     * space.
-     */
-    static final Rectangle2D sheetP;
+	public static void main(final String[] args) {
+		new PiccoloExample();
+	}
 
-    static {
-        final double r2 = 2 * RockProps.DEFAULT.getRadius();
-        final double x = IceSize.SIDE_2_CENTER + r2;
-        houseP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_TEE + r2), 2 * x,
-                IceSize.HOG_2_TEE + IceSize.BACK_2_TEE + 3 * r2 + 2 * r2);
-        sheetP = new Rectangle2D.Double(-x, -(IceSize.HOG_2_HOG
-                + IceSize.HOG_2_TEE + r2), 2 * x, IceSize.HOG_2_HOG
-                + IceSize.HOG_2_TEE + IceSize.BACK_2_TEE + 3 * r2 + 2 * r2);
-    }
+	private final JFrame frame;
 
-    public static void main(final String[] args) {
-        new PiccoloExample();
-    }
+	private final PCanvas pico;
 
-    private final JFrame frame;
+	public PiccoloExample() {
+		frame = new JFrame("Piccolo Example");
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(final WindowEvent e) {
+				System.exit(0);
+			}
+		});
 
-    private final PCanvas pico;
+		frame.setBounds(0, 0, 800, 600);
+		pico = new PCanvas();
+		pico.setBackground(new Color(0xE8E8FF));
+		pico.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+		pico.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+		final PCamera cam = pico.getCamera();
+		// Shift origin to center of the frame:
+		cam.setViewOffset(0.5 * frame.getWidth(), 0.5 * frame.getHeight());
+		cam.setViewScale(50);
+		frame.getContentPane().add(pico);
 
-    public PiccoloExample() {
-        frame = new JFrame("Piccolo Example");
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(final WindowEvent e) {
-                System.exit(0);
-            }
-        });
+		// some curling:
+		final PNode ice = new PIceFactory.Fancy().newInstance();
+		pico.getLayer().addChild(ice);
+		final PPositionSet pos = new PPositionSet(new PRockFactory.Fancy(100));
+		pos.setModel(PositionSet.allOut());
+		ice.addChild(pos);
+		pos.addInputEventListener(new DragHandler());
+		// some helpers:
+		// pico.getLayer().addChild(new PPath(house));
 
-        frame.setBounds(0, 0, 800, 600);
-        pico = new PCanvas();
-        pico.setBackground(new Color(0xE8E8FF));
-        pico.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-        pico.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-        final PCamera cam = pico.getCamera();
-        // Shift origin to center of the frame:
-        cam.setViewOffset(0.5 * frame.getWidth(), 0.5 * frame.getHeight());
-        cam.setViewScale(50);
-        frame.getContentPane().add(pico);
-
-        // some curling:
-        final PNode ice = new PIceFactory.Fancy().newInstance();
-        pico.getLayer().addChild(ice);
-        final PPositionSet pos = new PPositionSet(new PRockFactory.Fancy(100));
-        pos.setModel(PositionSet.allOut());
-        ice.addChild(pos);
-        pos.addInputEventListener(new PPositionSetDrag());
-
-        // some helpers:
-        // pico.getLayer().addChild(new PPath(house));
-
-        pico.getRoot().getDefaultInputManager().setKeyboardFocus(
-                new KeyboardZoom(cam));
-        frame.setVisible(true);
-    }
+		pico.getRoot().getDefaultInputManager().setKeyboardFocus(
+				new KeyboardZoom(cam));
+		frame.setVisible(true);
+	}
 }

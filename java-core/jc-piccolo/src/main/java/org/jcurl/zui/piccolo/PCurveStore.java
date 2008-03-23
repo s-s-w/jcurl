@@ -84,7 +84,7 @@ public class PCurveStore extends PNode implements PropertyChangeListener {
         if (model == null)
             return;
         final PNode c = f.newInstance(i16, model.iterator(i16), tmax);
-        c.addAttribute(PPositionSet.index16, i16);
+        c.addAttribute(PRockNode.INDEX16, i16);
         getChild(i16).replaceWith(c);
     }
 }

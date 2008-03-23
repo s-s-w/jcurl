@@ -22,8 +22,6 @@ import java.awt.Color;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.zui.piccolo.KeyboardZoom;
-import org.jcurl.zui.piccolo.PIceFactory;
 
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PCanvas;

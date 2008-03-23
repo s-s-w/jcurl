@@ -29,19 +29,15 @@ import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
-import org.jcurl.core.api.VelocitySet;
 import org.jcurl.core.api.TrajectorySet;
 import org.jcurl.core.api.Unit;
+import org.jcurl.core.api.VelocitySet;
 import org.jcurl.core.helpers.AnnoHelper;
 import org.jcurl.core.impl.CollissionSpin;
 import org.jcurl.core.impl.CurlerDenny;
 import org.jcurl.core.impl.CurveManager;
 import org.jcurl.core.impl.NewtonCollissionDetector;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.zui.piccolo.PCurveStore;
-import org.jcurl.zui.piccolo.PPositionSet;
-import org.jcurl.zui.piccolo.PRockFactory;
-import org.jcurl.zui.piccolo.PTrajectoryFactory;
 
 public class TrajectoryDisplayTest extends TestZuiBase {
     static final Log log = JCLoggerFactory

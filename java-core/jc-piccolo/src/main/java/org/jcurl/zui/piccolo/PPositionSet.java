@@ -23,11 +23,11 @@ import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.PositionSet;
-import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.log.JCLoggerFactory;
 
 import edu.umd.cs.piccolo.PNode;
+
 /**
  * Piccolo {@link PNode} backed with a {@link PositionSet}.
  * 
@@ -35,37 +35,17 @@ import edu.umd.cs.piccolo.PNode;
  * @version $Id:PPositionSet.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
 public class PPositionSet extends PNode implements ChangeListener {
-
-	private static final double eps = 1e-11;
-	public static final Object index16 = "index16";
+	static final double eps = PRockNode.EPSILON;
 	private static final Log log = JCLoggerFactory
 			.getLogger(PPositionSet.class);
 	private static final long serialVersionUID = 6564103045992326633L;
-
-	static boolean sync(final Rock src, final PNode dst) {
-		// check if it's changed either location or angle:
-		if (src.distanceSq(dst.getOffset()) < eps
-				&& Math.abs(src.getA() - dst.getRotation()) < eps)
-			return false;
-		if (true)
-			dst.setTransform(src.getAffineTransform());
-		else {
-			dst.setRotation(src.getA());
-			dst.setOffset(src.getX(), src.getY());
-		}
-		dst.invalidatePaint();
-		// Why is this necessary?
-		dst.repaint();
-		return true;
-	}
-
 	private final PRockFactory f;
 	private PositionSet model = null;
 
 	/**
 	 * Create a pickable child node for each rock and set it's attributes
-	 * {@link #index16} and {@link PositionSet#getClass()} - yes the class
-	 * object is the key.
+	 * {@link PRockNode#INDEX16} and {@link PositionSet#getClass()} - yes the
+	 * class object is the key.
 	 * 
 	 * @param f
 	 */
@@ -77,33 +57,27 @@ public class PPositionSet extends PNode implements ChangeListener {
 		return model;
 	}
 
-	public void stateChanged(final ChangeEvent evt) {
-		log.debug(evt);
-		sync(model, this);
-	}
-
 	public void setModel(final PositionSet positionSet) {
 		if (model != null)
-			positionSet.removeChangeListener(this);
+			throw new UnsupportedOperationException();
 		model = positionSet;
 		setVisible(model != null);
 		if (model != null) {
 			removeAllChildren();
-			for (int i = 0; i < RockSet.ROCKS_PER_SET; i++) {
-				final PNode c = f.newInstance(i);
-				c.addAttribute(index16, i);
-				c.addAttribute(positionSet.getClass(), positionSet);
-				addChild(i, c);
-			}
-			sync(model, this);
-			positionSet.addChangeListener(this);
+			for (int i = 0; i < RockSet.ROCKS_PER_SET; i++)
+				addChild(i, f.newInstance(i, positionSet.getRock(i)));
 		}
+	}
+
+	public void stateChanged(final ChangeEvent evt) {
+		log.debug(evt);
+		sync(model, this);
 	}
 
 	private void sync(final PositionSet src, final PPositionSet dst) {
 		if (src == null)
 			return;
 		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
-			sync(src.getRock(i), dst.getChild(i));
+			PRockFactory.sync(src.getRock(i), (PRockNode) dst.getChild(i));
 	}
 }

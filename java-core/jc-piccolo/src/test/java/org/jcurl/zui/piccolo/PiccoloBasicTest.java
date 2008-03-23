@@ -19,9 +19,7 @@
 package org.jcurl.zui.piccolo;
 
 import org.jcurl.core.api.PositionSet;
-import org.jcurl.zui.piccolo.PPositionSet;
-import org.jcurl.zui.piccolo.PPositionSetDrag;
-import org.jcurl.zui.piccolo.PRockFactory;
+import org.jcurl.zui.piccolo.PRockNode.DragHandler;
 
 public class PiccoloBasicTest extends TestZuiBase {
 
@@ -35,7 +33,7 @@ public class PiccoloBasicTest extends TestZuiBase {
         final PPositionSet initial = new PPositionSet(new PRockFactory.Simple());
         initial.setModel(PositionSet.allHome());
         ice.addChild(initial);
-        initial.addInputEventListener(new PPositionSetDrag());
+        initial.addInputEventListener(new DragHandler());
         final PPositionSet end = new PPositionSet(new PRockFactory.Fancy(10));
         end.setModel(PositionSet.allOut());
         ice.addChild(end);

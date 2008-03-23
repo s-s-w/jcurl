@@ -59,9 +59,9 @@ public abstract class Rock extends Point2D implements IChangeSupport,
 	/** Utility field used by bound properties. */
 	protected final transient ChangeSupport change = new ChangeSupport(this);
 
-	private transient boolean dirty = true;
+	private transient volatile boolean dirty = true;
 
-	private transient AffineTransform trafo;
+	private transient volatile AffineTransform trafo;
 
 	public void addChangeListener(final ChangeListener l) {
 		change.addChangeListener(l);
@@ -95,14 +95,16 @@ public abstract class Rock extends Point2D implements IChangeSupport,
 	public AffineTransform getAffineTransform() {
 		if (trafo != null && !dirty)
 			return trafo;
-		if (trafo == null)
-			trafo = new AffineTransform();
-		else
-			trafo.setToIdentity();
-		trafo.translate(getX(), getY());
-		// TUNE jdk 1.6 brings a non-trigonometric rotate!
-		trafo.rotate(getA());
-		dirty = false;
+		synchronized (this) {
+			if (trafo == null)
+				trafo = new AffineTransform();
+			else
+				trafo.setToIdentity();
+			trafo.translate(getX(), getY());
+			// TUNE jdk 1.6 brings a non-trigonometric rotate!
+			trafo.rotate(getA());
+			dirty = false;
+		}
 		return trafo;
 	}
 

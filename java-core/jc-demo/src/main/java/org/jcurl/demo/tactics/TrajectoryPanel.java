@@ -2,9 +2,9 @@ package org.jcurl.demo.tactics;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.geom.Point2D;
 
 import javax.swing.JComponent;
-import javax.swing.undo.StateEdit;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.impl.CurveManager;
@@ -15,19 +15,18 @@ import org.jcurl.zui.piccolo.BroomPromptSimple;
 import org.jcurl.zui.piccolo.PCurveStore;
 import org.jcurl.zui.piccolo.PIceFactory;
 import org.jcurl.zui.piccolo.PPositionSet;
-import org.jcurl.zui.piccolo.PPositionSetDrag;
 import org.jcurl.zui.piccolo.PRockFactory;
+import org.jcurl.zui.piccolo.PRockNode;
 import org.jcurl.zui.piccolo.PTrajectoryFactory;
+import org.jcurl.zui.piccolo.PRockNode.DragHandler;
 
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PNode;
-import edu.umd.cs.piccolo.event.PInputEvent;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
 class TrajectoryPanel extends JComponent {
 	private static final Log log = JCLoggerFactory
 			.getLogger(TrajectoryPanel.class);
-
 	private static final long serialVersionUID = -4648771240323713217L;
 	private final BroomPromptSimple broom;
 	private final PPositionSet current;
@@ -38,7 +37,6 @@ class TrajectoryPanel extends JComponent {
 	private final BroomSpeedMediator mediator = new BroomSpeedMediator();
 	private final int minor = 64;
 	final PCanvas pico;
-
 	private final PCurveStore traj;
 	private UndoRedoDocumentBase undo;
 
@@ -55,25 +53,13 @@ class TrajectoryPanel extends JComponent {
 
 		traj = new PCurveStore(new PTrajectoryFactory.Fancy(), MainApp.tmax);
 		initial = new PPositionSet(new PRockFactory.Fancy(minor));
-		initial.addInputEventListener(new PPositionSetDrag() {
-			private StateEdit edit = null;
-
+		initial.addInputEventListener(new DragHandler() {
 			@Override
-			synchronized public void mouseDragged(final PInputEvent event) {
-				if (edit == null)
-					edit = new StateEdit(curves.getInitialPos());
-				super.mouseDragged(event);
-			}
-
-			@Override
-			synchronized public void mouseReleased(final PInputEvent event) {
-				if (edit == null)
-					return;
-				super.mouseReleased(event);
-				edit.end();
-				getUndo().addEdit(edit);
-				edit = null;
-				// FIXME traj.sync(MainApp.tmax);
+			protected void pushChange(final boolean isDrop,
+					final PRockNode node, final Point2D currentPos,
+					final Point2D startPos) {
+				// FIXME Add Undo.
+				super.pushChange(isDrop, node, currentPos, startPos);
 			}
 		});
 		current = new PPositionSet(new PRockFactory.Fancy(major));

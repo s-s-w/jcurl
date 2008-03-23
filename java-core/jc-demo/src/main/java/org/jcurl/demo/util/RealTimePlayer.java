@@ -21,8 +21,8 @@ package org.jcurl.demo.util;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
-import org.jcurl.core.api.VelocitySet;
 import org.jcurl.core.api.TrajectorySet;
+import org.jcurl.core.api.VelocitySet;
 
 /**
  * Extract locations from a (non-discrete) {@link TrajectorySet} and walk on in
