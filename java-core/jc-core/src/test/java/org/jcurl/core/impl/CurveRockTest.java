@@ -23,8 +23,6 @@ import junit.framework.TestCase;
 import org.jcurl.core.api.CurveRock;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
-import org.jcurl.core.impl.CurveRockAnalytic;
-import org.jcurl.core.impl.CurveStill;
 import org.jcurl.math.Polynome;
 
 public class CurveRockTest extends TestCase {

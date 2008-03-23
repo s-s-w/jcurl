@@ -24,6 +24,7 @@ import java.awt.geom.Point2D;
 import org.jcurl.core.api.Curler;
 import org.jcurl.core.api.CurveRock;
 import org.jcurl.core.api.IceSize;
+import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.math.NewtonSimpleSolver;
 
 /**
@@ -34,7 +35,7 @@ import org.jcurl.math.NewtonSimpleSolver;
  */
 public abstract class CurlerBase extends PropModelImpl implements Curler {
 
-	public double computeIntervalTime(final CurveRock wc) {
+	public double computeIntervalTime(final CurveRock<Pos> wc) {
 		final double back = NewtonSimpleSolver.computeNewtonValue(wc, 1, 0,
 				IceSize.BACK_2_HOG + IceSize.FAR_HOG_2_TEE, 0, 10);
 		final double hog = NewtonSimpleSolver.computeNewtonValue(wc, 1, 0,
@@ -42,9 +43,9 @@ public abstract class CurlerBase extends PropModelImpl implements Curler {
 		return hog - back;
 	}
 
-	public CurveRock computeWc(final Point2D broom, double split,
+	public CurveRock<Pos> computeWc(final Point2D broom, double split,
 			final double a0, final double omega0, final double sweepFactor) {
-		return new CurveTransformed(computeRc(a0,
+		return new CurveTransformed<Pos>(computeRc(a0,
 				computeHackSpeed(split, broom), omega0, sweepFactor),
 				hackRc2Wc(null, broom), 0);
 	}

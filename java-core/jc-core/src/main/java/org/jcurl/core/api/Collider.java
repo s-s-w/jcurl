@@ -21,6 +21,9 @@ package org.jcurl.core.api;
 import java.awt.geom.AffineTransform;
 import java.util.Map;
 
+import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.core.api.RockType.Vel;
+
 
 /**
  * Compute rock collissions.
@@ -36,7 +39,7 @@ public interface Collider extends PropModel, Strategy {
      * Does not change <code>pos</code>!
      * </p>
      * <p>
-     * Does not fire {@link VelocitySet#fireStateChanged()}!
+     * Does not fire {@link RockSet#fireStateChanged()}!
      * </p>
      * 
      * @param pos
@@ -48,7 +51,7 @@ public interface Collider extends PropModel, Strategy {
      *            <code>null</code> creates a new instance.
      * @return bitmask of the changed rocks
      */
-    public abstract int compute(PositionSet pos, VelocitySet speed,
+    public abstract int compute(RockSet<Pos> pos, RockSet<Vel> speed,
             AffineTransform tr);
 
     public void init(Map<CharSequence, Measure> ice);

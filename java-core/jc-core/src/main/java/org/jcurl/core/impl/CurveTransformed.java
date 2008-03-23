@@ -25,6 +25,7 @@ import java.io.ObjectStreamException;
 import org.jcurl.core.api.CurveRock;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
+import org.jcurl.core.api.RockType;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.R1RNFunction;
 
@@ -35,7 +36,7 @@ import org.jcurl.math.R1RNFunction;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CurveTransformed.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
-public class CurveTransformed extends CurveRock {
+public class CurveTransformed<T extends RockType>  extends CurveRock<T> {
 
 	private static final long serialVersionUID = -665772521427597014L;
 
@@ -109,7 +110,7 @@ public class CurveTransformed extends CurveRock {
 	 *            See {@link #createRc2Wc(Point2D, Point2D, AffineTransform)}
 	 * @param t0
 	 */
-	public CurveTransformed(final CurveRock base, final AffineTransform trafo,
+	public CurveTransformed(final CurveRock<T> base, final AffineTransform trafo,
 			final double t0) {
 		this(trafo, base, t0);
 	}
@@ -137,10 +138,10 @@ public class CurveTransformed extends CurveRock {
 	}
 
 	@Override
-	public Rock at(final int derivative, double t, Rock ret) {
+	public Rock<T> at(final int derivative, double t, Rock<T> ret) {
 		t -= t0;
 		if (ret == null)
-			ret = new RockDouble();
+			ret = new RockDouble<T>();
 		ret.setLocation(base.at(0, derivative, t), base.at(1, derivative, t),
 				base.at(2, derivative, t));
 		if (derivative < 1) {
@@ -153,7 +154,7 @@ public class CurveTransformed extends CurveRock {
 		} else {
 			final double x = trafo[0] * ret.getX() + trafo[2] * ret.getY();
 			final double y = trafo[1] * ret.getX() + trafo[3] * ret.getY();
-			ret.setLocation(x, y);
+			ret.setLocation(x, y, ret.getA());
 		}
 		return ret;
 	}
@@ -168,7 +169,7 @@ public class CurveTransformed extends CurveRock {
 	}
 
 	protected Object readResolve() throws ObjectStreamException {
-		return new CurveTransformed(new AffineTransform(trafo), base, t0);
+		return new CurveTransformed<T>(new AffineTransform(trafo), base, t0);
 	}
 
 	@Override

@@ -19,6 +19,8 @@
 package org.jcurl.core.swing;
 
 import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockType.Pos;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -32,12 +34,12 @@ class SumShotDisplay extends SumDisplayBase {
         super();
     }
 
-    public SumShotDisplay(final PositionSet model) {
+    public SumShotDisplay(final RockSet<Pos> model) {
         super(model);
     }
 
     @Override
-    protected int computeMask(final PositionSet rocks) {
+    protected int computeMask(final RockSet<Pos> rocks) {
         return PositionSet.getShotRocks(rocks);
     }
 }

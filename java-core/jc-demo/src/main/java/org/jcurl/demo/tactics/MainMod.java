@@ -1,5 +1,6 @@
 package org.jcurl.demo.tactics;
 
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
@@ -19,7 +20,8 @@ import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.Unit;
-import org.jcurl.core.api.VelocitySet;
+import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.core.helpers.AnnoHelper;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.impl.CollissionSpin;
@@ -45,7 +47,7 @@ class MainMod extends BroomPromptModel {
         te.setCollissionDetector(new NewtonCollissionDetector());
         te.setCurler(new CurlerDenny(24, 1));
         te.setInitialPos(PositionSet.allOut());
-        te.setInitialSpeed(new VelocitySet(new RockDouble()));
+        te.setInitialSpeed(new RockSet<Vel>(new RockDouble<Vel>()));
         te.getAnnotations().put(AnnoHelper.HammerK, AnnoHelper.HammerVDark);
         te.getAnnotations().put(AnnoHelper.DarkTeamK, "Scotland");
         te.getAnnotations().put(AnnoHelper.LightTeamK, "Canada");
@@ -58,7 +60,7 @@ class MainMod extends BroomPromptModel {
         return te;
     }
 
-    static void initHammy(final PositionSet p, final VelocitySet s) {
+    static void initHammy(final RockSet<Pos> p, final RockSet<Vel> s) {
         PositionSet.allOut(p);
         // te.getInitialPos().getLight(1-1).setLocation(
         p.getLight(2 - 1).setLocation(Unit.f2m(-1.170732), Unit.f2m(15.365854),
@@ -132,7 +134,7 @@ class MainMod extends BroomPromptModel {
     }
 
     @Override
-    public Rock getBroom() {
+    public Point2D getBroom() {
         throw new NotImplementedYetException();
     }
 
@@ -152,11 +154,11 @@ class MainMod extends BroomPromptModel {
         return new File(".");
     }
 
-    public PositionSet getCurrentPos() {
+    public RockSet<Pos> getCurrentPos() {
         return ts.getCurrentPos();
     }
 
-    public VelocitySet getCurrentSpeed() {
+    public RockSet<Vel> getCurrentSpeed() {
         return ts.getCurrentSpeed();
     }
 
@@ -171,11 +173,11 @@ class MainMod extends BroomPromptModel {
         return ts;
     }
 
-    public PositionSet getInitialPos() {
+    public RockSet<Pos> getInitialPos() {
         return ts.getInitialPos();
     }
 
-    public VelocitySet getInitialSpeed() {
+    public RockSet<Vel> getInitialSpeed() {
         return ts.getInitialSpeed();
     }
 
@@ -264,11 +266,11 @@ class MainMod extends BroomPromptModel {
         ts.setCurveStore(curveStore);
     }
 
-    public void setInitialPos(final PositionSet initialPos) {
+    public void setInitialPos(final RockSet<Pos> initialPos) {
         ts.setInitialPos(initialPos);
     }
 
-    public void setInitialSpeed(final VelocitySet initialSpeed) {
+    public void setInitialSpeed(final RockSet<Vel> initialSpeed) {
         ts.setInitialSpeed(initialSpeed);
     }
 

@@ -25,9 +25,8 @@ import org.jcurl.core.api.CurveRock;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
-import org.jcurl.core.impl.CurveRockAnalytic;
-import org.jcurl.core.impl.CurveStill;
-import org.jcurl.core.impl.CurveTransformed;
+import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.swing.TestShowBase;
 import org.jcurl.core.ui.FixpointZoomer;
 import org.jcurl.math.PolynomeCurve;
@@ -71,7 +70,7 @@ public class CurveTransformedTest extends TestShowBase {
         assertEquals("", 1.0, d[3], 1e-9);
         assertEquals("", 0.0, d[4], 1e-9);
         assertEquals("", 0.0, d[5], 1e-9);
-        at.transform(r = new RockDouble(2, 3, 4), r);
+        at.transform((r = new RockDouble(2, 3, 4)).p(), r.p());
         assertEquals(2, 3, 4, r, 1e-9);
 
         at = AffineTransform.getScaleInstance(0.5, 0.75);
@@ -82,7 +81,7 @@ public class CurveTransformedTest extends TestShowBase {
         assertEquals("", 0.75, d[3], 1e-9);
         assertEquals("", 0.0, d[4], 1e-9);
         assertEquals("", 0.0, d[5], 1e-9);
-        at.transform(r = new RockDouble(2, 3, 4), r);
+        at.transform((r = new RockDouble(2, 3, 4)).p(), r.p());
         assertEquals(1, 2.25, 4, r, 1e-9);
 
         at = AffineTransform.getTranslateInstance(0.5, 0.75);
@@ -93,7 +92,7 @@ public class CurveTransformedTest extends TestShowBase {
         assertEquals("", 1.0, d[3], 1e-9);
         assertEquals("", 0.5, d[4], 1e-9);
         assertEquals("", 0.75, d[5], 1e-9);
-        at.transform(r = new RockDouble(2, 3, 4), r);
+        at.transform((r = new RockDouble(2, 3, 4)).p(), r.p());
         assertEquals(2.5, 3.75, 4, r, 1e-9);
     }
 
@@ -101,7 +100,7 @@ public class CurveTransformedTest extends TestShowBase {
         final Rock v0 = new RockDouble(1, 1.5, 0.3);
         final double[] d = { v0.getY(), -v0.getX(), v0.getX(), v0.getY(), 0, 0 };
         final AffineTransform at = new AffineTransform(d);
-        final double v = v0.distance(0, 0);
+        final double v = v0.p().distance(0, 0);
         at.scale(1 / v, 1 / v);
         assertEquals(AffineTransform.TYPE_GENERAL_ROTATION, at.getType());
         assertEquals("", 1.0, at.getDeterminant(), 1e-9);
@@ -136,7 +135,7 @@ public class CurveTransformedTest extends TestShowBase {
     public void testAffineTransformRotateShift() {
         final Point2D p0_wc = new Point2D.Double(3, 3.5);
         final Rock v0_wc = new RockDouble(2, 4.2, 0.3);
-        final double v = v0_wc.distance(0, 0);
+        final double v = v0_wc.p().distance(0, 0);
         final double[] d = { v0_wc.getY(), -v0_wc.getX(), v0_wc.getX(),
                 v0_wc.getY(), 0, 0 };
         final AffineTransform at = new AffineTransform(d);
@@ -183,7 +182,7 @@ public class CurveTransformedTest extends TestShowBase {
     public void testCreateRc2Wc() {
         final Point2D p0_wc = new Point2D.Double(3, 3.5);
         final Rock v0_wc = new RockDouble(2, 4.2, 0.3);
-        final AffineTransform at = CurveTransformed.createRc2Wc(p0_wc, v0_wc,
+        final AffineTransform at = CurveTransformed.createRc2Wc(p0_wc, v0_wc.p(),
                 null);
         assertEquals(AffineTransform.TYPE_GENERAL_ROTATION
                 + AffineTransform.TYPE_TRANSLATION, at.getType());
@@ -242,7 +241,7 @@ public class CurveTransformedTest extends TestShowBase {
     }
 
     public void testStill() {
-        final PositionSet p = PositionSet.allOut();
+        final RockSet<Pos> p = PositionSet.allOut();
         final CurveTransformed[] c = new CurveTransformed[6];
         final AffineTransform[] m = new AffineTransform[c.length];
         int k = -1;

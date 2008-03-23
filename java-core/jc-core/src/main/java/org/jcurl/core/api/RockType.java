@@ -16,28 +16,24 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
+
 package org.jcurl.core.api;
 
 /**
- * A {@link RockSet} with velocity semantics.
+ * Markers to distinguish position, velocity and acceleration semantics. Goes
+ * halfway to <a href="http://www.jcp.org/en/jsr/detail?id=275">JSR 275</a> and
+ * <a href="http://www.jscience.org">JScience</a>.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id:SpeedSet.java 378 2007-01-24 01:18:35Z mrohrmoser $
+ * @version $Id$
  */
-public class VelocitySet extends RockSet {
+public interface RockType {
+	/** Position Acceleration */
+	public static interface Acc extends RockType {}
 
-    private static final long serialVersionUID = 7650353293030622027L;
+	/** Position Semantics */
+	public static interface Pos extends RockType {}
 
-    public VelocitySet(final Rock seed) {
-        super(seed);
-    }
-
-    public VelocitySet(final RockSet b) {
-        super(b);
-    }
-
-    @Override
-    public Object clone() {
-        return new VelocitySet(this);
-    }
+	/** Velocity Semantics */
+	public static interface Vel extends RockType {}
 }

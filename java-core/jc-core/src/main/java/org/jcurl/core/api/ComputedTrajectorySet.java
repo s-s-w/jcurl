@@ -18,6 +18,8 @@
  */
 package org.jcurl.core.api;
 
+import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.math.R1RNFunction;
 
 /**
@@ -34,9 +36,9 @@ public interface ComputedTrajectorySet extends TrajectorySet {
 
     public abstract Curler getCurler();
 
-    public abstract PositionSet getInitialPos();
+    public abstract RockSet<Pos> getInitialPos();
 
-    public abstract VelocitySet getInitialSpeed();
+    public abstract RockSet<Vel> getInitialSpeed();
 
     public abstract void setCollider(final Collider collider);
 
@@ -47,20 +49,20 @@ public interface ComputedTrajectorySet extends TrajectorySet {
 
     /**
      * Currently the internal reference MUST be final, so this updates via
-     * {@link PositionSet#setLocation(RockSet)}. This is the case to simplify
+     * {@link RockSet#setLocation(RockSet)}. This is the case to simplify
      * event controllers.
      * 
      * @param initialPos
      */
-    public abstract void setInitialPos(final PositionSet initialPos);
+    public abstract void setInitialPos(final RockSet<Pos> initialPos);
 
     /**
      * Currently the internal reference MUST be final, so this updates via
-     * {@link VelocitySet#setLocation(RockSet)}. This is the case to simplify
+     * {@link RockSet#setLocation(RockSet)}. This is the case to simplify
      * event controllers.
      * 
      * @param initialSpeed
      */
-    public abstract void setInitialSpeed(final VelocitySet initialSpeed);
+    public abstract void setInitialSpeed(final RockSet<Vel> initialSpeed);
 
 }

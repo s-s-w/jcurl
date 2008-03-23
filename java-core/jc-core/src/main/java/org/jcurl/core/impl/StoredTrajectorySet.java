@@ -26,8 +26,9 @@ import org.jcurl.core.api.CurveStore;
 import org.jcurl.core.api.MutableObject;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.RockSet;
-import org.jcurl.core.api.VelocitySet;
 import org.jcurl.core.api.TrajectorySet;
+import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.core.api.RockType.Vel;
 
 
 /**
@@ -42,10 +43,9 @@ public class StoredTrajectorySet extends MutableObject implements TrajectorySet 
 
     private final Map<CharSequence, CharSequence> annotations = new HashMap<CharSequence, CharSequence>();
 
-    private transient final PositionSet currentPos = PositionSet.allHome();
+    private transient final RockSet<Pos> currentPos = PositionSet.allHome();
 
-    private transient final VelocitySet currentSpeed = new VelocitySet(PositionSet
-            .allHome());
+    private transient final RockSet<Vel> currentSpeed = RockSet.zeroSpeed();
 
     private transient double currentTime = 0;
 
@@ -79,11 +79,11 @@ public class StoredTrajectorySet extends MutableObject implements TrajectorySet 
         return annotations;
     }
 
-    public PositionSet getCurrentPos() {
+    public RockSet<Pos> getCurrentPos() {
         return currentPos;
     }
 
-    public VelocitySet getCurrentSpeed() {
+    public RockSet<Vel> getCurrentSpeed() {
         return currentSpeed;
     }
 

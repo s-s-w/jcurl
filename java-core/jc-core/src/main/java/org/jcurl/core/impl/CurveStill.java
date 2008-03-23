@@ -20,6 +20,7 @@ package org.jcurl.core.impl;
 
 import org.jcurl.core.api.CurveRock;
 import org.jcurl.core.api.Rock;
+import org.jcurl.core.api.RockType;
 
 /**
  * Curve implementation for rocks NOT in motion.
@@ -27,7 +28,7 @@ import org.jcurl.core.api.Rock;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CurveStill.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
-public class CurveStill extends CurveRock {
+public class CurveStill<T extends RockType>  extends CurveRock<T> {
     private static final long serialVersionUID = -8031863193302315171L;
 
     public static CurveStill newInstance(final double x, final double y,
@@ -53,7 +54,7 @@ public class CurveStill extends CurveRock {
         this.a = a;
     }
 
-    private CurveStill(final Rock x) {
+    private CurveStill(final Rock<T> x) {
         this(x.getX(), x.getY(), x.getA());
     }
 

@@ -23,6 +23,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.ui.FixpointZoomer;
 
 public class PositionDisplayTest extends TestShowBase {
@@ -31,7 +33,7 @@ public class PositionDisplayTest extends TestShowBase {
         final int dt = 5000;
         final Graphics g = new BufferedImage(1024 * 2, 768 * 2,
                 BufferedImage.TYPE_INT_ARGB).getGraphics();
-        final PositionSet p = PositionSet.allHome();
+        final RockSet<Pos> p = PositionSet.allHome();
         final int frames = showPositionDisplay(p, FixpointZoomer.HOG2HACK, dt,
                 new TimeRunnable() {
                     @Override

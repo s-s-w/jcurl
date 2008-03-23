@@ -23,7 +23,6 @@ import java.util.Map.Entry;
 import junit.framework.TestCase;
 
 import org.jcurl.core.api.CurveStore;
-import org.jcurl.core.impl.CurveStoreImpl;
 import org.jcurl.math.R1RNFunction;
 
 public class CurveStoreTest extends TestCase {

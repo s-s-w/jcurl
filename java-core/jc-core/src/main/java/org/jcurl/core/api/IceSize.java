@@ -20,6 +20,8 @@ package org.jcurl.core.api;
 
 import java.awt.Shape;
 
+import org.jcurl.core.api.RockType.Pos;
+
 
 /**
  * Ice dimensions. TODO Should here be {@link Shape}s?
@@ -78,11 +80,11 @@ public final class IceSize {
      * @param speed
      * @return bitmask of modified (removed) rocks
      */
-    public static int checkOut(final PositionSet pos, final PositionSet speed) {
+    public static int checkOut(final RockSet<Pos> pos, final RockSet<Pos> speed) {
         int ret = 0;
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
             if (speed.getRock(i).isNotZero()) {
-                final Rock r = pos.getRock(i);
+                final Rock<Pos> r = pos.getRock(i);
                 if (r.getX() > outX || r.getX() < -outX || r.getY() < -outY) {
                     setOut(r, i % 2 == 0, i / 2);
                     speed.getRock(i).setLocation(0, 0, 0);
@@ -100,7 +102,7 @@ public final class IceSize {
      *            the rock to check
      * @return true/false
      */
-    public static boolean ingame(final Rock x) {
+    public static boolean ingame(final Rock<Pos> x) {
         return -x.getY() < BACK_2_TEE + rad && x.getY() < FAR_HOG_2_TEE - rad
                 && x.getX() < SIDE_2_CENTER - rad
                 && -x.getX() < SIDE_2_CENTER - rad;
@@ -114,7 +116,7 @@ public final class IceSize {
      *            rock's location
      * @return <code>true/false</code>
      */
-    public static boolean ingamePlus(final Rock x) {
+    public static boolean ingamePlus(final Rock<Pos> x) {
         return -x.getY() < BACK_2_TEE + rad && x.getY() < FAR_HACK_2_TEE + rad
                 && x.getX() < SIDE_2_CENTER - rad
                 && -x.getX() < SIDE_2_CENTER - rad;
@@ -133,7 +135,7 @@ public final class IceSize {
      * @param idx
      *            index [0-7]
      */
-    public static void setHome(final Rock R, final boolean isDark, final int idx) {
+    public static void setHome(final Rock<Pos> R, final boolean isDark, final int idx) {
         // R.setLocation((isDark ? -1 : 1) * Dim.f2m(5 + (idx % 2) * 1.2), Dim
         // .f2m(120 + 1.2 * (idx / 2)), 0);
         R.setLocation((isDark ? -1 : 1) * Unit.f2m(7.25), Unit
@@ -152,7 +154,7 @@ public final class IceSize {
      * @param i
      *            index
      */
-    public static void setOut(final Rock R, final boolean isDark, final int i) {
+    public static void setOut(final Rock<Pos> R, final boolean isDark, final int i) {
         R.setLocation((isDark ? -1 : 1) * Unit.f2m(2.5 + 1.2 * i / 2), Unit
                 .f2m(i % 2 == 0 ? -8 : -9.2), 0);
     }

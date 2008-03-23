@@ -22,7 +22,8 @@ import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.TrajectorySet;
-import org.jcurl.core.api.VelocitySet;
+import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.core.api.RockType.Vel;
 
 /**
  * Extract locations from a (non-discrete) {@link TrajectorySet} and walk on in
@@ -65,8 +66,8 @@ public class RealTimePlayer implements Runnable {
      */
     public void run() {
         try {
-            final PositionSet pos = PositionSet.allHome(null);
-            final VelocitySet speed = new VelocitySet(new RockDouble());
+            final RockSet<Pos> pos = PositionSet.allHome(null);
+            final RockSet<Vel> speed = new RockSet<Vel>(new RockDouble<Vel>());
             final long start = System.currentTimeMillis();
             for (;;) {
                 final long dt = System.currentTimeMillis() - start;

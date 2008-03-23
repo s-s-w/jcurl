@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.jcurl.core.api.CurveRock;
 import org.jcurl.core.api.Measure;
+import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.helpers.PropModelHelper;
 import org.jcurl.math.Polynome;
 import org.jcurl.math.PolynomeCurve;
@@ -77,9 +78,9 @@ public class CurlerNoCurl extends CoulombCurler {
 		init(ice);
 	}
 
-	public CurveRock computeRc(final double a0, final double v0,
+	public CurveRock<Pos> computeRc(final double a0, final double v0,
 			final double omega0, final double sweepFactor) {
-		return new CurveRockAnalytic(new PolynomeCurve(computeRcPoly(a0, v0,
+		return new CurveRockAnalytic<Pos>(new PolynomeCurve(computeRcPoly(a0, v0,
 				omega0, sweepFactor)));
 	}
 

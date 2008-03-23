@@ -23,7 +23,6 @@ import junit.framework.TestCase;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.ui.MessageExecutor;
 import org.jcurl.core.ui.MessageExecutor.ExecutorType;
 import org.jcurl.core.ui.MessageExecutor.Message;
 import org.jcurl.core.ui.MessageExecutor.Parallel;

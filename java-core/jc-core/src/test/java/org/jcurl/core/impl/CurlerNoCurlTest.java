@@ -24,8 +24,9 @@ import java.awt.geom.Point2D;
 import org.jcurl.core.api.CurveRock;
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.Unit;
-import org.jcurl.core.impl.CurlerNoCurl;
+import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.swing.TestShowBase;
 import org.jcurl.core.ui.FixpointZoomer;
 import org.jcurl.core.ui.Zoomer;
@@ -36,7 +37,7 @@ public class CurlerNoCurlTest extends TestShowBase {
 
 	void showTrajectory(final Polynome[] p, final Zoomer zoom,
 			final int millis, final int dt) {
-		final PositionSet pos = PositionSet.allHome();
+		final RockSet<Pos> pos = PositionSet.allHome();
 		showPositionDisplay(pos, zoom, millis, new TimeRunnable() {
 			@Override
 			public void run(final double t) throws InterruptedException {

@@ -30,7 +30,6 @@ import java.util.TreeSet;
 import junit.framework.TestCase;
 
 import org.jcurl.core.api.RockSet;
-import org.jcurl.core.impl.CollissionStore;
 
 public class CollissionStoreTest extends TestCase {
 

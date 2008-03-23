@@ -24,7 +24,7 @@ import java.io.Serializable;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:RockDouble.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class RockDouble extends Rock implements Serializable {
+public class RockDouble<T extends RockType> extends Rock<T> implements Serializable {
 
 	private static final long serialVersionUID = 2337028316325540776L;
 
@@ -34,7 +34,7 @@ public class RockDouble extends Rock implements Serializable {
 		this(0, 0, 0);
 	}
 
-	public RockDouble(final Rock r) {
+	public RockDouble(final Rock<T> r) {
 		this(r.getX(), r.getY(), r.getA());
 	}
 
@@ -46,7 +46,7 @@ public class RockDouble extends Rock implements Serializable {
 
 	@Override
 	public Object clone() {
-		return new RockDouble(x[0], x[1], x[2]);
+		return new RockDouble<T>(x[0], x[1], x[2]);
 	}
 
 	@Override
@@ -89,15 +89,6 @@ public class RockDouble extends Rock implements Serializable {
 		if (alpha == x[2])
 			return;
 		x[2] = alpha;
-		fireStateChanged();
-	}
-
-	@Override
-	public void setLocation(final double x, final double y) {
-		if (x == this.x[0] && y == this.x[1])
-			return;
-		this.x[0] = x;
-		this.x[1] = y;
 		fireStateChanged();
 	}
 

@@ -24,6 +24,7 @@ import org.jcurl.core.api.CurveRock;
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.Measure;
 import org.jcurl.core.api.RockProps;
+import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.helpers.PropModelHelper;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.Polynome;
@@ -95,7 +96,7 @@ public class CurlerDenny extends CoulombCurler {
 		init(t);
 	}
 
-	public CurveRock computeRc(final double a0, final double v0,
+	public CurveRock<Pos> computeRc(final double a0, final double v0,
 			final double omega0, final double sweepFactor) {
 		final double f = -Math.signum(omega0) * b * g * mu / (48 * eps * _R);
 		final Polynome x = new Polynome(new double[] { 0, 0, 0, -4 * v0 * f,

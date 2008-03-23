@@ -30,6 +30,8 @@ import junit.framework.TestCase;
 import org.jcurl.core.api.CurveRock;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
+import org.jcurl.core.api.RockType;
+import org.jcurl.core.api.RockType.Pos;
 import org.jscience.mathematics.number.Float64;
 
 /**
@@ -46,23 +48,23 @@ public class FunctionTest extends TestCase {
 	 * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
 	 * @version $Id$
 	 */
-	static class CurveRockJScience extends CurveRock {
+	static class CurveRockJScience<T extends RockType> extends CurveRock<T> {
 		private static final Variable.Local<Float64> localT = new Variable.Local<Float64>(
 				VAR_T);
 
 		private static final long serialVersionUID = -1938366869381933449L;
-		private transient Function<Float64, Rock> c1 = null;
-		private transient Function<Float64, Rock> c2 = null;
-		private final RockFunction<Float64> f;
+		private transient Function<Float64, Rock<T>> c1 = null;
+		private transient Function<Float64, Rock<T>> c2 = null;
+		private final RockFunction<Float64, T> f;
 
-		public CurveRockJScience(final RockFunction<Float64> f) {
+		public CurveRockJScience(final RockFunction<Float64, T> f) {
 			this.f = f;
 		}
 
 		@Override
-		public Rock at(final int c, final double t, final Rock ret) {
+		public Rock<T> at(final int c, final double t, final Rock<T> ret) {
 			final Float64 tt = Float64.valueOf(t);
-			final Rock r;
+			final Rock<T> r;
 			switch (c) {
 			case 0:
 				r = f.evaluate(tt);
@@ -90,7 +92,7 @@ public class FunctionTest extends TestCase {
 
 		@Override
 		public double at(final int dim, final int c, final double t) {
-			final Rock r = at(c, t, (Rock) null);
+			final Rock<T> r = at(c, t, (Rock<T>) null);
 			switch (dim) {
 			case 0:
 				return r.getX();
@@ -113,7 +115,8 @@ public class FunctionTest extends TestCase {
 	 * requiring the 3 dimensions to be functions of {@link FunctionTest#VAR_T}
 	 * and being independent from each other.
 	 */
-	static class RockFunction<T extends Number> extends Function<T, Rock> {
+	static class RockFunction<T extends Number, R extends RockType> extends
+			Function<T, Rock<R>> {
 		private class Differentiator implements Runnable {
 			private final Function<T, T> f;
 			Function<T, T> result = null;
@@ -144,7 +147,7 @@ public class FunctionTest extends TestCase {
 
 		private final Function<T, T> angle;
 
-		private transient RockFunction<T> c1 = null;
+		private transient RockFunction<T, R> c1 = null;
 		private transient final Differentiator d_angle;
 		private transient final Differentiator d_x;
 		private transient final Differentiator d_y;
@@ -184,7 +187,7 @@ public class FunctionTest extends TestCase {
 		 * and buffered for later use.
 		 */
 		@Override
-		public Function<T, Rock> differentiate(final Variable<T> v) {
+		public Function<T, Rock<R>> differentiate(final Variable<T> v) {
 			if (c1 == null) {
 				if (!"t".equals(v.getSymbol()))
 					throw new IllegalArgumentException();
@@ -198,7 +201,8 @@ public class FunctionTest extends TestCase {
 					// threads
 					// to complete.
 				}
-				c1 = new RockFunction<T>(d_x.result, d_y.result, d_angle.result);
+				c1 = new RockFunction<T, R>(d_x.result, d_y.result,
+						d_angle.result);
 			}
 			return c1;
 		}
@@ -208,7 +212,7 @@ public class FunctionTest extends TestCase {
 		 * computation and create a new {@link RockDouble} instance to return.
 		 */
 		@Override
-		public Rock evaluate() {
+		public Rock<R> evaluate() {
 			ConcurrentContext.enter();
 			try {
 				ConcurrentContext.execute(e_x);
@@ -218,7 +222,7 @@ public class FunctionTest extends TestCase {
 				ConcurrentContext.exit(); // Waits for all concurrent threads
 				// to complete.
 			}
-			return new RockDouble(e_x.result.doubleValue(), e_y.result
+			return new RockDouble<R>(e_x.result.doubleValue(), e_y.result
 					.doubleValue(), e_angle.result.doubleValue());
 		}
 
@@ -233,7 +237,8 @@ public class FunctionTest extends TestCase {
 		}
 	}
 
-	private static class SimpleFunction extends Function<Double, Rock> {
+	private static class SimpleFunction<T extends RockType> extends
+			Function<Double, Rock<T>> {
 		private static final long serialVersionUID = -3416921495780500242L;
 		private final List<Variable<Double>> vars;
 
@@ -245,10 +250,10 @@ public class FunctionTest extends TestCase {
 		}
 
 		@Override
-		public Rock evaluate() {
+		public Rock<T> evaluate() {
 			final Variable<Double> tv = getVariable(VAR_T);
 			final double t = tv.get();
-			return new RockDouble(1 * t, 2 * t, 3 * t);
+			return new RockDouble<T>(1 * t, 2 * t, 3 * t);
 		}
 
 		@Override
@@ -267,18 +272,18 @@ public class FunctionTest extends TestCase {
 	public void testCurveRockJScience() {
 		final Variable<Float64> varT = new Variable.Local<Float64>("t");
 		final Polynomial<Float64> x = Polynomial.valueOf(Float64.ONE, varT);
-		final CurveRockJScience f = new CurveRockJScience(
-				new RockFunction<Float64>(x, x, x));
+		final CurveRockJScience<Pos> f = new CurveRockJScience<Pos>(
+				new RockFunction<Float64, Pos>(x, x, x));
 
 		assertEquals("[[1.0]t, [1.0]t, [1.0]t]", f.toString());
-		final Rock r = f.at(0, 2, (Rock) null);
+		final Rock<Pos> r = f.at(0, 2, (Rock<Pos>) null);
 		assertEquals("[2.0, 2.0, 2.0]", r.toString());
 
 		final int loops = 100000;
 		{
 			final long start = System.currentTimeMillis();
 			for (int i = loops - 1; i >= 0; i--)
-				f.at(0, 2, (Rock) null);
+				f.at(0, 2, (Rock<Pos>) null);
 			final long stop = System.currentTimeMillis() - start;
 			System.out.println(loops + " loops took " + stop
 					+ " millis (wrapped 3D jscience function evaluation)");
@@ -305,9 +310,10 @@ public class FunctionTest extends TestCase {
 	public void testRock() {
 		final Variable<Float64> varT = new Variable.Local<Float64>(VAR_T);
 		final Polynomial<Float64> x = Polynomial.valueOf(Float64.ONE, varT);
-		final RockFunction<Float64> f = new RockFunction<Float64>(x, x, x);
+		final RockFunction<Float64, Pos> f = new RockFunction<Float64, Pos>(x, x,
+				x);
 		assertEquals("[[1.0]t, [1.0]t, [1.0]t]", f.toString());
-		final Rock r = f.evaluate(Float64.valueOf(2));
+		final Rock<Pos> r = f.evaluate(Float64.valueOf(2));
 		assertEquals("[2.0, 2.0, 2.0]", r.toString());
 
 		final int loops = 100000;
@@ -322,17 +328,17 @@ public class FunctionTest extends TestCase {
 	}
 
 	public void testSimple() {
-		final Function<Double, Rock> f = new SimpleFunction();
+		final Function<Double, Rock<Pos>> f = new SimpleFunction<Pos>();
 		assertEquals("Hello, world!", f.toString());
-		final Rock r = f.evaluate(-1.0);
+		final Rock<Pos> r = f.evaluate(-1.0);
 		assertEquals("[-1.0, -2.0, -3.0]", r.toString());
 		assertEquals("d[Hello, world!]/dt", f.differentiate(
 				new Variable.Local<Double>(VAR_T)).toString());
 
-		final Function<Double, Rock> f2 = f.pow(2);
+		final Function<Double, Rock<Pos>> f2 = f.pow(2);
 		assertEquals("(Hello, world!)·(Hello, world!)", f2.toString());
 		try {
-			final Rock r2 = f2.evaluate(-1.0);
+			final Rock<Pos> r2 = f2.evaluate(-1.0);
 			fail();
 		} catch (final FunctionException e) {}
 	}

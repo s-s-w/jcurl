@@ -7,7 +7,8 @@ import javax.swing.JComponent;
 import javax.swing.undo.StateEdit;
 
 import org.jcurl.core.api.CurveStore;
-import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.UndoRedoDocumentBase;
 import org.jcurl.zui.piccolo.BroomPromptSimple;
@@ -88,11 +89,11 @@ class ZuiPanel extends JComponent {
 		return broom.getModel();
 	}
 
-	public PositionSet getCurrentPos() {
+	public RockSet<Pos> getCurrentPos() {
 		return current.getModel();
 	}
 
-	public PositionSet getInitialPos() {
+	public RockSet<Pos> getInitialPos() {
 		return initial.getModel();
 	}
 
@@ -100,7 +101,7 @@ class ZuiPanel extends JComponent {
 		broom.setModel(broomPrompt);
 	}
 
-	public void setCurrentPos(final PositionSet current) {
+	public void setCurrentPos(final RockSet<Pos> current) {
 		this.current.setModel(current);
 	}
 
@@ -108,7 +109,7 @@ class ZuiPanel extends JComponent {
 		traj.setModel(cs);
 	}
 
-	public void setInitialPos(final PositionSet initial) {
+	public void setInitialPos(final RockSet<Pos> initial) {
 		this.initial.setModel(initial);
 	}
 }

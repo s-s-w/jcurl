@@ -20,6 +20,9 @@ package org.jcurl.core.api;
 
 import java.util.Map;
 
+import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.core.api.RockType.Vel;
+
 /**
  * "Read-only" trajectories of a whole set of {@link RockSet#ROCKS_PER_SET}
  * rocks.
@@ -31,9 +34,9 @@ public interface TrajectorySet {
 
     public Map<CharSequence, CharSequence> getAnnotations();
 
-    public abstract PositionSet getCurrentPos();
+    public abstract RockSet<Pos> getCurrentPos();
 
-    public abstract VelocitySet getCurrentSpeed();
+    public abstract RockSet<Vel> getCurrentSpeed();
 
     public abstract double getCurrentTime();
 

@@ -20,11 +20,13 @@ package org.jcurl.core.api;
 
 import java.awt.geom.Point2D;
 
+import org.jcurl.core.api.RockType.Pos;
+
 /**
  * Create rock-coordinate curves for running rocks.
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:Curler.java 780 2008-03-18 11:06:30Z mrohrmoser $
  */
 public interface Curler extends Factory, Strategy, PropModel {
 
@@ -39,7 +41,7 @@ public interface Curler extends Factory, Strategy, PropModel {
 	 */
 	double computeHackSpeed(double splitTime, Point2D broom);
 
-	double computeIntervalTime(final CurveRock wc);
+	double computeIntervalTime(final CurveRock<Pos> wc);
 
 	/**
 	 * Release a rock.
@@ -54,7 +56,7 @@ public interface Curler extends Factory, Strategy, PropModel {
 	 * @param sweepFactor
 	 * @return world coordinate curve.
 	 */
-	CurveRock computeWc(Point2D broom, double splitTime, double a0,
+	CurveRock<Pos> computeWc(Point2D broom, double splitTime, double a0,
 			double omega0, double sweepFactor);
 
 	/**
@@ -69,7 +71,7 @@ public interface Curler extends Factory, Strategy, PropModel {
 	 * @param sweepFactor
 	 * @return trajectory (RC)
 	 */
-	CurveRock computeRc(double a0, double v0, double omega0, double sweepFactor);
+	CurveRock<Pos> computeRc(double a0, double v0, double omega0, double sweepFactor);
 
 	double getDrawToTeeCurl();
 

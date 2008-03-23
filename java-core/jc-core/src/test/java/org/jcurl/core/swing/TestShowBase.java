@@ -23,8 +23,9 @@ import java.awt.Component;
 import javax.swing.JFrame;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.TestBase;
+import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.Zoomer;
 
@@ -74,7 +75,7 @@ public abstract class TestShowBase extends TestBase {
             display = null;
     }
 
-    public int showPositionDisplay(final PositionSet p, final Zoomer zoom,
+    public int showPositionDisplay(final RockSet<Pos> p, final Zoomer zoom,
             final long millis, final TimeRunnable r) {
         if (frame == null)
             return -1;

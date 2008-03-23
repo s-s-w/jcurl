@@ -38,6 +38,7 @@ import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.TrajectorySet;
+import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.impl.CurveManager;
 import org.jcurl.core.ui.FixpointZoomer;
 
@@ -228,7 +229,7 @@ class TrajectoryDisplay extends WCComponent implements ChangeListener {
      * @param mask
      *            bit field which rocks to paint. {@link PositionSet#ALL_MASK}
      */
-    protected void paintRocksWC(final Graphics2D g, final PositionSet rocks,
+    protected void paintRocksWC(final Graphics2D g, final RockSet<Pos> rocks,
             final int mask) {
         if ((mask & RockSet.ALL_MASK) == 0)
             return;

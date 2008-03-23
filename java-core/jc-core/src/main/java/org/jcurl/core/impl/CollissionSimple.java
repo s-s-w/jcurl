@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.jcurl.core.api.Measure;
 import org.jcurl.core.api.Rock;
+import org.jcurl.core.api.RockType.Vel;
 
 /**
  * A very simple hit-model using conservation of energy and momentum.
@@ -35,24 +36,22 @@ import org.jcurl.core.api.Rock;
  */
 public class CollissionSimple extends ColliderBase {
 
-    private static final long serialVersionUID = -5423884872114753286L;
+	private static final long serialVersionUID = -5423884872114753286L;
 
-    public CollissionSimple() {
+	public CollissionSimple() {}
 
-    }
+	public CollissionSimple(final Map<CharSequence, Measure> ice) {
+		init(ice);
+	}
 
-    public CollissionSimple(final Map<CharSequence, Measure> ice) {
-        init(ice);
-    }
+	@Override
+	public void computeCC(final Rock<Vel> va, final Rock<Vel> vb) {
+		final double tmp = va.getY();
+		va.setLocation(va.getX(), vb.getY(), va.getA());
+		vb.setLocation(vb.getX(), tmp, vb.getA());
+	}
 
-    @Override
-    public void computeCC(final Rock va, final Rock vb) {
-        final double tmp = va.getY();
-        va.setLocation(va.getX(), vb.getY());
-        vb.setLocation(vb.getX(), tmp);
-    }
-
-    public void init(final Map<CharSequence, Measure> params) {
-        internalInit(params);
-    }
+	public void init(final Map<CharSequence, Measure> params) {
+		internalInit(params);
+	}
 }

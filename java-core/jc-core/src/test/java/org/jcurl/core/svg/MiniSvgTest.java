@@ -20,9 +20,9 @@ package org.jcurl.core.svg;
 
 import java.io.StringWriter;
 
-import org.jcurl.core.helpers.XmlSerializer;
-
 import junit.framework.TestCase;
+
+import org.jcurl.core.helpers.XmlSerializer;
 
 public class MiniSvgTest extends TestCase {
 

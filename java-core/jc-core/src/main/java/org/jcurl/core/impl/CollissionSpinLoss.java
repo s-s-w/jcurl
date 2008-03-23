@@ -27,6 +27,8 @@ import org.jcurl.core.api.Measure;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockProps;
+import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.core.helpers.PropModelHelper;
 import org.jcurl.math.MathVec;
 
@@ -65,10 +67,10 @@ public class CollissionSpinLoss extends ColliderBase {
         setFricRockRock(0);
     }
 
-    public boolean compute(final Rock xa, final Rock xb, final Rock va,
-            final Rock vb) {
+    public boolean compute(final Rock<Pos> xa, final Rock<Pos> xb, final Rock<Vel> va,
+            final Rock<Vel> vb) {
         // vector from a's center to b's:
-        final Point2D r = MathVec.sub(xb, xa, null);
+        final Point2D r = MathVec.sub(xb.p(), xa.p(), null);
         double tmp = MathVec.abs2D(r);
         if (!(va.isNotZero() || vb.isNotZero())
                 || tmp > RADIUS + RADIUS + HIT_MAX_DIST)
@@ -94,13 +96,13 @@ public class CollissionSpinLoss extends ColliderBase {
         // va[1] = eY[0] * Va[0] + eY[1] * Va[1];
         final Rock _va = new RockDouble();
         final Rock _vb = new RockDouble();
-        mat.transform(va, _va);
-        mat.transform(vb, _vb);
+        mat.transform(va.p(), _va.p());
+        mat.transform(vb.p(), _vb.p());
         final double[] w = { va.getA(), vb.getA() };
 
         if (va.isNotZero() ^ vb.isNotZero())
-            singleLoss(_va, _vb, w);
-        singleNoLoss(_va, _vb, w);
+            singleLoss(_va.p(), _vb.p(), w);
+        singleNoLoss(_va.p(), _vb.p(), w);
 
         va.setA(w[0]);
         vb.setA(w[1]);
@@ -109,8 +111,8 @@ public class CollissionSpinLoss extends ColliderBase {
             // re-transformation: do the coordinate-trafo new->world:
             // Va[0] = eX[0] * va[0] + eY[0] * va[1];
             // Va[1] = eX[1] * va[0] + eY[1] * va[1];
-            mat.inverseTransform(_va, va);
-            mat.inverseTransform(_vb, vb);
+            mat.inverseTransform(_va.p(), va.p());
+            mat.inverseTransform(_vb.p(), vb.p());
         } catch (final NoninvertibleTransformException e) {
             throw new RuntimeException("matrix MUST be invertible.", e);
         }
@@ -118,7 +120,7 @@ public class CollissionSpinLoss extends ColliderBase {
     }
 
     @Override
-    public void computeCC(final Rock va, final Rock vb) {
+    public void computeCC(final Rock<Vel> va, final Rock<Vel> vb) {
         // TODO Auto-generated method stub
 
     }

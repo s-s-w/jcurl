@@ -19,6 +19,7 @@
 package org.jcurl.core.impl;
 
 import org.jcurl.core.api.CurveRock;
+import org.jcurl.core.api.RockType;
 import org.jcurl.math.CurveFkt;
 import org.jcurl.math.R1R1Function;
 import org.jcurl.math.R1RNFunction;
@@ -30,7 +31,7 @@ import org.jcurl.math.R1RNFunction;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:CurveRockAnalytic.java 780 2008-03-18 11:06:30Z mrohrmoser $
  */
-public class CurveRockAnalytic extends CurveRock {
+public class CurveRockAnalytic<T extends RockType> extends CurveRock<T> {
 
     private static final long serialVersionUID = 6879559446969142018L;
 

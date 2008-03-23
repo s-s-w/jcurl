@@ -18,10 +18,9 @@
  */
 package org.jcurl.core.api;
 
-import org.jcurl.core.api.PositionSet;
-import org.jcurl.core.api.RockSet;
-
 import junit.framework.TestCase;
+
+import org.jcurl.core.api.RockType.Pos;
 
 public class RockSetTest extends TestCase {
     public void testCountBits() {
@@ -30,7 +29,7 @@ public class RockSetTest extends TestCase {
     }
 
     public void testIterators() throws InterruptedException {
-        final PositionSet p = PositionSet.allHome();
+        final RockSet<Pos> p = PositionSet.allHome();
         final int loops = 500000;
         long t0 = 0;
         long v = 0;

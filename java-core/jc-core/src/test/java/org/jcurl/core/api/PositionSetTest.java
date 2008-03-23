@@ -22,8 +22,7 @@ import java.awt.geom.Point2D;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.api.PositionSet;
-import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockType.Pos;
 
 /**
  * JUnit Test
@@ -35,8 +34,8 @@ import org.jcurl.core.api.RockSet;
 public class PositionSetTest extends TestCase {
 
     public void testFindRockAtPos() {
-        final PositionSet a = PositionSet.allHome();
-        a.getRock(1).setLocation(0, 0);
+        final RockSet<Pos> a = PositionSet.allHome();
+        a.getRock(1).setLocation(0, 0, 0);
         assertEquals(1, PositionSet.findRockIndexAtPos(a, new Point2D.Float(0,
                 0)));
         assertEquals(1, PositionSet.findRockIndexAtPos(a, new Point2D.Float(
@@ -44,9 +43,9 @@ public class PositionSetTest extends TestCase {
     }
 
     public void testGetShotRocks() {
-        final PositionSet a = PositionSet.allHome();
+        final RockSet<Pos> a = PositionSet.allHome();
         for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
-            a.getRock(i).setLocation(0, i * 0.5);
+            a.getRock(i).setLocation(0, i * 0.5, 0);
         assertEquals(1, PositionSet.getShotRocks(a));
     }
 }

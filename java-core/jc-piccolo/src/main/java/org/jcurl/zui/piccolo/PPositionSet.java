@@ -24,6 +24,7 @@ import javax.swing.event.ChangeListener;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.log.JCLoggerFactory;
 
 import edu.umd.cs.piccolo.PNode;
@@ -40,7 +41,7 @@ public class PPositionSet extends PNode implements ChangeListener {
 			.getLogger(PPositionSet.class);
 	private static final long serialVersionUID = 6564103045992326633L;
 	private final PRockFactory f;
-	private PositionSet model = null;
+	private RockSet<Pos> model = null;
 
 	/**
 	 * Create a pickable child node for each rock and set it's attributes
@@ -53,11 +54,11 @@ public class PPositionSet extends PNode implements ChangeListener {
 		this.f = f;
 	}
 
-	public PositionSet getModel() {
+	public RockSet<Pos> getModel() {
 		return model;
 	}
 
-	public void setModel(final PositionSet positionSet) {
+	public void setModel(final RockSet<Pos> positionSet) {
 		if (model != null)
 			throw new UnsupportedOperationException();
 		model = positionSet;
@@ -74,7 +75,7 @@ public class PPositionSet extends PNode implements ChangeListener {
 		sync(model, this);
 	}
 
-	private void sync(final PositionSet src, final PPositionSet dst) {
+	private void sync(final RockSet<Pos> src, final PPositionSet dst) {
 		if (src == null)
 			return;
 		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)

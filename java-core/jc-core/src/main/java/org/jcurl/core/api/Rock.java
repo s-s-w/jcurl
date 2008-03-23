@@ -29,7 +29,7 @@ import org.jcurl.core.helpers.Service;
 /**
  * Base class for rock information (either location or speed). The 3rd component (<code>a</code>)
  * is the handle angle in radians.
- * <h3>Why is this type not generic, e.g. Rock<T extends Number></h3>
+ * <h3>Why is this type not generic, e.g. Rock<XY extends Number, A extends Number></h3>
  * <p>
  * Yes, this would be preferable, especially for a neat integration into <a
  * href="http://www.jscience.org">JScience</a> calculus.
@@ -54,13 +54,28 @@ import org.jcurl.core.helpers.Service;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:Rock.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public abstract class Rock extends Point2D implements IChangeSupport,
+public abstract class Rock<R extends RockType> implements IChangeSupport,
 		Cloneable, Serializable {
-	/** Utility field used by bound properties. */
+	private class RockPoint extends Point2D {
+		@Override
+		public double getX() {
+			return Rock.this.getX();
+		}
+
+		@Override
+		public double getY() {
+			return Rock.this.getY();
+		}
+
+		@Override
+		public void setLocation(final double x, final double y) {
+			Rock.this.setLocation(x, y, getA());
+		}
+	}
+
 	protected final transient ChangeSupport change = new ChangeSupport(this);
-
 	private transient volatile boolean dirty = true;
-
+	private transient final Point2D p = new RockPoint();
 	private transient volatile AffineTransform trafo;
 
 	public void addChangeListener(final ChangeListener l) {
@@ -74,10 +89,10 @@ public abstract class Rock extends Point2D implements IChangeSupport,
 	public final boolean equals(final Object obj) {
 		if (obj == null || !(obj instanceof Rock))
 			return false;
-		return equals((Rock) obj);
+		return equals((Rock<R>) obj);
 	}
 
-	private boolean equals(final Rock b) {
+	private boolean equals(final Rock<R> b) {
 		if (this == b)
 			return true;
 		if (b == null)
@@ -112,12 +127,20 @@ public abstract class Rock extends Point2D implements IChangeSupport,
 		return change.getChangeListeners();
 	}
 
+	public abstract double getX();
+
+	public abstract double getY();
+
 	/**
 	 * Convenience method to check if zero or not.
 	 * 
 	 * @return whether x or y are non-zero
 	 */
 	public abstract boolean isNotZero();
+
+	public Point2D p() {
+		return p;
+	}
 
 	public void removeChangeListener(final ChangeListener l) {
 		change.removeChangeListener(l);
@@ -127,9 +150,10 @@ public abstract class Rock extends Point2D implements IChangeSupport,
 
 	public abstract void setLocation(double x, double y, double a);
 
+	@Deprecated
 	public abstract void setLocation(double[] l);
 
-	public void setLocation(final Rock r) {
+	public void setLocation(final Rock<R> r) {
 		this.setLocation(r.getX(), r.getY(), r.getA());
 	}
 

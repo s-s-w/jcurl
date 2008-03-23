@@ -32,7 +32,8 @@ import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.TrajectorySet;
 import org.jcurl.core.api.Unit;
-import org.jcurl.core.api.VelocitySet;
+import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.core.helpers.AnnoHelper;
 import org.jcurl.core.impl.CollissionSpin;
 import org.jcurl.core.impl.CurlerNoCurl;
@@ -53,7 +54,7 @@ public class XStreamIOTest extends TestBase {
         te.setCollissionDetector(new NewtonCollissionDetector());
         te.setCurler(new CurlerNoCurl(24, 0));
         te.setInitialPos(PositionSet.allOut());
-        te.setInitialSpeed(new VelocitySet(new RockDouble()));
+        te.setInitialSpeed(new RockSet<Vel>(new RockDouble<Vel>()));
         te.getAnnotations().put(AnnoHelper.HammerK, AnnoHelper.HammerVDark);
         te.getAnnotations().put(AnnoHelper.DarkTeamK, "Scotland");
         te.getAnnotations().put(AnnoHelper.LightTeamK, "Canada");
@@ -66,7 +67,7 @@ public class XStreamIOTest extends TestBase {
         return te;
     }
 
-    public static void initHammy(final PositionSet p, final VelocitySet s) {
+    public static void initHammy(final RockSet<Pos> p, final RockSet<Vel> s) {
         PositionSet.allOut(p);
         // te.getInitialPos().getLight(1-1).setLocation(
         p.getLight(2 - 1).setLocation(Unit.f2m(-1.170732), Unit.f2m(15.365854),
@@ -194,7 +195,7 @@ public class XStreamIOTest extends TestBase {
                 "            <rock>-0.1338145136833191 -1.6949855089187622 0.0</rock>\n" + 
                 "            <rock>-0.5352586507797241 -0.4906536340713501 0.0</rock>\n" + 
                 "          </light>\n" + 
-                "          <source class=\"org.jcurl.core.api.PositionSet\" reference=\"..\"/>\n" + 
+                "          <source class=\"org.jcurl.core.api.RockSet\" reference=\"..\"/>\n" + 
                 "        </initialPos>\n" + 
                 "        <initialSpeed>\n" + 
                 "          <dark>\n" + 
@@ -217,7 +218,7 @@ public class XStreamIOTest extends TestBase {
                 "            <rock>0.0 0.0 0.0</rock>\n" + 
                 "            <rock>0.0 0.0 0.0</rock>\n" + 
                 "          </light>\n" + 
-                "          <source class=\"org.jcurl.core.api.VelocitySet\" reference=\"..\"/>\n" + 
+                "          <source class=\"org.jcurl.core.api.RockSet\" reference=\"..\"/>\n" + 
                 "        </initialSpeed>\n" + 
                 "      </CurveManager>\n" + 
                 "    </trajectories>\n" + 
@@ -242,7 +243,7 @@ public class XStreamIOTest extends TestBase {
         te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
         te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
                 0.25 * Math.PI);
-        te.setInitialSpeed(new VelocitySet(new RockDouble()));
+        te.setInitialSpeed(new RockSet<Vel>(new RockDouble<Vel>()));
         te.getInitialSpeed().getDark(0).setLocation(0,
                 -te.getCurler().computeHackSpeed(5,tee), Math.PI / 2);
         te.setCurrentTime(20);
@@ -487,7 +488,7 @@ public class XStreamIOTest extends TestBase {
         te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
         te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
                 0.25 * Math.PI);
-        te.setInitialSpeed(new VelocitySet(new RockDouble()));
+        te.setInitialSpeed(new RockSet<Vel>(new RockDouble<Vel>()));
         te.getInitialSpeed().getDark(0).setLocation(0,
                 -te.getCurler().computeHackSpeed(5,tee), Math.PI / 2);
 
@@ -547,7 +548,7 @@ public class XStreamIOTest extends TestBase {
                 "      <rock>2.2098000049591064 7.254240036010742 0.0</rock>\n" + 
                 "      <rock>2.2098000049591064 6.888480186462402 0.0</rock>\n" + 
                 "    </light>\n" + 
-                "    <source class=\"org.jcurl.core.api.PositionSet\" reference=\"..\"/>\n" + 
+                "    <source class=\"org.jcurl.core.api.RockSet\" reference=\"..\"/>\n" + 
                 "  </initialPos>\n" + 
                 "  <initialSpeed>\n" + 
                 "    <dark>\n" + 
@@ -570,7 +571,7 @@ public class XStreamIOTest extends TestBase {
                 "      <rock>0.0 0.0 0.0</rock>\n" + 
                 "      <rock>0.0 0.0 0.0</rock>\n" + 
                 "    </light>\n" + 
-                "    <source class=\"org.jcurl.core.api.VelocitySet\" reference=\"..\"/>\n" + 
+                "    <source class=\"org.jcurl.core.api.RockSet\" reference=\"..\"/>\n" + 
                 "  </initialSpeed>\n" + 
                 "</org.jcurl.core.impl.CurveManager>", x);
 
@@ -595,7 +596,7 @@ public class XStreamIOTest extends TestBase {
         te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
         te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
                 0.25 * Math.PI);
-        te.setInitialSpeed(new VelocitySet(new RockDouble()));
+        te.setInitialSpeed(new RockSet<Vel>(new RockDouble<Vel>()));
         te.getInitialSpeed().getDark(0).setLocation(0,
                 -te.getCurler().computeHackSpeed(5,tee), Math.PI / 2);
         te.setCurrentTime(20);
@@ -838,7 +839,7 @@ public class XStreamIOTest extends TestBase {
         te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
         te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
                 0.25 * Math.PI);
-        te.setInitialSpeed(new VelocitySet(new RockDouble()));
+        te.setInitialSpeed(new RockSet<Vel>(new RockDouble<Vel>()));
         te.getInitialSpeed().getDark(0).setLocation(0,
                 -te.getCurler().computeHackSpeed(5,tee), Math.PI / 2);
 
@@ -898,7 +899,7 @@ public class XStreamIOTest extends TestBase {
                 "            <rock>2.2098000049591064 7.254240036010742 0.0</rock>\n" + 
                 "            <rock>2.2098000049591064 6.888480186462402 0.0</rock>\n" + 
                 "          </light>\n" + 
-                "          <source class=\"org.jcurl.core.api.PositionSet\" reference=\"..\"/>\n" + 
+                "          <source class=\"org.jcurl.core.api.RockSet\" reference=\"..\"/>\n" + 
                 "        </initialPos>\n" + 
                 "        <initialSpeed>\n" + 
                 "          <dark>\n" + 
@@ -921,7 +922,7 @@ public class XStreamIOTest extends TestBase {
                 "            <rock>0.0 0.0 0.0</rock>\n" + 
                 "            <rock>0.0 0.0 0.0</rock>\n" + 
                 "          </light>\n" + 
-                "          <source class=\"org.jcurl.core.api.VelocitySet\" reference=\"..\"/>\n" + 
+                "          <source class=\"org.jcurl.core.api.RockSet\" reference=\"..\"/>\n" + 
                 "        </initialSpeed>\n" + 
                 "      </CurveManager>\n" + 
                 "    </trajectories>\n" + 

@@ -28,16 +28,16 @@ import org.jcurl.math.R1RNFunctionImpl;
  * </p>
  * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @version $Id:CurveRock.java 780 2008-03-18 11:06:30Z mrohrmoser $
  */
-public abstract class CurveRock extends R1RNFunctionImpl {
+public abstract class CurveRock<T extends RockType> extends R1RNFunctionImpl {
 	protected CurveRock() {
 		super(3);
 	}
 
-	public Rock at(final int c, final double t, Rock ret) {
+	public Rock<T> at(final int c, final double t, Rock<T> ret) {
 		if (ret == null)
-			ret = new RockDouble();
+			ret = new RockDouble<T>();
 		ret.setLocation(at(0, c, t), at(1, c, t), at(2, c, t));
 		return ret;
 	}

@@ -23,6 +23,7 @@ import java.util.Hashtable;
 
 import javax.swing.undo.StateEditable;
 
+import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.math.MathVec;
 
 /**
@@ -36,23 +37,28 @@ import org.jcurl.math.MathVec;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:RockSet.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public abstract class RockSet extends ChangeSupport implements Cloneable,
-		Serializable, StateEditable {
+public class RockSet<R extends RockType> extends ChangeSupport implements
+		Cloneable, Serializable, StateEditable {
+
 	public static final int ALL_MASK = 0xFFFF;
 	public static final int DARK_MASK = 0xAAAA;
 	public static final int LIGHT_MASK = 0x5555;
 	private static final Object mark = RockSet.class.getName() + ":allrocks";
 	public static final int ROCKS_PER_COLOR = 8;
 	public static final int ROCKS_PER_SET = 16;
+	private static final long serialVersionUID = -7154547850436886952L;
 
-	public static RockSet allZero(final RockSet dst) {
+	public static <T extends RockType> RockSet<T> allZero(RockSet<T> dst) {
+		if (dst == null)
+			dst = new RockSet<T>(new RockDouble<T>());
 		for (int i = ROCKS_PER_SET - 1; i >= 0; i--)
 			dst.getRock(i).setLocation(0, 0, 0);
 		dst.fireStateChanged();
 		return dst;
 	}
 
-	public static RockSet copy(final RockSet src, final RockSet dst) {
+	public static <T extends RockType> RockSet<T> copy(final RockSet<T> src,
+			final RockSet<T> dst) {
 		return dst.setLocation(src);
 	}
 
@@ -94,7 +100,7 @@ public abstract class RockSet extends ChangeSupport implements Cloneable,
 	 * @param rocks
 	 * @return bitset of the rocks being non-zero
 	 */
-	public static int nonZero(final RockSet rocks) {
+	public static <T extends RockType> int nonZero(final RockSet<T> rocks) {
 		int ret = 0;
 		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
 			if (rocks.getRock(i).isNotZero())
@@ -118,14 +124,14 @@ public abstract class RockSet extends ChangeSupport implements Cloneable,
 		return 2 * idx8 + (isDark ? 0 : 1);
 	}
 
-	protected final Rock[] dark = new Rock[ROCKS_PER_COLOR];
-	protected final Rock[] light = new Rock[ROCKS_PER_COLOR];
+	protected final Rock<R>[] dark = new Rock[ROCKS_PER_COLOR];
+	protected final Rock<R>[] light = new Rock[ROCKS_PER_COLOR];
 
-	public RockSet(final Rock seed) {
+	public RockSet(final Rock<R> seed) {
 		if (seed != null)
 			for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
-				dark[i] = (Rock) seed.clone();
-				light[i] = (Rock) seed.clone();
+				dark[i] = (Rock<R>) seed.clone();
+				light[i] = (Rock<R>) seed.clone();
 			}
 	}
 
@@ -135,7 +141,7 @@ public abstract class RockSet extends ChangeSupport implements Cloneable,
 	 * 
 	 * @param b
 	 */
-	protected RockSet(final RockSet b) {
+	protected RockSet(final RockSet<R> b) {
 		this(b.getRock(0));
 		copy(b, this);
 	}
@@ -148,7 +154,7 @@ public abstract class RockSet extends ChangeSupport implements Cloneable,
 		// http://www.angelikalanger.com/Articles/JavaSpektrum/02.Equals-Part2/02.Equals2.html
 		if (obj == null || !(obj instanceof RockSet))
 			return false;
-		final RockSet b = (RockSet) obj;
+		final RockSet<R> b = (RockSet<R>) obj;
 		for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
 			if (!dark[i].equals(b.dark[i]))
 				return false;
@@ -158,15 +164,15 @@ public abstract class RockSet extends ChangeSupport implements Cloneable,
 		return true;
 	}
 
-	public Rock getDark(final int i8) {
+	public Rock<R> getDark(final int i8) {
 		return dark[i8];
 	}
 
-	public Rock getLight(final int i8) {
+	public Rock<R> getLight(final int i8) {
 		return light[i8];
 	}
 
-	public Rock getRock(final int i16) {
+	public Rock<R> getRock(final int i16) {
 		return i16 % 2 == 0 ? dark[i16 / 2] : light[i16 / 2];
 	}
 
@@ -194,7 +200,7 @@ public abstract class RockSet extends ChangeSupport implements Cloneable,
 		fireStateChanged();
 	}
 
-	public RockSet setLocation(final RockSet src) {
+	public RockSet<R> setLocation(final RockSet<R> src) {
 		for (int i = ROCKS_PER_SET - 1; i >= 0; i--)
 			getRock(i).setLocation(src.getRock(i));
 		fireStateChanged();
@@ -205,11 +211,15 @@ public abstract class RockSet extends ChangeSupport implements Cloneable,
 		final double[] arr = new double[ROCKS_PER_SET * 3];
 		for (byte i16 = ROCKS_PER_SET - 1; i16 >= 0; i16--) {
 			final int o = i16 * 3;
-			final Rock r = getRock(i16);
+			final Rock<R> r = getRock(i16);
 			arr[o] = r.getX();
 			arr[o + 1] = r.getY();
 			arr[o + 2] = r.getA();
 		}
 		state.put(mark, arr);
+	}
+
+	public static RockSet<Vel> zeroSpeed() {
+		return new RockSet<Vel>(new RockDouble<Vel>());
 	}
 }

@@ -18,9 +18,6 @@
  */
 package org.jcurl.core.api;
 
-import org.jcurl.core.api.Measure;
-import org.jcurl.core.api.Unit;
-
 import junit.framework.TestCase;
 
 /**

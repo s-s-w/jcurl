@@ -34,6 +34,7 @@ import javax.swing.event.ChangeListener;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.ui.FixpointZoomer;
 /**
  * Base for rock location displays. Does all the coordinate transformation math
@@ -74,7 +75,7 @@ class PositionDisplay extends WCComponent implements ChangeListener {
 
     private BufferedImage img = null;
 
-    private PositionSet pos = null;
+    private RockSet<Pos> pos = null;
 
     private RockPainter rockPainter = null;
 
@@ -107,7 +108,7 @@ class PositionDisplay extends WCComponent implements ChangeListener {
         return icePainter;
     }
 
-    public PositionSet getPos() {
+    public RockSet<Pos> getPos() {
         return pos;
     }
 
@@ -208,7 +209,7 @@ class PositionDisplay extends WCComponent implements ChangeListener {
      * @param mask
      *            bit field which rocks to paint. {@link PositionSet#ALL_MASK}
      */
-    protected void paintRocksWC(final Graphics2D g, final PositionSet rocks,
+    protected void paintRocksWC(final Graphics2D g, final RockSet<Pos> rocks,
             final int mask) {
         if ((mask & RockSet.ALL_MASK) == 0)
             return;
@@ -247,12 +248,12 @@ class PositionDisplay extends WCComponent implements ChangeListener {
      * Property (rocks) changed.
      * 
      * @param evt
-     * @see #setPos(PositionSet)
+     * @see #setPos(RockSet)
      */
     public void stateChanged(ChangeEvent evt) {
         final Object tmp = evt.getSource();
         if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass()))
-            this.setPos((PositionSet) tmp);
+            this.setPos((RockSet<Pos>) tmp);
     }
 
     /**
@@ -271,9 +272,9 @@ class PositionDisplay extends WCComponent implements ChangeListener {
      * 
      * @param rocks
      *            rocks' locations.
-     * @see #setPos(PositionSet, int)
+     * @see #setPos(RockSet, int)
      */
-    public void setPos(final PositionSet rocks) {
+    public void setPos(final RockSet<Pos> rocks) {
         this.setPos(rocks, RockSet.ALL_MASK);
     }
 
@@ -286,7 +287,7 @@ class PositionDisplay extends WCComponent implements ChangeListener {
      * @param discontinuous
      *            bitmask of discontinuous locations
      */
-    public void setPos(final PositionSet rocks, final int discontinuous) {
+    public void setPos(final RockSet<Pos> rocks, final int discontinuous) {
         if (pos != rocks) {
             if (pos != null)
                 pos.removeChangeListener(this);

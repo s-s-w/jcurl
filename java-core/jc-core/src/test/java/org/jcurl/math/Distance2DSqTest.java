@@ -96,7 +96,7 @@ public class Distance2DSqTest extends TestBase {
                 final double t = i * 1e-3;
                 final Rock x0 = c0.at(0, t, new RockDouble());
                 final Rock x1 = c1.at(0, t, new RockDouble());
-                assertEquals(Double.toString(t), x0.distanceSq(x1), d.at(0, t),
+                assertEquals(Double.toString(t), x0.p().distanceSq(x1.p()), d.at(0, t),
                         1e-9);
             }
             assertEquals("", 2, NewtonSimpleSolver.computeNewtonZero(d, 0, 0,
@@ -108,7 +108,7 @@ public class Distance2DSqTest extends TestBase {
                 final double t = i * 1e-3;
                 final Rock x0 = c0.at(0, t, new RockDouble());
                 final Rock x1 = c1.at(0, t, new RockDouble());
-                assertEquals(Double.toString(t), x0.distanceSq(x1) - 1, d.at(0,
+                assertEquals(Double.toString(t), x0.p().distanceSq(x1.p()) - 1, d.at(0,
                         t), 1e-9);
             }
             assertEquals("", 1, NewtonSimpleSolver.computeNewtonZero(d, 0, 0,
@@ -121,7 +121,7 @@ public class Distance2DSqTest extends TestBase {
                 final double t = i * 1e-3;
                 final Rock x0 = c0.at(0, t, new RockDouble());
                 final Rock x1 = c1.at(0, t, new RockDouble());
-                assertEquals(Double.toString(t), x0.distanceSq(x1) - RR2, d.at(
+                assertEquals(Double.toString(t), x0.p().distanceSq(x1.p()) - RR2, d.at(
                         0, t), 1e-9);
             }
             assertEquals("", 1.6951999962329865, NewtonSimpleSolver
@@ -141,7 +141,7 @@ public class Distance2DSqTest extends TestBase {
                 final double t = i * 1e-3;
                 final Rock x0 = c0.at(0, t, new RockDouble());
                 final Rock x1 = c1.at(0, t, new RockDouble());
-                assertEquals(Double.toString(t), x0.distanceSq(x1), d.at(0, t),
+                assertEquals(Double.toString(t), x0.p().distanceSq(x1.p()), d.at(0, t),
                         1e-9);
             }
             assertEquals("", Double.NaN, NewtonSimpleSolver.computeNewtonZero(
@@ -154,7 +154,7 @@ public class Distance2DSqTest extends TestBase {
                 final double t = i * 1e-3;
                 final Rock x0 = c0.at(0, t, new RockDouble());
                 final Rock x1 = c1.at(0, t, new RockDouble());
-                assertEquals(Double.toString(t), x0.distanceSq(x1) - RR2, d.at(
+                assertEquals(Double.toString(t), x0.p().distanceSq(x1.p()) - RR2, d.at(
                         0, t), 1e-9);
             }
             assertEquals("", Double.NaN, NewtonSimpleSolver.computeNewtonZero(

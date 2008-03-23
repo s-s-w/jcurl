@@ -95,7 +95,7 @@ public class PRockNode extends PComposite implements ChangeListener {
 		 */
 		protected void pushChange(final boolean isDrop, final PRockNode node,
 				final Point2D currentPos, final Point2D startPos) {
-			node.getRock().setLocation(currentPos);
+			node.getRock().p().setLocation(currentPos);
 		}
 
 		private void pushChangeInternal(final boolean isDrop,
@@ -121,7 +121,7 @@ public class PRockNode extends PComposite implements ChangeListener {
 	/** This is kinda controller model-&gt;view */
 	private final transient Message<?> model2view = new Message<SwingEDT>() {
 		public void run() {
-			if (getGlobalTranslation().distanceSq(getRock()) < EPSILON)
+			if (getGlobalTranslation().distanceSq(getRock().p()) < EPSILON)
 				return;
 			// TODO check the turn
 			setTransform(getRock().getAffineTransform());

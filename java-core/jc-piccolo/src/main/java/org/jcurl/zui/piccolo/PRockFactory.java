@@ -147,7 +147,7 @@ public abstract class PRockFactory implements Factory {
 
 	protected static boolean sync(final Rock src, final PRockNode dst) {
 		// check if it's changed either location or angle:
-		if (src.distanceSq(dst.getOffset()) < PPositionSet.eps
+		if (src.p().distanceSq(dst.getOffset()) < PPositionSet.eps
 				&& Math.abs(src.getA() - dst.getRotation()) < PPositionSet.eps)
 			return false;
 		if (true)

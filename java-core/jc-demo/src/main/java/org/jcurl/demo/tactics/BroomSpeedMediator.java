@@ -31,11 +31,11 @@ import org.jcurl.core.api.Curler;
 import org.jcurl.core.api.IChangeSupport;
 import org.jcurl.core.api.IPropertyChangeSupport;
 import org.jcurl.core.api.IceSize;
-import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
-import org.jcurl.core.api.VelocitySet;
+import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.math.MathVec;
@@ -52,8 +52,8 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 
 	private BroomPromptModel broom;
 	private Curler curler;
-	private PositionSet position;
-	private VelocitySet speed;
+	private RockSet<Pos> position;
+	private RockSet<Vel> speed;
 
 	private void add(final IChangeSupport l) {
 		if (l != null)
@@ -73,30 +73,31 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 		return curler;
 	}
 
-	public PositionSet getPosition() {
+	public RockSet<Pos> getPosition() {
 		return position;
 	}
 
-	public VelocitySet getSpeed() {
+	public RockSet<Vel> getSpeed() {
 		return speed;
 	}
 
 	public void propertyChange(final PropertyChangeEvent evt) {
-		final Object src = evt.getSource();
-		if (src instanceof BroomPromptModel) {
-			if ("idx16".equals(evt.getPropertyName()))
-				updateIndex((Integer) evt.getOldValue(), (Integer) evt
-						.getNewValue());
-			else
-				updateSpeed();
-		} else if (src instanceof PositionSet)
-			updateBroom();
-		else if (src instanceof VelocitySet)
-			updateBroom();
-		else if (src instanceof Curler)
-			updateSpeed();
-		else
-			log.warn("unconsumed source: " + src.getClass().getName());
+		// FIXME
+//		final Object src = evt.getSource();
+//		if (src instanceof BroomPromptModel) {
+//			if ("idx16".equals(evt.getPropertyName()))
+//				updateIndex((Integer) evt.getOldValue(), (Integer) evt
+//						.getNewValue());
+//			else
+//				updateSpeed();
+//		} else if (src instanceof PositionSet)
+//			updateBroom();
+//		else if (src instanceof VelocitySet)
+//			updateBroom();
+//		else if (src instanceof Curler)
+//			updateSpeed();
+//		else
+//			log.warn("unconsumed source: " + src.getClass().getName());
 	}
 
 	private void remove(final IChangeSupport l) {
@@ -126,13 +127,13 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 		updateSpeed();
 	}
 
-	public void setPosition(final PositionSet position) {
+	public void setPosition(final RockSet<Pos> position) {
 		remove(this.position);
 		add(this.position = position);
 		updateBroom();
 	}
 
-	public void setSpeed(final VelocitySet speed) {
+	public void setSpeed(final RockSet<Vel> speed) {
 		remove(this.speed);
 		add(this.speed = speed);
 		updateBroom();
@@ -153,7 +154,7 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 		if (position == null || speed == null || broom == null)
 			return;
 		// Compute Broom Location
-		final Point2D x = position.getRock(broom.getIdx16());
+		final Point2D x = position.getRock(broom.getIdx16()).p();
 		final Rock v = speed.getRock(broom.getIdx16());
 		final Point2D b = broom.getBroom();
 		final Point2D b2 = new Point2D.Double((b.getY() - x.getY()) * v.getX()
@@ -192,12 +193,12 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 		position.getRock(broom.getIdx16()).setLocation(start);
 		position.fireStateChanged();
 		// Compute direction
-		MathVec.sub(broom.getBroom(), start, start);
-		MathVec.norm(start, start);
+		MathVec.sub(broom.getBroom(), start.p(), start.p());
+		MathVec.norm(start.p(), start.p());
 		// Compute initial Speed
 		final double v0 = curler.computeHackSpeed(broom.getSplitTimeMillis()
 				.getValue() * 1e-3, broom.getBroom());
-		MathVec.mult(v0, start, start);
+		MathVec.mult(v0, start.p(), start.p());
 		// Handle
 		start.setA((broom.getOutTurn() ? 1 : -1) * 0.25);
 		speed.getRock(broom.getIdx16()).setLocation(start);

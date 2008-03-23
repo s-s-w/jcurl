@@ -26,12 +26,9 @@ import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
-import org.jcurl.core.api.VelocitySet;
-import org.jcurl.core.impl.CollissionSpin;
-import org.jcurl.core.impl.CurlerDenny;
-import org.jcurl.core.impl.CurlerNoCurl;
-import org.jcurl.core.impl.CurveManager;
-import org.jcurl.core.impl.NewtonCollissionDetector;
+import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.core.swing.TestShowBase;
 import org.jcurl.core.ui.FixpointZoomer;
 import org.jcurl.core.ui.Zoomer;
@@ -54,7 +51,8 @@ public class CurlerDennyTest extends TestShowBase {
 		te.getInitialPos().getDark(0).setLocation(0, IceSize.FAR_HOG_2_TEE, 0);
 		te.getInitialPos().getLight(0).setLocation(0, IceSize.BACK_2_TEE,
 				0.25 * Math.PI);
-		te.setInitialSpeed(new VelocitySet(PositionSet.allHome()));
+		RockSet<Vel> tmp = null;
+		te.setInitialSpeed(tmp =RockSet.allZero(null));
 		if (false)
 			te.getInitialSpeed().getDark(0).setLocation(-0.096,
 					-te.getCurler().computeHackSpeed(3.124, tee), Math.PI / 2);
@@ -75,7 +73,7 @@ public class CurlerDennyTest extends TestShowBase {
 
 	private void showTrajectory(final CurveRock p, final Zoomer zoom,
 			final int millis, final int dt) {
-		final PositionSet pos = PositionSet.allOut();
+		final RockSet<Pos> pos = PositionSet.allOut();
 		showPositionDisplay(pos, zoom, millis, new TimeRunnable() {
 			@Override
 			public void run(final double t) throws InterruptedException {

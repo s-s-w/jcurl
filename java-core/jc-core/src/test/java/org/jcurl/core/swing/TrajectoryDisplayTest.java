@@ -28,9 +28,10 @@ import org.jcurl.core.api.ComputedTrajectorySet;
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.RockSet;
-import org.jcurl.core.api.VelocitySet;
 import org.jcurl.core.api.TrajectorySet;
 import org.jcurl.core.api.Unit;
+import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.core.helpers.AnnoHelper;
 import org.jcurl.core.impl.CollissionSpin;
 import org.jcurl.core.impl.CurlerDenny;
@@ -51,7 +52,7 @@ public class TrajectoryDisplayTest extends TestShowBase {
         te.setCollissionDetector(new NewtonCollissionDetector());
         te.setCurler(new CurlerDenny(24, 1));
         te.setInitialPos(PositionSet.allOut());
-        te.setInitialSpeed(new VelocitySet(PositionSet.allHome()));
+        te.setInitialSpeed(RockSet.zeroSpeed());
         te.getAnnotations().put(AnnoHelper.HammerK, AnnoHelper.HammerVDark);
         te.getAnnotations().put(AnnoHelper.DarkTeamK, "Scotland");
         te.getAnnotations().put(AnnoHelper.LightTeamK, "Canada");
@@ -64,7 +65,7 @@ public class TrajectoryDisplayTest extends TestShowBase {
         return te;
     }
 
-    static void initHammy(final PositionSet p, final VelocitySet s) {
+    static void initHammy(final RockSet<Pos> p, final RockSet<Vel> s) {
         PositionSet.allOut(p);
         // te.getInitialPos().getLight(1-1).setLocation(
         p.getLight(2 - 1).setLocation(Unit.f2m(-1.170732), Unit.f2m(15.365854),
@@ -195,7 +196,7 @@ public class TrajectoryDisplayTest extends TestShowBase {
                     0);
             ti.getInitialPos().getLight(0).setLocation(0, IceSize.BACK_2_TEE,
                     0.25 * Math.PI);
-            ti.setInitialSpeed(new VelocitySet(PositionSet.allHome()));
+            ti.setInitialSpeed(RockSet.zeroSpeed());
             if (false)
                 ti.getInitialSpeed().getDark(0).setLocation(-0.095,
                         -ti.getCurler().computeHackSpeed(3.124, new Point2D.Double(0,0)), Math.PI / 2);

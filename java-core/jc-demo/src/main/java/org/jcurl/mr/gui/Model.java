@@ -23,8 +23,9 @@ import org.jcurl.core.api.ComputedTrajectorySet;
 import org.jcurl.core.api.Curler;
 import org.jcurl.core.api.Measure;
 import org.jcurl.core.api.MutableObject;
-import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.Unit;
+import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.impl.CollissionSimple;
 import org.jcurl.core.impl.CurlerNoCurl;
 import org.jcurl.core.impl.CurveManager;
@@ -112,7 +113,7 @@ public class Model extends MutableObject {
                 Unit.SECOND);
     }
 
-    public PositionSet getInitialPos() {
+    public RockSet<Pos> getInitialPos() {
         return getTrajectory().getInitialPos();
     }
 
@@ -177,7 +178,7 @@ public class Model extends MutableObject {
                 drawTime.to(Unit.SECOND).value);
     }
 
-    public void setInitialPos(final PositionSet initialPos) {
+    public void setInitialPos(final RockSet<Pos> initialPos) {
         if (initialPos == null)
             return;
         propChange

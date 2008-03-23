@@ -24,7 +24,7 @@ import java.io.Serializable;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:RockFloat.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-class RockFloat extends Rock implements Serializable {
+class RockFloat<T extends RockType> extends Rock<T> implements Serializable {
 
 	private static final long serialVersionUID = 3219049101239057245L;
 
@@ -42,7 +42,7 @@ class RockFloat extends Rock implements Serializable {
 
 	@Override
 	public Object clone() {
-		return new RockFloat(x[0], x[1], x[2]);
+		return new RockFloat<T>(x[0], x[1], x[2]);
 	}
 
 	@Override
@@ -83,15 +83,6 @@ class RockFloat extends Rock implements Serializable {
 		if (alpha == x[2])
 			return;
 		x[2] = (float) alpha;
-		fireStateChanged();
-	}
-
-	@Override
-	public void setLocation(final double x, final double y) {
-		if (x == this.x[0] && y == this.x[1])
-			return;
-		this.x[0] = (float) x;
-		this.x[1] = (float) y;
 		fireStateChanged();
 	}
 

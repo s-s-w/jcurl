@@ -20,9 +20,6 @@ package org.jcurl.core.api;
 
 import java.awt.geom.AffineTransform;
 
-import org.jcurl.core.api.Rock;
-import org.jcurl.core.api.RockDouble;
-
 public class RockTest extends TestBase {
 
     static Rock m2r(final AffineTransform m, Rock r) {

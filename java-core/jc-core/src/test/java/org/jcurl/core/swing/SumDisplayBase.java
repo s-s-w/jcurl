@@ -35,6 +35,7 @@ import javax.swing.event.ChangeListener;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.swing.RockPainter.ColorSet;
 
@@ -75,7 +76,7 @@ abstract class SumDisplayBase extends JComponent implements
 
     public Paint backGround = new Color(0xF0F0FF);
 
-    private PositionSet model;
+    private RockSet<Pos> model;
 
     private int recentMask = -1;
 
@@ -83,11 +84,11 @@ abstract class SumDisplayBase extends JComponent implements
         this(null);
     }
 
-    public SumDisplayBase(final PositionSet model) {
+    public SumDisplayBase(final RockSet<Pos> model) {
         this.setPos(model);
     }
 
-    protected abstract int computeMask(final PositionSet rocks);
+    protected abstract int computeMask(final RockSet<Pos> rocks);
 
     @Override
     public Dimension getMaximumSize() {
@@ -142,12 +143,12 @@ abstract class SumDisplayBase extends JComponent implements
     public void stateChanged(final ChangeEvent evt) {
         final Object tmp = evt.getSource();
         if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass()))
-            this.setPos((PositionSet) tmp);
+            this.setPos((RockSet<Pos>) tmp);
         else
             log.info(tmp);
     }
 
-    public void setPos(final PositionSet rocks) {
+    public void setPos(final RockSet<Pos> rocks) {
         if (model != null && model != rocks)
             model.removeChangeListener(this);
         rocks.addChangeListener(this);
@@ -155,7 +156,7 @@ abstract class SumDisplayBase extends JComponent implements
         showRocks(computeMask(model));
     }
 
-    public void setPos(final PositionSet rocks, final int discontinuous) {
+    public void setPos(final RockSet<Pos> rocks, final int discontinuous) {
         this.setPos(rocks);
     }
 

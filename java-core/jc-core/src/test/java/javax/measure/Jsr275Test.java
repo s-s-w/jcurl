@@ -19,7 +19,6 @@ import junit.framework.TestCase;
 
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.Rock;
-import org.jcurl.core.api.VelocitySet;
 
 /**
  * Demo for a possible use of <a
