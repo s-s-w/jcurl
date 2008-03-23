@@ -33,14 +33,25 @@ import org.jcurl.core.log.JCLoggerFactory;
 
 /**
  * Dispatch {@link Message}s to the according {@link Executor}.
+ * 
+ * <ul>
+ * <li>http://java.sun.com/javase/6/docs/api/javax/swing/SwingWorker.html</li>
+ * <li>Fowler: http://martinfowler.com/eaaDev/EventCollaboration.html</li>
+ * <li>EventBus https://eventbus.dev.java.net/
+ * https://aptframework.dev.java.net/article/edtMessageBus.html</li>
+ * <li><a href="https://beansbinding.dev.java.net/">JSR-295 Beans Binding</a></li>
+ * <li><a href="https://appframework.dev.java.net/">JSR-296 Swing Application
+ * Framework</a></li>
+ * </ul>
+ * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
 public class MessageExecutor implements Executor {
 
-	public static interface Message<T extends ExecutorType> extends Runnable {}
-
 	static interface ExecutorType {}
+
+	public static interface Message<T extends ExecutorType> extends Runnable {}
 
 	public static interface Parallel extends ExecutorType {}
 
