@@ -34,18 +34,23 @@ import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockType;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
+import org.jcurl.core.ui.MessageExecutor;
+import org.jcurl.core.ui.MessageExecutor.Message;
+import org.jcurl.core.ui.MessageExecutor.Single;
 import org.jcurl.math.MathVec;
 
 class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 	private static final Log log = JCLoggerFactory
 			.getLogger(BroomSpeedMediator.class);
 
-	private static void swap(final RockSet r, final int a, final int b) {
-		final Rock tmp = new RockDouble(r.getRock(a));
+	private static <R extends RockType> void swap(final RockSet<R> r,
+			final int a, final int b) {
+		final Rock<R> tmp = new RockDouble<R>(r.getRock(a));
 		r.getRock(a).setLocation(r.getRock(b));
 		r.getRock(b).setLocation(tmp);
 	}
@@ -82,22 +87,19 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 	}
 
 	public void propertyChange(final PropertyChangeEvent evt) {
-		// FIXME
-//		final Object src = evt.getSource();
-//		if (src instanceof BroomPromptModel) {
-//			if ("idx16".equals(evt.getPropertyName()))
-//				updateIndex((Integer) evt.getOldValue(), (Integer) evt
-//						.getNewValue());
-//			else
-//				updateSpeed();
-//		} else if (src instanceof PositionSet)
-//			updateBroom();
-//		else if (src instanceof VelocitySet)
-//			updateBroom();
-//		else if (src instanceof Curler)
-//			updateSpeed();
-//		else
-//			log.warn("unconsumed source: " + src.getClass().getName());
+		final Object src = evt.getSource();
+		if (src instanceof BroomPromptModel) {
+			if ("idx16".equals(evt.getPropertyName()))
+				updateIndex((Integer) evt.getOldValue(), (Integer) evt
+						.getNewValue());
+			else
+				updateSpeed();
+		} else if (src instanceof RockSet)
+			updateBroom();
+		else if (src instanceof Curler)
+			updateSpeed();
+		else
+			log.warn("unconsumed source: " + src.getClass().getName());
 	}
 
 	private void remove(final IChangeSupport l) {
@@ -149,59 +151,86 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 			log.warn("unconsumed source: " + src.getClass().getName());
 	}
 
-	/** Initialpos, speed or curler have changed */
-	synchronized public void updateBroom() {
+	/**
+	 * Initialpos, speed or curler have changed. Forked via
+	 * {@link MessageExecutor#execute(Message)} into a {@link Single} thread.
+	 */
+	public void updateBroom() {
 		if (position == null || speed == null || broom == null)
 			return;
-		// Compute Broom Location
-		final Point2D x = position.getRock(broom.getIdx16()).p();
-		final Rock v = speed.getRock(broom.getIdx16());
-		final Point2D b = broom.getBroom();
-		final Point2D b2 = new Point2D.Double((b.getY() - x.getY()) * v.getX()
-				/ v.getY(), b.getY());
-		log.info(b2);
-		broom.setBroom(b2);
+		MessageExecutor.getInstance().execute(new Message<Single>() {
+			public void run() {
+				// Compute Broom Location
+				final Point2D x = position.getRock(broom.getIdx16()).p();
+				final Rock<Vel> v = speed.getRock(broom.getIdx16());
+				final Point2D b = broom.getBroom();
+				final Point2D b2 = new Point2D.Double((b.getY() - x.getY())
+						* v.getX() / v.getY(), b.getY());
+				log.info(b2);
+				broom.setBroom(b2);
 
-		// Compute Split Time
-		// broom.getSplitTimeMillis().setValue((int)(1000 *
-		// curler.computeIntervalTime(v0));
-		// TODO
+				// Compute Split Time
+				// broom.getSplitTimeMillis().setValue((int)(1000 *
+				// curler.computeIntervalTime(v0));
+				// TODO
 
-		// Compute Handle
-		broom.setOutTurn(v.getA() >= 0);
+				// Compute Handle
+				broom.setOutTurn(v.getA() >= 0);
+			}
+		});
 	}
 
-	/** Active Rock Number has changed */
-	synchronized public void updateIndex(final Integer oldV, final Integer newV) {
+	/**
+	 * Active Rock Number has changed. Forked via
+	 * {@link MessageExecutor#execute(Message)} into a {@link Single} thread.
+	 */
+	public void updateIndex(final Integer oldV, final Integer newV) {
 		if (oldV == null || newV == null)
 			return;
-		final int a = oldV.intValue();
-		final int b = newV.intValue();
-		swap(position, a, b);
-		swap(speed, a, b);
-		position.fireStateChanged();
-		speed.fireStateChanged();
+		MessageExecutor.getInstance().execute(new Message<Single>() {
+			public void run() {
+				final int a = oldV.intValue();
+				final int b = newV.intValue();
+				swap(position, a, b);
+				swap(speed, a, b);
+				// TODO Better call the CurveManager to update it's curves.
+				position.fireStateChanged();
+				// TODO Better call the CurveManager to update it's curves.
+				speed.fireStateChanged();
+				// TODO Update the BroomPrompt
+			}
+		});
 	}
 
-	/** Broom properties have changed */
-	synchronized public void updateSpeed() {
+	/**
+	 * Broom properties have changed. Forked via
+	 * {@link MessageExecutor#execute(Message)} into a {@link Single} thread.
+	 */
+	public void updateSpeed() {
 		log.info(broom);
 		if (position == null || curler == null || broom == null)
 			return;
-		// set to initial pos
-		final Rock start = new RockDouble(0, IceSize.FAR_HACK_2_TEE, Math.PI);
-		position.getRock(broom.getIdx16()).setLocation(start);
-		position.fireStateChanged();
-		// Compute direction
-		MathVec.sub(broom.getBroom(), start.p(), start.p());
-		MathVec.norm(start.p(), start.p());
-		// Compute initial Speed
-		final double v0 = curler.computeHackSpeed(broom.getSplitTimeMillis()
-				.getValue() * 1e-3, broom.getBroom());
-		MathVec.mult(v0, start.p(), start.p());
-		// Handle
-		start.setA((broom.getOutTurn() ? 1 : -1) * 0.25);
-		speed.getRock(broom.getIdx16()).setLocation(start);
-		speed.fireStateChanged();
+		MessageExecutor.getInstance().execute(new Message<Single>() {
+			public void run() {
+				// set to initial pos
+				final Rock start = new RockDouble(0, IceSize.FAR_HACK_2_TEE,
+						Math.PI);
+				position.getRock(broom.getIdx16()).setLocation(start);
+				position.fireStateChanged();
+				// Compute direction
+				MathVec.sub(broom.getBroom(), start.p(), start.p());
+				MathVec.norm(start.p(), start.p());
+				// Compute initial Speed
+				final double v0 = curler.computeHackSpeed(broom
+						.getSplitTimeMillis().getValue() * 1e-3, broom
+						.getBroom());
+				MathVec.mult(v0, start.p(), start.p());
+				// Handle
+				start.setA((broom.getOutTurn() ? 1 : -1) * 0.25);
+				speed.getRock(broom.getIdx16()).setLocation(start);
+				// TODO Better call the CurveManager to update it's curves.
+				speed.fireStateChanged();
+			}
+		});
 	}
 }

@@ -321,7 +321,7 @@ public class CurveManager extends MutableObject implements ChangeListener,
 		this.curler = curler;
 	}
 
-	synchronized public void setCurrentTime(final double currentTime) {
+	public void setCurrentTime(final double currentTime) {
 		// log.info(Double.toString(currentTime));
 		if (!dirty) {
 			if (this.currentTime == currentTime)

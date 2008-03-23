@@ -41,7 +41,7 @@ public class BroomPromptModel extends MutableObject {
 	private BoundedRangeModel splitTimeMillis = null;
 
 	public BroomPromptModel() {
-		setSplitTimeMillis(new DefaultBoundedRangeModel(2000, 0, 1000, 3000));
+		setSplitTimeMillis(new DefaultBoundedRangeModel(2000, 0, 1000, 5000));
 	}
 
 	@Override

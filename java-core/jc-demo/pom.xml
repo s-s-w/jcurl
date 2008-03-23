@@ -35,58 +35,8 @@
 				<enabled>false</enabled>
 			</releases>
 			<snapshots />
-
 		</repository>
 	</repositories>
-	<profiles>
-		<profile>
-			<id>netbeans-public</id>
-			<activation>
-				<property>
-					<name>netbeans.execution</name>
-					<value>true</value>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-jar-plugin</artifactId>
-						<configuration>
-							<archive>
-								<manifest>
-									<addClasspath>true</addClasspath>
-									<classpathPrefix>
-										lib
-									</classpathPrefix>
-									<mainClass>
-										org.jcurl.demo.tactics.MainApp
-									</mainClass>
-								</manifest>
-							</archive>
-						</configuration>
-					</plugin>
-					<plugin>
-						<artifactId>maven-assembly-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>nb</id>
-								<phase>package</phase>
-								<goals>
-									<goal>directory</goal>
-								</goals>
-								<configuration>
-									<descriptor>
-										${basedir}/src/main/assemblies/netbeans-run.xml
-									</descriptor>
-									<finalName>executable</finalName>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>org.jcurl.core</groupId>
@@ -171,7 +121,7 @@
 						true
 					</includeConfigurationDirectoryInClasspath>
 					<!-- prefix all bin files with "mycompany" -->
-					<binPrefix>jcurl-demo</binPrefix>
+					<binPrefix>jcurl-demo-</binPrefix>
 					<!-- Extra JVM arguments that will be included in the bin scripts -->
 					<!-- extraJvmArguments>-Xms128m</extraJvmArguments -->
 					<programs>
@@ -180,6 +130,12 @@
 								org.jcurl.demo.tactics.MainApp
 							</mainClass>
 							<name>tactics</name>
+						</program>
+						<program>
+							<mainClass>
+								org.jcurl.demo.zui.BroomPromptDemo
+							</mainClass>
+							<name>broomprompt</name>
 						</program>
 					</programs>
 				</configuration>

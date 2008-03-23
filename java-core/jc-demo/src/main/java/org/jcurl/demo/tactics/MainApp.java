@@ -33,20 +33,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import org.jcurl.core.ui.BroomPromptModel;
-import org.jcurl.core.ui.MessageExecutor;
 import org.jcurl.demo.tactics.Controller.MainController;
 import org.jcurl.demo.tactics.Controller.UndoRedoCon;
 import org.jcurl.demo.tactics.Controller.ZuiController;
 
 /**
- * <ul>
- * <li>{@link MessageExecutor}</li>
- * <li>http://java.sun.com/javase/6/docs/api/javax/swing/SwingWorker.html</li>
- * <li>Fowler: http://martinfowler.com/eaaDev/EventCollaboration.html</li>
- * <li>EventBus https://eventbus.dev.java.net/ https://aptframework.dev.java.net/article/edtMessageBus.html</li>
- * <li><a href="https://beansbinding.dev.java.net/">JSR-295 Beans Binding</a></li>
- * <li><a href="https://appframework.dev.java.net/">JSR-296 Swing Application Framework</a></li>
- * </ul>
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */

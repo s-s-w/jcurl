@@ -24,81 +24,102 @@ import java.io.Serializable;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:RockDouble.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class RockDouble<T extends RockType> extends Rock<T> implements Serializable {
+public class RockDouble<R extends RockType> extends Rock<R> implements
+		Serializable {
 
 	private static final long serialVersionUID = 2337028316325540776L;
 
-	private final double[] x = new double[3];
+	private volatile double a;
+	private volatile double x;
+	private volatile double y;
 
 	public RockDouble() {
 		this(0, 0, 0);
 	}
 
-	public RockDouble(final Rock<T> r) {
-		this(r.getX(), r.getY(), r.getA());
+	public RockDouble(final double x, final double y, final double alpha) {
+		this.x = x;
+		this.y = y;
+		this.a = alpha;
 	}
 
-	public RockDouble(final double x, final double y, final double alpha) {
-		this.x[0] = x;
-		this.x[1] = y;
-		this.x[2] = alpha;
+	public RockDouble(final Rock<R> r) {
+		this(r.getX(), r.getY(), r.getA());
 	}
 
 	@Override
 	public Object clone() {
-		return new RockDouble<T>(x[0], x[1], x[2]);
+		return new RockDouble<R>(x, y, a);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final RockDouble other = (RockDouble) obj;
+		if (Double.doubleToLongBits(a) != Double.doubleToLongBits(other.a))
+			return false;
+		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
+			return false;
+		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
+			return false;
+		return true;
 	}
 
 	@Override
 	public double getA() {
-		return x[2];
+		return a;
 	}
 
 	@Override
 	public double getX() {
-		return x[0];
+		return x;
 	}
 
 	@Override
 	public double getY() {
-		return x[1];
+		return y;
 	}
 
 	@Override
 	public int hashCode() {
-		// http://www.angelikalanger.com/Articles/JavaSpektrum/03.HashCode/03.HashCode.html
-		// hashcode N = hashcode N-1 * multiplikator + feldwert N
-		int hash = 17;
-		final int fact = 59;
-		for (int i = 0; i < 3; i++) {
-			hash *= fact;
-			final long tmp = x[0] == 0.0 ? 0L : java.lang.Double
-					.doubleToLongBits(x[0]);
-			hash += (int) (tmp ^ tmp >>> 32);
-		}
-		return hash;
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(a);
+		result = prime * result + (int) (temp ^ temp >>> 32);
+		temp = Double.doubleToLongBits(x);
+		result = prime * result + (int) (temp ^ temp >>> 32);
+		temp = Double.doubleToLongBits(y);
+		result = prime * result + (int) (temp ^ temp >>> 32);
+		return result;
 	}
 
 	@Override
 	public boolean isNotZero() {
-		return x[0] * x[0] + x[1] * x[1] > 1e-4;
+		return x * x + y * y > 1e-4;
 	}
 
 	@Override
 	public void setA(final double alpha) {
-		if (alpha == x[2])
+		if (alpha == a)
 			return;
-		x[2] = alpha;
+		a = alpha;
 		fireStateChanged();
 	}
 
 	@Override
 	public void setLocation(final double x, final double y, final double a) {
-		if (x == this.x[0] && y == this.x[1] && a == this.x[2])
+		if (x == this.x && y == this.y && a == this.y)
 			return;
-		this.x[0] = x;
-		this.x[1] = y;
-		this.x[2] = a;
+		this.x = x;
+		this.y = y;
+		this.a = a;
 		fireStateChanged();
 	}
 
@@ -106,25 +127,22 @@ public class RockDouble<T extends RockType> extends Rock<T> implements Serializa
 	public void setLocation(final double[] pt) {
 		if (pt.length != 3)
 			throw new IllegalArgumentException();
-		if (pt[0] == x[0] && pt[1] == x[1] && pt[2] == x[2])
-			return;
-		System.arraycopy(pt, 0, x, 0, 3);
-		fireStateChanged();
+		setLocation(pt[0], pt[1], pt[2]);
 	}
 
 	@Override
 	public void setX(final double x) {
-		if (x == this.x[0])
+		if (x == this.x)
 			return;
-		this.x[0] = x;
+		this.x = x;
 		fireStateChanged();
 	}
 
 	@Override
 	public void setY(final double y) {
-		if (y == x[1])
+		if (y == this.y)
 			return;
-		x[1] = y;
+		this.y = y;
 		fireStateChanged();
 	}
 }

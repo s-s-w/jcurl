@@ -29,7 +29,8 @@ import org.jcurl.core.helpers.Service;
 /**
  * Base class for rock information (either location or speed). The 3rd component (<code>a</code>)
  * is the handle angle in radians.
- * <h3>Why is this type not generic, e.g. Rock<XY extends Number, A extends Number></h3>
+ * <h3>Why is this type not generic, e.g. Rock<XY extends Number, A extends
+ * Number></h3>
  * <p>
  * Yes, this would be preferable, especially for a neat integration into <a
  * href="http://www.jscience.org">JScience</a> calculus.
@@ -56,6 +57,66 @@ import org.jcurl.core.helpers.Service;
  */
 public abstract class Rock<R extends RockType> implements IChangeSupport,
 		Cloneable, Serializable {
+
+	private static class ImmutableRock<X extends RockType> extends Rock<X> {
+		private static final long serialVersionUID = 3485638632856914198L;
+		private final Rock<X> base;
+
+		ImmutableRock(final Rock<X> base) {
+			this.base = base;
+		}
+
+		@Override
+		public Object clone() {
+			return this;
+		}
+
+		@Override
+		public double getA() {
+			return base.getA();
+		}
+
+		@Override
+		public double getX() {
+			return base.getX();
+		}
+
+		@Override
+		public double getY() {
+			return base.getY();
+		}
+
+		@Override
+		public boolean isNotZero() {
+			return base.isNotZero();
+		}
+
+		@Override
+		public void setA(final double a) {
+			throw new UnsupportedOperationException("Not supported.");
+		}
+
+		@Override
+		public void setLocation(final double x, final double y, final double a) {
+			throw new UnsupportedOperationException("Not supported.");
+		}
+
+		@Override
+		public void setLocation(final double[] l) {
+			throw new UnsupportedOperationException("Not supported.");
+		}
+
+		@Override
+		public void setX(final double x) {
+			throw new UnsupportedOperationException("Not supported.");
+		}
+
+		@Override
+		public void setY(final double y) {
+			throw new UnsupportedOperationException("Not supported.");
+		}
+	}
+
 	private class RockPoint extends Point2D {
 		@Override
 		public double getX() {
@@ -73,6 +134,10 @@ public abstract class Rock<R extends RockType> implements IChangeSupport,
 		}
 	}
 
+	public static <Y extends RockType> Rock<Y> immutable(final Rock<Y> r) {
+		return new ImmutableRock<Y>(r);
+	}
+
 	protected final transient ChangeSupport change = new ChangeSupport(this);
 	private transient volatile boolean dirty = true;
 	private transient final Point2D p = new RockPoint();
@@ -84,21 +149,6 @@ public abstract class Rock<R extends RockType> implements IChangeSupport,
 
 	@Override
 	public abstract Object clone();
-
-	@Override
-	public final boolean equals(final Object obj) {
-		if (obj == null || !(obj instanceof Rock))
-			return false;
-		return equals((Rock<R>) obj);
-	}
-
-	private boolean equals(final Rock<R> b) {
-		if (this == b)
-			return true;
-		if (b == null)
-			return false;
-		return getX() == b.getX() && getY() == b.getY() && getA() == b.getA();
-	}
 
 	protected void fireStateChanged() {
 		dirty = true;
