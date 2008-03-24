@@ -19,11 +19,13 @@
 
 package org.jcurl.core.ui;
 
+import java.lang.reflect.ParameterizedType;
+
 import junit.framework.TestCase;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.ui.MessageExecutor.ExecutorType;
+import org.jcurl.core.ui.MessageExecutor.ForkableFixed;
 import org.jcurl.core.ui.MessageExecutor.Message;
 import org.jcurl.core.ui.MessageExecutor.Parallel;
 import org.jcurl.core.ui.MessageExecutor.Single;
@@ -53,10 +55,16 @@ public class MessageExecutorTest extends TestCase {
 		}
 	}
 
+	private static class MessageBase1 extends ForkableFixed<SwingEDT> {
+		public void run() {
+			log.info("Hello, " + this.getClass().getName());
+		}
+	}
+
 	private static final Log log = JCLoggerFactory
 			.getLogger(MessageExecutorTest.class);;
 
-	public void testInvoke() {
+	public void _testInvoke() {
 		final MessageExecutor mb = MessageExecutor.getInstance();
 		mb.execute(new Message1());
 		mb.execute(new Message2());
@@ -64,7 +72,22 @@ public class MessageExecutorTest extends TestCase {
 	}
 
 	public void testRTTI() {
-		assertEquals(SwingEDT.class, MessageExecutor.findGenericTypeParam(Message1.class,
-				ExecutorType.class));
+		assertEquals(0, MessageBase1.class.getGenericInterfaces().length);
+		assertEquals(
+				"org.jcurl.core.ui.MessageExecutor.org.jcurl.core.ui.MessageExecutor$AbstractMessage<org.jcurl.core.ui.MessageExecutor$SwingEDT>",
+				MessageBase1.class.getGenericSuperclass().toString());
+		ParameterizedType pt = (ParameterizedType) MessageBase1.class
+				.getGenericSuperclass();
+		assertEquals(SwingEDT.class, pt.getActualTypeArguments()[0]);
+
+		assertEquals(1, Message1.class.getGenericInterfaces().length);
+		assertEquals(Object.class, Message1.class.getGenericSuperclass());
+		pt = (ParameterizedType) Message1.class.getGenericInterfaces()[0];
+		assertEquals(SwingEDT.class, pt.getActualTypeArguments()[0]);
+
+		assertEquals(SwingEDT.class, MessageExecutor
+				.findMessageTypeParam(Message1.class));
+		assertEquals(SwingEDT.class, MessageExecutor
+				.findMessageTypeParam(MessageBase1.class));
 	}
 }

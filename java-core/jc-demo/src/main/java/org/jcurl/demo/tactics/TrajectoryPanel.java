@@ -11,9 +11,8 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.impl.CurveManager;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
-import org.jcurl.core.ui.MessageExecutor;
 import org.jcurl.core.ui.UndoRedoDocumentBase;
-import org.jcurl.core.ui.MessageExecutor.Message;
+import org.jcurl.core.ui.MessageExecutor.ForkableFixed;
 import org.jcurl.core.ui.MessageExecutor.Single;
 import org.jcurl.zui.piccolo.BroomPromptSimple;
 import org.jcurl.zui.piccolo.PCurveStore;
@@ -62,9 +61,8 @@ class TrajectoryPanel extends JComponent {
 			protected void pushChange(final boolean isDrop,
 					final PRockNode node, final Point2D currentPos,
 					final Point2D startPos) {
-				MessageExecutor.getInstance().execute(
 				/** A Inner Anonymous Class Comment */
-				new Message<Single>() {
+				new ForkableFixed<Single>() {
 					/** A Inner Anonymous Method Comment */
 					public void run() {
 						node.getRock().p().setLocation(currentPos);
@@ -75,7 +73,7 @@ class TrajectoryPanel extends JComponent {
 						getCurves().stateChanged(
 								new ChangeEvent(getCurves().getInitialPos()));
 					}
-				});
+				}.fork();
 			}
 		});
 		current = new PPositionSet(new PRockFactory.Fancy(major));

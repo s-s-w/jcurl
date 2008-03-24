@@ -29,10 +29,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import org.jcurl.core.ui.BroomPromptModel;
+import org.jcurl.core.ui.MessageExecutor.ForkableFixed;
+import org.jcurl.core.ui.MessageExecutor.SwingEDT;
 import org.jcurl.demo.tactics.Controller.MainController;
 import org.jcurl.demo.tactics.Controller.UndoRedoCon;
 import org.jcurl.demo.tactics.Controller.ZuiController;
@@ -242,7 +243,7 @@ public class MainApp extends JFrame {
 		// PDebug.debugPrintFrameRate = true;
 		// PDebug.debugPaintCalls = true;
 		final MainApp application = new MainApp();
-		SwingUtilities.invokeLater(new Runnable() {
+		new ForkableFixed<SwingEDT>() {
 			public void run() {
 				application
 						.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -251,7 +252,8 @@ public class MainApp extends JFrame {
 				application.setVisible(true);
 				application.center();
 			}
-		});
+		}.fork();
+		
 		if (true)
 			application.m.setCurrentTime(tmax);
 		else {

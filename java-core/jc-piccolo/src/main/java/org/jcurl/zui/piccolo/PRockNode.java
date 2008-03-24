@@ -28,8 +28,8 @@ import javax.swing.event.ChangeListener;
 
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockSet;
-import org.jcurl.core.ui.MessageExecutor;
-import org.jcurl.core.ui.MessageExecutor.Message;
+import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.core.ui.MessageExecutor.ForkableFixed;
 import org.jcurl.core.ui.MessageExecutor.SwingEDT;
 
 import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
@@ -87,7 +87,8 @@ public class PRockNode extends PComposite implements ChangeListener {
 		/**
 		 * Typical extension point - by default just update the rock's location.
 		 * 
-		 * @see Rock#setLocation(Point2D)
+		 * @see Rock#p
+		 * @see Point2D#setLocation(Point2D)
 		 * @param isDrop
 		 * @param node
 		 * @param currentPos
@@ -119,7 +120,7 @@ public class PRockNode extends PComposite implements ChangeListener {
 	static final Object INDEX16 = "index16";
 	private static final long serialVersionUID = 4713843366445017130L;
 	/** This is kinda controller model-&gt;view */
-	private final transient Message<?> model2view = new Message<SwingEDT>() {
+	private final transient ForkableFixed<SwingEDT> model2view = new ForkableFixed<SwingEDT>() {
 		public void run() {
 			if (getGlobalTranslation().distanceSq(getRock().p()) < EPSILON)
 				return;
@@ -136,7 +137,7 @@ public class PRockNode extends PComposite implements ChangeListener {
 	 * @param rock
 	 * @see Rock#addChangeListener(ChangeListener)
 	 */
-	public PRockNode(final int idx8, final boolean isDark, final Rock rock) {
+	public PRockNode(final int idx8, final boolean isDark, final Rock<Pos> rock) {
 		addAttribute(Rock.class.getName(), rock);
 		addAttribute(PRockNode.INDEX16, RockSet.toIdx16(isDark, idx8));
 		setTransform(rock.getAffineTransform());
@@ -147,16 +148,13 @@ public class PRockNode extends PComposite implements ChangeListener {
 		return (Integer) getAttribute(PRockNode.INDEX16);
 	}
 
-	public Rock getRock() {
-		return (Rock) getAttribute(Rock.class.getName());
+	public Rock<Pos> getRock() {
+		return (Rock<Pos>) getAttribute(Rock.class.getName());
 	}
 
 	public void stateChanged(final ChangeEvent e) {
 		if (e.getSource() != getRock())
 			return;
-		if (false)
-			model2view.run();
-		else
-			MessageExecutor.getInstance().execute(model2view);
+		model2view.fork();
 	}
 }

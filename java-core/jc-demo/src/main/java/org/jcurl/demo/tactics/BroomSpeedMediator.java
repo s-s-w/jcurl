@@ -39,8 +39,7 @@ import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
-import org.jcurl.core.ui.MessageExecutor;
-import org.jcurl.core.ui.MessageExecutor.Message;
+import org.jcurl.core.ui.MessageExecutor.ForkableFixed;
 import org.jcurl.core.ui.MessageExecutor.Single;
 import org.jcurl.math.MathVec;
 
@@ -59,6 +58,32 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 	private Curler curler;
 	private RockSet<Pos> position;
 	private RockSet<Vel> speed;
+
+	/**
+	 * Initialpos, speed or curler have changed.
+	 */
+	private final ForkableFixed<Single> updateBroom = new ForkableFixed<Single>() {
+		public void run() {
+			if (position == null || speed == null || broom == null)
+				return;
+			// Compute Broom Location
+			final Point2D x = position.getRock(broom.getIdx16()).p();
+			final Rock<Vel> v = speed.getRock(broom.getIdx16());
+			final Point2D b = broom.getBroom();
+			final Point2D b2 = new Point2D.Double((b.getY() - x.getY())
+					* v.getX() / v.getY(), b.getY());
+			log.info(b2);
+			broom.setBroom(b2);
+
+			// Compute Split Time
+			// broom.getSplitTimeMillis().setValue((int)(1000 *
+			// curler.computeIntervalTime(v0));
+			// TODO
+
+			// Compute Handle
+			broom.setOutTurn(v.getA() >= 0);
+		}
+	};
 
 	private void add(final IChangeSupport l) {
 		if (l != null)
@@ -95,7 +120,7 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 			else
 				updateSpeed();
 		} else if (src instanceof RockSet)
-			updateBroom();
+			updateBroom.fork();
 		else if (src instanceof Curler)
 			updateSpeed();
 		else
@@ -132,13 +157,13 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 	public void setPosition(final RockSet<Pos> position) {
 		remove(this.position);
 		add(this.position = position);
-		updateBroom();
+		updateBroom.fork();
 	}
 
 	public void setSpeed(final RockSet<Vel> speed) {
 		remove(this.speed);
 		add(this.speed = speed);
-		updateBroom();
+		updateBroom.fork();
 	}
 
 	public void stateChanged(final ChangeEvent e) {
@@ -146,48 +171,18 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 		if (src instanceof BoundedRangeModel)
 			updateSpeed();
 		if (src instanceof RockSet)
-			updateBroom();
+			updateBroom.fork();
 		else
 			log.warn("unconsumed source: " + src.getClass().getName());
 	}
 
 	/**
-	 * Initialpos, speed or curler have changed. Forked via
-	 * {@link MessageExecutor#execute(Message)} into a {@link Single} thread.
-	 */
-	public void updateBroom() {
-		if (position == null || speed == null || broom == null)
-			return;
-		MessageExecutor.getInstance().execute(new Message<Single>() {
-			public void run() {
-				// Compute Broom Location
-				final Point2D x = position.getRock(broom.getIdx16()).p();
-				final Rock<Vel> v = speed.getRock(broom.getIdx16());
-				final Point2D b = broom.getBroom();
-				final Point2D b2 = new Point2D.Double((b.getY() - x.getY())
-						* v.getX() / v.getY(), b.getY());
-				log.info(b2);
-				broom.setBroom(b2);
-
-				// Compute Split Time
-				// broom.getSplitTimeMillis().setValue((int)(1000 *
-				// curler.computeIntervalTime(v0));
-				// TODO
-
-				// Compute Handle
-				broom.setOutTurn(v.getA() >= 0);
-			}
-		});
-	}
-
-	/**
-	 * Active Rock Number has changed. Forked via
-	 * {@link MessageExecutor#execute(Message)} into a {@link Single} thread.
+	 * Active Rock Number has changed.
 	 */
 	public void updateIndex(final Integer oldV, final Integer newV) {
 		if (oldV == null || newV == null)
 			return;
-		MessageExecutor.getInstance().execute(new Message<Single>() {
+		new ForkableFixed<Single>() {
 			public void run() {
 				final int a = oldV.intValue();
 				final int b = newV.intValue();
@@ -199,18 +194,17 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 				speed.fireStateChanged();
 				// TODO Update the BroomPrompt
 			}
-		});
+		}.fork();
 	}
 
 	/**
-	 * Broom properties have changed. Forked via
-	 * {@link MessageExecutor#execute(Message)} into a {@link Single} thread.
+	 * Broom properties have changed.
 	 */
 	public void updateSpeed() {
 		log.info(broom);
 		if (position == null || curler == null || broom == null)
 			return;
-		MessageExecutor.getInstance().execute(new Message<Single>() {
+		new ForkableFixed<Single>() {
 			public void run() {
 				// set to initial pos
 				final Rock start = new RockDouble(0, IceSize.FAR_HACK_2_TEE,
@@ -231,6 +225,6 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 				// TODO Better call the CurveManager to update it's curves.
 				speed.fireStateChanged();
 			}
-		});
+		}.fork();
 	}
 }

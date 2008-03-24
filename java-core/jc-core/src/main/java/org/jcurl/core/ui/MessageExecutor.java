@@ -20,9 +20,9 @@
 package org.jcurl.core.ui;
 
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
 
@@ -49,15 +49,94 @@ import org.jcurl.core.log.JCLoggerFactory;
  */
 public class MessageExecutor implements Executor {
 
-	static interface ExecutorType {}
+	/** Execute in the current Thread */
+	public static class Current implements Executor {
+		public void execute(final Runnable command) {
+			command.run();
+		}
+	}
 
-	public static interface Message<T extends ExecutorType> extends Runnable {}
+	public static class ExecutorDelegate implements Executor {
+		private final Executor base;
 
-	public static interface Parallel extends ExecutorType {}
+		public ExecutorDelegate(final Executor base) {
+			this.base = base;
+		}
 
-	public static interface Single extends ExecutorType {}
+		public void execute(final Runnable command) {
+			base.execute(command);
+		}
+	}
 
-	public static interface SwingEDT extends ExecutorType {}
+	/**
+	 * Similar to {@link ForkableFixed} but late-bound to an {@link Executor}.
+	 * 
+	 * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+	 * @version $Id$
+	 */
+	public static abstract class ForkableFlex implements Runnable {
+		private final MessageExecutor ex;
+
+		public ForkableFlex() {
+			this(null);
+		}
+
+		public ForkableFlex(final MessageExecutor ex) {
+			this.ex = ex == null ? MessageExecutor.getInstance() : ex;
+		}
+
+		/** Convenience Method. */
+		public void fork(final Class<? extends Executor> dst) {
+			ex.execute(this, dst);
+		}
+	}
+
+	/**
+	 * Similar to {@link ForkableFlex} but early-bound to an {@link Executor}.
+	 * 
+	 * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+	 * @version $Id$
+	 */
+	public static abstract class ForkableFixed<T extends Executor> implements
+			Message<T> {
+		private final Executor ex;
+
+		public ForkableFixed() {
+			this(null);
+		}
+
+		public ForkableFixed(final Executor ex) {
+			this.ex = ex == null ? MessageExecutor.getInstance() : ex;
+		}
+
+		/** Convenience Method. */
+		public void fork() {
+			ex.execute(this);
+		}
+	}
+
+	static interface Message<T extends Executor> extends Runnable {}
+
+	/** Execute in a multi threaded pool executor. */
+	public static class Parallel extends ExecutorDelegate {
+		public Parallel() {
+			super(Executors.newCachedThreadPool());
+		}
+	}
+
+	/** Execute in a single threaded executor. */
+	public static class Single extends ExecutorDelegate {
+		public Single() {
+			super(Executors.newSingleThreadExecutor());
+		}
+	}
+
+	/** Execute in the Swing/AWT Event Queue Thread */
+	public static class SwingEDT implements Executor {
+		public void execute(final Runnable command) {
+			SwingUtilities.invokeLater(command);
+		}
+	}
 
 	private static final MessageExecutor instance = new MessageExecutor();
 
@@ -68,50 +147,79 @@ public class MessageExecutor implements Executor {
 	 * Find the presence of a generic type parameter.
 	 */
 	@SuppressWarnings("unchecked")
-	static <T> Class<T> findGenericTypeParam(final Class<?> clz,
-			final Class<T> genericParam) {
-		for (final Type t : clz.getGenericInterfaces())
-			for (final Type ta : ((ParameterizedType) t)
-					.getActualTypeArguments())
-				if (ta instanceof Class)
-					if (genericParam.isAssignableFrom((Class<?>) ta))
-						return (Class<T>) ta;
-		return null;
+	static Class<Executor> findMessageTypeParam(final Class<?> clz) {
+		if (Object.class.equals(clz.getGenericSuperclass())) {
+			// clz is not based on MessageBase
+			final ParameterizedType pt = (ParameterizedType) clz
+					.getGenericInterfaces()[0];
+			return (Class<Executor>) pt.getActualTypeArguments()[0];
+		}
+		final ParameterizedType pt = (ParameterizedType) clz
+				.getGenericSuperclass();
+		return (Class<Executor>) pt.getActualTypeArguments()[0];
 	}
 
-	public static MessageExecutor getInstance() {
+	static MessageExecutor getInstance() {
 		return instance;
 	}
 
-	private final ExecutorService parallel;
+	private final Map<Class<? extends Executor>, Executor> map = new WeakHashMap<Class<? extends Executor>, Executor>();
 
-	private final ExecutorService single;
+	private MessageExecutor() {}
 
-	private MessageExecutor() {
-		single = Executors.newSingleThreadExecutor();
-		parallel = Executors.newCachedThreadPool();
+	/**
+	 * Delegate to the {@link #execute(Runnable, Class)}.
+	 * 
+	 * Uses {@link #findMessageTypeParam(Class)} to find the {@link Executor}
+	 * type parameter
+	 * 
+	 * @param msg
+	 */
+	void execute(final Message<? extends Executor> msg) {
+		execute(msg, findMessageTypeParam(msg.getClass()));
 	}
 
-	public void execute(final Message<? extends ExecutorType> msg) {
-		final Class<ExecutorType> et = findGenericTypeParam(msg.getClass(),
-				ExecutorType.class);
-		log.debug(et);
-		if (SwingEDT.class.equals(et))
-			SwingUtilities.invokeLater(msg);
-		else if (Single.class.equals(et))
-			single.execute(msg);
-		else if (Parallel.class.equals(et))
-			parallel.execute(msg);
-		else
-			throw new RejectedExecutionException(et.getName());
-	}
-
+	/**
+	 * Cast down to {@link Message} and delegate to
+	 * {@link #execute(org.jcurl.core.ui.MessageExecutor.Message)}.
+	 * 
+	 * @throws RejectedExecutionException
+	 *             if the downcast fails.
+	 */
 	@SuppressWarnings("unchecked")
 	public void execute(final Runnable command) {
 		try {
-			execute((Message<? extends ExecutorType>) command);
+			execute((Message<? extends Executor>) command);
 		} catch (final ClassCastException e) {
 			throw new RejectedExecutionException(e);
 		}
+	}
+
+	/**
+	 * Delegate to the {@link Executor#execute(Runnable)} of the type parameter.
+	 * 
+	 * Keeps a {@link Map} class-&gt;instance.
+	 * 
+	 * @param msg
+	 * @param et
+	 *            executor to delegate to.
+	 * @throws RejectedExecutionException
+	 *             {@link Class#newInstance()} of the type parameter failed.
+	 */
+	public void execute(final Runnable msg, final Class<? extends Executor> et) {
+		log.debug(et);
+		Executor ex;
+		try {
+			synchronized (et) {
+				ex = map.get(et);
+				if (ex == null)
+					map.put(et, ex = et.newInstance());
+			}
+		} catch (final InstantiationException e) {
+			throw new RejectedExecutionException(e);
+		} catch (final IllegalAccessException e) {
+			throw new RejectedExecutionException(e);
+		}
+		ex.execute(msg);
 	}
 }
