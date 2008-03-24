@@ -39,8 +39,8 @@ import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
-import org.jcurl.core.ui.MessageExecutor.ForkableFixed;
-import org.jcurl.core.ui.MessageExecutor.Single;
+import org.jcurl.core.ui.TaskExecutor.ForkableFixed;
+import org.jcurl.core.ui.TaskExecutor.Single;
 import org.jcurl.math.MathVec;
 
 class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {

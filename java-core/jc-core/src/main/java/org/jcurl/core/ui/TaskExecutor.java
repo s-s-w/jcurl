@@ -32,7 +32,7 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
 
 /**
- * Dispatch {@link Message}s to the according {@link Executor}.
+ * Dispatch {@link Task}s to the according {@link Executor}.
  * 
  * <ul>
  * <li>http://java.sun.com/javase/6/docs/api/javax/swing/SwingWorker.html</li>
@@ -47,7 +47,7 @@ import org.jcurl.core.log.JCLoggerFactory;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class MessageExecutor implements Executor {
+public class TaskExecutor implements Executor {
 
 	/** Execute in the current Thread */
 	public static class Current implements Executor {
@@ -69,36 +69,13 @@ public class MessageExecutor implements Executor {
 	}
 
 	/**
-	 * Similar to {@link ForkableFixed} but late-bound to an {@link Executor}.
-	 * 
-	 * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
-	 * @version $Id$
-	 */
-	public static abstract class ForkableFlex implements Runnable {
-		private final MessageExecutor ex;
-
-		public ForkableFlex() {
-			this(null);
-		}
-
-		public ForkableFlex(final MessageExecutor ex) {
-			this.ex = ex == null ? MessageExecutor.getInstance() : ex;
-		}
-
-		/** Convenience Method. */
-		public void fork(final Class<? extends Executor> dst) {
-			ex.execute(this, dst);
-		}
-	}
-
-	/**
 	 * Similar to {@link ForkableFlex} but early-bound to an {@link Executor}.
 	 * 
 	 * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
 	 * @version $Id$
 	 */
 	public static abstract class ForkableFixed<T extends Executor> implements
-			Message<T> {
+			Task<T> {
 		private final Executor ex;
 
 		public ForkableFixed() {
@@ -106,7 +83,7 @@ public class MessageExecutor implements Executor {
 		}
 
 		public ForkableFixed(final Executor ex) {
-			this.ex = ex == null ? MessageExecutor.getInstance() : ex;
+			this.ex = ex == null ? TaskExecutor.getInstance() : ex;
 		}
 
 		/** Convenience Method. */
@@ -115,7 +92,28 @@ public class MessageExecutor implements Executor {
 		}
 	}
 
-	static interface Message<T extends Executor> extends Runnable {}
+	/**
+	 * Similar to {@link ForkableFixed} but late-bound to an {@link Executor}.
+	 * 
+	 * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+	 * @version $Id$
+	 */
+	public static abstract class ForkableFlex implements Runnable {
+		private final TaskExecutor ex;
+
+		public ForkableFlex() {
+			this(null);
+		}
+
+		public ForkableFlex(final TaskExecutor ex) {
+			this.ex = ex == null ? TaskExecutor.getInstance() : ex;
+		}
+
+		/** Convenience Method. */
+		public void fork(final Class<? extends Executor> dst) {
+			ex.execute(this, dst);
+		}
+	}
 
 	/** Execute in a multi threaded pool executor. */
 	public static class Parallel extends ExecutorDelegate {
@@ -138,10 +136,12 @@ public class MessageExecutor implements Executor {
 		}
 	}
 
-	private static final MessageExecutor instance = new MessageExecutor();
+	static interface Task<T extends Executor> extends Runnable {}
+
+	private static final TaskExecutor instance = new TaskExecutor();
 
 	private static final Log log = JCLoggerFactory
-			.getLogger(MessageExecutor.class);
+			.getLogger(TaskExecutor.class);
 
 	/**
 	 * Find the presence of a generic type parameter.
@@ -159,29 +159,17 @@ public class MessageExecutor implements Executor {
 		return (Class<Executor>) pt.getActualTypeArguments()[0];
 	}
 
-	static MessageExecutor getInstance() {
+	static TaskExecutor getInstance() {
 		return instance;
 	}
 
 	private final Map<Class<? extends Executor>, Executor> map = new WeakHashMap<Class<? extends Executor>, Executor>();
 
-	private MessageExecutor() {}
+	private TaskExecutor() {}
 
 	/**
-	 * Delegate to the {@link #execute(Runnable, Class)}.
-	 * 
-	 * Uses {@link #findMessageTypeParam(Class)} to find the {@link Executor}
-	 * type parameter
-	 * 
-	 * @param msg
-	 */
-	void execute(final Message<? extends Executor> msg) {
-		execute(msg, findMessageTypeParam(msg.getClass()));
-	}
-
-	/**
-	 * Cast down to {@link Message} and delegate to
-	 * {@link #execute(org.jcurl.core.ui.MessageExecutor.Message)}.
+	 * Cast down to {@link Task} and delegate to
+	 * {@link #execute(org.jcurl.core.ui.TaskExecutor.Task)}.
 	 * 
 	 * @throws RejectedExecutionException
 	 *             if the downcast fails.
@@ -189,7 +177,7 @@ public class MessageExecutor implements Executor {
 	@SuppressWarnings("unchecked")
 	public void execute(final Runnable command) {
 		try {
-			execute((Message<? extends Executor>) command);
+			execute((Task<? extends Executor>) command);
 		} catch (final ClassCastException e) {
 			throw new RejectedExecutionException(e);
 		}
@@ -221,5 +209,17 @@ public class MessageExecutor implements Executor {
 			throw new RejectedExecutionException(e);
 		}
 		ex.execute(msg);
+	}
+
+	/**
+	 * Delegate to the {@link #execute(Runnable, Class)}.
+	 * 
+	 * Uses {@link #findMessageTypeParam(Class)} to find the {@link Executor}
+	 * type parameter
+	 * 
+	 * @param msg
+	 */
+	void execute(final Task<? extends Executor> msg) {
+		execute(msg, findMessageTypeParam(msg.getClass()));
 	}
 }

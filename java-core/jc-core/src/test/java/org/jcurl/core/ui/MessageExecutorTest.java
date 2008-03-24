@@ -25,11 +25,11 @@ import junit.framework.TestCase;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.ui.MessageExecutor.ForkableFixed;
-import org.jcurl.core.ui.MessageExecutor.Message;
-import org.jcurl.core.ui.MessageExecutor.Parallel;
-import org.jcurl.core.ui.MessageExecutor.Single;
-import org.jcurl.core.ui.MessageExecutor.SwingEDT;
+import org.jcurl.core.ui.TaskExecutor.ForkableFixed;
+import org.jcurl.core.ui.TaskExecutor.Task;
+import org.jcurl.core.ui.TaskExecutor.Parallel;
+import org.jcurl.core.ui.TaskExecutor.Single;
+import org.jcurl.core.ui.TaskExecutor.SwingEDT;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
@@ -37,19 +37,19 @@ import org.jcurl.core.ui.MessageExecutor.SwingEDT;
  */
 public class MessageExecutorTest extends TestCase {
 
-	private static class Message1 implements Message<SwingEDT> {
+	private static class Message1 implements Task<SwingEDT> {
 		public void run() {
 			log.info("Hello, " + this.getClass().getName());
 		}
 	}
 
-	private static class Message2 implements Message<Single> {
+	private static class Message2 implements Task<Single> {
 		public void run() {
 			log.info("Hello, " + this.getClass().getName());
 		}
 	}
 
-	private static class Message3 implements Message<Parallel> {
+	private static class Message3 implements Task<Parallel> {
 		public void run() {
 			log.info("Hello, " + this.getClass().getName());
 		}
@@ -65,7 +65,7 @@ public class MessageExecutorTest extends TestCase {
 			.getLogger(MessageExecutorTest.class);;
 
 	public void _testInvoke() {
-		final MessageExecutor mb = MessageExecutor.getInstance();
+		final TaskExecutor mb = TaskExecutor.getInstance();
 		mb.execute(new Message1());
 		mb.execute(new Message2());
 		mb.execute(new Message3());
@@ -85,9 +85,9 @@ public class MessageExecutorTest extends TestCase {
 		pt = (ParameterizedType) Message1.class.getGenericInterfaces()[0];
 		assertEquals(SwingEDT.class, pt.getActualTypeArguments()[0]);
 
-		assertEquals(SwingEDT.class, MessageExecutor
+		assertEquals(SwingEDT.class, TaskExecutor
 				.findMessageTypeParam(Message1.class));
-		assertEquals(SwingEDT.class, MessageExecutor
+		assertEquals(SwingEDT.class, TaskExecutor
 				.findMessageTypeParam(MessageBase1.class));
 	}
 }

@@ -29,8 +29,8 @@ import javax.swing.event.ChangeListener;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.RockType.Pos;
-import org.jcurl.core.ui.MessageExecutor.ForkableFixed;
-import org.jcurl.core.ui.MessageExecutor.SwingEDT;
+import org.jcurl.core.ui.TaskExecutor.ForkableFixed;
+import org.jcurl.core.ui.TaskExecutor.SwingEDT;
 
 import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
 import edu.umd.cs.piccolo.event.PInputEvent;
