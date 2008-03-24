@@ -24,12 +24,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
-public class JDKSerializer extends JCurlSerializer {
+import org.jcurl.core.io.JCurlSerializer.Engine;
 
-    public JDKSerializer() {
-    }
+public class JDKSerializer implements Engine {
 
-    @Override
     public IODocument read(final InputStream src) throws IOException {
         try {
             return (IODocument) new ObjectInputStream(src).readObject();
@@ -38,7 +36,6 @@ public class JDKSerializer extends JCurlSerializer {
         }
     }
 
-    @Override
     public void write(final IODocument src, final OutputStream dst)
             throws IOException {
         src.annotations().put(IODocument.CreatedByUser,

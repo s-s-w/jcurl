@@ -18,18 +18,13 @@
  */
 package org.jcurl.core.xsio;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
-import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 
 import org.jcurl.core.api.Measure;
 import org.jcurl.core.api.Rock;
@@ -45,7 +40,7 @@ import org.jcurl.core.impl.NewtonStopDetector;
 import org.jcurl.core.impl.StoredTrajectorySet;
 import org.jcurl.core.io.IODocument;
 import org.jcurl.core.io.IOTrajectories;
-import org.jcurl.core.io.JCurlSerializer;
+import org.jcurl.core.io.JCurlSerializer.Engine;
 import org.jcurl.math.CurveCombined;
 import org.jcurl.math.PolynomeCurve;
 import org.jcurl.math.CurveCombined.Part;
@@ -65,7 +60,7 @@ import com.thoughtworks.xstream.converters.SingleValueConverter;
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id:XStreamSerializer.java 752 2007-12-09 22:49:16Z mrohrmoser $
  */
-public class XStreamSerializer extends JCurlSerializer {
+public class XStreamSerializer implements Engine {
 
     private static class DoubleArrayConverter implements SingleValueConverter {
 
@@ -147,7 +142,6 @@ public class XStreamSerializer extends JCurlSerializer {
         registerAliases(xs);
     }
 
-    @Override
     public IODocument read(final InputStream src) throws IOException {
         return (IODocument) xs.fromXML(src);
     }
@@ -158,8 +152,6 @@ public class XStreamSerializer extends JCurlSerializer {
 
     public IODocument read(InputStream src, final String name,
             final IODocument dst) throws IOException {
-        if (isGzipped(name))
-            src = new GZIPInputStream(src);
         return read(src, dst);
     }
 
@@ -171,15 +163,6 @@ public class XStreamSerializer extends JCurlSerializer {
         return (IODocument) xs.fromXML(s);
     }
 
-    public IODocument read(final URL src, final IODocument dst)
-            throws IOException {
-        final InputStream s = src.openStream();
-        try {
-            return read(s, src.getFile(), dst);
-        } finally {
-            s.close();
-        }
-    }
 
     /**
      * Map all basic concepts to be a little bit robust against refactorings.
@@ -219,19 +202,6 @@ public class XStreamSerializer extends JCurlSerializer {
         return xs.toXML(src);
     }
 
-    @Override
-    public void write(final IODocument src, final File dst) throws IOException {
-        OutputStream d = new FileOutputStream(dst);
-        try {
-            if (isGzipped(dst.getName()))
-                d = new GZIPOutputStream(d);
-            write(src, d);
-        } finally {
-            d.close();
-        }
-    }
-
-    @Override
     public void write(final IODocument src, final OutputStream dst) {
         xs.toXML(src, dst);
     }

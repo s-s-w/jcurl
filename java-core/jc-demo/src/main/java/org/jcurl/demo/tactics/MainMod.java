@@ -30,8 +30,9 @@ import org.jcurl.core.impl.CurveManager;
 import org.jcurl.core.impl.NewtonCollissionDetector;
 import org.jcurl.core.io.IODocument;
 import org.jcurl.core.io.IOTrajectories;
-import org.jcurl.core.io.JCurlSerializer;
 import org.jcurl.core.io.JDKSerializer;
+import org.jcurl.core.io.JCurlSerializer;
+import org.jcurl.core.io.JCurlSerializer.Engine;
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.UndoRedoDocumentBase;
 
@@ -202,7 +203,7 @@ class MainMod extends BroomPromptModel {
     void open(final File src) {
         if (src.getName().endsWith(".jcz") || src.getName().endsWith(".jcx")) {
             log.debug(src);
-            final JCurlSerializer xs = new JDKSerializer();
+            final Engine xs = new JDKSerializer();
             try {
                 throw new IOException("Not implemented yet"); // xs.read(src.toURL(),
                 // xs.wrap(null,
@@ -225,13 +226,13 @@ class MainMod extends BroomPromptModel {
     void save(final File dst) {
         if (dst.getName().endsWith(".jcz") || dst.getName().endsWith(".jcx")) {
             log.debug(dst);
-            final JCurlSerializer xs = new JDKSerializer();
+            final JCurlSerializer xs = new JCurlSerializer();
             final IODocument src = new IODocument();
             final IOTrajectories l = new IOTrajectories();
             src.setRoot(l);
             l.trajectories().add(ts);
             try {
-                xs.write(src, dst);
+                xs.write(src, dst, JDKSerializer.class);
             } catch (final IOException e) {
                 log.error("", e);
             }

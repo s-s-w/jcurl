@@ -1,25 +1,27 @@
 /*
- * jcurl curling simulation framework http://www.jcurl.org
- * Copyright (C) 2005-2008 M. Rohrmoser
+ * jcurl curling simulation framework http://www.jcurl.org Copyright (C)
+ * 2005-2008 M. Rohrmoser
  * 
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
- * Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 package org.jcurl.core.api;
 
 import java.io.Serializable;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import javax.swing.undo.StateEditable;
 
@@ -38,7 +40,7 @@ import org.jcurl.math.MathVec;
  * @version $Id:RockSet.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class RockSet<R extends RockType> extends ChangeSupport implements
-		Cloneable, Serializable, StateEditable {
+		Iterable<Rock<R>>, Cloneable, Serializable, StateEditable {
 
 	public static final int ALL_MASK = 0xFFFF;
 	public static final int DARK_MASK = 0xAAAA;
@@ -124,7 +126,12 @@ public class RockSet<R extends RockType> extends ChangeSupport implements
 		return 2 * idx8 + (isDark ? 0 : 1);
 	}
 
+	public static RockSet<Vel> zeroSpeed() {
+		return new RockSet<Vel>(new RockDouble<Vel>());
+	}
+
 	protected final Rock<R>[] dark = new Rock[ROCKS_PER_COLOR];
+
 	protected final Rock<R>[] light = new Rock[ROCKS_PER_COLOR];
 
 	public RockSet(final Rock<R> seed) {
@@ -191,6 +198,26 @@ public class RockSet<R extends RockType> extends ChangeSupport implements
 		return hash;
 	}
 
+	public Iterator<Rock<R>> iterator() {
+		return new Iterator<Rock<R>>() {
+			private int i = 0;
+
+			public boolean hasNext() {
+				return i < ROCKS_PER_SET;
+			}
+
+			public Rock<R> next() {
+				if (i >= ROCKS_PER_SET)
+					throw new NoSuchElementException();
+				return getRock(i++);
+			}
+
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
+		};
+	}
+
 	public void restoreState(final Hashtable<?, ?> state) {
 		final double[] arr = (double[]) state.get(mark);
 		for (byte i16 = ROCKS_PER_SET - 1; i16 >= 0; i16--) {
@@ -217,9 +244,5 @@ public class RockSet<R extends RockType> extends ChangeSupport implements
 			arr[o + 2] = r.getA();
 		}
 		state.put(mark, arr);
-	}
-
-	public static RockSet<Vel> zeroSpeed() {
-		return new RockSet<Vel>(new RockDouble<Vel>());
 	}
 }
