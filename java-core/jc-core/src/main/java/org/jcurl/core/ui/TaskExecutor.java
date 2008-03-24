@@ -71,6 +71,8 @@ public class TaskExecutor implements Executor {
 	/**
 	 * Similar to {@link ForkableFlex} but early-bound to an {@link Executor}.
 	 * 
+	 * @param T
+	 *            see {@link TaskExecutor#execute(Runnable, Class)}
 	 * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
 	 * @version $Id$
 	 */
@@ -78,15 +80,24 @@ public class TaskExecutor implements Executor {
 			Task<T> {
 		private final Executor ex;
 
+		/**
+		 * Delegate to {@link ForkableFixed#ForkableFixed(Executor)} with
+		 * {@link TaskExecutor#getInstance()}.
+		 */
 		public ForkableFixed() {
-			this(null);
+			this(TaskExecutor.getInstance());
 		}
 
+		/**
+		 * Enable dependency injaction for testing purposes.
+		 * 
+		 * @param ex
+		 */
 		public ForkableFixed(final Executor ex) {
-			this.ex = ex == null ? TaskExecutor.getInstance() : ex;
+			this.ex = ex;
 		}
 
-		/** Convenience Method. */
+		/** Delegate <code>this</code> to {@link Executor#execute(Runnable)} */
 		public void fork() {
 			ex.execute(this);
 		}
@@ -101,15 +112,27 @@ public class TaskExecutor implements Executor {
 	public static abstract class ForkableFlex implements Runnable {
 		private final TaskExecutor ex;
 
+		/**
+		 * Delegate to {@link ForkableFlex#ForkableFlex(TaskExecutor)} with
+		 * {@link TaskExecutor#getInstance()}.
+		 */
 		public ForkableFlex() {
-			this(null);
+			this(TaskExecutor.getInstance());
 		}
 
+		/**
+		 * Enable dependency injaction for testing purposes.
+		 * 
+		 * @param ex
+		 */
 		public ForkableFlex(final TaskExecutor ex) {
-			this.ex = ex == null ? TaskExecutor.getInstance() : ex;
+			this.ex = ex;
 		}
 
-		/** Convenience Method. */
+		/**
+		 * Delegate <code>this</code> to
+		 * {@link TaskExecutor#execute(Runnable, Class)}
+		 */
 		public void fork(final Class<? extends Executor> dst) {
 			ex.execute(this, dst);
 		}
@@ -147,9 +170,8 @@ public class TaskExecutor implements Executor {
 	 * Find the presence of a generic type parameter.
 	 */
 	@SuppressWarnings("unchecked")
-	static Class<Executor> findMessageTypeParam(final Class<?> clz) {
+	static Class<Executor> findMessageTypeParam(final Class<? extends Task> clz) {
 		if (Object.class.equals(clz.getGenericSuperclass())) {
-			// clz is not based on MessageBase
 			final ParameterizedType pt = (ParameterizedType) clz
 					.getGenericInterfaces()[0];
 			return (Class<Executor>) pt.getActualTypeArguments()[0];
