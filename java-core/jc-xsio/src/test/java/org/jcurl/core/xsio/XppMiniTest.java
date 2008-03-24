@@ -44,11 +44,9 @@ public class XppMiniTest extends TestCase {
 
         final Rock r = new RockDouble(1, 2, 3);
         assertEquals("<org.jcurl.core.api.RockDouble>\n" + 
-        		"  <x>\n" + 
-        		"    <double>1.0</double>\n" + 
-        		"    <double>2.0</double>\n" + 
-        		"    <double>3.0</double>\n" + 
-        		"  </x>\n" + 
+        		"  <a>3.0</a>\n" + 
+        		"  <x>1.0</x>\n" + 
+        		"  <y>2.0</y>\n" + 
         		"</org.jcurl.core.api.RockDouble>", xs.toXML(r));
     }
 
