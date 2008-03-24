@@ -26,16 +26,16 @@ import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.TaskExecutor.ForkableFixed;
-import org.jcurl.core.ui.TaskExecutor.Task;
 import org.jcurl.core.ui.TaskExecutor.Parallel;
 import org.jcurl.core.ui.TaskExecutor.Single;
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
+import org.jcurl.core.ui.TaskExecutor.Task;
 
 /**
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
-public class MessageExecutorTest extends TestCase {
+public class TaskExecutorTest extends TestCase {
 
 	private static class Message1 implements Task<SwingEDT> {
 		public void run() {
@@ -62,7 +62,7 @@ public class MessageExecutorTest extends TestCase {
 	}
 
 	private static final Log log = JCLoggerFactory
-			.getLogger(MessageExecutorTest.class);;
+			.getLogger(TaskExecutorTest.class);;
 
 	public void _testInvoke() {
 		final TaskExecutor mb = TaskExecutor.getInstance();
@@ -74,7 +74,7 @@ public class MessageExecutorTest extends TestCase {
 	public void testRTTI() {
 		assertEquals(0, MessageBase1.class.getGenericInterfaces().length);
 		assertEquals(
-				"org.jcurl.core.ui.MessageExecutor.org.jcurl.core.ui.MessageExecutor$AbstractMessage<org.jcurl.core.ui.MessageExecutor$SwingEDT>",
+				"org.jcurl.core.ui.TaskExecutor.org.jcurl.core.ui.TaskExecutor$ForkableFixed<org.jcurl.core.ui.TaskExecutor$SwingEDT>",
 				MessageBase1.class.getGenericSuperclass().toString());
 		ParameterizedType pt = (ParameterizedType) MessageBase1.class
 				.getGenericSuperclass();
