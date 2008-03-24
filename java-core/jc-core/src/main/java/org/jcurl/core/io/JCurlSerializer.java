@@ -25,12 +25,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 /**
+ * Wrapper around {@link Engine}s to make them switchable.
+ * 
+ * <p>
+ * Puts the {@link Engine}s class name as an xml comment at the begin of the
+ * stream to make the serialized form self-explanatory (and xml conforming for
+ * those who care).
+ * </p>
+ * 
  * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -49,13 +58,15 @@ public class JCurlSerializer {
 
 	private static final char CHAR = '\n';
 
+	private static final Pattern idpat = Pattern
+			.compile("<!--\\s*(\\S+)\\s*-->");
+
 	private static final String UTF_8 = "UTF-8";
 
-	protected Engine id2Ser(final byte[] id) throws ClassNotFoundException,
-			UnsupportedEncodingException, InstantiationException,
-			IllegalAccessException {
+	protected Engine id2Ser(final String id) throws ClassNotFoundException,
+			InstantiationException, IllegalAccessException {
 		final Class<? extends Engine> deser = (Class<? extends Engine>) Class
-				.forName(new String(id, UTF_8));
+				.forName(id);
 		return deser.newInstance();
 	}
 
@@ -68,7 +79,6 @@ public class JCurlSerializer {
 	}
 
 	public IODocument read(final InputStream src) throws IOException {
-		final Class<? extends Engine> deser;
 		final Engine d;
 		try {
 			final ByteArrayOutputStream buf = new ByteArrayOutputStream();
@@ -79,7 +89,10 @@ public class JCurlSerializer {
 				buf.write(b);
 			}
 			buf.close();
-			d = id2Ser(buf.toByteArray());
+			final Matcher m = idpat
+					.matcher(new String(buf.toByteArray(), UTF_8));
+			m.matches();
+			d = id2Ser(m.group(1));
 		} catch (final Exception e) {
 			final IOException io = new IOException();
 			io.initCause(e);
@@ -99,8 +112,8 @@ public class JCurlSerializer {
 		}
 	}
 
-	protected byte[] ser2Id(final Engine d) throws UnsupportedEncodingException {
-		return d.getClass().getName().getBytes(UTF_8);
+	protected String ser2Id(final Engine d) {
+		return d.getClass().getName();
 	}
 
 	public void write(final IODocument src, final File dst,
@@ -125,7 +138,9 @@ public class JCurlSerializer {
 			io.initCause(e);
 			throw io;
 		}
-		dst.write(ser2Id(d));
+		dst.write("<!-- ".getBytes(UTF_8));
+		dst.write(ser2Id(d).getBytes(UTF_8));
+		dst.write(" -->".getBytes(UTF_8));
 		dst.write(CHAR);
 		d.write(src, dst);
 	}
