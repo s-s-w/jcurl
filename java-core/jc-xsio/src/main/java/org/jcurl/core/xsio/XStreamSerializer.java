@@ -38,7 +38,7 @@ import org.jcurl.core.impl.CurveTransformed;
 import org.jcurl.core.impl.NewtonCollissionDetector;
 import org.jcurl.core.impl.NewtonStopDetector;
 import org.jcurl.core.impl.StoredTrajectorySet;
-import org.jcurl.core.io.IODocument;
+import org.jcurl.core.io.IONode;
 import org.jcurl.core.io.IOTrajectories;
 import org.jcurl.core.io.JCurlSerializer.Engine;
 import org.jcurl.math.CurveCombined;
@@ -142,25 +142,25 @@ public class XStreamSerializer implements Engine {
         registerAliases(xs);
     }
 
-    public IODocument read(final InputStream src) throws IOException {
-        return (IODocument) xs.fromXML(src);
+    public IONode read(final InputStream src) throws IOException {
+        return (IONode) xs.fromXML(src);
     }
 
-    public IODocument read(final InputStream src, final IODocument dst) {
-        return (IODocument) xs.fromXML(src, dst);
+    public IONode read(final InputStream src, final IONode dst) {
+        return (IONode) xs.fromXML(src, dst);
     };
 
-    public IODocument read(InputStream src, final String name,
-            final IODocument dst) throws IOException {
+    public IONode read(InputStream src, final String name,
+            final IONode dst) throws IOException {
         return read(src, dst);
     }
 
-    public IODocument read(final Reader src, final IODocument dst) {
-        return (IODocument) xs.fromXML(src, dst);
+    public IONode read(final Reader src, final IONode dst) {
+        return (IONode) xs.fromXML(src, dst);
     }
 
-    public IODocument read(final String s) {
-        return (IODocument) xs.fromXML(s);
+    public IONode read(final String s) {
+        return (IONode) xs.fromXML(s);
     }
 
 
@@ -172,7 +172,7 @@ public class XStreamSerializer implements Engine {
         xs.alias("measure", Measure.class);
         xs.alias("rock", RockDouble.class);
         // 
-        xs.alias("IODocument", IODocument.class);
+        xs.alias("IODocument", IONode.class);
         xs.alias("IOTrajectories", IOTrajectories.class);
         // 
         xs.alias("StoredTrajectory", StoredTrajectorySet.class);
@@ -198,15 +198,15 @@ public class XStreamSerializer implements Engine {
         return xs;
     }
 
-    public String write(final IODocument src) {
+    public String write(final IONode src) {
         return xs.toXML(src);
     }
 
-    public void write(final IODocument src, final OutputStream dst) {
+    public void write(final IONode src, final OutputStream dst) {
         xs.toXML(src, dst);
     }
 
-    public void write(final IODocument src, final Writer dst) {
+    public void write(final IONode src, final Writer dst) {
         xs.toXML(src, dst);
     }
 }

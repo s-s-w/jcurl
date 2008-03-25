@@ -103,31 +103,28 @@ public class JCurlSerializerTest extends TestCase {
 
 	public void testEmpty() throws IOException {
 		final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-		io.write(new IODocument(), bout, JDKSerializer.class);
+		io.write(new IOGroup(), bout, JDKSerializer.class);
 		bout.close();
 		assertEquals("<!-- " + JDKSerializer.class.getName() + " -->\n",
 				new String(bout.toByteArray(), 0, 5 + JDKSerializer.class
 						.getName().length() + 5, "UTF-8"));
 
-		final IODocument d = io.read(new ByteArrayInputStream(bout
+		final IOGroup d = (IOGroup)io.read(new ByteArrayInputStream(bout
 				.toByteArray()));
-		assertNull(d.getRoot());
-		assertNotNull(d.annotations().get(IODocument.CreatedByUser));
+		assertEquals(0, d.children().size());
+		assertNotNull(d.annotations().get(IONode.CreatedByUser));
 	}
 
 	public void testHammy() throws IOException {
-		final IODocument a = new IODocument();
-		IOTrajectories l;
-		a.setRoot(l = new IOTrajectories());
+		IOTrajectories l = new IOTrajectories();
 		l.trajectories().add(initHammy(null));
-		a.annotations().put(IODocument.CreatedByProgram, "value");
+		l.annotations().put(IONode.CreatedByProgram, "value");
 
 		final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-		io.write(a, bout, JDKSerializer.class);
-		final IODocument d = io.read(new ByteArrayInputStream(bout
+		io.write(l, bout, JDKSerializer.class);
+		final IONode d = io.read(new ByteArrayInputStream(bout
 				.toByteArray()));
-		assertNotNull(d.getRoot());
-		l = (IOTrajectories) d.getRoot();
+		l = (IOTrajectories) d;
 		assertEquals(1, l.trajectories().size());
 		final CurveManager c = (CurveManager) l.trajectories().get(0);
 		assertEquals(7, c.getAnnotations().size());

@@ -51,9 +51,9 @@ public class JCurlSerializer {
 	 * @version $Id:JCurlSerializer.java 682 2007-08-12 21:25:04Z mrohrmoser $
 	 */
 	public static interface Engine {
-		IODocument read(InputStream src) throws IOException;
+		IONode read(InputStream src) throws IOException;
 
-		void write(IODocument src, OutputStream dst) throws IOException;
+		void write(IONode src, OutputStream dst) throws IOException;
 	}
 
 	private static final char CHAR = '\n';
@@ -74,11 +74,11 @@ public class JCurlSerializer {
 		return name.toString().endsWith(".jcz");
 	}
 
-	public IODocument read(final File src) throws IOException {
+	public IONode read(final File src) throws IOException {
 		return read(src.toURL());
 	}
 
-	public IODocument read(final InputStream src) throws IOException {
+	public IONode read(final InputStream src) throws IOException {
 		final Engine d;
 		try {
 			final ByteArrayOutputStream buf = new ByteArrayOutputStream();
@@ -101,7 +101,7 @@ public class JCurlSerializer {
 		return d.read(src);
 	}
 
-	public IODocument read(final URL src) throws IOException {
+	public IONode read(final URL src) throws IOException {
 		InputStream is = src.openStream();
 		try {
 			if (isGzipped(src.getFile()))
@@ -116,7 +116,7 @@ public class JCurlSerializer {
 		return d.getClass().getName();
 	}
 
-	public void write(final IODocument src, final File dst,
+	public void write(final IONode src, final File dst,
 			final Class<? extends Engine> ser) throws IOException {
 		OutputStream os = new FileOutputStream(dst);
 		try {
@@ -128,7 +128,7 @@ public class JCurlSerializer {
 		}
 	}
 
-	public void write(final IODocument src, final OutputStream dst,
+	public void write(final IONode src, final OutputStream dst,
 			final Class<? extends Engine> ser) throws IOException {
 		final Engine d;
 		try {

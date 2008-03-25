@@ -24,24 +24,24 @@ import java.util.List;
 import java.util.Map;
 
 public class IOGroup extends IONode {
-    private static final long serialVersionUID = 6594185597261724279L;
-    private final List<IONode> children;
+	private static final long serialVersionUID = 6594185597261724279L;
+	private final List<IONode> children;
 
-    public IOGroup() {
-        this(null, null);
-    }
+	public IOGroup() {
+		this(null, null);
+	}
 
-    protected IOGroup(final Map<CharSequence, CharSequence> annotations,
-            final List<IONode> children) {
-        super(annotations);
-        this.children = children == null ? new ArrayList<IONode>() : children;
-    }
+	protected IOGroup(final Map<CharSequence, CharSequence> annotations,
+			final List<IONode> children) {
+		super(annotations);
+		this.children = children == null ? new ArrayList<IONode>() : children;
+	}
 
-    public List<IONode> children() {
-        return children;
-    }
+	public List<IONode> children() {
+		return children;
+	}
 
-    protected Object readResolve() throws ObjectStreamException {
-        return new IOGroup(annotations(), children());
-    }
+	protected Object readResolve() throws ObjectStreamException {
+		return new IOGroup(annotations(), children());
+	}
 }

@@ -25,6 +25,8 @@ import java.util.Map;
 public abstract class IONode implements Serializable {
     private static final long serialVersionUID = -4734020637823903908L;
     private final Map<CharSequence, CharSequence> annotations;
+	public static final String CreatedByUser = "org.jcurl.core.io.CreatedByUser";
+	public static final String CreatedByProgram = "org.jcurl.core.io.CreatedByProgram";
 
     public IONode() {
         this(null);

@@ -28,7 +28,6 @@ import org.jcurl.core.impl.CollissionSpin;
 import org.jcurl.core.impl.CurlerDenny;
 import org.jcurl.core.impl.CurveManager;
 import org.jcurl.core.impl.NewtonCollissionDetector;
-import org.jcurl.core.io.IODocument;
 import org.jcurl.core.io.IOTrajectories;
 import org.jcurl.core.io.JCurlSerializer;
 import org.jcurl.core.io.JDKSerializer;
@@ -228,10 +227,8 @@ class MainMod extends BroomPromptModel {
 		if (dst.getName().endsWith(".jcz") || dst.getName().endsWith(".jcx")) {
 			log.debug(dst);
 			final JCurlSerializer xs = new JCurlSerializer();
-			final IODocument src = new IODocument();
-			final IOTrajectories l = new IOTrajectories();
-			src.setRoot(l);
-			l.trajectories().add(ts);
+			final IOTrajectories src = new IOTrajectories();
+			src.trajectories().add(ts);
 			try {
 				xs.write(src, dst, JDKSerializer.class);
 			} catch (final IOException e) {

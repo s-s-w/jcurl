@@ -38,7 +38,7 @@ import org.jcurl.core.impl.CollissionSpin;
 import org.jcurl.core.impl.CurlerDenny;
 import org.jcurl.core.impl.CurveManager;
 import org.jcurl.core.impl.NewtonCollissionDetector;
-import org.jcurl.core.io.IODocument;
+import org.jcurl.core.io.IONode;
 import org.jcurl.core.io.IOTrajectories;
 
 public class MainApp extends JFrame {
@@ -147,11 +147,8 @@ public class MainApp extends JFrame {
         });
     }
 
-    static IODocument newHammy() {
-        final IODocument doc = new IODocument();
-        doc.annotations().put("t", "document");
+    static IONode newHammy() {
         final IOTrajectories root = new IOTrajectories();
-        doc.setRoot(root);
         root.annotations().put("t", "World Curling Championships");
 
         final IOTrajectories c1 = new IOTrajectories();
@@ -167,7 +164,7 @@ public class MainApp extends JFrame {
         c2.children().add(c3);
 
         c3.trajectories().add(initHammy(null));
-        return doc;
+        return root;
     }
 
     public MainApp() {
