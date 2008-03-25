@@ -25,24 +25,23 @@ import java.util.Map;
 
 import org.jcurl.core.api.TrajectorySet;
 
-public class IOTrajectories extends IOGroup {
+public class IOTrajectories extends IONode {
     private static final long serialVersionUID = -8243459215398281867L;
     private final List<TrajectorySet> trajectories;
 
     public IOTrajectories() {
-        this(null, null, null);
+        this(null, null);
     }
 
     protected IOTrajectories(final Map<CharSequence, CharSequence> annotations,
-            final List<IONode> children, final List<TrajectorySet> trajectories) {
-        super(annotations, children);
+            final List<TrajectorySet> trajectories) {
+        super(annotations);
         this.trajectories = trajectories == null ? new ArrayList<TrajectorySet>()
                 : trajectories;
     }
 
-    @Override
     protected Object readResolve() throws ObjectStreamException {
-        return new IOTrajectories(annotations(), children(), trajectories());
+        return new IOTrajectories(annotations(), trajectories());
     }
 
     public List<TrajectorySet> trajectories() {

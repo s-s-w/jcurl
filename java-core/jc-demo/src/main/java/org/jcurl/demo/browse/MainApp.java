@@ -148,23 +148,13 @@ public class MainApp extends JFrame {
     }
 
     static IONode newHammy() {
-        final IOTrajectories root = new IOTrajectories();
-        root.annotations().put("t", "World Curling Championships");
-
-        final IOTrajectories c1 = new IOTrajectories();
-        c1.annotations().put("t", "Men");
-        root.children().add(c1);
-
-        final IOTrajectories c2 = new IOTrajectories();
-        c2.annotations().put("t", "Garmisch 1992");
-        c1.children().add(c2);
-
-        final IOTrajectories c3 = new IOTrajectories();
-        c3.annotations().put("t", "Semi Final SCO - CAN");
-        c2.children().add(c3);
-
-        c3.trajectories().add(initHammy(null));
-        return root;
+        final IOTrajectories node = new IOTrajectories();
+        node.annotations().put("Series", "World Curling Championships");
+        node.annotations().put("Gender", "Men");
+        node.annotations().put("Event", "Garmisch 1992");
+        node.annotations().put("Game", "Semi Final SCO - CAN");
+        node.trajectories().add(initHammy(null));
+        return node;
     }
 
     public MainApp() {
