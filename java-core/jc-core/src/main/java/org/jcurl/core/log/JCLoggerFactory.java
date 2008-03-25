@@ -33,7 +33,7 @@ import org.apache.commons.logging.impl.Jdk14Logger;
  * therefore cannot be used inside a sandbox.
  * </p>
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public final class JCLoggerFactory {

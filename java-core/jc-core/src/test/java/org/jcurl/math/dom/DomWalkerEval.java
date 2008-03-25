@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * Compute the value of the expression.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:DomWalkerEval.java 473 2007-03-26 12:24:21Z mrohrmoser $
  */
 public class DomWalkerEval extends DomWalker {

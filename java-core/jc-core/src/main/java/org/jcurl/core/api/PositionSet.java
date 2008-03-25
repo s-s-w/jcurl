@@ -25,7 +25,7 @@ import org.jcurl.core.api.RockType.Pos;
 /**
  * Utils for {@link RockSet}s with location semantics {@link Pos}.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:PositionSet.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public abstract class PositionSet {

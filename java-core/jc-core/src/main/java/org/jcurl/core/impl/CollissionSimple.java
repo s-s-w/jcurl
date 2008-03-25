@@ -31,7 +31,7 @@ import org.jcurl.core.api.RockType.Vel;
  * speed-components along the hit-direction of the two involved rocks. Only
  * conservation of momentum is obeyed, e.g. spin is neglected.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CollissionSimple.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class CollissionSimple extends ColliderBase {

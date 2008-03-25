@@ -36,7 +36,7 @@ import org.jcurl.core.api.Unit;
  * Strategy to paint the ice sheet in world coordinates.
  * 
  * @see org.jcurl.core.swing.RockPainter
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:IcePainter.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 class IcePainter implements Strategy {

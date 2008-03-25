@@ -27,7 +27,7 @@ import org.jcurl.math.R1RNFunction;
  * {@link NewtonSimpleSolver#computeNewtonValue(R1RNFunction , int, int, double, double, double)}
  * on {@link Distance2DSq} to find the next collission.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id: NewtonCollissionDetector.java 558 2007-04-18 17:44:24Z
  *          mrohrmoser $
  */

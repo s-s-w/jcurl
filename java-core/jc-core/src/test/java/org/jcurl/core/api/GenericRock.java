@@ -32,7 +32,7 @@ import java.io.Serializable;
  * @param <A>
  *            angular data. Must be convertible to and from {@link Double}
  *            (radians).
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public interface GenericRock<XY, A> extends IChangeSupport, Cloneable,

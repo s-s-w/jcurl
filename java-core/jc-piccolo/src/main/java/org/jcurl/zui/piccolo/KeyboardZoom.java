@@ -36,7 +36,7 @@ import edu.umd.cs.piccolo.event.PInputEvent;
 /**
  * Simple keyboard zoom to sheet, house and 12-foot.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:KeyboardZoom.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
 public class KeyboardZoom extends PBasicInputEventHandler {

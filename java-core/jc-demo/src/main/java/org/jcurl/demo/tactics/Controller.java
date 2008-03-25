@@ -48,7 +48,7 @@ import edu.umd.cs.piccolo.PCamera;
 /**
  * ...home of the {@link Action}s
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 class Controller {
@@ -248,7 +248,7 @@ class Controller {
          * 
          * http://www.javaworld.com/javaworld/jw-06-1998/jw-06-undoredo.html
          * 
-         * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+         * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
          * @version $Id$
          */
         class UndoRedoAction extends AbstractAction {

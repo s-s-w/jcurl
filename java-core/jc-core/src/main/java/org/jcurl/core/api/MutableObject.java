@@ -26,7 +26,7 @@ import java.beans.PropertyChangeListener;
  * Base class for all mutable value Objects. Provides a generic toString and
  * means to notify others upon propery changes.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:MutableObject.java 682 2007-08-12 21:25:04Z mrohrmoser $
  * 
  */

@@ -36,7 +36,7 @@ import org.xml.sax.helpers.XMLFilterImpl;
 /**
  * JUnit Test
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class XMLWriterTes extends TestCase {

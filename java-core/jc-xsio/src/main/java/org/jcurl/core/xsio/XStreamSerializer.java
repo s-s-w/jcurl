@@ -57,7 +57,7 @@ import com.thoughtworks.xstream.converters.SingleValueConverter;
  * implementations of an interface and the service provider plugin mechanism.
  * </p>
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:XStreamSerializer.java 752 2007-12-09 22:49:16Z mrohrmoser $
  */
 public class XStreamSerializer implements Engine {

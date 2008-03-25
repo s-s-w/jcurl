@@ -34,7 +34,7 @@ import org.jcurl.core.api.RockType.Vel;
 /**
  * Trajectory wrapping a {@link CurveStore}.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:StoredTrajectorySet.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class StoredTrajectorySet extends MutableObject implements TrajectorySet {

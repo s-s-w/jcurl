@@ -29,7 +29,7 @@ import java.util.Map.Entry;
  * support post-constructor initialisation as required by
  * <code>Service#providers(Class)</code>.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:PropModel.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public interface PropModel extends Iterable<Entry<CharSequence, Measure>>,

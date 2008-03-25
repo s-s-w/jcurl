@@ -22,7 +22,7 @@ package org.jcurl.core.api;
 /**
  * Rock properties like mass etc.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:RockProps.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class RockProps {

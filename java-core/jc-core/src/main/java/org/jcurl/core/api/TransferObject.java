@@ -30,7 +30,7 @@ import java.util.Map.Entry;
 /**
  * Base class for all value Objects. Provides a generic toString.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  * 
  */

@@ -41,7 +41,7 @@ import org.jcurl.core.log.JCLoggerFactory;
  * http://www.koders.com/java/fid88589626EC469B9526AB5888794D34914322B7A9.aspx
  * http://ajax.sourceforge.net/apollo/crossref/apollo/dev/DevFileOpenService.java.html
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 class FileDialogSwing implements OpenService, SaveService {

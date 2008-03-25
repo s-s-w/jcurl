@@ -43,7 +43,7 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * 
  * @see XmlSimpleWriter
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:XmlSimpleWriterTest.java 8046 2006-02-27 17:03:05Z rohrmoser $
  * 
  */

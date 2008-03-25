@@ -40,7 +40,7 @@ import edu.umd.cs.piccolo.nodes.PText;
  * Creates a pickable node displaying one rock, assuming a <b>RIGHT HANDED</b>
  * parent coordinate system.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:PRockFactory.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
 public abstract class PRockFactory implements Factory {

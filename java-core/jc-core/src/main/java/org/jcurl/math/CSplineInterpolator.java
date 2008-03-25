@@ -23,7 +23,7 @@ package org.jcurl.math;
  * Mathematik I, second edition. Could this be based on
  * {@link org.jcurl.math.CurveCombined}with 3-dimensional polynomes?
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class CSplineInterpolator extends R1R1Function {

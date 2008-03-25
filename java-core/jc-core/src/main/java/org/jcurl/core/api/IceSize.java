@@ -26,7 +26,7 @@ import org.jcurl.core.api.RockType.Pos;
 /**
  * Ice dimensions. TODO Should here be {@link Shape}s?
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:IceSize.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public final class IceSize {

@@ -32,7 +32,7 @@ import org.jcurl.core.log.JCLoggerFactory;
  * Combined curve. Becomes more and more similar to {@link List} with some
  * restrictions and additions.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class CurveCombined extends R1RNFunctionImpl implements

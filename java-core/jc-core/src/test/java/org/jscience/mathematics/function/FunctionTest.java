@@ -37,7 +37,7 @@ import org.jscience.mathematics.number.Float64;
 /**
  * Demonstrate how to interact with <a href="http://www.jscience.org">JScience</a>
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class FunctionTest extends TestCase {
@@ -45,7 +45,7 @@ public class FunctionTest extends TestCase {
 	/**
 	 * Wrap a {@link RockFunction} into a {@link CurveRock}.
 	 * 
-	 * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+	 * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
 	 * @version $Id$
 	 */
 	static class CurveRockJScience<T extends RockType> extends CurveRock<T> {

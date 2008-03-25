@@ -29,7 +29,7 @@ import java.util.TreeMap;
  * {@link java.util.TreeMap}s for the flyweight lookup.
  * 
  * @see java.util.TreeMap
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public abstract class EnumBase extends Number implements Comparable<EnumBase> {

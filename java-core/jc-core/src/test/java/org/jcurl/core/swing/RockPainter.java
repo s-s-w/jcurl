@@ -34,7 +34,7 @@ import org.jcurl.core.api.Strategy;
  * negative y-axis. This coordinate system is also called
  * <em>Rock Coordinates (RC)</em>.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:RockPainter.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 class RockPainter implements Strategy {

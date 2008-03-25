@@ -31,7 +31,7 @@ import org.jcurl.core.helpers.NotImplementedYetException;
  * Smart handler for creating wc to dc transformations.
  * 
  * @deprecated Can we get rid of this?
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CenteredZoomer.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 @Deprecated

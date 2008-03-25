@@ -46,7 +46,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * http://www.jcurl.org/api/com/megginson/sax/XMLWriter.html
  * </p>
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:XmlSimpleWriter.java 8046 2006-02-27 17:03:05Z rohrmoser $
  */
 public class XmlSimpleWriter extends DefaultHandler {

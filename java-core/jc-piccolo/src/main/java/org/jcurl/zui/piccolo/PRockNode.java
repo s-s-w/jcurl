@@ -41,7 +41,7 @@ import edu.umd.cs.piccolo.event.PInputEventFilter;
  * 
  * Maybe add a fully transparent circle to avoid the {@link PComposite}.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class PRockNode extends PComposite implements ChangeListener {
@@ -49,7 +49,7 @@ public class PRockNode extends PComposite implements ChangeListener {
 	 * Add drag-support to a {@link PRockNode}s. This is kinda controller
 	 * view-&gt;model.
 	 * 
-	 * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+	 * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
 	 * @version $Id:PPositionSetDrag.java 795 2008-03-19 13:40:42Z mrohrmoser $
 	 */
 	public static class DragHandler extends PBasicInputEventHandler {

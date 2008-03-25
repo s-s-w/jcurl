@@ -32,7 +32,7 @@ import edu.umd.cs.piccolo.PNode;
 /**
  * Piccolo {@link PNode} backed with a {@link PositionSet}.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:PPositionSet.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
 public class PPositionSet extends PNode implements ChangeListener {

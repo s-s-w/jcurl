@@ -21,7 +21,7 @@ package org.jcurl.math;
 /**
  * Polynomes of n-th grade.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class Polynome extends R1R1Function {

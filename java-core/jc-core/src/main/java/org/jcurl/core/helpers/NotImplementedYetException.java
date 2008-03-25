@@ -19,7 +19,7 @@
 package org.jcurl.core.helpers;
 
 /**
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id: NotImplementedYetException.java 13 2005-03-05 22:58:41Z
  *          mrohrmoser $
  */

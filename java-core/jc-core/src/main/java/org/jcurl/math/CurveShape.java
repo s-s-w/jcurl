@@ -27,7 +27,7 @@ import org.jcurl.core.log.JCLoggerFactory;
  * Helper for convenient approximated Java2D drawing of arbitratry curves with
  * at least 2 dimensions.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public abstract class CurveShape {

@@ -23,7 +23,7 @@ import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.RockType.Pos;
 
 /**
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 class SumShotDisplay extends SumDisplayBase {

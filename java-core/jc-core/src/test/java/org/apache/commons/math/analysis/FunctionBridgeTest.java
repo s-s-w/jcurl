@@ -28,7 +28,7 @@ import org.jcurl.math.R1R1Function;
  * Demonstrate how to interact with <a
  * href="http://commons.apache.org/math/">Jakarta Commons Math</a>
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class FunctionBridgeTest extends TestCase {

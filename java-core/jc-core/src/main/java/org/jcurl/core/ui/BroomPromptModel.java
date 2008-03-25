@@ -30,7 +30,7 @@ import org.jcurl.core.api.RockSet;
  * Data model for broom location, rock index, rotation (counter-/clockwise) and
  * initial speed.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:BroomPromptModel.java 780 2008-03-18 11:06:30Z mrohrmoser $
  */
 public class BroomPromptModel extends MutableObject {

@@ -30,7 +30,7 @@ import org.jcurl.math.NewtonSimpleSolver;
 /**
  * Base implementation for {@link Curler}s.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CurlerBase.java 780 2008-03-18 11:06:30Z mrohrmoser $
  */
 public abstract class CurlerBase extends PropModelImpl implements Curler {

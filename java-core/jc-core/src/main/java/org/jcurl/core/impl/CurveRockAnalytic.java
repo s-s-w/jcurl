@@ -28,7 +28,7 @@ import org.jcurl.math.R1RNFunction;
  * Wrapper for rock trajectory segments wrapping 3 dimensional
  * {@link R1RNFunction}s.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CurveRockAnalytic.java 780 2008-03-18 11:06:30Z mrohrmoser $
  */
 public class CurveRockAnalytic<T extends RockType> extends CurveRock<T> {

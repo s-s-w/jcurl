@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
  * simpler.
  * 
  * @see org.jcurl.core.api.Unit
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:Measure.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class Measure implements Serializable {

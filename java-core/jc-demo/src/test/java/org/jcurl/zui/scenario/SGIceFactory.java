@@ -45,7 +45,7 @@ import com.sun.scenario.scenegraph.SGTransform;
  * Creates {@link SGParent} displaying a sheet of ice with a <b>RIGHT HANDED</b>
  * coordinate system.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:PIceFactory.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
 abstract class SGIceFactory implements Factory {

@@ -28,7 +28,7 @@ import org.jcurl.core.api.RockType.Vel;
 /**
  * Compute rock collissions.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:Collider.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public interface Collider extends PropModel, Strategy {

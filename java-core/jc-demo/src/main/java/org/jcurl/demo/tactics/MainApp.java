@@ -40,7 +40,7 @@ import org.jcurl.demo.tactics.Controller.UndoRedoCon;
 import org.jcurl.demo.tactics.Controller.ZuiController;
 
 /**
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class MainApp extends JFrame {
@@ -49,7 +49,7 @@ public class MainApp extends JFrame {
 	 * Create menues and wire them up with {@link Action}s from
 	 * {@link MainController} and {@link ZuiController}.
 	 * 
-	 * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+	 * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
 	 * @version $Id$
 	 */
 	static class Menufactory {

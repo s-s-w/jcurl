@@ -31,7 +31,7 @@ import java.util.WeakHashMap;
 /**
  * Thread-less age based cache.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  * @param <K>
  * @param <V>

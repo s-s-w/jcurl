@@ -21,7 +21,7 @@ package org.jcurl.mr.gui;
 import javax.swing.JFrame;
 
 /**
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class Driver {

@@ -52,7 +52,7 @@ import org.jcurl.core.helpers.Service;
  * </ul>
  * 
  * @see org.jcurl.core.api.RockSet
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:Rock.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public abstract class Rock<R extends RockType> implements IChangeSupport,

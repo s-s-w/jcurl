@@ -22,8 +22,8 @@ package org.jcurl.core.api;
  * Marker Interface for <a
  * href="http://en.wikipedia.org/wiki/Abstract_factory_pattern">Factories</a>.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
- * @version $Id$
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
+ * @version $Id:Factory.java 780 2008-03-18 11:06:30Z mrohrmoser $
  */
 public interface Factory {
 

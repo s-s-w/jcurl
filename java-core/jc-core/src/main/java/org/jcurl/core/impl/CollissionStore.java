@@ -29,7 +29,7 @@ import org.jcurl.core.log.JCLoggerFactory;
  * Store unique tupels of two rocks (indices). Has a time stamp for sorting
  * purpose.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CollissionStore.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 class CollissionStore {

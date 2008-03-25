@@ -49,10 +49,10 @@ import org.jcurl.math.PolynomeCurve;
  * </ul>
  * </p>
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:SlideDenny.java 378 2007-01-24 01:18:35Z mrohrmoser $
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CurlerNoCurl.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class CurlerNoCurl extends CoulombCurler {

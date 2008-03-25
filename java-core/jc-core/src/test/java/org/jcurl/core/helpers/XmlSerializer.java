@@ -26,7 +26,7 @@ import java.io.Writer;
 import org.xml.sax.SAXException;
 
 /**
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:XmlSerializer.java 542 2007-04-12 00:12:53Z mrohrmoser $
  */
 public class XmlSerializer extends XmlSimpleWriter {

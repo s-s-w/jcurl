@@ -21,7 +21,7 @@ package org.jcurl.core.api;
 import java.io.Serializable;
 
 /**
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:RockDouble.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class RockDouble<R extends RockType> extends Rock<R> implements

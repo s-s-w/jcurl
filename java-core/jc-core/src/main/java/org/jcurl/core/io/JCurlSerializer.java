@@ -40,14 +40,14 @@ import java.util.zip.GZIPOutputStream;
  * those who care).
  * </p>
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class JCurlSerializer {
 	/**
 	 * Read and write JCurl data.
 	 * 
-	 * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+	 * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
 	 * @version $Id:JCurlSerializer.java 682 2007-08-12 21:25:04Z mrohrmoser $
 	 */
 	public static interface Engine {

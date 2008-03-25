@@ -41,7 +41,7 @@ import org.jcurl.core.swing.RockPainter.ColorSet;
 
 /**
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:SumDisplayBase.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 abstract class SumDisplayBase extends JComponent implements

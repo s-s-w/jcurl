@@ -37,7 +37,7 @@ import org.jcurl.math.R1RNFunction;
 /**
  * Paint a {@link CurveStore}.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 class CurvePainter implements Strategy {

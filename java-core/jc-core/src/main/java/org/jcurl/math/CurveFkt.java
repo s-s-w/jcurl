@@ -23,7 +23,7 @@ package org.jcurl.math;
  * {@link org.jcurl.math.R1R1Function}s.
  * 
  * @see org.jcurl.math.R1R1Function
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class CurveFkt extends R1RNFunctionImpl {

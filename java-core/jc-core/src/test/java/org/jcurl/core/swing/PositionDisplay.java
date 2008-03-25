@@ -40,7 +40,7 @@ import org.jcurl.core.ui.FixpointZoomer;
  * Base for rock location displays. Does all the coordinate transformation math
  * and setters to delegate to {@link RockPainter} and {@link IcePainter} .
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id: RockLocationDisplayBase.java 230 2006-02-19 12:34:18Z
  *          mrohrmoser $
  */

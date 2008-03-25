@@ -28,7 +28,7 @@ import org.jcurl.core.api.WeakHashSet;
 /**
  * Abstract base.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class UndoRedoDocumentBase implements UndoRedoDocument {

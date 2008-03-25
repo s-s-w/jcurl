@@ -26,7 +26,7 @@ import org.jcurl.core.impl.CurveRockAnalytic;
 import org.jcurl.core.impl.CurveTransformed;
 
 /**
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class CurveShapeTest extends TestCase {

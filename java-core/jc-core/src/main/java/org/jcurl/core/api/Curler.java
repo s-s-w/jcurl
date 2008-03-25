@@ -25,7 +25,7 @@ import org.jcurl.core.api.RockType.Pos;
 /**
  * Create rock-coordinate curves for running rocks.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:Curler.java 780 2008-03-18 11:06:30Z mrohrmoser $
  */
 public interface Curler extends Factory, Strategy, PropModel {

@@ -48,7 +48,7 @@ import org.jcurl.math.R1RNFunctionImpl;
 /**
  * Bring it all together and trigger computation.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CurveManager.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class CurveManager extends MutableObject implements ChangeListener,

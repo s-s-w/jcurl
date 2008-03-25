@@ -28,7 +28,7 @@ import org.jcurl.core.api.RockType.Pos;
  * JUnit Test
  * 
  * @see org.jcurl.core.api.PositionSet
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:PositionSetTest.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class PositionSetTest extends TestCase {

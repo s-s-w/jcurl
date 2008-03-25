@@ -28,7 +28,7 @@ import java.util.ListIterator;
 /**
  * Type safe list for {@link java.awt.Point}s.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:PointList.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class PointList implements List {

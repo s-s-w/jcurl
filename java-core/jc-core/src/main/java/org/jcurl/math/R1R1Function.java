@@ -23,7 +23,7 @@ package org.jcurl.math;
  * the same as a 1-dimensional curve it extends
  * {@link org.jcurl.math.R1RNFunctionImpl}.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public abstract class R1R1Function extends R1RNFunctionImpl {

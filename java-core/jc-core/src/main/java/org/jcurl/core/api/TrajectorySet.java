@@ -27,7 +27,7 @@ import org.jcurl.core.api.RockType.Vel;
  * "Read-only" trajectories of a whole set of {@link RockSet#ROCKS_PER_SET}
  * rocks.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:TrajectorySet.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public interface TrajectorySet {

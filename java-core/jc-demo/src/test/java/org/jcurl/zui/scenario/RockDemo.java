@@ -34,7 +34,7 @@ import com.sun.scenario.scenegraph.SGNode;
 import com.sun.scenario.scenegraph.SGTransform;
 
 /**
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class RockDemo {

@@ -38,7 +38,7 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
 /**
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:PiccoloExample.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
 public class PiccoloExample {

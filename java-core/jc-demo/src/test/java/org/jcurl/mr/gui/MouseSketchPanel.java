@@ -34,7 +34,7 @@ import org.jcurl.core.log.JCLoggerFactory;
 /**
  * Draw lines if the "hot" key is pressed.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:MouseSketchPanel.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class MouseSketchPanel extends JPanel implements KeyListener {

@@ -42,7 +42,7 @@ import edu.umd.cs.piccolo.nodes.PPath;
  * Create an unpickable {@link PNode} for a combined curve describing the path
  * of one rock.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:PTrajectoryFactory.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
 public abstract class PTrajectoryFactory implements Factory {

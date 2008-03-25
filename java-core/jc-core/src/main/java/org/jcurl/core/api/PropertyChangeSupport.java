@@ -60,7 +60,7 @@ import org.jcurl.core.log.JCLoggerFactory;
  * This class is thread safe.
  * </p>
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:PropertyChangeSupport.java 682 2007-08-12 21:25:04Z mrohrmoser $
  * @see java.lang.ref.WeakReference
  * @see java.beans.PropertyChangeSupport

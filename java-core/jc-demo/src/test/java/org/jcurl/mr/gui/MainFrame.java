@@ -28,7 +28,7 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
 
 /**
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:MainFrame.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class MainFrame extends JFrame {

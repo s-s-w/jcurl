@@ -26,7 +26,7 @@ import junit.framework.TestCase;
  * @see org.jcurl.math.R1RNFunctionImpl
  * @see org.jcurl.math.dom.CurveDom
  * @see org.jcurl.math.CurveCombined
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class CurveTest extends TestCase {

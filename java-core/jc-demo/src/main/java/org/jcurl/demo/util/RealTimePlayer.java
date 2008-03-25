@@ -29,7 +29,7 @@ import org.jcurl.core.api.RockType.Vel;
  * Extract locations from a (non-discrete) {@link TrajectorySet} and walk on in
  * real time.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:RealTimePlayer.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class RealTimePlayer implements Runnable {

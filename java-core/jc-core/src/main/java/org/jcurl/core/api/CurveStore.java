@@ -32,7 +32,7 @@ import org.jcurl.math.R1RNFunction;
  * {@link StopDetector}.
  * </p>
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CurveStore.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public interface CurveStore extends

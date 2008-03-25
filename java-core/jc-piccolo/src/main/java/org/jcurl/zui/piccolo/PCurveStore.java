@@ -32,7 +32,7 @@ import edu.umd.cs.piccolo.PNode;
 /**
  * Manage a set of trajectories.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:PCurveStore.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
 public class PCurveStore extends PNode implements PropertyChangeListener {

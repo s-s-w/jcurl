@@ -42,7 +42,7 @@ import org.jcurl.core.log.JCLoggerFactory;
  * Does some tricks to be useable in untrusted Webstart Applications.
  * </p>
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class FileDialogService {

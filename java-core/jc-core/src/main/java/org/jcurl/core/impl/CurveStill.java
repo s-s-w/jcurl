@@ -25,7 +25,7 @@ import org.jcurl.core.api.RockType;
 /**
  * Curve implementation for rocks NOT in motion.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CurveStill.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class CurveStill<T extends RockType>  extends CurveRock<T> {

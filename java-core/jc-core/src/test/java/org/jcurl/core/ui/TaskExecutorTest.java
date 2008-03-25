@@ -32,7 +32,7 @@ import org.jcurl.core.ui.TaskExecutor.SwingEDT;
 import org.jcurl.core.ui.TaskExecutor.Task;
 
 /**
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class TaskExecutorTest extends TestCase {

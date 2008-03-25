@@ -25,7 +25,7 @@ import org.jcurl.math.R1RNFunction;
 /**
  * Find Collissions of two spheres moving along curves.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CollissionDetectorBase.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public abstract class CollissionDetectorBase implements CollissionDetector {

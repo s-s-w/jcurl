@@ -27,7 +27,7 @@ import org.jcurl.math.R1RNFunctionImpl;
  * Maybe obsolete?
  * </p>
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CurveRock.java 780 2008-03-18 11:06:30Z mrohrmoser $
  */
 public abstract class CurveRock<T extends RockType> extends R1RNFunctionImpl {

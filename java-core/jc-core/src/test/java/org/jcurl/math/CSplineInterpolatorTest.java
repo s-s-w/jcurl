@@ -22,7 +22,7 @@ import junit.framework.TestCase;
 
 /**
  * @see org.jcurl.math.CSplineInterpolator
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id: CSplineInterpolatorTest.java 136 2005-10-03 22:05:16Z
  *          mrohrmoser $
  */

@@ -37,7 +37,7 @@ import javax.swing.KeyStroke;
 /**
  * Try building Menues via Annotations.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 abstract class Menu {

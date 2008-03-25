@@ -33,7 +33,7 @@ import org.jcurl.core.impl.CurveManager;
 /**
  * Higher level Data Model - more abstract than {@link ComputedTrajectorySet}.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class Model extends MutableObject {

@@ -38,7 +38,7 @@ import org.jcurl.mr.math.Calc1;
  * @see org.jcurl.math.dom.DomWalkerInfix
  * @see org.jcurl.math.dom.DomWalkerPostfix
  * @see org.jcurl.math.dom.DomWalkerEval
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:MathDomTest.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class MathDomTest extends TestCase {

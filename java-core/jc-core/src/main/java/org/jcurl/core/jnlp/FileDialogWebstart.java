@@ -37,7 +37,7 @@ import org.jcurl.core.log.JCLoggerFactory;
  * https://java.sun.com/products/javawebstart/1.0.1/javadoc/javax/jnlp/FileOpenService.html
  * https://java.sun.com/products/javawebstart/1.0.1/javadoc/javax/jnlp/FileSaveService.html
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 class FileDialogWebstart implements OpenService, SaveService {

@@ -23,7 +23,7 @@ import java.awt.geom.AffineTransform;
 /**
  * Multidimensional curves of polynomes.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class PolynomeCurve extends R1RNFunctionImpl {

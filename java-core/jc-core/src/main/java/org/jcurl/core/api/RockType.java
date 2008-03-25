@@ -24,7 +24,7 @@ package org.jcurl.core.api;
  * halfway to <a href="http://www.jcp.org/en/jsr/detail?id=275">JSR 275</a> and
  * <a href="http://www.jscience.org">JScience</a>.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public interface RockType {

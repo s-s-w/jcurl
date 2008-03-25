@@ -40,7 +40,7 @@ import edu.umd.cs.piccolo.nodes.PPath;
  * Creates a unpickable {@link PNode} displaying a sheet of ice with a <b>RIGHT
  * HANDED</b> coordinate system.
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:PIceFactory.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
 public abstract class PIceFactory implements Factory {

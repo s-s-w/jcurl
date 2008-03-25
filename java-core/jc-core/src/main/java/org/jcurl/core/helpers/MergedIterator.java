@@ -29,7 +29,7 @@ import java.util.LinkedList;
  * When using the "natural order" form {@link #MergedIterator(Iterable)} the
  * iterator elements must be {@link Comparable} with each other!
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:EnumBase.java 682 2007-08-12 21:25:04Z mrohrmoser $
  * @param <E>
  *            Iterator Element Type.

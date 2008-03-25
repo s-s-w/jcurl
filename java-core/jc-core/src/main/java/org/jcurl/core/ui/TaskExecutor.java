@@ -44,7 +44,7 @@ import org.jcurl.core.log.JCLoggerFactory;
  * Framework</a></li>
  * </ul>
  * 
- * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class TaskExecutor implements Executor {
@@ -73,7 +73,7 @@ public class TaskExecutor implements Executor {
 	 * 
 	 * @param T
 	 *            see {@link TaskExecutor#execute(Runnable, Class)}
-	 * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+	 * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
 	 * @version $Id$
 	 */
 	public static abstract class ForkableFixed<T extends Executor> implements
@@ -106,7 +106,7 @@ public class TaskExecutor implements Executor {
 	/**
 	 * Similar to {@link ForkableFixed} but late-bound to an {@link Executor}.
 	 * 
-	 * @author <a href="mailto:jcurl@gmx.net">M. Rohrmoser </a>
+	 * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
 	 * @version $Id$
 	 */
 	public static abstract class ForkableFlex implements Runnable {
