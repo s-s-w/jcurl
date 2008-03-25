@@ -13,7 +13,7 @@ import com.sun.scenario.scenegraph.SGText;
 /**
  * From http://forums.java.net/jive/thread.jspa?threadID=34259&tstart=45
  */
-public class Demo {
+public class HelloWorld {
 
 	public static void main(final String[] args) {
 		final JFrame f = new JFrame("Demo");
