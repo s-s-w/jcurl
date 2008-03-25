@@ -27,7 +27,7 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.TaskExecutor.ForkableFixed;
 import org.jcurl.core.ui.TaskExecutor.Parallel;
-import org.jcurl.core.ui.TaskExecutor.Single;
+import org.jcurl.core.ui.TaskExecutor.SmartQueue;
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
 import org.jcurl.core.ui.TaskExecutor.Task;
 
@@ -43,7 +43,7 @@ public class TaskExecutorTest extends TestCase {
 		}
 	}
 
-	private static class Message2 implements Task<Single> {
+	private static class Message2 implements Task<SmartQueue> {
 		public void run() {
 			log.info("Hello, " + this.getClass().getName());
 		}

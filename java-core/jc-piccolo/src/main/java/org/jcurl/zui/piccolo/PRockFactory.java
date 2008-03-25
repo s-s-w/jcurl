@@ -30,6 +30,7 @@ import java.awt.geom.Arc2D;
 import org.jcurl.core.api.Factory;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockProps;
+import org.jcurl.core.api.RockType.Pos;
 
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.nodes.PPath;
@@ -89,7 +90,7 @@ public abstract class PRockFactory implements Factory {
 
 		@Override
 		public PRockNode newInstance(final int i8, final boolean isDark,
-				final Rock rock) {
+				final Rock<Pos> rock) {
 			final PRockNode r = new PRockNode(i8, isDark, rock);
 			r.addChild(node(outer, alpha(colors.granite, alpha), null, null));
 			r.addChild(node(inner, alpha(isDark ? colors.dark : colors.light,
@@ -122,7 +123,7 @@ public abstract class PRockFactory implements Factory {
 
 		@Override
 		public PRockNode newInstance(final int i8, final boolean isDark,
-				final Rock rock) {
+				final Rock<Pos> rock) {
 			final PRockNode r = new PRockNode(i8, isDark, rock);
 			// fill to also make the body, not only the edge
 			// pickable:
@@ -145,7 +146,7 @@ public abstract class PRockFactory implements Factory {
 		return n;
 	}
 
-	protected static boolean sync(final Rock src, final PRockNode dst) {
+	protected static boolean sync(final Rock<Pos> src, final PRockNode dst) {
 		// check if it's changed either location or angle:
 		if (src.p().distanceSq(dst.getOffset()) < PPositionSet.eps
 				&& Math.abs(src.getA() - dst.getRotation()) < PPositionSet.eps)
@@ -163,9 +164,9 @@ public abstract class PRockFactory implements Factory {
 	}
 
 	public abstract PRockNode newInstance(final int i8, final boolean isDark,
-			Rock rock);
+			Rock<Pos> rock);
 
-	public PRockNode newInstance(final int i16, final Rock rock) {
+	public PRockNode newInstance(final int i16, final Rock<Pos> rock) {
 		return newInstance(i16 / 2, i16 % 2 == 0, rock);
 	}
 }

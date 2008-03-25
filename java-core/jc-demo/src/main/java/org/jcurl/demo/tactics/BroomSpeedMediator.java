@@ -40,7 +40,7 @@ import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.TaskExecutor.ForkableFixed;
-import org.jcurl.core.ui.TaskExecutor.Single;
+import org.jcurl.core.ui.TaskExecutor.SmartQueue;
 import org.jcurl.math.MathVec;
 
 class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
@@ -62,7 +62,7 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 	/**
 	 * Initialpos, speed or curler have changed.
 	 */
-	private final ForkableFixed<Single> updateBroom = new ForkableFixed<Single>() {
+	private final ForkableFixed<SmartQueue> updateBroom = new ForkableFixed<SmartQueue>() {
 		public void run() {
 			if (position == null || speed == null || broom == null)
 				return;
@@ -182,7 +182,7 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 	public void updateIndex(final Integer oldV, final Integer newV) {
 		if (oldV == null || newV == null)
 			return;
-		new ForkableFixed<Single>() {
+		new ForkableFixed<SmartQueue>() {
 			public void run() {
 				final int a = oldV.intValue();
 				final int b = newV.intValue();
@@ -204,7 +204,7 @@ class BroomSpeedMediator implements PropertyChangeListener, ChangeListener {
 		log.info(broom);
 		if (position == null || curler == null || broom == null)
 			return;
-		new ForkableFixed<Single>() {
+		new ForkableFixed<SmartQueue>() {
 			public void run() {
 				// set to initial pos
 				final Rock start = new RockDouble(0, IceSize.FAR_HACK_2_TEE,

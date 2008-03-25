@@ -173,6 +173,8 @@ public abstract class PTrajectoryFactory implements Factory {
 
     public PNode newInstance(final int i16,
             final Iterator<Entry<Double, R1RNFunction>> t, final double tmax) {
-        return newInstance(i16 / 2, i16 % 2 == 0, t, tmax);
+        final PNode r = newInstance(i16 / 2, i16 % 2 == 0, t, tmax);
+        r.addAttribute(PRockNode.INDEX16, 16);
+        return r;
     }
 }

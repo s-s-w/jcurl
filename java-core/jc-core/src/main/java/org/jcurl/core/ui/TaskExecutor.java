@@ -152,6 +152,16 @@ public class TaskExecutor implements Executor {
 		}
 	}
 
+	/**
+	 * TODO Execute in a single threaded executor but remove duplicates from the
+	 * queue.
+	 */
+	public static class SmartQueue extends ExecutorDelegate {
+		public SmartQueue() {
+			super(Executors.newSingleThreadExecutor());
+		}
+	}
+
 	/** Execute in the Swing/AWT Event Queue Thread */
 	public static class SwingEDT implements Executor {
 		public void execute(final Runnable command) {
@@ -166,9 +176,7 @@ public class TaskExecutor implements Executor {
 	private static final Log log = JCLoggerFactory
 			.getLogger(TaskExecutor.class);
 
-	/**
-	 * Find the presence of a generic type parameter.
-	 */
+	/** Find the presence of a generic type parameter. */
 	@SuppressWarnings("unchecked")
 	static Class<Executor> findMessageTypeParam(final Class<? extends Task> clz) {
 		if (Object.class.equals(clz.getGenericSuperclass())) {

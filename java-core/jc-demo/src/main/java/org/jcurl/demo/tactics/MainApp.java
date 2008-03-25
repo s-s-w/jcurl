@@ -33,6 +33,7 @@ import javax.swing.WindowConstants;
 
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.TaskExecutor.ForkableFixed;
+import org.jcurl.core.ui.TaskExecutor.Single;
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
 import org.jcurl.demo.tactics.Controller.MainController;
 import org.jcurl.demo.tactics.Controller.UndoRedoCon;
@@ -253,20 +254,31 @@ public class MainApp extends JFrame {
 				application.center();
 			}
 		}.fork();
-		
+
 		if (true)
-			application.m.setCurrentTime(tmax);
+			new ForkableFixed<Single>() {
+				public void run() {
+					application.m.setCurrentTime(tmax);
+				}
+			}.fork();
 		else {
-			final long dt = 20;
+			final double t0 = application.m.getCurrentTime();
+			final long start = System.currentTimeMillis();
+
+			final ForkableFixed<SwingEDT> runner = new ForkableFixed<SwingEDT>() {
+				public void run() {
+					application.m.setCurrentTime(t0
+							+ (System.currentTimeMillis() - start) * 1e-3);
+				}
+			};
+
 			while (application.m.getCurrentTime() < tmax) {
-				// application.repaint();
 				try {
-					Thread.sleep(dt);
+					Thread.sleep(20);
 				} catch (final InterruptedException e1) {
 					break;
 				}
-				application.m.setCurrentTime(application.m.getCurrentTime()
-						+ dt * 1e-3);
+				runner.fork();
 			}
 		}
 	}

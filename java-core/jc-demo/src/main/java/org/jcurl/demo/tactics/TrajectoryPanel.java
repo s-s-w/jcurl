@@ -13,7 +13,7 @@ import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.UndoRedoDocumentBase;
 import org.jcurl.core.ui.TaskExecutor.ForkableFixed;
-import org.jcurl.core.ui.TaskExecutor.Single;
+import org.jcurl.core.ui.TaskExecutor.SmartQueue;
 import org.jcurl.zui.piccolo.BroomPromptSimple;
 import org.jcurl.zui.piccolo.PCurveStore;
 import org.jcurl.zui.piccolo.PIceFactory;
@@ -62,7 +62,7 @@ class TrajectoryPanel extends JComponent {
 					final PRockNode node, final Point2D currentPos,
 					final Point2D startPos) {
 				/** A Inner Anonymous Class Comment */
-				new ForkableFixed<Single>() {
+				new ForkableFixed<SmartQueue>() {
 					/** A Inner Anonymous Method Comment */
 					public void run() {
 						node.getRock().p().setLocation(currentPos);
