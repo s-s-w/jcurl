@@ -219,8 +219,7 @@
 						http://download.java.net/media/java3d/javadoc/1.5.0-latest
 						-link
 						http://www.picocontainer.org/versions/1.0/apidocs/
-						-link
-						http://commons.apache.org/math/apidocs
+						-link http://commons.apache.org/math/apidocs
 						-link http://geosoft.no/graphics/G/docs/
 					</additionalparam>
 				</configuration>
