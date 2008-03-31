@@ -22,7 +22,7 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
 
 public class NewtonSimpleSolver {
-	public static final double eps = 1e-6;
+	public static final double eps = 1e-9;
 	private static final Log log = JCLoggerFactory
 			.getLogger(NewtonSimpleSolver.class);
 	public static final int maxsteps = 100000;
