@@ -80,6 +80,10 @@ public class PCurveStore extends PNode implements PropertyChangeListener {
 	private void sync(final int i16) {
 		if (model == null)
 			return;
-		getChild(i16).replaceWith(f.newInstance(i16, model.iterator(i16), tmax));
+		// FIXME evtl. model als mutex?
+		synchronized (getChild(i16)) {
+			getChild(i16).replaceWith(
+					f.newInstance(i16, model.iterator(i16), tmax));
+		}
 	}
 }

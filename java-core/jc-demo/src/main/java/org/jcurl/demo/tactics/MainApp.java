@@ -31,7 +31,6 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
-import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.TaskExecutor.ForkableFixed;
 import org.jcurl.core.ui.TaskExecutor.Single;
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
@@ -293,12 +292,9 @@ public class MainApp extends JFrame {
 		final UndoRedoCon undoc = new UndoRedoCon();
 		undoc.setModel(m.undo);
 
-		final BroomPromptModel bpm = new BroomPromptModel();
-		bpm.setIdx16(14);
-
 		final TrajectoryPanel zui = new TrajectoryPanel();
 		zui.setUndo(m.undo);
-		zui.setBroom(bpm);
+		zui.getBroom().setIdx16(14);
 		zui.setCurves(m.getCurveManager());
 
 		getContentPane().add(zui, "Center");

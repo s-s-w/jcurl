@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
@@ -32,18 +33,20 @@ import org.jcurl.core.log.JCLoggerFactory;
  * Combined curve. Becomes more and more similar to {@link List} with some
  * restrictions and additions.
  * 
+ * @param <T>
+ *            type of the parts to be combined.
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveCombined extends R1RNFunctionImpl implements
-		Iterable<Entry<Double, R1RNFunction>>, Serializable {
-	public static class Part extends Number implements
-			Entry<Double, R1RNFunction>, Comparable<Number> {
+public class CurveCombined<T extends R1RNFunction> extends R1RNFunctionImpl
+		implements Iterable<Entry<Double, T>>, Serializable {
+	public static class Part<U extends R1RNFunction> extends Number implements
+			Entry<Double, U>, Comparable<Number> {
 		private static final long serialVersionUID = 2799393238450079381L;
-		private final R1RNFunction curve;
+		private final U curve;
 		private final Double t0;
 
-		public Part(final double t0, final R1RNFunction f) {
+		public Part(final double t0, final U f) {
 			this.t0 = new Double(t0);
 			curve = f;
 		}
@@ -70,7 +73,7 @@ public class CurveCombined extends R1RNFunctionImpl implements
 			return t0;
 		}
 
-		public R1RNFunction getValue() {
+		public U getValue() {
 			return curve;
 		}
 
@@ -99,6 +102,8 @@ public class CurveCombined extends R1RNFunctionImpl implements
 			.getLogger(CurveCombined.class);
 
 	private static final long serialVersionUID = 5955065096153576747L;
+
+	Map<Integer, String> m;
 
 	/**
 	 * Search only part of an array.
@@ -146,7 +151,8 @@ public class CurveCombined extends R1RNFunctionImpl implements
 	 * @param key
 	 * @param comp
 	 * 
-	 * @see java.util.Arrays#binarySearch(Object[], int, int, Object, java.util.Comparator)
+	 * @see java.util.Arrays#binarySearch(Object[], int, int, Object,
+	 *      java.util.Comparator)
 	 * @return found index
 	 */
 	static <E> int binarySearch(final List<E> a, final int fromIndex,
@@ -188,8 +194,9 @@ public class CurveCombined extends R1RNFunctionImpl implements
 	 *      java.util.Comparator)
 	 * @return found index
 	 */
-	static int binarySearch(final List<Entry<Double, R1RNFunction>> a,
-			int fromIndex, int toIndex, final double key) {
+	static <V extends R1RNFunction> int binarySearch(
+			final List<Entry<Double, V>> a, int fromIndex, int toIndex,
+			final double key) {
 		if (false) {
 			if (fromIndex > toIndex)
 				throw new IllegalArgumentException("fromIndex(" + fromIndex
@@ -238,14 +245,13 @@ public class CurveCombined extends R1RNFunctionImpl implements
 			}
 	}
 
-	private final List<Entry<Double, R1RNFunction>> parts = new ArrayList<Entry<Double, R1RNFunction>>();
+	private final List<Entry<Double, T>> parts = new ArrayList<Entry<Double, T>>();
 
 	public CurveCombined(final int dim) {
 		super(dim);
 	}
 
-	public void add(final double t0, final R1RNFunction fkt,
-			final boolean dropTail) {
+	public void add(final double t0, final T fkt, final boolean dropTail) {
 		log.debug("");
 		if (fkt.dim() != dim())
 			throw new IllegalArgumentException();
@@ -254,7 +260,7 @@ public class CurveCombined extends R1RNFunctionImpl implements
 			for (int i = parts.size() - 1; i > idx; i--)
 				parts.remove(i);
 		}
-		parts.add(new Part(t0, fkt));
+		parts.add(new Part<T>(t0, fkt));
 	}
 
 	/**
@@ -282,6 +288,10 @@ public class CurveCombined extends R1RNFunctionImpl implements
 		parts.clear();
 	}
 
+	public T first() {
+		return parts.get(0).getValue();
+	}
+
 	/**
 	 * Binary search. Could be more general operating with {@link Comparable}
 	 * and {@link Object}s.
@@ -303,7 +313,7 @@ public class CurveCombined extends R1RNFunctionImpl implements
 		return -2 - idx;
 	}
 
-	public Iterator<Entry<Double, R1RNFunction>> iterator() {
+	public Iterator<Entry<Double, T>> iterator() {
 		return parts.iterator();
 	}
 }

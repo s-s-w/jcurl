@@ -31,6 +31,7 @@ import org.jcurl.core.api.Collider;
 import org.jcurl.core.api.CollissionDetector;
 import org.jcurl.core.api.ComputedTrajectorySet;
 import org.jcurl.core.api.Curler;
+import org.jcurl.core.api.CurveRock;
 import org.jcurl.core.api.CurveStore;
 import org.jcurl.core.api.MutableObject;
 import org.jcurl.core.api.PositionSet;
@@ -43,7 +44,6 @@ import org.jcurl.core.impl.CollissionStore.Tupel;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.MathVec;
 import org.jcurl.math.R1RNFunction;
-import org.jcurl.math.R1RNFunctionImpl;
 
 /**
  * Bring it all together and trigger computation.
@@ -108,11 +108,11 @@ public class CurveManager extends MutableObject implements ChangeListener,
 	 * @param sweepFactor
 	 * @return the new Curve in world coordinates.
 	 */
-	R1RNFunctionImpl doComputeCurve(final int i16, final double t0,
+	CurveRock<Pos> doComputeCurve(final int i16, final double t0,
 			final RockSet<Pos> p, final RockSet<Vel> s, final double sweepFactor) {
 		final Rock<Pos> x = p.getRock(i16);
 		final Rock<Vel> v = s.getRock(i16);
-		final R1RNFunctionImpl wc;
+		final CurveRock<Pos> wc;
 		if (v.p().distanceSq(0, 0) == 0)
 			wc = CurveStill.newInstance(x);
 		else
@@ -267,15 +267,9 @@ public class CurveManager extends MutableObject implements ChangeListener,
 		return 0;
 	}
 
-	/**
-	 * TODO Fire a "refresh" event, so the eventqueue can remove obsolete
-	 * (outdated) events.
-	 * 
-	 * @param arg0
-	 */
-	public void stateChanged(ChangeEvent arg0) {
-		final Object src = arg0.getSource();
-		if (src == initialPos || src == initialSpeed) {
+	public void stateChanged(final ChangeEvent arg0) {
+		final Object src = arg0 == null ? null : arg0.getSource();
+		if (src == null || src == initialPos || src == initialSpeed) {
 			// force recomputation:
 			dirty = true;
 			try {
@@ -283,9 +277,8 @@ public class CurveManager extends MutableObject implements ChangeListener,
 			} catch (final NullPointerException e) {
 				log.warn("Oops!", e);
 			}
-			return;
-		}
-		log.info(arg0);
+		} else
+			log.info(arg0);
 	}
 
 	protected Object readResolve() throws ObjectStreamException {

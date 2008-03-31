@@ -117,7 +117,7 @@ public class PRockNode extends PComposite implements ChangeListener {
 	}
 
 	static final double EPSILON = 1e-11;
-	static final Object INDEX16 = "index16";
+	public static final Object INDEX16 = "index16";
 	private static final long serialVersionUID = 4713843366445017130L;
 	/** This is kinda controller model-&gt;view */
 	private final transient ForkableFixed<SwingEDT> model2view = new ForkableFixed<SwingEDT>() {

@@ -24,7 +24,7 @@ import junit.framework.TestCase;
 
 public class CurveCombinedTest extends TestCase {
     public void testIterator() {
-        final CurveCombined cc = new CurveCombined(1);
+        final CurveCombined<R1RNFunction> cc = new CurveCombined<R1RNFunction>(1);
         cc.add(0, new Polynome(new double[] { 0 }), true);
         cc.add(1, new Polynome(new double[] { 1 }), true);
         cc.add(2, new Polynome(new double[] { 2 }), true);
