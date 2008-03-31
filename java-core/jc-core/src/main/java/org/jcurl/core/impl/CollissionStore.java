@@ -130,7 +130,7 @@ class CollissionStore {
 	 * @param b16
 	 *            0-15
 	 */
-	public void add(final double t, final int a16, final int b16) {
+	synchronized public void add(final double t, final int a16, final int b16) {
 		final Tupel o = new Tupel(t, a16, b16);
 		if (log.isDebugEnabled())
 			log.debug("collission " + o);
@@ -139,11 +139,11 @@ class CollissionStore {
 		Collections.sort(m, comp);
 	}
 
-	public void clear() {
+	synchronized public void clear() {
 		m.clear();
 	}
 
-	public Tupel first() {
+	synchronized public Tupel first() {
 		return m.getFirst();
 	}
 
@@ -158,7 +158,7 @@ class CollissionStore {
 	 * @param b
 	 *            0-15
 	 */
-	public void replace(final double t, int a, int b) {
+	synchronized public void replace(final double t, int a, int b) {
 		if (a < b) {
 			final int tmp = a;
 			a = b;

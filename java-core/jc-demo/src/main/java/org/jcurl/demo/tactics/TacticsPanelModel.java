@@ -120,7 +120,7 @@ class TacticsPanelModel {
 	}
 
 	public void updateIndex(final int i16) {
-		log.info("");
+		log.debug("");
 		// initial pos
 		swap(cm.getInitialPos(), prompt.getIdx16(), i16);
 		final Rock start = new RockDouble(0, IceSize.FAR_HACK_2_TEE, Math.PI);
@@ -130,7 +130,7 @@ class TacticsPanelModel {
 	}
 
 	public void updatePos(final int i16, final Point2D newPos) {
-		log.info("");
+		log.debug("");
 		cm.getInitialPos().getRock(i16).p().setLocation(newPos);
 		cm.stateChanged(null);
 	}

@@ -148,4 +148,7 @@ public class Distance2DSq extends R1R1Function {
         return 2.0 * ret;
     }
 
+    public String toString() {
+    	return this.getClass().getName() + "(" + c1 + ", " + c2 + ")";
+    }
 }

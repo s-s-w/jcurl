@@ -316,4 +316,16 @@ public class CurveCombined<T extends R1RNFunction> extends R1RNFunctionImpl
 	public Iterator<Entry<Double, T>> iterator() {
 		return parts.iterator();
 	}
+
+	public String toString() {
+		StringBuilder b = new StringBuilder();
+		b.append('[');
+		for (Entry<Double, T> elem : parts)
+			b.append("x>=").append(elem.getKey()).append(" f(x)=").append(
+					elem.getValue()).append(", ");
+		if (b.length() > 2)
+			b.setLength(b.length() - 2);
+		b.append(']');
+		return b.toString();
+	}
 }

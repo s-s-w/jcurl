@@ -328,6 +328,8 @@ public class CurveManager extends MutableObject implements ChangeListener,
 			// NaN-safe time range check (are we navigating known ground?):
 			while (currentTime > doGetNextHit().t) {
 				final Tupel nh = doGetNextHit();
+				if (log.isDebugEnabled())
+					log.debug(nh.a + " - " + nh.b + " : " + nh.t);
 				doUpdatePosAndSpeed(nh.t, tmp);
 				// compute collission(s);
 				final int mask = collider.compute(currentPos, currentSpeed, m);
