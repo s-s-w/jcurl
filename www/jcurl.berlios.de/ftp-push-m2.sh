@@ -8,9 +8,11 @@
 # uses a timestamp file $timer to upload only new stuff
 #
 cwd=`pwd`
+reporter=/home/groups/jcurl/htdocs/ftp-push-m2-to-html.awk
 #src=$HOME/.m2/repository/org/jcurl
 src=/home/groups/jcurl/htdocs/m2
 timer=$0.timer
+report=`basename $0`.html
 
 dst_host=jcurl.org
 #dst_dir=sandbox
@@ -29,6 +31,10 @@ cmd="$cmd"`find . -mindepth 1 -type f -anewer $timer -not -name "wagon*.zip" -pr
 cmd="mkdir $dst_dir\ncd $dst_dir\n$cmd"
 cmd=$cmd"quit"
 #echo -e $cmd
-echo -e $cmd | ftp -v -i $dst_host
+echo -e $cmd | ftp -v -i $dst_host | $reporter > $report
 touch $timer
+
+# upload the report
+echo -e "cd $dst_dir\nput $report\nquit" | ftp -i $dst_host
+
 cd $cwd
