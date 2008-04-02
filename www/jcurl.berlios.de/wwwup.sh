@@ -3,11 +3,15 @@
 
 # Push the svn repo dump to jcurl.org as a sort of backup
 repo=jcurl-repos.gz
+echo "backup http://svn.berlios.de/svndumps/$repo to ftp://jcurl.org"
 wget --no-verbose -O $repo http://svn.berlios.de/svndumps/$repo
 echo -e "put $repo" | ftp -i -V jcurl.org
 rm $repo
 
-# update the local working copy (the http://jcurl.berlios.de/ content)
+echo "done"
+echo "==============="
+
+echo "update the local working copy (the http://jcurl.berlios.de/ content)"
 dir=$WWWHOME
 if [ `svn update $dir | wc --lines` -lt 2 ]
 then
