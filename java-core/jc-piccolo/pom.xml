@@ -12,7 +12,7 @@
 	<artifactId>jc-piccolo</artifactId>
 	<name>JCurl ZUI using piccolo</name>
 	<url>
-		http://www.jcurl.org/m2/site/${pom.artifactId}/${pom.version}
+		${httpsitebase}/${pom.artifactId}/${pom.version}
 	</url>
 	<scm>
 		<connection>
@@ -61,7 +61,7 @@
 			<id>jcurl-snapshots</id>
 			<name>JCurl Maven Snapshots</name>
 			<layout>default</layout>
-			<url>http://www.jcurl.org/m2/snap</url>
+			<url>http://jcurl.berlios.de/m2/snap</url>
 			<releases>
 				<enabled>false</enabled>
 			</releases>

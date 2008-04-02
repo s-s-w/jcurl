@@ -13,12 +13,12 @@
 		simulation, game filing, analysis and visualisation
 	</description>
 	<properties>
-		<httpbase>http://www.jcurl.org/m2</httpbase>
+		<httpbase>http://jcurl.berlios.de/m2</httpbase>
 		<httpsitebase>${httpbase}/site</httpsitebase>
-		<ftpbase>ftp://jcurl.org</ftpbase>
-		<ftpsitebase>ftp://jcurl.org/site</ftpsitebase>
+		<!-- ftpbase>ftp://jcurl.org</ftpbase>
+		<ftpsitebase>${ftpbase}/site</ftpsitebase -->
 		<scpbase>
-			scp://jcurl.org/kunden/homepages/6/d143911421/htdocs/org.jcurl.www/m2
+			scp://shell.berlios.de/home/groups/jcurl/htdocs/m2
 		</scpbase>
 		<scpsitebase>${scpbase}/site</scpsitebase>
 	</properties>
@@ -94,12 +94,12 @@
 		<url>http://www.jcurl.org</url>
 	</organization>
 	<build>
-		<extensions>
+		<!-- extensions>
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-ftp</artifactId>
 			</extension>
-		</extensions>
+		</extensions -->
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -316,18 +316,17 @@
 	</repositories>
 	<distributionManagement>
 		<repository>
-			<id>ftp-jcurl-repo</id>
-			<url>${ftpbase}/repo</url>
+			<id>ssh-jcurl-repo</id>
+			<url>${scpbase}/repo</url>
 		</repository>
 		<snapshotRepository>
-			<id>ftp-jcurl-snap</id>
-			<url>${ftpbase}/snap</url>
+			<id>ssh-jcurl-snap</id>
+			<url>${scpbase}/snap</url>
 			<uniqueVersion>true</uniqueVersion>
 		</snapshotRepository>
 		<site>
-			<id>ftp-jcurl-site</id>
-			<url>${ftpsitebase}/${pom.artifactId}/${pom.version}</url>
+			<id>ssh-jcurl-site</id>
+			<url>${scpsitebase}/${pom.artifactId}/${pom.version}</url>
 		</site>
 	</distributionManagement>
 </project>
-

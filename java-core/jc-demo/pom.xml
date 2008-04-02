@@ -30,7 +30,7 @@
 			<id>jcurl-snapshots</id>
 			<name>JCurl Maven Snapshots</name>
 			<layout>default</layout>
-			<url>http://www.jcurl.org/m2/snap</url>
+			<url>http://jcurl.berlios.de/m2/snap</url>
 			<releases>
 				<enabled>false</enabled>
 			</releases>
