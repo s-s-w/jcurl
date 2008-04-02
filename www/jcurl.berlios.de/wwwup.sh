@@ -3,8 +3,8 @@
 
 # Push the svn repo dump to jcurl.org
 repo=jcurl-repos.gz
-wget -O $repo http://svn.berlios.de/svndumps/$repo
-echo -e "put $repo" | ftp -i jcurl.org
+wget --no-verbose -O $repo http://svn.berlios.de/svndumps/$repo
+echo -e "put $repo" | ftp -i -V jcurl.org
 rm $repo
 
 # update the local working copy (the http://jcurl.berlios.de/ content)
