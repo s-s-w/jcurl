@@ -4,7 +4,9 @@ BEGIN {
 	"date --iso-8601=seconds" | getline date;
 	print "<html><head><title>Ftp Mirror Status</title></head><body>";
 	print "<h1>Ftp Mirror Status</h1>";
-	print "<p>Created " date "</p>";
+	print "<p>The content here and below is mirrored from <a href='http://jcurl.berlios.de/m2'>http://jcurl.berlios.de/m2</a></p>";
+	print "<p><b>All the content here is read-only and may be changed at the source only!</b></p>";
+	print "<p>Last updated " date "</p>";
 	print "<h2>Terminal Output</h2><pre>";
 }
 
