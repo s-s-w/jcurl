@@ -12,7 +12,7 @@ BEGIN {
 / Entering Extended Passive Mode /	{ next; }
 /^local: /	{ next; }
 / Transfer complete$/	{ next; }
-/ jcurl-maven /	{ next; }
+/ jcurl-maven/	{ next; }
 
 /mkdir/ {
 	directories[$0] = "new";
