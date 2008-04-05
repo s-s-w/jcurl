@@ -24,14 +24,14 @@ fi
 while [ "$1" != "" ]
 do
 	# first split the item name
-	if [ `expr match "$1" '^[^:]*:[^:]*:[^:]*:[^:]*$'` -le 0 ]
+	if [ `expr match "$1" '[^:]*:[^:]*:[^:]*:[^:]*$'` -le 0 ]
 	then
 		echo "ERROR: Couldn't parse '$1' - must match 'groupId:artifactId:version:packaging'" >&2
 	fi
-	groupId=`expr match "$1" '^\([^:]*\):[^:]*:[^:]*:[^:]*$'`
-	artifactId=`expr match "$1" '^[^:]*:\([^:]*\):[^:]*:[^:]*$'`
-	version=`expr match "$1" '^[^:]*:[^:]*:\([^:]*\):[^:]*$'`
-	packaging=`expr match "$1" '^[^:]*:[^:]*:[^:]*:\([^:]*\)$'`
+	groupId=`expr match "$1" '\([^:]*\):[^:]*:[^:]*:[^:]*$'`
+	artifactId=`expr match "$1" '[^:]*:\([^:]*\):[^:]*:[^:]*$'`
+	version=`expr match "$1" '[^:]*:[^:]*:\([^:]*\):[^:]*$'`
+	packaging=`expr match "$1" '[^:]*:[^:]*:[^:]*:\([^:]*\)$'`
 	# next find the most recent SNAPSHOT - if it's a snapshot version
 	if [ `expr match "$version" '.*-SNAPSHOT$'` -gt 0 ]
 	then
