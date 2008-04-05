@@ -50,6 +50,7 @@ do
 		rm -r $dst_path 2> /dev/null
 		mkdir -p $dst_path
 		unzip -d $dst_path $src_path
+		chmod g+rw -R $jwsroot
 	#else
 	#	echo "Update NOT necessary" >&2
 	fi
