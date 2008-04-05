@@ -1,6 +1,6 @@
 #
 # See http://forum.springframework.org/showpost.php?p=121432&postcount=5
 #
-Action process-jnlp /home/groups/jcurl/htdocs/jws/download-jnlp.php
-AddHandler process-jnlp .jnlp
-AddHandler process-jnlp .jar
+#Action process-jnlp /home/groups/jcurl/htdocs/jws/download-jnlp.php
+#AddHandler process-jnlp .jnlp
+#AddHandler process-jnlp .jar
