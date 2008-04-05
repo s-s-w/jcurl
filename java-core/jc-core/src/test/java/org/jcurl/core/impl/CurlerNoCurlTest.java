@@ -68,7 +68,6 @@ public class CurlerNoCurlTest extends TestShowBase {
 		for (int t = 0; t < 20; t += 1)
 			assertEquals("t=" + t, rc.at(1, 0, t), (IceSize.FAR_HACK_2_TEE - wc
 					.at(1, 0, t)), 1e-9);
-
 	}
 
 	// public void testBeta() {

@@ -36,7 +36,7 @@ import org.jcurl.math.R1RNFunction;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CurveTransformed.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
-public class CurveTransformed<T extends RockType>  extends CurveRock<T> {
+public class CurveTransformed<T extends RockType> extends CurveRock<T> {
 
 	private static final long serialVersionUID = -665772521427597014L;
 
@@ -64,7 +64,7 @@ public class CurveTransformed<T extends RockType>  extends CurveRock<T> {
 			ret.setToIdentity();
 		ret.translate(x0, y0);
 		MathVec.rotate(ret, vx, vy);
-		MathVec.rotate(ret, 0, -1); 
+		MathVec.rotate(ret, 0, -1);
 		return ret;
 	}
 
@@ -110,8 +110,8 @@ public class CurveTransformed<T extends RockType>  extends CurveRock<T> {
 	 *            See {@link #createRc2Wc(Point2D, Point2D, AffineTransform)}
 	 * @param t0
 	 */
-	public CurveTransformed(final CurveRock<T> base, final AffineTransform trafo,
-			final double t0) {
+	public CurveTransformed(final CurveRock<T> base,
+			final AffineTransform trafo, final double t0) {
 		this(trafo, base, t0);
 	}
 
@@ -121,19 +121,19 @@ public class CurveTransformed<T extends RockType>  extends CurveRock<T> {
 		ret = base.at(derivative, t, ret);
 		final double x;
 		final double y;
-		final double z;
+		final double a;
 		if (derivative < 1) {
 			x = trafo[0] * ret[0] + trafo[2] * ret[1] + trafo[4];
 			y = trafo[1] * ret[0] + trafo[3] * ret[1] + trafo[5];
-			z = ret[2] + rot;
+			a = ret[2] + rot;
 		} else {
 			x = trafo[0] * ret[0] + trafo[2] * ret[1];
 			y = trafo[1] * ret[0] + trafo[3] * ret[1];
-			z = ret[2];
+			a = ret[2];
 		}
 		ret[0] = x;
 		ret[1] = y;
-		ret[2] = z;
+		ret[2] = a;
 		return ret;
 	}
 
@@ -166,6 +166,16 @@ public class CurveTransformed<T extends RockType>  extends CurveRock<T> {
 		final double[] tmp = { 0, 0, 0 };
 		at(derivative, t, tmp);
 		return tmp[component];
+	}
+
+	/** Clone the untransformed base curve for testing purposes */
+	R1RNFunction getBase() {
+		return base;
+	}
+
+	/** Clone the trafo for testing purposes */
+	AffineTransform getTrafo() {
+		return new AffineTransform(trafo);
 	}
 
 	protected Object readResolve() throws ObjectStreamException {

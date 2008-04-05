@@ -34,9 +34,9 @@ public interface StopDetector extends Strategy, Serializable {
      * When drops the "speed" (first derivative) of a function to zero?
      * 
      * @param f
-     * @param tmin
+     * @param t0
      * @param tmax
      * @return {@link Double#NaN} if not stopping within [tmin, tmax]
      */
-    public abstract double compute(R1RNFunction f, double tmin, double tmax);
+    public abstract double compute(R1RNFunction f, double t0, double tmax);
 }

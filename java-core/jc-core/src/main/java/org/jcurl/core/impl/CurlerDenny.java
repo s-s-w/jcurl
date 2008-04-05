@@ -33,12 +33,14 @@ import org.jcurl.math.R1R1Function;
 /**
  * Mark Denny's curl-model. Motion of a curling rock acc. to "Curling rock
  * dynamics", Mark Denny, Canadian Journal of Physics, 1988, P. 295-304:
- * <p>
- * <code>tau = v0 * (mu * g)</code><br />
- * <code>x(t) := - (b * v0^2 / (4 * e * R * tau)) * (t^3 / 3 - t^4 / (4 * tau))</code><br />
- * <code>y(t) := v0 * (t - t^2 / (2 * tau))</code><br />
- * <code>w(t) := w0 * (1 - t / tau)^(1 / e)</code>
- * </p>
+ * 
+ * <pre>
+ * tau = v0 * (mu * g)
+ * x(t) := - (b * v0&circ;2 / (4 * e * R * tau)) * (t&circ;3 / 3 - t&circ;4 / (4 * tau))
+ * y(t) := v0 * (t - t&circ;2 / (2 * tau))
+ * w(t) := w0 * (1 - t / tau)&circ;(1 / e)
+ * </pre>
+ * 
  * <p>
  * with
  * <ul>
@@ -56,10 +58,34 @@ import org.jcurl.math.R1R1Function;
  * <li><code>g [N/kg]</code> gravitation 9.81</li>
  * </ul>
  * </p>
- * 
  * <p>
  * Integrating <code>w(t)</code> leads to<br />
  * <code>a(t) = - w0 * e * (tau * ((tau-t)/tau)^(1/e) - t * ((tau-t)/tau)^(1/e) - tau) / (e + 1)</code>
+ * </p>
+ * <p>
+ * <a href="http://maxima.sourceforge.net">Maxima</a> Solution for the friction
+ * coefficients: Starting with the basic equations we first substitute
+ * <code>tau</tau>:<pre>
+ * tau = v0 * (mu * g)
+ * x(t) := - (b * v0&circ;2 / (4 * e * R * tau)) * (t&circ;3 / 3 - t&circ;4 / (4 * tau))
+ * ratsubst(v0/(mu*g), tau, %);
+ * y(t) := v0 * (t - t&circ;2 / (2 * tau))
+ * ratsubst(v0/(mu*g), tau, %);
+ * </pre>
+ * which results in<pre>
+ * x(t):=-(4*g*mu*b*t&circ;3*v0-3*g&circ;2*mu&circ;2*b*t&circ;4)/(48*e*R)
+ * y(t):=(2*t*v0-g*mu*t&circ;2)/2
+ * </pre>
+ * Now as we're interested in the frictions coefficients:
+ * <pre>
+ * solve([y(tt)=tee, diff(y(tt),tt)=0, x(tt)=curl], [mu, v0, b]);
+ * </pre>
+ * we get them:
+ * <pre>
+ * mu=(2*tee)/(g*tt&circ;2)
+ * v0=(2*tee)/tt
+ * b=-(12*curl*e*R)/tee&circ;2
+ * </pre>
  * </p>
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
@@ -79,11 +105,6 @@ public class CurlerDenny extends CoulombCurler {
 	public CurlerDenny() {}
 
 	/**
-	 * Computes the internal ice friction coefficient as:
-	 * <p>
-	 * <code>beta = {@link IceSize#FAR_HOG_2_TEE} / drawToTeeTime^2</code>
-	 * </p>
-	 * 
 	 * @param drawToTeeTime
 	 *            may be {@link Double#POSITIVE_INFINITY}.
 	 * @param drawToTeeCurl
@@ -98,10 +119,10 @@ public class CurlerDenny extends CoulombCurler {
 
 	public CurveRock<Pos> computeRc(final double a0, final double v0,
 			final double omega0, final double sweepFactor) {
-		final double f = -Math.signum(omega0) * b * g * mu / (48 * eps * _R);
-		final Polynome x = new Polynome(new double[] { 0, 0, 0, -4 * v0 * f,
-				3 * g * mu * f });
 		final Polynome y = new Polynome(new double[] { 0, v0, -g * mu / 2 });
+		final double f = Math.signum(omega0) * b * g * mu / (48 * eps * _R);
+		final Polynome x = new Polynome(new double[] { 0, 0, 0, 4 * v0 * f,
+				-3 * g * mu * f });
 		final R1R1Function a = new R1R1Function() {
 			private static final long serialVersionUID = -4138559036279095873L;
 
@@ -126,7 +147,7 @@ public class CurlerDenny extends CoulombCurler {
 				return "";
 			}
 		};
-		return new CurveRockAnalytic(x, y, a);
+		return new CurveRockAnalytic<Pos>(x, y, a);
 	}
 
 	public void init(final Map<CharSequence, Measure> ice) {
@@ -137,7 +158,7 @@ public class CurlerDenny extends CoulombCurler {
 
 	public void setDrawToTeeCurl(final double drawToTeeCurl) {
 		b = -drawToTeeCurl * 12.0 * eps * _R
-				/ MathVec.sqr(IceSize.FAR_HOG_2_TEE);
+				/ MathVec.sqr(IceSize.FAR_HACK_2_TEE);
 		PropModelHelper.setDrawToTeeCurl(params, drawToTeeCurl);
 	}
 }

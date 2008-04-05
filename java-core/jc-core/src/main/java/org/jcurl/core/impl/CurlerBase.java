@@ -25,7 +25,9 @@ import org.jcurl.core.api.Curler;
 import org.jcurl.core.api.CurveRock;
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.math.BisectionSolver;
 import org.jcurl.math.NewtonSimpleSolver;
+import org.jcurl.math.R1R1Function;
 
 /**
  * Base implementation for {@link Curler}s.
@@ -35,6 +37,51 @@ import org.jcurl.math.NewtonSimpleSolver;
  */
 public abstract class CurlerBase extends PropModelImpl implements Curler {
 
+	private static final Point2D teeWc = new Point2D.Double(0, 0);
+
+	public static double computeHackToTee(final Curler cu) {
+		if (true) {
+			final double v0 = computeV0ToTee(cu);
+			final CurveRock<Pos> rc = cu.computeRc(0, v0, 1, 0);
+			return new NewtonStopDetector().compute(rc, 15, 60);
+		} else {
+			final double splitTime = computeSplitToTee(cu);
+			final CurveRock<Pos> wc = cu.computeWc(teeWc, splitTime, 0, 1, 0);
+			return new NewtonStopDetector().compute(wc, 20, 60);
+		}
+	}
+
+	public static double computeSplitToTee(final Curler cu) {
+		final NewtonStopDetector s = new NewtonStopDetector();
+		// running distance (y) 'til stop:
+		final R1R1Function f = new R1R1Function() {
+			private static final long serialVersionUID = 5450796623114903424L;
+
+			@Override
+			public double at(int c, double splitTime) {
+				final CurveRock<Pos> wc = cu.computeWc(teeWc, splitTime, 0, 1,
+						0);
+				return wc.at(1, 0, s.compute(wc, 0, 60));
+			}
+		};
+		return BisectionSolver.findRoot(f, 0, 2, 6);
+	}
+
+	public static double computeV0ToTee(final Curler cu) {
+		final NewtonStopDetector s = new NewtonStopDetector();
+		// running distance (y) 'til stop:
+		final R1R1Function f = new R1R1Function() {
+			private static final long serialVersionUID = -4702648935820079700L;
+
+			@Override
+			public double at(int c, double v0) {
+				final CurveRock<Pos> rc = cu.computeRc(0, v0, 1, 0);
+				return rc.at(1, 0, s.compute(rc, 0, 60)) - IceSize.FAR_HACK_2_TEE;
+			}
+		};
+		return BisectionSolver.findRoot(f, 0, 1, 7);
+	}
+
 	public double computeIntervalTime(final CurveRock<Pos> wc) {
 		final double back = NewtonSimpleSolver.computeNewtonValue(wc, 1, 0,
 				IceSize.BACK_2_HOG + IceSize.FAR_HOG_2_TEE, 0, 10);
@@ -43,11 +90,10 @@ public abstract class CurlerBase extends PropModelImpl implements Curler {
 		return hog - back;
 	}
 
-	public CurveRock<Pos> computeWc(final Point2D broom, double split,
+	public CurveRock<Pos> computeWc(final Point2D broom, final double split,
 			final double a0, final double omega0, final double sweepFactor) {
-		return new CurveTransformed<Pos>(computeRc(a0,
-				computeHackSpeed(split, broom), omega0, sweepFactor),
-				hackRc2Wc(null, broom), 0);
+		return new CurveTransformed<Pos>(computeRc(a0, computeHackSpeed(split,
+				broom), omega0, sweepFactor), hackRc2Wc(null, broom), 0);
 	}
 
 	/**
@@ -63,8 +109,8 @@ public abstract class CurlerBase extends PropModelImpl implements Curler {
 	 * @see CurveTransformed#createRc2Wc(AffineTransform, double, double,
 	 *      double, double)
 	 */
-	public AffineTransform hackRc2Wc(final AffineTransform ret, final double broomX,
-			final double broomY) {
+	public AffineTransform hackRc2Wc(final AffineTransform ret,
+			final double broomX, final double broomY) {
 		return CurveTransformed.createRc2Wc(ret, 0, IceSize.FAR_HACK_2_TEE,
 				broomX, broomY - IceSize.FAR_HACK_2_TEE);
 	}

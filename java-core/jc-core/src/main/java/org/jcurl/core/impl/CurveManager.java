@@ -54,7 +54,8 @@ import org.jcurl.math.R1RNFunction;
 public class CurveManager extends MutableObject implements ChangeListener,
 		ComputedTrajectorySet {
 
-	private static final double _30 = 30.0;
+	// compute beyond a realistic amount of time
+	private static final double _30 = 60.0;
 
 	/** Time leap during a hit. */
 	private static final double hitDt = 1e-6;
