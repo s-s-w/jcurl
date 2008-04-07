@@ -53,6 +53,9 @@
 							<exclude>javax.servlet:servlet-api</exclude>
 						</excludes>
 					</dependencies>
+					<pack200>true</pack200>
+					<gzip>true</gzip>
+					<verbose>true</verbose>
 					<jnlp>
 						<!-- we play with the resource path and template relative path to test MOJO-391 -->
 						<!-- inputTemplateResourcePath>
