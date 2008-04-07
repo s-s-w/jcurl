@@ -3,6 +3,7 @@ package org.jcurl.demo.tactics;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -19,6 +20,7 @@ import org.jcurl.core.ui.UndoRedoDocumentBase;
 import org.jcurl.core.ui.TaskExecutor.ForkableFixed;
 import org.jcurl.core.ui.TaskExecutor.SmartQueue;
 import org.jcurl.zui.piccolo.BroomPromptSimple;
+import org.jcurl.zui.piccolo.KeyboardZoom;
 import org.jcurl.zui.piccolo.PCurveStore;
 import org.jcurl.zui.piccolo.PIceFactory;
 import org.jcurl.zui.piccolo.PPositionSet;
@@ -27,19 +29,22 @@ import org.jcurl.zui.piccolo.PRockNode;
 import org.jcurl.zui.piccolo.PTrajectoryFactory;
 import org.jcurl.zui.piccolo.PRockNode.DragHandler;
 
+import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PInputEventListener;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
-class TrajectoryPanel extends JComponent {
+class TrajectoryPiccoloPanel extends JComponent implements Zoomable {
 	/**
 	 * Mediate ZUI changes to the underlying {@link TacticsPanelModel}.
 	 * 
+	 * @see KeyboardZoom
 	 * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
 	 * @version $Id$
 	 */
 	static class Controller implements PropertyChangeListener, ChangeListener {
+		final PInputEventListener keyZoom;
 		final PInputEventListener rockMove = new DragHandler() {
 			@Override
 			protected void pushChange(final boolean isDrop,
@@ -61,13 +66,14 @@ class TrajectoryPanel extends JComponent {
 
 		private final TacticsPanelModel tpm;
 
-		Controller(final TacticsPanelModel tpm) {
+		Controller(final TacticsPanelModel tpm, final PCamera cam) {
 			this.tpm = tpm;
+			keyZoom = new KeyboardZoom(cam);
 		}
 
 		public void propertyChange(final PropertyChangeEvent evt) {
 			// log.info(evt.getSource().getClass().getName() + " "
-			//					+ evt.getPropertyName());
+			// + evt.getPropertyName());
 			if (evt.getSource() instanceof BroomPromptModel) {
 				final BroomPromptModel bpm = (BroomPromptModel) evt.getSource();
 				new ForkableFixed<SmartQueue>() {
@@ -90,7 +96,7 @@ class TrajectoryPanel extends JComponent {
 		}
 
 		public void stateChanged(final ChangeEvent evt) {
-			//log.info(evt.getSource().getClass().getName());
+			// log.info(evt.getSource().getClass().getName());
 			if (evt.getSource() instanceof BoundedRangeModel) {
 				final BoundedRangeModel brm = (BoundedRangeModel) evt
 						.getSource();
@@ -105,7 +111,7 @@ class TrajectoryPanel extends JComponent {
 	}
 
 	private static final Log log = JCLoggerFactory
-			.getLogger(TrajectoryPanel.class);
+			.getLogger(TrajectoryPiccoloPanel.class);
 	private static final long serialVersionUID = -4648771240323713217L;
 	private final BroomPromptSimple broom;
 	private final Controller con;
@@ -119,8 +125,7 @@ class TrajectoryPanel extends JComponent {
 	private final PCurveStore traj;
 	private UndoRedoDocumentBase undo;
 
-	public TrajectoryPanel() {
-		con = new Controller(tpm);
+	public TrajectoryPiccoloPanel() {
 		setLayout(new BorderLayout());
 		this.add(pico = new PCanvas(), BorderLayout.CENTER);
 		pico.setBackground(new Color(0xE8E8FF));
@@ -128,6 +133,9 @@ class TrajectoryPanel extends JComponent {
 		pico.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 		// pico.getRoot().getDefaultInputManager().setKeyboardFocus(
 		// new KeyboardZoom(pico.getCamera()));
+
+		con = new Controller(tpm, pico.getCamera());
+		pico.addInputEventListener(con.keyZoom);
 
 		// create the scene
 		ice = new PIceFactory.Fancy().newInstance();
@@ -165,6 +173,10 @@ class TrajectoryPanel extends JComponent {
 		return undo;
 	}
 
+	public Rectangle2D getZoom() {
+		return pico.getCamera().getBounds();
+	}
+
 	public void setCurves(final CurveManager model) {
 		tpm.setCm(model);
 		if (model == null) {
@@ -184,5 +196,9 @@ class TrajectoryPanel extends JComponent {
 
 	public void setUndo(final UndoRedoDocumentBase undo) {
 		this.undo = undo;
+	}
+
+	public void setZoom(final Rectangle2D viewport) {
+		pico.getCamera().animateViewToCenterBounds(viewport, true, 333);
 	}
 }

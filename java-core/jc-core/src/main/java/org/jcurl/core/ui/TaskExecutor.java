@@ -71,7 +71,7 @@ public class TaskExecutor implements Executor {
 	/**
 	 * Similar to {@link ForkableFlex} but early-bound to an {@link Executor}.
 	 * 
-	 * @param T
+	 * @param <T>
 	 *            see {@link TaskExecutor#execute(Runnable, Class)}
 	 * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
 	 * @version $Id$

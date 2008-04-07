@@ -37,8 +37,8 @@ import org.jcurl.math.CurveCombined;
 import org.jcurl.math.MathVec;
 
 /**
- * Successor of {@link BroomSpeedMediator}. Aggregates {@link CurveManager} and
- * {@link BroomPromptModel} under a convenient, high-level interface.
+ * Aggregates {@link CurveManager} and {@link BroomPromptModel} under a
+ * convenient, high-level interface.
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$

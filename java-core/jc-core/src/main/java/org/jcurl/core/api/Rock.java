@@ -36,7 +36,7 @@ import org.jcurl.core.helpers.Service;
  * href="http://www.jscience.org">JScience</a> calculus.
  * </p>
  * <p>
- * But as {@link #setLocation(double, double)} &amp; co must be provided to
+ * But as {@link Point2D#setLocation(double, double)} &amp; co must be provided to
  * satisfy the {@link Point2D} (settable via mouse interaction on a panel) there
  * MUST be a way to convert {@link java.lang.Double}s to <code>T</code>s.
  * {@link Service} factories (@link Double}-&gt;<code>T</code>) could be a

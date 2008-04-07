@@ -36,7 +36,6 @@ import org.jcurl.core.ui.TaskExecutor.Single;
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
 import org.jcurl.demo.tactics.Controller.MainController;
 import org.jcurl.demo.tactics.Controller.UndoRedoCon;
-import org.jcurl.demo.tactics.Controller.ZuiController;
 
 /**
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
@@ -46,7 +45,7 @@ public class MainApp extends JFrame {
 
 	/**
 	 * Create menues and wire them up with {@link Action}s from
-	 * {@link MainController} and {@link ZuiController}.
+	 * {@link MainController}.
 	 * 
 	 * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
 	 * @version $Id$
@@ -55,12 +54,9 @@ public class MainApp extends JFrame {
 
 		private final MainController mainc;
 		private final UndoRedoCon undoc;
-		private final ZuiController zuic;
 
-		public Menufactory(final MainController mainc,
-				final ZuiController zuic, final UndoRedoCon undoc) {
+		public Menufactory(final MainController mainc, final UndoRedoCon undoc) {
 			this.mainc = mainc;
-			this.zuic = zuic;
 			this.undoc = undoc;
 		}
 
@@ -165,28 +161,28 @@ public class MainApp extends JFrame {
 			final JMenu ret = new JMenu("View");
 			ret.setMnemonic('V');
 			JMenuItem i = null;
-
-			i = ret.add(new JMenuItem(zuic.ZoomHouse));
-			i.setText("House");
-			i.setMnemonic('H');
-			i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME, 0));
-
-			i = ret.add(new JMenuItem(zuic.Zoom12Foot));
-			i.setText("12-foot");
-			i.setMnemonic('2');
-			i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END, 0));
-
-			i = ret.add(new JMenuItem(zuic.ZoomComplete));
-			i.setText("Complete");
-			i.setMnemonic('C');
-			i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME,
-					InputEvent.CTRL_MASK));
-
-			i = ret.add(new JMenuItem(zuic.ZoomSheet));
-			i.setText("Active");
-			i.setMnemonic('A');
-			i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END,
-					InputEvent.CTRL_MASK));
+			//
+			// i = ret.add(new JMenuItem(zuic.ZoomHouse));
+			// i.setText("House");
+			// i.setMnemonic('H');
+			// i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME, 0));
+			//
+			// i = ret.add(new JMenuItem(zuic.Zoom12Foot));
+			// i.setText("12-foot");
+			// i.setMnemonic('2');
+			// i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END, 0));
+			//
+			// i = ret.add(new JMenuItem(zuic.ZoomComplete));
+			// i.setText("Complete");
+			// i.setMnemonic('C');
+			// i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME,
+			// InputEvent.CTRL_MASK));
+			//
+			// i = ret.add(new JMenuItem(zuic.ZoomSheet));
+			// i.setText("Active");
+			// i.setMnemonic('A');
+			// i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END,
+			// InputEvent.CTRL_MASK));
 
 			ret.addSeparator();
 
@@ -233,9 +229,7 @@ public class MainApp extends JFrame {
 	}
 
 	private static final long serialVersionUID = 3398372625156897223L;
-
-	// FIXME What goes wrong if I put here 30?
-	static final double tmax = 15;
+	static final double tmax = 30;
 
 	public static void main(final String[] args) {
 		// PDebug.debugBounds = true;
@@ -250,11 +244,11 @@ public class MainApp extends JFrame {
 				application.pack();
 				application.setSize(600, 800);
 				application.setVisible(true);
-				application.center();
+				// application.center();
 			}
 		}.fork();
 
-		if (true)
+		if (false)
 			new ForkableFixed<Single>() {
 				public void run() {
 					application.m.setCurrentTime(tmax);
@@ -284,7 +278,6 @@ public class MainApp extends JFrame {
 
 	private final MainMod m;
 	private final MainController mainc;
-	private final ZuiController zuic;
 
 	public MainApp() {
 		m = new MainMod();
@@ -292,15 +285,14 @@ public class MainApp extends JFrame {
 		final UndoRedoCon undoc = new UndoRedoCon();
 		undoc.setModel(m.undo);
 
-		final TrajectoryPanel zui = new TrajectoryPanel();
+		final TrajectoryPiccoloPanel zui = new TrajectoryPiccoloPanel();
 		zui.setUndo(m.undo);
 		zui.getBroom().setIdx16(14);
 		zui.setCurves(m.getCurveManager());
 
 		getContentPane().add(zui, "Center");
 		mainc = new MainController(zui, m, this);
-		zuic = new ZuiController(zui.pico.getCamera());
-		setJMenuBar(new Menufactory(mainc, zuic, undoc).menu());
+		setJMenuBar(new Menufactory(mainc, undoc).menu());
 		addWindowListener(new WindowAdapter() {
 
 			@Override
@@ -308,9 +300,5 @@ public class MainApp extends JFrame {
 				mainc.shutDown();
 			}
 		});
-	}
-
-	private void center() {
-		zuic.ZoomComplete.actionPerformed(null);
 	}
 }

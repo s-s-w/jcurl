@@ -41,9 +41,6 @@ import javax.swing.undo.UndoableEdit;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jcurl.core.ui.UndoRedoDocument;
-import org.jcurl.zui.piccolo.KeyboardZoom;
-
-import edu.umd.cs.piccolo.PCamera;
 
 /**
  * ...home of the {@link Action}s
@@ -304,13 +301,6 @@ class Controller {
                 return;
             editUndo.setEnabled(ed.canUndo());
             editRedo.setEnabled(ed.canRedo());
-        }
-    }
-
-    static class ZuiController extends KeyboardZoom {
-
-        public ZuiController(final PCamera cam) {
-            super(cam);
         }
     }
 }
