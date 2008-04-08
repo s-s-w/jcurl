@@ -15,6 +15,8 @@ timer=$0.timer
 report=`basename $0`.html
 
 dst_host=jcurl.org
+# temporary address while KK-ing:
+dst_host=213.133.104.85
 #dst_dir=sandbox
 dst_dir=.
 
