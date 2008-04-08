@@ -28,7 +28,7 @@ cmd="pwd\n"
 cmd="$cmd"`find . -mindepth 1 -type d -printf "mkdir %p\\\\\n"`
 
 # upload all files newer than $timer except wagon*.zip
-cmd="$cmd"`find . -mindepth 1 -type f -anewer $timer -not -name "wagon*.zip" -printf "put %p\\\\\n"`
+cmd="$cmd"`find . -mindepth 1 -type f -newer $timer -not -name "wagon*.zip" -printf "put %p\\\\\n"`
 
 cmd="mkdir $dst_dir\ncd $dst_dir\n$cmd"
 cmd=$cmd"quit"
