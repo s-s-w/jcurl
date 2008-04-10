@@ -40,6 +40,8 @@ public class BroomPromptModel extends MutableObject {
 	private boolean outTurn = true;
 	private BoundedRangeModel splitTimeMillis = null;
 
+	private boolean valueIsAdjusting = false;
+
 	public BroomPromptModel() {
 		setSplitTimeMillis(new DefaultBoundedRangeModel(2000, 0, 1000, 5000));
 	}
@@ -86,6 +88,10 @@ public class BroomPromptModel extends MutableObject {
 		return splitTimeMillis;
 	}
 
+	public boolean getValueIsAdjusting() {
+		return valueIsAdjusting;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -122,5 +128,11 @@ public class BroomPromptModel extends MutableObject {
 		final BoundedRangeModel old = this.splitTimeMillis;
 		this.splitTimeMillis = splitTimeMillis;
 		firePropertyChange("splitTimeMillis", old, this.splitTimeMillis);
+	}
+
+	public void setValueIsAdjusting(final boolean valueIsAdjusting) {
+		final boolean old = this.valueIsAdjusting;
+		this.valueIsAdjusting = valueIsAdjusting;
+		firePropertyChange("valueIsAdjusting", old, this.valueIsAdjusting);
 	}
 }

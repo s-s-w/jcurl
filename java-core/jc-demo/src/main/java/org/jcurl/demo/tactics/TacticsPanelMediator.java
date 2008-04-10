@@ -37,15 +37,15 @@ import org.jcurl.math.CurveCombined;
 import org.jcurl.math.MathVec;
 
 /**
- * Aggregates {@link CurveManager} and {@link BroomPromptModel} under a
- * convenient, high-level interface.
+ * Mediates {@link CurveManager} and {@link BroomPromptModel} under a
+ * convenient, stateless, high-level interface.
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-class TacticsPanelModel {
+class TacticsPanelMediator {
 	private static final Log log = JCLoggerFactory
-			.getLogger(TacticsPanelModel.class);
+			.getLogger(TacticsPanelMediator.class);
 
 	private static <R extends RockType> void swap(final RockSet<R> r,
 			final int a, final int b) {
@@ -54,19 +54,11 @@ class TacticsPanelModel {
 		r.getRock(b).setLocation(tmp);
 	}
 
-	private CurveManager cm;
-	private final BroomPromptModel prompt = new BroomPromptModel();
-
-	public CurveManager getCm() {
-		return cm;
-	}
-
-	public BroomPromptModel getPrompt() {
-		return prompt;
-	}
-
-	private void recomputeCurves(final Point2D newPos,
+	private void recomputeCurves(final CurveManager cm,
+			final BroomPromptModel prompt, final Point2D newPos,
 			final long splitTimeMillis, final boolean outTurn) {
+		if (cm == null)
+			return;
 		// set to initial pos
 		final Rock start = new RockDouble(0, IceSize.FAR_HACK_2_TEE, Math.PI);
 		cm.getInitialPos().getRock(prompt.getIdx16()).setLocation(start);
@@ -88,59 +80,89 @@ class TacticsPanelModel {
 		cm.stateChanged(null);
 	}
 
-	public void setCm(final CurveManager cm) {
-		this.cm = cm;
-
-		final Rock<Vel> v = getCm().getInitialSpeed()
-				.getRock(prompt.getIdx16());
+	/** Initialise the broom. */
+	public BroomPromptModel setCm(final CurveManager cm, BroomPromptModel prompt) {
+		if (cm == null)
+			return null;
+		if (prompt == null)
+			prompt = new BroomPromptModel();
+		final int idx16;
+		if (true || prompt.getIdx16() < 0) {
+			// Try to find the running rock.
+			// 1st try: if there's only one rock running, that's it.
+			int tmp = -1;
+			for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+				if (cm.getInitialSpeed().getRock(i).isNotZero()) {
+					if (tmp >= 0)
+						log.error("Multiple running rocks: " + tmp + i);
+					tmp = i;
+					break;
+				}
+			idx16 = tmp;
+		} else
+			idx16 = prompt.getIdx16();
+		release(cm.getInitialPos().getRock(idx16));
+		final Rock<Vel> v = cm.getInitialSpeed().getRock(idx16);
 
 		// Compute Handle
 		prompt.setOutTurn(v.getA() >= 0);
 
 		// Compute Broom Location
-		final Point2D x = getCm().getInitialPos().getRock(prompt.getIdx16())
-				.p();
+		final Point2D x = cm.getInitialPos().getRock(idx16).p();
 		final Point2D b = prompt.getBroom();
 		final Point2D b2 = new Point2D.Double((b.getY() - x.getY()) * v.getX()
 				/ v.getY(), b.getY());
-		log.info(b2);
+		log.info("v=" + v + ", x=" + b2);
 		prompt.setBroom(b2);
 
 		// Compute Split Time
 		final CurveCombined<CurveRock<Pos>> c1 = (CurveCombined<CurveRock<Pos>>) cm
-				.getCurveStore().getCurve(prompt.getIdx16());
+				.getCurveStore().getCurve(idx16);
 		prompt.getSplitTimeMillis().setValue(
-				(int) (1000 * getCm().getCurler().computeIntervalTime(
-						c1.first())));
+				(int) (1000 * cm.getCurler().computeIntervalTime(c1.first())));
+		if (prompt.getIdx16() < 0)
+			prompt.setIdx16(idx16);
+		return prompt;
 	}
 
-	public void updateBroom(final Point2D newPos) {
-		recomputeCurves(newPos, prompt.getSplitTimeMillis().getValue(), prompt
-				.getOutTurn());
+	public void updateBroom(final Point2D newPos, final CurveManager cm,
+			final BroomPromptModel prompt) {
+		recomputeCurves(cm, prompt, newPos, prompt.getSplitTimeMillis()
+				.getValue(), prompt.getOutTurn());
 	}
 
-	public void updateIndex(final int i16) {
+	public void updateIndex(final int i16, final CurveManager cm,
+			final BroomPromptModel prompt) {
+		if (i16 == prompt.getIdx16())
+			return;
 		log.debug("");
 		// initial pos
 		swap(cm.getInitialPos(), prompt.getIdx16(), i16);
-		final Rock start = new RockDouble(0, IceSize.FAR_HACK_2_TEE, Math.PI);
-		cm.getInitialPos().getRock(prompt.getIdx16()).setLocation(start);
+		release(cm.getInitialPos().getRock(i16));
 		// initial speed
 		swap(cm.getInitialSpeed(), prompt.getIdx16(), i16);
 	}
 
-	public void updatePos(final int i16, final Point2D newPos) {
+	public static void release(Rock<Pos> r) {
+		r.setLocation(0, IceSize.FAR_HACK_2_TEE, Math.PI);
+	}
+
+	public void updatePos(final int i16, final Point2D newPos,
+			final CurveManager cm) {
 		log.debug("");
 		cm.getInitialPos().getRock(i16).p().setLocation(newPos);
 		cm.stateChanged(null);
 	}
 
-	public void updateSplitTimeMillis(final long newSplit) {
-		recomputeCurves(prompt.getBroom(), newSplit, prompt.getOutTurn());
+	public void updateSplitTimeMillis(final CurveManager cm,
+			final BroomPromptModel prompt, final long newSplit) {
+		recomputeCurves(cm, prompt, prompt.getBroom(), newSplit, prompt
+				.getOutTurn());
 	}
 
-	public void updateTurn(final boolean outTurn) {
-		recomputeCurves(prompt.getBroom(), prompt.getSplitTimeMillis()
-				.getValue(), outTurn);
+	public void updateTurn(final boolean outTurn,
+			final BroomPromptModel prompt, final CurveManager cm) {
+		recomputeCurves(cm, prompt, prompt.getBroom(), prompt
+				.getSplitTimeMillis().getValue(), outTurn);
 	}
 }

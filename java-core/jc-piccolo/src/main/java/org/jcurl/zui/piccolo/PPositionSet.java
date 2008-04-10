@@ -63,8 +63,8 @@ public class PPositionSet extends PNode implements ChangeListener {
 	public void setModel(final RockSet<Pos> positionSet) {
 		if(model == positionSet)
 			return;
-		if (model != null)
-			throw new UnsupportedOperationException();
+//		if (model != null)
+//			throw new UnsupportedOperationException();
 		model = positionSet;
 		setVisible(model != null);
 		if (model != null) {

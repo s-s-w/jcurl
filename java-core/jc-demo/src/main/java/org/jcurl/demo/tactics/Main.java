@@ -18,6 +18,7 @@
  */
 package org.jcurl.demo.tactics;
 
+import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.prefs.BackingStoreException;
@@ -35,15 +36,23 @@ import org.jcurl.core.ui.TaskExecutor.SwingEDT;
 public class Main extends JFrame {
 
 	private static final long serialVersionUID = 3398372625156897223L;
-
+	
 	public static void main(final String[] args) {
 		final JFrame f = new Main();
 		f.setSize(600, 800);
 		f.setVisible(true);
 		// zoom to the house smoothely
 		ActionRegistry.invoke(MenuView.class, "zoomHouse", SwingEDT.class);
-		// load hammy by default
-		
+		if (false) {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				return;
+			}
+			// load hammy by default
+			ActionRegistry.invoke(MenuFile.Controller.class, "showHammy",
+					SwingEDT.class);
+		}
 		{
 			final Preferences p = Preferences.userNodeForPackage(Main.class);
 			p.putLong("lastStartMillis", System.currentTimeMillis());
@@ -59,9 +68,11 @@ public class Main extends JFrame {
 		setTitle("JCurl Shot Planner");
 		final JMenuBar mb = new JMenuBar();
 		final TrajectoryPiccoloPanel tp = new TrajectoryPiccoloPanel();
+		tp.setBackground(new Color(0xE8E8FF));
 		final ActionRegistry ah = ActionRegistry.getInstance();
 		{
-			final MenuFile.Controller con = new MenuFile.Controller(this, tp);
+			final MenuFile.Controller con = new MenuFile.Controller(this, tp,
+					tp);
 			ah.registerController(con);
 			addWindowListener(new WindowAdapter() {
 				@Override
@@ -70,6 +81,8 @@ public class Main extends JFrame {
 				}
 			});
 			mb.add(ah.createJMenu(con));
+			ah.findAction(con, "clear").setEnabled(true);
+			ah.findAction(con, "showHammy").setEnabled(true);
 			ah.findAction(con, "openFile").setEnabled(true);
 			ah.findAction(con, "newFile").setEnabled(true);
 			ah.findAction(con, "screenShot").setEnabled(true);

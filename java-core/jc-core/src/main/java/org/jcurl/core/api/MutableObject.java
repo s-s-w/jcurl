@@ -18,8 +18,12 @@
  */
 package org.jcurl.core.api;
 
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
 
 
 /**
@@ -109,4 +113,38 @@ public abstract class MutableObject extends TransferObject implements
             final PropertyChangeListener listener) {
         propChange.removePropertyChangeListener(property, listener);
     }
+
+    /** TUNE cache! */
+	protected PropertyDescriptor findPropertyDescriptor(final Class<?> bean, final String name) {
+		try {
+			for (final PropertyDescriptor pd : Introspector.getBeanInfo(bean)
+					.getPropertyDescriptors())
+				if (name.equals(pd.getName()))
+					return pd;
+		} catch (final IntrospectionException e) {
+			throw new RuntimeException("Unhandled", e);
+		}
+		throw new IllegalArgumentException("Property \"" + name
+				+ "\" not found in class \"" + bean + "\"");
+	}
+
+	protected void updateProperty(final String name, final Object old, final Object neo) {
+		if (old == neo || (old != null && old.equals(neo)))
+			return;
+		try {
+			final Object[] args = { neo };
+			this.getClass().getField(name).set(this, args);
+//			findPropertyDescriptor(this.getClass(), name).setgetWriteMethod()
+//					.invoke(this, args);
+			firePropertyChange(name, old, neo);
+		} catch (final IllegalAccessException e) {
+			throw new RuntimeException("Unhandled", e);
+		} catch (SecurityException e) {
+			throw new RuntimeException("Unhandled", e);
+		} catch (NoSuchFieldException e) {
+			for(Field f : this.getClass().getFields())
+				System.out.println(f.getName());
+			throw new RuntimeException("Unhandled", e);
+		}
+	}
 }

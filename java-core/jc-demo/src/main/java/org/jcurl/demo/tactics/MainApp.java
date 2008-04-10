@@ -18,24 +18,16 @@
  */
 package org.jcurl.demo.tactics;
 
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
+import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
-import javax.swing.Action;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
-import javax.swing.WindowConstants;
 
-import org.jcurl.core.ui.TaskExecutor.ForkableFixed;
-import org.jcurl.core.ui.TaskExecutor.Single;
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
-import org.jcurl.demo.tactics.Controller.MainController;
-import org.jcurl.demo.tactics.Controller.UndoRedoCon;
 
 /**
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
@@ -43,262 +35,79 @@ import org.jcurl.demo.tactics.Controller.UndoRedoCon;
  */
 public class MainApp extends JFrame {
 
-	/**
-	 * Create menues and wire them up with {@link Action}s from
-	 * {@link MainController}.
-	 * 
-	 * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
-	 * @version $Id$
-	 */
-	static class Menufactory {
-
-		private final MainController mainc;
-		private final UndoRedoCon undoc;
-
-		public Menufactory(final MainController mainc, final UndoRedoCon undoc) {
-			this.mainc = mainc;
-			this.undoc = undoc;
-		}
-
-		public JMenu editMenu() {
-			final JMenu ret = new JMenu("Edit");
-			ret.setMnemonic('E');
-
-			JMenuItem i = ret.add(new JMenuItem(undoc.editUndo));
-			i.setText("Undo");
-			i.setMnemonic('U');
-			i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
-					InputEvent.CTRL_MASK));
-
-			i = ret.add(new JMenuItem(undoc.editRedo));
-			i.setText("Redo");
-			i.setMnemonic('R');
-			i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,
-					InputEvent.CTRL_MASK));
-
-			ret.addSeparator();
-
-			i = ret.add(new JMenuItem());
-			i.setText("Properties");
-			// i.setMnemonic('P');
-			i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,
-					InputEvent.CTRL_MASK));
-			i.setEnabled(false);
-
-			return ret;
-		}
-
-		public JMenu fileMenu() {
-			final JMenu ret = new JMenu("File");
-			ret.setMnemonic('F');
-
-			JMenuItem i = ret.add(new JMenuItem());
-			i.setText("New");
-			i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
-					InputEvent.CTRL_MASK));
-			i.setMnemonic('N');
-			i.setEnabled(false);
-
-			i = ret.add(new JMenuItem(mainc.fileOpen));
-			i.setText("Open");
-			i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_0,
-					InputEvent.CTRL_MASK));
-			i.setMnemonic('O');
-
-			ret.addSeparator();
-
-			i = ret.add(new JMenuItem());
-			i.setText("Save");
-			i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-					InputEvent.CTRL_MASK));
-			i.setMnemonic('S');
-			i.setEnabled(false);
-
-			i = ret.add(new JMenuItem(mainc.fileSaveAs));
-			i.setText("Save As");
-			i.setMnemonic('A');
-
-			ret.addSeparator();
-
-			i = ret.add(new JMenuItem(mainc.fileScreenshot));
-			i.setText("Screenshot");
-			i.setMnemonic('c');
-			i
-					.setAccelerator(KeyStroke.getKeyStroke(
-							KeyEvent.VK_PRINTSCREEN, 0));
-
-			ret.addSeparator();
-
-			i = ret.add(new JMenuItem(mainc.fileExit));
-			i.setText("Exit");
-			i.setMnemonic('x');
-
-			return ret;
-		}
-
-		public JMenu helpMenu() {
-			final JMenu ret = new JMenu("Help");
-			ret.setMnemonic('H');
-
-			final JMenuItem i = ret.add(new JMenuItem());
-			i.setText("About");
-			i.setMnemonic('A');
-			i.setEnabled(false);
-
-			return ret;
-		}
-
-		public JMenuBar menu() {
-			final JMenuBar mb = new JMenuBar();
-			mb.add(fileMenu());
-			mb.add(editMenu());
-			mb.add(viewMenu());
-			mb.add(helpMenu());
-			return mb;
-		}
-
-		public JMenu viewMenu() {
-			final JMenu ret = new JMenu("View");
-			ret.setMnemonic('V');
-			JMenuItem i = null;
-			//
-			// i = ret.add(new JMenuItem(zuic.ZoomHouse));
-			// i.setText("House");
-			// i.setMnemonic('H');
-			// i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME, 0));
-			//
-			// i = ret.add(new JMenuItem(zuic.Zoom12Foot));
-			// i.setText("12-foot");
-			// i.setMnemonic('2');
-			// i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END, 0));
-			//
-			// i = ret.add(new JMenuItem(zuic.ZoomComplete));
-			// i.setText("Complete");
-			// i.setMnemonic('C');
-			// i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_HOME,
-			// InputEvent.CTRL_MASK));
-			//
-			// i = ret.add(new JMenuItem(zuic.ZoomSheet));
-			// i.setText("Active");
-			// i.setMnemonic('A');
-			// i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END,
-			// InputEvent.CTRL_MASK));
-
-			ret.addSeparator();
-
-			i = ret.add(new JMenuItem());
-			i.setText("In");
-			i.setMnemonic('I');
-			i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, 0));
-			i.setEnabled(false);
-
-			i = ret.add(new JMenuItem());
-			i.setText("Out");
-			i.setMnemonic('O');
-			i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, 0));
-			i.setEnabled(false);
-
-			ret.addSeparator();
-
-			i = ret.add(new JMenuItem());
-			i.setText("North");
-			i.setMnemonic('N');
-			i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0));
-			i.setEnabled(false);
-
-			i = ret.add(new JMenuItem());
-			i.setText("South");
-			i.setMnemonic('S');
-			i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
-			i.setEnabled(false);
-
-			i = ret.add(new JMenuItem());
-			i.setText("West");
-			i.setMnemonic('W');
-			i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0));
-			i.setEnabled(false);
-
-			i = ret.add(new JMenuItem());
-			i.setText("East");
-			i.setMnemonic('E');
-			i.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0));
-			i.setEnabled(false);
-
-			return ret;
-		}
-	}
-
 	private static final long serialVersionUID = 3398372625156897223L;
-	static final double tmax = 30;
 
 	public static void main(final String[] args) {
-		// PDebug.debugBounds = true;
-		// PDebug.debugPrintUsedMemory = true;
-		// PDebug.debugPrintFrameRate = true;
-		// PDebug.debugPaintCalls = true;
-		final MainApp application = new MainApp();
-		new ForkableFixed<SwingEDT>() {
-			public void run() {
-				application
-						.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-				application.pack();
-				application.setSize(600, 800);
-				application.setVisible(true);
-				// application.center();
+		final JFrame f = new MainApp();
+		f.setSize(600, 800);
+		f.setVisible(true);
+		// zoom to the house smoothely
+		ActionRegistry.invoke(MenuView.class, "zoomHouse", SwingEDT.class);
+		if (false) {
+			try {
+				Thread.sleep(500);
+			} catch (final InterruptedException e1) {
+				return;
 			}
-		}.fork();
-
-		if (false)
-			new ForkableFixed<Single>() {
-				public void run() {
-					application.m.setCurrentTime(tmax);
-				}
-			}.fork();
-		else {
-			final double t0 = application.m.getCurrentTime();
-			final long start = System.currentTimeMillis();
-
-			final ForkableFixed<SwingEDT> runner = new ForkableFixed<SwingEDT>() {
-				public void run() {
-					application.m.setCurrentTime(t0
-							+ (System.currentTimeMillis() - start) * 1e-3);
-				}
-			};
-
-			while (application.m.getCurrentTime() < tmax) {
-				try {
-					Thread.sleep(20);
-				} catch (final InterruptedException e1) {
-					break;
-				}
-				runner.fork();
+			// load hammy by default
+			ActionRegistry.invoke(MenuFile.Controller.class, "showHammy",
+					SwingEDT.class);
+		}
+		{
+			final Preferences p = Preferences.userNodeForPackage(Main.class);
+			p.putLong("lastStartMillis", System.currentTimeMillis());
+			try {
+				p.flush();
+			} catch (final BackingStoreException e) {
+				throw new RuntimeException("Unhandled", e);
 			}
 		}
 	}
 
-	private final MainMod m;
-	private final MainController mainc;
-
-	public MainApp() {
-		m = new MainMod();
-
-		final UndoRedoCon undoc = new UndoRedoCon();
-		undoc.setModel(m.undo);
-
-		final TrajectoryPiccoloPanel zui = new TrajectoryPiccoloPanel();
-		zui.setUndo(m.undo);
-		zui.getBroom().setIdx16(14);
-		zui.setCurves(m.getCurveManager());
-
-		getContentPane().add(zui, "Center");
-		mainc = new MainController(zui, m, this);
-		setJMenuBar(new Menufactory(mainc, undoc).menu());
-		addWindowListener(new WindowAdapter() {
-
-			@Override
-			public void windowClosing(final WindowEvent e) {
-				mainc.shutDown();
-			}
-		});
+	private MainApp() {
+		setTitle("JCurl Shot Planner");
+		final JMenuBar mb = new JMenuBar();
+		final TrajectoryPiccoloPanel tp = new TrajectoryPiccoloPanel();
+		tp.setBackground(new Color(0xE8E8FF));
+		final ActionRegistry ah = ActionRegistry.getInstance();
+		{
+			final MenuFile.Controller con = new MenuFile.Controller(this, tp,
+					tp);
+			ah.registerController(con);
+			addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowClosing(final WindowEvent e) {
+					con.exitFile();
+				}
+			});
+			mb.add(ah.createJMenu(con));
+			ah.findAction(con, "clear").setEnabled(true);
+			ah.findAction(con, "showHammy").setEnabled(true);
+			ah.findAction(con, "openFile").setEnabled(true);
+			ah.findAction(con, "newFile").setEnabled(true);
+			ah.findAction(con, "screenShot").setEnabled(true);
+			ah.findAction(con, "exitFile").setEnabled(true);
+			ah.findAction(con, "saveAsFile").setEnabled(true);
+		}
+		{
+			final MenuEdit.Controller con = new MenuEdit.Controller();
+			ah.registerController(con);
+			mb.add(ah.createJMenu(con));
+		}
+		{
+			final MenuView con = new MenuView();
+			ah.registerController(con);
+			mb.add(ah.createJMenu(con));
+			con.setModel(tp);
+		}
+		{
+			final MenuHelp con = new MenuHelp();
+			ah.registerController(con);
+			mb.add(ah.createJMenu(con));
+			ah.findAction(con, "helpAbout").setEnabled(true);
+		}
+		setJMenuBar(mb);
+		getContentPane().add(tp);
+		pack();
 	}
 }

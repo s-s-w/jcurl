@@ -18,7 +18,7 @@ import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.UndoRedoDocumentBase;
 import org.jcurl.core.ui.TaskExecutor.ForkableFixed;
-import org.jcurl.core.ui.TaskExecutor.SmartQueue;
+import org.jcurl.core.ui.TaskExecutor.SwingEDT;
 import org.jcurl.zui.piccolo.BroomPromptSimple;
 import org.jcurl.zui.piccolo.KeyboardZoom;
 import org.jcurl.zui.piccolo.PCurveStore;
@@ -35,15 +35,16 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PInputEventListener;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
-class TrajectoryPiccoloPanel extends JComponent implements Zoomable {
+class TrajectoryPiccoloPanel extends JComponent implements Zoomable,
+		TrajectoryDisplay {
 	/**
-	 * Mediate ZUI changes to the underlying {@link TacticsPanelModel}.
+	 * Mediate ZUI changes to the underlying {@link TacticsPanelMediator}.
 	 * 
 	 * @see KeyboardZoom
 	 * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
 	 * @version $Id$
 	 */
-	static class Controller implements PropertyChangeListener, ChangeListener {
+	class Controller implements PropertyChangeListener, ChangeListener {
 		final PInputEventListener keyZoom;
 		final PInputEventListener rockMove = new DragHandler() {
 			@Override
@@ -51,11 +52,12 @@ class TrajectoryPiccoloPanel extends JComponent implements Zoomable {
 					final PRockNode node, final Point2D currentPos,
 					final Point2D startPos) {
 				/** A Inner Anonymous Class Comment */
-				new ForkableFixed<SmartQueue>() {
+				new ForkableFixed<SwingEDT>() {
 					/** A Inner Anonymous Method Comment */
 					public void run() {
-						tpm.updatePos((Integer) node
-								.getAttribute(PRockNode.INDEX16), currentPos);
+						mediator.updatePos((Integer) node
+								.getAttribute(PRockNode.INDEX16), currentPos,
+								cm);
 						if (isDrop)
 							// FIXME Add Undo.
 							;
@@ -64,10 +66,7 @@ class TrajectoryPiccoloPanel extends JComponent implements Zoomable {
 			}
 		};
 
-		private final TacticsPanelModel tpm;
-
-		Controller(final TacticsPanelModel tpm, final PCamera cam) {
-			this.tpm = tpm;
+		Controller(final PCamera cam) {
 			keyZoom = new KeyboardZoom(cam);
 		}
 
@@ -76,15 +75,21 @@ class TrajectoryPiccoloPanel extends JComponent implements Zoomable {
 			// + evt.getPropertyName());
 			if (evt.getSource() instanceof BroomPromptModel) {
 				final BroomPromptModel bpm = (BroomPromptModel) evt.getSource();
-				new ForkableFixed<SmartQueue>() {
+				new ForkableFixed<SwingEDT>() {
 					/** A Inner Anonymous Method Comment */
 					public void run() {
 						if ("broom".equals(evt.getPropertyName()))
-							tpm.updateBroom(bpm.getBroom());
+							mediator.updateBroom(bpm.getBroom(), cm, bpm);
 						else if ("outTurn".equals(evt.getPropertyName()))
-							tpm.updateTurn(bpm.getOutTurn());
+							mediator.updateTurn(bpm.getOutTurn(), bpm, cm);
 						else if ("idx16".equals(evt.getPropertyName()))
-							tpm.updateIndex(bpm.getIdx16());
+							mediator.updateIndex(bpm.getIdx16(), cm, bpm);
+						else if ("valueIsAdjusting".equals(evt
+								.getPropertyName()))
+							if (bpm.getValueIsAdjusting())
+								log.info("Push broom to Undo/Redo manager");
+							else
+								;
 						else
 							throw new UnsupportedOperationException(evt
 									.getPropertyName());
@@ -100,10 +105,15 @@ class TrajectoryPiccoloPanel extends JComponent implements Zoomable {
 			if (evt.getSource() instanceof BoundedRangeModel) {
 				final BoundedRangeModel brm = (BoundedRangeModel) evt
 						.getSource();
-				new ForkableFixed<SmartQueue>() {
+				new ForkableFixed<SwingEDT>() {
 					/** A Inner Anonymous Method Comment */
 					public void run() {
-						tpm.updateSplitTimeMillis(brm.getValue());
+						if (brm.getValueIsAdjusting())
+							log.info("Speed change underway");
+						else
+							log.info("Speed change done");
+						mediator.updateSplitTimeMillis(cm, broom.getModel(),
+								brm.getValue());
 					}
 				}.fork();
 			}
@@ -112,41 +122,40 @@ class TrajectoryPiccoloPanel extends JComponent implements Zoomable {
 
 	private static final Log log = JCLoggerFactory
 			.getLogger(TrajectoryPiccoloPanel.class);
+
 	private static final long serialVersionUID = -4648771240323713217L;
+	private static final int TMAX = 30;
 	private final BroomPromptSimple broom;
+	private CurveManager cm = null;
 	private final Controller con;
 	private final PPositionSet current;
 	private final PNode ice;
 	private final PPositionSet initial;
 	private final int major = 255;
+	private final TacticsPanelMediator mediator = new TacticsPanelMediator();
 	private final int minor = 64;
-	final PCanvas pico;
-	private final TacticsPanelModel tpm = new TacticsPanelModel();
+	private final PCanvas pico;
 	private final PCurveStore traj;
 	private UndoRedoDocumentBase undo;
 
 	public TrajectoryPiccoloPanel() {
+		pico = new PCanvas();
+		setVisible(false);
 		setLayout(new BorderLayout());
-		this.add(pico = new PCanvas(), BorderLayout.CENTER);
-		pico.setBackground(new Color(0xE8E8FF));
+		add(pico, BorderLayout.CENTER);
 		pico.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 		pico.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-		// pico.getRoot().getDefaultInputManager().setKeyboardFocus(
-		// new KeyboardZoom(pico.getCamera()));
 
-		con = new Controller(tpm, pico.getCamera());
+		con = new Controller(pico.getCamera());
 		pico.addInputEventListener(con.keyZoom);
 
 		// create the scene
 		ice = new PIceFactory.Fancy().newInstance();
-		traj = new PCurveStore(new PTrajectoryFactory.Fancy(), MainApp.tmax);
+		traj = new PCurveStore(new PTrajectoryFactory.Fancy(), TMAX);
 		initial = new PPositionSet(new PRockFactory.Fancy(minor));
 		initial.addInputEventListener(con.rockMove);
 		current = new PPositionSet(new PRockFactory.Fancy(major));
 		broom = new BroomPromptSimple();
-		broom.setModel(con.tpm.getPrompt());
-		broom.getModel().addPropertyChangeListener(con);
-		broom.getModel().getSplitTimeMillis().addChangeListener(con);
 
 		traj.setVisible(false);
 		current.setVisible(false);
@@ -159,6 +168,8 @@ class TrajectoryPiccoloPanel extends JComponent implements Zoomable {
 		ice.addChild(broom);
 
 		pico.getLayer().addChild(ice);
+		setBackground(super.getBackground());
+		setVisible(true);
 	}
 
 	public BroomPromptModel getBroom() {
@@ -166,7 +177,7 @@ class TrajectoryPiccoloPanel extends JComponent implements Zoomable {
 	}
 
 	public CurveManager getCurves() {
-		return tpm.getCm();
+		return cm;
 	}
 
 	public UndoRedoDocumentBase getUndo() {
@@ -177,8 +188,26 @@ class TrajectoryPiccoloPanel extends JComponent implements Zoomable {
 		return pico.getCamera().getBounds();
 	}
 
+	@Override
+	public void setBackground(final Color bg) {
+		pico.setBackground(bg);
+		super.setBackground(bg);
+	}
+
+	public void setBroom(final BroomPromptModel b) {
+		if (broom.getModel() != null) {
+			broom.getModel().removePropertyChangeListener(con);
+			broom.getModel().getSplitTimeMillis().removeChangeListener(con);
+		}
+		broom.setModel(b);
+		if (broom.getModel() != null) {
+			broom.getModel().addPropertyChangeListener(con);
+			broom.getModel().getSplitTimeMillis().addChangeListener(con);
+		}
+	}
+
 	public void setCurves(final CurveManager model) {
-		tpm.setCm(model);
+		setBroom(mediator.setCm(cm = model, broom.getModel()));
 		if (model == null) {
 			traj.setModel(null);
 			current.setModel(null);

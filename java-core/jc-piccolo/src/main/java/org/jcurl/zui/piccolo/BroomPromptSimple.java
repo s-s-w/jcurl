@@ -17,7 +17,6 @@ import java.beans.PropertyChangeListener;
 import javax.swing.BoundedRangeModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.undo.StateEdit;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.IceSize;
@@ -38,15 +37,16 @@ import edu.umd.cs.piccolo.util.PPickPath;
 /** Piccolo View + Controller for {@link BroomPromptModel}s. */
 public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 		ChangeListener {
-	private static final Cursor CURSOR = new Cursor(Cursor.HAND_CURSOR);
 	private static final Color dark = Color.RED;
 	private static final Color fast = Color.RED;
 	private static final Color light = Color.YELLOW;
 	private static final Log log = JCLoggerFactory
 			.getLogger(BroomPromptSimple.class);
+	private static final Cursor MOVE_CURSOR = new Cursor(Cursor.MOVE_CURSOR);
 	private static final double scale0 = 0;
 	private static final long serialVersionUID = 3115716478135484000L;
 	private static final Color slow = Color.BLUE;
+	private static final Cursor UPDN_CURSOR = new Cursor(Cursor.N_RESIZE_CURSOR);
 
 	/**
 	 * Pointing along the positive X-axis, tip ending at 0,0
@@ -241,7 +241,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 		}
 		// Set up Event handling
 		addInputEventListener(new PDragEventHandler() {
-			private StateEdit edit = null;
+
 			/** double-click: flip handle */
 			@Override
 			public void mouseClicked(final PInputEvent arg0) {
@@ -256,6 +256,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 			@Override
 			public void mouseDragged(final PInputEvent arg0) {
 				arg0.setHandled(true);
+				getModel().setValueIsAdjusting(true);
 				getModel().setBroom(
 						arg0.getPositionRelativeTo(self.getParent()));
 			}
@@ -263,7 +264,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 			@Override
 			public void mouseEntered(final PInputEvent arg0) {
 				super.mouseEntered(arg0);
-				arg0.pushCursor(CURSOR);
+				arg0.pushCursor(MOVE_CURSOR);
 			}
 
 			@Override
@@ -271,8 +272,18 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 				super.mouseExited(arg0);
 				arg0.popCursor();
 			}
+
+			@Override
+			public void mouseReleased(final PInputEvent pinputevent) {
+				getModel().setValueIsAdjusting(false);
+			}
 		});
 		slider.addInputEventListener(new PDragEventHandler() {
+			@Override
+			protected void endDrag(final PInputEvent pinputevent) {
+				log.debug("speed");
+			}
+
 			/** adjust the slider */
 			@Override
 			public void mouseDragged(final PInputEvent arg0) {
@@ -282,7 +293,30 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 						.getSplitTimeMillis();
 				if (r == null)
 					return;
+				r.setValueIsAdjusting(true);
 				r.setValue(ratio2value(p.getY() / stickLength, r));
+			}
+
+			@Override
+			public void mouseEntered(final PInputEvent arg0) {
+				super.mouseEntered(arg0);
+				arg0.pushCursor(UPDN_CURSOR);
+			}
+
+			@Override
+			public void mouseExited(final PInputEvent arg0) {
+				super.mouseExited(arg0);
+				arg0.popCursor();
+			}
+
+			@Override
+			public void mouseReleased(final PInputEvent pinputevent) {
+				log.debug("speed");
+				final BoundedRangeModel r = self.getModel()
+						.getSplitTimeMillis();
+				if (r == null)
+					return;
+				r.setValueIsAdjusting(false);
 			}
 		});
 	}
@@ -299,6 +333,10 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 
 	public BroomPromptModel getModel() {
 		return model;
+	}
+
+	public UndoRedoDocument getUndo() {
+		return undo;
 	}
 
 	public void propertyChange(final PropertyChangeEvent evt) {
@@ -358,6 +396,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 			setSlider(this.model.getSplitTimeMillis());
 			this.model.addPropertyChangeListener(this);
 		}
+		invalidatePaint();
 	}
 
 	private void setOutTurn(final boolean ot) {
@@ -371,6 +410,10 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 			return;
 		s.addChangeListener(this);
 		adjustSlider(s);
+	}
+
+	public void setUndo(final UndoRedoDocument undo) {
+		this.undo = undo;
 	}
 
 	protected Color sliderColor(final BoundedRangeModel r) {
@@ -388,13 +431,5 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 	private double value2ratio(final BoundedRangeModel r) {
 		return (double) (r.getValue() - r.getMaximum())
 				/ (r.getMinimum() - r.getMaximum());
-	}
-
-	public UndoRedoDocument getUndo() {
-		return undo;
-	}
-
-	public void setUndo(UndoRedoDocument undo) {
-		this.undo = undo;
 	}
 }
