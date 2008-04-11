@@ -31,7 +31,7 @@ import org.jcurl.demo.tactics.ActionRegistry.JCMenu;
 @JCMenu("&Help")
 public class MenuHelp {
 
-	private static final Log log = JCLoggerFactory.getLogger(Controller.class);
+	private static final Log log = JCLoggerFactory.getLogger(MenuHelp.class);
 
 	@JCAction(title = "&About", idx = 10)
 	public void helpAbout() {

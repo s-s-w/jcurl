@@ -54,7 +54,7 @@ public class MainApp extends JFrame {
 					SwingEDT.class);
 		}
 		{
-			final Preferences p = Preferences.userNodeForPackage(Main.class);
+			final Preferences p = Preferences.userNodeForPackage(MainApp.class);
 			p.putLong("lastStartMillis", System.currentTimeMillis());
 			try {
 				p.flush();

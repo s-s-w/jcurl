@@ -150,7 +150,7 @@ public class ActionRegistry {
 		if (a.separated())
 			ret.addSeparator();
 		final JMenuItem mi = new JMenuItem();
-		mi.setAction(findAction(controller, m));		
+		mi.setAction(findAction(controller, m));
 		{
 			// TODO move to createAction
 			final Character mne = findMnemonic(a.title());
@@ -257,15 +257,6 @@ public class ActionRegistry {
 	 * @throws IllegalArgumentException
 	 *             no such action found
 	 */
-	public Action findAction(final Method method) {
-		return findAction(c2a.get(method.getDeclaringClass()), method);
-	}
-
-	/**
-	 * @return never <code>null</code>
-	 * @throws IllegalArgumentException
-	 *             no such action found
-	 */
 	public Action findAction(final Class<?> controller, final String method) {
 		try {
 			return findAction(controller.getMethod(method, (Class<?>[]) null));
@@ -283,6 +274,15 @@ public class ActionRegistry {
 		if (ret == null)
 			throw new IllegalArgumentException(method.toString());
 		return ret;
+	}
+
+	/**
+	 * @return never <code>null</code>
+	 * @throws IllegalArgumentException
+	 *             no such action found
+	 */
+	public Action findAction(final Method method) {
+		return findAction(c2a.get(method.getDeclaringClass()), method);
 	}
 
 	/**

@@ -47,6 +47,10 @@ class TacticsPanelMediator {
 	private static final Log log = JCLoggerFactory
 			.getLogger(TacticsPanelMediator.class);
 
+	public static void release(final Rock<Pos> r) {
+		r.setLocation(0, IceSize.FAR_HACK_2_TEE, Math.PI);
+	}
+
 	private static <R extends RockType> void swap(final RockSet<R> r,
 			final int a, final int b) {
 		final Rock<R> tmp = new RockDouble<R>(r.getRock(a));
@@ -141,10 +145,6 @@ class TacticsPanelMediator {
 		release(cm.getInitialPos().getRock(i16));
 		// initial speed
 		swap(cm.getInitialSpeed(), prompt.getIdx16(), i16);
-	}
-
-	public static void release(Rock<Pos> r) {
-		r.setLocation(0, IceSize.FAR_HACK_2_TEE, Math.PI);
 	}
 
 	public void updatePos(final int i16, final Point2D newPos,
