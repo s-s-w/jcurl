@@ -10,7 +10,7 @@
 cwd=`pwd`
 reporter=/home/groups/jcurl/htdocs/ftp-push-m2-to-html.awk
 #src=$HOME/.m2/repository/org/jcurl
-src=/home/groups/jcurl/htdocs/m2
+src=/home/groups/jcurl/htdocs/jws
 timer=$0.timer
 report=`basename $0`.html
 
@@ -18,7 +18,7 @@ dst_host=jcurl.org
 # temporary address while KK-ing:
 dst_host=213.133.104.85
 #dst_dir=sandbox
-dst_dir=public_html/m2
+dst_dir=public_html/jws
 
 cd $src
 
