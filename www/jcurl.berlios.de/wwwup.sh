@@ -5,7 +5,7 @@
 repo=jcurl-repos.gz
 echo "backup http://svn.berlios.de/svndumps/$repo to ftp://jcurl.org"
 wget --no-verbose -O $repo http://svn.berlios.de/svndumps/$repo
-echo -e "put $repo" | ftp -i -V jcurl.org
+echo -e "cd public_html\nput $repo" | ftp -i -V jcurl.org
 rm $repo
 
 echo "done"
