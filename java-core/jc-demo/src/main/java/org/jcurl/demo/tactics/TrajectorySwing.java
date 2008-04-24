@@ -80,7 +80,8 @@ public class TrajectorySwing extends JComponent implements TrajectoryDisplay {
 			tb.setLayout(new BoxLayout(tb, BoxLayout.X_AXIS));
 			tb.setBorder(BorderFactory.createTitledBorder("Split Time"));
 			tb.add(new JSpinner());
-			tb.add(new JLabel("sec"));
+			tb.add(new JComboBox(new Object[] { "sec", "1/10 sec", "1/100 sec",
+					"1/1000 sec" }));
 			tb.add(Box.createHorizontalGlue());
 			b.add(tb);
 		}
@@ -92,14 +93,16 @@ public class TrajectorySwing extends JComponent implements TrajectoryDisplay {
 				final Box tb = Box.createHorizontalBox();
 				tb.add(new JLabel("x: "));
 				tb.add(new JSpinner());
-				tb.add(new JComboBox(new Object[] { "m", "ft" }));
+				tb.add(new JComboBox(
+						new Object[] { "m", "cm", "mm", "ft", "in" }));
 				p.add(tb);
 			}
 			{
 				final Box tb = Box.createHorizontalBox();
 				tb.add(new JLabel("y: "));
 				tb.add(new JSpinner());
-				tb.add(new JComboBox(new Object[] { "m", "ft" }));
+				tb.add(new JComboBox(
+						new Object[] { "m", "cm", "mm", "ft", "in" }));
 				p.add(tb);
 			}
 			b.add(p);
