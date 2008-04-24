@@ -161,7 +161,7 @@ public class MenuFile {
 			final Cursor cu = switchCursor(waitc);
 			try {
 				// This cast just eases code navigation. Remove it later.
-				((TrajectoryPiccoloPanel) td).setCurves(null);
+				((TrajectoryPiccolo) td).setCurves(null);
 			} finally {
 				switchCursor(cu);
 			}

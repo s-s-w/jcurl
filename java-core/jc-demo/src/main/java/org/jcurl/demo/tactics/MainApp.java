@@ -18,12 +18,16 @@
  */
 package org.jcurl.demo.tactics;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 
@@ -67,7 +71,7 @@ public class MainApp extends JFrame {
 	private MainApp() {
 		setTitle("JCurl Shot Planner");
 		final JMenuBar mb = new JMenuBar();
-		final TrajectoryPiccoloPanel tp = new TrajectoryPiccoloPanel();
+		final TrajectoryPiccolo tp = new TrajectoryPiccolo();
 		tp.setBackground(new Color(0xE8E8FF));
 		final ActionRegistry ah = ActionRegistry.getInstance();
 		{
@@ -107,7 +111,16 @@ public class MainApp extends JFrame {
 			ah.findAction(con, "helpAbout").setEnabled(true);
 		}
 		setJMenuBar(mb);
-		getContentPane().add(tp);
+		final Container c = getContentPane();
+		c.setLayout(new BorderLayout());
+		c.add(tp, BorderLayout.CENTER);
+		Box b = Box.createVerticalBox();
+		final TrajectorySwing ts = new TrajectorySwing();
+		b.add(ts);
+		b.add(new Box.Filler(new Dimension(0, 0), new Dimension(1,
+				Integer.MAX_VALUE), new Dimension(Integer.MAX_VALUE,
+				Integer.MAX_VALUE)));
+		c.add(b, BorderLayout.EAST);
 		pack();
 	}
 }

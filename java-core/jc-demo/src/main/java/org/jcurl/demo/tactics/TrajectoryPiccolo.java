@@ -35,7 +35,7 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PInputEventListener;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
-class TrajectoryPiccoloPanel extends JComponent implements Zoomable,
+class TrajectoryPiccolo extends JComponent implements Zoomable,
 		TrajectoryDisplay {
 	/**
 	 * Mediate ZUI changes to the underlying {@link TacticsPanelMediator}.
@@ -121,7 +121,7 @@ class TrajectoryPiccoloPanel extends JComponent implements Zoomable,
 	}
 
 	private static final Log log = JCLoggerFactory
-			.getLogger(TrajectoryPiccoloPanel.class);
+			.getLogger(TrajectoryPiccolo.class);
 
 	private static final long serialVersionUID = -4648771240323713217L;
 	private static final int TMAX = 30;
@@ -138,7 +138,7 @@ class TrajectoryPiccoloPanel extends JComponent implements Zoomable,
 	private final PCurveStore traj;
 	private UndoRedoDocumentBase undo;
 
-	public TrajectoryPiccoloPanel() {
+	public TrajectoryPiccolo() {
 		pico = new PCanvas();
 		setVisible(false);
 		setLayout(new BorderLayout());
