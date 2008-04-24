@@ -77,10 +77,10 @@
 						<keypass>m2m2m2</keypass>
 						<storepass>m2m2m2</storepass>
 						<!--sigfile>m2m2m2</sigfile-->
-						<alias>mrohrmoser</alias>
+						<alias>m@jcurl.org</alias>
 						<validity>30</validity>
 
-						<dnameCn>M. Rohrmoser (http://www.mrohrmoser.de)</dnameCn>
+						<dnameCn>M. Rohrmoser (mailto:m@jcurl.org)</dnameCn>
 						<dnameOu>None</dnameOu>
 						<dnameO>M. Rohrmoser</dnameO>
 						<dnameL>Munich</dnameL>
