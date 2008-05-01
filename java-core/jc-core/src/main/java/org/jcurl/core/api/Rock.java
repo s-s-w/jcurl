@@ -23,31 +23,33 @@ import java.awt.geom.Point2D;
 
 import javax.swing.event.ChangeListener;
 
-import org.jcurl.core.helpers.Service;
-
 /**
  * Base class for rock information (either location or speed). The 3rd component (<code>a</code>)
  * is the handle angle in radians.
- * <h3>Why is this type not generic, e.g. Rock<XY extends Number, A extends
- * Number></h3>
+ * <h3>Why is this type not generic, e.g. Rock&lt;XY extends Number, A extends
+ * Number&gt;</h3>
  * <p>
  * Yes, this would be preferable, especially for a neat integration into <a
  * href="http://www.jscience.org">JScience</a> calculus.
  * </p>
  * <p>
- * But as {@link Point2D#setLocation(double, double)} &amp; co must be provided
- * to satisfy the {@link Point2D} (settable via mouse interaction on a panel)
- * there MUST be a way to convert {@link java.lang.Double}s to <code>T</code>s.
- * {@link Service} factories (@link Double}-&gt;<code>T</code>) could be a
- * solution.
+ * As the function and curve classes take the order of the desired derivative as
+ * an input parameter to {@link CurveRock#at(int, double, Rock)} there's a
+ * pardigm shift necessary to use jscience-like typing.
  * </p>
  * <p>
- * Looks like this absolutely central class is subject to major refactoring.
+ * And - at least for the moment - I hesitate to add a 700K dependency to this
+ * lib.
+ * </p>
+ * <p>
+ * But it looks like this absolutely central class is subject to some more
+ * refactoring.
  * </p>
  * <h2>Possible ways out</h2>
  * <ul>
- * <li>don't extend {@link Point2D} but use a wrapper to communicate with
- * displays.</li>
+ * <li>understand and adopt the <a
+ * href="http://www.jscience.org/api/org/jscience/mathematics/function/Function.html#differentiate(org.jscience.mathematics.function.Variable)">jscience
+ * function concept</a>.</li>
  * </ul>
  * 
  * @see org.jcurl.core.api.RockSet

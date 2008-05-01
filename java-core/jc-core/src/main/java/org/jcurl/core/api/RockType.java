@@ -28,7 +28,7 @@ package org.jcurl.core.api;
  * @version $Id$
  */
 public interface RockType {
-	/** Position Acceleration */
+	/** Acceleration Semantics */
 	public static interface Acc extends RockType {}
 
 	/** Position Semantics */

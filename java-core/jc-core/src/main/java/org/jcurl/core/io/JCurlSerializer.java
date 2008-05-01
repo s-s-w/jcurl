@@ -56,7 +56,7 @@ public class JCurlSerializer {
 		void write(IONode src, OutputStream dst) throws IOException;
 	}
 
-	private static final char CHAR = '\n';
+	private static final char LF = '\n';
 
 	private static final Pattern idpat = Pattern
 			.compile("<!--\\s*(\\S+)\\s*-->");
@@ -84,7 +84,7 @@ public class JCurlSerializer {
 			final ByteArrayOutputStream buf = new ByteArrayOutputStream();
 			for (;;) {
 				final int b = src.read();
-				if (b == CHAR)
+				if (b == LF)
 					break;
 				buf.write(b);
 			}
@@ -141,7 +141,7 @@ public class JCurlSerializer {
 		dst.write("<!-- ".getBytes(UTF_8));
 		dst.write(ser2Id(d).getBytes(UTF_8));
 		dst.write(" -->".getBytes(UTF_8));
-		dst.write(CHAR);
+		dst.write(LF);
 		d.write(src, dst);
 	}
 }

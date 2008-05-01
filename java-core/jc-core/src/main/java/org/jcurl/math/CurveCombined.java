@@ -40,6 +40,12 @@ import org.jcurl.core.log.JCLoggerFactory;
  */
 public class CurveCombined<T extends R1RNFunction> extends R1RNFunctionImpl
 		implements Iterable<Entry<Double, T>>, Serializable {
+	/**
+	 * One segment of the combined curve.
+	 * 
+	 * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
+	 * @version $Id$
+	 */
 	public static class Part<U extends R1RNFunction> extends Number implements
 			Entry<Double, U>, Comparable<Number> {
 		private static final long serialVersionUID = 2799393238450079381L;

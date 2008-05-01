@@ -29,18 +29,31 @@ import javolution.testing.AssertionException;
 import junit.framework.TestCase;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.api.Collider;
+import org.jcurl.core.api.CollissionDetector;
+import org.jcurl.core.api.Curler;
+import org.jcurl.core.api.EnumBase;
 import org.jcurl.core.api.IceSize;
+import org.jcurl.core.api.Measure;
+import org.jcurl.core.api.MutableObject;
 import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.TransferObject;
 import org.jcurl.core.api.Unit;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.core.helpers.AnnoHelper;
+import org.jcurl.core.impl.ColliderBase;
+import org.jcurl.core.impl.CollissionDetectorBase;
 import org.jcurl.core.impl.CollissionSpin;
+import org.jcurl.core.impl.CoulombCurler;
+import org.jcurl.core.impl.CurlerBase;
 import org.jcurl.core.impl.CurlerDenny;
 import org.jcurl.core.impl.CurveManager;
 import org.jcurl.core.impl.NewtonCollissionDetector;
+import org.jcurl.core.impl.PropModelImpl;
 import org.jcurl.core.log.JCLoggerFactory;
 
 public class JDKSerializerTest extends TestCase {
@@ -279,61 +292,60 @@ public class JDKSerializerTest extends TestCase {
 				{ "org.jcurl.core.jnlp.FileDialogWebstart", "0" },
 				{ "org.jcurl.core.jnlp.FileDialogSwing$1", "0" },
 				{ "org.jcurl.core.jnlp.FileDialogSwing", "0" } };
-		final String[][] ser = {
-				{ "org.jcurl.core.api.Collider", null },
-				{ "org.jcurl.core.api.CollissionDetector", null },
-				{ "org.jcurl.core.api.Curler", null },
-				{ "org.jcurl.core.api.Unit", "6779663806431722367" },
-				{ "org.jcurl.core.api.EnumBase", null },
-				{ "org.jcurl.core.api.EnumBase$HashCodeComp", null },
-				{ "org.jcurl.core.api.Measure", "-958212044733309378" },
-				{ "org.jcurl.core.api.MutableObject", null },
-				{ "org.jcurl.core.api.Rock", null },
-				{ "org.jcurl.core.api.Rock$ImmutableRock", null },
-				{ "org.jcurl.core.api.Rock$RockPoint", null },
-				{ "org.jcurl.core.api.RockDouble", "2337028316325540776" },
-				{ "org.jcurl.core.api.RockSet", "-7154547850436886952" },
-				{ "org.jcurl.core.api.TransferObject", null },
-				{ "org.jcurl.core.api.Unit", "6779663806431722367" },
-				{ "org.jcurl.core.impl.ColliderBase", null },
-				{ "org.jcurl.core.impl.CollissionDetectorBase", null },
-				{ "org.jcurl.core.impl.CollissionSpin", "8103077481042211458" },
-				{ "org.jcurl.core.impl.CoulombCurler", null },
-				{ "org.jcurl.core.impl.CurlerBase", "-3873001715024033329" },
-				{ "org.jcurl.core.impl.CurlerDenny", "9048729754646886751" },
-				{ "org.jcurl.core.impl.CurveManager", "7198540442889130378" },
-				{ "org.jcurl.core.impl.NewtonCollissionDetector",
-						"-3370270087945653006" },
-				{ "org.jcurl.core.impl.PropModelImpl", "-1281395608873589552" },
-				{ "org.jcurl.core.io.IONode", "-4734020637823903908" },
-				{ "org.jcurl.core.io.IOTrajectories", "-8243459215398281867" } };
-		for (final String[] elem : ser)
+		final Object[][] ser = { { Collider.class, null },
+				{ CollissionDetector.class, null }, { Curler.class, null },
+				{ EnumBase.class, null },
+				{ EnumBase.class.getName() + "$HashCodeComp", null },
+				{ Measure.class, -958212044733309378L },
+				{ MutableObject.class, null }, { Rock.class, null },
+				{ Rock.class.getName() + "$ImmutableRock", null },
+				{ Rock.class.getName() + "$RockPoint", null },
+				{ RockDouble.class, 2337028316325540776L },
+				{ RockSet.class, -7154547850436886952L },
+				{ TransferObject.class, null },
+				{ Unit.class, 6779663806431722367L },
+				{ ColliderBase.class, null },
+				{ CollissionDetectorBase.class, null },
+				{ CollissionSpin.class, 8103077481042211458L },
+				{ CoulombCurler.class, null },
+				{ CurlerBase.class, -3873001715024033329L },
+				{ CurlerDenny.class, 9048729754646886751L },
+				{ CurveManager.class, 7198540442889130378L },
+				{ NewtonCollissionDetector.class, -3370270087945653006L },
+				{ PropModelImpl.class, -1281395608873589552L },
+				{ IONode.class, -4734020637823903908L },
+				{ IOTrajectories.class, -8243459215398281867L } };
+		for (final Object[] elem : ser)
 			try {
-				final Class<?> c = Class.forName(elem[0]);
-				if (elem[1] == null) {
-					if (Serializable.class.isAssignableFrom(c))
-						log.warn(elem[0] + " shouldn't be Serializable");
-					try {
-						if (c.getDeclaredField("serialVersionUID") != null)
-							log.error(elem[0]
-									+ " shouldn't have a serialVersionUID");
-					} catch (NoSuchFieldException e) {}
-				} else {
-					final Field f = c.getDeclaredField("serialVersionUID");
-					f.setAccessible(true);
-					assertEquals(elem[0], Long.parseLong(elem[1]), f
-							.getLong(null));
+				final Class<?> c = elem[0] instanceof String ? Class
+						.forName((String) elem[0]) : (Class<?>) elem[0];
+				try {
+					if (elem[1] == null) {
+						if (Serializable.class.isAssignableFrom(c))
+							log
+									.warn(c.getName()
+											+ " shouldn't be Serializable");
+						try {
+							if (c.getDeclaredField("serialVersionUID") != null)
+								log.error(c.getName()
+										+ " shouldn't have a serialVersionUID");
+						} catch (final NoSuchFieldException e) {}
+					} else {
+						final Field f = c.getDeclaredField("serialVersionUID");
+						f.setAccessible(true);
+						assertEquals(c.getName(), elem[1], f.getLong(null));
+					}
+				} catch (final SecurityException e) {
+					throw new AssertionException(c.getName(), null, e);
+				} catch (final NoSuchFieldException e) {
+					throw new AssertionException(c.getName(), null, e);
+				} catch (final IllegalArgumentException e) {
+					throw new AssertionException(c.getName(), null, e);
+				} catch (final IllegalAccessException e) {
+					throw new AssertionException(c.getName(), null, e);
 				}
 			} catch (final ClassNotFoundException e) {
-				throw new AssertionException(elem[0], null, e);
-			} catch (final SecurityException e) {
-				throw new AssertionException(elem[0], null, e);
-			} catch (final NoSuchFieldException e) {
-				throw new AssertionException(elem[0], null, e);
-			} catch (final IllegalArgumentException e) {
-				throw new AssertionException(elem[0], null, e);
-			} catch (final IllegalAccessException e) {
-				throw new AssertionException(elem[0], null, e);
+				throw new AssertionException((String) elem[0], null, e);
 			}
 	}
 }

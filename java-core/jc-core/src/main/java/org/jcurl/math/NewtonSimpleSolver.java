@@ -21,6 +21,12 @@ package org.jcurl.math;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
 
+/**
+ * Very simple implementation of Newton's root-finding algorithm.
+ * 
+ * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
+ * @version $Id$
+ */
 public class NewtonSimpleSolver {
 	public static final double eps = 1e-9;
 	private static final Log log = JCLoggerFactory
