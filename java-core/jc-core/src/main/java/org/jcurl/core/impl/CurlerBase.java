@@ -37,6 +37,8 @@ import org.jcurl.math.R1R1Function;
  */
 public abstract class CurlerBase extends PropModelImpl implements Curler {
 
+	private static final long serialVersionUID = -3873001715024033329L;
+
 	private static final Point2D teeWc = new Point2D.Double(0, 0);
 
 	public static double computeHackToTee(final Curler cu) {
@@ -76,7 +78,8 @@ public abstract class CurlerBase extends PropModelImpl implements Curler {
 			@Override
 			public double at(int c, double v0) {
 				final CurveRock<Pos> rc = cu.computeRc(0, v0, 1, 0);
-				return rc.at(1, 0, s.compute(rc, 0, 60)) - IceSize.FAR_HACK_2_TEE;
+				return rc.at(1, 0, s.compute(rc, 0, 60))
+						- IceSize.FAR_HACK_2_TEE;
 			}
 		};
 		return BisectionSolver.findRoot(f, 0, 1, 7);
