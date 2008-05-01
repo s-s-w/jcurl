@@ -285,9 +285,13 @@ public class JDKSerializerTest extends TestCase {
 				{ "org.jcurl.core.api.Curler", null },
 				{ "org.jcurl.core.api.Unit", "6779663806431722367" },
 				{ "org.jcurl.core.api.EnumBase", null },
+				{ "org.jcurl.core.api.EnumBase$HashCodeComp", null },
 				{ "org.jcurl.core.api.Measure", "-958212044733309378" },
 				{ "org.jcurl.core.api.MutableObject", null },
 				{ "org.jcurl.core.api.Rock", null },
+				{ "org.jcurl.core.api.Rock$ImmutableRock",
+						"3485638632856914198" },
+				{ "org.jcurl.core.api.Rock$RockPoint", null },
 				{ "org.jcurl.core.api.RockDouble", "2337028316325540776" },
 				{ "org.jcurl.core.api.RockSet", "-7154547850436886952" },
 				{ "org.jcurl.core.api.TransferObject", null },
@@ -312,11 +316,9 @@ public class JDKSerializerTest extends TestCase {
 						log.warn(elem[0] + " shouldn't be Serializable");
 					try {
 						if (c.getDeclaredField("serialVersionUID") != null)
-							log.warn(elem[0]
+							log.error(elem[0]
 									+ " shouldn't have a serialVersionUID");
 					} catch (NoSuchFieldException e) {}
-					// assertFalse(elem[0],
-					// Serializable.class.isAssignableFrom(c));
 				} else {
 					final Field f = c.getDeclaredField("serialVersionUID");
 					f.setAccessible(true);

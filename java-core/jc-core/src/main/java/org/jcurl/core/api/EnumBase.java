@@ -19,7 +19,6 @@
 package org.jcurl.core.api;
 
 import java.io.ObjectStreamException;
-import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
@@ -36,9 +35,7 @@ public abstract class EnumBase extends Number implements Comparable<EnumBase> {
 
 	/** Simple comparator based on the hash-value. */
 	private static class HashCodeComp implements
-			Comparator<Class<? extends EnumBase>>, Serializable {
-
-		private static final long serialVersionUID = -4254772860505516069L;
+			Comparator<Class<? extends EnumBase>> {
 
 		public int compare(final Class<? extends EnumBase> o1,
 				final Class<? extends EnumBase> o2) {
