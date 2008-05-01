@@ -21,7 +21,6 @@ package org.jcurl.core.api;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -34,7 +33,7 @@ import java.util.Map.Entry;
  * @version $Id$
  * 
  */
-public abstract class TransferObject implements Serializable {
+public abstract class TransferObject {
 
     /**
      * Generic toString method.

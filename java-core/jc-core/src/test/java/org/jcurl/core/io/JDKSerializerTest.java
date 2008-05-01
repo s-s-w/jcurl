@@ -289,8 +289,7 @@ public class JDKSerializerTest extends TestCase {
 				{ "org.jcurl.core.api.Measure", "-958212044733309378" },
 				{ "org.jcurl.core.api.MutableObject", null },
 				{ "org.jcurl.core.api.Rock", null },
-				{ "org.jcurl.core.api.Rock$ImmutableRock",
-						"3485638632856914198" },
+				{ "org.jcurl.core.api.Rock$ImmutableRock", null },
 				{ "org.jcurl.core.api.Rock$RockPoint", null },
 				{ "org.jcurl.core.api.RockDouble", "2337028316325540776" },
 				{ "org.jcurl.core.api.RockSet", "-7154547850436886952" },
@@ -305,7 +304,7 @@ public class JDKSerializerTest extends TestCase {
 				{ "org.jcurl.core.impl.CurveManager", "7198540442889130378" },
 				{ "org.jcurl.core.impl.NewtonCollissionDetector",
 						"-3370270087945653006" },
-				{ "org.jcurl.core.impl.PropModelImpl", null },
+				{ "org.jcurl.core.impl.PropModelImpl", "-1281395608873589552" },
 				{ "org.jcurl.core.io.IONode", "-4734020637823903908" },
 				{ "org.jcurl.core.io.IOTrajectories", "-8243459215398281867" } };
 		for (final String[] elem : ser)

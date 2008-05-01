@@ -18,8 +18,6 @@
  */
 package org.jcurl.core.api;
 
-import java.io.Serializable;
-
 import org.jcurl.math.MathVec;
 import org.jcurl.math.R1RNFunction;
 
@@ -29,7 +27,7 @@ import org.jcurl.math.R1RNFunction;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CollissionDetector.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
-public interface CollissionDetector extends Strategy, Serializable {
+public interface CollissionDetector extends Strategy {
 
     public static double RR2 = MathVec.sqr(2 * RockProps.DEFAULT.getRadius());
 

@@ -20,7 +20,6 @@ package org.jcurl.core.api;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.io.Serializable;
 
 import javax.swing.event.ChangeListener;
 
@@ -36,9 +35,9 @@ import org.jcurl.core.helpers.Service;
  * href="http://www.jscience.org">JScience</a> calculus.
  * </p>
  * <p>
- * But as {@link Point2D#setLocation(double, double)} &amp; co must be provided to
- * satisfy the {@link Point2D} (settable via mouse interaction on a panel) there
- * MUST be a way to convert {@link java.lang.Double}s to <code>T</code>s.
+ * But as {@link Point2D#setLocation(double, double)} &amp; co must be provided
+ * to satisfy the {@link Point2D} (settable via mouse interaction on a panel)
+ * there MUST be a way to convert {@link java.lang.Double}s to <code>T</code>s.
  * {@link Service} factories (@link Double}-&gt;<code>T</code>) could be a
  * solution.
  * </p>
@@ -56,10 +55,9 @@ import org.jcurl.core.helpers.Service;
  * @version $Id:Rock.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public abstract class Rock<R extends RockType> implements IChangeSupport,
-		Cloneable, Serializable {
+		Cloneable {
 
 	private static class ImmutableRock<X extends RockType> extends Rock<X> {
-		private static final long serialVersionUID = 3485638632856914198L;
 		private final Rock<X> base;
 
 		ImmutableRock(final Rock<X> base) {

@@ -19,6 +19,7 @@
 package org.jcurl.core.impl;
 
 import java.io.ObjectStreamException;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -34,10 +35,12 @@ import org.jcurl.core.helpers.PropModelHelper;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:ModelBase.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public abstract class PropModelImpl implements PropModel {
+public abstract class PropModelImpl implements PropModel, Serializable {
 
     protected Map<CharSequence, Measure> params = null;
 
+    private static final long serialVersionUID = -1281395608873589552L;
+    
     public Measure getProp(final CharSequence key) {
         return params.get(key);
     }

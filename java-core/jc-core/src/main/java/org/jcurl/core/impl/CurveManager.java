@@ -20,6 +20,7 @@ package org.jcurl.core.impl;
 
 import java.awt.geom.AffineTransform;
 import java.io.ObjectStreamException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,7 +53,7 @@ import org.jcurl.math.R1RNFunction;
  * @version $Id:CurveManager.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
 public class CurveManager extends MutableObject implements ChangeListener,
-		ComputedTrajectorySet {
+		ComputedTrajectorySet, Serializable {
 
 	// compute beyond a realistic amount of time
 	private static final double _30 = 60.0;
