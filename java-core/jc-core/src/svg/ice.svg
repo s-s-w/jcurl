@@ -1,0 +1,77 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" width="1.4cm" height="8cm" viewBox="-7 -7 14 80" version="1.1">
+  <desc>Example sheet of ice with one rock of each color</desc>
+  <defs>
+    <style type="text/css"><![CDATA[
+      .rock-dark { fill: #e01010; stroke: none }
+      .rock-light { fill: #e0e010; stroke: none }
+      .rock-granite { fill: #565755; stroke: none }
+      .rock-number { fill: black }
+      .circle-12 { fill: #ff3131; stroke: none }
+      .circle-8 { fill: #ffffff; stroke: none }
+      .circle-4 { fill: #3131ff; stroke: none }
+      .circle-1 { fill: #ffffff; stroke: none }
+      .line { stroke: black; stroke-width: 0.025 /* inches, world-coordinates */ }
+      .ice-house { fill: #e8e8ff; stroke: none; }
+    ]]></style>
+  </defs>
+  <!-- Show outline of canvas using 'rect' element -->
+  <g transform="scale(0.1)">
+    <!-- make coord-sys right handed -->
+    <g transform="scale(1,-1)">
+      <g>
+        <!-- house area -->
+        <rect class="ice-house" x="-6" y="-6" width="12" height="27"/>
+        <!-- 4-ft line -->
+        <line class="line" x1="-2" y1="-6" x2="-2" y2="93"/>
+        <line class="line" x1="2" y1="-6" x2="2" y2="93"/>
+        <!-- 12 ft -->
+        <circle class="circle-12" cx="0" cy="0" r="6"/>
+        <!-- 8 ft -->
+        <circle class="circle-8" cx="0" cy="0" r="4"/>
+        <!-- 4 ft -->
+        <circle class="circle-4" cx="0" cy="0" r="2"/>
+        <!-- 1 ft -->
+        <circle class="circle-1" cx="0" cy="0" r="0.5"/>
+        <!-- tee -->
+        <line class="line" x1="-7" y1="0" x2="7" y2="0"/>
+        <!-- back -->
+        <line class="line" x1="-7" y1="-6" x2="7" y2="-6"/>
+        <!-- near hog -->
+        <line class="line" x1="-7" y1="21" x2="7" y2="21"/>
+        <!-- far hog -->
+        <line class="line" x1="-7" y1="93" x2="7" y2="93"/>
+        <!-- hack -->
+        <line class="line" x1="-0.5" y1="132" x2="0.5" y2="132"/>
+        <!-- center line -->
+        <line class="line" x1="0" y1="-6" x2="0" y2="132"/>
+        <!-- side line -->
+        <line class="line" x1="-6" y1="-6" x2="-6" y2="93"/>
+        <line class="line" x1="6" y1="-6" x2="6" y2="93"/>
+      </g>
+      <g transform="translate(0.1, 2)">
+        <g stroke="none">
+          <!-- light rock -->
+          <circle class="rock-granite" cx="0" cy="0" r="0.5"/>
+          <circle class="rock-light" cx="0" cy="0" r="0.35"/>
+          <!-- make left-handed again -->
+          <g transform="scale(1,-1)">
+            <text class="rock-number" x="0" y="0" font-size="0.65" alignment-baseline="central" text-anchor="middle" transform="translate(0,0.25)">7</text>
+          </g>
+        </g>
+      </g>
+      <g transform="translate(-1.0, 2)">
+        <g stroke="none">
+          <!-- dark rock -->
+          <circle class="rock-granite" cx="0" cy="0" r="0.5"/>
+          <circle class="rock-dark" cx="0" cy="0" r="0.35"/>
+          <!-- make left-handed again -->
+          <g transform="scale(1,-1)">
+            <text class="rock-number" x="0" y="0" font-size="0.65" fill="black" alignment-baseline="central" text-anchor="middle" transform="translate(0,0.25)">7</text>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
