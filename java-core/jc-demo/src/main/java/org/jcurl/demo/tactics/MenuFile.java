@@ -41,6 +41,7 @@ import org.jcurl.core.api.Unit;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.core.helpers.AnnoHelper;
+import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.impl.CollissionSpin;
 import org.jcurl.core.impl.CurlerDenny;
 import org.jcurl.core.impl.CurveManager;
@@ -251,6 +252,23 @@ public class MenuFile {
 			}
 		}
 
+		@JCAction(title = "Export SV&G", idx = 51, accelerator = "CTRL-G")
+		public void exportSvg() {
+			// if (JFileChooser.APPROVE_OPTION == fcPng.showSaveDialog(parent))
+			// {
+			// final File dst = fcPng.getSelectedFile();
+			File dst = new File("/tmp/tactics");
+			final Cursor cu = switchCursor(waitc);
+			try {
+				model.exportSvg(shootable, dst);
+			} catch (final Exception e1) {
+				log.error("", e1);
+			} finally {
+				switchCursor(cu);
+			}
+			// }
+		}
+
 		public void setModel(final Model model) {
 			this.model = model;
 		}
@@ -305,6 +323,37 @@ public class MenuFile {
 			if (!dst.getName().endsWith(".png"))
 				dst = new File(dst.getAbsoluteFile() + ".png");
 			ImageIO.write(img, "png", dst);
+		}
+
+		public void exportSvg(final Component src, File dst) throws IOException {
+			throw new NotImplementedYetException();
+//			if (false) {
+//				if (!dst.getName().endsWith(".svg"))
+//					dst = new File(dst.getAbsoluteFile() + ".svg");
+//				final Graphics g = Graphics2Svg.createGraphics(src.getWidth(),
+//						src.getHeight(), dst);
+//				try {
+//					src.paintAll(g);
+//				} finally {
+//					g.dispose();
+//				}
+//			} else {
+//				final BufferedImage img = new BufferedImage(src.getWidth(), src
+//						.getHeight(), BufferedImage.TYPE_INT_ARGB);
+//				final Graphics g;
+//				if (false)
+//					g = new Graphics2DWrap(img.createGraphics());
+//				else
+//					g = new Graphics2DWrap(src.getGraphics());
+//				try {
+//					src.paintAll(g);
+//				} finally {
+//					g.dispose();
+//				}
+//				// if (!dst.getName().endsWith(".png"))
+//				// dst = new File(dst.getAbsoluteFile() + ".png");
+//				// ImageIO.write(img, "png", dst);
+//			}
 		}
 
 		public File getFile() {

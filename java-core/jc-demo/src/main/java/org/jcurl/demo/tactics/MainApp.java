@@ -69,7 +69,7 @@ public class MainApp extends JFrame {
 	}
 
 	private MainApp() {
-		setTitle("JCurl Shot Planner");
+		setTitle("JCurl Shot Planner - www.jcurl.org");
 		final JMenuBar mb = new JMenuBar();
 		final TrajectoryPiccolo tp = new TrajectoryPiccolo();
 		tp.setBackground(new Color(0xE8E8FF));
@@ -90,6 +90,7 @@ public class MainApp extends JFrame {
 			ah.findAction(con, "openFile").setEnabled(true);
 			ah.findAction(con, "newFile").setEnabled(true);
 			ah.findAction(con, "screenShot").setEnabled(true);
+			//ah.findAction(con, "exportSvg").setEnabled(true);
 			ah.findAction(con, "exitFile").setEnabled(true);
 			ah.findAction(con, "saveAsFile").setEnabled(true);
 		}

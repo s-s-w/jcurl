@@ -19,8 +19,6 @@
 
 package org.jcurl.demo.tactics;
 
-import java.awt.BorderLayout;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -42,16 +40,19 @@ import org.jcurl.core.ui.BroomPromptModel;
 public class TrajectorySwing extends JComponent implements TrajectoryDisplay {
 	private static final long serialVersionUID = -3512129363499720146L;
 
+	private final JComponent rock, dark, light, in, out, split, dt, x, y, dx,
+			dy;
+
 	public TrajectorySwing() {
-		setLayout(new BorderLayout());
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		final Box b = Box.createVerticalBox();
 		{
 			final JPanel tb = new JPanel();
 			tb.setLayout(new BoxLayout(tb, BoxLayout.X_AXIS));
 			tb.setBorder(BorderFactory.createTitledBorder("Rock"));
-			tb.add(new JComboBox(new Object[] { "1", "2", "3", "4", "5", "6",
-					"7", "8" }));
+			tb.add(rock = new JComboBox(new Object[] { "1", "2", "3", "4", "5",
+					"6", "7", "8" }));
 			final JRadioButton dark = new JRadioButton("dark");
 			final JRadioButton light = new JRadioButton("light");
 			final ButtonGroup bg = new ButtonGroup();
@@ -60,30 +61,41 @@ public class TrajectorySwing extends JComponent implements TrajectoryDisplay {
 			tb.add(dark);
 			tb.add(light);
 			b.add(tb);
+			this.dark = dark;
+			this.light = light;
+			this.rock.setEnabled(false);
+			this.dark.setEnabled(false);
+			this.light.setEnabled(false);
 		}
 		{
 			final JPanel tb = new JPanel();
 			tb.setLayout(new BoxLayout(tb, BoxLayout.X_AXIS));
 			tb.setBorder(BorderFactory.createTitledBorder("Handle"));
-			final JRadioButton dark = new JRadioButton("in");
-			final JRadioButton light = new JRadioButton("out");
+			final JRadioButton in = new JRadioButton("in");
+			final JRadioButton out = new JRadioButton("out");
 			final ButtonGroup bg = new ButtonGroup();
-			bg.add(dark);
-			bg.add(light);
-			tb.add(dark);
-			tb.add(light);
+			bg.add(in);
+			bg.add(out);
+			tb.add(in);
+			tb.add(out);
 			tb.add(Box.createHorizontalGlue());
 			b.add(tb);
+			this.in = in;
+			this.out = out;
+			this.in.setEnabled(false);
+			this.out.setEnabled(false);
 		}
 		{
 			final JPanel tb = new JPanel();
 			tb.setLayout(new BoxLayout(tb, BoxLayout.X_AXIS));
 			tb.setBorder(BorderFactory.createTitledBorder("Split Time"));
-			tb.add(new JSpinner());
-			tb.add(new JComboBox(new Object[] { "sec", "1/10 sec", "1/100 sec",
-					"1/1000 sec" }));
+			tb.add(split = new JSpinner());
+			tb.add(dt = new JComboBox(new Object[] { "sec", "1/10 sec",
+					"1/100 sec", "1/1000 sec" }));
 			tb.add(Box.createHorizontalGlue());
 			b.add(tb);
+			this.split.setEnabled(false);
+			this.dt.setEnabled(false);
 		}
 		{
 			final JPanel p = new JPanel();
@@ -92,20 +104,24 @@ public class TrajectorySwing extends JComponent implements TrajectoryDisplay {
 			{
 				final Box tb = Box.createHorizontalBox();
 				tb.add(new JLabel("x: "));
-				tb.add(new JSpinner());
-				tb.add(new JComboBox(
-						new Object[] { "m", "cm", "mm", "ft", "in" }));
+				tb.add(x = new JSpinner());
+				tb.add(dx = new JComboBox(new Object[] { "ft", "in", "m", "cm",
+						"mm" }));
 				p.add(tb);
 			}
 			{
 				final Box tb = Box.createHorizontalBox();
 				tb.add(new JLabel("y: "));
-				tb.add(new JSpinner());
-				tb.add(new JComboBox(
-						new Object[] { "m", "cm", "mm", "ft", "in" }));
+				tb.add(y = new JSpinner());
+				tb.add(dy = new JComboBox(new Object[] { "ft", "in", "m", "cm",
+						"mm" }));
 				p.add(tb);
 			}
 			b.add(p);
+			this.x.setEnabled(false);
+			this.y.setEnabled(false);
+			this.dx.setEnabled(false);
+			this.dy.setEnabled(false);
 		}
 		this.add(b);
 	}
@@ -122,11 +138,23 @@ public class TrajectorySwing extends JComponent implements TrajectoryDisplay {
 
 	public void setBroom(final BroomPromptModel b) {
 		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet.");
+		// throw new UnsupportedOperationException("Not implemented yet.");
 	}
 
-	public void setCurves(final CurveManager model) {
+	public void setCurves(final CurveManager b) {
 		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet.");
+//		throw new UnsupportedOperationException("Not implemented yet.");
+
+		this.rock.setEnabled(b != null);
+		this.dark.setEnabled(b != null);
+		this.light.setEnabled(b != null);
+		this.in.setEnabled(b != null);
+		this.out.setEnabled(b != null);
+		this.split.setEnabled(b != null);
+		this.dt.setEnabled(b != null);
+		this.x.setEnabled(b != null);
+		this.y.setEnabled(b != null);
+		this.dx.setEnabled(b != null);
+		this.dy.setEnabled(b != null);
 	}
 }
