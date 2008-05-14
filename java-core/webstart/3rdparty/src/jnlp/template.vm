@@ -2,14 +2,13 @@
 <!-- $Id: viewerdemo.jnlp 213 2005-12-30 17:42:01Z mrohrmoser $ -->
 <jnlp
   spec="1.0+"
-  codebase="http://www.jcurl.org/jws/org/jcurl/demo/tactics/0.7-SNAPSHOT"
+  codebase="http://www.jcurl.org/jws/org/jcurl/demo/3rdparty/0.7-SNAPSHOT"
   href="$outputFile">
   <information>
-    <title>JCurl Tactics Demo 0.7-SNAPSHOT</title>
+    <title>JCurl 3rd party libs</title>
     <vendor>M. Rohrmoser</vendor>
     <homepage href="http://www.jcurl.org/index.html"/>
-    <description>JCurl Tactics Demo Application</description>
-    <description kind="short">A demo of the capabilities of the JCurl Curling Framework.</description>
+    <description>JCurl 3rd party libs</description>
     <icon href="images/jcurl-icon.gif" kind="default"/>
     <offline-allowed/>
   </information>
@@ -20,7 +19,6 @@
   <resources>
     <j2se version="1.5+"/>
     $dependencies
-    <extension href="http://www.jcurl.org/jws/org/jcurl/demo/3rdparty/0.7-SNAPSHOT/launch.jnlp"/>
   </resources>
-  <application-desc main-class="$mainClass"/>
+  <component-desc />
 </jnlp> 

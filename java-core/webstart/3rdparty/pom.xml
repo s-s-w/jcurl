@@ -18,10 +18,10 @@
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 	<groupId>org.jcurl.demo</groupId>
-	<artifactId>tactics</artifactId>
+	<artifactId>3rdparty</artifactId>
 	<version>0.7-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>JCurl Tactics Demo</name>
+	<name>JCurl 3rd party libs</name>
 	<scm>
 		<connection>
 			scm:svn:svn://svn.berlios.de/jcurl/trunk/java-core/webstart/${pom.artifactId}
@@ -30,9 +30,7 @@
 			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/java-core/webstart/${pom.artifactId}
 		</developerConnection>
 		<tag />
-		<url>
-			http://svn.berlios.de/wsvn/jcurl/trunk/java-core/webstart/${pom.artifactId}
-		</url>
+		<url>http://svn.berlios.de/wsvn/jcurl/trunk/java-core/webstart/${pom.artifactId}</url>
 	</scm>
 	<build>
 		<plugins>
@@ -47,16 +45,14 @@
 					</execution>
 				</executions>
 				<configuration>
-					<dependencies>
+					<!-- dependencies>
 						<excludes>
-							<exclude>
-								avalon-framework:avalon-framework
-							</exclude>
+							<exclude>avalon-framework:avalon-framework</exclude>
 							<exclude>log4j:log4j</exclude>
 							<exclude>logkit:logkit</exclude>
 							<exclude>javax.servlet:servlet-api</exclude>
 						</excludes>
-					</dependencies>
+					</dependencies -->
 					<pack200>true</pack200>
 					<gzip>true</gzip>
 					<verbose>true</verbose>
@@ -64,15 +60,15 @@
 						<!-- we play with the resource path and template relative path to test MOJO-391 -->
 						<!-- inputTemplateResourcePath>
 							${project.basedir}/src/
-							</inputTemplateResourcePath -->
+						</inputTemplateResourcePath -->
 						<!--  inputTemplate>viewerdemo.jnlp</inputTemplate -->
 						<resources>
 							${project.basedir}/src/jnlp/resources
 						</resources>
 						<outputFile>launch.jnlp</outputFile>
-						<mainClass>
-							org.jcurl.demo.tactics.MainApp
-						</mainClass>
+						<!-- mainClass>
+							  org.jcurl.demo.tactics.MainApp
+						</mainClass -->
 					</jnlp>
 					<!-- SIGNING -->
 					<!-- defining this will automatically sign the jar and its dependencies -->
@@ -84,13 +80,11 @@
 						<alias>m@jcurl.org</alias>
 						<validity>30</validity>
 
-						<dnameCn>
-							M. Rohrmoser (mailto:m@jcurl.org)
-						</dnameCn>
+						<dnameCn>M. Rohrmoser (mailto:m@jcurl.org)</dnameCn>
 						<dnameOu>None</dnameOu>
 						<dnameO>M. Rohrmoser</dnameO>
 						<dnameL>Munich</dnameL>
-						<dnameSt />
+						<dnameSt></dnameSt>
 						<dnameC>Germany</dnameC>
 						<verify>true</verify>
 					</sign>
@@ -105,31 +99,47 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>org.jcurl.core</groupId>
-			<artifactId>jc-demo</artifactId>
-			<version>${version}</version>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1</version>
 			<exclusions>
 				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
+					<artifactId>avalon-framework</artifactId>
+					<groupId>avalon-framework</groupId>
 				</exclusion>
 				<exclusion>
-					<groupId>edu.umd.cs.hcil</groupId>
-					<artifactId>piccolo</artifactId>
+					<artifactId>servlet-api</artifactId>
+					<groupId>javax.servlet</groupId>
 				</exclusion>
 				<exclusion>
-					<groupId>net.java.dev.scenegraph</groupId>
-					<artifactId>scenario</artifactId>
+					<artifactId>logkit</artifactId>
+					<groupId>logkit</groupId>
 				</exclusion>
 				<exclusion>
-					<groupId>org.jscience</groupId>
-					<artifactId>jscience</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.thoughtworks.xstream</groupId>
-					<artifactId>xstream</artifactId>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>edu.umd.cs.hcil</groupId>
+			<artifactId>piccolo</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>net.java.dev.scenegraph</groupId>
+			<artifactId>scenario</artifactId>
+			<version>0.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jscience</groupId>
+			<artifactId>jscience</artifactId>
+			<version>4.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.2.2</version>
 		</dependency>
 	</dependencies>
 	<repositories>

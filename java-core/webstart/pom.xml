@@ -28,6 +28,7 @@
 		<module>tactics</module>
 		<module>broomprompt</module>
 		<module>viewer</module>
+		<module>3rdparty</module>
 	</modules>
 	<repositories>
 		<repository>
