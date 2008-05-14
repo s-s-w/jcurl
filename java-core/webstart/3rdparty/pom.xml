@@ -30,7 +30,9 @@
 			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/java-core/webstart/${pom.artifactId}
 		</developerConnection>
 		<tag />
-		<url>http://svn.berlios.de/wsvn/jcurl/trunk/java-core/webstart/${pom.artifactId}</url>
+		<url>
+			http://svn.berlios.de/wsvn/jcurl/trunk/java-core/webstart/${pom.artifactId}
+		</url>
 	</scm>
 	<build>
 		<plugins>
@@ -47,12 +49,12 @@
 				<configuration>
 					<!-- dependencies>
 						<excludes>
-							<exclude>avalon-framework:avalon-framework</exclude>
-							<exclude>log4j:log4j</exclude>
-							<exclude>logkit:logkit</exclude>
-							<exclude>javax.servlet:servlet-api</exclude>
+						<exclude>avalon-framework:avalon-framework</exclude>
+						<exclude>log4j:log4j</exclude>
+						<exclude>logkit:logkit</exclude>
+						<exclude>javax.servlet:servlet-api</exclude>
 						</excludes>
-					</dependencies -->
+						</dependencies -->
 					<pack200>true</pack200>
 					<gzip>true</gzip>
 					<verbose>true</verbose>
@@ -60,15 +62,15 @@
 						<!-- we play with the resource path and template relative path to test MOJO-391 -->
 						<!-- inputTemplateResourcePath>
 							${project.basedir}/src/
-						</inputTemplateResourcePath -->
+							</inputTemplateResourcePath -->
 						<!--  inputTemplate>viewerdemo.jnlp</inputTemplate -->
 						<resources>
 							${project.basedir}/src/jnlp/resources
 						</resources>
 						<outputFile>launch.jnlp</outputFile>
 						<!-- mainClass>
-							  org.jcurl.demo.tactics.MainApp
-						</mainClass -->
+							org.jcurl.demo.tactics.MainApp
+							</mainClass -->
 					</jnlp>
 					<!-- SIGNING -->
 					<!-- defining this will automatically sign the jar and its dependencies -->
@@ -80,11 +82,13 @@
 						<alias>m@jcurl.org</alias>
 						<validity>30</validity>
 
-						<dnameCn>M. Rohrmoser (mailto:m@jcurl.org)</dnameCn>
+						<dnameCn>
+							M. Rohrmoser (mailto:m@jcurl.org)
+						</dnameCn>
 						<dnameOu>None</dnameOu>
 						<dnameO>M. Rohrmoser</dnameO>
 						<dnameL>Munich</dnameL>
-						<dnameSt></dnameSt>
+						<dnameSt />
 						<dnameC>Germany</dnameC>
 						<verify>true</verify>
 					</sign>
@@ -140,6 +144,11 @@
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
 			<version>1.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>1.8.0.7</version>
 		</dependency>
 	</dependencies>
 	<repositories>
