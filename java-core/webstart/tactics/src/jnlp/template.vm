@@ -12,12 +12,18 @@
     <description kind="short">A demo of the capabilities of the JCurl Curling Framework.</description>
     <icon href="images/jcurl-icon.gif" kind="default"/>
     <offline-allowed/>
+    <association mime-type="application-x/jcurl-file" extensions="jcz" />
+    <shortcut online="false">
+      <desktop/>
+      <menu submenu="JCurl"/>
+    </shortcut>
   </information>
   <update check="timeout" policy="always"/>
   <security>
     <all-permissions/>
   </security>
   <resources>
+    <j2se href="http://java.sun.com/products/autodl/j2se" version="1.5+"/>
     <j2se version="1.5+"/>
     $dependencies
     <extension href="http://www.jcurl.org/jws/org/jcurl/demo/3rdparty/0.7-SNAPSHOT/launch.jnlp"/>
