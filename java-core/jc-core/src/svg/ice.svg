@@ -33,11 +33,9 @@
       .line { stroke: black; stroke-width: 0.025 /* feet, world-coordinates */ }
       .ice-house { fill: #e8e8ff; stroke: none; }
       .watermark { fill: black; opacity: 0.75; font-size: 0.4; }
+      .ghost { opacity: 0.5; }
     ]]></style>
-  </defs>
-  <!-- make coord-sys right handed -->
-  <g id="ice" transform="scale(1,-1)">
-    <g id="ice_markers">
+    <g id="ice">
       <!-- upper house area -->
       <rect class="ice-house" x="-6" y="0" width="12" height="21"/>
       <!-- 4-ft lines -->
@@ -72,137 +70,103 @@
         <text class="watermark" x="-6" y="5.8">http://www.jcurl.org</text>
       </a>
     </g>
-    <g id="rock_light_all">
-      <g id="rock_light_1" transform="translate(-2, -7)">
-        <circle class="rock-granite" r="0.5"/>
-        <circle class="rock-light" r="0.35"/>
-        <!-- make left-handed again -->
-        <g transform="scale(1,-1)">
-          <text class="rock-number" transform="translate(0,0.25)">1</text>
-        </g>
-      </g>
-      <g id="rock_light_2" transform="translate(-2, -8.2)">
-        <circle class="rock-granite" r="0.5"/>
-        <circle class="rock-light" r="0.35"/>
-        <!-- make left-handed again -->
-        <g transform="scale(1,-1)">
-          <text class="rock-number" transform="translate(0,0.25)">2</text>
-        </g>
-      </g>
-      <g id="rock_light_3" transform="translate(-3.2, -7)">
-        <circle class="rock-granite" r="0.5"/>
-        <circle class="rock-light" r="0.35"/>
-        <!-- make left-handed again -->
-        <g transform="scale(1,-1)">
-          <text class="rock-number" transform="translate(0,0.25)">3</text>
-        </g>
-      </g>
-      <g id="rock_light_4" transform="translate(-3.2, -8.2)">
-        <circle class="rock-granite" r="0.5"/>
-        <circle class="rock-light" r="0.35"/>
-        <!-- make left-handed again -->
-        <g transform="scale(1,-1)">
-          <text class="rock-number" transform="translate(0,0.25)">4</text>
-        </g>
-      </g>
-      <g id="rock_light_5" transform="translate(-4.4, -7)">
-        <circle class="rock-granite" r="0.5"/>
-        <circle class="rock-light" r="0.35"/>
-        <!-- make left-handed again -->
-        <g transform="scale(1,-1)">
-          <text class="rock-number" transform="translate(0,0.25)">5</text>
-        </g>
-      </g>
-      <g id="rock_light_6" transform="translate(-4.4, -8.2)">
-        <circle class="rock-granite" r="0.5"/>
-        <circle class="rock-light" r="0.35"/>
-        <!-- make left-handed again -->
-        <g transform="scale(1,-1)">
-          <text class="rock-number" transform="translate(0,0.25)">6</text>
-        </g>
-      </g>
-      <g id="rock_light_7" transform="translate(-5.6, -7)">
-        <circle class="rock-granite" r="0.5"/>
-        <circle class="rock-light" r="0.35"/>
-        <!-- make left-handed again -->
-        <g transform="scale(1,-1)">
-          <text class="rock-number" transform="translate(0,0.25)">7</text>
-        </g>
-      </g>
-      <g id="rock_light_8" transform="translate(-5.6, -8.2)">
-        <circle class="rock-granite" r="0.5"/>
-        <circle class="rock-light" r="0.35"/>
-        <!-- make left-handed again -->
-        <g transform="scale(1,-1)">
-          <text class="rock-number" transform="translate(0,0.25)">8</text>
-        </g>
+    <g id="rock_body">
+      <circle class="rock-granite" r="0.5"/>
+      <circle r="0.35"/>
+    </g>
+    <g id="rock_1">
+      <use xlink:href="#rock_body"/>
+      <!-- make left-handed again -->
+      <g transform="scale(1,-1)">
+        <text class="rock-number" transform="translate(0,0.25)">1</text>
       </g>
     </g>
-    <g id="rock_dark_all">
-      <g id="rock_dark_1" transform="translate(2, -7)">
-        <circle class="rock-granite" r="0.5"/>
-        <circle class="rock-dark" r="0.35"/>
-        <!-- make left-handed again -->
-        <g transform="scale(1,-1)">
-          <text class="rock-number" transform="translate(0,0.25)">1</text>
-        </g>
-      </g>
-      <g id="rock_dark_2" transform="translate(2, -8.2)">
-        <circle class="rock-granite" r="0.5"/>
-        <circle class="rock-dark" r="0.35"/>
-        <!-- make left-handed again -->
-        <g transform="scale(1,-1)">
-          <text class="rock-number" transform="translate(0,0.25)">2</text>
-        </g>
-      </g>
-      <g id="rock_dark_3" transform="translate(3.2, -7)">
-        <circle class="rock-granite" r="0.5"/>
-        <circle class="rock-dark" r="0.35"/>
-        <!-- make left-handed again -->
-        <g transform="scale(1,-1)">
-          <text class="rock-number" transform="translate(0,0.25)">3</text>
-        </g>
-      </g>
-      <g id="rock_dark_4" transform="translate(3.2, -8.2)">
-        <circle class="rock-granite" r="0.5"/>
-        <circle class="rock-dark" r="0.35"/>
-        <!-- make left-handed again -->
-        <g transform="scale(1,-1)">
-          <text class="rock-number" transform="translate(0,0.25)">4</text>
-        </g>
-      </g>
-      <g id="rock_dark_5" transform="translate(4.4, -7)">
-        <circle class="rock-granite" r="0.5"/>
-        <circle class="rock-dark" r="0.35"/>
-        <!-- make left-handed again -->
-        <g transform="scale(1,-1)">
-          <text class="rock-number" transform="translate(0,0.25)">5</text>
-        </g>
-      </g>
-      <g id="rock_dark_6" transform="translate(4.4, -8.2)">
-        <circle class="rock-granite" r="0.5"/>
-        <circle class="rock-dark" r="0.35"/>
-        <!-- make left-handed again -->
-        <g transform="scale(1,-1)">
-          <text class="rock-number" transform="translate(0,0.25)">6</text>
-        </g>
-      </g>
-      <g id="rock_dark_7" transform="translate(5.6, -7)">
-        <circle class="rock-granite" r="0.5"/>
-        <circle class="rock-dark" r="0.35"/>
-        <!-- make left-handed again -->
-        <g transform="scale(1,-1)">
-          <text class="rock-number" transform="translate(0,0.25)">7</text>
-        </g>
-      </g>
-      <g id="rock_dark_8" transform="translate(5.6, -8.2)">
-        <circle class="rock-granite" r="0.5"/>
-        <circle class="rock-dark" r="0.35"/>
-        <!-- make left-handed again -->
-        <g transform="scale(1,-1)">
-          <text class="rock-number" transform="translate(0,0.25)">8</text>
-        </g>
+    <g id="rock_2">
+      <use xlink:href="#rock_body"/>
+      <!-- make left-handed again -->
+      <g transform="scale(1,-1)">
+        <text class="rock-number" transform="translate(0,0.25)">2</text>
       </g>
     </g>
+    <g id="rock_3">
+      <use xlink:href="#rock_body"/>
+      <!-- make left-handed again -->
+      <g transform="scale(1,-1)">
+        <text class="rock-number" transform="translate(0,0.25)">3</text>
+      </g>
+    </g>
+    <g id="rock_4">
+      <use xlink:href="#rock_body"/>
+      <!-- make left-handed again -->
+      <g transform="scale(1,-1)">
+        <text class="rock-number" transform="translate(0,0.25)">4</text>
+      </g>
+    </g>
+    <g id="rock_5">
+      <use xlink:href="#rock_body"/>
+      <!-- make left-handed again -->
+      <g transform="scale(1,-1)">
+        <text class="rock-number" transform="translate(0,0.25)">5</text>
+      </g>
+    </g>
+    <g id="rock_6">
+      <use xlink:href="#rock_body"/>
+      <!-- make left-handed again -->
+      <g transform="scale(1,-1)">
+        <text class="rock-number" transform="translate(0,0.25)">6</text>
+      </g>
+    </g>
+    <g id="rock_7">
+      <use xlink:href="#rock_body"/>
+      <!-- make left-handed again -->
+      <g transform="scale(1,-1)">
+        <text class="rock-number" transform="translate(0,0.25)">7</text>
+      </g>
+    </g>
+    <g id="rock_8">
+      <use xlink:href="#rock_body"/>
+      <!-- make left-handed again -->
+      <g transform="scale(1,-1)">
+        <text class="rock-number" transform="translate(0,0.25)">8</text>
+      </g>
+    </g>
+  </defs>
+  <!-- make coord-sys right handed -->
+  <g transform="scale(1,-1)">
+    <use xlink:href="#ice"/>
+    <!-- opaque rocks -->
+    <use xlink:href="#rock_1" class="rock-light" x="-2.0" y="-7.0"/>
+    <use xlink:href="#rock_2" class="rock-light" x="-2.0" y="-8.2"/>
+    <use xlink:href="#rock_3" class="rock-light" x="-3.2" y="-7.0"/>
+    <use xlink:href="#rock_4" class="rock-light" x="-3.2" y="-8.2"/>
+    <use xlink:href="#rock_5" class="rock-light" x="-4.4" y="-7.0"/>
+    <use xlink:href="#rock_6" class="rock-light" x="-4.4" y="-8.2"/>
+    <use xlink:href="#rock_7" class="rock-light" x="-5.6" y="-7.0"/>
+    <use xlink:href="#rock_8" class="rock-light" x="-5.6" y="-8.2"/>
+    <use xlink:href="#rock_1" class="rock-dark" x="2.0" y="-7.0"/>
+    <use xlink:href="#rock_2" class="rock-dark" x="2.0" y="-8.2"/>
+    <use xlink:href="#rock_3" class="rock-dark" x="3.2" y="-7.0"/>
+    <use xlink:href="#rock_4" class="rock-dark" x="3.2" y="-8.2"/>
+    <use xlink:href="#rock_5" class="rock-dark" x="4.4" y="-7.0"/>
+    <use xlink:href="#rock_6" class="rock-dark" x="4.4" y="-8.2"/>
+    <use xlink:href="#rock_7" class="rock-dark" x="5.6" y="-7.0"/>
+    <use xlink:href="#rock_8" class="rock-dark" x="5.6" y="-8.2"/>
+    <!-- transparent rocks -->
+    <use xlink:href="#rock_1" class="rock-light ghost" x="-6.6" y="28.0"/>
+    <use xlink:href="#rock_2" class="rock-light ghost" x="-6.6" y="27.0"/>
+    <use xlink:href="#rock_3" class="rock-light ghost" x="-6.6" y="26.0"/>
+    <use xlink:href="#rock_4" class="rock-light ghost" x="-6.6" y="25.0"/>
+    <use xlink:href="#rock_5" class="rock-light ghost" x="-6.6" y="24.0"/>
+    <use xlink:href="#rock_6" class="rock-light ghost" x="-6.6" y="23.0"/>
+    <use xlink:href="#rock_7" class="rock-light ghost" x="-6.6" y="22.0"/>
+    <use xlink:href="#rock_8" class="rock-light ghost" x="-6.6" y="21.0"/>
+    <use xlink:href="#rock_1" class="rock-dark ghost" x="6.6" y="28.0"/>
+    <use xlink:href="#rock_2" class="rock-dark ghost" x="6.6" y="27.0"/>
+    <use xlink:href="#rock_3" class="rock-dark ghost" x="6.6" y="26.0"/>
+    <use xlink:href="#rock_4" class="rock-dark ghost" x="6.6" y="25.0"/>
+    <use xlink:href="#rock_5" class="rock-dark ghost" x="6.6" y="24.0"/>
+    <use xlink:href="#rock_6" class="rock-dark ghost" x="6.6" y="23.0"/>
+    <use xlink:href="#rock_7" class="rock-dark ghost" x="6.6" y="22.0"/>
+    <use xlink:href="#rock_8" class="rock-dark ghost" x="6.6" y="21.0"/>
   </g>
 </svg>
