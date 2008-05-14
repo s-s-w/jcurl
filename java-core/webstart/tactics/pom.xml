@@ -49,12 +49,24 @@
 				<configuration>
 					<dependencies>
 						<excludes>
+							<!-- provided by 3rdparty/launch.jnlp: -->
 							<exclude>
+								commons-logging:commons-logging
+							</exclude>
+							<exclude>edu.umd.cs.hcil:piccolo</exclude>
+							<exclude>
+								net.java.dev.scenegraph:scenario
+							</exclude>
+							<exclude>org.jscience:jscience</exclude>
+							<exclude>
+								com.thoughtworks.xstream:xstream
+							</exclude>
+							<!-- exclude>
 								avalon-framework:avalon-framework
 							</exclude>
 							<exclude>log4j:log4j</exclude>
 							<exclude>logkit:logkit</exclude>
-							<exclude>javax.servlet:servlet-api</exclude>
+							<exclude>javax.servlet:servlet-api</exclude -->
 						</excludes>
 					</dependencies>
 					<pack200>true</pack200>
@@ -108,28 +120,6 @@
 			<groupId>org.jcurl.core</groupId>
 			<artifactId>jc-demo</artifactId>
 			<version>${version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>edu.umd.cs.hcil</groupId>
-					<artifactId>piccolo</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>net.java.dev.scenegraph</groupId>
-					<artifactId>scenario</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.jscience</groupId>
-					<artifactId>jscience</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.thoughtworks.xstream</groupId>
-					<artifactId>xstream</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 	</dependencies>
 	<repositories>

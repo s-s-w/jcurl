@@ -28,7 +28,7 @@
 		<module>tactics</module>
 		<module>broomprompt</module>
 		<module>viewer</module>
-		<module>3rdparty</module>
+		<!-- publish only on explicit demand - usually manually: module>3rdparty</module -->
 	</modules>
 	<repositories>
 		<repository>
