@@ -49,7 +49,7 @@
 				<configuration>
 					<dependencies>
 						<excludes>
-							<!-- provided by 3rdparty/launch.jnlp: -->
+							<!-- provided by  http://www.jcurl.org/jws/org/jcurl/demo/3rdparty/0.7-SNAPSHOT/launch.jnlp -->
 							<exclude>
 								commons-logging:commons-logging
 							</exclude>
@@ -60,6 +60,9 @@
 							<exclude>org.jscience:jscience</exclude>
 							<exclude>
 								com.thoughtworks.xstream:xstream
+							</exclude>
+							<exclude>
+								hsqldb:hsqldb
 							</exclude>
 							<!-- exclude>
 								avalon-framework:avalon-framework
