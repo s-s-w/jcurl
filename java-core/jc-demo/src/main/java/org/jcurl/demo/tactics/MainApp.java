@@ -29,7 +29,10 @@ import java.util.prefs.Preferences;
 
 import javax.swing.Box;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
+import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
 
@@ -90,7 +93,7 @@ public class MainApp extends JFrame {
 			ah.findAction(con, "openFile").setEnabled(true);
 			ah.findAction(con, "newFile").setEnabled(true);
 			ah.findAction(con, "screenShot").setEnabled(true);
-			//ah.findAction(con, "exportSvg").setEnabled(true);
+			// ah.findAction(con, "exportSvg").setEnabled(true);
 			ah.findAction(con, "exitFile").setEnabled(true);
 			ah.findAction(con, "saveAsFile").setEnabled(true);
 		}
@@ -115,13 +118,27 @@ public class MainApp extends JFrame {
 		final Container c = getContentPane();
 		c.setLayout(new BorderLayout());
 		c.add(tp, BorderLayout.CENTER);
-		Box b = Box.createVerticalBox();
+
+		// add the swing widget based trajectory manipulation
+		final Box b = Box.createVerticalBox();
+
+		final JTabbedPane t = new JTabbedPane(SwingConstants.TOP,
+				JTabbedPane.SCROLL_TAB_LAYOUT);
 		final TrajectorySwing ts = new TrajectorySwing();
-		b.add(ts);
+		t.add("Rock", ts);
+		t.setMnemonicAt(0, 'R');
+		t.add("Ice", new JLabel("Todo"));
+		t.setMnemonicAt(1, 'I');
+		t.add("Collission", new JLabel("Todo"));
+		t.setMnemonicAt(2, 'C');
+
+		b.add(t);
 		b.add(new Box.Filler(new Dimension(0, 0), new Dimension(1,
 				Integer.MAX_VALUE), new Dimension(Integer.MAX_VALUE,
 				Integer.MAX_VALUE)));
+
 		c.add(b, BorderLayout.EAST);
+
 		pack();
 	}
 }

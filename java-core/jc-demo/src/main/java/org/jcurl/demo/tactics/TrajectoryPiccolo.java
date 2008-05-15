@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RectangularShape;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -16,6 +17,7 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.impl.CurveManager;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
+import org.jcurl.core.ui.DefaultBroomPromptModel;
 import org.jcurl.core.ui.UndoRedoDocumentBase;
 import org.jcurl.core.ui.TaskExecutor.ForkableFixed;
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
@@ -73,7 +75,7 @@ class TrajectoryPiccolo extends JComponent implements Zoomable,
 		public void propertyChange(final PropertyChangeEvent evt) {
 			// log.info(evt.getSource().getClass().getName() + " "
 			// + evt.getPropertyName());
-			if (evt.getSource() instanceof BroomPromptModel) {
+			if (evt.getSource() instanceof DefaultBroomPromptModel) {
 				final BroomPromptModel bpm = (BroomPromptModel) evt.getSource();
 				new ForkableFixed<SwingEDT>() {
 					/** A Inner Anonymous Method Comment */
@@ -135,7 +137,9 @@ class TrajectoryPiccolo extends JComponent implements Zoomable,
 	private final TacticsPanelMediator mediator = new TacticsPanelMediator();
 	private final int minor = 64;
 	private final PCanvas pico;
+	private transient volatile RectangularShape tmpViewPort = null;
 	private final PCurveStore traj;
+
 	private UndoRedoDocumentBase undo;
 
 	public TrajectoryPiccolo() {
@@ -184,8 +188,10 @@ class TrajectoryPiccolo extends JComponent implements Zoomable,
 		return undo;
 	}
 
-	public Rectangle2D getZoom() {
-		return pico.getCamera().getBounds();
+	public RectangularShape getZoom() {
+		if (tmpViewPort == null)
+			return pico.getCamera().getViewBounds();
+		return tmpViewPort;
 	}
 
 	@Override
@@ -194,7 +200,7 @@ class TrajectoryPiccolo extends JComponent implements Zoomable,
 		super.setBackground(bg);
 	}
 
-	public void setBroom(final BroomPromptModel b) {
+	public void setBroom(final DefaultBroomPromptModel b) {
 		if (broom.getModel() != null) {
 			broom.getModel().removePropertyChangeListener(con);
 			broom.getModel().getSplitTimeMillis().removeChangeListener(con);
@@ -227,7 +233,20 @@ class TrajectoryPiccolo extends JComponent implements Zoomable,
 		this.undo = undo;
 	}
 
-	public void setZoom(final Rectangle2D viewport) {
-		pico.getCamera().animateViewToCenterBounds(viewport, true, 333);
+	public void setZoom(final RectangularShape viewport) {
+		setZoom(viewport, -1);
+	}
+
+	public void setZoom(final RectangularShape viewport, int transitionMillis) {
+		if (transitionMillis < 0)
+			transitionMillis = 333;
+		final Rectangle2D r;
+		if (viewport instanceof Rectangle2D)
+			r = (Rectangle2D) viewport;
+		else
+			r = new Rectangle2D.Double(viewport.getX(), viewport.getY(),
+					viewport.getWidth(), viewport.getHeight());
+		tmpViewPort = (RectangularShape) r.clone();
+		pico.getCamera().animateViewToCenterBounds(r, true, transitionMillis);
 	}
 }

@@ -33,11 +33,12 @@ import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.core.impl.CurveManager;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
+import org.jcurl.core.ui.DefaultBroomPromptModel;
 import org.jcurl.math.CurveCombined;
 import org.jcurl.math.MathVec;
 
 /**
- * Mediates {@link CurveManager} and {@link BroomPromptModel} under a
+ * Mediates {@link CurveManager} and {@link DefaultBroomPromptModel} under a
  * convenient, stateless, high-level interface.
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
@@ -85,11 +86,11 @@ class TacticsPanelMediator {
 	}
 
 	/** Initialise the broom. */
-	public BroomPromptModel setCm(final CurveManager cm, BroomPromptModel prompt) {
+	public DefaultBroomPromptModel setCm(final CurveManager cm, DefaultBroomPromptModel prompt) {
 		if (cm == null)
 			return null;
 		if (prompt == null)
-			prompt = new BroomPromptModel();
+			prompt = new DefaultBroomPromptModel();
 		final int idx16;
 		if (true || prompt.getIdx16() < 0) {
 			// Try to find the running rock.

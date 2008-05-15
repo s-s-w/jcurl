@@ -21,6 +21,7 @@ package org.jcurl.demo.tactics;
 
 import org.jcurl.core.impl.CurveManager;
 import org.jcurl.core.ui.BroomPromptModel;
+import org.jcurl.core.ui.DefaultBroomPromptModel;
 
 /**
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
@@ -31,7 +32,7 @@ interface TrajectoryDisplay {
 
 	CurveManager getCurves();
 
-	void setBroom(BroomPromptModel b);
+	void setBroom(DefaultBroomPromptModel b);
 
 	void setCurves(final CurveManager model);
 

@@ -32,6 +32,7 @@ import javax.swing.JSpinner;
 
 import org.jcurl.core.impl.CurveManager;
 import org.jcurl.core.ui.BroomPromptModel;
+import org.jcurl.core.ui.DefaultBroomPromptModel;
 
 /**
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
@@ -50,7 +51,7 @@ public class TrajectorySwing extends JComponent implements TrajectoryDisplay {
 		{
 			final JPanel tb = new JPanel();
 			tb.setLayout(new BoxLayout(tb, BoxLayout.X_AXIS));
-			tb.setBorder(BorderFactory.createTitledBorder("Rock"));
+			tb.setBorder(BorderFactory.createTitledBorder("Active"));
 			tb.add(rock = new JComboBox(new Object[] { "1", "2", "3", "4", "5",
 					"6", "7", "8" }));
 			final JRadioButton dark = new JRadioButton("dark");
@@ -136,7 +137,7 @@ public class TrajectorySwing extends JComponent implements TrajectoryDisplay {
 		throw new UnsupportedOperationException("Not implemented yet.");
 	}
 
-	public void setBroom(final BroomPromptModel b) {
+	public void setBroom(final DefaultBroomPromptModel b) {
 		// TODO Auto-generated method stub
 		// throw new UnsupportedOperationException("Not implemented yet.");
 	}

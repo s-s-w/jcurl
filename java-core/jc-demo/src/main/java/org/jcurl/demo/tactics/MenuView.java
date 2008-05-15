@@ -19,7 +19,9 @@
 
 package org.jcurl.demo.tactics;
 
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RectangularShape;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.IceSize;
@@ -36,12 +38,14 @@ import org.jcurl.demo.tactics.ActionRegistry.JCAction;
 public class MenuView {
 	/** All from back to back */
 	public static final Rectangle2D CompletePlus;
+	/** */
+	private static final int DT = 200;
 	/** House area plus 1 rock margin plus "out" rock space. */
 	public static final Rectangle2D HousePlus;
 	private static final Log log = JCLoggerFactory.getLogger(MenuView.class);
 	/**
-	 * Inter-hog area area plus house area plus 1 rock margin plus "out"
-	 * rock space.
+	 * Inter-hog area area plus house area plus 1 rock margin plus "out" rock
+	 * space.
 	 */
 	private static final Rectangle2D SheetPlus;
 	/** 12-foot circle plus 1 rock */
@@ -66,6 +70,35 @@ public class MenuView {
 		return model;
 	}
 
+	private void pan(final double rx, final double ry, final int dt) {
+		if (getModel() == null)
+			return;
+		final RectangularShape src = getModel().getZoom();
+		src.setFrame(src.getX() + src.getWidth() * rx, src.getY()
+				+ src.getHeight() * ry, src.getWidth(), src.getHeight());
+		zoom(src, dt);
+	}
+
+	@JCAction(title = "Pan &East", idx = 90, accelerator = "LEFT")
+	public void panEast() {
+		pan(-0.2, 0, DT);
+	}
+
+	@JCAction(title = "Pan &North", idx = 70, accelerator = "DOWN", separated = true)
+	public void panNorth() {
+		pan(0, 0.2, DT);
+	}
+
+	@JCAction(title = "Pan &South", idx = 80, accelerator = "UP")
+	public void panSouth() {
+		pan(0, -0.2, DT);
+	}
+
+	@JCAction(title = "Pan &West", idx = 100, accelerator = "RIGHT")
+	public void panWest() {
+		pan(0.2, 0, DT);
+	}
+
 	public void setModel(final Zoomable model) {
 		this.model = model;
 		final boolean a = this.model != null;
@@ -74,30 +107,67 @@ public class MenuView {
 		ah.findAction(this, "zoomHouse").setEnabled(a);
 		ah.findAction(this, "zoomRink").setEnabled(a);
 		ah.findAction(this, "zoomTwelve").setEnabled(a);
+		ah.findAction(this, "zoomIn").setEnabled(a);
+		ah.findAction(this, "zoomOut").setEnabled(a);
+		ah.findAction(this, "panNorth").setEnabled(a);
+		ah.findAction(this, "panSouth").setEnabled(a);
+		ah.findAction(this, "panEast").setEnabled(a);
+		ah.findAction(this, "panWest").setEnabled(a);
 	}
 
-	private void zoom(final Rectangle2D viewport) {
-		if (getModel() != null)
-			getModel().setZoom(viewport);
+	private void zoom(final Point2D center, final double ratio, final int dt) {
+		if (getModel() == null)
+			return;
+		final RectangularShape src = getModel().getZoom();
+		if (log.isDebugEnabled())
+			log.debug(src);
+		final double w = src.getWidth() * ratio;
+		final double h = src.getHeight() * ratio;
+		final double cx, cy;
+		if (center == null) {
+			cx = src.getCenterX();
+			cy = src.getCenterY();
+		} else {
+			cx = center.getX();
+			cy = center.getY();
+		}
+		zoom(new Rectangle2D.Double(cx - w / 2, cy - h / 2, Math.abs(w), Math
+				.abs(h)), dt);
+	}
+
+	private void zoom(final RectangularShape viewport, final int dt) {
+		if (getModel() == null)
+			return;
+		getModel().setZoom(viewport, dt);
 	}
 
 	@JCAction(title = "&Active", idx = 40, accelerator = "CTRL-END")
 	public void zoomActive() {
-		zoom(SheetPlus);
+		zoom(SheetPlus, -1);
 	}
 
 	@JCAction(title = "&House", idx = 10, accelerator = "HOME")
 	public void zoomHouse() {
-		zoom(HousePlus);
+		zoom(HousePlus, -1);
+	}
+
+	@JCAction(title = "Zoom &In", idx = 50, accelerator = "ADD", separated = true)
+	public void zoomIn() {
+		zoom(null, 0.75, DT);
+	}
+
+	@JCAction(title = "Zoom &Out", idx = 60, accelerator = "SUBTRACT")
+	public void zoomOut() {
+		zoom(null, 1.25, DT);
 	}
 
 	@JCAction(title = "&Complete", idx = 30, accelerator = "CTRL-HOME")
 	public void zoomRink() {
-		zoom(CompletePlus);
+		zoom(CompletePlus, -1);
 	}
 
 	@JCAction(title = "1&2-Foot", idx = 20, accelerator = "END")
 	public void zoomTwelve() {
-		zoom(TwelvePlus);
+		zoom(TwelvePlus, -1);
 	}
 }

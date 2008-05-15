@@ -103,6 +103,14 @@ public class ActionRegistry {
 	private static final Map<String, Integer> str2key = new TreeMap<String, Integer>();
 
 	static {
+		str2key.put("UP", KeyEvent.VK_UP);
+		str2key.put("DOWN", KeyEvent.VK_DOWN);
+		str2key.put("LEFT", KeyEvent.VK_LEFT);
+		str2key.put("RIGHT", KeyEvent.VK_RIGHT);
+		str2key.put("ADD", KeyEvent.VK_ADD);
+		str2key.put("SUBTRACT", KeyEvent.VK_SUBTRACT);
+		str2key.put("PLUS", KeyEvent.VK_PLUS);
+		str2key.put("MINUS", KeyEvent.VK_MINUS);
 		str2key.put("HOME", KeyEvent.VK_HOME);
 		str2key.put("END", KeyEvent.VK_END);
 		str2key.put("PGUP", KeyEvent.VK_PAGE_UP);
