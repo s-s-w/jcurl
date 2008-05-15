@@ -11,9 +11,7 @@
 	</parent>
 	<artifactId>jc-piccolo</artifactId>
 	<name>JCurl ZUI using piccolo</name>
-	<url>
-		${httpsitebase}/${pom.artifactId}/${pom.version}
-	</url>
+	<url>${httpsitebase}/${pom.artifactId}/${pom.version}</url>
 	<scm>
 		<connection>
 			scm:svn:svn://svn.berlios.de/jcurl/trunk/java-core/${pom.artifactId}
@@ -52,6 +50,12 @@
 			<groupId>no.geosoft.cc.graphics</groupId>
 			<artifactId>demos</artifactId>
 			<version>1.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.java.dev.scenegraph</groupId>
+			<artifactId>scenario</artifactId>
+			<version>0.6</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
