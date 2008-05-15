@@ -37,6 +37,6 @@ echo -e $cmd | ftp -v -i $dst_host | $reporter > $report
 touch $timer
 
 # upload the report itself
-echo -e "cd $dst_dir\nput $report status.html\nquit" | ftp -i $dst_host
+echo -e "cd $dst_dir\nput $report README.html\nquit" | ftp -i $dst_host
 
 cd $cwd
