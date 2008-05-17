@@ -1,0 +1,3 @@
+#Options FollowSymLinks ExecCGI
+RewriteEngine on
+RewriteRule ^(.*)\.jar$ pack200.php/$1.jar.pack.gz
