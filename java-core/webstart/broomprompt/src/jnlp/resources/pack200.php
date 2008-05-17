@@ -4,7 +4,7 @@
  * with gzip (*.jar.gz) if available.
  * 
  * Test e.g. calling
- * $ wget -S --header="Accept-Encoding: pack200-gzip"  http://www.jcurl.org/jws/org/jcurl/demo/3rdparty/0.7-SNAPSHOT/commons-logging-1.1.jar
+ * $ wget -S --header="Accept-Encoding: pack200-gzip,gzip"  http://www.jcurl.org/jws/org/jcurl/demo/3rdparty/0.7-SNAPSHOT/commons-logging-1.1.jar
  *
  * This script is based on pack200.php from 
  * http://www.randelshofer.ch/pocketplayer/files/pocketplayer-6.1.25.nested.zip
@@ -58,7 +58,10 @@ function deliverFile($file, $contentEncoding) {
 		// since the last time it has been requested.
 		if (array_key_exists('HTTP_IF_MODIFIED_SINCE', $_SERVER)) {
 			$sinceTime = strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']);
-			if ($sinceTime !== false && $sinceTime < $fileCTime) {
+			if ($sinceTime !== false && $sinceTime >= $fileCTime) {
+#				header('Debug-Requested-File: ' . $file);
+				header('Debug-Last-Modified: ' . date('r', $fileCTime));
+				header('Debug-If-Modified-Since: ' . date('r', $sinceTime));
 				header('HTTP/1.0 304 Not Modified');
 				exit;
 			}

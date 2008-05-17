@@ -58,7 +58,10 @@ function deliverFile($file, $contentEncoding) {
 		// since the last time it has been requested.
 		if (array_key_exists('HTTP_IF_MODIFIED_SINCE', $_SERVER)) {
 			$sinceTime = strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']);
-			if ($sinceTime !== false && $sinceTime < $fileCTime) {
+			if ($sinceTime !== false && $sinceTime >= $fileCTime) {
+#				header('Debug-Requested-File: ' . $file);
+				header('Debug-Last-Modified: ' . date('r', $fileCTime));
+				header('Debug-If-Modified-Since: ' . date('r', $sinceTime));
 				header('HTTP/1.0 304 Not Modified');
 				exit;
 			}
