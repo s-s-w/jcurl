@@ -18,7 +18,8 @@
   </security>
   <resources>
     <j2se version="1.5+"/>
-    $dependencies
+    $dependencies    
+    <!-- extension href="http://download.java.net/javadesktop/scenario/releases/0.6/Scenario-0.6.jnlp" / -->
   </resources>
   <component-desc />
 </jnlp> 

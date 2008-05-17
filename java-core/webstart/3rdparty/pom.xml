@@ -130,6 +130,7 @@
 			<artifactId>piccolo</artifactId>
 			<version>1.2</version>
 		</dependency>
+		<!-- could be used as extension from http://download.java.net/javadesktop/scenario/releases/0.6/Scenario-0.6.jnlp -->
 		<dependency>
 			<groupId>net.java.dev.scenegraph</groupId>
 			<artifactId>scenario</artifactId>
