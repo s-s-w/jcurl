@@ -49,6 +49,16 @@
 			<version>${version}</version>
 			</dependency -->
 		<dependency>
+			<groupId>net.java.dev</groupId>
+			<artifactId>appframework</artifactId>
+			<version>1.03</version>
+		</dependency>
+		<dependency>
+			<groupId>net.java.dev</groupId>
+			<artifactId>swingworker</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.4</version>

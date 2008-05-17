@@ -60,7 +60,7 @@ public class MainApp extends JFrame {
 			ActionRegistry.invoke(MenuFile.Controller.class, "showHammy",
 					SwingEDT.class);
 		}
-		{
+		if (true) {
 			final Preferences p = Preferences.userNodeForPackage(MainApp.class);
 			p.putLong("lastStartMillis", System.currentTimeMillis());
 			try {
@@ -68,6 +68,11 @@ public class MainApp extends JFrame {
 			} catch (final BackingStoreException e) {
 				throw new RuntimeException("Unhandled", e);
 			}
+		}
+		if (false) {
+			System.out.println("Packages: ");
+			for (Package p : Package.getPackages())
+				System.out.println(p.toString());
 		}
 	}
 
@@ -127,9 +132,9 @@ public class MainApp extends JFrame {
 		final TrajectorySwing ts = new TrajectorySwing();
 		t.add("Rock", ts);
 		t.setMnemonicAt(0, 'R');
-		t.add("Ice", new JLabel("Todo"));
+		t.add("Ice", new JLabel("TODO: Ice settings"));
 		t.setMnemonicAt(1, 'I');
-		t.add("Collission", new JLabel("Todo"));
+		t.add("Collission", new JLabel("TODO: Collission settings"));
 		t.setMnemonicAt(2, 'C');
 
 		b.add(t);
