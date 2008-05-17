@@ -137,6 +137,16 @@
 			<version>0.6</version>
 		</dependency>
 		<dependency>
+			<groupId>net.java.dev</groupId>
+			<artifactId>appframework</artifactId>
+			<version>1.03</version>
+		</dependency>
+		<dependency>
+			<groupId>net.java.dev</groupId>
+			<artifactId>swingworker</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
 			<groupId>org.jscience</groupId>
 			<artifactId>jscience</artifactId>
 			<version>4.3.1</version>

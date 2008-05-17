@@ -57,6 +57,12 @@
 							<exclude>
 								net.java.dev.scenegraph:scenario
 							</exclude>
+							<exclude>
+								net.java.dev:appframework
+							</exclude>
+							<exclude>
+								net.java.dev:swingworker
+							</exclude>
 							<exclude>org.jscience:jscience</exclude>
 							<exclude>
 								com.thoughtworks.xstream:xstream
