@@ -22,11 +22,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -60,7 +63,7 @@ public class MainApp extends JFrame {
 			ActionRegistry.invoke(MenuFile.Controller.class, "showHammy",
 					SwingEDT.class);
 		}
-		if (true) {
+		if (false) {
 			final Preferences p = Preferences.userNodeForPackage(MainApp.class);
 			p.putLong("lastStartMillis", System.currentTimeMillis());
 			try {
@@ -77,6 +80,18 @@ public class MainApp extends JFrame {
 	}
 
 	private MainApp() {
+		{
+			final Image i;
+			if (true)
+				try {
+					i = ImageIO.read(this.getClass().getResource(
+							"/" + "org/jcurl/demo/tactics/resources" + "/"
+									+ "favicon-32x32.png"));
+				} catch (final IOException e) {
+					throw new RuntimeException("Unhandled", e);
+				}
+			setIconImage(i);
+		}
 		setTitle("JCurl Shot Planner - www.jcurl.org");
 		final JMenuBar mb = new JMenuBar();
 		final TrajectoryPiccolo tp = new TrajectoryPiccolo();
