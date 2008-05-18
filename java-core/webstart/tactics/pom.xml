@@ -57,25 +57,20 @@
 							<exclude>
 								net.java.dev.scenegraph:scenario
 							</exclude>
-							<exclude>
-								net.java.dev:appframework
-							</exclude>
-							<exclude>
-								net.java.dev:swingworker
-							</exclude>
+							<exclude>net.java.dev:appframework</exclude>
+							<exclude>net.java.dev:swingworker</exclude>
+							<exclude>net.java.dev:beansbinding</exclude>
 							<exclude>org.jscience:jscience</exclude>
 							<exclude>
 								com.thoughtworks.xstream:xstream
 							</exclude>
-							<exclude>
-								hsqldb:hsqldb
-							</exclude>
+							<exclude>hsqldb:hsqldb</exclude>
 							<!-- exclude>
 								avalon-framework:avalon-framework
-							</exclude>
-							<exclude>log4j:log4j</exclude>
-							<exclude>logkit:logkit</exclude>
-							<exclude>javax.servlet:servlet-api</exclude -->
+								</exclude>
+								<exclude>log4j:log4j</exclude>
+								<exclude>logkit:logkit</exclude>
+								<exclude>javax.servlet:servlet-api</exclude -->
 						</excludes>
 					</dependencies>
 					<pack200>true</pack200>
