@@ -219,8 +219,9 @@
 						http://jscience.org/api -link
 						http://xstream.codehaus.org/javadoc/ -link
 						http://www.cs.umd.edu/hcil/jazz/learn/piccolo/doc-1.2/api/
-						-link
-						http://download.java.net/javadesktop/scenario/releases/0.6/javadoc/
+						-link http://download.java.net/javadesktop/scenario/releases/0.6/javadoc/
+						-link http://appframework.dev.java.net/nonav/javadoc/AppFramework-1.03/
+						-link http://swingworker.dev.java.net/nonav/javadoc/
 						-link
 						http://download.java.net/media/java3d/javadoc/1.5.0-latest
 						-link
