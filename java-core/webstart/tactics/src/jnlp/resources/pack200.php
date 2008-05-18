@@ -10,6 +10,8 @@
  * http://www.randelshofer.ch/pocketplayer/files/pocketplayer-6.1.25.nested.zip
  * and the pack200 deployment guide:
  * http://java.sun.com/j2se/1.5.0/docs/guide/deployment/deployment-guide/pack200.html
+ *
+ * A different approach: http://forum.springframework.org/showpost.php?p=121432
  */
 
 /** 

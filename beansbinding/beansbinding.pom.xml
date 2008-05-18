@@ -1,0 +1,18 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.java.dev</groupId>
+	<artifactId>beansbinding</artifactId>
+	<packaging>jar</packaging>
+	<version>1.2.1</version>
+	<name>Beans Binding (JSR 295)</name>
+	<description>In essence, Beans Binding (JSR 295) is about keeping two properties (typically of two objects) in sync. An additional emphasis is placed on the ability to bind to Swing components, and easy integration with IDEs such as NetBeans. This project provides the reference implementation.</description>
+	<url>http://beansbinding.dev.java.net/</url>
+	<licenses>
+		<license>
+			<name>GNU LESSER GENERAL PUBLIC LICENSE</name>
+			<url>http://www.gnu.org/licenses/lgpl.html</url>
+			<distribution>manual</distribution>
+		</license>
+	</licenses>
+</project>
