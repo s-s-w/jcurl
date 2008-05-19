@@ -21,6 +21,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -162,12 +164,11 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	private static final double currentTime = 30;
 	private static URL defaultScene = null;
 	private static final int FAST = 200;
+	private static final Pattern jcxzPat = Pattern.compile("^.*\\.jc[xz]$");;
 	private static final Log log = JCLoggerFactory
-			.getLogger(JCurlShotPlanner.class);;
-	private static final int SLOW = 333;
-	private static final Cursor waitc = Cursor
-			.getPredefinedCursor(Cursor.WAIT_CURSOR);;
-	private static final ZoomHelper zh = new ZoomHelper();;
+			.getLogger(JCurlShotPlanner.class);
+	private static final Pattern pngPat = Pattern.compile("^.*\\.png$");;
+	private static final int SLOW = 333;;
 
 	// static void bind(final Object src, final String src_p, final Object dst,
 	// final String dst_p) {
@@ -176,8 +177,23 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	// .bind();
 	// }
 
-	private static JFileChooser jcx(final File base) {
+	private static final Cursor waitc = Cursor
+			.getPredefinedCursor(Cursor.WAIT_CURSOR);;
+
+	private static final ZoomHelper zh = new ZoomHelper();
+
+	private static File ensureSuffix(File dst, final Pattern pat,
+			final String suffix) {
+		final Matcher m = pat.matcher(dst.getName());
+		if (!m.matches())
+			dst = new File(dst.getAbsoluteFile() + suffix);
+		return dst;
+	};
+
+	private static JFileChooser jc(final File base, final Pattern pat,
+			final String txt) {
 		final JFileChooser chooser = new JFileChooser(base);
+		// chooser.setName(name);
 		chooser.setMultiSelectionEnabled(false);
 		chooser.setAcceptAllFileFilterUsed(true);
 		chooser.setFileFilter(new FileFilter() {
@@ -185,50 +201,40 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			public boolean accept(final File f) {
 				if (f == null)
 					return false;
-				return f.isDirectory() || f.getName().endsWith(".jcx")
-						|| f.getName().endsWith(".jcz");
+				return f.isDirectory() || pat.matcher(f.getName()).matches();
 			}
 
 			@Override
 			public String getDescription() {
-				return "JCurl Setup Files (.jcx) (.jcz)";
+				return txt;
 			}
 		});
 		return chooser;
-	};
+	}
+
+	private static JFileChooser jcx(final File base) {
+		return jc(base, jcxzPat, "JCurl Setup Files (.jcx) (.jcz)");
+	}
 
 	public static void main(final String[] args) {
 		// for debugging reasons only:
 		Locale.setDefault(Locale.CANADA);
 		launch(JCurlShotPlanner.class, args);
-	};
+	}
 
 	private static JFileChooser png(final File base) {
-		final JFileChooser fcPng = new JFileChooser(base);
-		fcPng.setMultiSelectionEnabled(false);
-		fcPng.setAcceptAllFileFilterUsed(true);
-		fcPng.setFileFilter(new FileFilter() {
-			@Override
-			public boolean accept(final File f) {
-				if (f == null)
-					return false;
-				return f.isDirectory() || f.getName().endsWith(".png");
-			}
-
-			@Override
-			public String getDescription() {
-				return "Png Bitmap Images (.png)";
-			}
-		});
-		return fcPng;
+		return jc(base, pngPat, "Png Bitmap Images (.png)");
 	}
 
 	private final ChangeManager cm = new ChangeManager(this);
 	private URL document;
 	private File file;
-	private boolean modified = false;
-	private final TacticsBean tactics = new TacticsBean();
-	private final JLabel url = new JLabel();
+
+	private boolean modified = false;;
+
+	private final TacticsBean tactics = new TacticsBean();;
+
+	private final JLabel url = new JLabel();;
 
 	private JCurlShotPlanner() {
 		// tactics.setName("tactics");
@@ -308,7 +314,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			toolBar.add(button);
 		}
 		return toolBar;
-	};
+	}
 
 	/** Edit Menu Action */
 	@Action(enabledProperty = "alwaysFalse")
@@ -316,7 +322,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 	/** Edit Menu Action */
 	@Action(enabledProperty = "alwaysFalse")
-	public void editProperties() {};
+	public void editProperties() {}
 
 	/** Edit Menu Action */
 	@Action(enabledProperty = "alwaysFalse")
@@ -324,7 +330,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 	/** Edit Menu Action */
 	@Action(enabledProperty = "alwaysFalse")
-	public void editUndo() {};
+	public void editUndo() {}
 
 	/** File Menu Action */
 	@Action
@@ -347,9 +353,8 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			if (JFileChooser.APPROVE_OPTION != fcPng
 					.showSaveDialog(getMainFrame()))
 				return;
-			File dst = fcPng.getSelectedFile();
-			if (!dst.getName().endsWith(".png"))
-				dst = new File(dst.getAbsoluteFile() + ".png");
+			final File dst = ensureSuffix(fcPng.getSelectedFile(), pngPat,
+					".png");
 			if (!askOverwrite(dst))
 				continue;
 
@@ -413,7 +418,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 				showErrorDialog("can't open \"" + file + "\"", e);
 			}
 		}
-	}
+	};
 
 	/** File Menu Action */
 	@Action
@@ -447,7 +452,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		final URL tmp = getDocument();
 		setDocument(null);
 		setDocument(tmp);
-	};
+	}
 
 	/** File Menu Action */
 	@Action(enabledProperty = "modified")
@@ -464,7 +469,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			}
 			setModified(false);
 		}
-	}
+	};
 
 	/** File Menu Action */
 	@Action
@@ -489,7 +494,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 	private javax.swing.Action getAction(final String actionName) {
 		return getContext().getActionMap().get(actionName);
-	};
+	}
 
 	private URL getDocument() {
 		return document;
@@ -505,7 +510,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 	/**
 	 * Setting the internal field {@link #document} directly (bypassing
-	 * {@link #setDocument(URL)} is used to deplay the document loading until
+	 * {@link #setDocument(URL)}) is used to deplay the document loading until
 	 * {@link #ready()}.
 	 */
 	@Override
@@ -563,7 +568,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		});
 	}
 
-	private final void save(final ComputedTrajectorySet cts, final File dst)
+	private final void save(final TrajectorySet cts, final File dst)
 			throws IOException {
 		final Cursor cu = switchCursor(waitc);
 		try {
@@ -592,9 +597,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			}
 			if (dst == null)
 				continue;
-			if (!(dst.getName().endsWith(".jcx") || dst.getName().endsWith(
-					".jcz")))
-				dst = new File(dst.getAbsoluteFile() + ".jcz");
+			dst = ensureSuffix(dst, jcxzPat, ".jcz");
 			if (forceOverwrite || askOverwrite(dst))
 				try {
 					save(tactics.getCurves(), dst);
