@@ -142,7 +142,7 @@ class TrajectoryPiccolo extends JComponent implements Zoomable,
 
 	private UndoRedoDocumentBase undo;
 
-	public TrajectoryPiccolo() {
+	public TrajectoryPiccolo() {		
 		pico = new PCanvas();
 		setVisible(false);
 		setLayout(new BorderLayout());

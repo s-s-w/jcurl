@@ -20,6 +20,7 @@
 package org.jcurl.demo.tactics;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.geom.RectangularShape;
 
 import javax.swing.JComponent;
@@ -38,9 +39,10 @@ public class TacticsBean extends JComponent implements Zoomable {
 	private final TrajectoryPiccolo tp;
 	private RectangularShape zoom = null;
 
-	public TacticsBean() {
+	public TacticsBean() {		
 		setLayout(new BorderLayout());
 		this.add(tp = new TrajectoryPiccolo(), BorderLayout.CENTER);
+		tp.setPreferredSize(new Dimension(400, 600));
 	}
 
 	public RectangularShape getZoom() {

@@ -65,12 +65,6 @@
 								com.thoughtworks.xstream:xstream
 							</exclude>
 							<exclude>hsqldb:hsqldb</exclude>
-							<!-- provided by  http://www.jcurl.org/jws/org/jcurl/demo/batik/0.7-SNAPSHOT/launch.jnlp -->
-							<exclude>batik:batik-svggen</exclude>
-							<exclude>batik:batik-awt-util</exclude>
-							<exclude>batik:batik-dom</exclude>
-							<exclude>batik:batik-util</exclude>
-							<exclude>batik:batik-xml</exclude>
 							<!-- exclude>
 								avalon-framework:avalon-framework
 								</exclude>
