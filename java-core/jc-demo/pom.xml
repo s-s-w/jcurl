@@ -64,6 +64,10 @@
 			<artifactId>batikbridge</artifactId>
 			<version>1.6</version>
 			<scope>provided</scope>
+			<!-- Use "provided" because
+				1) this feature is used via reflection as a quasi-plugin 
+				2) there's a webstart extension: http://www.jcurl.org/jws/org/jcurl/demo/batik/1.6/launch.jnlp 
+			-->
 		</dependency>
 
 		<dependency>

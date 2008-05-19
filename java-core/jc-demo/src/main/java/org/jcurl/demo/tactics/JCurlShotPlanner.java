@@ -6,6 +6,7 @@
 package org.jcurl.demo.tactics;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -229,7 +230,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		return jc(base, pngPat, "Png Bitmap Images (.png)");
 	}
 
-	private static void renderPng(final JComponent src, final File dst)
+	private static void renderPng(final Container src, final File dst)
 			throws IOException {
 		final BufferedImage img = new BufferedImage(src.getWidth(), src
 				.getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -393,10 +394,9 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			if (!askOverwrite(dst))
 				continue;
 
-			final JComponent src = tactics;
 			final Cursor cu = switchCursor(waitc);
 			try {
-				renderPng(src, dst);
+				renderPng(tactics, dst);
 				return;
 			} catch (final Exception e) {
 				throw new RuntimeException("Unhandled", e);
@@ -420,10 +420,9 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			if (!askOverwrite(dst))
 				continue;
 
-			final JComponent src = tactics;
 			final Cursor cu = switchCursor(waitc);
 			try {
-				batik.renderSvg(src, dst);
+				batik.renderSvg(tactics, dst);
 				return;
 			} catch (final Exception e) {
 				throw new RuntimeException("Unhandled", e);
@@ -591,13 +590,26 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		}
 
 		// schedule the document to load in #ready()
-		try {
-			if (as.length == 0)
-				document = initialScene;
-			else
-				document = new URL(as[0]);
-		} catch (final MalformedURLException e) {
-			log.warn("Cannot load '" + as[0] + "'.", e);
+		document = initialScene;
+		for (final String p : as) {
+			// ignore javaws parameters
+			if ("-open".equals(p) || "-print".equals(p))
+				continue;
+			try {
+				document = new URL(p);
+				break;
+			} catch (final MalformedURLException e) {
+				final File f = new File(p);
+				if (f.canRead())
+					try {
+						document = f.toURL();
+						break;
+					} catch (final MalformedURLException e2) {
+						log.warn("Cannot load '" + p + "'.", e);
+					}
+				else
+					log.warn("Cannot load '" + p + "'.", e);
+			}
 		}
 	}
 
