@@ -2,7 +2,7 @@
 <!-- $Id: viewerdemo.jnlp 213 2005-12-30 17:42:01Z mrohrmoser $ -->
 <jnlp
   spec="1.0+"
-  codebase="http://www.jcurl.org/jws/org/jcurl/demo/batik/1.6"
+  codebase="http://www.jcurl.org/jws/org/jcurl/demo/batik/1.7"
   href="$outputFile">
   <information>
     <title>JCurl 3rd party Batik SVG libs</title>
