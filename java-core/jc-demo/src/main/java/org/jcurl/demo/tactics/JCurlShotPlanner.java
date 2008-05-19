@@ -15,7 +15,11 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -40,6 +44,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 
+import org.apache.batik.dom.GenericDOMImplementation;
+import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.ComputedTrajectorySet;
 import org.jcurl.core.api.IceSize;
@@ -57,6 +63,8 @@ import org.jdesktop.application.Application;
 import org.jdesktop.application.ApplicationAction;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
 
 /**
  * Makes heavy use of the <a
@@ -164,13 +172,14 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 	private static final double currentTime = 30;
 	private static URL defaultScene = null;
-	private static URL templateScene = null;
 	private static final int FAST = 200;
-	private static final Pattern jcxzPat = Pattern.compile("^.*\\.jc[xz]$");;
+	private static final Pattern jcxzPat = Pattern.compile("^.*\\.jc[xz]$");
 	private static final Log log = JCLoggerFactory
-			.getLogger(JCurlShotPlanner.class);
-	private static final Pattern pngPat = Pattern.compile("^.*\\.png$");;
+			.getLogger(JCurlShotPlanner.class);;
+	private static final Pattern pngPat = Pattern.compile("^.*\\.png$");
 	private static final int SLOW = 333;;
+	private static final Pattern svgPat = Pattern.compile("^.*\\.svg$");;
+	private static URL templateScene = null;;
 
 	// static void bind(final Object src, final String src_p, final Object dst,
 	// final String dst_p) {
@@ -228,6 +237,10 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		return jc(base, pngPat, "Png Bitmap Images (.png)");
 	}
 
+	private static JFileChooser svg(final File base) {
+		return jc(base, svgPat, "SVG Vector Images (.svg)");
+	}
+
 	private final ChangeManager cm = new ChangeManager(this);
 	private URL document;
 	private File file;
@@ -252,18 +265,16 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			title = r.getString("discard" + ".Dialog" + ".title", action
 					.getValue(javax.swing.Action.NAME));
 			msg = r.getString("discard" + ".Dialog" + ".message");
+		} else if (action instanceof ApplicationAction) {
+			final ApplicationAction aa = (ApplicationAction) action;
+			final ResourceMap r = getContext().getResourceMap();
+			title = action == null ? null : r.getString(aa.getName()
+					+ ".Dialog" + ".title", aa
+					.getValue(javax.swing.Action.NAME));
+			msg = r.getString(aa.getName() + ".Dialog" + ".message");
 		} else {
-			if (action instanceof ApplicationAction) {
-				final ApplicationAction aa = (ApplicationAction) action;
-				final ResourceMap r = getContext().getResourceMap();
-				title = action == null ? null : r.getString(aa.getName()
-						+ ".Dialog" + ".title", aa
-						.getValue(javax.swing.Action.NAME));
-				msg = r.getString(aa.getName() + ".Dialog" + ".message");
-			} else {
-				title = null;
-				msg = "Discard unsaved changes?";
-			}
+			title = null;
+			msg = "Discard unsaved changes?";
 		}
 		return JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
 				getMainFrame(), msg, title, JOptionPane.YES_NO_OPTION,
@@ -383,15 +394,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			final JComponent src = tactics;
 			final Cursor cu = switchCursor(waitc);
 			try {
-				final BufferedImage img = new BufferedImage(src.getWidth(), src
-						.getHeight(), BufferedImage.TYPE_INT_ARGB);
-				final Graphics g = img.getGraphics();
-				try {
-					src.paintAll(g);
-				} finally {
-					g.dispose();
-				}
-				ImageIO.write(img, "png", dst);
+				renderPng(src, dst);
 				return;
 			} catch (final Exception e) {
 				throw new RuntimeException("Unhandled", e);
@@ -402,8 +405,31 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	}
 
 	/** File Menu Action */
-	@Action(enabledProperty = "alwaysFalse")
-	public void fileExportSvg() {}
+	@Action
+	public void fileExportSvg() {
+		final JFileChooser fcSvg = svg(getFile());
+		fcSvg.setName("exportSvgDialog");
+		for (;;) {
+			if (JFileChooser.APPROVE_OPTION != fcSvg
+					.showSaveDialog(getMainFrame()))
+				return;
+			final File dst = ensureSuffix(fcSvg.getSelectedFile(), svgPat,
+					".svg");
+			if (!askOverwrite(dst))
+				continue;
+
+			final JComponent src = tactics;
+			final Cursor cu = switchCursor(waitc);
+			try {
+				renderSvg(src, new FileOutputStream(dst));
+				return;
+			} catch (final Exception e) {
+				throw new RuntimeException("Unhandled", e);
+			} finally {
+				switchCursor(cu);
+			}
+		}
+	}
 
 	/** File Menu Action */
 	@Action
@@ -448,7 +474,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 				showErrorDialog("can't open \"" + file + "\"", e);
 			}
 		}
-	};
+	}
 
 	/** File Menu Action */
 	@Action
@@ -471,7 +497,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 				showErrorDialog(r.getString(a + ".Dialog" + ".error", url), e);
 			}
 		}
-	};
+	}
 
 	/**
 	 * File Menu Action
@@ -485,7 +511,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		final URL tmp = getDocument();
 		setDocument(null);
 		setDocument(tmp);
-	}
+	};
 
 	/** File Menu Action */
 	@Action(enabledProperty = "modified")
@@ -517,7 +543,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			}
 			setModified(false);
 		}
-	};
+	}
 
 	/** File Menu Action */
 	@Action
@@ -527,11 +553,11 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 	private javax.swing.Action findAction(final String actionName) {
 		return getContext().getActionMap().get(actionName);
-	}
+	};
 
 	private URL getDocument() {
 		return document;
-	}
+	};
 
 	private File getFile() {
 		return file;
@@ -599,6 +625,49 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 				log.info("Good bye!");
 			}
 		});
+	}
+
+	private void renderPng(final JComponent src, final File dst)
+			throws IOException {
+		final BufferedImage img = new BufferedImage(src.getWidth(), src
+				.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		final Graphics g = img.getGraphics();
+		try {
+			src.paintAll(g);
+		} finally {
+			g.dispose();
+		}
+		ImageIO.write(img, "png", dst);
+	}
+
+	/**
+	 * http://xmlgraphics.apache.org/batik/using/svg-generator.html
+	 * 
+	 * @param src
+	 * @param dst
+	 * @throws IOException
+	 */
+	private void renderSvg(final JComponent src, final OutputStream dst)
+			throws IOException {
+		// Get a DOMImplementation.
+		final DOMImplementation domImpl = GenericDOMImplementation
+				.getDOMImplementation();
+
+		// Create an instance of org.w3c.dom.Document.
+		final String svgNS = "http://www.w3.org/2000/svg";
+		final Document document = domImpl.createDocument(svgNS, "svg", null);
+
+		// Create an instance of the SVG Generator.
+		final SVGGraphics2D svgGenerator = new SVGGraphics2D(document);
+
+		// Ask the test to render into the SVG Graphics2D implementation.
+		src.paint(svgGenerator);
+
+		// Finally, stream out SVG to the standard output using
+		// UTF-8 encoding.
+		final boolean useCSS = true; // we want to use CSS style attributes
+		final Writer out = new OutputStreamWriter(dst, "UTF-8");
+		svgGenerator.stream(out, useCSS);
 	}
 
 	private final void save(final TrajectorySet cts, final File dst)
