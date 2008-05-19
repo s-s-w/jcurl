@@ -18,10 +18,10 @@
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 	<groupId>org.jcurl.demo</groupId>
-	<artifactId>viewer</artifactId>
+	<artifactId>batik</artifactId>
 	<version>0.7-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>JCurl Viewer Demo</name>
+	<name>JCurl 3rd party Batik SVG libs</name>
 	<scm>
 		<connection>
 			scm:svn:svn://svn.berlios.de/jcurl/trunk/java-core/webstart/${pom.artifactId}
@@ -30,7 +30,9 @@
 			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/java-core/webstart/${pom.artifactId}
 		</developerConnection>
 		<tag />
-		<url>http://svn.berlios.de/wsvn/jcurl/trunk/java-core/webstart/${pom.artifactId}</url>
+		<url>
+			http://svn.berlios.de/wsvn/jcurl/trunk/java-core/webstart/${pom.artifactId}
+		</url>
 	</scm>
 	<build>
 		<plugins>
@@ -45,54 +47,30 @@
 					</execution>
 				</executions>
 				<configuration>
-					<dependencies>
+					<!-- dependencies>
 						<excludes>
-							<!-- provided by  http://www.jcurl.org/jws/org/jcurl/demo/3rdparty/0.7-SNAPSHOT/launch.jnlp -->
-							<exclude>
-								commons-logging:commons-logging
-							</exclude>
-							<exclude>edu.umd.cs.hcil:piccolo</exclude>
-							<exclude>
-								net.java.dev.scenegraph:scenario
-							</exclude>
-							<exclude>net.java.dev:appframework</exclude>
-							<exclude>net.java.dev:swingworker</exclude>
-							<exclude>net.java.dev:beansbinding</exclude>
-							<exclude>org.jscience:jscience</exclude>
-							<exclude>
-								com.thoughtworks.xstream:xstream
-							</exclude>
-							<exclude>hsqldb:hsqldb</exclude>
-
-							<exclude>batik:batik-svggen:1.6</exclude>
-							<exclude>batik:batik-awt-util:1.6</exclude>
-							<exclude>batik:batik-dom:1.6</exclude>
-							<exclude>batik:batik-util:1.6</exclude>
-							<exclude>batik:batik-xml:1.6</exclude>
-
-							<!-- exclude>
-								avalon-framework:avalon-framework
-								</exclude>
-								<exclude>log4j:log4j</exclude>
-								<exclude>logkit:logkit</exclude>
-								<exclude>javax.servlet:servlet-api</exclude -->
+						<exclude>avalon-framework:avalon-framework</exclude>
+						<exclude>log4j:log4j</exclude>
+						<exclude>logkit:logkit</exclude>
+						<exclude>javax.servlet:servlet-api</exclude>
 						</excludes>
-					</dependencies>
+						</dependencies -->
 					<pack200>true</pack200>
 					<gzip>true</gzip>
+					<verbose>true</verbose>
 					<jnlp>
 						<!-- we play with the resource path and template relative path to test MOJO-391 -->
 						<!-- inputTemplateResourcePath>
 							${project.basedir}/src/
-						</inputTemplateResourcePath -->
+							</inputTemplateResourcePath -->
 						<!--  inputTemplate>viewerdemo.jnlp</inputTemplate -->
 						<resources>
 							${project.basedir}/src/jnlp/resources
 						</resources>
 						<outputFile>launch.jnlp</outputFile>
-						<mainClass>
-							  org.jcurl.demo.tactics.MainApp
-						</mainClass>
+						<!-- mainClass>
+							org.jcurl.demo.tactics.MainApp
+							</mainClass -->
 					</jnlp>
 					<!-- SIGNING -->
 					<!-- defining this will automatically sign the jar and its dependencies -->
@@ -104,11 +82,13 @@
 						<alias>m@jcurl.org</alias>
 						<validity>30</validity>
 
-						<dnameCn>M. Rohrmoser (mailto:m@jcurl.org)</dnameCn>
+						<dnameCn>
+							M. Rohrmoser (mailto:m@jcurl.org)
+						</dnameCn>
 						<dnameOu>None</dnameOu>
 						<dnameO>M. Rohrmoser</dnameO>
 						<dnameL>Munich</dnameL>
-						<dnameSt></dnameSt>
+						<dnameSt />
 						<dnameC>Germany</dnameC>
 						<verify>true</verify>
 					</sign>
@@ -123,9 +103,44 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>org.jcurl.core</groupId>
-			<artifactId>jc-demo</artifactId>
-			<version>${version}</version>
+			<groupId>batik</groupId>
+			<artifactId>batik-svggen</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<!-- dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-svg-dom</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-ext</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-extension</artifactId>
+			<version>1.6</version>
+		</dependency -->
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-awt-util</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-dom</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-util</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-xml</artifactId>
+			<version>1.6</version>
 		</dependency>
 	</dependencies>
 	<repositories>

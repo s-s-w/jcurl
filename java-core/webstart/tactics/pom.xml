@@ -65,6 +65,28 @@
 								com.thoughtworks.xstream:xstream
 							</exclude>
 							<exclude>hsqldb:hsqldb</exclude>
+
+							<exclude>batik:batik-svggen:1.6</exclude>
+							<!-- dependency>
+								<groupId>batik</groupId>
+								<artifactId>batik-svg-dom</artifactId>
+								<version>1.6</version>
+								</dependency>
+								<dependency>
+								<groupId>batik</groupId>
+								<artifactId>batik-ext</artifactId>
+								<version>1.6</version>
+								</dependency>
+								<dependency>
+								<groupId>batik</groupId>
+								<artifactId>batik-extension</artifactId>
+								<version>1.6</version>
+								</dependency -->
+							<exclude>batik:batik-awt-util:1.6</exclude>
+							<exclude>batik:batik-dom:1.6</exclude>
+							<exclude>batik:batik-util:1.6</exclude>
+							<exclude>batik:batik-xml:1.6</exclude>
+
 							<!-- exclude>
 								avalon-framework:avalon-framework
 								</exclude>
