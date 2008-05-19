@@ -68,6 +68,7 @@
 		<module>jc-xsio</module>
 		<module>jc-piccolo</module>
 		<module>jc-demo</module>
+		<module>batikbridge</module>
 		<module>webstart</module>
 	</modules>
 </project>

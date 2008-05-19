@@ -38,6 +38,7 @@
       <item name="JC XSIO" href="../../jc-xsio/0.7-SNAPSHOT"/>
       <item name="JC Piccolo ZUI" href="../../jc-piccolo/0.7-SNAPSHOT"/>
       <item name="JC Demo" href="../../jc-demo/0.7-SNAPSHOT"/>
+      <item name="Batik Bridge" href="../../batikbridge/1.6"/>
     </menu>
     <menu ref="reports" />
   </body>
