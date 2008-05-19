@@ -65,28 +65,12 @@
 								com.thoughtworks.xstream:xstream
 							</exclude>
 							<exclude>hsqldb:hsqldb</exclude>
-
-							<exclude>batik:batik-svggen:1.6</exclude>
-							<!-- dependency>
-								<groupId>batik</groupId>
-								<artifactId>batik-svg-dom</artifactId>
-								<version>1.6</version>
-								</dependency>
-								<dependency>
-								<groupId>batik</groupId>
-								<artifactId>batik-ext</artifactId>
-								<version>1.6</version>
-								</dependency>
-								<dependency>
-								<groupId>batik</groupId>
-								<artifactId>batik-extension</artifactId>
-								<version>1.6</version>
-								</dependency -->
-							<exclude>batik:batik-awt-util:1.6</exclude>
-							<exclude>batik:batik-dom:1.6</exclude>
-							<exclude>batik:batik-util:1.6</exclude>
-							<exclude>batik:batik-xml:1.6</exclude>
-
+							<!-- provided by  http://www.jcurl.org/jws/org/jcurl/demo/batik/0.7-SNAPSHOT/launch.jnlp -->
+							<exclude>batik:batik-svggen</exclude>
+							<exclude>batik:batik-awt-util</exclude>
+							<exclude>batik:batik-dom</exclude>
+							<exclude>batik:batik-util</exclude>
+							<exclude>batik:batik-xml</exclude>
 							<!-- exclude>
 								avalon-framework:avalon-framework
 								</exclude>
@@ -108,8 +92,11 @@
 							${project.basedir}/src/jnlp/resources
 						</resources>
 						<outputFile>launch.jnlp</outputFile>
-						<mainClass>
+						<!-- mainClass>
 							org.jcurl.demo.tactics.MainApp
+						</mainClass -->
+						<mainClass>
+							org.jcurl.demo.tactics.JCurlShotPlanner
 						</mainClass>
 					</jnlp>
 					<!-- SIGNING -->

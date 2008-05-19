@@ -27,6 +27,7 @@
     <j2se version="1.5+"/>
     $dependencies
     <extension href="http://www.jcurl.org/jws/org/jcurl/demo/3rdparty/0.7-SNAPSHOT/launch.jnlp"/>
+    <extension href="http://www.jcurl.org/jws/org/jcurl/demo/batik/0.7-SNAPSHOT/launch.jnlp"/>
   </resources>
   <application-desc main-class="$mainClass"/>
 </jnlp> 
