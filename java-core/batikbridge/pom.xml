@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>parent</artifactId>
+		<groupId>org.jcurl.core</groupId>
+		<version>0.7-SNAPSHOT</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>batikbridge</artifactId>
+	<version>1.6</version>
+	<name>Batik Bridge</name>
+	<description>
+		Bundle Batik Jars plus a easly "reflectible" wrapper.
+	</description>
+	<url>${httpsitebase}/${pom.artifactId}/${pom.version}</url>
+	<scm>
+		<connection>
+			scm:svn:svn://svn.berlios.de/jcurl/trunk/java-core/${pom.artifactId}
+		</connection>
+		<developerConnection>
+			scm:svn:svn+ssh://svn.berlios.de/svnroot/repos/jcurl/trunk/java-core/${pom.artifactId}
+		</developerConnection>
+		<url>
+			http://svn.berlios.de/wsvn/jcurl/trunk/java-core/${pom.artifactId}
+		</url>
+	</scm>
+	<repositories>
+		<repository>
+			<!-- Bootstrap parent pom  -->
+			<id>jcurl-snapshots</id>
+			<name>JCurl Maven Snapshots</name>
+			<layout>default</layout>
+			<url>http://jcurl.berlios.de/m2/snap</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots />
+		</repository>
+	</repositories>
+	<dependencies>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-svggen</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<!-- dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-svg-dom</artifactId>
+			<version>1.6</version>
+			</dependency>
+			<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-ext</artifactId>
+			<version>1.6</version>
+			</dependency>
+			<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-extension</artifactId>
+			<version>1.6</version>
+			</dependency -->
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-awt-util</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-dom</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-util</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>batik</groupId>
+			<artifactId>batik-xml</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.4</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<distributionManagement>
+		<site>
+			<id>ssh-jcurl-site</id>
+			<url>${scpsitebase}/${pom.artifactId}/${pom.version}</url>
+		</site>
+	</distributionManagement>
+</project>
