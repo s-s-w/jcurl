@@ -54,6 +54,7 @@ import org.jcurl.core.io.JDKSerializer;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
+import org.jdesktop.application.ApplicationAction;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
 
@@ -244,23 +245,43 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	private boolean askDiscardUnsaved(final javax.swing.Action action) {
 		if (!isModified())
 			return true;
-		final String title = action == null ? null : "Action: "
-				+ (String) action.getValue(javax.swing.Action.NAME);
+		final String title, msg;
+		if (true) {
+			final ResourceMap r = getContext().getResourceMap();
+			title = r.getString("discard" + ".Dialog" + ".title", action
+					.getValue(javax.swing.Action.NAME));
+			msg = r.getString("discard" + ".Dialog" + ".message");
+		} else {
+			if (action instanceof ApplicationAction) {
+				final ApplicationAction aa = (ApplicationAction) action;
+				final ResourceMap r = getContext().getResourceMap();
+				title = action == null ? null : r.getString(aa.getName()
+						+ ".Dialog" + ".title", aa
+						.getValue(javax.swing.Action.NAME));
+				msg = r.getString(aa.getName() + ".Dialog" + ".message");
+			} else {
+				title = null;
+				msg = "Discard unsaved changes?";
+			}
+		}
 		return JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
-				getMainFrame(), "Discard unsaved changes?", title,
-				JOptionPane.YES_NO_OPTION);
+				getMainFrame(), msg, title, JOptionPane.YES_NO_OPTION,
+				JOptionPane.WARNING_MESSAGE);
 	};
 
 	private boolean askOverwrite(final File f) {
 		if (!f.exists())
 			return true;
-		return JOptionPane.YES_OPTION == JOptionPane
-				.showConfirmDialog(
-						getMainFrame(),
-						"The file '"
-								+ f
-								+ "' already exists.\nDo you really want to overwrite it?",
-						"Overwrite existing file?", JOptionPane.YES_NO_OPTION);
+		final String title, msg;
+		{
+			final ResourceMap r = getContext().getResourceMap();
+			title = r.getString("overwrite" + ".Dialog" + ".title");
+			msg = r.getString("overwrite" + ".Dialog" + ".message", f
+					.toString());
+		}
+		return JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
+				getMainFrame(), msg, title, JOptionPane.YES_NO_OPTION,
+				JOptionPane.WARNING_MESSAGE);
 	};
 
 	private JMenu createMenu(final String menuName, final String[] actionNames) {
@@ -271,7 +292,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 				menu.add(new JSeparator());
 			else {
 				final JMenuItem menuItem = new JMenuItem();
-				menuItem.setAction(getAction(actionName));
+				menuItem.setAction(findAction(actionName));
 				menuItem.setIcon(null);
 				menu.add(menuItem);
 			}
@@ -309,7 +330,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		toolBar.setFloatable(false);
 		for (final String actionName : toolbarActionNames) {
 			final JButton button = new JButton();
-			button.setAction(getAction(actionName));
+			button.setAction(findAction(actionName));
 			button.setFocusable(false);
 			toolBar.add(button);
 		}
@@ -335,7 +356,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	/** File Menu Action */
 	@Action
 	private void fileClear() {
-		if (!askDiscardUnsaved(getAction("fileClear")))
+		if (!askDiscardUnsaved(findAction("fileClear")))
 			return;
 		try {
 			setDocument(null);
@@ -386,7 +407,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	/** File Menu Action */
 	@Action
 	public void fileHammy() {
-		if (!askDiscardUnsaved(getAction("fileHammy")))
+		if (!askDiscardUnsaved(findAction("fileHammy")))
 			return;
 		try {
 			setDocument(defaultScene);
@@ -402,7 +423,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	/** File Menu Action */
 	@Action
 	public void fileOpen() {
-		if (!askDiscardUnsaved(getAction("fileOpen")))
+		if (!askDiscardUnsaved(findAction("fileOpen")))
 			return;
 		final JFileChooser chooser = jcx(getFile());
 		chooser.setName("openDialog");
@@ -423,19 +444,22 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	/** File Menu Action */
 	@Action
 	public void fileOpenURL() {
-		if (!askDiscardUnsaved(getAction("fileOpenURL")))
+		final String a = "fileOpenURL";
+		if (!askDiscardUnsaved(findAction(a)))
 			return;
+		final ResourceMap r = getContext().getResourceMap();
+		final String title = r.getString(a + ".Dialog" + ".title");
+		final String msg = r.getString(a + ".Dialog" + ".message");
 		for (;;) {
-			final String url = JOptionPane.showInputDialog(getMainFrame(),
-					"Give me an URL:", getContext().getResourceMap().getString(
-							"fileOpenURL"), JOptionPane.QUESTION_MESSAGE);
+			final String url = JOptionPane.showInputDialog(getMainFrame(), msg,
+					title, JOptionPane.QUESTION_MESSAGE);
 			if (url == null)
 				return;
 			try {
 				setDocument(new URL(url));
 				return;
 			} catch (final IOException e) {
-				showErrorDialog("Couldn't load document from '" + url + "'", e);
+				showErrorDialog(r.getString(a + ".Dialog" + ".error", url), e);
 			}
 		}
 	};
@@ -447,7 +471,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	 */
 	@Action(enabledProperty = "modified")
 	public void fileReset() throws IOException {
-		if (!askDiscardUnsaved(getAction("fileReset")))
+		if (!askDiscardUnsaved(findAction("fileReset")))
 			return;
 		final URL tmp = getDocument();
 		setDocument(null);
@@ -492,7 +516,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		log.info(saveHelper(null, getFile(), "saveCopyAsDialog", false));
 	};
 
-	private javax.swing.Action getAction(final String actionName) {
+	private javax.swing.Action findAction(final String actionName) {
 		return getContext().getActionMap().get(actionName);
 	}
 
@@ -559,7 +583,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		}
 		addExitListener(new Application.ExitListener() {
 			public boolean canExit(final EventObject e) {
-				return askDiscardUnsaved(getAction("quit"));
+				return askDiscardUnsaved(findAction("quit"));
 			}
 
 			public void willExit(final EventObject e) {
