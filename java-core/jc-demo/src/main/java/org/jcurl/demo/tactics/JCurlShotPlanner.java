@@ -5,63 +5,107 @@
 
 package org.jcurl.demo.tactics;
 
+import java.awt.BorderLayout;
 import java.awt.Cursor;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.EventObject;
+import java.util.Locale;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JToolBar;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.api.ComputedTrajectorySet;
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.RockProps;
+import org.jcurl.core.api.TrajectorySet;
 import org.jcurl.core.api.Unit;
-import org.jcurl.core.helpers.NotImplementedYetException;
+import org.jcurl.core.impl.CurveManager;
+import org.jcurl.core.io.IONode;
+import org.jcurl.core.io.IOTrajectories;
+import org.jcurl.core.io.JCurlSerializer;
+import org.jcurl.core.io.JDKSerializer;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
-import org.jdesktop.beansbinding.AutoBinding;
-import org.jdesktop.beansbinding.BeanProperty;
-import org.jdesktop.beansbinding.Bindings;
 
 /**
+ * Makes heavy use of the <a
+ * href="https://appframework.dev.java.net/intro/index.html">Swing Application
+ * Framework</a>.
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class JCurlShotPlanner extends SingleFrameApplication {
+	private static class ChangeManager implements ChangeListener {
+		private final JCurlShotPlanner host;
+
+		public ChangeManager(final JCurlShotPlanner host) {
+			this.host = host;
+		}
+
+		public void deregister(final ComputedTrajectorySet cts) {
+			if (cts == null)
+				return;
+			cts.getInitialPos().removeChangeListener(this);
+			cts.getInitialSpeed().removeChangeListener(this);
+			cts.getCurrentPos().removeChangeListener(this);
+			cts.getCurrentSpeed().removeChangeListener(this);
+		}
+
+		public void register(final ComputedTrajectorySet cts) {
+			if (cts == null)
+				return;
+			cts.getInitialPos().addChangeListener(this);
+			cts.getInitialSpeed().addChangeListener(this);
+			cts.getCurrentPos().addChangeListener(this);
+			cts.getCurrentSpeed().addChangeListener(this);
+		}
+
+		public void stateChanged(final ChangeEvent e) {
+			host.setModified(true);
+		}
+	}
+
 	private static class ZoomHelper {
-		/** All from back to back */
-		public static final Rectangle2D CompletePlus;
-		/** House area plus 1 rock margin plus "out" rock space. */
-		public static final Rectangle2D HousePlus;
-		private static final Log log = JCLoggerFactory
-				.getLogger(ZoomHelper.class);
 		/**
 		 * Inter-hog area area plus house area plus 1 rock margin plus "out"
 		 * rock space.
 		 */
-		private static final Rectangle2D SheetPlus;
+		public static final Rectangle2D ActivePlus;
+		/** All from back to back */
+		public static final Rectangle2D CompletePlus;
+		/** House area plus 1 rock margin plus "out" rock space. */
+		public static final Rectangle2D HousePlus;
 		/** 12-foot circle plus 1 rock */
-		private static final Rectangle2D TwelvePlus;
+		public static final Rectangle2D TwelvePlus;
 		static {
 			final double r2 = 2 * RockProps.DEFAULT.getRadius();
 			final double x = IceSize.SIDE_2_CENTER + r2;
@@ -70,7 +114,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 							* r2);
 			final double c12 = r2 + Unit.f2m(6.0);
 			TwelvePlus = new Rectangle2D.Double(-c12, -c12, 2 * c12, 2 * c12);
-			SheetPlus = new Rectangle2D.Double(-x, -(IceSize.HOG_2_HOG
+			ActivePlus = new Rectangle2D.Double(-x, -(IceSize.HOG_2_HOG
 					+ IceSize.HOG_2_TEE + r2), 2 * x, IceSize.HOG_2_HOG
 					+ IceSize.HOG_2_TEE + IceSize.BACK_2_TEE + 3 * r2 + 2 * r2);
 			CompletePlus = new Rectangle2D.Double(-x, -(IceSize.HOG_2_TEE
@@ -83,9 +127,9 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			if (dst == null)
 				return;
 			final RectangularShape src = dst.getZoom();
-			src.setFrame(src.getX() + src.getWidth() * rx, src.getY()
-					+ src.getHeight() * ry, src.getWidth(), src.getHeight());
-			zoom(dst, src, dt);
+			zoom(dst, new Rectangle2D.Double(src.getX() + src.getWidth() * rx,
+					src.getY() + src.getHeight() * ry, src.getWidth(), src
+							.getHeight()), dt);
 		}
 
 		private void zoom(final Zoomable dst, final Point2D center,
@@ -93,8 +137,6 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			if (dst == null)
 				return;
 			final RectangularShape src = dst.getZoom();
-			if (log.isDebugEnabled())
-				log.debug(src);
 			final double w = src.getWidth() * ratio;
 			final double h = src.getHeight() * ratio;
 			final double cx, cy;
@@ -117,22 +159,22 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		}
 	}
 
+	private static final double currentTime = 30;
 	private static URL defaultScene = null;
 	private static final int FAST = 200;
-	private static Log log = JCLoggerFactory.getLogger(JCurlShotPlanner.class);
+	private static final Log log = JCLoggerFactory
+			.getLogger(JCurlShotPlanner.class);;
 	private static final int SLOW = 333;
-
 	private static final Cursor waitc = Cursor
 			.getPredefinedCursor(Cursor.WAIT_CURSOR);;
+	private static final ZoomHelper zh = new ZoomHelper();;
 
-	private static final ZoomHelper zh = new ZoomHelper();
-
-	static void bind(final Object src, final String src_p, final Object dst,
-			final String dst_p) {
-		Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, src,
-				BeanProperty.create(src_p), dst, BeanProperty.create(dst_p))
-				.bind();
-	};
+	// static void bind(final Object src, final String src_p, final Object dst,
+	// final String dst_p) {
+	// Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, src,
+	// BeanProperty.create(src_p), dst, BeanProperty.create(dst_p))
+	// .bind();
+	// }
 
 	private static JFileChooser jcx(final File base) {
 		final JFileChooser chooser = new JFileChooser(base);
@@ -156,21 +198,10 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	};
 
 	public static void main(final String[] args) {
-		final Class<? extends Application> mc = JCurlShotPlanner.class;
-		{
-			final String res;
-			if (true) {
-				final ResourceMap r = Application.getInstance(mc).getContext()
-						.getResourceMap();
-				res = "/" + r.getResourcesDir()
-						+ r.getString("Application.defaultDocument");
-			} else
-				res = "/" + mc.getPackage().getName().replace('.', '/')
-						+ "/resources" + "/" + "default.jcz";
-			defaultScene = mc.getResource(res);
-		}
-		launch(mc, args);
-	}
+		// for debugging reasons only:
+		Locale.setDefault(Locale.CANADA);
+		launch(JCurlShotPlanner.class, args);
+	};
 
 	private static JFileChooser png(final File base) {
 		final JFileChooser fcPng = new JFileChooser(base);
@@ -190,12 +221,40 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			}
 		});
 		return fcPng;
-	};
+	}
 
-	private final TacticsBean tactics = new TacticsBean();;
+	private final ChangeManager cm = new ChangeManager(this);
+	private URL document;
+	private File file;
+	private boolean modified = false;
+	private final TacticsBean tactics = new TacticsBean();
+	private final JLabel url = new JLabel();
 
 	private JCurlShotPlanner() {
-		tactics.setName("tactics");
+		// tactics.setName("tactics");
+		url.setName("urlLabel");
+	};
+
+	private boolean askDiscardUnsaved(final javax.swing.Action action) {
+		if (!isModified())
+			return true;
+		final String title = action == null ? null : "Action: "
+				+ (String) action.getValue(javax.swing.Action.NAME);
+		return JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
+				getMainFrame(), "Discard unsaved changes?", title,
+				JOptionPane.YES_NO_OPTION);
+	};
+
+	private boolean askOverwrite(final File f) {
+		if (!f.exists())
+			return true;
+		return JOptionPane.YES_OPTION == JOptionPane
+				.showConfirmDialog(
+						getMainFrame(),
+						"The file '"
+								+ f
+								+ "' already exists.\nDo you really want to overwrite it?",
+						"Overwrite existing file?", JOptionPane.YES_NO_OPTION);
 	};
 
 	private JMenu createMenu(final String menuName, final String[] actionNames) {
@@ -216,9 +275,10 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	private JMenuBar createMenuBar() {
 		final JMenuBar menuBar = new JMenuBar();
 
-		final String[] fileMenuActionNames = { "fileClear", "fileHammy", "---",
-				"fileNewDoc", "fileOpen", "---", "fileSave", "fileSaveAs",
-				"---", "fileExportPng", "fileExportSvg", "---", "quit" };
+		final String[] fileMenuActionNames = { /*"fileClear",*/"fileNewDoc",
+				"fileHammy", "---", "fileOpen", "fileOpenURL", "---",
+				"fileReset", "fileSave", "fileSaveAs", "fileSaveCopyAs", "---",
+				"fileExportPng", "fileExportSvg", "---", "quit" };
 		menuBar.add(createMenu("fileMenu", fileMenuActionNames));
 
 		final String[] editMenuActionNames = { "editUndo", "editRedo", "---",
@@ -260,7 +320,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 	/** Edit Menu Action */
 	@Action(enabledProperty = "alwaysFalse")
-	public void editRedo() {};
+	public void editRedo() {}
 
 	/** Edit Menu Action */
 	@Action(enabledProperty = "alwaysFalse")
@@ -268,29 +328,11 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 	/** File Menu Action */
 	@Action
-	public void fileClear() {
-		// TODO check is Modified
+	private void fileClear() {
+		if (!askDiscardUnsaved(getAction("fileClear")))
+			return;
 		try {
-			tactics.setDocument(null);
-		} catch (final IOException e) {
-			throw new RuntimeException("Unhandled", e);
-		}
-	};
-
-	/** File Menu Action */
-	@Action
-	public void fileExportPng() {};
-
-	/** File Menu Action */
-	@Action(enabledProperty = "alwaysFalse")
-	public void fileExportSvg() {};
-
-	/** File Menu Action */
-	@Action
-	public void fileHammy() {
-		// TODO check is Modified
-		try {
-			tactics.setDocument(defaultScene);
+			setDocument(null);
 		} catch (final IOException e) {
 			throw new RuntimeException("Unhandled", e);
 		}
@@ -298,19 +340,72 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 	/** File Menu Action */
 	@Action
-	public void fileNewDoc() {};
+	public void fileExportPng() {
+		final JFileChooser fcPng = png(getFile());
+		fcPng.setName("exportPngDialog");
+		for (;;) {
+			if (JFileChooser.APPROVE_OPTION != fcPng
+					.showSaveDialog(getMainFrame()))
+				return;
+			File dst = fcPng.getSelectedFile();
+			if (!dst.getName().endsWith(".png"))
+				dst = new File(dst.getAbsoluteFile() + ".png");
+			if (!askOverwrite(dst))
+				continue;
+
+			final JComponent src = tactics;
+			final Cursor cu = switchCursor(waitc);
+			try {
+				final BufferedImage img = new BufferedImage(src.getWidth(), src
+						.getHeight(), BufferedImage.TYPE_INT_ARGB);
+				final Graphics g = img.getGraphics();
+				try {
+					src.paintAll(g);
+				} finally {
+					g.dispose();
+				}
+				ImageIO.write(img, "png", dst);
+				return;
+			} catch (final Exception e) {
+				throw new RuntimeException("Unhandled", e);
+			} finally {
+				switchCursor(cu);
+			}
+		}
+	}
+
+	/** File Menu Action */
+	@Action(enabledProperty = "alwaysFalse")
+	public void fileExportSvg() {}
+
+	/** File Menu Action */
+	@Action
+	public void fileHammy() {
+		if (!askDiscardUnsaved(getAction("fileHammy")))
+			return;
+		try {
+			setDocument(defaultScene);
+		} catch (final IOException e) {
+			throw new RuntimeException("Unhandled", e);
+		}
+	}
+
+	/** File Menu Action */
+	@Action
+	public void fileNewDoc() {}
 
 	/** File Menu Action */
 	@Action
 	public void fileOpen() {
-		// TODO check is Modified
-		final JFileChooser chooser = jcx(tactics.getFile());
+		if (!askDiscardUnsaved(getAction("fileOpen")))
+			return;
+		final JFileChooser chooser = jcx(getFile());
 		chooser.setName("openDialog");
 		final int option = chooser.showOpenDialog(getMainFrame());
 		if (option == JFileChooser.APPROVE_OPTION) {
 			final File file = chooser.getSelectedFile();
 			try {
-				tactics.setDocument(file.toURI().toURL());
+				setDocument(file.toURI().toURL());
 			} catch (final MalformedURLException e) {
 				// shouldn't happen unless the JRE fails
 				log.warn("File.toURI().toURL() failed", e);
@@ -321,96 +416,296 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	}
 
 	/** File Menu Action */
-	@Action(enabledProperty = "savingSensible")
-	public void fileSave() {}
+	@Action
+	public void fileOpenURL() {
+		if (!askDiscardUnsaved(getAction("fileOpenURL")))
+			return;
+		for (;;) {
+			final String url = JOptionPane.showInputDialog(getMainFrame(),
+					"Give me an URL:", getContext().getResourceMap().getString(
+							"fileOpenURL"), JOptionPane.QUESTION_MESSAGE);
+			if (url == null)
+				return;
+			try {
+				setDocument(new URL(url));
+				return;
+			} catch (final IOException e) {
+				showErrorDialog("Couldn't load document from '" + url + "'", e);
+			}
+		}
+	};
+
+	/**
+	 * File Menu Action
+	 * 
+	 * @throws IOException
+	 */
+	@Action(enabledProperty = "modified")
+	public void fileReset() throws IOException {
+		if (!askDiscardUnsaved(getAction("fileReset")))
+			return;
+		final URL tmp = getDocument();
+		setDocument(null);
+		setDocument(tmp);
+	};
+
+	/** File Menu Action */
+	@Action(enabledProperty = "modified")
+	public void fileSave() {
+		if (!isModified())
+			return;
+		final File f = saveHelper(getFile(), getFile(), "saveDialog", true);
+		log.info(f);
+		if (f != null) {
+			try {
+				setDocument(f.toURL(), false);
+			} catch (final IOException e) {
+				throw new RuntimeException("Unhandled", e);
+			}
+			setModified(false);
+		}
+	}
 
 	/** File Menu Action */
 	@Action
 	public void fileSaveAs() {
-		final JFileChooser fcJcx = jcx(tactics.getFile());
-		fcJcx.setDialogTitle("Save As");
-		if (JFileChooser.APPROVE_OPTION == fcJcx.showSaveDialog(getMainFrame())) {
-			final Cursor cu = switchCursor(waitc);
+		final File f = saveHelper(null, getFile(), "saveAsDialog", false);
+		log.info(f);
+		if (f != null) {
 			try {
-				// model.saveAs(td, fcJcx.getSelectedFile());
-				throw new NotImplementedYetException();
-			} catch (final Exception e1) {
-				log.error("", e1);
-			} finally {
-				switchCursor(cu);
+				setDocument(f.toURL(), false);
+			} catch (final IOException e) {
+				throw new RuntimeException("Unhandled", e);
 			}
+			setModified(false);
 		}
-	}
+	};
+
+	/** File Menu Action */
+	@Action
+	public void fileSaveCopyAs() {
+		log.info(saveHelper(null, getFile(), "saveCopyAsDialog", false));
+	};
 
 	private javax.swing.Action getAction(final String actionName) {
 		return getContext().getActionMap().get(actionName);
+	};
+
+	private URL getDocument() {
+		return document;
 	}
 
-	public boolean getAlwaysFalse() {
-		return false;
-	};
+	private File getFile() {
+		return file;
+	}
 
 	/** Help Menu Action */
 	@Action
-	public void helpAbout() {};
+	public void helpAbout() {}
 
+	/**
+	 * Setting the internal field {@link #document} directly (bypassing
+	 * {@link #setDocument(URL)} is used to deplay the document loading until
+	 * {@link #ready()}.
+	 */
 	@Override
 	protected void initialize(final String[] as) {
-		try {
-			final URL scene;
-			if (as.length == 0)
-				scene = defaultScene;
-			else
-				scene = new URL(as[0]);
-			tactics.setDocument(scene);
-		} catch (final IOException e) {
-			log.warn("Couldn't load '" + as[0] + "'.", e);
+		final Class<?> mc = this.getClass();
+		{
+			final String res;
+			if (true) {
+				final ResourceMap r = Application.getInstance().getContext()
+						.getResourceMap();
+				res = "/" + r.getResourcesDir()
+						+ r.getString("Application.defaultDocument");
+			} else
+				res = "/" + mc.getPackage().getName().replace('.', '/')
+						+ "/resources" + "/" + "default.jcz";
+			defaultScene = mc.getResource(res);
 		}
-	};
 
-	public boolean isSavingSensible() {
-		return tactics.isSavingSensible();
+		// schedule the document to load in #ready()
+		try {
+			if (as.length == 0)
+				document = defaultScene;
+			else
+				document = new URL(as[0]);
+		} catch (final MalformedURLException e) {
+			log.warn("Cannot load '" + as[0] + "'.", e);
+		}
 	}
 
-	private void showErrorDialog(String message, final Exception e) {
-		final String title = "Error";
-		final int type = JOptionPane.ERROR_MESSAGE;
-		message = "Error: " + message;
-		JOptionPane.showMessageDialog(getMainFrame(), message, title, type);
-	};
+	public boolean isAlwaysFalse() {
+		return false;
+	}
+
+	public boolean isModified() {
+		return modified;
+	}
 
 	@Override
-	protected void startup() { // set the window icon:
-		final Image i;
-		{
-			final ResourceMap r = getContext().getResourceMap();
-			if (false)
-				i = getContext().getResourceMap().getImageIcon(
-						"Application.icon").getImage();
-			else if (true)
+	protected void ready() {
+		final URL tmp = document;
+		document = null;
+		try {
+			setDocument(tmp);
+		} catch (final IOException e) {
+			log.warn("Couldn't load '" + tmp + "'.", e);
+		}
+		addExitListener(new Application.ExitListener() {
+			public boolean canExit(final EventObject e) {
+				return askDiscardUnsaved(getAction("quit"));
+			}
+
+			public void willExit(final EventObject e) {
+				log.info("Good bye!");
+			}
+		});
+	}
+
+	private final void save(final ComputedTrajectorySet cts, final File dst)
+			throws IOException {
+		final Cursor cu = switchCursor(waitc);
+		try {
+			final IOTrajectories t = new IOTrajectories();
+			// TODO add annotations
+			t.trajectories().add(cts);
+			new JCurlSerializer().write(t, dst, JDKSerializer.class);
+		} finally {
+			switchCursor(cu);
+		}
+	}
+
+	private File saveHelper(File dst, final File base, final String name,
+			final boolean forceOverwrite) {
+		JFileChooser fcJcx = null;
+		for (;;) {
+			if (fcJcx == null) {
+				fcJcx = jcx(base);
+				fcJcx.setName(name);
+			}
+			if (dst == null) {
+				if (JFileChooser.APPROVE_OPTION != fcJcx
+						.showSaveDialog(getMainFrame()))
+					return null;
+				dst = fcJcx.getSelectedFile();
+			}
+			if (dst == null)
+				continue;
+			if (!(dst.getName().endsWith(".jcx") || dst.getName().endsWith(
+					".jcz")))
+				dst = new File(dst.getAbsoluteFile() + ".jcz");
+			if (forceOverwrite || askOverwrite(dst))
 				try {
-					i = ImageIO.read(this.getClass().getResource(
-							"/" + r.getResourcesDir() + "/"
-									+ r.getString("Application.icon")));
-				} catch (final IOException e) {
-					throw new RuntimeException("Unhandled", e);
+					save(tactics.getCurves(), dst);
+					return dst;
+				} catch (final Exception e) {
+					showErrorDialog("Couldn't save to '" + dst + "'", e);
 				}
-			else
-				i = Toolkit.getDefaultToolkit().createImage(
-						this.getClass().getResource(
+		}
+	}
+
+	private void setDocument(final URL document) throws IOException {
+		this.setDocument(document, true);
+	}
+
+	private void setDocument(final URL document, boolean load)
+			throws IOException {
+		final Cursor cu = switchCursor(waitc);
+		try {
+			log.info(document);
+			final URL old = this.document;
+			this.firePropertyChange("document", old, this.document = document);
+			setFile(this.document);
+			url.setText(this.document == null ? "{null}" : this.document
+					.toString());
+			if (!load)
+				return;
+
+			cm.deregister(tactics.getCurves());
+			final CurveManager cts;
+			if (this.document == null)
+				cts = null;
+			else {
+				final IONode n = new JCurlSerializer().read(this.document);
+				final IOTrajectories it = (IOTrajectories) n;
+				final TrajectorySet ts = it.trajectories().get(0);
+				cts = (CurveManager) ts;
+			}
+			if (cts != null)
+				cts.setCurrentTime(currentTime);
+			tactics.setCurves(cts);
+			// TODO just push to the Swing Trajectory Bean
+			// bpm = tp.getBroom();
+			cm.register(tactics.getCurves());
+			setModified(false);
+		} finally {
+			switchCursor(cu);
+		}
+	}
+
+	private void setFile(final URL url) {
+		File file;
+		if (url != null && "file".equals(url.getProtocol()))
+			try {
+				file = new File(url.toURI());
+			} catch (final URISyntaxException e) {
+				file = null;
+			}
+		else
+			file = null;
+		final File old = this.file;
+		this.firePropertyChange("file", old, this.file = file);
+	};
+
+	public void setModified(final boolean modified) {
+		final boolean old = this.modified;
+		firePropertyChange("modified", old, this.modified = modified);
+	}
+
+	private void showErrorDialog(final String message, final Exception e) {
+		JOptionPane.showMessageDialog(getMainFrame(), "Error: " + message,
+				"Error", JOptionPane.ERROR_MESSAGE);
+	}
+
+	@Override
+	protected void startup() {
+		// set the window icon:
+		{
+			final Image img;
+			if (true)
+				img = getContext().getResourceMap().getImageIcon(
+						"Application.icon").getImage();
+			else {
+				final ResourceMap r = getContext().getResourceMap();
+				if (true)
+					try {
+						img = ImageIO.read(this.getClass().getResource(
 								"/" + r.getResourcesDir() + "/"
 										+ r.getString("Application.icon")));
+					} catch (final IOException e) {
+						throw new RuntimeException("Unhandled", e);
+					}
+				else
+					img = Toolkit.getDefaultToolkit().createImage(
+							this.getClass().getResource(
+									"/" + r.getResourcesDir() + "/"
+											+ r.getString("Application.icon")));
+			}
+			getMainFrame().setIconImage(img);
+			// SystemTray tray = SystemTray.getSystemTray();
 		}
-		getMainFrame().setIconImage(i);
-		// SystemTray tray = SystemTray.getSystemTray();
 
 		getMainFrame().setJMenuBar(createMenuBar());
-		// tactics.setDocument(src);
 
 		// Either use the binding here or delegate the change event?
-		bind(tactics, "savingSensible", this, "savingSensible");
+		// bind(tactics, "savingSensible", this, "savingSensible");
 
-		show(tactics);
+		final JComponent c = new JPanel();
+		c.setLayout(new BorderLayout());
+		c.add(tactics, BorderLayout.CENTER);
+		c.add(url, BorderLayout.NORTH);
+		show(c);
 		viewHouse();
 	}
 
@@ -430,7 +725,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	/** View Menu Action */
 	@Action
 	public void viewActive() {
-		zh.zoom(tactics, ZoomHelper.SheetPlus, SLOW);
+		zh.zoom(tactics, ZoomHelper.ActivePlus, SLOW);
 	}
 
 	/** View Menu Action */

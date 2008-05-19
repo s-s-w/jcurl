@@ -47,15 +47,32 @@
 				<configuration>
 					<dependencies>
 						<excludes>
-							<exclude>avalon-framework:avalon-framework</exclude>
-							<exclude>log4j:log4j</exclude>
-							<exclude>logkit:logkit</exclude>
-							<exclude>javax.servlet:servlet-api</exclude>
-							<exclude>org.jcurl.core:jc-xsio</exclude>
-							<exclude>com.thoughtworks.xstream:xstream</exclude>
-							<exclude>xpp3:xpp3_min</exclude>
+							<!-- provided by  http://www.jcurl.org/jws/org/jcurl/demo/3rdparty/0.7-SNAPSHOT/launch.jnlp -->
+							<exclude>
+								commons-logging:commons-logging
+							</exclude>
+							<exclude>edu.umd.cs.hcil:piccolo</exclude>
+							<exclude>
+								net.java.dev.scenegraph:scenario
+							</exclude>
+							<exclude>net.java.dev:appframework</exclude>
+							<exclude>net.java.dev:swingworker</exclude>
+							<exclude>net.java.dev:beansbinding</exclude>
+							<exclude>org.jscience:jscience</exclude>
+							<exclude>
+								com.thoughtworks.xstream:xstream
+							</exclude>
+							<exclude>hsqldb:hsqldb</exclude>
+							<!-- exclude>
+								avalon-framework:avalon-framework
+								</exclude>
+								<exclude>log4j:log4j</exclude>
+								<exclude>logkit:logkit</exclude>
+								<exclude>javax.servlet:servlet-api</exclude -->
 						</excludes>
 					</dependencies>
+					<pack200>true</pack200>
+					<gzip>true</gzip>
 					<jnlp>
 						<!-- we play with the resource path and template relative path to test MOJO-391 -->
 						<!-- inputTemplateResourcePath>
