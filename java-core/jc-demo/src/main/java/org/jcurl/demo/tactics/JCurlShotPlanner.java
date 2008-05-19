@@ -164,6 +164,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 	private static final double currentTime = 30;
 	private static URL defaultScene = null;
+	private static URL templateScene = null;
 	private static final int FAST = 200;
 	private static final Pattern jcxzPat = Pattern.compile("^.*\\.jc[xz]$");;
 	private static final Log log = JCLoggerFactory
@@ -418,7 +419,15 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 	/** File Menu Action */
 	@Action
-	public void fileNewDoc() {}
+	public void fileNewDoc() {
+		if (!askDiscardUnsaved(findAction("fileNewDoc")))
+			return;
+		try {
+			setDocument(templateScene);
+		} catch (final IOException e) {
+			throw new RuntimeException("Unhandled", e);
+		}
+	}
 
 	/** File Menu Action */
 	@Action
