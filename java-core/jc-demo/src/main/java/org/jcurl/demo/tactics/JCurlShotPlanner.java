@@ -1,6 +1,20 @@
 /*
- * Copyright (C) 2006 Sun Microsystems, Inc. All rights reserved. Use is subject
- * to license terms.
+ * jcurl curling simulation framework http://www.jcurl.org Copyright (C)
+ * 2005-2008 M. Rohrmoser
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 package org.jcurl.demo.tactics;
@@ -8,8 +22,12 @@ package org.jcurl.demo.tactics;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -28,6 +46,7 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -36,7 +55,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
@@ -56,8 +77,11 @@ import org.jcurl.core.log.JCLoggerFactory;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ApplicationAction;
+import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
+import org.jdesktop.application.Task;
+import org.jdesktop.application.Task.BlockingScope;
 
 /**
  * Makes heavy use of the <a
@@ -68,7 +92,7 @@ import org.jdesktop.application.SingleFrameApplication;
  * @version $Id$
  */
 public class JCurlShotPlanner extends SingleFrameApplication {
-	private static class ChangeManager implements ChangeListener {
+	static class ChangeManager implements ChangeListener {
 		private final JCurlShotPlanner host;
 
 		public ChangeManager(final JCurlShotPlanner host) {
@@ -98,7 +122,158 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		}
 	}
 
-	private static class ZoomHelper {
+	static class GuiUtil {
+
+		private static final Insets zeroInsets = new Insets(0, 0, 0, 0);
+
+		private final ApplicationContext act;;
+
+		public GuiUtil(final ApplicationContext act) {
+			this.act = act;
+		}
+
+		/**
+		 * Create a simple about box JDialog that displays the standard
+		 * Application resources, like {@code Application.title} and
+		 * {@code Application.description}. The about box's labels and fields
+		 * are configured by resources that are injected when the about box is
+		 * shown (see SingleFrameApplication#show). The resources are defined in
+		 * the application resource file: resources/DocumentExample.properties.
+		 * 
+		 * From:
+		 * https://appframework.dev.java.net/downloads/AppFramework-1.03-src.zip
+		 * DocumentExample
+		 */
+		private JDialog createAboutBox(final Frame owner) {
+			final JPanel panel = new JPanel(new GridBagLayout());
+			panel.setBorder(new EmptyBorder(0, 28, 16, 28)); // top, left,
+			// bottom, right
+			final JLabel titleLabel = new JLabel();
+			titleLabel.setName("aboutTitleLabel");
+			final GridBagConstraints c = new GridBagConstraints();
+			initGridBagConstraints(c);
+			c.anchor = GridBagConstraints.WEST;
+			c.gridwidth = GridBagConstraints.REMAINDER;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.ipady = 32;
+			c.weightx = 1.0;
+			panel.add(titleLabel, c);
+			final String[] fields = { "description", "version", "vendor",
+					"home" };
+			for (final String field : fields) {
+				final JLabel label = new JLabel();
+				label.setName(field + "Label");
+				final JTextField textField = new JTextField();
+				textField.setName(field + "TextField");
+				textField.setEditable(false);
+				textField.setBorder(null);
+				initGridBagConstraints(c);
+				// c.anchor = GridBagConstraints.BASELINE_TRAILING; 1.6 ONLY
+				c.anchor = GridBagConstraints.EAST;
+				panel.add(label, c);
+				initGridBagConstraints(c);
+				c.weightx = 1.0;
+				c.gridwidth = GridBagConstraints.REMAINDER;
+				c.fill = GridBagConstraints.HORIZONTAL;
+				panel.add(textField, c);
+			}
+			final JButton closeAboutButton = new JButton();
+			closeAboutButton.setAction(findAction("closeAboutBox"));
+			initGridBagConstraints(c);
+			c.anchor = GridBagConstraints.EAST;
+			c.gridx = 1;
+			panel.add(closeAboutButton, c);
+			final JDialog dialog = new JDialog(owner);
+			dialog.setName("aboutDialog");
+			dialog.add(panel, BorderLayout.CENTER);
+			return dialog;
+		}
+
+		private JFileChooser createFileChooser(final File base,
+				final String resourceName, final FileFilter filter) {
+			final JFileChooser fc = new JFileChooser(base);
+			fc.setName(resourceName);
+			fc.setMultiSelectionEnabled(false);
+			fc.setAcceptAllFileFilterUsed(true);
+			fc.setFileFilter(filter);
+			getContext().getResourceMap().injectComponents(fc);
+			return fc;
+		}
+
+		private JFileChooser createFileChooser(final File base,
+				final String resourceName, final String... extensions) {
+			final ResourceMap appResourceMap = getContext().getResourceMap();
+			final String key = resourceName + "_description";
+			final String desc = appResourceMap.getString(key);
+			return createFileChooser(base, resourceName,
+					new FileNameExtensionFilter(desc == null ? key : desc,
+							extensions));
+		}
+
+		private JMenu createMenu(final String menuName,
+				final String[] actionNames) {
+			final JMenu menu = new JMenu();
+			menu.setName(menuName);
+			for (final String actionName : actionNames)
+				if (actionName.equals("---"))
+					menu.add(new JSeparator());
+				else {
+					final JMenuItem menuItem = new JMenuItem();
+					menuItem.setAction(findAction(actionName));
+					menuItem.setIcon(null);
+					menu.add(menuItem);
+				}
+			return menu;
+		}
+
+		private javax.swing.Action findAction(final String actionName) {
+			return getContext().getActionMap().get(actionName);
+		};
+
+		public ApplicationContext getContext() {
+			return act;
+		};
+
+		private void initGridBagConstraints(final GridBagConstraints c) {
+			c.anchor = GridBagConstraints.CENTER;
+			c.fill = GridBagConstraints.NONE;
+			c.gridwidth = 1;
+			c.gridheight = 1;
+			c.gridx = GridBagConstraints.RELATIVE;
+			c.gridy = GridBagConstraints.RELATIVE;
+			c.insets = zeroInsets;
+			c.ipadx = 4; // not the usual default
+			c.ipady = 4; // not the usual default
+			c.weightx = 0.0;
+			c.weighty = 0.0;
+		};
+	}
+
+	abstract static class WaitCursorTask<T, V> extends Task<T, V> {
+		private final SingleFrameApplication app;
+
+		public WaitCursorTask(final SingleFrameApplication app) {
+			super(app);
+			this.app = app;
+		}
+
+		protected abstract T doCursor() throws Exception;
+
+		@Override
+		protected T doInBackground() throws Exception {
+			final Cursor cu = app.getMainFrame().getCursor();
+			try {
+				app.getMainFrame().setCursor(waitc);
+				Thread.yield();
+				return doCursor();
+			} finally {
+				app.getMainFrame().setCursor(cu);
+				Thread.yield();
+			}
+		}
+	}
+
+	static class ZoomHelper {
 		/**
 		 * Inter-hog area area plus house area plus 1 rock margin plus "out"
 		 * rock space.
@@ -164,28 +339,28 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	}
 
 	private static final BatikButler batik = new BatikButler();
+
 	private static final double currentTime = 30;
+
 	private static final int FAST = 200;
+
 	private static URL initialScene = null;
+
 	private static final Pattern jcxzPat = Pattern.compile("^.*\\.jc[xz]$");
+
 	private static final Log log = JCLoggerFactory
 			.getLogger(JCurlShotPlanner.class);
+
 	private static final Pattern pngPat = Pattern.compile("^.*\\.png$");
+
 	private static final int SLOW = 333;
 	private static final Pattern svgPat = Pattern.compile("^.*\\.svgz?$");
-
-	// static void bind(final Object src, final String src_p, final Object dst,
-	// final String dst_p) {
-	// Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, src,
-	// BeanProperty.create(src_p), dst, BeanProperty.create(dst_p))
-	// .bind();
-	// }
-
 	private static URL templateScene = null;
 	private static final Cursor waitc = Cursor
 			.getPredefinedCursor(Cursor.WAIT_CURSOR);
 	private static final ZoomHelper zh = new ZoomHelper();
 
+	/** TODO integrate with {@link FileNameExtensionFilter} */
 	private static File ensureSuffix(File dst, final Pattern pat,
 			final String suffix) {
 		final Matcher m = pat.matcher(dst.getName());
@@ -194,41 +369,18 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		return dst;
 	}
 
-	private static JFileChooser jc(final File base, final Pattern pat,
-			final String txt) {
-		final JFileChooser chooser = new JFileChooser(base);
-		// chooser.setName(name);
-		chooser.setMultiSelectionEnabled(false);
-		chooser.setAcceptAllFileFilterUsed(true);
-		chooser.setFileFilter(new FileFilter() {
-			@Override
-			public boolean accept(final File f) {
-				if (f == null)
-					return false;
-				return f.isDirectory() || pat.matcher(f.getName()).matches();
-			}
-
-			@Override
-			public String getDescription() {
-				return txt;
-			}
-		});
-		return chooser;
-	}
-
-	private static JFileChooser jcx(final File base) {
-		return jc(base, jcxzPat, "JCurl Setup Files (.jcx) (.jcz)");
-	}
-
 	public static void main(final String[] args) {
 		// for debugging reasons only:
 		Locale.setDefault(Locale.CANADA);
 		launch(JCurlShotPlanner.class, args);
 	}
 
-	private static JFileChooser png(final File base) {
-		return jc(base, pngPat, "Png Bitmap Images (.png)");
-	}
+	// static void bind(final Object src, final String src_p, final Object dst,
+	// final String dst_p) {
+	// Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, src,
+	// BeanProperty.create(src_p), dst, BeanProperty.create(dst_p))
+	// .bind();
+	// }
 
 	private static void renderPng(final Container src, final File dst)
 			throws IOException {
@@ -243,15 +395,20 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		ImageIO.write(img, "png", dst);
 	}
 
-	private static JFileChooser svg(final File base) {
-		return jc(base, svgPat, "Svg Vector Images (.svg) (.svgz)");
-	};
+	private JDialog aboutBox = null;
 
 	private final ChangeManager cm = new ChangeManager(this);
+
 	private URL document;
+
 	private File file;
+
+	private final GuiUtil gui = new GuiUtil(getContext());
+
 	private boolean modified = false;
+
 	private final TacticsBean tactics = new TacticsBean();
+
 	private final JLabel url = new JLabel();
 
 	private JCurlShotPlanner() {
@@ -259,7 +416,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		url.setName("urlLabel");
 	};
 
-	private boolean askDiscardUnsaved(final javax.swing.Action action) {
+	public boolean askDiscardUnsaved(final javax.swing.Action action) {
 		if (!isModified())
 			return true;
 		final String title, msg;
@@ -282,9 +439,9 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		return JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
 				getMainFrame(), msg, title, JOptionPane.YES_NO_OPTION,
 				JOptionPane.WARNING_MESSAGE);
-	};
+	}
 
-	private boolean askOverwrite(final File f) {
+	public boolean askOverwrite(final File f) {
 		if (!f.exists())
 			return true;
 		final String title, msg;
@@ -297,46 +454,51 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		return JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
 				getMainFrame(), msg, title, JOptionPane.YES_NO_OPTION,
 				JOptionPane.WARNING_MESSAGE);
-	};
+	}
 
-	private JMenu createMenu(final String menuName, final String[] actionNames) {
-		final JMenu menu = new JMenu();
-		menu.setName(menuName);
-		for (final String actionName : actionNames)
-			if (actionName.equals("---"))
-				menu.add(new JSeparator());
-			else {
-				final JMenuItem menuItem = new JMenuItem();
-				menuItem.setAction(findAction(actionName));
-				menuItem.setIcon(null);
-				menu.add(menuItem);
-			}
-		return menu;
+	@Action
+	public void closeAboutBox() {
+		if (aboutBox == null)
+			return;
+		aboutBox.setVisible(false);
+		aboutBox = null;
+	}
+
+	private JFileChooser createJcxChooser(final File base, final String name) {
+		return gui.createFileChooser(base, name, "jcz", "jcx");
 	}
 
 	private JMenuBar createMenuBar() {
 		final JMenuBar menuBar = new JMenuBar();
 
-		final String[] fileMenuActionNames = { /*"fileClear",*/"fileNewDoc",
-				"fileHammy", "---", "fileOpen", "fileOpenURL", "---",
+		final String[] fileMenuActionNames = { /*"fileClear",*/
+		"fileNewDoc", "fileHammy", "---", "fileOpen", "fileOpenURL", "---",
 				"fileReset", "fileSave", "fileSaveAs", "fileSaveCopyAs", "---",
 				"fileExportPng", "fileExportSvg", "---", "quit" };
-		menuBar.add(createMenu("fileMenu", fileMenuActionNames));
+		menuBar.add(gui.createMenu("fileMenu", fileMenuActionNames));
 
 		final String[] editMenuActionNames = { "editUndo", "editRedo", "---",
 				"editProperties", "---", "editPreferences" };
-		menuBar.add(createMenu("editMenu", editMenuActionNames));
+		menuBar.add(gui.createMenu("editMenu", editMenuActionNames));
 
 		final String[] viewMenuActionNames = { "viewHouse", "view12Foot",
 				"viewComplete", "viewActive", "---", "viewZoomIn",
 				"viewZoomOut", "---", "viewPanNorth", "viewPanSouth",
 				"viewPanEast", "viewPanWest" };
-		menuBar.add(createMenu("viewMenu", viewMenuActionNames));
+		menuBar.add(gui.createMenu("viewMenu", viewMenuActionNames));
 
-		final String[] helpMenuActionNames = { "helpAbout" };
-		menuBar.add(createMenu("helpMenu", helpMenuActionNames));
+		final String[] helpMenuActionNames = { "showAboutBox" };
+		menuBar.add(gui.createMenu("helpMenu", helpMenuActionNames));
 
 		return menuBar;
+	};
+
+	private JFileChooser createPngChooser(final File base, final String name) {
+		return gui.createFileChooser(base, name, "png");
+	}
+
+	private JFileChooser createSvgChooser(final File base, final String name) {
+		return gui.createFileChooser(base, name, "svgz", "svg");
 	};
 
 	private JComponent createToolBar() {
@@ -345,7 +507,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		toolBar.setFloatable(false);
 		for (final String actionName : toolbarActionNames) {
 			final JButton button = new JButton();
-			button.setAction(findAction(actionName));
+			button.setAction(gui.findAction(actionName));
 			button.setFocusable(false);
 			toolBar.add(button);
 		}
@@ -371,7 +533,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	/** File Menu Action */
 	@Action
 	private void fileClear() {
-		if (!askDiscardUnsaved(findAction("fileClear")))
+		if (!askDiscardUnsaved(gui.findAction("fileClear")))
 			return;
 		try {
 			setDocument(null);
@@ -381,61 +543,57 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	}
 
 	/** File Menu Action */
-	@Action
-	public void fileExportPng() {
-		final JFileChooser fcPng = png(getFile());
-		fcPng.setName("exportPngDialog");
+	@Action(block = BlockingScope.ACTION)
+	public Task<Void, Void> fileExportPng() {
+		final JFileChooser fcPng = createPngChooser(getFile(),
+				"exportPngFileChooser");
 		for (;;) {
 			if (JFileChooser.APPROVE_OPTION != fcPng
 					.showSaveDialog(getMainFrame()))
-				return;
+				return null;
 			final File dst = ensureSuffix(fcPng.getSelectedFile(), pngPat,
 					".png");
 			if (!askOverwrite(dst))
 				continue;
 
-			final Cursor cu = switchCursor(waitc);
-			try {
-				renderPng(tactics, dst);
-				return;
-			} catch (final Exception e) {
-				throw new RuntimeException("Unhandled", e);
-			} finally {
-				switchCursor(cu);
-			}
+			return new WaitCursorTask<Void, Void>(this) {
+				@Override
+				protected Void doCursor() throws Exception {
+					renderPng(tactics, dst);
+					return null;
+				}
+			};
 		}
 	}
 
 	/** File Menu Action */
-	@Action(enabledProperty = "renderSvgAvailable")
-	public void fileExportSvg() {
-		final JFileChooser fcSvg = svg(getFile());
-		fcSvg.setName("exportSvgDialog");
+	@Action(enabledProperty = "renderSvgAvailable", block = BlockingScope.ACTION)
+	public Task<Void, Void> fileExportSvg() {
+		final JFileChooser fcSvg = createSvgChooser(getFile(),
+				"exportSvgFileChooser");
 		for (;;) {
 			if (JFileChooser.APPROVE_OPTION != fcSvg
 					.showSaveDialog(getMainFrame()))
-				return;
+				return null;
 			final File dst = ensureSuffix(fcSvg.getSelectedFile(), svgPat,
 					".svgz");
 			if (!askOverwrite(dst))
 				continue;
 
-			final Cursor cu = switchCursor(waitc);
-			try {
-				batik.renderSvg(tactics, dst);
-				return;
-			} catch (final Exception e) {
-				throw new RuntimeException("Unhandled", e);
-			} finally {
-				switchCursor(cu);
-			}
+			return new WaitCursorTask<Void, Void>(this) {
+				@Override
+				protected Void doCursor() throws Exception {
+					batik.renderSvg(tactics, dst);
+					return null;
+				}
+			};
 		}
 	}
 
 	/** File Menu Action */
-	@Action
+	@Action(block = BlockingScope.APPLICATION)
 	public void fileHammy() {
-		if (!askDiscardUnsaved(findAction("fileHammy")))
+		if (!askDiscardUnsaved(gui.findAction("fileHammy")))
 			return;
 		try {
 			setDocument(initialScene);
@@ -447,7 +605,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	/** File Menu Action */
 	@Action
 	public void fileNewDoc() {
-		if (!askDiscardUnsaved(findAction("fileNewDoc")))
+		if (!askDiscardUnsaved(gui.findAction("fileNewDoc")))
 			return;
 		try {
 			setDocument(templateScene);
@@ -459,12 +617,11 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	/** File Menu Action */
 	@Action
 	public void fileOpen() {
-		if (!askDiscardUnsaved(findAction("fileOpen")))
+		if (!askDiscardUnsaved(gui.findAction("fileOpen")))
 			return;
-		final JFileChooser chooser = jcx(getFile());
-		chooser.setName("openDialog");
-		final int option = chooser.showOpenDialog(getMainFrame());
-		if (option == JFileChooser.APPROVE_OPTION) {
+		final JFileChooser chooser = createJcxChooser(getFile(),
+				"openFileChooser");
+		if (chooser.showOpenDialog(getMainFrame()) == JFileChooser.APPROVE_OPTION) {
 			final File file = chooser.getSelectedFile();
 			try {
 				setDocument(file.toURI().toURL());
@@ -481,7 +638,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	@Action
 	public void fileOpenURL() {
 		final String a = "fileOpenURL";
-		if (!askDiscardUnsaved(findAction(a)))
+		if (!askDiscardUnsaved(gui.findAction(a)))
 			return;
 		final ResourceMap r = getContext().getResourceMap();
 		final String title = r.getString(a + ".Dialog" + ".title");
@@ -498,7 +655,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 				showErrorDialog(r.getString(a + ".Dialog" + ".error", url), e);
 			}
 		}
-	};
+	}
 
 	/**
 	 * File Menu Action
@@ -507,7 +664,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	 */
 	@Action(enabledProperty = "modified")
 	public void fileReset() throws IOException {
-		if (!askDiscardUnsaved(findAction("fileReset")))
+		if (!askDiscardUnsaved(gui.findAction("fileReset")))
 			return;
 		final URL tmp = getDocument();
 		setDocument(null);
@@ -519,7 +676,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	public void fileSave() {
 		if (!isModified())
 			return;
-		final File f = saveHelper(getFile(), getFile(), "saveDialog", true);
+		final File f = saveHelper(getFile(), getFile(), "saveFileChooser", true);
 		log.info(f);
 		if (f != null) {
 			try {
@@ -534,7 +691,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	/** File Menu Action */
 	@Action
 	public void fileSaveAs() {
-		final File f = saveHelper(null, getFile(), "saveAsDialog", false);
+		final File f = saveHelper(null, getFile(), "saveAsFileChooser", false);
 		log.info(f);
 		if (f != null) {
 			try {
@@ -549,11 +706,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	/** File Menu Action */
 	@Action
 	public void fileSaveCopyAs() {
-		log.info(saveHelper(null, getFile(), "saveCopyAsDialog", false));
-	};
-
-	private javax.swing.Action findAction(final String actionName) {
-		return getContext().getActionMap().get(actionName);
+		log.info(saveHelper(null, getFile(), "saveCopyAsFileChooser", false));
 	};
 
 	private URL getDocument() {
@@ -564,10 +717,6 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		return file;
 	}
 
-	/** Help Menu Action */
-	@Action
-	public void helpAbout() {}
-
 	/**
 	 * Setting the internal field {@link #document} directly (bypassing
 	 * {@link #setDocument(URL)}) is used to deplay the document loading until
@@ -575,6 +724,9 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	 */
 	@Override
 	protected void initialize(final String[] as) {
+		if ("Linux".equals(System.getProperty("os.name")))
+			getContext().getResourceManager().setPlatform("linux");
+
 		final Class<?> mc = this.getClass();
 		{
 			final String res;
@@ -636,7 +788,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		}
 		addExitListener(new Application.ExitListener() {
 			public boolean canExit(final EventObject e) {
-				return askDiscardUnsaved(findAction("quit"));
+				return askDiscardUnsaved(gui.findAction("quit"));
 			}
 
 			public void willExit(final EventObject e) {
@@ -662,10 +814,8 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			final boolean forceOverwrite) {
 		JFileChooser fcJcx = null;
 		for (;;) {
-			if (fcJcx == null) {
-				fcJcx = jcx(base);
-				fcJcx.setName(name);
-			}
+			if (fcJcx == null)
+				fcJcx = createJcxChooser(base, name);
 			if (dst == null) {
 				if (JFileChooser.APPROVE_OPTION != fcJcx
 						.showSaveDialog(getMainFrame()))
@@ -741,6 +891,16 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	public void setModified(final boolean modified) {
 		final boolean old = this.modified;
 		firePropertyChange("modified", old, this.modified = modified);
+	}
+
+	/**
+	 * Show the about box dialog.
+	 */
+	@Action(block = BlockingScope.COMPONENT)
+	public void showAboutBox() {
+		if (aboutBox == null)
+			aboutBox = gui.createAboutBox(getMainFrame());
+		show(aboutBox);
 	}
 
 	private void showErrorDialog(final String message, final Exception e) {
