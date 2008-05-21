@@ -48,7 +48,7 @@ public class CurveStoreImpl extends MutableObject implements Serializable,
 	private static final Log log = JCLoggerFactory
 			.getLogger(CurveStoreImpl.class);
 	private static final long serialVersionUID = -1485170570756670720L;
-	private final CurveCombined[] curve;
+	private final CurveCombined<R1RNFunction>[] curve;
 	private final StopDetector stopper;
 
 	/**
@@ -62,7 +62,7 @@ public class CurveStoreImpl extends MutableObject implements Serializable,
 		this.stopper = stopper;
 		curve = new CurveCombined[capacity];
 		for (int i = curve.length - 1; i >= 0; i--)
-			curve[i] = new CurveCombined(DIM);
+			curve[i] = new CurveCombined<R1RNFunction>(DIM);
 	}
 
 	public void add(final int i, final double t, final R1RNFunction f,

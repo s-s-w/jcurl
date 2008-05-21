@@ -63,6 +63,7 @@ public class JCurlSerializer {
 
 	private static final String UTF_8 = "UTF-8";
 
+	@SuppressWarnings("unchecked")
 	protected Engine id2Ser(final String id) throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException {
 		final Class<? extends Engine> deser = (Class<? extends Engine>) Class

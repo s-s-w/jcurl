@@ -17,7 +17,7 @@
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.jcurl.demo.tactics;
+package org.jcurl.core.helpers;
 
 import java.awt.Container;
 import java.io.File;
@@ -28,10 +28,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.zip.GZIPOutputStream;
 
-import org.jcurl.batik.BatikWrapper;
-
 /**
- * "Client-side" of {@link BatikWrapper}.
+ * "Client-side" of <code>org.jcurl.batik.BatikWrapper</code>. Introduces
+ * <b>NO</b> compile time dependency but checks the availability at runtime
+ * (static initializer) per reflection ({@link Class#forName(String)}).
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
@@ -57,16 +57,36 @@ public class BatikButler {
 		return renderSvg != null;
 	}
 
+	/**
+	 * Convenience wrapper for {@link #renderSvg(Container, OutputStream)}. If
+	 * the filename ends with "<code>.svgz</code>" the output is gzipped.
+	 * 
+	 * @param src
+	 * @param dst
+	 * @throws IOException
+	 */
 	public void renderSvg(final Container src, final File dst)
 			throws IOException {
-		renderSvg(src, new FileOutputStream(dst), dst.getName().endsWith(
-				".svgz"));
+		OutputStream str = new FileOutputStream(dst);
+		try {
+			if (dst.getName().endsWith(".svgz"))
+				str = new GZIPOutputStream(str);
+			renderSvg(src, str);
+		} finally {
+			str.close();
+		}
 	}
 
-	public void renderSvg(final Container src, OutputStream dst,
-			final boolean gzip) throws IOException {
-		if (gzip)
-			dst = new GZIPOutputStream(dst);
+	/**
+	 * Delegate to the the <code>renderSvg</code> method of
+	 * <code>org.jcurl.batik.BatikWrapper</code>.
+	 * 
+	 * @param src
+	 * @param dst
+	 * @throws IOException
+	 */
+	public void renderSvg(final Container src, final OutputStream dst)
+			throws IOException {
 		try {
 			renderSvg.invoke(null, new Object[] { src, dst });
 		} catch (final IllegalArgumentException e) {
@@ -77,8 +97,6 @@ public class BatikButler {
 			if (e.getCause() instanceof IOException)
 				throw (IOException) e.getCause();
 			throw new RuntimeException("Unhandled", e);
-		} finally {
-			dst.close();
 		}
 	}
 }

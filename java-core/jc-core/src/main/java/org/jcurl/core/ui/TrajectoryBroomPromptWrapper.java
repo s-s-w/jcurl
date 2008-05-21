@@ -17,7 +17,7 @@
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.jcurl.demo.tactics;
+package org.jcurl.core.ui;
 
 import java.awt.geom.Point2D;
 
@@ -38,16 +38,14 @@ import org.jcurl.core.api.RockType;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.ui.BroomPromptModel;
-import org.jcurl.core.ui.DefaultBroomPromptModel;
 import org.jcurl.math.CurveCombined;
 import org.jcurl.math.MathVec;
 
 /**
- * Push changes down from this {@link BroomPromptModel} to one {@link Pos} and
- * {@link Vel} {@link RockSet} each.
+ * Push changes down from this {@link BroomPromptModel} to a
+ * {@link ComputedTrajectorySet}.
  * <p>
- * Does <b>not sync back</b> events from the {@link RockSet}s!
+ * Does <b>not sync back</b> events from the {@link ComputedTrajectorySet}!
  * </p>
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
@@ -118,6 +116,7 @@ public class TrajectoryBroomPromptWrapper extends DefaultBroomPromptModel
 		 * @param dstPos
 		 * @param dstVel
 		 */
+		@SuppressWarnings("unchecked")
 		private void syncBpm2Cts(final Point2D newPos,
 				final long splitTimeMillis, final int idx16,
 				final boolean outTurn, final Curler curl,
@@ -266,6 +265,7 @@ public class TrajectoryBroomPromptWrapper extends DefaultBroomPromptModel
 			log.warn("Unprocessed event " + evt);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void updateBroom(final boolean isInit) {
 		// syncCts2Bpm calls back setOutTurn which leads to a buggy cyclic
 		// computation. To prevent this we use a (dirty) trick:

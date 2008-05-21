@@ -17,6 +17,7 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.api.ComputedTrajectorySet;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
+import org.jcurl.core.ui.TrajectoryBroomPromptWrapper;
 import org.jcurl.core.ui.UndoRedoDocumentBase;
 import org.jcurl.core.ui.TaskExecutor.ForkableFixed;
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
