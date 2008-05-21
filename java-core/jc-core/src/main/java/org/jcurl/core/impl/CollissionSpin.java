@@ -37,73 +37,72 @@ import org.jcurl.core.helpers.PropModelHelper;
  */
 public class CollissionSpin extends ColliderBase {
 
-    private static final double J = RockProps.DEFAULT.getInertia();
+	private static final double J = RockProps.DEFAULT.getInertia();
 
-    private static final double m = RockProps.DEFAULT.getMass();
+	private static final double m = RockProps.DEFAULT.getMass();
 
-    private static final double R = RockProps.DEFAULT.getRadius();
+	private static final double R = RockProps.DEFAULT.getRadius();
 
-    private static final long serialVersionUID = 8103077481042211458L;
+	private static final long serialVersionUID = 8103077481042211458L;
 
-    private transient double mu;
+	private transient double mu;
 
-    public CollissionSpin() {
-    }
+	public CollissionSpin() {}
 
-    public CollissionSpin(final double f, final double l) {
-        final Map<CharSequence, Measure> t = PropModelHelper.create();
-        PropModelHelper.setFrictionRockRock(t, f);
-        PropModelHelper.setLoss(t, l);
-        init(t);
-    }
+	public CollissionSpin(final double f, final double l) {
+		final Map<CharSequence, Measure> t = PropModelHelper.create();
+		PropModelHelper.setFrictionRockRock(t, f);
+		PropModelHelper.setLoss(t, l);
+		init(t);
+	}
 
-    @Override
-    public void computeCC(final Rock<Vel> va, final Rock<Vel> vb) {
-        final double Veff = va.getX() + R * va.getA()
-                - (vb.getX() + R * vb.getA());
-        double X = -Veff / (2 * (1 / m + R * R / J));
-        final double dVy = vb.getY() - va.getY();
-        final double dPabs = m * abs(dVy);
-        if (abs(X) > mu * dPabs)
-            X = -Math.signum(Veff) * mu * dPabs;
-        final double dVx = X / m;
-        final double dW = -X * R / J;
-        va.setX(va.getX() + dVx);
-        va.setY(va.getY() + dVy);
-        va.setA(va.getA() + dW);
-        vb.setX(vb.getX() - dVx);
-        vb.setY(vb.getY() - dVy);
-        vb.setA(vb.getA() + dW);
-    }
+	@Override
+	public void computeCC(final Rock<Vel> va, final Rock<Vel> vb) {
+		final double Veff = va.getX() + R * va.getA()
+				- (vb.getX() + R * vb.getA());
+		double X = -Veff / (2 * (1 / m + R * R / J));
+		final double dVy = vb.getY() - va.getY();
+		final double dPabs = m * abs(dVy);
+		if (abs(X) > mu * dPabs)
+			X = -Math.signum(Veff) * mu * dPabs;
+		final double dVx = X / m;
+		final double dW = -X * R / J;
+		va.setX(va.getX() + dVx);
+		va.setY(va.getY() + dVy);
+		va.setA(va.getA() + dW);
+		vb.setX(vb.getX() - dVx);
+		vb.setY(vb.getY() - dVy);
+		vb.setA(vb.getA() + dW);
+	}
 
-    void init(final double fritionRockRock, final double loss) {
-        mu = fritionRockRock;
-    }
+	void init(final double fritionRockRock, final double loss) {
+		mu = fritionRockRock;
+	}
 
-    public void init(final Map<CharSequence, Measure> params) {
-        internalInit(params);
-        init(PropModelHelper.getFrictionRockRock(this.params), PropModelHelper
-                .getLoss(this.params));
-    }
+	public void init(final Map<CharSequence, Measure> params) {
+		internalInit(params);
+		init(PropModelHelper.getFrictionRockRock(this.params), PropModelHelper
+				.getLoss(this.params));
+	}
 
-    /**
-     * The friction rock/rock. Set the parameter for friction rock/rock.
-     * 
-     * @param v
-     *            the value
-     */
-    public void setFricRockRock(final double v) {
-        PropModelHelper.setFrictionRockRock(params, mu = v);
-    }
+	/**
+	 * The friction rock/rock. Set the parameter for friction rock/rock.
+	 * 
+	 * @param v
+	 *            the value
+	 */
+	public void setFricRockRock(final double v) {
+		PropModelHelper.setFrictionRockRock(params, mu = v);
+	}
 
-    /**
-     * The loss of energy on raises. Set the parameter for the loss of energy
-     * raises suffer.
-     * 
-     * @param v
-     *            [Joule] the value
-     */
-    public void setLoss(final double v) {
-        PropModelHelper.setLoss(params, v);
-    }
+	/**
+	 * The loss of energy on raises. Set the parameter for the loss of energy
+	 * raises suffer.
+	 * 
+	 * @param v
+	 *            [Joule] the value
+	 */
+	public void setLoss(final double v) {
+		PropModelHelper.setLoss(params, v);
+	}
 }

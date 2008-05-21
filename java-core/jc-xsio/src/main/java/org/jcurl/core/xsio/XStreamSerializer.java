@@ -62,151 +62,150 @@ import com.thoughtworks.xstream.converters.SingleValueConverter;
  */
 public class XStreamSerializer implements Engine {
 
-    private static class DoubleArrayConverter implements SingleValueConverter {
+	private static class DoubleArrayConverter implements SingleValueConverter {
 
-        @SuppressWarnings("unchecked")
-        public boolean canConvert(final Class arg0) {
-            return double[].class.isAssignableFrom(arg0);
-        }
+		@SuppressWarnings("unchecked")
+		public boolean canConvert(final Class arg0) {
+			return double[].class.isAssignableFrom(arg0);
+		}
 
-        public Object fromString(final String s) {
-            final String[] p = s.split(" ");
-            final double[] d = new double[p.length];
-            for (int i = 0; i < d.length; i++)
-                d[i] = Double.parseDouble(p[i]);
-            return d;
-        }
+		public Object fromString(final String s) {
+			final String[] p = s.split(" ");
+			final double[] d = new double[p.length];
+			for (int i = 0; i < d.length; i++)
+				d[i] = Double.parseDouble(p[i]);
+			return d;
+		}
 
-        public String toString(final Object obj) {
-            final double[] d = (double[]) obj;
-            final StringBuilder s = new StringBuilder();
-            for (final double element : d)
-                s.append(element).append(' ');
-            return s.toString().trim();
-        }
-    }
+		public String toString(final Object obj) {
+			final double[] d = (double[]) obj;
+			final StringBuilder s = new StringBuilder();
+			for (final double element : d)
+				s.append(element).append(' ');
+			return s.toString().trim();
+		}
+	}
 
-    static class MeasureConverter implements SingleValueConverter {
+	static class MeasureConverter implements SingleValueConverter {
 
-        @SuppressWarnings("unchecked")
-        public boolean canConvert(final Class arg0) {
-            return Measure.class.isAssignableFrom(arg0);
-        }
+		@SuppressWarnings("unchecked")
+		public boolean canConvert(final Class arg0) {
+			return Measure.class.isAssignableFrom(arg0);
+		}
 
-        public Object fromString(final String s) {
-            return Measure.parse(s);
-        }
+		public Object fromString(final String s) {
+			return Measure.parse(s);
+		}
 
-        public String toString(final Object obj) {
-            final Measure d = (Measure) obj;
-            final StringBuilder s = new StringBuilder();
-            s.append(d.value).append(" ").append(d.unit);
-            return s.toString();
-        }
-    }
+		public String toString(final Object obj) {
+			final Measure d = (Measure) obj;
+			final StringBuilder s = new StringBuilder();
+			s.append(d.value).append(" ").append(d.unit);
+			return s.toString();
+		}
+	}
 
-    static class RockConverter implements SingleValueConverter {
-        static final String num = "-?[0-9]+(?:[.][0-9]+)?(?:e-?[0-9]+)?";
+	static class RockConverter implements SingleValueConverter {
+		static final String num = "-?[0-9]+(?:[.][0-9]+)?(?:e-?[0-9]+)?";
 
-        static final Pattern p = Pattern.compile("(" + num + ") (" + num
-                + ") (" + num + ")");
+		static final Pattern p = Pattern.compile("(" + num + ") (" + num
+				+ ") (" + num + ")");
 
-        @SuppressWarnings("unchecked")
-        public boolean canConvert(final Class arg0) {
-            return Rock.class.isAssignableFrom(arg0);
-        }
+		@SuppressWarnings("unchecked")
+		public boolean canConvert(final Class arg0) {
+			return Rock.class.isAssignableFrom(arg0);
+		}
 
-        public Object fromString(final String s) {
-            final Matcher m = p.matcher(s);
-            if (!m.matches())
-                throw new IllegalStateException();
-            return new RockDouble(Double.parseDouble(m.group(1)), Double
-                    .parseDouble(m.group(2)), Double.parseDouble(m.group(3)));
-        }
+		public Object fromString(final String s) {
+			final Matcher m = p.matcher(s);
+			if (!m.matches())
+				throw new IllegalStateException();
+			return new RockDouble(Double.parseDouble(m.group(1)), Double
+					.parseDouble(m.group(2)), Double.parseDouble(m.group(3)));
+		}
 
-        public String toString(final Object obj) {
-            final Rock d = (Rock) obj;
-            final StringBuilder s = new StringBuilder();
-            s.append(d.getX()).append(" ");
-            s.append(d.getY()).append(" ");
-            s.append(d.getA());
-            return s.toString();
-        }
-    }
+		public String toString(final Object obj) {
+			final Rock d = (Rock) obj;
+			final StringBuilder s = new StringBuilder();
+			s.append(d.getX()).append(" ");
+			s.append(d.getY()).append(" ");
+			s.append(d.getA());
+			return s.toString();
+		}
+	}
 
-    private final XStream xs;
+	private final XStream xs;
 
-    public XStreamSerializer() {
-        xs = new XStream();
-        registerConverter(xs);
-        registerAliases(xs);
-    }
+	public XStreamSerializer() {
+		xs = new XStream();
+		registerConverter(xs);
+		registerAliases(xs);
+	}
 
-    public IONode read(final InputStream src) throws IOException {
-        return (IONode) xs.fromXML(src);
-    }
+	public IONode read(final InputStream src) throws IOException {
+		return (IONode) xs.fromXML(src);
+	}
 
-    public IONode read(final InputStream src, final IONode dst) {
-        return (IONode) xs.fromXML(src, dst);
-    };
+	public IONode read(final InputStream src, final IONode dst) {
+		return (IONode) xs.fromXML(src, dst);
+	};
 
-    public IONode read(InputStream src, final String name,
-            final IONode dst) throws IOException {
-        return read(src, dst);
-    }
+	public IONode read(final InputStream src, final String name,
+			final IONode dst) throws IOException {
+		return read(src, dst);
+	}
 
-    public IONode read(final Reader src, final IONode dst) {
-        return (IONode) xs.fromXML(src, dst);
-    }
+	public IONode read(final Reader src, final IONode dst) {
+		return (IONode) xs.fromXML(src, dst);
+	}
 
-    public IONode read(final String s) {
-        return (IONode) xs.fromXML(s);
-    }
+	public IONode read(final String s) {
+		return (IONode) xs.fromXML(s);
+	}
 
+	/**
+	 * Map all basic concepts to be a little bit robust against refactorings.
+	 * Make the aliases upper- or camelcase to distinguish them from properties.
+	 */
+	protected XStream registerAliases(final XStream xs) {
+		xs.alias("measure", Measure.class);
+		xs.alias("rock", RockDouble.class);
+		// 
+		xs.alias("IODocument", IONode.class);
+		xs.alias("IOTrajectories", IOTrajectories.class);
+		// 
+		xs.alias("StoredTrajectory", StoredTrajectorySet.class);
+		xs.alias("CombinedCurve", CurveCombined.class);
+		xs.alias("part", Part.class);
+		xs.alias("TransformedCurve", CurveTransformed.class);
+		xs.alias("PolynomeCurve", PolynomeCurve.class);
+		xs.alias("PointCurve", CurveStill.class);
+		// 
+		xs.alias("CurveManager", CurveManager.class);
+		xs.alias("CurveStore", CurveStoreImpl.class);
+		xs.alias("NewtonStopDetector", NewtonStopDetector.class);
+		xs.alias("CollissionSpin", CollissionSpin.class);
+		xs.alias("NewtonCollissionDetector", NewtonCollissionDetector.class);
+		xs.alias("NoCurlCurler", CurlerNoCurl.class);
+		return xs;
+	}
 
-    /**
-     * Map all basic concepts to be a little bit robust against refactorings.
-     * Make the aliases upper- or camelcase to distinguish them from properties.
-     */
-    protected XStream registerAliases(final XStream xs) {
-        xs.alias("measure", Measure.class);
-        xs.alias("rock", RockDouble.class);
-        // 
-        xs.alias("IODocument", IONode.class);
-        xs.alias("IOTrajectories", IOTrajectories.class);
-        // 
-        xs.alias("StoredTrajectory", StoredTrajectorySet.class);
-        xs.alias("CombinedCurve", CurveCombined.class);
-        xs.alias("part", Part.class);
-        xs.alias("TransformedCurve", CurveTransformed.class);
-        xs.alias("PolynomeCurve", PolynomeCurve.class);
-        xs.alias("PointCurve", CurveStill.class);
-        // 
-        xs.alias("CurveManager", CurveManager.class);
-        xs.alias("CurveStore", CurveStoreImpl.class);
-        xs.alias("NewtonStopDetector", NewtonStopDetector.class);
-        xs.alias("CollissionSpin", CollissionSpin.class);
-        xs.alias("NewtonCollissionDetector", NewtonCollissionDetector.class);
-        xs.alias("NoCurlCurler", CurlerNoCurl.class);
-        return xs;
-    }
+	protected XStream registerConverter(final XStream xs) {
+		xs.registerConverter(new MeasureConverter());
+		xs.registerConverter(new DoubleArrayConverter());
+		xs.registerConverter(new RockConverter());
+		return xs;
+	}
 
-    protected XStream registerConverter(final XStream xs) {
-        xs.registerConverter(new MeasureConverter());
-        xs.registerConverter(new DoubleArrayConverter());
-        xs.registerConverter(new RockConverter());
-        return xs;
-    }
+	public String write(final IONode src) {
+		return xs.toXML(src);
+	}
 
-    public String write(final IONode src) {
-        return xs.toXML(src);
-    }
+	public void write(final IONode src, final OutputStream dst) {
+		xs.toXML(src, dst);
+	}
 
-    public void write(final IONode src, final OutputStream dst) {
-        xs.toXML(src, dst);
-    }
-
-    public void write(final IONode src, final Writer dst) {
-        xs.toXML(src, dst);
-    }
+	public void write(final IONode src, final Writer dst) {
+		xs.toXML(src, dst);
+	}
 }

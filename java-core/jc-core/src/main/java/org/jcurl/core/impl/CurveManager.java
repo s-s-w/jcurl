@@ -269,20 +269,6 @@ public class CurveManager extends MutableObject implements ChangeListener,
 		return 0;
 	}
 
-	public void stateChanged(final ChangeEvent arg0) {
-		final Object src = arg0 == null ? null : arg0.getSource();
-		if (src == null || src == initialPos || src == initialSpeed) {
-			// force recomputation:
-			dirty = true;
-			try {
-				setCurrentTime(getCurrentTime());
-			} catch (final NullPointerException e) {
-				log.warn("Oops!", e);
-			}
-		} else
-			log.info(arg0);
-	}
-
 	protected Object readResolve() throws ObjectStreamException {
 		final CurveManager m = new CurveManager();
 		m.annotations.putAll(annotations);
@@ -373,5 +359,19 @@ public class CurveManager extends MutableObject implements ChangeListener,
 		// initialSpeed);
 		// this.initialSpeed = initialSpeed;
 		this.initialSpeed.setLocation(initialSpeed);
+	}
+
+	public void stateChanged(final ChangeEvent arg0) {
+		final Object src = arg0 == null ? null : arg0.getSource();
+		if (src == null || src == initialPos || src == initialSpeed) {
+			// force recomputation:
+			dirty = true;
+			try {
+				setCurrentTime(getCurrentTime());
+			} catch (final NullPointerException e) {
+				log.warn("Oops!", e);
+			}
+		} else
+			log.info(arg0);
 	}
 }

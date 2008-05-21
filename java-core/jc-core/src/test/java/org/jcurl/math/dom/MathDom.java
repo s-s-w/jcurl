@@ -29,86 +29,84 @@ package org.jcurl.math.dom;
  */
 public abstract class MathDom {
 
-    public static class BinaryOp extends Operator {
+	public static class BinaryOp extends Operator {
 
-        public final Node left;
+		public final Node left;
 
-        public final Node right;
+		public final Node right;
 
-        public BinaryOp(final char op, final Node left, final Node right) {
-            super(op);
-            this.left = left;
-            this.right = right;
-        }
-    }
+		public BinaryOp(final char op, final Node left, final Node right) {
+			super(op);
+			this.left = left;
+			this.right = right;
+		}
+	}
 
-    public static class Block extends Node {
+	public static class Block extends Node {
 
-        public final Node arg;
+		public final Node arg;
 
-        public Block(final Node arg) {
-            this.arg = arg;
-        }
-    }
+		public Block(final Node arg) {
+			this.arg = arg;
+		}
+	}
 
-    public static class Function extends Node {
+	public static class Function extends Node {
 
-        public final Node arg;
+		public final Node arg;
 
-        public final String name;
+		public final String name;
 
-        public Function(final String name, final Node arg) {
-            this.name = name;
-            this.arg = arg;
-        }
-    }
+		public Function(final String name, final Node arg) {
+			this.name = name;
+			this.arg = arg;
+		}
+	}
 
-    public static class Integer extends Literal {
-        public final int ival;
+	public static class Integer extends Literal {
+		public final int ival;
 
-        public Integer(final int val) {
-            super(val);
-            ival = val;
-        }
-    }
+		public Integer(final int val) {
+			super(val);
+			ival = val;
+		}
+	}
 
-    public static class Literal extends Value {
-        public final double val;
+	public static class Literal extends Value {
+		public final double val;
 
-        public Literal(final double val) {
-            this.val = val;
-        }
-    }
+		public Literal(final double val) {
+			this.val = val;
+		}
+	}
 
-    public static abstract class Node {
-    }
+	public static abstract class Node {}
 
-    public abstract static class Operator extends Node {
-        public final char op;
+	public abstract static class Operator extends Node {
+		public final char op;
 
-        public Operator(final char op) {
-            this.op = op;
-        }
-    }
+		public Operator(final char op) {
+			this.op = op;
+		}
+	}
 
-    public static class Parameter extends Value {
-        public final String name;
+	public static class Parameter extends Value {
+		public final String name;
 
-        public Parameter(final String name) {
-            this.name = name;
-        }
-    }
+		public Parameter(final String name) {
+			this.name = name;
+		}
+	}
 
-    public static class UnaryOp extends Operator {
+	public static class UnaryOp extends Operator {
 
-        public final Node arg;
+		public final Node arg;
 
-        public UnaryOp(final char op, final Node arg) {
-            super(op);
-            this.arg = arg;
-        }
-    }
+		public UnaryOp(final char op, final Node arg) {
+			super(op);
+			this.arg = arg;
+		}
+	}
 
-    public static abstract class Value extends Node {
-    }
+	public static abstract class Value extends Node {}
 }

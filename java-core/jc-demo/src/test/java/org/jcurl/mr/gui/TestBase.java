@@ -22,13 +22,13 @@ import junit.framework.TestCase;
 
 public abstract class TestBase extends TestCase {
 
-    protected void assertEquals(final double expected, final double found) {
-        final double precision = 1e-9;
-        assertEquals("expected:<" + expected + "> +/-:<" + precision
-                + "> but was:<" + found + ">", expected, found, precision);
-    }
+	protected void assertEquals(final double expected, final double found) {
+		final double precision = 1e-9;
+		assertEquals("expected:<" + expected + "> +/-:<" + precision
+				+ "> but was:<" + found + ">", expected, found, precision);
+	}
 
-    protected double rad2deg(final double rad) {
-        return 180 * rad / Math.PI;
-    }
+	protected double rad2deg(final double rad) {
+		return 180 * rad / Math.PI;
+	}
 }

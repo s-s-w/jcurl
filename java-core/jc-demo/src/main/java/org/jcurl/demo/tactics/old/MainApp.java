@@ -16,7 +16,7 @@
  * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
-package org.jcurl.demo.tactics;
+package org.jcurl.demo.tactics.old;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -38,6 +38,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
+import org.jcurl.demo.tactics.TrajectoryPiccolo;
+import org.jcurl.demo.tactics.TrajectorySwing;
 
 /**
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
@@ -74,7 +76,7 @@ public class MainApp extends JFrame {
 		}
 		if (false) {
 			System.out.println("Packages: ");
-			for (Package p : Package.getPackages())
+			for (final Package p : Package.getPackages())
 				System.out.println(p.toString());
 		}
 	}

@@ -28,119 +28,119 @@ import java.util.Map;
  */
 public class DomWalkerEval extends DomWalker {
 
-    public static double eval(final MathDom.Node n) {
-        return eval(n, null);
-    }
+	public static double eval(final MathDom.Node n) {
+		return eval(n, null);
+	}
 
-    public static double eval(final MathDom.Node n, final Map params) {
-        final DomWalkerEval w = new DomWalkerEval(params);
-        w.walk(n);
-        return w.doubleValue();
-    }
+	public static double eval(final MathDom.Node n, final Map params) {
+		final DomWalkerEval w = new DomWalkerEval(params);
+		w.walk(n);
+		return w.doubleValue();
+	}
 
-    private final Map params;
+	private final Map params;
 
-    private double v = 0;
+	private double v = 0;
 
-    public DomWalkerEval() {
-        this(null);
-    }
+	public DomWalkerEval() {
+		this(null);
+	}
 
-    public DomWalkerEval(final Map params) {
-        this.params = params;
-    }
+	public DomWalkerEval(final Map params) {
+		this.params = params;
+	}
 
-    public double doubleValue() {
-        return v;
-    }
+	public double doubleValue() {
+		return v;
+	}
 
-    @Override
-    public void reset() {
-        v = 0;
-    }
+	@Override
+	public void reset() {
+		v = 0;
+	}
 
-    @Override
-    public void walk(final MathDom.BinaryOp n) {
-        v = 0;
-        final double l;
-        if (n.op == '=')
-            l = 0;
-        else {
-            this.walk(n.left);
-            l = v;
-            v = 0;
-        }
-        this.walk(n.right);
-        final double r = v;
-        switch (n.op) {
-        case '=':
-            if (params == null)
-                throw new IllegalArgumentException(
-                        "I need a parameter map to handle assignments.");
-            final Double t = new Double(r);
-            params.put(((MathDom.Parameter) n.left).name, t);
-            v = t.doubleValue();
-        case '+':
-            v = l + r;
-            return;
-        case '-':
-            v = l - r;
-            return;
-        case '*':
-            v = l * r;
-            return;
-        case '/':
-            v = l / r;
-            return;
-        default:
-            throw new IllegalArgumentException("Unknown operator [" + n.op
-                    + "]");
-        }
-    }
+	@Override
+	public void walk(final MathDom.BinaryOp n) {
+		v = 0;
+		final double l;
+		if (n.op == '=')
+			l = 0;
+		else {
+			this.walk(n.left);
+			l = v;
+			v = 0;
+		}
+		this.walk(n.right);
+		final double r = v;
+		switch (n.op) {
+		case '=':
+			if (params == null)
+				throw new IllegalArgumentException(
+						"I need a parameter map to handle assignments.");
+			final Double t = new Double(r);
+			params.put(((MathDom.Parameter) n.left).name, t);
+			v = t.doubleValue();
+		case '+':
+			v = l + r;
+			return;
+		case '-':
+			v = l - r;
+			return;
+		case '*':
+			v = l * r;
+			return;
+		case '/':
+			v = l / r;
+			return;
+		default:
+			throw new IllegalArgumentException("Unknown operator [" + n.op
+					+ "]");
+		}
+	}
 
-    @Override
-    public void walk(final MathDom.Block n) {
-        this.walk(n.arg);
-    }
+	@Override
+	public void walk(final MathDom.Block n) {
+		this.walk(n.arg);
+	}
 
-    @Override
-    public void walk(final MathDom.Function n) {
-        this.walk(n.arg);
-        final String fkt = n.name;
-        if ("sin".equals(fkt))
-            v = Math.sin(v);
-        else if ("abs".equals(fkt))
-            v = Math.abs(v);
-        else if ("sqrt".equals(fkt))
-            v = Math.sqrt(v);
-        else
-            throw new IllegalArgumentException("Unknown function [" + fkt + "]");
-    }
+	@Override
+	public void walk(final MathDom.Function n) {
+		this.walk(n.arg);
+		final String fkt = n.name;
+		if ("sin".equals(fkt))
+			v = Math.sin(v);
+		else if ("abs".equals(fkt))
+			v = Math.abs(v);
+		else if ("sqrt".equals(fkt))
+			v = Math.sqrt(v);
+		else
+			throw new IllegalArgumentException("Unknown function [" + fkt + "]");
+	}
 
-    @Override
-    public void walk(final MathDom.Literal n) {
-        v = n.val;
-    }
+	@Override
+	public void walk(final MathDom.Literal n) {
+		v = n.val;
+	}
 
-    @Override
-    public void walk(final MathDom.Parameter n) {
-        final Object t = params.get(n.name);
-        if (t == null || !(t instanceof Number))
-            throw new IllegalArgumentException("Parameter [" + n.name
-                    + "] not known.");
-        v = ((Double) t).doubleValue();
-    }
+	@Override
+	public void walk(final MathDom.Parameter n) {
+		final Object t = params.get(n.name);
+		if (t == null || !(t instanceof Number))
+			throw new IllegalArgumentException("Parameter [" + n.name
+					+ "] not known.");
+		v = ((Double) t).doubleValue();
+	}
 
-    @Override
-    public void walk(final MathDom.UnaryOp n) {
-        this.walk(n.arg);
-        switch (n.op) {
-        case '-':
-            v = -v;
-            break;
-        default:
-            throw new IllegalArgumentException("Unknown operator [" + n.op
-                    + "]");
-        }
-    }
+	@Override
+	public void walk(final MathDom.UnaryOp n) {
+		this.walk(n.arg);
+		switch (n.op) {
+		case '-':
+			v = -v;
+			break;
+		default:
+			throw new IllegalArgumentException("Unknown operator [" + n.op
+					+ "]");
+		}
+	}
 }

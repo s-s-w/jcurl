@@ -29,28 +29,28 @@ import org.jcurl.core.ui.FixpointZoomer;
 
 public class PositionDisplayTest extends TestShowBase {
 
-    public void testThroughPut() {
-        final int dt = 5000;
-        final Graphics g = new BufferedImage(1024 * 2, 768 * 2,
-                BufferedImage.TYPE_INT_ARGB).getGraphics();
-        final RockSet<Pos> p = PositionSet.allHome();
-        final int frames = showPositionDisplay(p, FixpointZoomer.HOG2HACK, dt,
-                new TimeRunnable() {
-                    @Override
-                    public void run(final double t) throws InterruptedException {
-                        throw new UnsupportedOperationException();
-                    }
+	public void testThroughPut() {
+		final int dt = 5000;
+		final Graphics g = new BufferedImage(1024 * 2, 768 * 2,
+				BufferedImage.TYPE_INT_ARGB).getGraphics();
+		final RockSet<Pos> p = PositionSet.allHome();
+		final int frames = showPositionDisplay(p, FixpointZoomer.HOG2HACK, dt,
+				new TimeRunnable() {
+					@Override
+					public void run(final double t) throws InterruptedException {
+						throw new UnsupportedOperationException();
+					}
 
-                    @Override
-                    public void run(final double t, final Component jp)
-                            throws InterruptedException {
-                        jp.paint(g);
-                    }
-                });
-        if (frame != null)
-            System.out.println(getClass().getName() + " frequency: " + frames
-                    * 1000L / (double) dt + " frames per second");
-        // System.out.println(frames + " computations took " + dt
-        // + " millis, i.e. " + frames * 1000L / dt + " per second.");
-    }
+					@Override
+					public void run(final double t, final Component jp)
+							throws InterruptedException {
+						jp.paint(g);
+					}
+				});
+		if (frame != null)
+			System.out.println(getClass().getName() + " frequency: " + frames
+					* 1000L / (double) dt + " frames per second");
+		// System.out.println(frames + " computations took " + dt
+		// + " millis, i.e. " + frames * 1000L / dt + " per second.");
+	}
 }

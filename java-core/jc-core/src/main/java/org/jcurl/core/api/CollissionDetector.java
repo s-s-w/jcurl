@@ -29,79 +29,79 @@ import org.jcurl.math.R1RNFunction;
  */
 public interface CollissionDetector extends Strategy {
 
-    public static double RR2 = MathVec.sqr(2 * RockProps.DEFAULT.getRadius());
+	public static double RR2 = MathVec.sqr(2 * RockProps.DEFAULT.getRadius());
 
-    /**
-     * Find the smallest <code>t</code> with
-     * <code>t0 &lt;= t &lt;= tmax</code> when the two spheres <code>ra</code>
-     * moving along <code>fa</code> and <code>rb</code> moving along
-     * <code>fb</code> touch.
-     * <p>
-     * Delegates to
-     * {@link #compute(double, double, R1RNFunction, R1RNFunction, double)}.
-     * </p>
-     * 
-     * @param t0
-     *            start time
-     * @param tstop
-     *            max. time
-     * @param fa
-     *            location of sphere <code>a</code>
-     * @param ra
-     *            radius of sphere <code>a</code>
-     * @param fb
-     *            location of sphere <code>b</code>
-     * @param rb
-     *            radius of sphere <code>b</code>
-     * @return time of next collission or {@link Double#NaN} if none.
-     */
-    public double compute(double t0, double tstop, R1RNFunction fa, double ra,
-            R1RNFunction fb, double rb);
+	/**
+	 * Find the smallest <code>t</code> with
+	 * <code>t0 &lt;= t &lt;= tmax</code> when the two spheres <code>ra</code>
+	 * moving along <code>fa</code> and <code>rb</code> moving along
+	 * <code>fb</code> touch.
+	 * <p>
+	 * Delegates to
+	 * {@link #compute(double, double, R1RNFunction, R1RNFunction, double)}.
+	 * </p>
+	 * 
+	 * @param t0
+	 *            start time
+	 * @param tstop
+	 *            max. time
+	 * @param fa
+	 *            location of sphere <code>a</code>
+	 * @param ra
+	 *            radius of sphere <code>a</code>
+	 * @param fb
+	 *            location of sphere <code>b</code>
+	 * @param rb
+	 *            radius of sphere <code>b</code>
+	 * @return time of next collission or {@link Double#NaN} if none.
+	 */
+	public double compute(double t0, double tstop, R1RNFunction fa, double ra,
+			R1RNFunction fb, double rb);
 
-    /**
-     * Find the smallest <code>t</code> with
-     * <code>t0 &lt;= t &lt;= tmax</code> when the two spheres <code>ra</code>
-     * moving along <code>fa</code> and <code>rb</code> moving along
-     * <code>fb</code> touch.
-     * <p>
-     * Assumes a curling rock's radius for the radii of the both spheres.
-     * </p>
-     * <p>
-     * Delegates to
-     * {@link #compute(double, double, R1RNFunction, R1RNFunction, double)}.
-     * </p>
-     * 
-     * @param t0
-     *            start time
-     * @param tstop
-     *            max. time
-     * @param fa
-     *            location of sphere <code>a</code>
-     * @param fb
-     *            location of sphere <code>b</code>
-     * @return time of next collission or {@link Double#NaN} if none.
-     */
-    public double compute(double t0, double tstop, R1RNFunction fa,
-            R1RNFunction fb);
+	/**
+	 * Find the smallest <code>t</code> with
+	 * <code>t0 &lt;= t &lt;= tmax</code> when the two spheres <code>ra</code>
+	 * moving along <code>fa</code> and <code>rb</code> moving along
+	 * <code>fb</code> touch.
+	 * <p>
+	 * Assumes a curling rock's radius for the radii of the both spheres.
+	 * </p>
+	 * <p>
+	 * Delegates to
+	 * {@link #compute(double, double, R1RNFunction, R1RNFunction, double)}.
+	 * </p>
+	 * 
+	 * @param t0
+	 *            start time
+	 * @param tstop
+	 *            max. time
+	 * @param fa
+	 *            location of sphere <code>a</code>
+	 * @param fb
+	 *            location of sphere <code>b</code>
+	 * @return time of next collission or {@link Double#NaN} if none.
+	 */
+	public double compute(double t0, double tstop, R1RNFunction fa,
+			R1RNFunction fb);
 
-    /**
-     * Find the smallest <code>t</code> with
-     * <code>t0 &lt;= t &lt;= tmax</code> when the two spheres <code>ra</code>
-     * moving along <code>fa</code> and <code>rb</code> moving along
-     * <code>fb</code> touch.
-     * 
-     * @param t0
-     *            start time
-     * @param tstop
-     *            max. time
-     * @param fa
-     *            location of sphere <code>a</code>
-     * @param fb
-     *            location of sphere <code>b</code>
-     * @param distSq
-     *            square of sum of both spheres radii
-     * @return time of next collission or {@link Double#NaN} if none.
-     */
-    public double compute(double t0, double tstop, R1RNFunction fa,
-            R1RNFunction fb, double distSq);
+	/**
+	 * Find the smallest <code>t</code> with
+	 * <code>t0 &lt;= t &lt;= tmax</code> when the two spheres <code>ra</code>
+	 * moving along <code>fa</code> and <code>rb</code> moving along
+	 * <code>fb</code> touch.
+	 * 
+	 * @param t0
+	 *            start time
+	 * @param tstop
+	 *            max. time
+	 * @param fa
+	 *            location of sphere <code>a</code>
+	 * @param fb
+	 *            location of sphere <code>b</code>
+	 * @param distSq
+	 *            square of sum of both spheres radii
+	 * @return time of next collission or {@link Double#NaN} if none.
+	 */
+	public double compute(double t0, double tstop, R1RNFunction fa,
+			R1RNFunction fb, double distSq);
 }

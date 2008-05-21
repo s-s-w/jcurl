@@ -30,17 +30,17 @@ import java.util.Iterator;
  */
 public class PeekIterator<E> extends FilterIterator<E> {
 
-    public PeekIterator(final Iterator<E> base) {
-        super(base);
-    }
+	public PeekIterator(final Iterator<E> base) {
+		super(base);
+	}
 
-    @Override
-    protected boolean matches(final E item) {
-        return true;
-    }
+	@Override
+	protected boolean matches(final E item) {
+		return true;
+	}
 
-    @Override
-    public E peek() {
-        return super.peek();
-    }
+	@Override
+	public E peek() {
+		return super.peek();
+	}
 }

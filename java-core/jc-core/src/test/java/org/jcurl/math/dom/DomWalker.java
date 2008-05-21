@@ -27,35 +27,35 @@ package org.jcurl.math.dom;
  */
 public abstract class DomWalker {
 
-    public abstract void reset();
+	public abstract void reset();
 
-    public abstract void walk(MathDom.BinaryOp n);
+	public abstract void walk(MathDom.BinaryOp n);
 
-    public abstract void walk(MathDom.Block n);
+	public abstract void walk(MathDom.Block n);
 
-    public abstract void walk(MathDom.Function n);
+	public abstract void walk(MathDom.Function n);
 
-    public abstract void walk(MathDom.Literal n);
+	public abstract void walk(MathDom.Literal n);
 
-    public void walk(final MathDom.Node n) {
-        if (n instanceof MathDom.BinaryOp)
-            this.walk((MathDom.BinaryOp) n);
-        else if (n instanceof MathDom.Block)
-            this.walk((MathDom.Block) n);
-        else if (n instanceof MathDom.Function)
-            this.walk((MathDom.Function) n);
-        else if (n instanceof MathDom.Literal)
-            this.walk((MathDom.Literal) n);
-        else if (n instanceof MathDom.Parameter)
-            this.walk((MathDom.Parameter) n);
-        else if (n instanceof MathDom.UnaryOp)
-            this.walk((MathDom.UnaryOp) n);
-        else
-            throw new IllegalStateException("Unknown node type ["
-                    + n.getClass().getName() + "]");
-    }
+	public void walk(final MathDom.Node n) {
+		if (n instanceof MathDom.BinaryOp)
+			this.walk((MathDom.BinaryOp) n);
+		else if (n instanceof MathDom.Block)
+			this.walk((MathDom.Block) n);
+		else if (n instanceof MathDom.Function)
+			this.walk((MathDom.Function) n);
+		else if (n instanceof MathDom.Literal)
+			this.walk((MathDom.Literal) n);
+		else if (n instanceof MathDom.Parameter)
+			this.walk((MathDom.Parameter) n);
+		else if (n instanceof MathDom.UnaryOp)
+			this.walk((MathDom.UnaryOp) n);
+		else
+			throw new IllegalStateException("Unknown node type ["
+					+ n.getClass().getName() + "]");
+	}
 
-    public abstract void walk(MathDom.Parameter n);
+	public abstract void walk(MathDom.Parameter n);
 
-    public abstract void walk(MathDom.UnaryOp n);
+	public abstract void walk(MathDom.UnaryOp n);
 }

@@ -34,69 +34,69 @@ import org.jcurl.core.api.RockType.Vel;
  */
 public class RealTimePlayer implements Runnable {
 
-    private final TrajectorySet src;
+	private final TrajectorySet src;
 
-    private double t0Last;
+	private double t0Last;
 
-    private final double t0Start;
+	private final double t0Start;
 
-    private volatile double timeScale;
+	private volatile double timeScale;
 
-    private final long timeSleep = 25;
+	private final long timeSleep = 25;
 
-    private double tNow;
+	private double tNow;
 
-    public RealTimePlayer(final double t0, final double scale,
-            final TrajectorySet src) {
-        t0Start = t0Last = tNow = t0;
-        timeScale = scale;
-        this.src = src;
-    }
+	public RealTimePlayer(final double t0, final double scale,
+			final TrajectorySet src) {
+		t0Start = t0Last = tNow = t0;
+		timeScale = scale;
+		this.src = src;
+	}
 
-    /**
-     * @return Returns the timeScale.
-     */
-    public double getTimeScale() {
-        return timeScale;
-    }
+	/**
+	 * @return Returns the timeScale.
+	 */
+	public double getTimeScale() {
+		return timeScale;
+	}
 
-    /**
-     * 
-     * @see java.lang.Runnable#run()
-     */
-    public void run() {
-        try {
-            final RockSet<Pos> pos = PositionSet.allHome(null);
-            final RockSet<Vel> speed = new RockSet<Vel>(new RockDouble<Vel>());
-            final long start = System.currentTimeMillis();
-            for (;;) {
-                final long dt = System.currentTimeMillis() - start;
-                tNow = t0Last + dt * timeScale * 1e-3;
-                // get the position
-                src.setCurrentTime(tNow);
-                if (0 == RockSet.nonZero(src.getCurrentSpeed())) {
-                    t0Last = t0Start;
-                    break;
-                }
-                try {
-                    Thread.sleep(timeSleep);
-                } catch (final InterruptedException e) {
-                    t0Last = tNow;
-                    break;
-                }
-            }
-        } catch (final Exception e) {
-            System.err.println(e.toString());
-            e.printStackTrace(System.err);
-        }
-    }
+	/**
+	 * 
+	 * @see java.lang.Runnable#run()
+	 */
+	public void run() {
+		try {
+			final RockSet<Pos> pos = PositionSet.allHome(null);
+			final RockSet<Vel> speed = new RockSet<Vel>(new RockDouble<Vel>());
+			final long start = System.currentTimeMillis();
+			for (;;) {
+				final long dt = System.currentTimeMillis() - start;
+				tNow = t0Last + dt * timeScale * 1e-3;
+				// get the position
+				src.setCurrentTime(tNow);
+				if (0 == RockSet.nonZero(src.getCurrentSpeed())) {
+					t0Last = t0Start;
+					break;
+				}
+				try {
+					Thread.sleep(timeSleep);
+				} catch (final InterruptedException e) {
+					t0Last = tNow;
+					break;
+				}
+			}
+		} catch (final Exception e) {
+			System.err.println(e.toString());
+			e.printStackTrace(System.err);
+		}
+	}
 
-    /**
-     * @param timeScale
-     *            The timeScale to set.
-     */
-    public void setTimeScale(final double timeScale) {
-        t0Last = tNow;
-        this.timeScale = timeScale;
-    }
+	/**
+	 * @param timeScale
+	 *            The timeScale to set.
+	 */
+	public void setTimeScale(final double timeScale) {
+		t0Last = tNow;
+		this.timeScale = timeScale;
+	}
 }

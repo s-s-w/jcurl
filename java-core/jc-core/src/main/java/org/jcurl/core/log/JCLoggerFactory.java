@@ -38,36 +38,35 @@ import org.apache.commons.logging.impl.Jdk14Logger;
  */
 public final class JCLoggerFactory {
 
-    private static final boolean fallback;
-    static {
-        boolean t = false;
-        try {
-            LogFactory.getLog(JCLoggerFactory.class);
-        } catch (final ExceptionInInitializerError e) {
-            t = true;
-        }
-        fallback = t;
-    }
+	private static final boolean fallback;
+	static {
+		boolean t = false;
+		try {
+			LogFactory.getLog(JCLoggerFactory.class);
+		} catch (final ExceptionInInitializerError e) {
+			t = true;
+		}
+		fallback = t;
+	}
 
-    /**
-     * Delegate to {@link LogFactory#getLog(Class)}.
-     * 
-     * @param clz
-     * @return the logger.
-     */
-    public static Log getLogger(final Class<?> clz) {
-        if (!fallback)
-            return LogFactory.getLog(clz);
-        // if (false) {
-        final Jdk14Logger l = new Jdk14Logger(clz.getName());
-        return l;
-        // } else {
-        // final SimpleLog l = new SimpleLog(clz.getName());
-        // l.setLevel(SimpleLog.LOG_LEVEL_ALL);
-        // return l;
-        // }
-    }
+	/**
+	 * Delegate to {@link LogFactory#getLog(Class)}.
+	 * 
+	 * @param clz
+	 * @return the logger.
+	 */
+	public static Log getLogger(final Class<?> clz) {
+		if (!fallback)
+			return LogFactory.getLog(clz);
+		// if (false) {
+		final Jdk14Logger l = new Jdk14Logger(clz.getName());
+		return l;
+		// } else {
+		// final SimpleLog l = new SimpleLog(clz.getName());
+		// l.setLevel(SimpleLog.LOG_LEVEL_ALL);
+		// return l;
+		// }
+	}
 
-    private JCLoggerFactory() {
-    }
+	private JCLoggerFactory() {}
 }

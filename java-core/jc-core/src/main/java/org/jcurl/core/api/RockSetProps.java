@@ -27,31 +27,31 @@ package org.jcurl.core.api;
  */
 public class RockSetProps {
 
-    public static final RockSetProps DEFAULT;
-    static {
-        DEFAULT = new RockSetProps();
-        for (int i = DEFAULT.dark.length - 1; i >= 0; i--) {
-            DEFAULT.dark[i] = RockProps.DEFAULT;
-            DEFAULT.light[i] = RockProps.DEFAULT;
-        }
-    }
+	public static final RockSetProps DEFAULT;
+	static {
+		DEFAULT = new RockSetProps();
+		for (int i = DEFAULT.dark.length - 1; i >= 0; i--) {
+			DEFAULT.dark[i] = RockProps.DEFAULT;
+			DEFAULT.light[i] = RockProps.DEFAULT;
+		}
+	}
 
-    private final RockProps[] dark = new RockProps[RockSet.ROCKS_PER_COLOR];
+	private final RockProps[] dark = new RockProps[RockSet.ROCKS_PER_COLOR];
 
-    private final RockProps[] light = new RockProps[RockSet.ROCKS_PER_COLOR];
+	private final RockProps[] light = new RockProps[RockSet.ROCKS_PER_COLOR];
 
-    public RockSetProps() {
-        for (int i = dark.length - 1; i >= 0; i--) {
-            dark[i] = new RockProps();
-            light[i] = new RockProps();
-        }
-    }
+	public RockSetProps() {
+		for (int i = dark.length - 1; i >= 0; i--) {
+			dark[i] = new RockProps();
+			light[i] = new RockProps();
+		}
+	}
 
-    public RockProps getDark(final int i) {
-        return dark[i];
-    }
+	public RockProps getDark(final int i) {
+		return dark[i];
+	}
 
-    public RockProps getLight(final int i) {
-        return light[i];
-    }
+	public RockProps getLight(final int i) {
+		return light[i];
+	}
 }

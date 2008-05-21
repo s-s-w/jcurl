@@ -17,12 +17,12 @@
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.jcurl.demo.tactics;
+package org.jcurl.demo.tactics.old;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.demo.tactics.ActionRegistry.JCAction;
-import org.jcurl.demo.tactics.ActionRegistry.JCMenu;
+import org.jcurl.demo.tactics.old.ActionRegistry.JCAction;
+import org.jcurl.demo.tactics.old.ActionRegistry.JCMenu;
 
 /**
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>

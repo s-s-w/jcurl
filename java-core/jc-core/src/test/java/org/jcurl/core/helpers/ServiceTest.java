@@ -39,8 +39,8 @@ public class ServiceTest extends TestCase {
 					Collider.class, null).iterator();
 			assertNotNull(it.next());
 			if (false)
-				for (Collider elem : Service.providerInstances(Collider.class,
-						null))
+				for (final Collider elem : Service.providerInstances(
+						Collider.class, null))
 					System.out.println(elem.getClass().getName());
 		}
 	}

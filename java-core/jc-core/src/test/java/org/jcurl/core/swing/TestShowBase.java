@@ -31,76 +31,76 @@ import org.jcurl.core.ui.Zoomer;
 
 public abstract class TestShowBase extends TestBase {
 
-    public static abstract class TimeRunnable {
-        public abstract void run(double t) throws InterruptedException;
+	public static abstract class TimeRunnable {
+		public abstract void run(double t) throws InterruptedException;
 
-        public void run(final double t, final Component p)
-                throws InterruptedException {
-            run(t);
-        }
-    }
+		public void run(final double t, final Component p)
+				throws InterruptedException {
+			run(t);
+		}
+	}
 
-    private static final Log log = JCLoggerFactory
-            .getLogger(TestShowBase.class);
+	private static final Log log = JCLoggerFactory
+			.getLogger(TestShowBase.class);
 
-    private static final boolean showGui;
+	private static final boolean showGui;
 
-    static {
-        final StackTraceElement[] se = new RuntimeException().getStackTrace();
-        boolean inEclipse = false;
-        for (int i = se.length - 1; i >= 0; i--)
-            if (se[i].getClassName().startsWith("org.eclipse.jdt")) {
-                inEclipse = true;
-                break;
-            }
-        showGui = inEclipse;
-    }
+	static {
+		final StackTraceElement[] se = new RuntimeException().getStackTrace();
+		boolean inEclipse = false;
+		for (int i = se.length - 1; i >= 0; i--)
+			if (se[i].getClassName().startsWith("org.eclipse.jdt")) {
+				inEclipse = true;
+				break;
+			}
+		showGui = inEclipse;
+	}
 
-    protected final PositionDisplay display;
+	protected final PositionDisplay display;
 
-    protected final JFrame frame;
+	protected final JFrame frame;
 
-    public TestShowBase() {
-        this(800, 600);
-    }
+	public TestShowBase() {
+		this(800, 600);
+	}
 
-    public TestShowBase(final int dx, final int dy) {
-        frame = showGui ? new JFrame() : null;
-        if (frame != null) {
-            display = new PositionDisplay();
-            frame.setBounds(0, 0, dx, dy);
-            frame.setTitle(getClass().getName());
-            frame.getContentPane().add(display);
-        } else
-            display = null;
-    }
+	public TestShowBase(final int dx, final int dy) {
+		frame = showGui ? new JFrame() : null;
+		if (frame != null) {
+			display = new PositionDisplay();
+			frame.setBounds(0, 0, dx, dy);
+			frame.setTitle(getClass().getName());
+			frame.getContentPane().add(display);
+		} else
+			display = null;
+	}
 
-    public int showPositionDisplay(final RockSet<Pos> p, final Zoomer zoom,
-            final long millis, final TimeRunnable r) {
-        if (frame == null)
-            return -1;
-        display.setZoom(zoom);
-        display.setPos(p);
-        frame.setVisible(true);
+	public int showPositionDisplay(final RockSet<Pos> p, final Zoomer zoom,
+			final long millis, final TimeRunnable r) {
+		if (frame == null)
+			return -1;
+		display.setZoom(zoom);
+		display.setPos(p);
+		frame.setVisible(true);
 
-        final long t0 = System.currentTimeMillis();
-        int loop = 0;
-        try {
-            while (System.currentTimeMillis() - t0 < millis) {
-                r.run(1e-3 * (System.currentTimeMillis() - t0), display);
-                loop++;
-            }
-        } catch (final InterruptedException e) {
-            log.warn("Oops", e);
-        }
-        frame.setVisible(false);
-        return loop;
-    }
+		final long t0 = System.currentTimeMillis();
+		int loop = 0;
+		try {
+			while (System.currentTimeMillis() - t0 < millis) {
+				r.run(1e-3 * (System.currentTimeMillis() - t0), display);
+				loop++;
+			}
+		} catch (final InterruptedException e) {
+			log.warn("Oops", e);
+		}
+		frame.setVisible(false);
+		return loop;
+	}
 
-    @Override
-    public void tearDown() {
-        if (frame != null)
-            frame.setVisible(false);
-    }
+	@Override
+	public void tearDown() {
+		if (frame != null)
+			frame.setVisible(false);
+	}
 
 }

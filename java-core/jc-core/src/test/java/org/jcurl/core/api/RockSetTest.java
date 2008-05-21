@@ -23,40 +23,40 @@ import junit.framework.TestCase;
 import org.jcurl.core.api.RockType.Pos;
 
 public class RockSetTest extends TestCase {
-    public void testCountBits() {
-        assertEquals(8, RockSet.countBits(RockSet.DARK_MASK));
-        assertEquals(8, RockSet.countBits(RockSet.LIGHT_MASK));
-    }
+	public void testCountBits() {
+		assertEquals(8, RockSet.countBits(RockSet.DARK_MASK));
+		assertEquals(8, RockSet.countBits(RockSet.LIGHT_MASK));
+	}
 
-    public void testIterators() throws InterruptedException {
-        final RockSet<Pos> p = PositionSet.allHome();
-        final int loops = 500000;
-        long t0 = 0;
-        long v = 0;
-        String txt = null;
-        // calm down a bit...
-        Thread.sleep(100);
+	public void testIterators() throws InterruptedException {
+		final RockSet<Pos> p = PositionSet.allHome();
+		final int loops = 500000;
+		long t0 = 0;
+		long v = 0;
+		String txt = null;
+		// calm down a bit...
+		Thread.sleep(100);
 
-        txt = "plain for loop (downwards)";
-        t0 = System.currentTimeMillis();
-        for (int l = 0; l < loops; l++)
-            for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
-                v++;
-        System.out.println(txt + ": " + (System.currentTimeMillis() - t0));
+		txt = "plain for loop (downwards)";
+		t0 = System.currentTimeMillis();
+		for (int l = 0; l < loops; l++)
+			for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+				v++;
+		System.out.println(txt + ": " + (System.currentTimeMillis() - t0));
 
-        txt = "plain for loop (upwards)";
-        t0 = System.currentTimeMillis();
-        for (int l = 0; l < loops; l++)
-            for (int i = 0; i < RockSet.ROCKS_PER_SET; i++)
-                v++;
-        System.out.println(txt + ": " + (System.currentTimeMillis() - t0));
-        assertTrue(v != 0);
-    }
+		txt = "plain for loop (upwards)";
+		t0 = System.currentTimeMillis();
+		for (int l = 0; l < loops; l++)
+			for (int i = 0; i < RockSet.ROCKS_PER_SET; i++)
+				v++;
+		System.out.println(txt + ": " + (System.currentTimeMillis() - t0));
+		assertTrue(v != 0);
+	}
 
-    public void testToIdx16() {
-        for (int i = RockSet.ROCKS_PER_COLOR - 1; i >= 0; i--) {
-            assertEquals(2 * i, RockSet.toIdx16(true, i));
-            assertEquals(2 * i + 1, RockSet.toIdx16(false, i));
-        }
-    }
+	public void testToIdx16() {
+		for (int i = RockSet.ROCKS_PER_COLOR - 1; i >= 0; i--) {
+			assertEquals(2 * i, RockSet.toIdx16(true, i));
+			assertEquals(2 * i + 1, RockSet.toIdx16(false, i));
+		}
+	}
 }

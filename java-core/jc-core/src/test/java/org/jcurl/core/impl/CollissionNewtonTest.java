@@ -29,47 +29,47 @@ import org.jcurl.math.R1RNFunction;
 
 public class CollissionNewtonTest extends TestCase {
 
-    public void testCompute() {
-        final CurlerNoCurl s = new CurlerNoCurl(1000, 0);
-        final NewtonCollissionDetector co = new NewtonCollissionDetector();
-        final R1RNFunction c0 = new CurveRockAnalytic(s.computeRcPoly(0, 1,
-                Math.PI / 2, 0));
-        // System.out.println(c0.toString());
-        final R1RNFunction c1 = CurveStill.newInstance(0, 2, 0);
-        // System.out.println(c0.at(2, null));
-        // System.out.println(c1.at(2, new RockDouble()));
-        // System.out.println(co.compute(0, Double.NaN, c0, c1));
-        assertEquals("", 1.6952814631961088, co.compute(0, 5, c0, c1), 1e-9);
+	public void testCompute() {
+		final CurlerNoCurl s = new CurlerNoCurl(1000, 0);
+		final NewtonCollissionDetector co = new NewtonCollissionDetector();
+		final R1RNFunction c0 = new CurveRockAnalytic(s.computeRcPoly(0, 1,
+				Math.PI / 2, 0));
+		// System.out.println(c0.toString());
+		final R1RNFunction c1 = CurveStill.newInstance(0, 2, 0);
+		// System.out.println(c0.at(2, null));
+		// System.out.println(c1.at(2, new RockDouble()));
+		// System.out.println(co.compute(0, Double.NaN, c0, c1));
+		assertEquals("", 1.6952814631961088, co.compute(0, 5, c0, c1), 1e-9);
 
-        // System.out.println(new DistanceSq(c0, c1,
-        // CollissionDetector.RR2).at(1.6952814631961088));
-    }
+		// System.out.println(new DistanceSq(c0, c1,
+		// CollissionDetector.RR2).at(1.6952814631961088));
+	}
 
-    public void testPre() {
-        final CurveRock c0 = new CurveRockAnalytic(new Polynome[] {
-                new Polynome(new double[] { 0 }),
-                new Polynome(new double[] { 0, 1, -2.8346399307250977E-5 }),
-                new Polynome(new double[] { 0, 1.5707963267948966 }) });
-        R1RNFunction c1 = new CurveRockAnalytic(new Polynome[] {
-                new Polynome(new double[] { 0 }),
-                new Polynome(new double[] { 2 }),
-                new Polynome(new double[] { 3.141592653589793 }) });
+	public void testPre() {
+		final CurveRock c0 = new CurveRockAnalytic(new Polynome[] {
+				new Polynome(new double[] { 0 }),
+				new Polynome(new double[] { 0, 1, -2.8346399307250977E-5 }),
+				new Polynome(new double[] { 0, 1.5707963267948966 }) });
+		R1RNFunction c1 = new CurveRockAnalytic(new Polynome[] {
+				new Polynome(new double[] { 0 }),
+				new Polynome(new double[] { 2 }),
+				new Polynome(new double[] { 3.141592653589793 }) });
 
-        assertEquals("", 1.5690174844768945, NewtonSimpleSolver
-                .computeNewtonValue(new Distance2DSq(c0, c1,
-                        CollissionDetector.RR2), 0, 0, CollissionDetector.RR2,
-                        0, 5), 1e-9);
-        c1 = CurveStill.newInstance(0, 2, 0);
-        assertEquals("", 1.5690174844768945, NewtonSimpleSolver
-                .computeNewtonValue(new Distance2DSq(c0, c1,
-                        CollissionDetector.RR2), 0, 0, CollissionDetector.RR2,
-                        0, 5), 1e-9);
-    }
+		assertEquals("", 1.5690174844768945, NewtonSimpleSolver
+				.computeNewtonValue(new Distance2DSq(c0, c1,
+						CollissionDetector.RR2), 0, 0, CollissionDetector.RR2,
+						0, 5), 1e-9);
+		c1 = CurveStill.newInstance(0, 2, 0);
+		assertEquals("", 1.5690174844768945, NewtonSimpleSolver
+				.computeNewtonValue(new Distance2DSq(c0, c1,
+						CollissionDetector.RR2), 0, 0, CollissionDetector.RR2,
+						0, 5), 1e-9);
+	}
 
-    public void testStill() {
-        final NewtonCollissionDetector co = new NewtonCollissionDetector();
-        final R1RNFunction c0 = CurveStill.newInstance(0, 1, 0);
-        final R1RNFunction c1 = CurveStill.newInstance(0, 2, 0);
-        assertEquals("", Double.NaN, co.compute(0, 5, c0, c1), 1e-9);
-    }
+	public void testStill() {
+		final NewtonCollissionDetector co = new NewtonCollissionDetector();
+		final R1RNFunction c0 = CurveStill.newInstance(0, 1, 0);
+		final R1RNFunction c1 = CurveStill.newInstance(0, 2, 0);
+		assertEquals("", Double.NaN, co.compute(0, 5, c0, c1), 1e-9);
+	}
 }

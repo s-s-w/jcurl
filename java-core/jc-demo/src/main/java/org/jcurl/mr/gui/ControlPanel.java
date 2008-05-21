@@ -38,40 +38,40 @@ import org.jcurl.core.api.Unit;
  */
 public class ControlPanel extends JTabbedPane {
 
-    private static final long serialVersionUID = -7647827327554178710L;
+	private static final long serialVersionUID = -7647827327554178710L;
 
-    private final Model model;
+	private final Model model;
 
-    public ControlPanel() {
-        this(null);
-    }
+	public ControlPanel() {
+		this(null);
+	}
 
-    public ControlPanel(final Model m) {
-        setVisible(false);
-        model = m == null ? new Model() : m;
-        DimValSliderPanel p = null;
-        final JPanel p0 = new JPanel();
-        // FIXME leads to Rock-Numbering Shift!!!
-        p0.setLayout(new GridLayout(0, 2));
-        p0.add(p = new DimValSliderPanel(model, "Broom", "broomX", Unit.FOOT));
-        p0.add(p = new DimValSliderPanel(model, "Interval", "interval",
-                Unit.SECOND));
-        p.setMinimum(1000);
-        p.setMaximum(4000);
-        this.addTab("Rock", p0);
+	public ControlPanel(final Model m) {
+		setVisible(false);
+		model = m == null ? new Model() : m;
+		DimValSliderPanel p = null;
+		final JPanel p0 = new JPanel();
+		// FIXME leads to Rock-Numbering Shift!!!
+		p0.setLayout(new GridLayout(0, 2));
+		p0.add(p = new DimValSliderPanel(model, "Broom", "broomX", Unit.FOOT));
+		p0.add(p = new DimValSliderPanel(model, "Interval", "interval",
+				Unit.SECOND));
+		p.setMinimum(1000);
+		p.setMaximum(4000);
+		this.addTab("Rock", p0);
 
-        final JPanel p1 = new JPanel();
-        p1.setLayout(p0.getLayout());
-        p1.add(p = new DimValSliderPanel(model, "Curl", "drawCurl", Unit.FOOT));
-        p1
-                .add(p = new DimValSliderPanel(model, "Time", "drawTime",
-                        Unit.SECOND));
-        p.setMinimum(15000);
-        p.setMaximum(30000);
-        this.addTab("Ice", p1);
+		final JPanel p1 = new JPanel();
+		p1.setLayout(p0.getLayout());
+		p1.add(p = new DimValSliderPanel(model, "Curl", "drawCurl", Unit.FOOT));
+		p1
+				.add(p = new DimValSliderPanel(model, "Time", "drawTime",
+						Unit.SECOND));
+		p.setMinimum(15000);
+		p.setMaximum(30000);
+		this.addTab("Ice", p1);
 
-        setSize(180, 250);
-        setMinimumSize(new Dimension(180, 250));
-        setVisible(true);
-    }
+		setSize(180, 250);
+		setMinimumSize(new Dimension(180, 250));
+		setVisible(true);
+	}
 }

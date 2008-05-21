@@ -17,7 +17,7 @@
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.jcurl.demo.tactics;
+package org.jcurl.demo.tactics.old;
 
 import java.awt.Component;
 import java.awt.Cursor;
@@ -52,7 +52,9 @@ import org.jcurl.core.io.IOTrajectories;
 import org.jcurl.core.io.JCurlSerializer;
 import org.jcurl.core.io.JDKSerializer;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.demo.tactics.ActionRegistry.JCAction;
+import org.jcurl.demo.tactics.TrajectoryDisplay;
+import org.jcurl.demo.tactics.TrajectoryPiccolo;
+import org.jcurl.demo.tactics.old.ActionRegistry.JCAction;
 
 /**
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
@@ -179,6 +181,23 @@ public class MenuFile {
 			System.exit(0);
 		}
 
+		@JCAction(title = "Export SV&G", idx = 51, accelerator = "CTRL-G")
+		public void exportSvg() {
+			// if (JFileChooser.APPROVE_OPTION == fcPng.showSaveDialog(parent))
+			// {
+			// final File dst = fcPng.getSelectedFile();
+			final File dst = new File("/tmp/tactics");
+			final Cursor cu = switchCursor(waitc);
+			try {
+				model.exportSvg(shootable, dst);
+			} catch (final Exception e1) {
+				log.error("", e1);
+			} finally {
+				switchCursor(cu);
+			}
+			// }
+		}
+
 		public Model getModel() {
 			return model;
 		}
@@ -253,23 +272,6 @@ public class MenuFile {
 			}
 		}
 
-		@JCAction(title = "Export SV&G", idx = 51, accelerator = "CTRL-G")
-		public void exportSvg() {
-			// if (JFileChooser.APPROVE_OPTION == fcPng.showSaveDialog(parent))
-			// {
-			// final File dst = fcPng.getSelectedFile();
-			File dst = new File("/tmp/tactics");
-			final Cursor cu = switchCursor(waitc);
-			try {
-				model.exportSvg(shootable, dst);
-			} catch (final Exception e1) {
-				log.error("", e1);
-			} finally {
-				switchCursor(cu);
-			}
-			// }
-		}
-
 		public void setModel(final Model model) {
 			this.model = model;
 		}
@@ -326,7 +328,8 @@ public class MenuFile {
 			ImageIO.write(img, "png", dst);
 		}
 
-		public void exportSvg(final Component src, File dst) throws IOException {
+		public void exportSvg(final Component src, final File dst)
+				throws IOException {
 			throw new NotImplementedYetException();
 			// if (false) {
 			// if (!dst.getName().endsWith(".svg"))

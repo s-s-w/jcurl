@@ -34,14 +34,14 @@ import javax.swing.filechooser.FileFilter;
 public class FileNameExtensionFilter extends FileFilter {
 	private final String description;
 
+	private final String[] extensions;
+
 	private final Pattern pattern;
 
-	private final String [] extensions;
-	
 	public FileNameExtensionFilter(final String description,
 			final String... extensions) {
 		this.extensions = extensions;
-		
+
 		// At first build a nice description
 		final StringBuilder p = new StringBuilder();
 		if (description != null)
@@ -83,11 +83,11 @@ public class FileNameExtensionFilter extends FileFilter {
 		return description;
 	}
 
-	Pattern getPattern() {
-		return pattern;
-	}
-
 	public String[] getExtensions() {
 		return extensions;
+	}
+
+	Pattern getPattern() {
+		return pattern;
 	}
 }

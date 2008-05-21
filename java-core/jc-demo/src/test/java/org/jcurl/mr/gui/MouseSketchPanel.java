@@ -39,114 +39,113 @@ import org.jcurl.core.log.JCLoggerFactory;
  */
 public class MouseSketchPanel extends JPanel implements KeyListener {
 
-    private static final Log log = JCLoggerFactory
-            .getLogger(MouseSketchPanel.class);
+	private static final Log log = JCLoggerFactory
+			.getLogger(MouseSketchPanel.class);
 
-    private static final long serialVersionUID = -4606015027709328552L;
+	private static final long serialVersionUID = -4606015027709328552L;
 
-    private static void circle(final Graphics g, final int x, final int y,
-            final int rx, final int ry) {
-        g.drawArc(x - rx, y - ry, 2 * rx, 2 * ry, 0, 360);
-    }
+	private static void circle(final Graphics g, final int x, final int y,
+			final int rx, final int ry) {
+		g.drawArc(x - rx, y - ry, 2 * rx, 2 * ry, 0, 360);
+	}
 
-    /**
-     * Paint the given curve.
-     * 
-     * @param g
-     * @param c
-     */
-    private static void paint(final Graphics g, final PointList c) {
-        final Iterator it = c.points();
-        if (!it.hasNext())
-            return;
-        Point p = (Point) it.next();
-        while (it.hasNext()) {
-            final Point p2 = (Point) it.next();
-            g.drawLine(p.x, p.y, p2.x, p2.y);
-            p = p2;
-        }
-    }
+	/**
+	 * Paint the given curve.
+	 * 
+	 * @param g
+	 * @param c
+	 */
+	private static void paint(final Graphics g, final PointList c) {
+		final Iterator it = c.points();
+		if (!it.hasNext())
+			return;
+		Point p = (Point) it.next();
+		while (it.hasNext()) {
+			final Point p2 = (Point) it.next();
+			g.drawLine(p.x, p.y, p2.x, p2.y);
+			p = p2;
+		}
+	}
 
-    private Point current = null;
+	private Point current = null;
 
-    private final PointList curve = new PointList();
+	private final PointList curve = new PointList();
 
-    private final char hotKey;
+	private final char hotKey;
 
-    private boolean isHot = false;
+	private boolean isHot = false;
 
-    public MouseSketchPanel(final char hotKey) {
-        this.hotKey = hotKey;
-        addMouseMotionListener(new MouseMotionAdapter() {
-            @Override
-            public void mouseMoved(final MouseEvent e) {
-                if (isHot)
-                    MouseSketchPanel.this.lineTo(e.getPoint());
-            }
-        });
-        addKeyListener(this);
-    }
+	public MouseSketchPanel(final char hotKey) {
+		this.hotKey = hotKey;
+		addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(final MouseEvent e) {
+				if (isHot)
+					MouseSketchPanel.this.lineTo(e.getPoint());
+			}
+		});
+		addKeyListener(this);
+	}
 
-    public PointList getCurve() {
-        return curve;
-    }
+	public PointList getCurve() {
+		return curve;
+	}
 
-    @Override
-    public boolean isFocusTraversable() {
-        return true;
-    }
+	@Override
+	public boolean isFocusTraversable() {
+		return true;
+	}
 
-    public void keyPressed(final KeyEvent e) {
-        if (e.getKeyChar() == hotKey) {
-            log.debug("HotKey pressed");
-            isHot = true;
-        }
-        switch (e.getKeyCode()) {
-        case KeyEvent.VK_ESCAPE:
-            current = null;
-            curve.clear();
-            this.repaint();
-            break;
-        case KeyEvent.VK_F1:
-            final Graphics g = getGraphics();
-            paint(g, PointList.getLine(curve));
-            g.dispose();
-            break;
-        }
-    }
+	public void keyPressed(final KeyEvent e) {
+		if (e.getKeyChar() == hotKey) {
+			log.debug("HotKey pressed");
+			isHot = true;
+		}
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_ESCAPE:
+			current = null;
+			curve.clear();
+			this.repaint();
+			break;
+		case KeyEvent.VK_F1:
+			final Graphics g = getGraphics();
+			paint(g, PointList.getLine(curve));
+			g.dispose();
+			break;
+		}
+	}
 
-    public void keyReleased(final KeyEvent e) {
-        if (e.getKeyChar() == hotKey) {
-            log.debug("HotKey released");
-            isHot = false;
-        }
-    }
+	public void keyReleased(final KeyEvent e) {
+		if (e.getKeyChar() == hotKey) {
+			log.debug("HotKey released");
+			isHot = false;
+		}
+	}
 
-    public void keyTyped(final KeyEvent e) {
-    }
+	public void keyTyped(final KeyEvent e) {}
 
-    private void lineTo(final Point p) {
-        if (current != null) {
-            log.debug("draw line");
-            final Graphics g = getGraphics();
-            g.drawLine(current.x, current.y, p.x, p.y);
-            g.dispose();
-        }
-        curve.add(current = p);
-    }
+	private void lineTo(final Point p) {
+		if (current != null) {
+			log.debug("draw line");
+			final Graphics g = getGraphics();
+			g.drawLine(current.x, current.y, p.x, p.y);
+			g.dispose();
+		}
+		curve.add(current = p);
+	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see javax.swing.JComponent#printComponent(java.awt.Graphics)
-     */
-    @Override
-    protected void paintComponent(final Graphics g) {
-        super.paintComponent(g);
-        g.drawLine(100, 110, 100, 90);
-        g.drawLine(110, 100, 90, 100);
-        circle(g, 100, 100, 10, 10);
-        g.drawArc(100, 100, 20, 20, 0, 360);
-        g.drawArc(100, 100, -20, -20, 0, 360);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.swing.JComponent#printComponent(java.awt.Graphics)
+	 */
+	@Override
+	protected void paintComponent(final Graphics g) {
+		super.paintComponent(g);
+		g.drawLine(100, 110, 100, 90);
+		g.drawLine(110, 100, 90, 100);
+		circle(g, 100, 100, 10, 10);
+		g.drawArc(100, 100, 20, 20, 0, 360);
+		g.drawArc(100, 100, -20, -20, 0, 360);
+	}
 }

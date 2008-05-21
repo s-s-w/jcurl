@@ -35,26 +35,26 @@ import org.jcurl.core.ui.Zoomer;
  */
 public class IconGenerator {
 
-    /**
-     * @param loc
-     * @param zoom
-     * @param dst
-     * @throws IOException
-     */
-    public static void savePng(final PositionSet loc, final Zoomer zoom,
-            final File dst) throws IOException {
-        // Create image and graphics.
-        final BufferedImage img = new BufferedImage(1024, 768,
-                BufferedImage.TYPE_INT_ARGB);
-        final Graphics g = img.getGraphics();
-        // FIXME !!!
-        // final PositionDisplay jp = new PositionDisplay();
-        // jp.setPos(loc);
-        // jp.setZoom(zoom);
-        // jp.setSize(img.getWidth(), img.getHeight());
-        // jp.paint(g);
-        g.dispose();
-        ImageIO.write(img, "png", dst);
-        throw new NotImplementedYetException();
-    }
+	/**
+	 * @param loc
+	 * @param zoom
+	 * @param dst
+	 * @throws IOException
+	 */
+	public static void savePng(final PositionSet loc, final Zoomer zoom,
+			final File dst) throws IOException {
+		// Create image and graphics.
+		final BufferedImage img = new BufferedImage(1024, 768,
+				BufferedImage.TYPE_INT_ARGB);
+		final Graphics g = img.getGraphics();
+		// FIXME !!!
+		// final PositionDisplay jp = new PositionDisplay();
+		// jp.setPos(loc);
+		// jp.setZoom(zoom);
+		// jp.setSize(img.getWidth(), img.getHeight());
+		// jp.paint(g);
+		g.dispose();
+		ImageIO.write(img, "png", dst);
+		throw new NotImplementedYetException();
+	}
 }

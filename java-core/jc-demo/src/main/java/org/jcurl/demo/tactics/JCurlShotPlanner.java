@@ -22,6 +22,7 @@ package org.jcurl.demo.tactics;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
@@ -55,8 +56,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -406,7 +409,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 	private boolean modified = false;
 
-	private final TacticsBean tactics = new TacticsBean();
+	private final TrajectoryPiccolo tactics = new TrajectoryPiccolo();
 
 	private final JLabel url = new JLabel();
 
@@ -937,13 +940,26 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 		getMainFrame().setJMenuBar(createMenuBar());
 
-		// Either use the binding here or delegate the change event?
-		// bind(tactics, "savingSensible", this, "savingSensible");
-
 		final JComponent c = new JPanel();
 		c.setLayout(new BorderLayout());
+		tactics.setPreferredSize(new Dimension(400, 600));
 		c.add(tactics, BorderLayout.CENTER);
 		c.add(url, BorderLayout.NORTH);
+		final TrajectorySwing swing = new TrajectorySwing();
+		swing.setBroom(tactics.getBroom());
+		{
+			final JTabbedPane t = new JTabbedPane(SwingConstants.TOP,
+					JTabbedPane.SCROLL_TAB_LAYOUT);
+			t.add("Rock", swing);
+			t.setMnemonicAt(0, 'R');
+			t.add("Ice", new JLabel("TODO: Ice settings"));
+			t.setMnemonicAt(1, 'I');
+			t.add("Collission", new JLabel("TODO: Collission settings"));
+			t.setMnemonicAt(2, 'C');
+
+			c.add(t, BorderLayout.EAST);
+		}
+
 		show(c);
 
 		viewHouse();

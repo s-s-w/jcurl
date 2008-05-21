@@ -28,7 +28,6 @@ import org.jcurl.core.api.Measure;
 import org.jcurl.core.api.PropModel;
 import org.jcurl.core.helpers.PropModelHelper;
 
-
 /**
  * Help with post-constructor one-time initialisation.
  * 
@@ -37,28 +36,28 @@ import org.jcurl.core.helpers.PropModelHelper;
  */
 public abstract class PropModelImpl implements PropModel, Serializable {
 
-    protected Map<CharSequence, Measure> params = null;
+	private static final long serialVersionUID = -1281395608873589552L;
 
-    private static final long serialVersionUID = -1281395608873589552L;
-    
-    public Measure getProp(final CharSequence key) {
-        return params.get(key);
-    }
+	protected Map<CharSequence, Measure> params = null;
 
-    protected void internalInit(final Map<CharSequence, Measure> props) {
-        if (params != null)
-            throw new IllegalStateException();
-        params = PropModelHelper.create(props);
-    }
+	public Measure getProp(final CharSequence key) {
+		return params.get(key);
+	}
 
-    public Iterator<Entry<CharSequence, Measure>> iterator() {
-        return params.entrySet().iterator();
-    }
+	protected void internalInit(final Map<CharSequence, Measure> props) {
+		if (params != null)
+			throw new IllegalStateException();
+		params = PropModelHelper.create(props);
+	}
 
-    protected Object readResolve() throws ObjectStreamException {
-        final Map<CharSequence, Measure> params = this.params;
-        this.params = null;
-        init(params);
-        return this;
-    }
+	public Iterator<Entry<CharSequence, Measure>> iterator() {
+		return params.entrySet().iterator();
+	}
+
+	protected Object readResolve() throws ObjectStreamException {
+		final Map<CharSequence, Measure> params = this.params;
+		this.params = null;
+		init(params);
+		return this;
+	}
 }

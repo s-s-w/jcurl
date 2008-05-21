@@ -35,103 +35,103 @@ import javax.swing.JPanel;
  */
 public class MouseRectPanel extends JPanel implements MouseMotionListener {
 
-    private static final int MAXNSQUARES = 10;
+	private static final int MAXNSQUARES = 10;
 
-    private static final long serialVersionUID = 3946069203465871809L;
+	private static final long serialVersionUID = 3946069203465871809L;
 
-    private static final int SQUARELENGTH = 10;
+	private static final int SQUARELENGTH = 10;
 
-    private int current = -1;
+	private int current = -1;
 
-    private int nsquares = 0;
+	private int nsquares = 0;
 
-    private final Point[] squares = new Point[MAXNSQUARES];
+	private final Point[] squares = new Point[MAXNSQUARES];
 
-    public MouseRectPanel() {
-        addMouseListener(new MouseAdapter() {
+	public MouseRectPanel() {
+		addMouseListener(new MouseAdapter() {
 
-            @Override
-            public void mouseClicked(final MouseEvent evt) {
-                if (evt.getClickCount() >= 2)
-                    MouseRectPanel.this.remove(current);
-            }
+			@Override
+			public void mouseClicked(final MouseEvent evt) {
+				if (evt.getClickCount() >= 2)
+					MouseRectPanel.this.remove(current);
+			}
 
-            @Override
-            public void mousePressed(final MouseEvent evt) {
-                final int x = evt.getX();
-                final int y = evt.getY();
-                current = MouseRectPanel.this.find(x, y);
-                if (current < 0) // not inside a square
-                    MouseRectPanel.this.add(x, y);
-            }
-        });
-        addMouseMotionListener(this);
-    }
+			@Override
+			public void mousePressed(final MouseEvent evt) {
+				final int x = evt.getX();
+				final int y = evt.getY();
+				current = MouseRectPanel.this.find(x, y);
+				if (current < 0) // not inside a square
+					MouseRectPanel.this.add(x, y);
+			}
+		});
+		addMouseMotionListener(this);
+	}
 
-    public void add(final int x, final int y) {
-        if (nsquares < MAXNSQUARES) {
-            squares[nsquares] = new Point(x, y);
-            current = nsquares;
-            nsquares++;
-            this.repaint();
-        }
-    }
+	public void add(final int x, final int y) {
+		if (nsquares < MAXNSQUARES) {
+			squares[nsquares] = new Point(x, y);
+			current = nsquares;
+			nsquares++;
+			this.repaint();
+		}
+	}
 
-    public void draw(final Graphics g, final int i) {
-        g.drawRect(squares[i].x - SQUARELENGTH / 2, squares[i].y - SQUARELENGTH
-                / 2, SQUARELENGTH, SQUARELENGTH);
-    }
+	public void draw(final Graphics g, final int i) {
+		g.drawRect(squares[i].x - SQUARELENGTH / 2, squares[i].y - SQUARELENGTH
+				/ 2, SQUARELENGTH, SQUARELENGTH);
+	}
 
-    public int find(final int x, final int y) {
-        for (int i = 0; i < nsquares; i++)
-            if (squares[i].x - SQUARELENGTH / 2 <= x
-                    && x <= squares[i].x + SQUARELENGTH / 2
-                    && squares[i].y - SQUARELENGTH / 2 <= y
-                    && y <= squares[i].y + SQUARELENGTH / 2
+	public int find(final int x, final int y) {
+		for (int i = 0; i < nsquares; i++)
+			if (squares[i].x - SQUARELENGTH / 2 <= x
+					&& x <= squares[i].x + SQUARELENGTH / 2
+					&& squares[i].y - SQUARELENGTH / 2 <= y
+					&& y <= squares[i].y + SQUARELENGTH / 2
 
-            )
-                return i;
-        return -1;
-    }
+			)
+				return i;
+		return -1;
+	}
 
-    public void mouseDragged(final MouseEvent e) {
-        final int x = e.getX();
-        final int y = e.getY();
-        if (current >= 0) {
-            final Graphics g = getGraphics();
-            g.setXORMode(getBackground());
-            draw(g, current);
-            squares[current].x = x;
-            squares[current].y = y;
-            draw(g, current);
-            g.dispose();
-        }
-    }
+	public void mouseDragged(final MouseEvent e) {
+		final int x = e.getX();
+		final int y = e.getY();
+		if (current >= 0) {
+			final Graphics g = getGraphics();
+			g.setXORMode(getBackground());
+			draw(g, current);
+			squares[current].x = x;
+			squares[current].y = y;
+			draw(g, current);
+			g.dispose();
+		}
+	}
 
-    public void mouseMoved(final MouseEvent e) {
-        final int x = e.getX();
-        final int y = e.getY();
-        if (find(x, y) >= 0)
-            setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-        else
-            setCursor(Cursor.getDefaultCursor());
-    }
+	public void mouseMoved(final MouseEvent e) {
+		final int x = e.getX();
+		final int y = e.getY();
+		if (find(x, y) >= 0)
+			setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+		else
+			setCursor(Cursor.getDefaultCursor());
+	}
 
-    @Override
-    public void paintComponent(final Graphics g) {
-        super.paintComponent(g);
-        for (int i = 0; i < nsquares; i++)
-            draw(g, i);
-    }
+	@Override
+	public void paintComponent(final Graphics g) {
+		super.paintComponent(g);
+		for (int i = 0; i < nsquares; i++)
+			draw(g, i);
+	}
 
-    @Override
-    public void remove(final int n) {
-        if (n < 0 || n >= nsquares)
-            return;
-        nsquares--;
-        squares[n] = squares[nsquares];
-        if (current == n)
-            current = -1;
-        this.repaint();
-    }
+	@Override
+	public void remove(final int n) {
+		if (n < 0 || n >= nsquares)
+			return;
+		nsquares--;
+		squares[n] = squares[nsquares];
+		if (current == n)
+			current = -1;
+		this.repaint();
+	}
 }

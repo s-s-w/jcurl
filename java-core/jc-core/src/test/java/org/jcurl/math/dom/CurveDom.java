@@ -36,72 +36,72 @@ import org.jcurl.math.R1RNFunctionImpl;
  */
 public class CurveDom extends R1RNFunctionImpl {
 
-    /** Internal helper - mutable number implementation */
-    private static final class Num extends Number {
+	/** Internal helper - mutable number implementation */
+	private static final class Num extends Number {
 
-        private static final long serialVersionUID = -4493962870206362722L;
+		private static final long serialVersionUID = -4493962870206362722L;
 
-        public double v;
+		public double v;
 
-        @Override
-        public double doubleValue() {
-            return v;
-        }
+		@Override
+		public double doubleValue() {
+			return v;
+		}
 
-        @Override
-        public float floatValue() {
-            return (float) v;
-        }
+		@Override
+		public float floatValue() {
+			return (float) v;
+		}
 
-        @Override
-        public int intValue() {
-            return (int) v;
-        }
+		@Override
+		public int intValue() {
+			return (int) v;
+		}
 
-        @Override
-        public long longValue() {
-            return (long) v;
-        }
+		@Override
+		public long longValue() {
+			return (long) v;
+		}
 
-    }
+	}
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 5253564389287453902L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5253564389287453902L;
 
-    private final MathDom.Node[][] c;
+	private final MathDom.Node[][] c;
 
-    private final DomWalkerEval de;
+	private final DomWalkerEval de;
 
-    private final Map p = new TreeMap();
+	private final Map p = new TreeMap();
 
-    private final Num t = new Num();
+	private final Num t = new Num();
 
-    public CurveDom(final MathDom.Node[] c0, final MathDom.Node[] c1,
-            final String param) {
-        super(c0.length);
-        p.put(param, t);
-        de = new DomWalkerEval(p);
-        c = new MathDom.Node[2][dim()];
-        for (int i = dim() - 1; i >= 0; i--) {
-            c[0][i] = c0[i];
-            c[1][i] = c1[i];
-        }
-    }
+	public CurveDom(final MathDom.Node[] c0, final MathDom.Node[] c1,
+			final String param) {
+		super(c0.length);
+		p.put(param, t);
+		de = new DomWalkerEval(p);
+		c = new MathDom.Node[2][dim()];
+		for (int i = dim() - 1; i >= 0; i--) {
+			c[0][i] = c0[i];
+			c[1][i] = c1[i];
+		}
+	}
 
-    public CurveDom(final MathDom.Node[] x, final String param) {
-        this(x, null, param); // TODO compute and store the derivatives
-    }
+	public CurveDom(final MathDom.Node[] x, final String param) {
+		this(x, null, param); // TODO compute and store the derivatives
+	}
 
-    @Override
-    public double at(final int dim, final int c, final double t) {
-        if (c == 0) {
-            this.t.v = t;
-            de.reset();
-            de.walk(this.c[0][dim]);
-            return de.doubleValue();
-        }
-        throw new UnsupportedOperationException("Not supported.");
-    }
+	@Override
+	public double at(final int dim, final int c, final double t) {
+		if (c == 0) {
+			this.t.v = t;
+			de.reset();
+			de.walk(this.c[0][dim]);
+			return de.doubleValue();
+		}
+		throw new UnsupportedOperationException("Not supported.");
+	}
 }

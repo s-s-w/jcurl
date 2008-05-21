@@ -27,49 +27,49 @@ import org.jcurl.core.log.JCLoggerFactory;
 
 public abstract class TestShowBase extends TestBase {
 
-    public static abstract class TimeRunnable {
-        public abstract void run(double t) throws InterruptedException;
+	public static abstract class TimeRunnable {
+		public abstract void run(double t) throws InterruptedException;
 
-        public void run(final double t, final Component p)
-                throws InterruptedException {
-            run(t);
-        }
-    }
+		public void run(final double t, final Component p)
+				throws InterruptedException {
+			run(t);
+		}
+	}
 
-    private static final Log log = JCLoggerFactory
-            .getLogger(TestShowBase.class);
+	private static final Log log = JCLoggerFactory
+			.getLogger(TestShowBase.class);
 
-    private static final boolean showGui;
+	private static final boolean showGui;
 
-    static {
-        final StackTraceElement[] se = new RuntimeException().getStackTrace();
-        boolean inEclipse = false;
-        for (int i = se.length - 1; i >= 0; i--)
-            if (se[i].getClassName().startsWith("org.eclipse.jdt")) {
-                inEclipse = true;
-                break;
-            }
-        showGui = inEclipse;
-    }
+	static {
+		final StackTraceElement[] se = new RuntimeException().getStackTrace();
+		boolean inEclipse = false;
+		for (int i = se.length - 1; i >= 0; i--)
+			if (se[i].getClassName().startsWith("org.eclipse.jdt")) {
+				inEclipse = true;
+				break;
+			}
+		showGui = inEclipse;
+	}
 
-    protected final JFrame frame;
+	protected final JFrame frame;
 
-    public TestShowBase() {
-        this(800, 600);
-    }
+	public TestShowBase() {
+		this(800, 600);
+	}
 
-    public TestShowBase(final int dx, final int dy) {
-        frame = showGui ? new JFrame() : null;
-        if (frame != null) {
-            frame.setBounds(0, 0, dx, dy);
-            frame.setTitle(getClass().getName());
-        }
-    }
+	public TestShowBase(final int dx, final int dy) {
+		frame = showGui ? new JFrame() : null;
+		if (frame != null) {
+			frame.setBounds(0, 0, dx, dy);
+			frame.setTitle(getClass().getName());
+		}
+	}
 
-    @Override
-    public void tearDown() {
-        if (frame != null)
-            frame.setVisible(false);
-    }
+	@Override
+	public void tearDown() {
+		if (frame != null)
+			frame.setVisible(false);
+	}
 
 }

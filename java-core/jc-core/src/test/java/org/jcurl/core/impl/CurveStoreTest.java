@@ -27,10 +27,10 @@ import org.jcurl.math.R1RNFunction;
 
 public class CurveStoreTest extends TestCase {
 
-    public void testIterator() {
-        final CurveStore cs = new CurveStoreImpl(null, 3);
-        for (final Iterable<Entry<Double, R1RNFunction>> element : cs)
-            for (final Entry<Double, R1RNFunction> e2 : element)
-                System.out.println(e2.getValue());
-    }
+	public void testIterator() {
+		final CurveStore cs = new CurveStoreImpl(null, 3);
+		for (final Iterable<Entry<Double, R1RNFunction>> element : cs)
+			for (final Entry<Double, R1RNFunction> e2 : element)
+				System.out.println(e2.getValue());
+	}
 }

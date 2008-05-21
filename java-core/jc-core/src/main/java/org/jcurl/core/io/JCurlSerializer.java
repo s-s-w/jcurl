@@ -56,10 +56,10 @@ public class JCurlSerializer {
 		void write(IONode src, OutputStream dst) throws IOException;
 	}
 
-	private static final char LF = '\n';
-
 	private static final Pattern idpat = Pattern
 			.compile("<!--\\s*(\\S+)\\s*-->");
+
+	private static final char LF = '\n';
 
 	private static final String UTF_8 = "UTF-8";
 

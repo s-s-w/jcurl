@@ -28,19 +28,19 @@ import org.jcurl.core.io.JCurlSerializer.Engine;
 
 public class JDKSerializer implements Engine {
 
-    public IONode read(final InputStream src) throws IOException {
-        try {
-            return (IONode) new ObjectInputStream(src).readObject();
-        } catch (final ClassNotFoundException e) {
-            throw new RuntimeException("Unhandled", e);
-        }
-    }
+	public IONode read(final InputStream src) throws IOException {
+		try {
+			return (IONode) new ObjectInputStream(src).readObject();
+		} catch (final ClassNotFoundException e) {
+			throw new RuntimeException("Unhandled", e);
+		}
+	}
 
-    public void write(final IONode src, final OutputStream dst)
-            throws IOException {
-        src.annotations().put(IONode.CreatedByUser,
-                System.getProperty("user.name"));
-        new ObjectOutputStream(dst).writeObject(src);
-        dst.flush();
-    }
+	public void write(final IONode src, final OutputStream dst)
+			throws IOException {
+		src.annotations().put(IONode.CreatedByUser,
+				System.getProperty("user.name"));
+		new ObjectOutputStream(dst).writeObject(src);
+		dst.flush();
+	}
 }

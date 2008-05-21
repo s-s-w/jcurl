@@ -29,60 +29,60 @@ import org.jcurl.core.api.RockType.Pos;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CurveStill.java 682 2007-08-12 21:25:04Z mrohrmoser $
  */
-public class CurveStill<T extends RockType>  extends CurveRock<T> {
-    private static final long serialVersionUID = -8031863193302315171L;
+public class CurveStill<T extends RockType> extends CurveRock<T> {
+	private static final long serialVersionUID = -8031863193302315171L;
 
-    public static CurveStill<Pos> newInstance(final double x, final double y,
-            final double a) {
-        return new CurveStill<Pos>(x, y, a);
-    }
+	public static CurveStill<Pos> newInstance(final double x, final double y,
+			final double a) {
+		return new CurveStill<Pos>(x, y, a);
+	}
 
-    public static CurveStill<Pos> newInstance(final double[] x) {
-        return CurveStill.newInstance(x[0], x[1], x[2]);
-    }
+	public static CurveStill<Pos> newInstance(final double[] x) {
+		return CurveStill.newInstance(x[0], x[1], x[2]);
+	}
 
-    public static CurveStill<Pos> newInstance(final Rock<Pos> x) {
-        return CurveStill.newInstance(x.getX(), x.getY(), x.getA());
-    }
+	public static CurveStill<Pos> newInstance(final Rock<Pos> x) {
+		return CurveStill.newInstance(x.getX(), x.getY(), x.getA());
+	}
 
-    private final double a;
-    private final double x;
-    private final double y;
+	private final double a;
+	private final double x;
+	private final double y;
 
-    private CurveStill(final double x, final double y, final double a) {
-        this.x = x;
-        this.y = y;
-        this.a = a;
-    }
+	private CurveStill(final double x, final double y, final double a) {
+		this.x = x;
+		this.y = y;
+		this.a = a;
+	}
 
-    private CurveStill(final Rock<T> x) {
-        this(x.getX(), x.getY(), x.getA());
-    }
+	private CurveStill(final Rock<T> x) {
+		this(x.getX(), x.getY(), x.getA());
+	}
 
-    @Override
-    public double at(final int dim, final int c, final double t) {
-        if (c > 0)
-            return 0;
-        switch (dim) {
-        case 0:
-            return x;
-        case 1:
-            return y;
-        case 2:
-            return a;
-        default:
-            throw new IllegalArgumentException();
-        }
-    }
+	@Override
+	public double at(final int dim, final int c, final double t) {
+		if (c > 0)
+			return 0;
+		switch (dim) {
+		case 0:
+			return x;
+		case 1:
+			return y;
+		case 2:
+			return a;
+		default:
+			throw new IllegalArgumentException();
+		}
+	}
 
-    @Override
-    public String toString() {
-        final StringBuilder buf = new StringBuilder();
-        buf.append('[');
-        buf.append(x).append(", ");
-        buf.append(y).append(", ");
-        buf.append(a);
-        buf.append(']');
-        return buf.toString();
-    }
+	@Override
+	public String toString() {
+		final StringBuilder buf = new StringBuilder();
+		buf.append('[');
+		buf.append(x).append(", ");
+		buf.append(y).append(", ");
+		buf.append(a);
+		buf.append(']');
+		return buf.toString();
+	}
 }

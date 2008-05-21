@@ -22,7 +22,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-
 /**
  * Interface for all classes that have <code>key=value</code> parameters and
  * support post-constructor initialisation as required by
@@ -33,10 +32,10 @@ import java.util.Map.Entry;
  */
 public interface PropModel extends Iterable<Entry<CharSequence, Measure>> {
 
-    public abstract Measure getProp(final CharSequence key);
+	public abstract Measure getProp(final CharSequence key);
 
-    public abstract void init(final Map<CharSequence, Measure> props);
+	public abstract void init(final Map<CharSequence, Measure> props);
 
-    public abstract Iterator<Entry<CharSequence, Measure>> iterator();
+	public abstract Iterator<Entry<CharSequence, Measure>> iterator();
 
 }

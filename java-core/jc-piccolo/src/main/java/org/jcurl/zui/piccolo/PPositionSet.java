@@ -61,17 +61,16 @@ public class PPositionSet extends PNode implements ChangeListener {
 	}
 
 	public void setModel(final RockSet<Pos> positionSet) {
-		if(model == positionSet)
+		if (model == positionSet)
 			return;
-//		if (model != null)
-//			throw new UnsupportedOperationException();
+		// if (model != null)
+		// throw new UnsupportedOperationException();
 		model = positionSet;
 		setVisible(model != null);
-		if (model != null) {
+		if (model != null)
 			for (int i = 0; i < RockSet.ROCKS_PER_SET; i++)
 				getChild(i).replaceWith(
 						f.newInstance(i, positionSet.getRock(i)));
-		}
 	}
 
 	public void stateChanged(final ChangeEvent evt) {
@@ -83,7 +82,7 @@ public class PPositionSet extends PNode implements ChangeListener {
 		if (src == null)
 			return;
 		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-			PNode c = dst.getChild(i);
+			final PNode c = dst.getChild(i);
 			if (c instanceof PRockNode)
 				PRockFactory.sync(src.getRock(i), (PRockNode) dst.getChild(i));
 		}

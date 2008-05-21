@@ -54,193 +54,194 @@ import java.util.regex.Pattern;
  */
 class ParserInfixRegExp {
 
-    private static final int ASSIGN = '=';
+	private static final int ASSIGN = '=';
 
-    private static final Pattern binaryPat = Pattern.compile("[-+/*^=]");
+	private static final Pattern binaryPat = Pattern.compile("[-+/*^=]");
 
-    private static final int DIV = '/';
+	private static final int DIV = '/';
 
-    private static final int END = 3;
+	private static final int END = 3;
 
-    private static final Pattern floatPat = Pattern
-            .compile("-?[0-9]+(.[0-9]*(e-?[0-9]+)?)?");
+	private static final Pattern floatPat = Pattern
+			.compile("-?[0-9]+(.[0-9]*(e-?[0-9]+)?)?");
 
-    private static final int LP = '(';
+	private static final int LP = '(';
 
-    private static final int MINUS = '-';
+	private static final int MINUS = '-';
 
-    private static final int MUL = '*';
+	private static final int MUL = '*';
 
-    private static final int NAME = 0;
+	private static final int NAME = 0;
 
-    private static final int NONE = 2;
+	private static final int NONE = 2;
 
-    private static final int NUMBER = 1;
+	private static final int NUMBER = 1;
 
-    private static final int PLUS = '+';
+	private static final int PLUS = '+';
 
-    private static final int RP = ')';
+	private static final int RP = ')';
 
-    private static final Pattern unaryPat = Pattern.compile("-");
+	private static final Pattern unaryPat = Pattern.compile("-");
 
-    public static MathDom.Node parse(final PushbackReader cin)
-            throws IOException, ParseException {
-        return new ParserInfixRegExp(cin).parseInfix();
-    }
+	public static MathDom.Node parse(final PushbackReader cin)
+			throws IOException, ParseException {
+		return new ParserInfixRegExp(cin).parseInfix();
+	}
 
-    public static MathDom.Node parse(final Reader cin) throws IOException,
-            ParseException {
-        return parse(new PushbackReader(cin));
-    }
+	public static MathDom.Node parse(final Reader cin) throws IOException,
+			ParseException {
+		return parse(new PushbackReader(cin));
+	}
 
-    public static MathDom.Node parse(final String cin) throws ParseException {
-        try {
-            return parse(new StringReader(cin));
-        } catch (final IOException e) {
-            throw new RuntimeException("Couldn't read from string.", e);
-        }
-    }
+	public static MathDom.Node parse(final String cin) throws ParseException {
+		try {
+			return parse(new StringReader(cin));
+		} catch (final IOException e) {
+			throw new RuntimeException("Couldn't read from string.", e);
+		}
+	}
 
-    private final PushbackReader cin;
+	private final PushbackReader cin;
 
-    private int curr_tok = NONE;
+	private int curr_tok = NONE;
 
-    private double number_value = 0;
+	private double number_value = 0;
 
-    private int pos = 0;
+	private int pos = 0;
 
-    private final StringBuilder string_value = new StringBuilder();
+	private final StringBuilder string_value = new StringBuilder();
 
-    public ParserInfixRegExp(final PushbackReader cin) {
-        this.cin = cin;
-    }
+	public ParserInfixRegExp(final PushbackReader cin) {
+		this.cin = cin;
+	}
 
-    private MathDom.Node expr(final boolean get) throws IOException,
-            ParseException {
-        MathDom.Node left = term(get);
-        for (;;)
-            switch (curr_tok) {
-            case PLUS:
-            case MINUS:
-                left = new MathDom.BinaryOp((char) curr_tok, left, term(true));
-                break;
-            default:
-                return left;
-            }
-    }
+	private MathDom.Node expr(final boolean get) throws IOException,
+			ParseException {
+		MathDom.Node left = term(get);
+		for (;;)
+			switch (curr_tok) {
+			case PLUS:
+			case MINUS:
+				left = new MathDom.BinaryOp((char) curr_tok, left, term(true));
+				break;
+			default:
+				return left;
+			}
+	}
 
-    private int get_token() throws IOException, ParseException {
-        int ch = 0;
-        do {
-            ch = cin.read();
-            pos++;
-            if (-1 == ch)
-                return curr_tok = END;
-        } while (Character.isWhitespace((char) ch));
-        switch (ch) {
-        case 65535:
-        case -1:
-            return curr_tok = END;
-        case '*':
-        case '/':
-        case '+':
-        case '-':
-        case '(':
-        case ')':
-        case '=':
-            return curr_tok = ch;
-        default:
-            if (parseNameOrLiteral(ch))
-                return curr_tok;
-            throw new ParseException("bad token", pos);
-        }
-    }
+	private int get_token() throws IOException, ParseException {
+		int ch = 0;
+		do {
+			ch = cin.read();
+			pos++;
+			if (-1 == ch)
+				return curr_tok = END;
+		}
+		while (Character.isWhitespace((char) ch));
+		switch (ch) {
+		case 65535:
+		case -1:
+			return curr_tok = END;
+		case '*':
+		case '/':
+		case '+':
+		case '-':
+		case '(':
+		case ')':
+		case '=':
+			return curr_tok = ch;
+		default:
+			if (parseNameOrLiteral(ch))
+				return curr_tok;
+			throw new ParseException("bad token", pos);
+		}
+	}
 
-    public MathDom.Node parseInfix() throws IOException, ParseException {
-        get_token();
-        if (curr_tok == END)
-            return null;
-        return expr(false);
-    }
+	public MathDom.Node parseInfix() throws IOException, ParseException {
+		get_token();
+		if (curr_tok == END)
+			return null;
+		return expr(false);
+	}
 
-    /**
-     * read a number or name.
-     * 
-     * @param ch
-     * @return false: neither found.
-     * @throws IOException
-     */
-    private boolean parseNameOrLiteral(int ch) throws IOException {
-        if (Character.isLetterOrDigit((char) ch)) {
-            string_value.setLength(0);
-            string_value.append((char) ch);
-            for (;;) {
-                ch = cin.read();
-                pos++;
-                if (-1 == ch || !Character.isLetterOrDigit((char) ch))
-                    break;
-                string_value.append((char) ch);
-            }
-            cin.unread(ch);
-            final String s = string_value.toString();
-            final Matcher mat = floatPat.matcher(s);
-            if (mat.matches()) {
-                number_value = Double.parseDouble(s);
-                curr_tok = NUMBER;
-            } else
-                curr_tok = NAME;
-            return true;
-        }
-        return false;
-    }
+	/**
+	 * read a number or name.
+	 * 
+	 * @param ch
+	 * @return false: neither found.
+	 * @throws IOException
+	 */
+	private boolean parseNameOrLiteral(int ch) throws IOException {
+		if (Character.isLetterOrDigit((char) ch)) {
+			string_value.setLength(0);
+			string_value.append((char) ch);
+			for (;;) {
+				ch = cin.read();
+				pos++;
+				if (-1 == ch || !Character.isLetterOrDigit((char) ch))
+					break;
+				string_value.append((char) ch);
+			}
+			cin.unread(ch);
+			final String s = string_value.toString();
+			final Matcher mat = floatPat.matcher(s);
+			if (mat.matches()) {
+				number_value = Double.parseDouble(s);
+				curr_tok = NUMBER;
+			} else
+				curr_tok = NAME;
+			return true;
+		}
+		return false;
+	}
 
-    private MathDom.Node prim(final boolean get) throws IOException,
-            ParseException {
-        if (get)
-            get_token();
-        switch (curr_tok) {
-        case NUMBER:
-            get_token();
-            return new MathDom.Literal(number_value);
-        case NAME:
-            final String p = string_value.toString();
-            get_token();
-            switch (curr_tok) {
-            case ASSIGN:
-                return new MathDom.BinaryOp((char) curr_tok,
-                        new MathDom.Parameter(p), expr(true));
-            case LP:
-                final MathDom.Node v3 = new MathDom.Function(p, expr(true));
-                if (curr_tok != RP)
-                    throw new ParseException(") expected", pos);
-                get_token();
-                return v3;
-            }
-            return new MathDom.Parameter(p);
-        case MINUS:
-            return new MathDom.UnaryOp((char) curr_tok, prim(true));
-        case LP:
-            final MathDom.Node e = new MathDom.Block(expr(true));
-            if (curr_tok != RP)
-                throw new ParseException(") expected", pos);
-            get_token();
-            return e;
-        default:
-            throw new ParseException("primary expected", pos);
-        }
-    }
+	private MathDom.Node prim(final boolean get) throws IOException,
+			ParseException {
+		if (get)
+			get_token();
+		switch (curr_tok) {
+		case NUMBER:
+			get_token();
+			return new MathDom.Literal(number_value);
+		case NAME:
+			final String p = string_value.toString();
+			get_token();
+			switch (curr_tok) {
+			case ASSIGN:
+				return new MathDom.BinaryOp((char) curr_tok,
+						new MathDom.Parameter(p), expr(true));
+			case LP:
+				final MathDom.Node v3 = new MathDom.Function(p, expr(true));
+				if (curr_tok != RP)
+					throw new ParseException(") expected", pos);
+				get_token();
+				return v3;
+			}
+			return new MathDom.Parameter(p);
+		case MINUS:
+			return new MathDom.UnaryOp((char) curr_tok, prim(true));
+		case LP:
+			final MathDom.Node e = new MathDom.Block(expr(true));
+			if (curr_tok != RP)
+				throw new ParseException(") expected", pos);
+			get_token();
+			return e;
+		default:
+			throw new ParseException("primary expected", pos);
+		}
+	}
 
-    private MathDom.Node term(final boolean get) throws IOException,
-            ParseException {
-        MathDom.Node left = prim(get);
-        for (;;)
-            switch (curr_tok) {
-            case MUL:
-            case DIV:
-                left = new MathDom.BinaryOp((char) curr_tok, left, prim(true));
-                break;
-            default:
-                return left;
-            }
-    }
+	private MathDom.Node term(final boolean get) throws IOException,
+			ParseException {
+		MathDom.Node left = prim(get);
+		for (;;)
+			switch (curr_tok) {
+			case MUL:
+			case DIV:
+				left = new MathDom.BinaryOp((char) curr_tok, left, prim(true));
+				break;
+			default:
+				return left;
+			}
+	}
 }

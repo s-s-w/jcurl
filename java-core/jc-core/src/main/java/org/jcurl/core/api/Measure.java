@@ -35,78 +35,78 @@ import java.util.regex.Pattern;
  */
 public class Measure implements Serializable {
 
-    private static final Pattern pat = Pattern
-            .compile("^(-?[0-9]+([.][0-9]+)?(e-?[0-9]+)?)[ \t]*([\\S]*)$");
+	private static final Pattern pat = Pattern
+			.compile("^(-?[0-9]+([.][0-9]+)?(e-?[0-9]+)?)[ \t]*([\\S]*)$");
 
-    private static final long serialVersionUID = -958212044733309378L;
+	private static final long serialVersionUID = -958212044733309378L;
 
-    public static Measure parse(final CharSequence measure) {
-        // split the string
-        final Matcher mat = pat.matcher(measure);
-        if (mat.matches()) {
-            // for (int i = 0; i < mat.groupCount(); i++)
-            // log.debug(i + "=" + mat.group(i));
-            final String val = mat.group(1);
-            final String dim = mat.group(4);
-            try {
-                return new Measure(Double.parseDouble(val), Unit
-                        .getInstance(dim));
-            } catch (final RuntimeException e) {
-                throw new IllegalArgumentException("Not a measure: [" + measure
-                        + "]", e);
-            }
-        }
-        throw new IllegalArgumentException("Not a measure: [" + measure + "]");
-    }
+	public static Measure parse(final CharSequence measure) {
+		// split the string
+		final Matcher mat = pat.matcher(measure);
+		if (mat.matches()) {
+			// for (int i = 0; i < mat.groupCount(); i++)
+			// log.debug(i + "=" + mat.group(i));
+			final String val = mat.group(1);
+			final String dim = mat.group(4);
+			try {
+				return new Measure(Double.parseDouble(val), Unit
+						.getInstance(dim));
+			} catch (final RuntimeException e) {
+				throw new IllegalArgumentException("Not a measure: [" + measure
+						+ "]", e);
+			}
+		}
+		throw new IllegalArgumentException("Not a measure: [" + measure + "]");
+	}
 
-    public final Unit unit;
+	public final Unit unit;
 
-    public final double value;
+	public final double value;
 
-    public Measure(final double value, final Unit unit) {
-        this.value = value;
-        this.unit = unit;
-    }
+	public Measure(final double value, final Unit unit) {
+		this.value = value;
+		this.unit = unit;
+	}
 
-    @Override
-    public boolean equals(final Object o) {
-        if (o == null || !(o instanceof Measure))
-            return false;
-        final Measure b = (Measure) o;
-        if (!unit.equals(b.unit))
-            return false;
-        if (value == b.value)
-            return true;
-        return false;
-    }
+	@Override
+	public boolean equals(final Object o) {
+		if (o == null || !(o instanceof Measure))
+			return false;
+		final Measure b = (Measure) o;
+		if (!unit.equals(b.unit))
+			return false;
+		if (value == b.value)
+			return true;
+		return false;
+	}
 
-    @Override
-    public int hashCode() {
-        // http://www.angelikalanger.com/Articles/JavaSpektrum/03.HashCode/03.HashCode.html
-        // hashcode N = hashcode N-1 * multiplikator + feldwert N
-        int hash = 17;
-        final int fact = 59;
-        hash *= fact;
-        hash += unit.hashCode();
-        hash *= fact;
-        final long tmp = value == 0.0 ? 0L : java.lang.Double
-                .doubleToLongBits(value);
-        hash += (int) (tmp ^ tmp >>> 32);
-        return hash;
-    }
+	@Override
+	public int hashCode() {
+		// http://www.angelikalanger.com/Articles/JavaSpektrum/03.HashCode/03.HashCode.html
+		// hashcode N = hashcode N-1 * multiplikator + feldwert N
+		int hash = 17;
+		final int fact = 59;
+		hash *= fact;
+		hash += unit.hashCode();
+		hash *= fact;
+		final long tmp = value == 0.0 ? 0L : java.lang.Double
+				.doubleToLongBits(value);
+		hash += (int) (tmp ^ tmp >>> 32);
+		return hash;
+	}
 
-    public Measure to(final Unit dst) {
-        if (unit.BaseUnit.intValue() != dst.BaseUnit.intValue())
-            throw new IllegalArgumentException("Units are not convertible ("
-                    + unit.toString() + "->" + dst.toString() + ")");
-        // this -> si -> dst
-        return new Measure(value * unit.Factor / dst.Factor, dst);
-    }
+	public Measure to(final Unit dst) {
+		if (unit.BaseUnit.intValue() != dst.BaseUnit.intValue())
+			throw new IllegalArgumentException("Units are not convertible ("
+					+ unit.toString() + "->" + dst.toString() + ")");
+		// this -> si -> dst
+		return new Measure(value * unit.Factor / dst.Factor, dst);
+	}
 
-    @Override
-    public String toString() {
-        if (unit == null)
-            return Double.toString(value);
-        return Double.toString(value) + unit.toString();
-    }
+	@Override
+	public String toString() {
+		if (unit == null)
+			return Double.toString(value);
+		return Double.toString(value) + unit.toString();
+	}
 }

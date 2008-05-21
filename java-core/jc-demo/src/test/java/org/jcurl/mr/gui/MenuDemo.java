@@ -37,88 +37,88 @@ import javax.swing.KeyStroke;
  */
 public class MenuDemo extends JFrame {
 
-    private static class MyAboutDialog extends JDialog {
+	private static class MyAboutDialog extends JDialog {
 
-        private static final long serialVersionUID = -7533904080833071647L;
+		private static final long serialVersionUID = -7533904080833071647L;
 
-        public MyAboutDialog(final JFrame owner) {
-            super(owner, "About", true);
-            setResizable(false);
-            setUndecorated(false);
-            // ...
+		public MyAboutDialog(final JFrame owner) {
+			super(owner, "About", true);
+			setResizable(false);
+			setUndecorated(false);
+			// ...
 
-            pack();
-        }
+			pack();
+		}
 
-        @Override
-        public void setVisible(boolean b) {
-            if (!b)
-                getOwner().requestFocus();
-            super.setVisible(b);
-        }
-    }
+		@Override
+		public void setVisible(boolean b) {
+			if (!b)
+				getOwner().requestFocus();
+			super.setVisible(b);
+		}
+	}
 
-    private static final long serialVersionUID = -2968454290313186955L;
+	private static final long serialVersionUID = -2968454290313186955L;
 
-    public static void main(final String[] args) {
-        JFrame.setDefaultLookAndFeelDecorated(true);
-        JDialog.setDefaultLookAndFeelDecorated(true);
+	public static void main(final String[] args) {
+		JFrame.setDefaultLookAndFeelDecorated(true);
+		JDialog.setDefaultLookAndFeelDecorated(true);
 
-        final JFrame frame = new MenuDemo();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }
+		final JFrame frame = new MenuDemo();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		frame.setVisible(true);
+	}
 
-    public MenuDemo() {
-        final JFrame owner = this;
-        final JMenuBar menu = new JMenuBar();
-        {
-            final JMenu animation = new JMenu("Animation");
-            animation.setMnemonic('A');
-            final Action toggleStartStop = new AbstractAction("Start/Stop") {
+	public MenuDemo() {
+		final JFrame owner = this;
+		final JMenuBar menu = new JMenuBar();
+		{
+			final JMenu animation = new JMenu("Animation");
+			animation.setMnemonic('A');
+			final Action toggleStartStop = new AbstractAction("Start/Stop") {
 
-                private static final long serialVersionUID = 5755124125303854954L;
+				private static final long serialVersionUID = 5755124125303854954L;
 
-                private boolean started = false;
+				private boolean started = false;
 
-                public void actionPerformed(ActionEvent evt) {
-                    started = !started;
-                    System.err.println(started ? "Start" : "Stop");
-                }
-            };
-            {
-                final JMenuItem startAnimation = new JMenuItem(toggleStartStop);
-                // startAnimation.setMnemonic('a');
-                // startAnimation.setMnemonic(KeyEvent.VK_SPACE);
-                startAnimation.setAccelerator(KeyStroke.getKeyStroke(' '));
-                animation.add(startAnimation);
-            }
-            // {
-            // final JMenuItem stopAnimation = new JMenuItem(toggleStartStop);
-            // stopAnimation.setMnemonic('o');
-            // stopAnimation.setAccelerator(KeyStroke.getKeyStroke(' '));
-            // animation.add(stopAnimation);
-            // }
-            menu.add(animation);
-        }
-        {
-            final JMenu help = new JMenu("Help");
-            help.setMnemonic('H');
-            final JMenuItem about = new JMenuItem(new AbstractAction("About") {
+				public void actionPerformed(ActionEvent evt) {
+					started = !started;
+					System.err.println(started ? "Start" : "Stop");
+				}
+			};
+			{
+				final JMenuItem startAnimation = new JMenuItem(toggleStartStop);
+				// startAnimation.setMnemonic('a');
+				// startAnimation.setMnemonic(KeyEvent.VK_SPACE);
+				startAnimation.setAccelerator(KeyStroke.getKeyStroke(' '));
+				animation.add(startAnimation);
+			}
+			// {
+			// final JMenuItem stopAnimation = new JMenuItem(toggleStartStop);
+			// stopAnimation.setMnemonic('o');
+			// stopAnimation.setAccelerator(KeyStroke.getKeyStroke(' '));
+			// animation.add(stopAnimation);
+			// }
+			menu.add(animation);
+		}
+		{
+			final JMenu help = new JMenu("Help");
+			help.setMnemonic('H');
+			final JMenuItem about = new JMenuItem(new AbstractAction("About") {
 
-                private static final long serialVersionUID = -1288940924434544822L;
+				private static final long serialVersionUID = -1288940924434544822L;
 
-                public void actionPerformed(ActionEvent evt) {
-                    new MyAboutDialog(owner).setVisible(true);
-                }
-            });
-            about.setMnemonic('A');
-            about.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
-                    InputEvent.CTRL_MASK));
-            help.add(about);
-            menu.add(help);
-        }
-        setJMenuBar(menu);
-    }
+				public void actionPerformed(ActionEvent evt) {
+					new MyAboutDialog(owner).setVisible(true);
+				}
+			});
+			about.setMnemonic('A');
+			about.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
+					InputEvent.CTRL_MASK));
+			help.add(about);
+			menu.add(help);
+		}
+		setJMenuBar(menu);
+	}
 }

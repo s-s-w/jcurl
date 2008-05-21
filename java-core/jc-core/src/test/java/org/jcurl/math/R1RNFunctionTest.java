@@ -22,36 +22,36 @@ import junit.framework.TestCase;
 
 public class R1RNFunctionTest extends TestCase {
 
-    public void testIsInside() {
-        assertTrue(MathVec.isInside(0, Double.NEGATIVE_INFINITY,
-                Double.POSITIVE_INFINITY, true));
-        assertTrue(MathVec.isInside(0, Double.POSITIVE_INFINITY,
-                Double.NEGATIVE_INFINITY, true));
-        assertFalse(MathVec.isInside(Double.NaN, Double.NEGATIVE_INFINITY,
-                Double.POSITIVE_INFINITY, true));
-        assertFalse(MathVec.isInside(Double.NaN, Double.POSITIVE_INFINITY,
-                Double.NEGATIVE_INFINITY, true));
-        assertFalse(MathVec.isInside(Double.POSITIVE_INFINITY,
-                Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, true));
-        assertFalse(MathVec.isInside(Double.NEGATIVE_INFINITY,
-                Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, true));
+	public void testIsInside() {
+		assertTrue(MathVec.isInside(0, Double.NEGATIVE_INFINITY,
+				Double.POSITIVE_INFINITY, true));
+		assertTrue(MathVec.isInside(0, Double.POSITIVE_INFINITY,
+				Double.NEGATIVE_INFINITY, true));
+		assertFalse(MathVec.isInside(Double.NaN, Double.NEGATIVE_INFINITY,
+				Double.POSITIVE_INFINITY, true));
+		assertFalse(MathVec.isInside(Double.NaN, Double.POSITIVE_INFINITY,
+				Double.NEGATIVE_INFINITY, true));
+		assertFalse(MathVec.isInside(Double.POSITIVE_INFINITY,
+				Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, true));
+		assertFalse(MathVec.isInside(Double.NEGATIVE_INFINITY,
+				Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, true));
 
-        assertTrue(MathVec.isInside(0, Double.NEGATIVE_INFINITY, Double.NaN,
-                true));
-        assertTrue(MathVec.isInside(0, Double.POSITIVE_INFINITY, Double.NaN,
-                true));
-        assertTrue(MathVec.isInside(0, Double.NaN, Double.NaN, true));
+		assertTrue(MathVec.isInside(0, Double.NEGATIVE_INFINITY, Double.NaN,
+				true));
+		assertTrue(MathVec.isInside(0, Double.POSITIVE_INFINITY, Double.NaN,
+				true));
+		assertTrue(MathVec.isInside(0, Double.NaN, Double.NaN, true));
 
-        assertTrue(MathVec.isInside(0, 0, Double.NEGATIVE_INFINITY, true));
-        assertTrue(MathVec.isInside(-1, 0, Double.NEGATIVE_INFINITY, true));
-        assertFalse(MathVec.isInside(1, 0, Double.NEGATIVE_INFINITY, true));
+		assertTrue(MathVec.isInside(0, 0, Double.NEGATIVE_INFINITY, true));
+		assertTrue(MathVec.isInside(-1, 0, Double.NEGATIVE_INFINITY, true));
+		assertFalse(MathVec.isInside(1, 0, Double.NEGATIVE_INFINITY, true));
 
-        assertFalse(MathVec.isInside(0, 3, 1, true));
-        assertTrue(MathVec.isInside(1, 3, 1, true));
-        assertTrue(MathVec.isInside(2, 3, 1, true));
-        assertTrue(MathVec.isInside(3, 3, 1, true));
-        assertFalse(MathVec.isInside(4, 3, 1, true));
+		assertFalse(MathVec.isInside(0, 3, 1, true));
+		assertTrue(MathVec.isInside(1, 3, 1, true));
+		assertTrue(MathVec.isInside(2, 3, 1, true));
+		assertTrue(MathVec.isInside(3, 3, 1, true));
+		assertFalse(MathVec.isInside(4, 3, 1, true));
 
-        assertTrue(MathVec.isInside(1, 1, 1, true));
-    }
+		assertTrue(MathVec.isInside(1, 1, 1, true));
+	}
 }

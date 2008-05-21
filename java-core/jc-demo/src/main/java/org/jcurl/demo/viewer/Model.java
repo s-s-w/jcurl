@@ -22,15 +22,15 @@ import org.jcurl.core.api.MutableObject;
 
 public class Model extends MutableObject {
 
-    private static final long serialVersionUID = -8204694341039195931L;
+	private static final long serialVersionUID = -8204694341039195931L;
 
-    @Override
-    public boolean equals(final Object arg0) {
-        return false;
-    }
+	@Override
+	public boolean equals(final Object arg0) {
+		return false;
+	}
 
-    @Override
-    public int hashCode() {
-        return 0;
-    }
+	@Override
+	public int hashCode() {
+		return 0;
+	}
 }

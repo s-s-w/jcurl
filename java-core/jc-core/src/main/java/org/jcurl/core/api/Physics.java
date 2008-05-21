@@ -20,5 +20,5 @@ package org.jcurl.core.api;
 
 public abstract class Physics {
 
-    public static final double g = 9.81;
+	public static final double g = 9.81;
 }

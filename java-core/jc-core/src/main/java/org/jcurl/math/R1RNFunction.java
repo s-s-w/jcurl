@@ -26,47 +26,47 @@ package org.jcurl.math;
  */
 public interface R1RNFunction {
 
-    /**
-     * Compute the c'th derivative of all dimensions at <code>t</code>.
-     * 
-     * Default implementation via iteration over {@link #at(int, int, double)}.
-     * 
-     * @param c
-     *            derivative (0=location, 1:speed, ...)
-     * @param t
-     *            t-value (input)
-     * @param ret
-     *            return value container
-     * @return the c'th derivative at <code>t</code>
-     */
-    public abstract double[] at(final int c, final double t, double[] ret);
+	/**
+	 * Compute the c'th derivative of all dimensions at <code>t</code>.
+	 * 
+	 * Default implementation via iteration over {@link #at(int, int, double)}.
+	 * 
+	 * @param c
+	 *            derivative (0=location, 1:speed, ...)
+	 * @param t
+	 *            t-value (input)
+	 * @param ret
+	 *            return value container
+	 * @return the c'th derivative at <code>t</code>
+	 */
+	public abstract double[] at(final int c, final double t, double[] ret);
 
-    /**
-     * Compute the c'th derivative of all dimensions at <code>t</code>.
-     * 
-     * @param c
-     *            derivative (0=location, 1:speed, ...)
-     * @param t
-     *            t-value (input)
-     * @param ret
-     *            return value container
-     * @return the c'th derivative at <code>t</code>
-     */
-    public abstract float[] at(final int c, final double t, float[] ret);
+	/**
+	 * Compute the c'th derivative of all dimensions at <code>t</code>.
+	 * 
+	 * @param c
+	 *            derivative (0=location, 1:speed, ...)
+	 * @param t
+	 *            t-value (input)
+	 * @param ret
+	 *            return value container
+	 * @return the c'th derivative at <code>t</code>
+	 */
+	public abstract float[] at(final int c, final double t, float[] ret);
 
-    /**
-     * Compute the c'th derivative of the given dimension at <code>t</code>.
-     * 
-     * @param dim
-     *            dimension (0,1,2,...)
-     * @param c
-     *            derivative (0=location, 1:speed, ...)
-     * @param t
-     *            t-value
-     * @return the c'th derivative at <code>t</code>
-     */
-    public abstract double at(int dim, int c, double t);
+	/**
+	 * Compute the c'th derivative of the given dimension at <code>t</code>.
+	 * 
+	 * @param dim
+	 *            dimension (0,1,2,...)
+	 * @param c
+	 *            derivative (0=location, 1:speed, ...)
+	 * @param t
+	 *            t-value
+	 * @return the c'th derivative at <code>t</code>
+	 */
+	public abstract double at(int dim, int c, double t);
 
-    public abstract int dim();
+	public abstract int dim();
 
 }

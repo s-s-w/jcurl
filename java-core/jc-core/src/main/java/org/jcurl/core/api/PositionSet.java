@@ -180,6 +180,5 @@ public abstract class PositionSet {
 		return ret;
 	}
 
-	private PositionSet() {
-	}
+	private PositionSet() {}
 }

@@ -63,7 +63,7 @@ public class TrajectorySwing extends JComponent implements TrajectoryDisplay {
 			b.add(tb);
 			this.dark = dark;
 			this.light = light;
-			this.rock.setEnabled(false);
+			rock.setEnabled(false);
 			this.dark.setEnabled(false);
 			this.light.setEnabled(false);
 		}
@@ -94,8 +94,8 @@ public class TrajectorySwing extends JComponent implements TrajectoryDisplay {
 					"1/100 sec", "1/1000 sec" }));
 			tb.add(Box.createHorizontalGlue());
 			b.add(tb);
-			this.split.setEnabled(false);
-			this.dt.setEnabled(false);
+			split.setEnabled(false);
+			dt.setEnabled(false);
 		}
 		{
 			final JPanel p = new JPanel();
@@ -118,10 +118,10 @@ public class TrajectorySwing extends JComponent implements TrajectoryDisplay {
 				p.add(tb);
 			}
 			b.add(p);
-			this.x.setEnabled(false);
-			this.y.setEnabled(false);
-			this.dx.setEnabled(false);
-			this.dy.setEnabled(false);
+			x.setEnabled(false);
+			y.setEnabled(false);
+			dx.setEnabled(false);
+			dy.setEnabled(false);
 		}
 		this.add(b);
 	}
@@ -137,24 +137,24 @@ public class TrajectorySwing extends JComponent implements TrajectoryDisplay {
 	}
 
 	public void setBroom(final BroomPromptModel b) {
-		// TODO Auto-generated method stub
-		// throw new UnsupportedOperationException("Not implemented yet.");
+	// TODO Auto-generated method stub
+	// throw new UnsupportedOperationException("Not implemented yet.");
 	}
 
 	public void setCurves(final ComputedTrajectorySet b) {
 		// TODO Auto-generated method stub
-//		throw new UnsupportedOperationException("Not implemented yet.");
+		// throw new UnsupportedOperationException("Not implemented yet.");
 
-		this.rock.setEnabled(b != null);
-		this.dark.setEnabled(b != null);
-		this.light.setEnabled(b != null);
-		this.in.setEnabled(b != null);
-		this.out.setEnabled(b != null);
-		this.split.setEnabled(b != null);
-		this.dt.setEnabled(b != null);
-		this.x.setEnabled(b != null);
-		this.y.setEnabled(b != null);
-		this.dx.setEnabled(b != null);
-		this.dy.setEnabled(b != null);
+		rock.setEnabled(b != null);
+		dark.setEnabled(b != null);
+		light.setEnabled(b != null);
+		in.setEnabled(b != null);
+		out.setEnabled(b != null);
+		split.setEnabled(b != null);
+		dt.setEnabled(b != null);
+		x.setEnabled(b != null);
+		y.setEnabled(b != null);
+		dx.setEnabled(b != null);
+		dy.setEnabled(b != null);
 	}
 }

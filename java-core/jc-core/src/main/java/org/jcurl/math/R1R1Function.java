@@ -28,53 +28,53 @@ package org.jcurl.math;
  */
 public abstract class R1R1Function extends R1RNFunctionImpl {
 
-    protected R1R1Function() {
-        super(1);
-    }
+	protected R1R1Function() {
+		super(1);
+	}
 
-    /**
-     * Compute the value <code>x</code>.
-     * 
-     * @param x
-     *            x-value
-     * @return the value at <code>x</code>
-     * @see R1R1Function#at(int, double)
-     */
-    public double at(final double x) {
-        return at(0, x);
-    }
+	/**
+	 * Compute the value <code>x</code>.
+	 * 
+	 * @param x
+	 *            x-value
+	 * @return the value at <code>x</code>
+	 * @see R1R1Function#at(int, double)
+	 */
+	public double at(final double x) {
+		return at(0, x);
+	}
 
-    /**
-     * Compute the c'th derivative at <code>x</code>.
-     * 
-     * @param c
-     *            derivative (0=location, 1:speed, ...)
-     * @param x
-     *            x-value
-     * @return the c'th derivative at <code>x</code>
-     * @see R1R1Function#at(int, int, double)
-     */
-    public abstract double at(int c, double x);
+	/**
+	 * Compute the c'th derivative at <code>x</code>.
+	 * 
+	 * @param c
+	 *            derivative (0=location, 1:speed, ...)
+	 * @param x
+	 *            x-value
+	 * @return the c'th derivative at <code>x</code>
+	 * @see R1R1Function#at(int, int, double)
+	 */
+	public abstract double at(int c, double x);
 
-    /**
-     * Compute the c'th derivative at <code>x</code>.
-     * 
-     * @param dim
-     *            must be 0
-     * @param c
-     *            derivative (0=location, 1:speed, ...)
-     * @param x
-     *            x-value
-     * @return the c'th derivative at <code>x</code>
-     * @see R1R1Function#at(int, double)
-     * @throws IllegalArgumentException
-     *             if <code>dim != 0</code>
-     */
-    @Override
-    public double at(final int dim, final int c, final double x) {
-        if (dim != 0)
-            throw new IllegalArgumentException("Dimension must be 0");
-        return this.at(c, x);
-    }
+	/**
+	 * Compute the c'th derivative at <code>x</code>.
+	 * 
+	 * @param dim
+	 *            must be 0
+	 * @param c
+	 *            derivative (0=location, 1:speed, ...)
+	 * @param x
+	 *            x-value
+	 * @return the c'th derivative at <code>x</code>
+	 * @see R1R1Function#at(int, double)
+	 * @throws IllegalArgumentException
+	 *             if <code>dim != 0</code>
+	 */
+	@Override
+	public double at(final int dim, final int c, final double x) {
+		if (dim != 0)
+			throw new IllegalArgumentException("Dimension must be 0");
+		return this.at(c, x);
+	}
 
 }

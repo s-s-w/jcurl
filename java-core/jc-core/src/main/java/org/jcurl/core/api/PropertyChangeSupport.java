@@ -144,7 +144,7 @@ public class PropertyChangeSupport implements IPropertyChangeSupport {
 		{
 			final Object a = event.getOldValue();
 			final Object b = event.getNewValue();
-			if (a != null && a.equals(b) || (a == null && b == null))
+			if (a != null && a.equals(b) || a == null && b == null)
 				return;
 		}
 		// validated that an event must be thrown; now throw it.

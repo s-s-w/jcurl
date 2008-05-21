@@ -24,12 +24,12 @@ import org.jcurl.core.ui.Zoomer;
 
 interface WCLayer {
 
-    public abstract Point2D dc2wc(final Point2D dc, Point2D wc);
+	public abstract Point2D dc2wc(final Point2D dc, Point2D wc);
 
-    public abstract Zoomer getZoom();
+	public abstract Zoomer getZoom();
 
-    public abstract void setZoom(final Zoomer zoom);
+	public abstract void setZoom(final Zoomer zoom);
 
-    public abstract Point2D wc2dc(final Point2D wc, Point2D dc);
+	public abstract Point2D wc2dc(final Point2D wc, Point2D dc);
 
 }

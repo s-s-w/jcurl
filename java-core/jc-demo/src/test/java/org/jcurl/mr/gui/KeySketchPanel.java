@@ -33,67 +33,66 @@ import javax.swing.JPanel;
  */
 public class KeySketchPanel extends JPanel implements KeyListener {
 
-    private static final long serialVersionUID = -3879989219730493694L;
+	private static final long serialVersionUID = -3879989219730493694L;
 
-    private final Point end = new Point(0, 0);
+	private final Point end = new Point(0, 0);
 
-    private final Point start = new Point(0, 0);
+	private final Point start = new Point(0, 0);
 
-    public KeySketchPanel() {
-        addKeyListener(this);
-    }
+	public KeySketchPanel() {
+		addKeyListener(this);
+	}
 
-    public void add(final int dx, final int dy) {
-        end.x += dx;
-        end.y += dy;
-        final Graphics g = getGraphics();
-        g.drawLine(start.x, start.y, end.x, end.y);
-        g.dispose();
-        start.x = end.x;
-        start.y = end.y;
-    }
+	public void add(final int dx, final int dy) {
+		end.x += dx;
+		end.y += dy;
+		final Graphics g = getGraphics();
+		g.drawLine(start.x, start.y, end.x, end.y);
+		g.dispose();
+		start.x = end.x;
+		start.y = end.y;
+	}
 
-    @Override
-    public boolean isFocusTraversable() {
-        return true;
-    }
+	@Override
+	public boolean isFocusTraversable() {
+		return true;
+	}
 
-    public void keyPressed(final KeyEvent e) {
-        final int keyCode = e.getKeyCode();
-        int d;
-        if (e.isShiftDown())
-            d = 5;
-        else
-            d = 1;
-        if (keyCode == KeyEvent.VK_LEFT)
-            this.add(-d, 0);
-        else if (keyCode == KeyEvent.VK_RIGHT)
-            this.add(d, 0);
-        else if (keyCode == KeyEvent.VK_UP)
-            this.add(0, -d);
-        else if (keyCode == KeyEvent.VK_DOWN)
-            this.add(0, d);
+	public void keyPressed(final KeyEvent e) {
+		final int keyCode = e.getKeyCode();
+		int d;
+		if (e.isShiftDown())
+			d = 5;
+		else
+			d = 1;
+		if (keyCode == KeyEvent.VK_LEFT)
+			this.add(-d, 0);
+		else if (keyCode == KeyEvent.VK_RIGHT)
+			this.add(d, 0);
+		else if (keyCode == KeyEvent.VK_UP)
+			this.add(0, -d);
+		else if (keyCode == KeyEvent.VK_DOWN)
+			this.add(0, d);
 
-    }
+	}
 
-    public void keyReleased(final KeyEvent e) {
-    }
+	public void keyReleased(final KeyEvent e) {}
 
-    public void keyTyped(final KeyEvent e) {
-        char keyChar = e.getKeyChar();
-        int d;
-        if (Character.isUpperCase(keyChar)) {
-            d = 5;
-            keyChar = Character.toLowerCase(keyChar);
-        } else
-            d = 1;
-        if (keyChar == 'h')
-            this.add(-d, 0);
-        else if (keyChar == 'l')
-            this.add(d, 0);
-        else if (keyChar == 'k')
-            this.add(0, -d);
-        else if (keyChar == 'j')
-            this.add(0, d);
-    }
+	public void keyTyped(final KeyEvent e) {
+		char keyChar = e.getKeyChar();
+		int d;
+		if (Character.isUpperCase(keyChar)) {
+			d = 5;
+			keyChar = Character.toLowerCase(keyChar);
+		} else
+			d = 1;
+		if (keyChar == 'h')
+			this.add(-d, 0);
+		else if (keyChar == 'l')
+			this.add(d, 0);
+		else if (keyChar == 'k')
+			this.add(0, -d);
+		else if (keyChar == 'j')
+			this.add(0, d);
+	}
 }

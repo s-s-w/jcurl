@@ -26,23 +26,22 @@ import java.sql.SQLException;
 import junit.framework.TestCase;
 
 public class DerbyTest extends TestCase {
-    public DerbyTest() {
-        try {
-            Class.forName("org.apache.derby.jdbc.EmbeddedDriver", true, this
-                    .getClass().getClassLoader());
-        } catch (final ClassNotFoundException e) {
-            throw new RuntimeException("Unhandled", e);
-        }
-    }
+	public DerbyTest() {
+		try {
+			Class.forName("org.apache.derby.jdbc.EmbeddedDriver", true, this
+					.getClass().getClassLoader());
+		} catch (final ClassNotFoundException e) {
+			throw new RuntimeException("Unhandled", e);
+		}
+	}
 
-    public void _test010() throws SQLException {
-        final Connection c = DriverManager.getConnection(
-                "jdbc:derby:target/jcurl-derby;create=true", "sa", "");
-        final PreparedStatement stmt = c
-                .prepareStatement("Create Table SCHEMA_VERSION (id int primary key)");
-        stmt.execute();
-    }
+	public void _test010() throws SQLException {
+		final Connection c = DriverManager.getConnection(
+				"jdbc:derby:target/jcurl-derby;create=true", "sa", "");
+		final PreparedStatement stmt = c
+				.prepareStatement("Create Table SCHEMA_VERSION (id int primary key)");
+		stmt.execute();
+	}
 
-    public void testOk() {
-    }
+	public void testOk() {}
 }

@@ -26,65 +26,65 @@ package org.jcurl.math.dom;
  */
 public class DomWalkerPostfix extends DomWalker {
 
-    public static String toString(final MathDom.Node n) {
-        return toString(n, new StringBuilder()).toString();
-    }
+	public static String toString(final MathDom.Node n) {
+		return toString(n, new StringBuilder()).toString();
+	}
 
-    public static StringBuilder toString(final MathDom.Node n,
-            final StringBuilder buf) {
-        final DomWalkerPostfix w = new DomWalkerPostfix(buf);
-        w.walk(n);
-        return w.buf;
-    }
+	public static StringBuilder toString(final MathDom.Node n,
+			final StringBuilder buf) {
+		final DomWalkerPostfix w = new DomWalkerPostfix(buf);
+		w.walk(n);
+		return w.buf;
+	}
 
-    public final StringBuilder buf;
+	public final StringBuilder buf;
 
-    public DomWalkerPostfix() {
-        this(new StringBuilder());
-    }
+	public DomWalkerPostfix() {
+		this(new StringBuilder());
+	}
 
-    public DomWalkerPostfix(final StringBuilder b) {
-        buf = b;
-    }
+	public DomWalkerPostfix(final StringBuilder b) {
+		buf = b;
+	}
 
-    @Override
-    public void reset() {
-        buf.setLength(0);
-    }
+	@Override
+	public void reset() {
+		buf.setLength(0);
+	}
 
-    @Override
-    public void walk(final MathDom.BinaryOp n) {
-        buf.append(' ');
-        buf.append(n.op).append(' ');
-        this.walk(n.left);
-        buf.append(' ');
-        this.walk(n.right);
-    }
+	@Override
+	public void walk(final MathDom.BinaryOp n) {
+		buf.append(' ');
+		buf.append(n.op).append(' ');
+		this.walk(n.left);
+		buf.append(' ');
+		this.walk(n.right);
+	}
 
-    @Override
-    public void walk(final MathDom.Block n) {
-        this.walk(n.arg);
-    }
+	@Override
+	public void walk(final MathDom.Block n) {
+		this.walk(n.arg);
+	}
 
-    @Override
-    public void walk(final MathDom.Function n) {
-        buf.append(n.name).append(' ');
-        this.walk(n.arg);
-    }
+	@Override
+	public void walk(final MathDom.Function n) {
+		buf.append(n.name).append(' ');
+		this.walk(n.arg);
+	}
 
-    @Override
-    public void walk(final MathDom.Literal n) {
-        buf.append(n.val);
-    }
+	@Override
+	public void walk(final MathDom.Literal n) {
+		buf.append(n.val);
+	}
 
-    @Override
-    public void walk(final MathDom.Parameter n) {
-        buf.append(n.name);
-    }
+	@Override
+	public void walk(final MathDom.Parameter n) {
+		buf.append(n.name);
+	}
 
-    @Override
-    public void walk(final MathDom.UnaryOp n) {
-        buf.append(n.op);
-        this.walk(n.arg);
-    }
+	@Override
+	public void walk(final MathDom.UnaryOp n) {
+		buf.append(n.op);
+		this.walk(n.arg);
+	}
 }

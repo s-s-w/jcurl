@@ -33,37 +33,37 @@ import org.jcurl.math.R1RNFunction;
  */
 public class CurveRockAnalytic<T extends RockType> extends CurveRock<T> {
 
-    private static final long serialVersionUID = 6879559446969142018L;
+	private static final long serialVersionUID = 6879559446969142018L;
 
-    private final R1RNFunction curve;
+	private final R1RNFunction curve;
 
-    public CurveRockAnalytic(final R1R1Function x, final R1R1Function y,
-            final R1R1Function a) {
-        this(new R1R1Function[] { x, y, a });
-    }
+	public CurveRockAnalytic(final R1R1Function x, final R1R1Function y,
+			final R1R1Function a) {
+		this(new R1R1Function[] { x, y, a });
+	}
 
-    public CurveRockAnalytic(final R1R1Function[] x) {
-        this(new CurveFkt(x));
-    }
+	public CurveRockAnalytic(final R1R1Function[] x) {
+		this(new CurveFkt(x));
+	}
 
-    public CurveRockAnalytic(final R1RNFunction f) {
-        if (f.dim() != 3)
-            throw new IllegalArgumentException("Function must be 3-dimensional");
-        curve = f;
-    }
+	public CurveRockAnalytic(final R1RNFunction f) {
+		if (f.dim() != 3)
+			throw new IllegalArgumentException("Function must be 3-dimensional");
+		curve = f;
+	}
 
-    @Override
-    public double at(final int dim, final int c, final double t) {
-        return curve.at(dim, c, t);
-    }
+	@Override
+	public double at(final int dim, final int c, final double t) {
+		return curve.at(dim, c, t);
+	}
 
-    public R1RNFunction getCurve() {
-        return curve;
-    }
+	public R1RNFunction getCurve() {
+		return curve;
+	}
 
-    @Override
-    public String toString() {
-        return curve.toString();
-    }
+	@Override
+	public String toString() {
+		return curve.toString();
+	}
 
 }

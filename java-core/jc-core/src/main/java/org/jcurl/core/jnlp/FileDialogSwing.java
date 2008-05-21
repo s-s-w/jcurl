@@ -45,93 +45,93 @@ import org.jcurl.core.log.JCLoggerFactory;
  * @version $Id$
  */
 class FileDialogSwing implements OpenService, SaveService {
-    private static final Log log = JCLoggerFactory
-            .getLogger(FileDialogSwing.class);
+	private static final Log log = JCLoggerFactory
+			.getLogger(FileDialogSwing.class);
 
-    private static JFileChooser createFileChooser(final String pathHint,
-            final String[] extensions, final boolean showDir) {
-        final JFileChooser fc = new JFileChooser();
-        fc.setMultiSelectionEnabled(false);
-        fc.setAcceptAllFileFilterUsed(true);
-        fc.setFileFilter(new FileFilter() {
-            @Override
-            public boolean accept(final File f) {
-                if (f == null)
-                    return false;
-                if (showDir && f.isDirectory())
-                    return true;
-                for (final String element : extensions)
-                    if (f.getName().endsWith("." + element))
-                        return true;
-                return false;
-            }
+	private static JFileChooser createFileChooser(final String pathHint,
+			final String[] extensions, final boolean showDir) {
+		final JFileChooser fc = new JFileChooser();
+		fc.setMultiSelectionEnabled(false);
+		fc.setAcceptAllFileFilterUsed(true);
+		fc.setFileFilter(new FileFilter() {
+			@Override
+			public boolean accept(final File f) {
+				if (f == null)
+					return false;
+				if (showDir && f.isDirectory())
+					return true;
+				for (final String element : extensions)
+					if (f.getName().endsWith("." + element))
+						return true;
+				return false;
+			}
 
-            @Override
-            public String getDescription() {
-                final StringBuilder b = new StringBuilder();
-                for (final String element : extensions)
-                    b.append("*.").append(element).append(", ");
-                if (b.length() > 0)
-                    b.setLength(b.length() - 2);
-                return b.toString();
-            }
-        });
-        return fc;
-    }
+			@Override
+			public String getDescription() {
+				final StringBuilder b = new StringBuilder();
+				for (final String element : extensions)
+					b.append("*.").append(element).append(", ");
+				if (b.length() > 0)
+					b.setLength(b.length() - 2);
+				return b.toString();
+			}
+		});
+		return fc;
+	}
 
-    public Contents openFileDialog(final String pathHint,
-            final String[] extensions, final Component parent) {
-        final JFileChooser fc = createFileChooser(pathHint, extensions, true);
-        final int ret = fc.showOpenDialog(parent);
-        switch (ret) {
-        case 0:
-            throw new NotImplementedYetException();
-        case 1:
-            return null;
-        default:
-            log.warn("Ignored Dialog Result " + ret);
-            return null;
-        }
-    }
+	public Contents openFileDialog(final String pathHint,
+			final String[] extensions, final Component parent) {
+		final JFileChooser fc = createFileChooser(pathHint, extensions, true);
+		final int ret = fc.showOpenDialog(parent);
+		switch (ret) {
+		case 0:
+			throw new NotImplementedYetException();
+		case 1:
+			return null;
+		default:
+			log.warn("Ignored Dialog Result " + ret);
+			return null;
+		}
+	}
 
-    public Contents saveAsFileDialog(final String pathHint,
-            final String[] extensions, final Contents contents,
-            final Component parent) {
-        final JFileChooser fc = createFileChooser(pathHint, extensions, false);
-        final int ret = fc.showSaveDialog(parent);
-        switch (ret) {
-        case 0:
-            throw new NotImplementedYetException();
-        case 1:
-            return null;
-        default:
-            log.warn("Ignored Dialog Result " + ret);
-            return null;
-        }
-    }
+	public Contents saveAsFileDialog(final String pathHint,
+			final String[] extensions, final Contents contents,
+			final Component parent) {
+		final JFileChooser fc = createFileChooser(pathHint, extensions, false);
+		final int ret = fc.showSaveDialog(parent);
+		switch (ret) {
+		case 0:
+			throw new NotImplementedYetException();
+		case 1:
+			return null;
+		default:
+			log.warn("Ignored Dialog Result " + ret);
+			return null;
+		}
+	}
 
-    public Contents saveFileDialog(final String pathHint,
-            final String[] extensions, final InputStream stream,
-            final String name, final Component parent) {
-        final JFileChooser fc = createFileChooser(pathHint, extensions, true);
-        final int ret = fc.showSaveDialog(parent);
-        switch (ret) {
-        case 0:
-            try {
-                final Contents c = new ContentsFile(fc.getSelectedFile());
-                final FileOutputStream fo = new FileOutputStream(fc
-                        .getSelectedFile());
-                // TODO fo.write(arg0)
-                fo.close();
-                return c;
-            } catch (final IOException e) {
-                throw new RuntimeException("Unhandled", e);
-            }
-        case 1:
-            return null;
-        default:
-            log.warn("Ignored Dialog Result " + ret);
-            return null;
-        }
-    }
+	public Contents saveFileDialog(final String pathHint,
+			final String[] extensions, final InputStream stream,
+			final String name, final Component parent) {
+		final JFileChooser fc = createFileChooser(pathHint, extensions, true);
+		final int ret = fc.showSaveDialog(parent);
+		switch (ret) {
+		case 0:
+			try {
+				final Contents c = new ContentsFile(fc.getSelectedFile());
+				final FileOutputStream fo = new FileOutputStream(fc
+						.getSelectedFile());
+				// TODO fo.write(arg0)
+				fo.close();
+				return c;
+			} catch (final IOException e) {
+				throw new RuntimeException("Unhandled", e);
+			}
+		case 1:
+			return null;
+		default:
+			log.warn("Ignored Dialog Result " + ret);
+			return null;
+		}
+	}
 }

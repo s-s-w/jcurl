@@ -75,7 +75,8 @@ public class Jsr275Test extends TestCase {
 	 * and {@link Rock} with position/velocity semantics.
 	 */
 	public void testRock() {
-		VectorMeasure<Length> v_ = VectorMeasure.valueOf(1, 2, 3, SI.METER);
+		final VectorMeasure<Length> v_ = VectorMeasure.valueOf(1, 2, 3,
+				SI.METER);
 
 		final RockDemo<Length> x = new RockDemo<Length>();
 		final RockDemo<Velocity> v = new RockDemo<Velocity>();

@@ -33,27 +33,27 @@ import org.jcurl.core.log.JCLoggerFactory;
  */
 public class MainFrame extends JFrame {
 
-    private static final Log log = JCLoggerFactory.getLogger(MainFrame.class);
+	private static final Log log = JCLoggerFactory.getLogger(MainFrame.class);
 
-    private static final long serialVersionUID = 7094013076400484227L;
+	private static final long serialVersionUID = 7094013076400484227L;
 
-    private final PointList curve;
+	private final PointList curve;
 
-    public MainFrame() {
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(final WindowEvent e) {
-                log.info("Points collected: " + curve.size());
-                System.exit(0);
-            }
-        });
-        setTitle("FirstFrame");
-        this.setSize(600, 600);
-        final Container contentPane = getContentPane();
-        // contentPane.add(new KeySketchPanel());
-        // contentPane.add(new MouseRectPanel());
-        final MouseSketchPanel mp = new MouseSketchPanel(' ');
-        curve = mp.getCurve();
-        contentPane.add(mp);
-    }
+	public MainFrame() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(final WindowEvent e) {
+				log.info("Points collected: " + curve.size());
+				System.exit(0);
+			}
+		});
+		setTitle("FirstFrame");
+		this.setSize(600, 600);
+		final Container contentPane = getContentPane();
+		// contentPane.add(new KeySketchPanel());
+		// contentPane.add(new MouseRectPanel());
+		final MouseSketchPanel mp = new MouseSketchPanel(' ');
+		curve = mp.getCurve();
+		contentPane.add(mp);
+	}
 }

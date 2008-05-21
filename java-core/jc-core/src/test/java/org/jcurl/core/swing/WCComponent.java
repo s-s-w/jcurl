@@ -43,119 +43,119 @@ import org.jcurl.core.ui.Zoomer;
 
 abstract class WCComponent extends Component implements WCLayer {
 
-    private static final Log log = JCLoggerFactory.getLogger(WCComponent.class);
+	private static final Log log = JCLoggerFactory.getLogger(WCComponent.class);
 
-    protected int oldHei = -1;
+	protected int oldHei = -1;
 
-    protected int oldWid = -1;
+	protected int oldWid = -1;
 
-    protected Orientation orient = Orientation.W;
+	protected Orientation orient = Orientation.W;
 
-    protected final AffineTransform wc_mat = new AffineTransform();
+	protected final AffineTransform wc_mat = new AffineTransform();
 
-    private Zoomer zoom = null;
+	private Zoomer zoom = null;
 
-    /**
-     * Convert display to world-coordinates.
-     * 
-     * @param dc
-     * @param wc
-     * @return world coordinates
-     */
-    public Point2D dc2wc(final Point2D dc, final Point2D wc) {
-        try {
-            return wc_mat.inverseTransform(dc, wc);
-        } catch (final NoninvertibleTransformException e) {
-            throw new RuntimeException("Why uninvertible?", e);
-        }
-    }
+	/**
+	 * Convert display to world-coordinates.
+	 * 
+	 * @param dc
+	 * @param wc
+	 * @return world coordinates
+	 */
+	public Point2D dc2wc(final Point2D dc, final Point2D wc) {
+		try {
+			return wc_mat.inverseTransform(dc, wc);
+		} catch (final NoninvertibleTransformException e) {
+			throw new RuntimeException("Why uninvertible?", e);
+		}
+	}
 
-    public void exportPng(File dst, final String watermark) throws IOException {
-        if (!dst.getName().endsWith(".png"))
-            dst = new File(dst.getName() + ".png");
-        ImageIO.write(renderPng(watermark), "png", dst);
-    }
+	public void exportPng(File dst, final String watermark) throws IOException {
+		if (!dst.getName().endsWith(".png"))
+			dst = new File(dst.getName() + ".png");
+		ImageIO.write(renderPng(watermark), "png", dst);
+	}
 
-    public void exportPng(final OutputStream dst, final String watermark)
-            throws IOException {
-        ImageIO.write(renderPng(watermark), "png", dst);
-    }
+	public void exportPng(final OutputStream dst, final String watermark)
+			throws IOException {
+		ImageIO.write(renderPng(watermark), "png", dst);
+	}
 
-    public Zoomer getZoom() {
-        return zoom;
-    }
+	public Zoomer getZoom() {
+		return zoom;
+	}
 
-    private BufferedImage renderPng(final String watermark) {
-        final BufferedImage img = new BufferedImage(getWidth(), getHeight(),
-                BufferedImage.TYPE_INT_ARGB);
-        final Graphics2D g2 = (Graphics2D) img.getGraphics();
-        {
-            final Map<Key, Object> hints = new HashMap<Key, Object>();
-            hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION,
-                    RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-            hints.put(RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON);
-            hints.put(RenderingHints.KEY_COLOR_RENDERING,
-                    RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-            hints.put(RenderingHints.KEY_DITHERING,
-                    RenderingHints.VALUE_DITHER_ENABLE);
-            hints.put(RenderingHints.KEY_FRACTIONALMETRICS,
-                    RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-            hints.put(RenderingHints.KEY_INTERPOLATION,
-                    RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-            hints.put(RenderingHints.KEY_RENDERING,
-                    RenderingHints.VALUE_RENDER_QUALITY);
-            hints.put(RenderingHints.KEY_STROKE_CONTROL,
-                    RenderingHints.VALUE_STROKE_NORMALIZE);
-            hints.put(RenderingHints.KEY_TEXT_ANTIALIASING,
-                    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            g2.addRenderingHints(hints);
-        }
-        final Font f0 = g2.getFont();
-        paint(g2);
-        g2.setTransform(new AffineTransform());
-        if (watermark != null) {
-            if (log.isDebugEnabled())
-                log.debug(f0);
-            g2.setFont(f0);
-            g2.setColor(new Color(0, 0, 0, 128));
-            g2.drawString(watermark, 10, 20);
-        }
-        g2.dispose();
-        return img;
-    }
+	private BufferedImage renderPng(final String watermark) {
+		final BufferedImage img = new BufferedImage(getWidth(), getHeight(),
+				BufferedImage.TYPE_INT_ARGB);
+		final Graphics2D g2 = (Graphics2D) img.getGraphics();
+		{
+			final Map<Key, Object> hints = new HashMap<Key, Object>();
+			hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION,
+					RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+			hints.put(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
+			hints.put(RenderingHints.KEY_COLOR_RENDERING,
+					RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+			hints.put(RenderingHints.KEY_DITHERING,
+					RenderingHints.VALUE_DITHER_ENABLE);
+			hints.put(RenderingHints.KEY_FRACTIONALMETRICS,
+					RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+			hints.put(RenderingHints.KEY_INTERPOLATION,
+					RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+			hints.put(RenderingHints.KEY_RENDERING,
+					RenderingHints.VALUE_RENDER_QUALITY);
+			hints.put(RenderingHints.KEY_STROKE_CONTROL,
+					RenderingHints.VALUE_STROKE_NORMALIZE);
+			hints.put(RenderingHints.KEY_TEXT_ANTIALIASING,
+					RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+			g2.addRenderingHints(hints);
+		}
+		final Font f0 = g2.getFont();
+		paint(g2);
+		g2.setTransform(new AffineTransform());
+		if (watermark != null) {
+			if (log.isDebugEnabled())
+				log.debug(f0);
+			g2.setFont(f0);
+			g2.setColor(new Color(0, 0, 0, 128));
+			g2.drawString(watermark, 10, 20);
+		}
+		g2.dispose();
+		return img;
+	}
 
-    /**
-     * Either the wc viewport, fixpoint or dc viewport has changed: re-compute
-     * the transformation {@link #wc_mat}.
-     * 
-     * @return was the transformation changed?
-     */
-    protected boolean resized() {
-        final int w = getWidth();
-        final int h = getHeight();
-        if (oldWid != w || oldHei != h) {
-            getZoom().computeWctoDcTrafo(this.getBounds(), wc_mat);
-            oldWid = w;
-            oldHei = h;
-            return true;
-        }
-        return false;
-    }
+	/**
+	 * Either the wc viewport, fixpoint or dc viewport has changed: re-compute
+	 * the transformation {@link #wc_mat}.
+	 * 
+	 * @return was the transformation changed?
+	 */
+	protected boolean resized() {
+		final int w = getWidth();
+		final int h = getHeight();
+		if (oldWid != w || oldHei != h) {
+			getZoom().computeWctoDcTrafo(this.getBounds(), wc_mat);
+			oldWid = w;
+			oldHei = h;
+			return true;
+		}
+		return false;
+	}
 
-    public void setZoom(final Zoomer zoom) {
-        this.zoom = zoom;
-        this.repaint();
-    }
+	public void setZoom(final Zoomer zoom) {
+		this.zoom = zoom;
+		this.repaint();
+	}
 
-    /**
-     * Convert world- to display coordinates.
-     * 
-     * @param wc
-     * @param dc
-     * @return display coordinates
-     */
-    public Point2D wc2dc(final Point2D wc, final Point2D dc) {
-        return wc_mat.transform(wc, dc);
-    }
+	/**
+	 * Convert world- to display coordinates.
+	 * 
+	 * @param wc
+	 * @param dc
+	 * @return display coordinates
+	 */
+	public Point2D wc2dc(final Point2D wc, final Point2D dc) {
+		return wc_mat.transform(wc, dc);
+	}
 }

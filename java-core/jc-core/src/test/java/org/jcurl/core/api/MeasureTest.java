@@ -25,13 +25,13 @@ import junit.framework.TestCase;
  * @version $Id$
  */
 public class MeasureTest extends TestCase {
-    public void testConvert() {
-        final Measure in = new Measure(12, Unit.INCH);
-        final Measure ft = new Measure(1, Unit.FOOT);
-        final Measure m = new Measure(0.3048, Unit.METER);
+	public void testConvert() {
+		final Measure in = new Measure(12, Unit.INCH);
+		final Measure ft = new Measure(1, Unit.FOOT);
+		final Measure m = new Measure(0.3048, Unit.METER);
 
-        assertEquals(m, m.to(Unit.METER));
-        assertEquals(m, in.to(Unit.METER));
-        assertEquals(m, ft.to(Unit.METER));
-    }
+		assertEquals(m, m.to(Unit.METER));
+		assertEquals(m, in.to(Unit.METER));
+		assertEquals(m, ft.to(Unit.METER));
+	}
 }

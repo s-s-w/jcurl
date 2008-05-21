@@ -35,6 +35,8 @@ import org.jcurl.math.Polynome;
 
 public class CurlerNoCurlTest extends TestShowBase {
 
+	private static final Point2D tee = new Point2D.Double(0, 0);
+
 	void showTrajectory(final Polynome[] p, final Zoomer zoom,
 			final int millis, final int dt) {
 		final RockSet<Pos> pos = PositionSet.allHome();
@@ -46,28 +48,6 @@ public class CurlerNoCurlTest extends TestShowBase {
 				Thread.sleep(dt);
 			}
 		});
-	}
-
-	public void testSplitTime() {
-		CurlerNoCurl c = new CurlerNoCurl(24, 0);
-		double split = 3.75;
-		// compute the initial speed:
-		assertEquals(2.453599211554087, c.computeHackSpeed(split, tee));
-
-		// compute the split time from a curve numerically:
-		CurveRock rc = c.computeRc(Math.PI, 2.453599211554087, 1, 0);
-		double back = NewtonSimpleSolver.computeNewtonValue(rc, 1, 0,
-				IceSize.HACK_2_BACK, 0, 10);
-		double hog = NewtonSimpleSolver.computeNewtonValue(rc, 1, 0,
-				IceSize.HACK_2_HOG, 0, 10);
-		assertEquals(split, hog - back);
-
-		CurveRock wc = c.computeWc(tee, split, Math.PI, 1, 0);
-		assertEquals("3.750000374248254", "" + c.computeIntervalTime(wc));
-
-		for (int t = 0; t < 20; t += 1)
-			assertEquals("t=" + t, rc.at(1, 0, t), (IceSize.FAR_HACK_2_TEE - wc
-					.at(1, 0, t)), 1e-9);
 	}
 
 	// public void testBeta() {
@@ -105,19 +85,17 @@ public class CurlerNoCurlTest extends TestShowBase {
 		assertEquals(0, p[1].at(0));
 		assertEquals(Math.PI, p[2].at(0));
 		assertEquals(0, p[0].at(23));
-		assertEquals("17.653598785400394", ""+p[1].at(23));
-		assertEquals("7.741592653589794",""+ p[2].at(23));
+		assertEquals("17.653598785400394", "" + p[1].at(23));
+		assertEquals("7.741592653589794", "" + p[2].at(23));
 
 		p = s.computeRcPoly(Math.PI, 3, 0.2, 0);
 		assertEquals(0, p[0].at(0));
 		assertEquals(0, p[1].at(0));
 		assertEquals(Math.PI, p[2].at(0));
 		assertEquals(0, p[0].at(23));
-		assertEquals("40.6535987854004","" +p[1].at(23));
-		assertEquals("7.741592653589794",""+ p[2].at(23));
+		assertEquals("40.6535987854004", "" + p[1].at(23));
+		assertEquals("7.741592653589794", "" + p[2].at(23));
 	}
-
-	private static final Point2D tee = new Point2D.Double(0, 0);
 
 	public void testComputeV0() {
 		CurlerNoCurl s = new CurlerNoCurl(17, 0);
@@ -208,5 +186,27 @@ public class CurlerNoCurlTest extends TestShowBase {
 		assertEquals("-1.0547001955577002", "" + (x.getX() - 0.5));
 		assertEquals("10.087675764012488", ""
 				+ (x.getY() - IceSize.FAR_HOG_2_TEE + 1));
+	}
+
+	public void testSplitTime() {
+		final CurlerNoCurl c = new CurlerNoCurl(24, 0);
+		final double split = 3.75;
+		// compute the initial speed:
+		assertEquals(2.453599211554087, c.computeHackSpeed(split, tee));
+
+		// compute the split time from a curve numerically:
+		final CurveRock rc = c.computeRc(Math.PI, 2.453599211554087, 1, 0);
+		final double back = NewtonSimpleSolver.computeNewtonValue(rc, 1, 0,
+				IceSize.HACK_2_BACK, 0, 10);
+		final double hog = NewtonSimpleSolver.computeNewtonValue(rc, 1, 0,
+				IceSize.HACK_2_HOG, 0, 10);
+		assertEquals(split, hog - back);
+
+		final CurveRock wc = c.computeWc(tee, split, Math.PI, 1, 0);
+		assertEquals("3.750000374248254", "" + c.computeIntervalTime(wc));
+
+		for (int t = 0; t < 20; t += 1)
+			assertEquals("t=" + t, rc.at(1, 0, t), (IceSize.FAR_HACK_2_TEE - wc
+					.at(1, 0, t)), 1e-9);
 	}
 }

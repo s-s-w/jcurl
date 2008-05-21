@@ -21,15 +21,13 @@ package org.jcurl.demo.tactics;
 
 import org.jcurl.core.api.ComputedTrajectorySet;
 
-
 /**
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-interface TrajectoryDisplay {
+public interface TrajectoryDisplay {
 
 	ComputedTrajectorySet getCurves();
-
 
 	void setCurves(final ComputedTrajectorySet model);
 

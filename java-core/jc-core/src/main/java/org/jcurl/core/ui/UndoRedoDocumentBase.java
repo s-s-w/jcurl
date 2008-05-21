@@ -33,46 +33,46 @@ import org.jcurl.core.api.WeakHashSet;
  */
 public class UndoRedoDocumentBase implements UndoRedoDocument {
 
-    private static final WeakHashSet<UndoableEditListener> listeners = new WeakHashSet<UndoableEditListener>();
+	private static final WeakHashSet<UndoableEditListener> listeners = new WeakHashSet<UndoableEditListener>();
 
-    private final UndoManager undoer = new UndoManager();
+	private final UndoManager undoer = new UndoManager();
 
-    public boolean addEdit(final UndoableEdit anEdit) {
-        final boolean ret = undoer.addEdit(anEdit);
-        for (final UndoableEditListener elem : listeners)
-            elem.undoableEditHappened(new UndoableEditEvent(undoer, anEdit));
-        return ret;
-    }
+	public boolean addEdit(final UndoableEdit anEdit) {
+		final boolean ret = undoer.addEdit(anEdit);
+		for (final UndoableEditListener elem : listeners)
+			elem.undoableEditHappened(new UndoableEditEvent(undoer, anEdit));
+		return ret;
+	}
 
-    public void addUndoableEditListener(final UndoableEditListener l) {
-        listeners.add(l);
-    }
+	public void addUndoableEditListener(final UndoableEditListener l) {
+		listeners.add(l);
+	}
 
-    public boolean canRedo() {
-        return undoer.canRedo();
-    }
+	public boolean canRedo() {
+		return undoer.canRedo();
+	}
 
-    public boolean canUndo() {
-        return undoer.canUndo();
-    }
+	public boolean canUndo() {
+		return undoer.canUndo();
+	}
 
-    public Iterable<UndoableEditListener> getUndoableEditListeners() {
-        return listeners;
-    }
+	public Iterable<UndoableEditListener> getUndoableEditListeners() {
+		return listeners;
+	}
 
-    public void redo() {
-        undoer.redo();
-        for (final UndoableEditListener elem : listeners)
-            elem.undoableEditHappened(new UndoableEditEvent(undoer, null));
-    }
+	public void redo() {
+		undoer.redo();
+		for (final UndoableEditListener elem : listeners)
+			elem.undoableEditHappened(new UndoableEditEvent(undoer, null));
+	}
 
-    public void removeUndoableEditListener(final UndoableEditListener l) {
-        listeners.remove(l);
-    }
+	public void removeUndoableEditListener(final UndoableEditListener l) {
+		listeners.remove(l);
+	}
 
-    public void undo() {
-        undoer.undo();
-        for (final UndoableEditListener elem : listeners)
-            elem.undoableEditHappened(new UndoableEditEvent(undoer, null));
-    }
+	public void undo() {
+		undoer.undo();
+		for (final UndoableEditListener elem : listeners)
+			elem.undoableEditHappened(new UndoableEditEvent(undoer, null));
+	}
 }

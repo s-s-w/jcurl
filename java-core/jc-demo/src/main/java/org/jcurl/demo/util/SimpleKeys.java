@@ -32,40 +32,40 @@ import org.jcurl.core.api.TrajectorySet;
  */
 public class SimpleKeys implements KeyListener {
 
-    private final RealTimePlayer player;
+	private final RealTimePlayer player;
 
-    private Thread worker = null;
+	private Thread worker = null;
 
-    public SimpleKeys(final TrajectorySet src) {
-        final double t0 = 0;
-        player = new RealTimePlayer(t0, 1.0, src);
-    }
+	public SimpleKeys(final TrajectorySet src) {
+		final double t0 = 0;
+		player = new RealTimePlayer(t0, 1.0, src);
+	}
 
-    public void keyPressed(final KeyEvent e) {
-        switch (e.getKeyCode()) {
-        case KeyEvent.VK_SPACE:
-            if (worker == null || !worker.isAlive()) {
-                worker = new Thread(player, player.getClass().getName());
-                worker.start();
-            } else {
-                worker.interrupt();
-                worker = null;
-            }
-            break;
-        case KeyEvent.VK_LEFT:
-            player.setTimeScale(-1);
-            break;
-        case KeyEvent.VK_RIGHT:
-            player.setTimeScale(1);
-            break;
-        }
-    }
+	public void keyPressed(final KeyEvent e) {
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_SPACE:
+			if (worker == null || !worker.isAlive()) {
+				worker = new Thread(player, player.getClass().getName());
+				worker.start();
+			} else {
+				worker.interrupt();
+				worker = null;
+			}
+			break;
+		case KeyEvent.VK_LEFT:
+			player.setTimeScale(-1);
+			break;
+		case KeyEvent.VK_RIGHT:
+			player.setTimeScale(1);
+			break;
+		}
+	}
 
-    public void keyReleased(final KeyEvent e) {
-        ; // nop
-    }
+	public void keyReleased(final KeyEvent e) {
+		; // nop
+	}
 
-    public void keyTyped(final KeyEvent e) {
-        ; // nop
-    }
+	public void keyTyped(final KeyEvent e) {
+		; // nop
+	}
 }

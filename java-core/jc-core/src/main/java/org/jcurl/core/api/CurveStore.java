@@ -66,14 +66,16 @@ public interface CurveStore extends
 
 	/**
 	 * @see CurveCombined#iterator()
-	 * @param i16 index
+	 * @param i16
+	 *            index
 	 */
 	public Iterator<Entry<Double, R1RNFunction>> iterator(int i16);
 
 	/**
 	 * Clear one curve.
 	 * 
-	 * @param i16 index
+	 * @param i16
+	 *            index
 	 */
 	public abstract void reset(final int i16);
 

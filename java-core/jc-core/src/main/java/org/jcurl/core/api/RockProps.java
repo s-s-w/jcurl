@@ -18,7 +18,6 @@
  */
 package org.jcurl.core.api;
 
-
 /**
  * Rock properties like mass etc.
  * 
@@ -26,29 +25,29 @@ package org.jcurl.core.api;
  * @version $Id:RockProps.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class RockProps {
-    public static final RockProps DEFAULT;
-    static {
-        DEFAULT = new RockProps();
-        DEFAULT.mass = 20;
-        DEFAULT.radius = Unit.f2m(0.5);
-        DEFAULT.inertia = 0.186F; // [Kg*m*m]
-    }
+	public static final RockProps DEFAULT;
+	static {
+		DEFAULT = new RockProps();
+		DEFAULT.mass = 20;
+		DEFAULT.radius = Unit.f2m(0.5);
+		DEFAULT.inertia = 0.186F; // [Kg*m*m]
+	}
 
-    private float inertia;
+	private float inertia;
 
-    private float mass;
+	private float mass;
 
-    private float radius;
+	private float radius;
 
-    public float getInertia() {
-        return inertia;
-    }
+	public float getInertia() {
+		return inertia;
+	}
 
-    public float getMass() {
-        return mass;
-    }
+	public float getMass() {
+		return mass;
+	}
 
-    public float getRadius() {
-        return radius;
-    }
+	public float getRadius() {
+		return radius;
+	}
 }

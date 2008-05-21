@@ -109,8 +109,6 @@ public class CurveCombined<T extends R1RNFunction> extends R1RNFunctionImpl
 
 	private static final long serialVersionUID = 5955065096153576747L;
 
-	Map<Integer, String> m;
-
 	/**
 	 * Search only part of an array.
 	 * 
@@ -251,6 +249,8 @@ public class CurveCombined<T extends R1RNFunction> extends R1RNFunctionImpl
 			}
 	}
 
+	Map<Integer, String> m;
+
 	private final List<Entry<Double, T>> parts = new ArrayList<Entry<Double, T>>();
 
 	public CurveCombined(final int dim) {
@@ -294,10 +294,6 @@ public class CurveCombined<T extends R1RNFunction> extends R1RNFunctionImpl
 		parts.clear();
 	}
 
-	public T first() {
-		return parts.get(0).getValue();
-	}
-
 	/**
 	 * Binary search. Could be more general operating with {@link Comparable}
 	 * and {@link Object}s.
@@ -319,14 +315,19 @@ public class CurveCombined<T extends R1RNFunction> extends R1RNFunctionImpl
 		return -2 - idx;
 	}
 
+	public T first() {
+		return parts.get(0).getValue();
+	}
+
 	public Iterator<Entry<Double, T>> iterator() {
 		return parts.iterator();
 	}
 
+	@Override
 	public String toString() {
-		StringBuilder b = new StringBuilder();
+		final StringBuilder b = new StringBuilder();
 		b.append('[');
-		for (Entry<Double, T> elem : parts)
+		for (final Entry<Double, T> elem : parts)
 			b.append("x>=").append(elem.getKey()).append(" f(x)=").append(
 					elem.getValue()).append(", ");
 		if (b.length() > 2)

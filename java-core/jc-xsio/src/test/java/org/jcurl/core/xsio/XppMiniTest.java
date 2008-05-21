@@ -36,95 +36,93 @@ import com.thoughtworks.xstream.converters.DataHolder;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 
 public class XppMiniTest extends TestCase {
-    private static final Log log = JCLoggerFactory.getLogger(XppMiniTest.class);
+	private static final Log log = JCLoggerFactory.getLogger(XppMiniTest.class);
 
-    public void testTrivial() {
-        final XStream xs = new XStream();
-        assertEquals("<string>Hello, world</string>", xs.toXML("Hello, world"));
+	public void testTrivial() {
+		final XStream xs = new XStream();
+		assertEquals("<string>Hello, world</string>", xs.toXML("Hello, world"));
 
-        final Rock r = new RockDouble(1, 2, 3);
-        assertEquals("<org.jcurl.core.api.RockDouble>\n" + 
-        		"  <a>3.0</a>\n" + 
-        		"  <x>1.0</x>\n" + 
-        		"  <y>2.0</y>\n" + 
-        		"</org.jcurl.core.api.RockDouble>", xs.toXML(r));
-    }
+		final Rock r = new RockDouble(1, 2, 3);
+		assertEquals("<org.jcurl.core.api.RockDouble>\n" + "  <a>3.0</a>\n"
+				+ "  <x>1.0</x>\n" + "  <y>2.0</y>\n"
+				+ "</org.jcurl.core.api.RockDouble>", xs.toXML(r));
+	}
 
-    public void testTrivial2() {
-        final XStream xs = new XStream() {
-            final String rootElem = "wrap";
+	public void testTrivial2() {
+		final XStream xs = new XStream() {
+			final String rootElem = "wrap";
 
-            final String rootNS = "mynamespace";
+			final String rootNS = "mynamespace";
 
-            private HierarchicalStreamReader checkRoot(
-                    HierarchicalStreamReader arg0) {
-                if (rootElem.equals(arg0.getNodeName())
-                        && rootNS.equals(arg0.getAttribute("xmlns"))) {
-                    log.debug("Found korrekt root!");
-                    arg0.moveDown();
-                }
-                return arg0;
-            }
+			private HierarchicalStreamReader checkRoot(
+					HierarchicalStreamReader arg0) {
+				if (rootElem.equals(arg0.getNodeName())
+						&& rootNS.equals(arg0.getAttribute("xmlns"))) {
+					log.debug("Found korrekt root!");
+					arg0.moveDown();
+				}
+				return arg0;
+			}
 
-            @Override
-            public String toXML(Object arg0) {
-                try {
-                    StringWriter w = new StringWriter();
-                    toXML(arg0, w);
-                    w.close();
-                    return w.getBuffer().toString();
-                } catch (IOException e) {
-                    throw new RuntimeException("Unhandled", e);
-                }
-            }
+			@Override
+			public String toXML(Object arg0) {
+				try {
+					StringWriter w = new StringWriter();
+					toXML(arg0, w);
+					w.close();
+					return w.getBuffer().toString();
+				} catch (IOException e) {
+					throw new RuntimeException("Unhandled", e);
+				}
+			}
 
-            @Override
-            public void toXML(Object arg0, OutputStream arg1) {
-                throw new NotImplementedYetException();
-            }
+			@Override
+			public void toXML(Object arg0, OutputStream arg1) {
+				throw new NotImplementedYetException();
+			}
 
-            @Override
-            public void toXML(Object arg0, Writer arg1) {
-                try {
-                    arg1.write("<?xml version='1.0'?>\n<");
-                    arg1.write(rootElem);
-                    arg1.write(" xmlns='");
-                    arg1.write(rootNS);
-                    arg1.write("'>\n");
-                    super.toXML(arg0, arg1);
-                    arg1.write("<");
-                    arg1.write(rootElem);
-                    arg1.write(">");
-                } catch (IOException e) {
-                    throw new RuntimeException("Unhandled", e);
-                }
-            }
+			@Override
+			public void toXML(Object arg0, Writer arg1) {
+				try {
+					arg1.write("<?xml version='1.0'?>\n<");
+					arg1.write(rootElem);
+					arg1.write(" xmlns='");
+					arg1.write(rootNS);
+					arg1.write("'>\n");
+					super.toXML(arg0, arg1);
+					arg1.write("<");
+					arg1.write(rootElem);
+					arg1.write(">");
+				} catch (IOException e) {
+					throw new RuntimeException("Unhandled", e);
+				}
+			}
 
-            @Override
-            public Object unmarshal(HierarchicalStreamReader arg0) {
-                return super.unmarshal(checkRoot(arg0));
-            }
+			@Override
+			public Object unmarshal(HierarchicalStreamReader arg0) {
+				return super.unmarshal(checkRoot(arg0));
+			}
 
-            @Override
-            public Object unmarshal(HierarchicalStreamReader arg0, Object arg1) {
-                return super.unmarshal(checkRoot(arg0), arg1);
-            }
+			@Override
+			public Object unmarshal(HierarchicalStreamReader arg0, Object arg1) {
+				return super.unmarshal(checkRoot(arg0), arg1);
+			}
 
-            @Override
-            public Object unmarshal(HierarchicalStreamReader arg0, Object arg1,
-                    DataHolder arg2) {
-                return super.unmarshal(checkRoot(arg0), arg1, arg2);
-            }
-        };
-        assertEquals(
-                "Hello, world",
-                xs
-                        .fromXML("<?xml version='1.0'?>\n<wrap xmlns='mynamespace'><string>Hello, world</string></wrap>"));
+			@Override
+			public Object unmarshal(HierarchicalStreamReader arg0, Object arg1,
+					DataHolder arg2) {
+				return super.unmarshal(checkRoot(arg0), arg1, arg2);
+			}
+		};
+		assertEquals(
+				"Hello, world",
+				xs
+						.fromXML("<?xml version='1.0'?>\n<wrap xmlns='mynamespace'><string>Hello, world</string></wrap>"));
 
-        assertEquals("<?xml version='1.0'?>\n" + "<wrap xmlns='mynamespace'>\n"
-                + "<string>Hallo, Welt!</string><wrap>", xs
-                .toXML("Hallo, Welt!"));
+		assertEquals("<?xml version='1.0'?>\n" + "<wrap xmlns='mynamespace'>\n"
+				+ "<string>Hallo, Welt!</string><wrap>", xs
+				.toXML("Hallo, Welt!"));
 
-        assertEquals("Hallo, Welt!!", xs.fromXML(xs.toXML("Hallo, Welt!!")));
-    }
+		assertEquals("Hallo, Welt!!", xs.fromXML(xs.toXML("Hallo, Welt!!")));
+	}
 }

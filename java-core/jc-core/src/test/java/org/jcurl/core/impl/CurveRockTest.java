@@ -28,20 +28,21 @@ import org.jcurl.math.Polynome;
 
 public class CurveRockTest extends TestCase {
 
-    public void testStill() {
-        final CurveRock<Pos> a = new CurveRockAnalytic<Pos>(new Polynome[] {
-                new Polynome(new double[] { 0 }),
-                new Polynome(new double[] { 2 }),
-                new Polynome(new double[] { Math.PI }) });
-        final CurveRock<Pos> b = CurveStill.newInstance(0, 2, Math.PI);
-        final Rock<Pos> ra = new RockDouble<Pos>();
-        final Rock<Pos> rb = new RockDouble<Pos>();
-        for (int c = 0; c < 3; c++)
-            for (double t = -10; t <= 10; t += 0.1) {
-                for (int dim = 0; dim < 3; dim++)
-                    assertEquals("c=" + c + " dim=" + dim + " t=" + t, a.at(
-                            dim, c, t), b.at(dim, c, t), 1e-9);
-                assertEquals(a.at(0, t, ra).toString(), b.at(0, t, rb).toString());
-            }
-    }
+	public void testStill() {
+		final CurveRock<Pos> a = new CurveRockAnalytic<Pos>(new Polynome[] {
+				new Polynome(new double[] { 0 }),
+				new Polynome(new double[] { 2 }),
+				new Polynome(new double[] { Math.PI }) });
+		final CurveRock<Pos> b = CurveStill.newInstance(0, 2, Math.PI);
+		final Rock<Pos> ra = new RockDouble<Pos>();
+		final Rock<Pos> rb = new RockDouble<Pos>();
+		for (int c = 0; c < 3; c++)
+			for (double t = -10; t <= 10; t += 0.1) {
+				for (int dim = 0; dim < 3; dim++)
+					assertEquals("c=" + c + " dim=" + dim + " t=" + t, a.at(
+							dim, c, t), b.at(dim, c, t), 1e-9);
+				assertEquals(a.at(0, t, ra).toString(), b.at(0, t, rb)
+						.toString());
+			}
+	}
 }

@@ -39,92 +39,92 @@ import org.jcurl.core.api.Unit;
 import org.jcurl.core.log.JCLoggerFactory;
 
 public class BroomPanel0 extends JPanel implements ChangeListener,
-        ActionListener, PropertyChangeListener {
+		ActionListener, PropertyChangeListener {
 
-    private static final Log log = JCLoggerFactory.getLogger(BroomPanel0.class);
+	private static final Log log = JCLoggerFactory.getLogger(BroomPanel0.class);
 
-    private static final long serialVersionUID = 9008976409239381440L;
+	private static final long serialVersionUID = 9008976409239381440L;
 
-    private final Unit dim = Unit.FOOT;
+	private final Unit dim = Unit.FOOT;
 
-    private final int Granularity = 1000;
+	private final int Granularity = 1000;
 
-    private final Model model;
+	private final Model model;
 
-    private final JSlider slider;
+	private final JSlider slider;
 
-    private final JTextField text;
+	private final JTextField text;
 
-    public BroomPanel0() {
-        this(null);
-    }
+	public BroomPanel0() {
+		this(null);
+	}
 
-    public BroomPanel0(final Model m) {
-        model = m == null ? new Model() : m;
-        model.addPropertyChangeListener(this);
-        setVisible(false);
-        setLayout(new BorderLayout());
+	public BroomPanel0(final Model m) {
+		model = m == null ? new Model() : m;
+		model.addPropertyChangeListener(this);
+		setVisible(false);
+		setLayout(new BorderLayout());
 
-        final JLabel label;
-        this.add(label = new JLabel(), "North");
-        label.setText("Broom");
-        label.setHorizontalAlignment(SwingConstants.CENTER);
+		final JLabel label;
+		this.add(label = new JLabel(), "North");
+		label.setText("Broom");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
 
-        this.add(slider = new JSlider(), "Center");
-        slider.setOrientation(SwingConstants.VERTICAL);
+		this.add(slider = new JSlider(), "Center");
+		slider.setOrientation(SwingConstants.VERTICAL);
 
-        final int max = (int) (new Measure(IceSize.SIDE_2_CENTER, Unit.METER)
-                .to(dim).value * Granularity);
-        slider.setMaximum((int) (Granularity * Math.ceil((double) max
-                / Granularity)));
-        // slider.setMaximum(2500);
-        slider.setMinimum(-slider.getMaximum());
-        slider.setMajorTickSpacing(Granularity);
-        slider.setMinorTickSpacing(Granularity / 10);
-        slider.setAlignmentX(10);
-        slider.setPaintLabels(true);
-        slider.setPaintTicks(true);
-        slider.setPaintTrack(true);
-        slider.addChangeListener(this);
+		final int max = (int) (new Measure(IceSize.SIDE_2_CENTER, Unit.METER)
+				.to(dim).value * Granularity);
+		slider.setMaximum((int) (Granularity * Math.ceil((double) max
+				/ Granularity)));
+		// slider.setMaximum(2500);
+		slider.setMinimum(-slider.getMaximum());
+		slider.setMajorTickSpacing(Granularity);
+		slider.setMinorTickSpacing(Granularity / 10);
+		slider.setAlignmentX(10);
+		slider.setPaintLabels(true);
+		slider.setPaintTicks(true);
+		slider.setPaintTrack(true);
+		slider.addChangeListener(this);
 
-        this.add(text = new JTextField(), "South");
-        text.setHorizontalAlignment(SwingConstants.CENTER);
-        text.setEditable(true);
-        text.addActionListener(this);
-        text.selectAll();
+		this.add(text = new JTextField(), "South");
+		text.setHorizontalAlignment(SwingConstants.CENTER);
+		text.setEditable(true);
+		text.addActionListener(this);
+		text.selectAll();
 
-        this.setSize(50, 100);
-        model.setBroomX(new Measure(0, dim));
-        setVisible(true);
-    }
+		this.setSize(50, 100);
+		model.setBroomX(new Measure(0, dim));
+		setVisible(true);
+	}
 
-    public void actionPerformed(final ActionEvent arg0) {
-        if (arg0.getSource() == text)
-            try {
-                model.setBroomX(Measure.parse(text.getText()));
-            } catch (final NumberFormatException e) {
-                ;// model. setBroomX(getBroomX());
-            }
-    }
+	public void actionPerformed(final ActionEvent arg0) {
+		if (arg0.getSource() == text)
+			try {
+				model.setBroomX(Measure.parse(text.getText()));
+			} catch (final NumberFormatException e) {
+				;// model. setBroomX(getBroomX());
+			}
+	}
 
-    public void propertyChange(final PropertyChangeEvent arg0) {
-        log.debug(arg0);
-        if (model == arg0.getSource())
-            if ("broomX".equals(arg0.getPropertyName())) {
-                final Measure raw = (Measure) arg0.getNewValue();
-                final Measure val;
-                if (raw.unit == Unit.NONE)
-                    val = new Measure(raw.value, dim);
-                else
-                    val = raw.to(dim);
-                slider.setValue((int) (val.value * Granularity));
-                text.setText(val.toString());
-            }
-    }
+	public void propertyChange(final PropertyChangeEvent arg0) {
+		log.debug(arg0);
+		if (model == arg0.getSource())
+			if ("broomX".equals(arg0.getPropertyName())) {
+				final Measure raw = (Measure) arg0.getNewValue();
+				final Measure val;
+				if (raw.unit == Unit.NONE)
+					val = new Measure(raw.value, dim);
+				else
+					val = raw.to(dim);
+				slider.setValue((int) (val.value * Granularity));
+				text.setText(val.toString());
+			}
+	}
 
-    public void stateChanged(final ChangeEvent arg0) {
-        if (arg0.getSource() == slider)
-            model.setBroomX(new Measure((double) slider.getValue()
-                    / Granularity, dim));
-    }
+	public void stateChanged(final ChangeEvent arg0) {
+		if (arg0.getSource() == slider)
+			model.setBroomX(new Measure((double) slider.getValue()
+					/ Granularity, dim));
+	}
 }

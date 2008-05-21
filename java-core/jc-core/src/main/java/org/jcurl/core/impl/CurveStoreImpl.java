@@ -55,7 +55,8 @@ public class CurveStoreImpl extends MutableObject implements Serializable,
 	 * 
 	 * @param stopper
 	 *            May be <code>null</code> for no stop detection.
-	 * @param capacity usually {@link RockSet#ROCKS_PER_SET}
+	 * @param capacity
+	 *            usually {@link RockSet#ROCKS_PER_SET}
 	 */
 	public CurveStoreImpl(final StopDetector stopper, final int capacity) {
 		this.stopper = stopper;

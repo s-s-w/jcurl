@@ -17,7 +17,7 @@
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.jcurl.demo.tactics;
+package org.jcurl.demo.tactics.old;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -32,22 +32,8 @@ import junit.framework.TestCase;
  */
 public class ActionHelperTest extends TestCase {
 
-	public void testGetMnemonic() {
-		ActionRegistry ah = ActionRegistry.getInstance();
-		assertEquals(Character.valueOf('S'), ah.findMnemonic("&Save"));
-		assertEquals(Character.valueOf('S'), ah.findMnemonic("&& &Save"));
-		assertEquals(Character.valueOf('S'), ah.findMnemonic("&Save &&"));
-	}
-
-	public void testGetName() {
-		ActionRegistry ah = ActionRegistry.getInstance();
-		assertEquals("Save", ah.stripMnemonic("&Save"));
-		assertEquals("& Save", ah.stripMnemonic("&& &Save"));
-		assertEquals("Save &", ah.stripMnemonic("&Save &&"));
-	}
-
 	public void testAccelerator() {
-		ActionRegistry ah = ActionRegistry.getInstance();
+		final ActionRegistry ah = ActionRegistry.getInstance();
 
 		// swing-like:
 		assertEquals(KeyStroke.getKeyStroke('S', InputEvent.CTRL_MASK), ah
@@ -68,7 +54,22 @@ public class ActionHelperTest extends TestCase {
 				InputEvent.CTRL_MASK), ah.findAccelerator("CTRL-PGUP"));
 		assertEquals(KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN,
 				InputEvent.CTRL_MASK), ah.findAccelerator("CTRL-PGDN"));
-		assertEquals(KeyStroke.getKeyStroke(KeyEvent.VK_F4,
-				InputEvent.ALT_MASK), ah.findAccelerator("ALT-F4"));
+		assertEquals(KeyStroke
+				.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_MASK), ah
+				.findAccelerator("ALT-F4"));
+	}
+
+	public void testGetMnemonic() {
+		final ActionRegistry ah = ActionRegistry.getInstance();
+		assertEquals(Character.valueOf('S'), ah.findMnemonic("&Save"));
+		assertEquals(Character.valueOf('S'), ah.findMnemonic("&& &Save"));
+		assertEquals(Character.valueOf('S'), ah.findMnemonic("&Save &&"));
+	}
+
+	public void testGetName() {
+		final ActionRegistry ah = ActionRegistry.getInstance();
+		assertEquals("Save", ah.stripMnemonic("&Save"));
+		assertEquals("& Save", ah.stripMnemonic("&& &Save"));
+		assertEquals("Save &", ah.stripMnemonic("&Save &&"));
 	}
 }

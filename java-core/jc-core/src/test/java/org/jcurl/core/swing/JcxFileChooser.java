@@ -25,29 +25,29 @@ import javax.swing.filechooser.FileFilter;
 
 class JcxFileChooser extends JFileChooser {
 
-    private static final long serialVersionUID = -1903818463336848079L;
+	private static final long serialVersionUID = -1903818463336848079L;
 
-    public JcxFileChooser() {
-        this(null);
-    }
+	public JcxFileChooser() {
+		this(null);
+	}
 
-    public JcxFileChooser(final File currentFile) {
-        super(currentFile == null ? new File(".") : currentFile);
-        setMultiSelectionEnabled(false);
-        setAcceptAllFileFilterUsed(true);
-        setFileFilter(new FileFilter() {
-            @Override
-            public boolean accept(final File f) {
-                if (f == null)
-                    return false;
-                return f.isDirectory() || f.getName().endsWith(".jcx")
-                        || f.getName().endsWith(".jcz");
-            }
+	public JcxFileChooser(final File currentFile) {
+		super(currentFile == null ? new File(".") : currentFile);
+		setMultiSelectionEnabled(false);
+		setAcceptAllFileFilterUsed(true);
+		setFileFilter(new FileFilter() {
+			@Override
+			public boolean accept(final File f) {
+				if (f == null)
+					return false;
+				return f.isDirectory() || f.getName().endsWith(".jcx")
+						|| f.getName().endsWith(".jcz");
+			}
 
-            @Override
-            public String getDescription() {
-                return "JCurl Setup Files (.jcx) (.jcz)";
-            }
-        });
-    }
+			@Override
+			public String getDescription() {
+				return "JCurl Setup Files (.jcx) (.jcz)";
+			}
+		});
+	}
 }

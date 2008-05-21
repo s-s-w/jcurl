@@ -23,16 +23,17 @@ import java.util.Map.Entry;
 import junit.framework.TestCase;
 
 public class CurveCombinedTest extends TestCase {
-    public void testIterator() {
-        final CurveCombined<R1RNFunction> cc = new CurveCombined<R1RNFunction>(1);
-        cc.add(0, new Polynome(new double[] { 0 }), true);
-        cc.add(1, new Polynome(new double[] { 1 }), true);
-        cc.add(2, new Polynome(new double[] { 2 }), true);
+	public void testIterator() {
+		final CurveCombined<R1RNFunction> cc = new CurveCombined<R1RNFunction>(
+				1);
+		cc.add(0, new Polynome(new double[] { 0 }), true);
+		cc.add(1, new Polynome(new double[] { 1 }), true);
+		cc.add(2, new Polynome(new double[] { 2 }), true);
 
-        int i = 0;
-        for (final Entry<Double, R1RNFunction> element : cc) {
-            System.out.println(element);
-            i++;
-        }
-    }
+		int i = 0;
+		for (final Entry<Double, R1RNFunction> element : cc) {
+			System.out.println(element);
+			i++;
+		}
+	}
 }

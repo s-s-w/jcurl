@@ -1,6 +1,6 @@
 // XMLWriter.java - serialize an XML document.
 // Written by David Megginson, david@megginson.com
-// NO WARRANTY!  This class is in the public domain.
+// NO WARRANTY! This class is in the public domain.
 
 // $Id:XMLWriter.java 378 2007-01-24 01:18:35Z mrohrmoser $
 
@@ -272,975 +272,975 @@ import org.xml.sax.helpers.XMLFilterImpl;
  */
 class XMLWriter extends XMLFilterImpl {
 
-    // //////////////////////////////////////////////////////////////////
-    // Constructors.
-    // //////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////
+	// Constructors.
+	// //////////////////////////////////////////////////////////////////
 
-    private Hashtable doneDeclTable;
+	private Hashtable doneDeclTable;
 
-    private int elementLevel = 0;
+	private int elementLevel = 0;
 
-    private final Attributes EMPTY_ATTS = new AttributesImpl();
+	private final Attributes EMPTY_ATTS = new AttributesImpl();
 
-    private Hashtable forcedDeclTable;
+	private Hashtable forcedDeclTable;
 
-    private NamespaceSupport nsSupport;
+	private NamespaceSupport nsSupport;
 
-    // //////////////////////////////////////////////////////////////////
-    // Public methods.
-    // //////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////
+	// Public methods.
+	// //////////////////////////////////////////////////////////////////
 
-    private Writer output;
+	private Writer output;
 
-    private int prefixCounter = 0;
+	private int prefixCounter = 0;
 
-    private Hashtable prefixTable;
+	private Hashtable prefixTable;
 
-    /**
-     * Create a new XML writer.
-     * 
-     * <p>
-     * Write to standard output.
-     * </p>
-     */
-    public XMLWriter() {
-        init(null);
-    }
+	/**
+	 * Create a new XML writer.
+	 * 
+	 * <p>
+	 * Write to standard output.
+	 * </p>
+	 */
+	public XMLWriter() {
+		init(null);
+	}
 
-    /**
-     * Create a new XML writer.
-     * 
-     * <p>
-     * Write to the writer provided.
-     * </p>
-     * 
-     * @param writer
-     *            The output destination, or null to use standard output.
-     */
-    public XMLWriter(final Writer writer) {
-        init(writer);
-    }
+	/**
+	 * Create a new XML writer.
+	 * 
+	 * <p>
+	 * Write to the writer provided.
+	 * </p>
+	 * 
+	 * @param writer
+	 *            The output destination, or null to use standard output.
+	 */
+	public XMLWriter(final Writer writer) {
+		init(writer);
+	}
 
-    /**
-     * Create a new XML writer.
-     * 
-     * <p>
-     * Use the specified XML reader as the parent.
-     * </p>
-     * 
-     * @param xmlreader
-     *            The parent in the filter chain, or null for no parent.
-     */
-    public XMLWriter(final XMLReader xmlreader) {
-        super(xmlreader);
-        init(null);
-    }
+	/**
+	 * Create a new XML writer.
+	 * 
+	 * <p>
+	 * Use the specified XML reader as the parent.
+	 * </p>
+	 * 
+	 * @param xmlreader
+	 *            The parent in the filter chain, or null for no parent.
+	 */
+	public XMLWriter(final XMLReader xmlreader) {
+		super(xmlreader);
+		init(null);
+	}
 
-    /**
-     * Create a new XML writer.
-     * 
-     * <p>
-     * Use the specified XML reader as the parent, and write to the specified
-     * writer.
-     * </p>
-     * 
-     * @param xmlreader
-     *            The parent in the filter chain, or null for no parent.
-     * @param writer
-     *            The output destination, or null to use standard output.
-     */
-    public XMLWriter(final XMLReader xmlreader, final Writer writer) {
-        super(xmlreader);
-        init(writer);
-    }
+	/**
+	 * Create a new XML writer.
+	 * 
+	 * <p>
+	 * Use the specified XML reader as the parent, and write to the specified
+	 * writer.
+	 * </p>
+	 * 
+	 * @param xmlreader
+	 *            The parent in the filter chain, or null for no parent.
+	 * @param writer
+	 *            The output destination, or null to use standard output.
+	 */
+	public XMLWriter(final XMLReader xmlreader, final Writer writer) {
+		super(xmlreader);
+		init(writer);
+	}
 
-    // //////////////////////////////////////////////////////////////////
-    // Methods from org.xml.sax.ContentHandler.
-    // //////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////
+	// Methods from org.xml.sax.ContentHandler.
+	// //////////////////////////////////////////////////////////////////
 
-    /**
-     * Write character data.
-     * 
-     * Pass the event on down the filter chain for further processing.
-     * 
-     * @param ch
-     *            The array of characters to write.
-     * @param start
-     *            The starting position in the array.
-     * @param len
-     *            The number of characters to write.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the characters, or if a
-     *                handler further down the filter chain raises an exception.
-     * @see org.xml.sax.ContentHandler#characters
-     */
-    @Override
-    public void characters(final char ch[], final int start, final int len)
-            throws SAXException {
-        writeEsc(ch, start, len, false);
-        super.characters(ch, start, len);
-    }
+	/**
+	 * Write character data.
+	 * 
+	 * Pass the event on down the filter chain for further processing.
+	 * 
+	 * @param ch
+	 *            The array of characters to write.
+	 * @param start
+	 *            The starting position in the array.
+	 * @param len
+	 *            The number of characters to write.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the characters, or if a
+	 *                handler further down the filter chain raises an exception.
+	 * @see org.xml.sax.ContentHandler#characters
+	 */
+	@Override
+	public void characters(final char ch[], final int start, final int len)
+			throws SAXException {
+		writeEsc(ch, start, len, false);
+		super.characters(ch, start, len);
+	}
 
-    /**
-     * Write a string of character data, with XML escaping.
-     * 
-     * <p>
-     * This is a convenience method that takes an XML String, converts it to a
-     * character array, then invokes {@link #characters(char[], int, int)}.
-     * </p>
-     * 
-     * @param data
-     *            The character data.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the string, or if a handler
-     *                further down the filter chain raises an exception.
-     * @see #characters(char[], int, int)
-     */
-    public void characters(final String data) throws SAXException {
-        final char ch[] = data.toCharArray();
-        this.characters(ch, 0, ch.length);
-    }
+	/**
+	 * Write a string of character data, with XML escaping.
+	 * 
+	 * <p>
+	 * This is a convenience method that takes an XML String, converts it to a
+	 * character array, then invokes {@link #characters(char[], int, int)}.
+	 * </p>
+	 * 
+	 * @param data
+	 *            The character data.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the string, or if a handler
+	 *                further down the filter chain raises an exception.
+	 * @see #characters(char[], int, int)
+	 */
+	public void characters(final String data) throws SAXException {
+		final char ch[] = data.toCharArray();
+		this.characters(ch, 0, ch.length);
+	}
 
-    /**
-     * Write an element with character data content but no attributes or
-     * Namespace URI.
-     * 
-     * <p>
-     * This is a convenience method to write a complete element with character
-     * data content, including the start tag and end tag. The method provides an
-     * empty string for the Namespace URI, and empty string for the qualified
-     * name, and an empty attribute list.
-     * </p>
-     * 
-     * <p>
-     * This method invokes
-     * {@link #startElement(String, String, String, Attributes)}, followed by
-     * {@link #characters(String)}, followed by
-     * {@link #endElement(String, String, String)}.
-     * </p>
-     * 
-     * @param localName
-     *            The element's local name.
-     * @param content
-     *            The character data content.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the empty tag, or if a
-     *                handler further down the filter chain raises an exception.
-     * @see #startElement(String, String, String, Attributes)
-     * @see #characters(String)
-     * @see #endElement(String, String, String)
-     */
-    public void dataElement(final String localName, final String content)
-            throws SAXException {
-        this.dataElement("", localName, "", EMPTY_ATTS, content);
-    }
+	/**
+	 * Write an element with character data content but no attributes or
+	 * Namespace URI.
+	 * 
+	 * <p>
+	 * This is a convenience method to write a complete element with character
+	 * data content, including the start tag and end tag. The method provides an
+	 * empty string for the Namespace URI, and empty string for the qualified
+	 * name, and an empty attribute list.
+	 * </p>
+	 * 
+	 * <p>
+	 * This method invokes
+	 * {@link #startElement(String, String, String, Attributes)}, followed by
+	 * {@link #characters(String)}, followed by
+	 * {@link #endElement(String, String, String)}.
+	 * </p>
+	 * 
+	 * @param localName
+	 *            The element's local name.
+	 * @param content
+	 *            The character data content.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the empty tag, or if a
+	 *                handler further down the filter chain raises an exception.
+	 * @see #startElement(String, String, String, Attributes)
+	 * @see #characters(String)
+	 * @see #endElement(String, String, String)
+	 */
+	public void dataElement(final String localName, final String content)
+			throws SAXException {
+		this.dataElement("", localName, "", EMPTY_ATTS, content);
+	}
 
-    /**
-     * Write an element with character data content but no attributes.
-     * 
-     * <p>
-     * This is a convenience method to write a complete element with character
-     * data content, including the start tag and end tag. This method provides
-     * an empty string for the qname and an empty attribute list.
-     * </p>
-     * 
-     * <p>
-     * This method invokes
-     * {@link #startElement(String, String, String, Attributes)}, followed by
-     * {@link #characters(String)}, followed by
-     * {@link #endElement(String, String, String)}.
-     * </p>
-     * 
-     * @param uri
-     *            The element's Namespace URI.
-     * @param localName
-     *            The element's local name.
-     * @param content
-     *            The character data content.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the empty tag, or if a
-     *                handler further down the filter chain raises an exception.
-     * @see #startElement(String, String, String, Attributes)
-     * @see #characters(String)
-     * @see #endElement(String, String, String)
-     */
-    public void dataElement(final String uri, final String localName,
-            final String content) throws SAXException {
-        this.dataElement(uri, localName, "", EMPTY_ATTS, content);
-    }
+	/**
+	 * Write an element with character data content but no attributes.
+	 * 
+	 * <p>
+	 * This is a convenience method to write a complete element with character
+	 * data content, including the start tag and end tag. This method provides
+	 * an empty string for the qname and an empty attribute list.
+	 * </p>
+	 * 
+	 * <p>
+	 * This method invokes
+	 * {@link #startElement(String, String, String, Attributes)}, followed by
+	 * {@link #characters(String)}, followed by
+	 * {@link #endElement(String, String, String)}.
+	 * </p>
+	 * 
+	 * @param uri
+	 *            The element's Namespace URI.
+	 * @param localName
+	 *            The element's local name.
+	 * @param content
+	 *            The character data content.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the empty tag, or if a
+	 *                handler further down the filter chain raises an exception.
+	 * @see #startElement(String, String, String, Attributes)
+	 * @see #characters(String)
+	 * @see #endElement(String, String, String)
+	 */
+	public void dataElement(final String uri, final String localName,
+			final String content) throws SAXException {
+		this.dataElement(uri, localName, "", EMPTY_ATTS, content);
+	}
 
-    /**
-     * Write an element with character data content.
-     * 
-     * <p>
-     * This is a convenience method to write a complete element with character
-     * data content, including the start tag and end tag.
-     * </p>
-     * 
-     * <p>
-     * This method invokes
-     * {@link #startElement(String, String, String, Attributes)}, followed by
-     * {@link #characters(String)}, followed by
-     * {@link #endElement(String, String, String)}.
-     * </p>
-     * 
-     * @param uri
-     *            The element's Namespace URI.
-     * @param localName
-     *            The element's local name.
-     * @param qName
-     *            The element's default qualified name.
-     * @param atts
-     *            The element's attributes.
-     * @param content
-     *            The character data content.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the empty tag, or if a
-     *                handler further down the filter chain raises an exception.
-     * @see #startElement(String, String, String, Attributes)
-     * @see #characters(String)
-     * @see #endElement(String, String, String)
-     */
-    public void dataElement(final String uri, final String localName,
-            final String qName, final Attributes atts, final String content)
-            throws SAXException {
-        this.startElement(uri, localName, qName, atts);
-        this.characters(content);
-        this.endElement(uri, localName, qName);
-    }
+	/**
+	 * Write an element with character data content.
+	 * 
+	 * <p>
+	 * This is a convenience method to write a complete element with character
+	 * data content, including the start tag and end tag.
+	 * </p>
+	 * 
+	 * <p>
+	 * This method invokes
+	 * {@link #startElement(String, String, String, Attributes)}, followed by
+	 * {@link #characters(String)}, followed by
+	 * {@link #endElement(String, String, String)}.
+	 * </p>
+	 * 
+	 * @param uri
+	 *            The element's Namespace URI.
+	 * @param localName
+	 *            The element's local name.
+	 * @param qName
+	 *            The element's default qualified name.
+	 * @param atts
+	 *            The element's attributes.
+	 * @param content
+	 *            The character data content.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the empty tag, or if a
+	 *                handler further down the filter chain raises an exception.
+	 * @see #startElement(String, String, String, Attributes)
+	 * @see #characters(String)
+	 * @see #endElement(String, String, String)
+	 */
+	public void dataElement(final String uri, final String localName,
+			final String qName, final Attributes atts, final String content)
+			throws SAXException {
+		this.startElement(uri, localName, qName, atts);
+		this.characters(content);
+		this.endElement(uri, localName, qName);
+	}
 
-    /**
-     * Determine the prefix for an element or attribute name.
-     * 
-     * TODO: this method probably needs some cleanup.
-     * 
-     * @param uri
-     *            The Namespace URI.
-     * @param qName
-     *            The qualified name (optional); this will be used to indicate
-     *            the preferred prefix if none is currently bound.
-     * @param isElement
-     *            true if this is an element name, false if it is an attribute
-     *            name (which cannot use the default Namespace).
-     * @return ???
-     */
-    private String doPrefix(final String uri, final String qName,
-            boolean isElement) {
-        final String defaultNS = nsSupport.getURI("");
-        if ("".equals(uri)) {
-            if (isElement && defaultNS != null)
-                nsSupport.declarePrefix("", "");
-            return null;
-        }
-        String prefix;
-        if (isElement && defaultNS != null && uri.equals(defaultNS))
-            prefix = "";
-        else
-            prefix = nsSupport.getPrefix(uri);
-        if (prefix != null)
-            return prefix;
-        prefix = (String) doneDeclTable.get(uri);
-        if (prefix != null
-                && ((!isElement || defaultNS != null) && "".equals(prefix) || nsSupport
-                        .getURI(prefix) != null))
-            prefix = null;
-        if (prefix == null) {
-            prefix = (String) prefixTable.get(uri);
-            if (prefix != null
-                    && ((!isElement || defaultNS != null) && "".equals(prefix) || nsSupport
-                            .getURI(prefix) != null))
-                prefix = null;
-        }
-        if (prefix == null && qName != null && !"".equals(qName)) {
-            final int i = qName.indexOf(':');
-            if (i == -1) {
-                if (isElement && defaultNS == null)
-                    prefix = "";
-            } else
-                prefix = qName.substring(0, i);
-        }
-        for (; prefix == null || nsSupport.getURI(prefix) != null; prefix = "__NS"
-                + ++prefixCounter)
-            ;
-        nsSupport.declarePrefix(prefix, uri);
-        doneDeclTable.put(uri, prefix);
-        return prefix;
-    }
+	/**
+	 * Determine the prefix for an element or attribute name.
+	 * 
+	 * TODO: this method probably needs some cleanup.
+	 * 
+	 * @param uri
+	 *            The Namespace URI.
+	 * @param qName
+	 *            The qualified name (optional); this will be used to indicate
+	 *            the preferred prefix if none is currently bound.
+	 * @param isElement
+	 *            true if this is an element name, false if it is an attribute
+	 *            name (which cannot use the default Namespace).
+	 * @return ???
+	 */
+	private String doPrefix(final String uri, final String qName,
+			boolean isElement) {
+		final String defaultNS = nsSupport.getURI("");
+		if ("".equals(uri)) {
+			if (isElement && defaultNS != null)
+				nsSupport.declarePrefix("", "");
+			return null;
+		}
+		String prefix;
+		if (isElement && defaultNS != null && uri.equals(defaultNS))
+			prefix = "";
+		else
+			prefix = nsSupport.getPrefix(uri);
+		if (prefix != null)
+			return prefix;
+		prefix = (String) doneDeclTable.get(uri);
+		if (prefix != null
+				&& ((!isElement || defaultNS != null) && "".equals(prefix) || nsSupport
+						.getURI(prefix) != null))
+			prefix = null;
+		if (prefix == null) {
+			prefix = (String) prefixTable.get(uri);
+			if (prefix != null
+					&& ((!isElement || defaultNS != null) && "".equals(prefix) || nsSupport
+							.getURI(prefix) != null))
+				prefix = null;
+		}
+		if (prefix == null && qName != null && !"".equals(qName)) {
+			final int i = qName.indexOf(':');
+			if (i == -1) {
+				if (isElement && defaultNS == null)
+					prefix = "";
+			} else
+				prefix = qName.substring(0, i);
+		}
+		for (; prefix == null || nsSupport.getURI(prefix) != null; prefix = "__NS"
+				+ ++prefixCounter)
+			;
+		nsSupport.declarePrefix(prefix, uri);
+		doneDeclTable.put(uri, prefix);
+		return prefix;
+	}
 
-    /**
-     * Add an empty element without a Namespace URI, qname or attributes.
-     * 
-     * <p>
-     * This method will supply an empty string for the qname, and empty string
-     * for the Namespace URI, and an empty attribute list. It invokes
-     * {@link #emptyElement(String, String, String, Attributes)} directly.
-     * </p>
-     * 
-     * @param localName
-     *            The element's local name.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the empty tag, or if a
-     *                handler further down the filter chain raises an exception.
-     * @see #emptyElement(String, String, String, Attributes)
-     */
-    public void emptyElement(final String localName) throws SAXException {
-        this.emptyElement("", localName, "", EMPTY_ATTS);
-    }
+	/**
+	 * Add an empty element without a Namespace URI, qname or attributes.
+	 * 
+	 * <p>
+	 * This method will supply an empty string for the qname, and empty string
+	 * for the Namespace URI, and an empty attribute list. It invokes
+	 * {@link #emptyElement(String, String, String, Attributes)} directly.
+	 * </p>
+	 * 
+	 * @param localName
+	 *            The element's local name.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the empty tag, or if a
+	 *                handler further down the filter chain raises an exception.
+	 * @see #emptyElement(String, String, String, Attributes)
+	 */
+	public void emptyElement(final String localName) throws SAXException {
+		this.emptyElement("", localName, "", EMPTY_ATTS);
+	}
 
-    // //////////////////////////////////////////////////////////////////
-    // Additional markup.
-    // //////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////
+	// Additional markup.
+	// //////////////////////////////////////////////////////////////////
 
-    /**
-     * Add an empty element without a qname or attributes.
-     * 
-     * <p>
-     * This method will supply an empty string for the qname and an empty
-     * attribute list. It invokes
-     * {@link #emptyElement(String, String, String, Attributes)} directly.
-     * </p>
-     * 
-     * @param uri
-     *            The element's Namespace URI.
-     * @param localName
-     *            The element's local name.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the empty tag, or if a
-     *                handler further down the filter chain raises an exception.
-     * @see #emptyElement(String, String, String, Attributes)
-     */
-    public void emptyElement(final String uri, final String localName)
-            throws SAXException {
-        this.emptyElement(uri, localName, "", EMPTY_ATTS);
-    }
+	/**
+	 * Add an empty element without a qname or attributes.
+	 * 
+	 * <p>
+	 * This method will supply an empty string for the qname and an empty
+	 * attribute list. It invokes
+	 * {@link #emptyElement(String, String, String, Attributes)} directly.
+	 * </p>
+	 * 
+	 * @param uri
+	 *            The element's Namespace URI.
+	 * @param localName
+	 *            The element's local name.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the empty tag, or if a
+	 *                handler further down the filter chain raises an exception.
+	 * @see #emptyElement(String, String, String, Attributes)
+	 */
+	public void emptyElement(final String uri, final String localName)
+			throws SAXException {
+		this.emptyElement(uri, localName, "", EMPTY_ATTS);
+	}
 
-    // //////////////////////////////////////////////////////////////////
-    // Convenience methods.
-    // //////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////
+	// Convenience methods.
+	// //////////////////////////////////////////////////////////////////
 
-    /**
-     * Write an empty element.
-     * 
-     * This method writes an empty element tag rather than a start tag followed
-     * by an end tag. Both a {@link #startElement(String)} and an
-     * {@link #endElement(String) } event will be passed on down the filter
-     * chain.
-     * 
-     * @param uri
-     *            The element's Namespace URI, or the empty string if the
-     *            element has no Namespace or if Namespace processing is not
-     *            being performed.
-     * @param localName
-     *            The element's local name (without prefix). This parameter must
-     *            be provided.
-     * @param qName
-     *            The element's qualified name (with prefix), or the empty
-     *            string if none is available. This parameter is strictly
-     *            advisory: the writer may or may not use the prefix attached.
-     * @param atts
-     *            The element's attribute list.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the empty tag, or if a
-     *                handler further down the filter chain raises an exception.
-     * @see #startElement(String, String, String, Attributes)
-     * @see #endElement(String, String, String)
-     */
-    public void emptyElement(final String uri, final String localName,
-            final String qName, final Attributes atts) throws SAXException {
-        nsSupport.pushContext();
-        this.write('<');
-        writeName(uri, localName, qName, true);
-        writeAttributes(atts);
-        if (elementLevel == 1)
-            forceNSDecls();
-        writeNSDecls();
-        this.write("/>");
-        super.startElement(uri, localName, qName, atts);
-        super.endElement(uri, localName, qName);
-    }
+	/**
+	 * Write an empty element.
+	 * 
+	 * This method writes an empty element tag rather than a start tag followed
+	 * by an end tag. Both a {@link #startElement(String)} and an
+	 * {@link #endElement(String) } event will be passed on down the filter
+	 * chain.
+	 * 
+	 * @param uri
+	 *            The element's Namespace URI, or the empty string if the
+	 *            element has no Namespace or if Namespace processing is not
+	 *            being performed.
+	 * @param localName
+	 *            The element's local name (without prefix). This parameter must
+	 *            be provided.
+	 * @param qName
+	 *            The element's qualified name (with prefix), or the empty
+	 *            string if none is available. This parameter is strictly
+	 *            advisory: the writer may or may not use the prefix attached.
+	 * @param atts
+	 *            The element's attribute list.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the empty tag, or if a
+	 *                handler further down the filter chain raises an exception.
+	 * @see #startElement(String, String, String, Attributes)
+	 * @see #endElement(String, String, String)
+	 */
+	public void emptyElement(final String uri, final String localName,
+			final String qName, final Attributes atts) throws SAXException {
+		nsSupport.pushContext();
+		this.write('<');
+		writeName(uri, localName, qName, true);
+		writeAttributes(atts);
+		if (elementLevel == 1)
+			forceNSDecls();
+		writeNSDecls();
+		this.write("/>");
+		super.startElement(uri, localName, qName, atts);
+		super.endElement(uri, localName, qName);
+	}
 
-    /**
-     * Write a newline at the end of the document.
-     * 
-     * Pass the event on down the filter chain for further processing.
-     * 
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the newline, or if a handler
-     *                further down the filter chain raises an exception.
-     * @see org.xml.sax.ContentHandler#endDocument
-     */
-    @Override
-    public void endDocument() throws SAXException {
-        this.write('\n');
-        super.endDocument();
-        try {
-            flush();
-        } catch (final IOException e) {
-            throw new SAXException(e);
-        }
-    }
+	/**
+	 * Write a newline at the end of the document.
+	 * 
+	 * Pass the event on down the filter chain for further processing.
+	 * 
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the newline, or if a handler
+	 *                further down the filter chain raises an exception.
+	 * @see org.xml.sax.ContentHandler#endDocument
+	 */
+	@Override
+	public void endDocument() throws SAXException {
+		this.write('\n');
+		super.endDocument();
+		try {
+			flush();
+		} catch (final IOException e) {
+			throw new SAXException(e);
+		}
+	}
 
-    /**
-     * End an element without a Namespace URI or qname.
-     * 
-     * <p>
-     * This method will supply an empty string for the qName and an empty string
-     * for the Namespace URI. It invokes
-     * {@link #endElement(String, String, String)} directly.
-     * </p>
-     * 
-     * @param localName
-     *            The element's local name.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the end tag, or if a handler
-     *                further down the filter chain raises an exception.
-     * @see #endElement(String, String, String)
-     */
-    public void endElement(final String localName) throws SAXException {
-        this.endElement("", localName, "");
-    }
+	/**
+	 * End an element without a Namespace URI or qname.
+	 * 
+	 * <p>
+	 * This method will supply an empty string for the qName and an empty string
+	 * for the Namespace URI. It invokes
+	 * {@link #endElement(String, String, String)} directly.
+	 * </p>
+	 * 
+	 * @param localName
+	 *            The element's local name.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the end tag, or if a handler
+	 *                further down the filter chain raises an exception.
+	 * @see #endElement(String, String, String)
+	 */
+	public void endElement(final String localName) throws SAXException {
+		this.endElement("", localName, "");
+	}
 
-    /**
-     * End an element without a qname.
-     * 
-     * <p>
-     * This method will supply an empty string for the qName. It invokes
-     * {@link #endElement(String, String, String)} directly.
-     * </p>
-     * 
-     * @param uri
-     *            The element's Namespace URI.
-     * @param localName
-     *            The element's local name.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the end tag, or if a handler
-     *                further down the filter chain raises an exception.
-     * @see #endElement(String, String, String)
-     */
-    public void endElement(final String uri, final String localName)
-            throws SAXException {
-        this.endElement(uri, localName, "");
-    }
+	/**
+	 * End an element without a qname.
+	 * 
+	 * <p>
+	 * This method will supply an empty string for the qName. It invokes
+	 * {@link #endElement(String, String, String)} directly.
+	 * </p>
+	 * 
+	 * @param uri
+	 *            The element's Namespace URI.
+	 * @param localName
+	 *            The element's local name.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the end tag, or if a handler
+	 *                further down the filter chain raises an exception.
+	 * @see #endElement(String, String, String)
+	 */
+	public void endElement(final String uri, final String localName)
+			throws SAXException {
+		this.endElement(uri, localName, "");
+	}
 
-    /**
-     * Write an end tag.
-     * 
-     * Pass the event on down the filter chain for further processing.
-     * 
-     * @param uri
-     *            The Namespace URI, or the empty string if none is available.
-     * @param localName
-     *            The element's local (unprefixed) name (required).
-     * @param qName
-     *            The element's qualified (prefixed) name, or the empty string
-     *            is none is available. This method will use the qName as a
-     *            template for generating a prefix if necessary, but it is not
-     *            guaranteed to use the same qName.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the end tag, or if a handler
-     *                further down the filter chain raises an exception.
-     * @see org.xml.sax.ContentHandler#endElement
-     */
-    @Override
-    public void endElement(final String uri, final String localName,
-            final String qName) throws SAXException {
-        this.write("</");
-        writeName(uri, localName, qName, true);
-        this.write('>');
-        if (elementLevel == 1)
-            this.write('\n');
-        super.endElement(uri, localName, qName);
-        nsSupport.popContext();
-        elementLevel--;
-    }
+	/**
+	 * Write an end tag.
+	 * 
+	 * Pass the event on down the filter chain for further processing.
+	 * 
+	 * @param uri
+	 *            The Namespace URI, or the empty string if none is available.
+	 * @param localName
+	 *            The element's local (unprefixed) name (required).
+	 * @param qName
+	 *            The element's qualified (prefixed) name, or the empty string
+	 *            is none is available. This method will use the qName as a
+	 *            template for generating a prefix if necessary, but it is not
+	 *            guaranteed to use the same qName.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the end tag, or if a handler
+	 *                further down the filter chain raises an exception.
+	 * @see org.xml.sax.ContentHandler#endElement
+	 */
+	@Override
+	public void endElement(final String uri, final String localName,
+			final String qName) throws SAXException {
+		this.write("</");
+		writeName(uri, localName, qName, true);
+		this.write('>');
+		if (elementLevel == 1)
+			this.write('\n');
+		super.endElement(uri, localName, qName);
+		nsSupport.popContext();
+		elementLevel--;
+	}
 
-    /**
-     * Flush the output.
-     * 
-     * <p>
-     * This method flushes the output stream. It is especially useful when you
-     * need to make certain that the entire document has been written to output
-     * but do not want to close the output stream.
-     * </p>
-     * 
-     * <p>
-     * This method is invoked automatically by the
-     * {@link #endDocument endDocument} method after writing a document.
-     * </p>
-     * 
-     * @throws IOException
-     * @see #reset
-     */
-    public void flush() throws IOException {
-        output.flush();
-    }
+	/**
+	 * Flush the output.
+	 * 
+	 * <p>
+	 * This method flushes the output stream. It is especially useful when you
+	 * need to make certain that the entire document has been written to output
+	 * but do not want to close the output stream.
+	 * </p>
+	 * 
+	 * <p>
+	 * This method is invoked automatically by the
+	 * {@link #endDocument endDocument} method after writing a document.
+	 * </p>
+	 * 
+	 * @throws IOException
+	 * @see #reset
+	 */
+	public void flush() throws IOException {
+		output.flush();
+	}
 
-    /**
-     * Force a Namespace to be declared on the root element.
-     * 
-     * <p>
-     * By default, the XMLWriter will declare only the Namespaces needed for an
-     * element; as a result, a Namespace may be declared many places in a
-     * document if it is not used on the root element.
-     * </p>
-     * 
-     * <p>
-     * This method forces a Namespace to be declared on the root element even if
-     * it is not used there, and reduces the number of xmlns attributes in the
-     * document.
-     * </p>
-     * 
-     * @param uri
-     *            The Namespace URI to declare.
-     * @see #forceNSDecl(java.lang.String,java.lang.String)
-     * @see #setPrefix
-     */
-    public void forceNSDecl(final String uri) {
-        forcedDeclTable.put(uri, Boolean.TRUE);
-    }
+	/**
+	 * Force a Namespace to be declared on the root element.
+	 * 
+	 * <p>
+	 * By default, the XMLWriter will declare only the Namespaces needed for an
+	 * element; as a result, a Namespace may be declared many places in a
+	 * document if it is not used on the root element.
+	 * </p>
+	 * 
+	 * <p>
+	 * This method forces a Namespace to be declared on the root element even if
+	 * it is not used there, and reduces the number of xmlns attributes in the
+	 * document.
+	 * </p>
+	 * 
+	 * @param uri
+	 *            The Namespace URI to declare.
+	 * @see #forceNSDecl(java.lang.String,java.lang.String)
+	 * @see #setPrefix
+	 */
+	public void forceNSDecl(final String uri) {
+		forcedDeclTable.put(uri, Boolean.TRUE);
+	}
 
-    /**
-     * Force a Namespace declaration with a preferred prefix.
-     * 
-     * <p>
-     * This is a convenience method that invokes {@link #setPrefix setPrefix}
-     * then {@link #forceNSDecl(java.lang.String) forceNSDecl}.
-     * </p>
-     * 
-     * @param uri
-     *            The Namespace URI to declare on the root element.
-     * @param prefix
-     *            The preferred prefix for the Namespace, or "" for the default
-     *            Namespace.
-     * @see #setPrefix
-     * @see #forceNSDecl(java.lang.String)
-     */
-    public void forceNSDecl(final String uri, final String prefix) {
-        setPrefix(uri, prefix);
-        this.forceNSDecl(uri);
-    }
+	/**
+	 * Force a Namespace declaration with a preferred prefix.
+	 * 
+	 * <p>
+	 * This is a convenience method that invokes {@link #setPrefix setPrefix}
+	 * then {@link #forceNSDecl(java.lang.String) forceNSDecl}.
+	 * </p>
+	 * 
+	 * @param uri
+	 *            The Namespace URI to declare on the root element.
+	 * @param prefix
+	 *            The preferred prefix for the Namespace, or "" for the default
+	 *            Namespace.
+	 * @see #setPrefix
+	 * @see #forceNSDecl(java.lang.String)
+	 */
+	public void forceNSDecl(final String uri, final String prefix) {
+		setPrefix(uri, prefix);
+		this.forceNSDecl(uri);
+	}
 
-    /**
-     * Force all Namespaces to be declared.
-     * 
-     * This method is used on the root element to ensure that the predeclared
-     * Namespaces all appear.
-     */
-    private void forceNSDecls() {
-        final Enumeration prefixes = forcedDeclTable.keys();
-        while (prefixes.hasMoreElements()) {
-            final String prefix = (String) prefixes.nextElement();
-            doPrefix(prefix, null, true);
-        }
-    }
+	/**
+	 * Force all Namespaces to be declared.
+	 * 
+	 * This method is used on the root element to ensure that the predeclared
+	 * Namespaces all appear.
+	 */
+	private void forceNSDecls() {
+		final Enumeration prefixes = forcedDeclTable.keys();
+		while (prefixes.hasMoreElements()) {
+			final String prefix = (String) prefixes.nextElement();
+			doPrefix(prefix, null, true);
+		}
+	}
 
-    /**
-     * Get the current or preferred prefix for a Namespace URI.
-     * 
-     * @param uri
-     *            The Namespace URI.
-     * @return The preferred prefix, or "" for the default Namespace.
-     * @see #setPrefix
-     */
-    public String getPrefix(final String uri) {
-        return (String) prefixTable.get(uri);
-    }
+	/**
+	 * Get the current or preferred prefix for a Namespace URI.
+	 * 
+	 * @param uri
+	 *            The Namespace URI.
+	 * @return The preferred prefix, or "" for the default Namespace.
+	 * @see #setPrefix
+	 */
+	public String getPrefix(final String uri) {
+		return (String) prefixTable.get(uri);
+	}
 
-    // //////////////////////////////////////////////////////////////////
-    // Internal methods.
-    // //////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////
+	// Internal methods.
+	// //////////////////////////////////////////////////////////////////
 
-    /**
-     * Write ignorable whitespace.
-     * 
-     * Pass the event on down the filter chain for further processing.
-     * 
-     * @param ch
-     *            The array of characters to write.
-     * @param start
-     *            The starting position in the array.
-     * @param length
-     *            The number of characters to write.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the whitespace, or if a
-     *                handler further down the filter chain raises an exception.
-     * @see org.xml.sax.ContentHandler#ignorableWhitespace
-     */
-    @Override
-    public void ignorableWhitespace(final char ch[], final int start,
-            final int length) throws SAXException {
-        writeEsc(ch, start, length, false);
-        super.ignorableWhitespace(ch, start, length);
-    }
+	/**
+	 * Write ignorable whitespace.
+	 * 
+	 * Pass the event on down the filter chain for further processing.
+	 * 
+	 * @param ch
+	 *            The array of characters to write.
+	 * @param start
+	 *            The starting position in the array.
+	 * @param length
+	 *            The number of characters to write.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the whitespace, or if a
+	 *                handler further down the filter chain raises an exception.
+	 * @see org.xml.sax.ContentHandler#ignorableWhitespace
+	 */
+	@Override
+	public void ignorableWhitespace(final char ch[], final int start,
+			final int length) throws SAXException {
+		writeEsc(ch, start, length, false);
+		super.ignorableWhitespace(ch, start, length);
+	}
 
-    /**
-     * Internal initialization method.
-     * 
-     * <p>
-     * All of the public constructors invoke this method.
-     * 
-     * @param writer
-     *            The output destination, or null to use standard output.
-     */
-    private void init(final Writer writer) {
-        setOutput(writer);
-        nsSupport = new NamespaceSupport();
-        prefixTable = new Hashtable();
-        forcedDeclTable = new Hashtable();
-        doneDeclTable = new Hashtable();
-    }
+	/**
+	 * Internal initialization method.
+	 * 
+	 * <p>
+	 * All of the public constructors invoke this method.
+	 * 
+	 * @param writer
+	 *            The output destination, or null to use standard output.
+	 */
+	private void init(final Writer writer) {
+		setOutput(writer);
+		nsSupport = new NamespaceSupport();
+		prefixTable = new Hashtable();
+		forcedDeclTable = new Hashtable();
+		doneDeclTable = new Hashtable();
+	}
 
-    /**
-     * Write a processing instruction.
-     * 
-     * Pass the event on down the filter chain for further processing.
-     * 
-     * @param target
-     *            The PI target.
-     * @param data
-     *            The PI data.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the PI, or if a handler
-     *                further down the filter chain raises an exception.
-     * @see org.xml.sax.ContentHandler#processingInstruction
-     */
-    @Override
-    public void processingInstruction(final String target, final String data)
-            throws SAXException {
-        this.write("<?");
-        this.write(target);
-        this.write(' ');
-        this.write(data);
-        this.write("?>");
-        if (elementLevel < 1)
-            this.write('\n');
-        super.processingInstruction(target, data);
-    }
+	/**
+	 * Write a processing instruction.
+	 * 
+	 * Pass the event on down the filter chain for further processing.
+	 * 
+	 * @param target
+	 *            The PI target.
+	 * @param data
+	 *            The PI data.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the PI, or if a handler
+	 *                further down the filter chain raises an exception.
+	 * @see org.xml.sax.ContentHandler#processingInstruction
+	 */
+	@Override
+	public void processingInstruction(final String target, final String data)
+			throws SAXException {
+		this.write("<?");
+		this.write(target);
+		this.write(' ');
+		this.write(data);
+		this.write("?>");
+		if (elementLevel < 1)
+			this.write('\n');
+		super.processingInstruction(target, data);
+	}
 
-    /**
-     * Reset the writer.
-     * 
-     * <p>
-     * This method is especially useful if the writer throws an exception before
-     * it is finished, and you want to reuse the writer for a new document. It
-     * is usually a good idea to invoke {@link #flush flush} before resetting
-     * the writer, to make sure that no output is lost.
-     * </p>
-     * 
-     * <p>
-     * This method is invoked automatically by the
-     * {@link #startDocument startDocument} method before writing a new
-     * document.
-     * </p>
-     * 
-     * <p>
-     * <strong>Note:</strong> this method will <em>not</em> clear the prefix
-     * or URI information in the writer or the selected output writer.
-     * </p>
-     * 
-     * @see #flush
-     */
-    public void reset() {
-        elementLevel = 0;
-        prefixCounter = 0;
-        nsSupport.reset();
-    }
+	/**
+	 * Reset the writer.
+	 * 
+	 * <p>
+	 * This method is especially useful if the writer throws an exception before
+	 * it is finished, and you want to reuse the writer for a new document. It
+	 * is usually a good idea to invoke {@link #flush flush} before resetting
+	 * the writer, to make sure that no output is lost.
+	 * </p>
+	 * 
+	 * <p>
+	 * This method is invoked automatically by the
+	 * {@link #startDocument startDocument} method before writing a new
+	 * document.
+	 * </p>
+	 * 
+	 * <p>
+	 * <strong>Note:</strong> this method will <em>not</em> clear the prefix
+	 * or URI information in the writer or the selected output writer.
+	 * </p>
+	 * 
+	 * @see #flush
+	 */
+	public void reset() {
+		elementLevel = 0;
+		prefixCounter = 0;
+		nsSupport.reset();
+	}
 
-    /**
-     * Set a new output destination for the document.
-     * 
-     * @param writer
-     *            The output destination, or null to use standard output.
-     * @see #flush
-     */
-    public void setOutput(final Writer writer) {
-        if (writer == null)
-            output = new OutputStreamWriter(System.out);
-        else
-            output = writer;
-    }
+	/**
+	 * Set a new output destination for the document.
+	 * 
+	 * @param writer
+	 *            The output destination, or null to use standard output.
+	 * @see #flush
+	 */
+	public void setOutput(final Writer writer) {
+		if (writer == null)
+			output = new OutputStreamWriter(System.out);
+		else
+			output = writer;
+	}
 
-    /**
-     * Specify a preferred prefix for a Namespace URI.
-     * 
-     * <p>
-     * Note that this method does not actually force the Namespace to be
-     * declared; to do that, use the {@link  #forceNSDecl(java.lang.String)
-     * forceNSDecl} method as well.
-     * </p>
-     * 
-     * @param uri
-     *            The Namespace URI.
-     * @param prefix
-     *            The preferred prefix, or "" to select the default Namespace.
-     * @see #getPrefix
-     * @see #forceNSDecl(java.lang.String)
-     * @see #forceNSDecl(java.lang.String,java.lang.String)
-     */
-    public void setPrefix(final String uri, final String prefix) {
-        prefixTable.put(uri, prefix);
-    }
+	/**
+	 * Specify a preferred prefix for a Namespace URI.
+	 * 
+	 * <p>
+	 * Note that this method does not actually force the Namespace to be
+	 * declared; to do that, use the {@link  #forceNSDecl(java.lang.String)
+	 * forceNSDecl} method as well.
+	 * </p>
+	 * 
+	 * @param uri
+	 *            The Namespace URI.
+	 * @param prefix
+	 *            The preferred prefix, or "" to select the default Namespace.
+	 * @see #getPrefix
+	 * @see #forceNSDecl(java.lang.String)
+	 * @see #forceNSDecl(java.lang.String,java.lang.String)
+	 */
+	public void setPrefix(final String uri, final String prefix) {
+		prefixTable.put(uri, prefix);
+	}
 
-    /**
-     * Write the XML declaration at the beginning of the document.
-     * 
-     * Pass the event on down the filter chain for further processing.
-     * 
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the XML declaration, or if a
-     *                handler further down the filter chain raises an exception.
-     * @see org.xml.sax.ContentHandler#startDocument
-     */
-    @Override
-    public void startDocument() throws SAXException {
-        reset();
-        this.write("<?xml version=\"1.0\" standalone=\"yes\"?>\n\n");
-        super.startDocument();
-    }
+	/**
+	 * Write the XML declaration at the beginning of the document.
+	 * 
+	 * Pass the event on down the filter chain for further processing.
+	 * 
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the XML declaration, or if a
+	 *                handler further down the filter chain raises an exception.
+	 * @see org.xml.sax.ContentHandler#startDocument
+	 */
+	@Override
+	public void startDocument() throws SAXException {
+		reset();
+		this.write("<?xml version=\"1.0\" standalone=\"yes\"?>\n\n");
+		super.startDocument();
+	}
 
-    /**
-     * Start a new element without a qname, attributes or a Namespace URI.
-     * 
-     * <p>
-     * This method will provide an empty string for the Namespace URI, and empty
-     * string for the qualified name, and a default empty attribute list. It
-     * invokes #startElement(String, String, String, Attributes)} directly.
-     * </p>
-     * 
-     * @param localName
-     *            The element's local name.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the start tag, or if a
-     *                handler further down the filter chain raises an exception.
-     * @see #startElement(String, String, String, Attributes)
-     */
-    public void startElement(final String localName) throws SAXException {
-        this.startElement("", localName, "", EMPTY_ATTS);
-    }
+	/**
+	 * Start a new element without a qname, attributes or a Namespace URI.
+	 * 
+	 * <p>
+	 * This method will provide an empty string for the Namespace URI, and empty
+	 * string for the qualified name, and a default empty attribute list. It
+	 * invokes #startElement(String, String, String, Attributes)} directly.
+	 * </p>
+	 * 
+	 * @param localName
+	 *            The element's local name.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the start tag, or if a
+	 *                handler further down the filter chain raises an exception.
+	 * @see #startElement(String, String, String, Attributes)
+	 */
+	public void startElement(final String localName) throws SAXException {
+		this.startElement("", localName, "", EMPTY_ATTS);
+	}
 
-    // //////////////////////////////////////////////////////////////////
-    // Constants.
-    // //////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////
+	// Constants.
+	// //////////////////////////////////////////////////////////////////
 
-    /**
-     * Start a new element without a qname or attributes.
-     * 
-     * <p>
-     * This method will provide a default empty attribute list and an empty
-     * string for the qualified name. It invokes {@link  #startElement(String,
-     * String, String, Attributes)} directly.
-     * </p>
-     * 
-     * @param uri
-     *            The element's Namespace URI.
-     * @param localName
-     *            The element's local name.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the start tag, or if a
-     *                handler further down the filter chain raises an exception.
-     * @see #startElement(String, String, String, Attributes)
-     */
-    public void startElement(final String uri, final String localName)
-            throws SAXException {
-        this.startElement(uri, localName, "", EMPTY_ATTS);
-    }
+	/**
+	 * Start a new element without a qname or attributes.
+	 * 
+	 * <p>
+	 * This method will provide a default empty attribute list and an empty
+	 * string for the qualified name. It invokes {@link  #startElement(String,
+	 * String, String, Attributes)} directly.
+	 * </p>
+	 * 
+	 * @param uri
+	 *            The element's Namespace URI.
+	 * @param localName
+	 *            The element's local name.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the start tag, or if a
+	 *                handler further down the filter chain raises an exception.
+	 * @see #startElement(String, String, String, Attributes)
+	 */
+	public void startElement(final String uri, final String localName)
+			throws SAXException {
+		this.startElement(uri, localName, "", EMPTY_ATTS);
+	}
 
-    // //////////////////////////////////////////////////////////////////
-    // Internal state.
-    // //////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////
+	// Internal state.
+	// //////////////////////////////////////////////////////////////////
 
-    /**
-     * Write a start tag.
-     * 
-     * Pass the event on down the filter chain for further processing.
-     * 
-     * @param uri
-     *            The Namespace URI, or the empty string if none is available.
-     * @param localName
-     *            The element's local (unprefixed) name (required).
-     * @param qName
-     *            The element's qualified (prefixed) name, or the empty string
-     *            is none is available. This method will use the qName as a
-     *            template for generating a prefix if necessary, but it is not
-     *            guaranteed to use the same qName.
-     * @param atts
-     *            The element's attribute list (must not be null).
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the start tag, or if a
-     *                handler further down the filter chain raises an exception.
-     * @see org.xml.sax.ContentHandler#startElement
-     */
-    @Override
-    public void startElement(final String uri, final String localName,
-            final String qName, final Attributes atts) throws SAXException {
-        elementLevel++;
-        nsSupport.pushContext();
-        this.write('<');
-        writeName(uri, localName, qName, true);
-        writeAttributes(atts);
-        if (elementLevel == 1)
-            forceNSDecls();
-        writeNSDecls();
-        this.write('>');
-        super.startElement(uri, localName, qName, atts);
-    }
+	/**
+	 * Write a start tag.
+	 * 
+	 * Pass the event on down the filter chain for further processing.
+	 * 
+	 * @param uri
+	 *            The Namespace URI, or the empty string if none is available.
+	 * @param localName
+	 *            The element's local (unprefixed) name (required).
+	 * @param qName
+	 *            The element's qualified (prefixed) name, or the empty string
+	 *            is none is available. This method will use the qName as a
+	 *            template for generating a prefix if necessary, but it is not
+	 *            guaranteed to use the same qName.
+	 * @param atts
+	 *            The element's attribute list (must not be null).
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the start tag, or if a
+	 *                handler further down the filter chain raises an exception.
+	 * @see org.xml.sax.ContentHandler#startElement
+	 */
+	@Override
+	public void startElement(final String uri, final String localName,
+			final String qName, final Attributes atts) throws SAXException {
+		elementLevel++;
+		nsSupport.pushContext();
+		this.write('<');
+		writeName(uri, localName, qName, true);
+		writeAttributes(atts);
+		if (elementLevel == 1)
+			forceNSDecls();
+		writeNSDecls();
+		this.write('>');
+		super.startElement(uri, localName, qName, atts);
+	}
 
-    /**
-     * Write a raw character.
-     * 
-     * @param c
-     *            The character to write.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the character, this method
-     *                will throw an IOException wrapped in a SAXException.
-     */
-    private void write(final char c) throws SAXException {
-        try {
-            output.write(c);
-        } catch (final IOException e) {
-            throw new SAXException(e);
-        }
-    }
+	/**
+	 * Write a raw character.
+	 * 
+	 * @param c
+	 *            The character to write.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the character, this method
+	 *                will throw an IOException wrapped in a SAXException.
+	 */
+	private void write(final char c) throws SAXException {
+		try {
+			output.write(c);
+		} catch (final IOException e) {
+			throw new SAXException(e);
+		}
+	}
 
-    /**
-     * Write a raw string.
-     * 
-     * @param s
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the string, this method will
-     *                throw an IOException wrapped in a SAXException
-     */
-    private void write(final String s) throws SAXException {
-        try {
-            output.write(s);
-        } catch (final IOException e) {
-            throw new SAXException(e);
-        }
-    }
+	/**
+	 * Write a raw string.
+	 * 
+	 * @param s
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the string, this method will
+	 *                throw an IOException wrapped in a SAXException
+	 */
+	private void write(final String s) throws SAXException {
+		try {
+			output.write(s);
+		} catch (final IOException e) {
+			throw new SAXException(e);
+		}
+	}
 
-    /**
-     * Write out an attribute list, escaping values.
-     * 
-     * The names will have prefixes added to them.
-     * 
-     * @param atts
-     *            The attribute list to write.
-     * @exception SAXException
-     *                If there is an error writing the attribute list, this
-     *                method will throw an IOException wrapped in a
-     *                SAXException.
-     */
-    private void writeAttributes(final Attributes atts) throws SAXException {
-        final int len = atts.getLength();
-        for (int i = 0; i < len; i++) {
-            final char ch[] = atts.getValue(i).toCharArray();
-            this.write(' ');
-            writeName(atts.getURI(i), atts.getLocalName(i), atts.getQName(i),
-                    false);
-            this.write("=\"");
-            writeEsc(ch, 0, ch.length, true);
-            this.write('"');
-        }
-    }
+	/**
+	 * Write out an attribute list, escaping values.
+	 * 
+	 * The names will have prefixes added to them.
+	 * 
+	 * @param atts
+	 *            The attribute list to write.
+	 * @exception SAXException
+	 *                If there is an error writing the attribute list, this
+	 *                method will throw an IOException wrapped in a
+	 *                SAXException.
+	 */
+	private void writeAttributes(final Attributes atts) throws SAXException {
+		final int len = atts.getLength();
+		for (int i = 0; i < len; i++) {
+			final char ch[] = atts.getValue(i).toCharArray();
+			this.write(' ');
+			writeName(atts.getURI(i), atts.getLocalName(i), atts.getQName(i),
+					false);
+			this.write("=\"");
+			writeEsc(ch, 0, ch.length, true);
+			this.write('"');
+		}
+	}
 
-    /**
-     * Write an array of data characters with escaping.
-     * 
-     * @param ch
-     *            The array of characters.
-     * @param start
-     *            The starting position.
-     * @param length
-     *            The number of characters to use.
-     * @param isAttVal
-     *            true if this is an attribute value literal.
-     * @exception SAXException
-     *                If there is an error writing the characters, this method
-     *                will throw an IOException wrapped in a SAXException.
-     */
-    private void writeEsc(final char ch[], final int start, final int length,
-            final boolean isAttVal) throws SAXException {
-        for (int i = start; i < start + length; i++)
-            switch (ch[i]) {
-            case '&':
-                this.write("&amp;");
-                break;
-            case '<':
-                this.write("&lt;");
-                break;
-            case '>':
-                this.write("&gt;");
-                break;
-            case '\"':
-                if (isAttVal)
-                    this.write("&quot;");
-                else
-                    this.write('\"');
-                break;
-            default:
-                if (ch[i] > '\u007f') {
-                    this.write("&#");
-                    this.write(Integer.toString(ch[i]));
-                    this.write(';');
-                } else
-                    this.write(ch[i]);
-            }
-    }
+	/**
+	 * Write an array of data characters with escaping.
+	 * 
+	 * @param ch
+	 *            The array of characters.
+	 * @param start
+	 *            The starting position.
+	 * @param length
+	 *            The number of characters to use.
+	 * @param isAttVal
+	 *            true if this is an attribute value literal.
+	 * @exception SAXException
+	 *                If there is an error writing the characters, this method
+	 *                will throw an IOException wrapped in a SAXException.
+	 */
+	private void writeEsc(final char ch[], final int start, final int length,
+			final boolean isAttVal) throws SAXException {
+		for (int i = start; i < start + length; i++)
+			switch (ch[i]) {
+			case '&':
+				this.write("&amp;");
+				break;
+			case '<':
+				this.write("&lt;");
+				break;
+			case '>':
+				this.write("&gt;");
+				break;
+			case '\"':
+				if (isAttVal)
+					this.write("&quot;");
+				else
+					this.write('\"');
+				break;
+			default:
+				if (ch[i] > '\u007f') {
+					this.write("&#");
+					this.write(Integer.toString(ch[i]));
+					this.write(';');
+				} else
+					this.write(ch[i]);
+			}
+	}
 
-    /**
-     * Write an element or attribute name.
-     * 
-     * @param uri
-     *            The Namespace URI.
-     * @param localName
-     *            The local name.
-     * @param qName
-     *            The prefixed name, if available, or the empty string.
-     * @param isElement
-     *            true if this is an element name, false if it is an attribute
-     *            name.
-     * @exception org.xml.sax.SAXException
-     *                This method will throw an IOException wrapped in a
-     *                SAXException if there is an error writing the name.
-     */
-    private void writeName(final String uri, final String localName,
-            final String qName, final boolean isElement) throws SAXException {
-        final String prefix = doPrefix(uri, qName, isElement);
-        if (prefix != null && !"".equals(prefix)) {
-            this.write(prefix);
-            this.write(':');
-        }
-        this.write(localName);
-    }
+	/**
+	 * Write an element or attribute name.
+	 * 
+	 * @param uri
+	 *            The Namespace URI.
+	 * @param localName
+	 *            The local name.
+	 * @param qName
+	 *            The prefixed name, if available, or the empty string.
+	 * @param isElement
+	 *            true if this is an element name, false if it is an attribute
+	 *            name.
+	 * @exception org.xml.sax.SAXException
+	 *                This method will throw an IOException wrapped in a
+	 *                SAXException if there is an error writing the name.
+	 */
+	private void writeName(final String uri, final String localName,
+			final String qName, final boolean isElement) throws SAXException {
+		final String prefix = doPrefix(uri, qName, isElement);
+		if (prefix != null && !"".equals(prefix)) {
+			this.write(prefix);
+			this.write(':');
+		}
+		this.write(localName);
+	}
 
-    /**
-     * Write out the list of Namespace declarations.
-     * 
-     * @exception org.xml.sax.SAXException
-     *                This method will throw an IOException wrapped in a
-     *                SAXException if there is an error writing the Namespace
-     *                declarations.
-     */
-    private void writeNSDecls() throws SAXException {
-        final Enumeration prefixes = nsSupport.getDeclaredPrefixes();
-        while (prefixes.hasMoreElements()) {
-            final String prefix = (String) prefixes.nextElement();
-            String uri = nsSupport.getURI(prefix);
-            if (uri == null)
-                uri = "";
-            final char ch[] = uri.toCharArray();
-            this.write(' ');
-            if ("".equals(prefix))
-                this.write("xmlns=\"");
-            else {
-                this.write("xmlns:");
-                this.write(prefix);
-                this.write("=\"");
-            }
-            writeEsc(ch, 0, ch.length, true);
-            this.write('\"');
-        }
-    }
+	/**
+	 * Write out the list of Namespace declarations.
+	 * 
+	 * @exception org.xml.sax.SAXException
+	 *                This method will throw an IOException wrapped in a
+	 *                SAXException if there is an error writing the Namespace
+	 *                declarations.
+	 */
+	private void writeNSDecls() throws SAXException {
+		final Enumeration prefixes = nsSupport.getDeclaredPrefixes();
+		while (prefixes.hasMoreElements()) {
+			final String prefix = (String) prefixes.nextElement();
+			String uri = nsSupport.getURI(prefix);
+			if (uri == null)
+				uri = "";
+			final char ch[] = uri.toCharArray();
+			this.write(' ');
+			if ("".equals(prefix))
+				this.write("xmlns=\"");
+			else {
+				this.write("xmlns:");
+				this.write(prefix);
+				this.write("=\"");
+			}
+			writeEsc(ch, 0, ch.length, true);
+			this.write('\"');
+		}
+	}
 
 }
 

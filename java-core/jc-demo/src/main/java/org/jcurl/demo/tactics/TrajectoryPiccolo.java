@@ -36,7 +36,7 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PInputEventListener;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
-class TrajectoryPiccolo extends JComponent implements Zoomable,
+public class TrajectoryPiccolo extends JComponent implements Zoomable,
 		TrajectoryDisplay {
 	class Controller implements PropertyChangeListener, ChangeListener {
 		final PInputEventListener keyZoom;

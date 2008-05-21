@@ -25,26 +25,26 @@ import javax.swing.filechooser.FileFilter;
 
 class PngFileChooser extends JFileChooser {
 
-    private static final long serialVersionUID = 400354997568206163L;
+	private static final long serialVersionUID = 400354997568206163L;
 
-    public PngFileChooser(final File currentFile) {
-        super(currentFile == null ? new File(".")
-                : currentFile.isDirectory() ? currentFile : currentFile
-                        .getParentFile());
-        setMultiSelectionEnabled(false);
-        setAcceptAllFileFilterUsed(true);
-        setFileFilter(new FileFilter() {
-            @Override
-            public boolean accept(final File f) {
-                if (f == null)
-                    return false;
-                return f.isDirectory() || f.getName().endsWith(".png");
-            }
+	public PngFileChooser(final File currentFile) {
+		super(currentFile == null ? new File(".")
+				: currentFile.isDirectory() ? currentFile : currentFile
+						.getParentFile());
+		setMultiSelectionEnabled(false);
+		setAcceptAllFileFilterUsed(true);
+		setFileFilter(new FileFilter() {
+			@Override
+			public boolean accept(final File f) {
+				if (f == null)
+					return false;
+				return f.isDirectory() || f.getName().endsWith(".png");
+			}
 
-            @Override
-            public String getDescription() {
-                return "Portable Network Graphics (.png)";
-            }
-        });
-    }
+			@Override
+			public String getDescription() {
+				return "Portable Network Graphics (.png)";
+			}
+		});
+	}
 }

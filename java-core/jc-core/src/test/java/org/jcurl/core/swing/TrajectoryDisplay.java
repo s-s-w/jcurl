@@ -266,18 +266,6 @@ class TrajectoryDisplay extends WCComponent implements ChangeListener {
 	}
 
 	/**
-	 * Property (rocks) changed.
-	 * 
-	 * @param evt
-	 * @see #setPos(TrajectorySet)
-	 */
-	public void stateChanged(final ChangeEvent evt) {
-		final Object tmp = evt.getSource();
-		if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass()))
-			;// FIXME this.setPos((PositionSet) tmp);
-	}
-
-	/**
 	 * Updates the painter and triggers a {@link #repaint()}.
 	 * 
 	 * @param icePainter
@@ -326,5 +314,17 @@ class TrajectoryDisplay extends WCComponent implements ChangeListener {
 	public void setRockPainter(final RockPainter rockPainter) {
 		this.rockPainter = rockPainter;
 		this.repaint();
+	}
+
+	/**
+	 * Property (rocks) changed.
+	 * 
+	 * @param evt
+	 * @see #setPos(TrajectorySet)
+	 */
+	public void stateChanged(final ChangeEvent evt) {
+		final Object tmp = evt.getSource();
+		if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass()))
+			;// FIXME this.setPos((PositionSet) tmp);
 	}
 }

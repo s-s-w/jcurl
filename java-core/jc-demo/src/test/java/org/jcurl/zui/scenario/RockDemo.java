@@ -56,7 +56,7 @@ public class RockDemo {
 
 		// TODO
 		rock.setA(0);
-		
+
 		f.add(panel);
 		f.setSize(400, 800);
 		f.setVisible(true);

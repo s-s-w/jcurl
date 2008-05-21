@@ -26,37 +26,37 @@ import junit.framework.TestCase;
 
 public class MergedIteratorTest extends TestCase {
 
-    public void testNonEmpty() {
-        final Collection<Iterator<String>> c = new ArrayList<Iterator<String>>();
-        {
-            final Collection<String> a = new ArrayList<String>();
-            a.add("1");
-            a.add("3");
-            a.add("3");
-            a.add("5");
-            c.add(a.iterator());
+	public void testNonEmpty() {
+		final Collection<Iterator<String>> c = new ArrayList<Iterator<String>>();
+		{
+			final Collection<String> a = new ArrayList<String>();
+			a.add("1");
+			a.add("3");
+			a.add("3");
+			a.add("5");
+			c.add(a.iterator());
 
-            c.add(new ArrayList<String>().iterator());
+			c.add(new ArrayList<String>().iterator());
 
-            final Collection<String> b = new ArrayList<String>();
-            b.add("2");
-            b.add("3");
-            b.add("4");
-            c.add(b.iterator());
+			final Collection<String> b = new ArrayList<String>();
+			b.add("2");
+			b.add("3");
+			b.add("4");
+			c.add(b.iterator());
 
-            c.add(new ArrayList<String>().iterator());
-        }
-        final MergedIterator<String> it = new MergedIterator<String>(c);
-        assertTrue(it.hasNext());
-        assertEquals("1", it.next());
-        assertEquals("2", it.next());
-        assertEquals("3", it.next());
-        assertEquals("3", it.next());
-        assertEquals("3", it.next());
-        assertEquals("4", it.next());
-        assertEquals("5", it.next());
-        assertFalse(it.hasNext());
-        assertEquals(null, it.next());
-    }
+			c.add(new ArrayList<String>().iterator());
+		}
+		final MergedIterator<String> it = new MergedIterator<String>(c);
+		assertTrue(it.hasNext());
+		assertEquals("1", it.next());
+		assertEquals("2", it.next());
+		assertEquals("3", it.next());
+		assertEquals("3", it.next());
+		assertEquals("3", it.next());
+		assertEquals("4", it.next());
+		assertEquals("5", it.next());
+		assertFalse(it.hasNext());
+		assertEquals(null, it.next());
+	}
 
 }

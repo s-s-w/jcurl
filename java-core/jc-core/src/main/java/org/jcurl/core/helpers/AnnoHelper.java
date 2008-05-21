@@ -20,33 +20,33 @@ package org.jcurl.core.helpers;
 
 public interface AnnoHelper {
 
-    public static final CharSequence DarkCoachK = "org.jcurl.core.Dark.Coach";
+	public static final CharSequence DarkCoachK = "org.jcurl.core.Dark.Coach";
 
-    public static final CharSequence DarkLeadK = "org.jcurl.core.Dark.Lead";
+	public static final CharSequence DarkLeadK = "org.jcurl.core.Dark.Lead";
 
-    public static final CharSequence DarkSecondK = "org.jcurl.core.Dark.Second";
+	public static final CharSequence DarkSecondK = "org.jcurl.core.Dark.Second";
 
-    public static final CharSequence DarkSkipK = "org.jcurl.core.Dark.Skip";
+	public static final CharSequence DarkSkipK = "org.jcurl.core.Dark.Skip";
 
-    public static final CharSequence DarkTeamK = "org.jcurl.core.Dark.Team";
+	public static final CharSequence DarkTeamK = "org.jcurl.core.Dark.Team";
 
-    public static final CharSequence DarkThirdK = "org.jcurl.core.Dark.Third";
+	public static final CharSequence DarkThirdK = "org.jcurl.core.Dark.Third";
 
-    public static final CharSequence DateK = "org.jcurl.core.Date";
+	public static final CharSequence DateK = "org.jcurl.core.Date";
 
-    public static final CharSequence EndK = "org.jcurl.core.End";
+	public static final CharSequence EndK = "org.jcurl.core.End";
 
-    public static final CharSequence EventK = "org.jcurl.core.Event";
+	public static final CharSequence EventK = "org.jcurl.core.Event";
 
-    public static final CharSequence GameK = "org.jcurl.core.Game";
+	public static final CharSequence GameK = "org.jcurl.core.Game";
 
-    public static final CharSequence HammerK = "org.jcurl.core.Hammer";
+	public static final CharSequence HammerK = "org.jcurl.core.Hammer";
 
-    public static final CharSequence HammerVDark = "Dark";
+	public static final CharSequence HammerVDark = "Dark";
 
-    public static final CharSequence HammerVLight = "Light";
+	public static final CharSequence HammerVLight = "Light";
 
-    public static final CharSequence LightTeamK = "org.jcurl.core.Light.Team";
+	public static final CharSequence LightTeamK = "org.jcurl.core.Light.Team";
 
-    public static final CharSequence LocationK = "org.jcurl.core.Location";
+	public static final CharSequence LocationK = "org.jcurl.core.Location";
 }

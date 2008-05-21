@@ -47,173 +47,173 @@ import org.jcurl.core.log.JCLoggerFactory;
  */
 public class FileDialogService {
 
-    public interface Contents {
-        boolean canRead();
+	public interface Contents {
+		boolean canRead();
 
-        boolean canWrite();
+		boolean canWrite();
 
-        InputStream getInputStream();
+		InputStream getInputStream();
 
-        long getLength();
+		long getLength();
 
-        long getMaxLength();
+		long getMaxLength();
 
-        String getName();
+		String getName();
 
-        OutputStream getOutputStream(boolean overwrite);
+		OutputStream getOutputStream(boolean overwrite);
 
-        void setMaxLength(long maxLength);
-    }
+		void setMaxLength(long maxLength);
+	}
 
-    public static class ContentsBuffer implements Contents {
+	public static class ContentsBuffer implements Contents {
 
-        private final ByteArrayOutputStream bout = new ByteArrayOutputStream();
+		private final ByteArrayOutputStream bout = new ByteArrayOutputStream();
 
-        private final String name;
+		private final String name;
 
-        public ContentsBuffer(final String name, final byte[] file) {
-            try {
-                if (file != null)
-                    bout.write(file);
-            } catch (final IOException e) {
-                throw new RuntimeException("Unhandled", e);
-            }
-            this.name = name;
-        }
+		public ContentsBuffer(final String name, final byte[] file) {
+			try {
+				if (file != null)
+					bout.write(file);
+			} catch (final IOException e) {
+				throw new RuntimeException("Unhandled", e);
+			}
+			this.name = name;
+		}
 
-        public boolean canRead() {
-            return true;
-        }
+		public boolean canRead() {
+			return true;
+		}
 
-        public boolean canWrite() {
-            return true;
-        }
+		public boolean canWrite() {
+			return true;
+		}
 
-        public InputStream getInputStream() {
-            return new ByteArrayInputStream(bout.toByteArray());
-        }
+		public InputStream getInputStream() {
+			return new ByteArrayInputStream(bout.toByteArray());
+		}
 
-        public long getLength() {
-            return bout.size();
-        }
+		public long getLength() {
+			return bout.size();
+		}
 
-        public long getMaxLength() {
-            return Integer.MAX_VALUE;
-        }
+		public long getMaxLength() {
+			return Integer.MAX_VALUE;
+		}
 
-        public String getName() {
-            return name;
-        }
+		public String getName() {
+			return name;
+		}
 
-        public OutputStream getOutputStream(final boolean overwrite) {
-            return bout;
-        }
+		public OutputStream getOutputStream(final boolean overwrite) {
+			return bout;
+		}
 
-        public void setMaxLength(final long maxLength) {
-            // nop;
-        }
+		public void setMaxLength(final long maxLength) {
+		// nop;
+		}
 
-    }
+	}
 
-    public static class ContentsFile implements Contents {
+	public static class ContentsFile implements Contents {
 
-        private final File file;
+		private final File file;
 
-        public ContentsFile(final File file) {
-            this.file = file;
-        }
+		public ContentsFile(final File file) {
+			this.file = file;
+		}
 
-        public boolean canRead() {
-            return file.canRead();
-        }
+		public boolean canRead() {
+			return file.canRead();
+		}
 
-        public boolean canWrite() {
-            return file.canWrite();
-        }
+		public boolean canWrite() {
+			return file.canWrite();
+		}
 
-        public InputStream getInputStream() {
-            try {
-                return new FileInputStream(file);
-            } catch (final FileNotFoundException e) {
-                return null;
-            }
-        }
+		public InputStream getInputStream() {
+			try {
+				return new FileInputStream(file);
+			} catch (final FileNotFoundException e) {
+				return null;
+			}
+		}
 
-        public long getLength() {
-            return file.length();
-        }
+		public long getLength() {
+			return file.length();
+		}
 
-        public long getMaxLength() {
-            return Long.MAX_VALUE;
-        }
+		public long getMaxLength() {
+			return Long.MAX_VALUE;
+		}
 
-        public String getName() {
-            return file.getName();
-        }
+		public String getName() {
+			return file.getName();
+		}
 
-        public OutputStream getOutputStream(final boolean overwrite) {
-            try {
-                return new FileOutputStream(file);
-            } catch (final FileNotFoundException e) {
-                return null;
-            }
-        }
+		public OutputStream getOutputStream(final boolean overwrite) {
+			try {
+				return new FileOutputStream(file);
+			} catch (final FileNotFoundException e) {
+				return null;
+			}
+		}
 
-        public void setMaxLength(final long maxLength) {
-            // unused
-        }
+		public void setMaxLength(final long maxLength) {
+		// unused
+		}
 
-    }
+	}
 
-    interface OpenService {
-        Contents openFileDialog(String pathHint, String[] extensions,
-                Component parent);
-    }
+	interface OpenService {
+		Contents openFileDialog(String pathHint, String[] extensions,
+				Component parent);
+	}
 
-    interface SaveService {
-        Contents saveAsFileDialog(String pathHint, String[] extensions,
-                Contents contents, Component parent);
+	interface SaveService {
+		Contents saveAsFileDialog(String pathHint, String[] extensions,
+				Contents contents, Component parent);
 
-        Contents saveFileDialog(String pathHint, String[] extensions,
-                InputStream stream, String name, Component parent);
-    }
+		Contents saveFileDialog(String pathHint, String[] extensions,
+				InputStream stream, String name, Component parent);
+	}
 
-    private static final Log log = JCLoggerFactory
-            .getLogger(FileDialogService.class);
+	private static final Log log = JCLoggerFactory
+			.getLogger(FileDialogService.class);
 
-    private OpenService open;
+	private OpenService open;
 
-    private SaveService save;
+	private SaveService save;
 
-    public FileDialogService() {
-        try {
-            // http://java.sun.com/docs/books/tutorial/uiswing/components/examples/JWSFileChooserDemo.java
-            final FileDialogWebstart ws = new FileDialogWebstart();
-            open = ws;
-            save = ws;
-        } catch (final Exception e) {
-            log.debug("Failed to use Webstart File Services, I use Swing");
-            final FileDialogSwing ws = new FileDialogSwing();
-            open = ws;
-            save = ws;
-        }
+	public FileDialogService() {
+		try {
+			// http://java.sun.com/docs/books/tutorial/uiswing/components/examples/JWSFileChooserDemo.java
+			final FileDialogWebstart ws = new FileDialogWebstart();
+			open = ws;
+			save = ws;
+		} catch (final Exception e) {
+			log.debug("Failed to use Webstart File Services, I use Swing");
+			final FileDialogSwing ws = new FileDialogSwing();
+			open = ws;
+			save = ws;
+		}
 
-    }
+	}
 
-    public Contents openFileDialog(final String pathHint,
-            final String[] extensions, final Component parent) {
-        return open.openFileDialog(pathHint, extensions, parent);
-    }
+	public Contents openFileDialog(final String pathHint,
+			final String[] extensions, final Component parent) {
+		return open.openFileDialog(pathHint, extensions, parent);
+	}
 
-    public Contents saveAsFileDialog(final String pathHint,
-            final String[] extensions, final Contents contents,
-            final Component parent) {
-        return save.saveAsFileDialog(pathHint, extensions, contents, parent);
-    }
+	public Contents saveAsFileDialog(final String pathHint,
+			final String[] extensions, final Contents contents,
+			final Component parent) {
+		return save.saveAsFileDialog(pathHint, extensions, contents, parent);
+	}
 
-    public Contents saveFileDialog(final String pathHint,
-            final String[] extensions, final InputStream stream,
-            final String name, final Component parent) {
-        return save.saveFileDialog(pathHint, extensions, stream, name, parent);
-    }
+	public Contents saveFileDialog(final String pathHint,
+			final String[] extensions, final InputStream stream,
+			final String name, final Component parent) {
+		return save.saveFileDialog(pathHint, extensions, stream, name, parent);
+	}
 }

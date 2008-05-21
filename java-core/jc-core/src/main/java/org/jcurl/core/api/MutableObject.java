@@ -25,7 +25,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 
-
 /**
  * Base class for all mutable value Objects. Provides a generic toString and
  * means to notify others upon propery changes.
@@ -35,87 +34,43 @@ import java.lang.reflect.Field;
  * 
  */
 public abstract class MutableObject extends TransferObject implements
-        IPropertyChangeSupport {
-    /** Utility field used by bound properties. */
-    protected final transient PropertyChangeSupport propChange = new PropertyChangeSupport(
-            this);
+		IPropertyChangeSupport {
+	/** Utility field used by bound properties. */
+	protected final transient PropertyChangeSupport propChange = new PropertyChangeSupport(
+			this);
 
-    /**
-     * Creates a new instance of MutableObject
-     */
-    protected MutableObject() {
-    }
+	/**
+	 * Creates a new instance of MutableObject
+	 */
+	protected MutableObject() {}
 
-    /**
-     * Adds a PropertyChangeListener to the listener list.
-     * 
-     * @param listener
-     *            The listener to add.
-     */
-    public void addPropertyChangeListener(final PropertyChangeListener listener) {
-        propChange.addPropertyChangeListener(listener);
-    }
+	/**
+	 * Adds a PropertyChangeListener to the listener list.
+	 * 
+	 * @param listener
+	 *            The listener to add.
+	 */
+	public void addPropertyChangeListener(final PropertyChangeListener listener) {
+		propChange.addPropertyChangeListener(listener);
+	}
 
-    /**
-     * Adds a PropertyChangeListener to the listener list for a specific
-     * property.
-     * 
-     * @param property
-     *            The property to listen to.
-     * @param listener
-     *            The listener to add.
-     */
-    public void addPropertyChangeListener(final String property,
-            final PropertyChangeListener listener) {
-        propChange.addPropertyChangeListener(property, listener);
-    }
+	/**
+	 * Adds a PropertyChangeListener to the listener list for a specific
+	 * property.
+	 * 
+	 * @param property
+	 *            The property to listen to.
+	 * @param listener
+	 *            The listener to add.
+	 */
+	public void addPropertyChangeListener(final String property,
+			final PropertyChangeListener listener) {
+		propChange.addPropertyChangeListener(property, listener);
+	}
 
-    public void fireIndexedPropertyChange(final String property,
-            final int index, final Object old, final Object neo) {
-        propChange.fireIndexedPropertyChange(property, index, old, neo);
-    }
-
-    public void firePropertyChange(final PropertyChangeEvent event) {
-        propChange.firePropertyChange(event);
-    }
-
-    public void firePropertyChange(final String property, final Object old,
-            final Object neo) {
-        propChange.firePropertyChange(property, old, neo);
-    }
-
-    public PropertyChangeListener[] getPropertyChangeListeners() {
-        return propChange.getPropertyChangeListeners();
-    }
-
-    public PropertyChangeListener[] getPropertyChangeListeners(
-            final String property) {
-        return propChange.getPropertyChangeListeners(property);
-    }
-
-    public boolean hasListeners(final String property) {
-        return propChange.hasListeners(property);
-    }
-
-    /**
-     * Removes a PropertyChangeListener to the listener list.
-     */
-    public void removePropertyChangeListener(
-            final PropertyChangeListener listener) {
-        propChange.removePropertyChangeListener(listener);
-    }
-
-    /**
-     * Removes a PropertyChangeListener to the listener list for a specific
-     * property.
-     */
-    public void removePropertyChangeListener(final String property,
-            final PropertyChangeListener listener) {
-        propChange.removePropertyChangeListener(property, listener);
-    }
-
-    /** TUNE cache! */
-	protected PropertyDescriptor findPropertyDescriptor(final Class<?> bean, final String name) {
+	/** TUNE cache! */
+	protected PropertyDescriptor findPropertyDescriptor(final Class<?> bean,
+			final String name) {
 		try {
 			for (final PropertyDescriptor pd : Introspector.getBeanInfo(bean)
 					.getPropertyDescriptors())
@@ -128,21 +83,66 @@ public abstract class MutableObject extends TransferObject implements
 				+ "\" not found in class \"" + bean + "\"");
 	}
 
-	protected void updateProperty(final String name, final Object old, final Object neo) {
-		if (old == neo || (old != null && old.equals(neo)))
+	public void fireIndexedPropertyChange(final String property,
+			final int index, final Object old, final Object neo) {
+		propChange.fireIndexedPropertyChange(property, index, old, neo);
+	}
+
+	public void firePropertyChange(final PropertyChangeEvent event) {
+		propChange.firePropertyChange(event);
+	}
+
+	public void firePropertyChange(final String property, final Object old,
+			final Object neo) {
+		propChange.firePropertyChange(property, old, neo);
+	}
+
+	public PropertyChangeListener[] getPropertyChangeListeners() {
+		return propChange.getPropertyChangeListeners();
+	}
+
+	public PropertyChangeListener[] getPropertyChangeListeners(
+			final String property) {
+		return propChange.getPropertyChangeListeners(property);
+	}
+
+	public boolean hasListeners(final String property) {
+		return propChange.hasListeners(property);
+	}
+
+	/**
+	 * Removes a PropertyChangeListener to the listener list.
+	 */
+	public void removePropertyChangeListener(
+			final PropertyChangeListener listener) {
+		propChange.removePropertyChangeListener(listener);
+	}
+
+	/**
+	 * Removes a PropertyChangeListener to the listener list for a specific
+	 * property.
+	 */
+	public void removePropertyChangeListener(final String property,
+			final PropertyChangeListener listener) {
+		propChange.removePropertyChangeListener(property, listener);
+	}
+
+	protected void updateProperty(final String name, final Object old,
+			final Object neo) {
+		if (old == neo || old != null && old.equals(neo))
 			return;
 		try {
 			final Object[] args = { neo };
 			this.getClass().getField(name).set(this, args);
-//			findPropertyDescriptor(this.getClass(), name).setgetWriteMethod()
-//					.invoke(this, args);
+			// findPropertyDescriptor(this.getClass(), name).setgetWriteMethod()
+			// .invoke(this, args);
 			firePropertyChange(name, old, neo);
 		} catch (final IllegalAccessException e) {
 			throw new RuntimeException("Unhandled", e);
-		} catch (SecurityException e) {
+		} catch (final SecurityException e) {
 			throw new RuntimeException("Unhandled", e);
-		} catch (NoSuchFieldException e) {
-			for(Field f : this.getClass().getFields())
+		} catch (final NoSuchFieldException e) {
+			for (final Field f : this.getClass().getFields())
 				System.out.println(f.getName());
 			throw new RuntimeException("Unhandled", e);
 		}

@@ -26,62 +26,62 @@ import junit.framework.TestCase;
 
 public class FilterIteratorTest extends TestCase {
 
-    private static final class MyFilter<E> extends FilterIterator<E> {
-        protected MyFilter(final Iterator<E> base) {
-            super(base);
-        }
+	private static final class MyFilter<E> extends FilterIterator<E> {
+		protected MyFilter(final Iterator<E> base) {
+			super(base);
+		}
 
-        @Override
-        protected boolean matches(final E item) {
-            return "2".equals(item) || "4".equals(item);
-        }
-    }
+		@Override
+		protected boolean matches(final E item) {
+			return "2".equals(item) || "4".equals(item);
+		}
+	}
 
-    public void testEmpty() {
-        final Iterable<String> i = new ArrayList<String>();
-        Iterator<String> it = new MyFilter<String>(i.iterator());
-        assertFalse(it.hasNext());
-        assertNull(it.next());
+	public void testEmpty() {
+		final Iterable<String> i = new ArrayList<String>();
+		Iterator<String> it = new MyFilter<String>(i.iterator());
+		assertFalse(it.hasNext());
+		assertNull(it.next());
 
-        it = new MyFilter<String>(i.iterator());
-        assertNull(it.next());
-        assertFalse(it.hasNext());
-    }
+		it = new MyFilter<String>(i.iterator());
+		assertNull(it.next());
+		assertFalse(it.hasNext());
+	}
 
-    public void testFilteredEmpty() {
-        final Collection<String> i = new ArrayList<String>();
-        i.add("1");
-        i.add("3");
-        i.add("3");
-        i.add("5");
+	public void testFilteredEmpty() {
+		final Collection<String> i = new ArrayList<String>();
+		i.add("1");
+		i.add("3");
+		i.add("3");
+		i.add("5");
 
-        Iterator<String> it = new MyFilter<String>(i.iterator());
-        assertFalse(it.hasNext());
-        assertNull(it.next());
+		Iterator<String> it = new MyFilter<String>(i.iterator());
+		assertFalse(it.hasNext());
+		assertNull(it.next());
 
-        it = new MyFilter<String>(i.iterator());
-        assertNull(it.next());
-        assertFalse(it.hasNext());
-    }
-    
-    public void testNonEmpty() {
-        final Collection<String> i = new ArrayList<String>();
-        i.add("1");
-        i.add("2");
-        i.add("3");
-        i.add("3");
-        i.add("4");
-        i.add("4");
-        i.add("5");
+		it = new MyFilter<String>(i.iterator());
+		assertNull(it.next());
+		assertFalse(it.hasNext());
+	}
 
-        final Iterator<String> it = new MyFilter<String>(i.iterator());
-        assertTrue(it.hasNext());
-        assertEquals("2", it.next());
-        assertTrue(it.hasNext());
-        assertEquals("4", it.next());
-        assertTrue(it.hasNext());
-        assertEquals("4", it.next());
-        assertFalse(it.hasNext());
-        assertEquals(null, it.next());
-    }
+	public void testNonEmpty() {
+		final Collection<String> i = new ArrayList<String>();
+		i.add("1");
+		i.add("2");
+		i.add("3");
+		i.add("3");
+		i.add("4");
+		i.add("4");
+		i.add("5");
+
+		final Iterator<String> it = new MyFilter<String>(i.iterator());
+		assertTrue(it.hasNext());
+		assertEquals("2", it.next());
+		assertTrue(it.hasNext());
+		assertEquals("4", it.next());
+		assertTrue(it.hasNext());
+		assertEquals("4", it.next());
+		assertFalse(it.hasNext());
+		assertEquals(null, it.next());
+	}
 }

@@ -290,88 +290,104 @@ public class Graphics2DWrap extends Graphics2D {
 		dst.drawString(iterator, x, y);
 	}
 
+	@Override
 	public void drawString(final AttributedCharacterIterator iterator,
 			final int x, final int y) {
 		log.info("wrapped");
 		dst.drawString(iterator, x, y);
 	}
 
+	@Override
 	public void drawString(final String s, final float x, final float y) {
 		log.info("wrapped");
 		dst.drawString(s, x, y);
 	}
 
+	@Override
 	public void drawString(final String str, final int x, final int y) {
 		log.info("wrapped");
 		dst.drawString(str, x, y);
 	}
 
+	@Override
 	public boolean equals(final Object obj) {
 		log.info("wrapped");
 		return dst.equals(obj);
 	}
 
+	@Override
 	public void fill(final Shape s) {
 		log.info("wrapped");
 		dst.fill(s);
 	}
 
+	@Override
 	public void fill3DRect(final int x, final int y, final int width,
 			final int height, final boolean raised) {
 		log.info("wrapped");
 		dst.fill3DRect(x, y, width, height, raised);
 	}
 
+	@Override
 	public void fillArc(final int x, final int y, final int width,
 			final int height, final int startAngle, final int arcAngle) {
 		log.info("wrapped");
 		dst.fillArc(x, y, width, height, startAngle, arcAngle);
 	}
 
+	@Override
 	public void fillOval(final int x, final int y, final int width,
 			final int height) {
 		log.info("wrapped");
 		dst.fillOval(x, y, width, height);
 	}
 
+	@Override
 	public void fillPolygon(final int[] points, final int[] points2,
 			final int points3) {
 		log.info("wrapped");
 		dst.fillPolygon(points, points2, points3);
 	}
 
+	@Override
 	public void fillPolygon(final Polygon p) {
 		log.info("wrapped");
 		dst.fillPolygon(p);
 	}
 
+	@Override
 	public void fillRect(final int x, final int y, final int width,
 			final int height) {
 		log.info("wrapped");
 		dst.fillRect(x, y, width, height);
 	}
 
+	@Override
 	public void fillRoundRect(final int x, final int y, final int width,
 			final int height, final int arcWidth, final int arcHeight) {
 		log.info("wrapped");
 		dst.fillRoundRect(x, y, width, height, arcWidth, arcHeight);
 	}
 
+	@Override
 	public Color getBackground() {
 		log.info("wrapped");
 		return dst.getBackground();
 	}
 
+	@Override
 	public Shape getClip() {
 		log.info("wrapped");
 		return dst.getClip();
 	}
 
+	@Override
 	public Rectangle getClipBounds() {
 		log.info("wrapped");
 		return dst.getClipBounds();
 	}
 
+	@Override
 	public Rectangle getClipBounds(final Rectangle r) {
 		log.info("wrapped");
 		return dst.getClipBounds(r);

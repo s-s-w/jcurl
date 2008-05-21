@@ -25,11 +25,11 @@ import javax.swing.JFrame;
  * @version $Id$
  */
 public class Driver {
-    // private static final ULogger log =
-    // JCLoggerFactory.getLogger(Driver.class);
+	// private static final ULogger log =
+	// JCLoggerFactory.getLogger(Driver.class);
 
-    public static void main(final String[] args) {
-        final JFrame frame = new MenuDemo();
-        frame.setVisible(true);
-    }
+	public static void main(final String[] args) {
+		final JFrame frame = new MenuDemo();
+		frame.setVisible(true);
+	}
 }

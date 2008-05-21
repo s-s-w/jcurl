@@ -32,14 +32,14 @@ import org.jcurl.core.api.RockType.Vel;
  */
 public interface TrajectorySet {
 
-    public Map<CharSequence, CharSequence> getAnnotations();
+	public Map<CharSequence, CharSequence> getAnnotations();
 
-    public abstract RockSet<Pos> getCurrentPos();
+	public abstract RockSet<Pos> getCurrentPos();
 
-    public abstract RockSet<Vel> getCurrentSpeed();
+	public abstract RockSet<Vel> getCurrentSpeed();
 
-    public abstract double getCurrentTime();
+	public abstract double getCurrentTime();
 
-    public abstract void setCurrentTime(final double currentTime);
+	public abstract void setCurrentTime(final double currentTime);
 
 }

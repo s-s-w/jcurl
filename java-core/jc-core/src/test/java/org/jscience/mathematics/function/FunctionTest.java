@@ -310,8 +310,8 @@ public class FunctionTest extends TestCase {
 	public void testRock() {
 		final Variable<Float64> varT = new Variable.Local<Float64>(VAR_T);
 		final Polynomial<Float64> x = Polynomial.valueOf(Float64.ONE, varT);
-		final RockFunction<Float64, Pos> f = new RockFunction<Float64, Pos>(x, x,
-				x);
+		final RockFunction<Float64, Pos> f = new RockFunction<Float64, Pos>(x,
+				x, x);
 		assertEquals("[[1.0]t, [1.0]t, [1.0]t]", f.toString());
 		final Rock<Pos> r = f.evaluate(Float64.valueOf(2));
 		assertEquals("[2.0, 2.0, 2.0]", r.toString());

@@ -24,14 +24,14 @@ import junit.framework.TestCase;
 
 public class Point2DTest extends TestCase {
 
-    public void testEqualsObject() {
-        final Point2D pd = new Point2D.Double(0, 1);
-        final Point2D pf = new Point2D.Float(0, 1);
+	public void testEqualsObject() {
+		final Point2D pd = new Point2D.Double(0, 1);
+		final Point2D pf = new Point2D.Float(0, 1);
 
-        assertEquals(pd, pd);
-        assertEquals(pf, pf);
+		assertEquals(pd, pd);
+		assertEquals(pf, pf);
 
-        assertEquals(pd, pf);
-        assertEquals(pf, pd);
-    }
+		assertEquals(pd, pf);
+		assertEquals(pf, pd);
+	}
 }

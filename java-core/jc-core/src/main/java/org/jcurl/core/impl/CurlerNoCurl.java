@@ -80,8 +80,8 @@ public class CurlerNoCurl extends CoulombCurler {
 
 	public CurveRock<Pos> computeRc(final double a0, final double v0,
 			final double omega0, final double sweepFactor) {
-		return new CurveRockAnalytic<Pos>(new PolynomeCurve(computeRcPoly(a0, v0,
-				omega0, sweepFactor)));
+		return new CurveRockAnalytic<Pos>(new PolynomeCurve(computeRcPoly(a0,
+				v0, omega0, sweepFactor)));
 	}
 
 	Polynome[] computeRcPoly(final double alpha0, final double v0,
@@ -94,6 +94,7 @@ public class CurlerNoCurl extends CoulombCurler {
 		return ret;
 	}
 
+	@Override
 	public double getDrawToTeeCurl() {
 		return 0;
 	}

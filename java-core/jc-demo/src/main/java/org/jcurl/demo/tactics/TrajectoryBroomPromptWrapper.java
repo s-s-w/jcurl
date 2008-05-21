@@ -44,8 +44,8 @@ import org.jcurl.math.CurveCombined;
 import org.jcurl.math.MathVec;
 
 /**
- * Push change events down from this {@link BroomPromptModel} to one {@link Pos}
- * and {@link Vel} {@link RockSet} each.
+ * Push changes down from this {@link BroomPromptModel} to one {@link Pos} and
+ * {@link Vel} {@link RockSet} each.
  * <p>
  * Does <b>not sync back</b> events from the {@link RockSet}s!
  * </p>

@@ -79,283 +79,283 @@ import org.xml.sax.XMLReader;
  */
 class DataWriter extends XMLWriter {
 
-    // //////////////////////////////////////////////////////////////////
-    // Constructors.
-    // //////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////
+	// Constructors.
+	// //////////////////////////////////////////////////////////////////
 
-    private final static Object SEEN_DATA = new Object();
+	private final static Object SEEN_DATA = new Object();
 
-    private final static Object SEEN_ELEMENT = new Object();
+	private final static Object SEEN_ELEMENT = new Object();
 
-    private final static Object SEEN_NOTHING = new Object();
+	private final static Object SEEN_NOTHING = new Object();
 
-    private int depth = 0;
+	private int depth = 0;
 
-    // //////////////////////////////////////////////////////////////////
-    // Accessors and setters.
-    // //////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////
+	// Accessors and setters.
+	// //////////////////////////////////////////////////////////////////
 
-    private int indentStep = 0;
+	private int indentStep = 0;
 
-    private Object state = SEEN_NOTHING;
+	private Object state = SEEN_NOTHING;
 
-    // //////////////////////////////////////////////////////////////////
-    // Override methods from XMLWriter.
-    // //////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////
+	// Override methods from XMLWriter.
+	// //////////////////////////////////////////////////////////////////
 
-    private Stack stateStack = new Stack();
+	private Stack stateStack = new Stack();
 
-    /**
-     * Create a new data writer for standard output.
-     */
-    public DataWriter() {
-        super();
-    }
+	/**
+	 * Create a new data writer for standard output.
+	 */
+	public DataWriter() {
+		super();
+	}
 
-    /**
-     * Create a new data writer for the specified output.
-     * 
-     * @param writer
-     *            The character stream where the XML document will be written.
-     */
-    public DataWriter(final Writer writer) {
-        super(writer);
-    }
+	/**
+	 * Create a new data writer for the specified output.
+	 * 
+	 * @param writer
+	 *            The character stream where the XML document will be written.
+	 */
+	public DataWriter(final Writer writer) {
+		super(writer);
+	}
 
-    /**
-     * Create a new data writer for standard output.
-     * 
-     * <p>
-     * Use the XMLReader provided as the source of events.
-     * </p>
-     * 
-     * @param xmlreader
-     *            The parent in the filter chain.
-     */
-    public DataWriter(final XMLReader xmlreader) {
-        super(xmlreader);
-    }
+	/**
+	 * Create a new data writer for standard output.
+	 * 
+	 * <p>
+	 * Use the XMLReader provided as the source of events.
+	 * </p>
+	 * 
+	 * @param xmlreader
+	 *            The parent in the filter chain.
+	 */
+	public DataWriter(final XMLReader xmlreader) {
+		super(xmlreader);
+	}
 
-    /**
-     * Create a new data writer for the specified output.
-     * <p>
-     * Use the XMLReader provided as the source of events.
-     * </p>
-     * 
-     * @param xmlreader
-     *            The parent in the filter chain.
-     * @param writer
-     *            The character stream where the XML document will be written.
-     */
-    public DataWriter(final XMLReader xmlreader, final Writer writer) {
-        super(xmlreader, writer);
-    }
+	/**
+	 * Create a new data writer for the specified output.
+	 * <p>
+	 * Use the XMLReader provided as the source of events.
+	 * </p>
+	 * 
+	 * @param xmlreader
+	 *            The parent in the filter chain.
+	 * @param writer
+	 *            The character stream where the XML document will be written.
+	 */
+	public DataWriter(final XMLReader xmlreader, final Writer writer) {
+		super(xmlreader, writer);
+	}
 
-    // //////////////////////////////////////////////////////////////////
-    // Internal methods.
-    // //////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////
+	// Internal methods.
+	// //////////////////////////////////////////////////////////////////
 
-    /**
-     * Write a sequence of characters.
-     * 
-     * @param ch
-     *            The characters to write.
-     * @param start
-     *            The starting position in the array.
-     * @param length
-     *            The number of characters to use.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the characters, or if a
-     *                filter further down the chain raises an exception.
-     * @see XMLWriter#characters(char[], int, int)
-     */
-    @Override
-    public void characters(final char ch[], final int start, final int length)
-            throws SAXException {
-        state = SEEN_DATA;
-        super.characters(ch, start, length);
-    }
+	/**
+	 * Write a sequence of characters.
+	 * 
+	 * @param ch
+	 *            The characters to write.
+	 * @param start
+	 *            The starting position in the array.
+	 * @param length
+	 *            The number of characters to use.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the characters, or if a
+	 *                filter further down the chain raises an exception.
+	 * @see XMLWriter#characters(char[], int, int)
+	 */
+	@Override
+	public void characters(final char ch[], final int start, final int length)
+			throws SAXException {
+		state = SEEN_DATA;
+		super.characters(ch, start, length);
+	}
 
-    // //////////////////////////////////////////////////////////////////
-    // Constants.
-    // //////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////
+	// Constants.
+	// //////////////////////////////////////////////////////////////////
 
-    /**
-     * Print indentation for the current level.
-     * 
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the indentation characters,
-     *                or if a filter further down the chain raises an exception.
-     */
-    private void doIndent() throws SAXException {
-        if (indentStep > 0 && depth > 0) {
-            final int n = indentStep * depth;
-            final char ch[] = new char[n];
-            for (int i = 0; i < n; i++)
-                ch[i] = ' ';
-            this.characters(ch, 0, n);
-        }
-    }
+	/**
+	 * Print indentation for the current level.
+	 * 
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the indentation characters,
+	 *                or if a filter further down the chain raises an exception.
+	 */
+	private void doIndent() throws SAXException {
+		if (indentStep > 0 && depth > 0) {
+			final int n = indentStep * depth;
+			final char ch[] = new char[n];
+			for (int i = 0; i < n; i++)
+				ch[i] = ' ';
+			this.characters(ch, 0, n);
+		}
+	}
 
-    /**
-     * Write a empty element tag.
-     * 
-     * <p>
-     * Each tag will appear on a new line, and will be indented by the current
-     * indent step times the number of ancestors that the element has.
-     * </p>
-     * 
-     * <p>
-     * The newline and indentation will be passed on down the filter chain
-     * through regular characters events.
-     * </p>
-     * 
-     * @param uri
-     *            The element's Namespace URI.
-     * @param localName
-     *            The element's local name.
-     * @param qName
-     *            The element's qualified (prefixed) name.
-     * @param atts
-     *            The element's attribute list.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the empty tag, or if a filter
-     *                further down the chain raises an exception.
-     * @see XMLWriter#emptyElement(String, String, String, Attributes)
-     */
-    @Override
-    public void emptyElement(final String uri, final String localName,
-            final String qName, final Attributes atts) throws SAXException {
-        state = SEEN_ELEMENT;
-        if (depth > 0)
-            super.characters("\n");
-        doIndent();
-        super.emptyElement(uri, localName, qName, atts);
-    }
+	/**
+	 * Write a empty element tag.
+	 * 
+	 * <p>
+	 * Each tag will appear on a new line, and will be indented by the current
+	 * indent step times the number of ancestors that the element has.
+	 * </p>
+	 * 
+	 * <p>
+	 * The newline and indentation will be passed on down the filter chain
+	 * through regular characters events.
+	 * </p>
+	 * 
+	 * @param uri
+	 *            The element's Namespace URI.
+	 * @param localName
+	 *            The element's local name.
+	 * @param qName
+	 *            The element's qualified (prefixed) name.
+	 * @param atts
+	 *            The element's attribute list.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the empty tag, or if a filter
+	 *                further down the chain raises an exception.
+	 * @see XMLWriter#emptyElement(String, String, String, Attributes)
+	 */
+	@Override
+	public void emptyElement(final String uri, final String localName,
+			final String qName, final Attributes atts) throws SAXException {
+		state = SEEN_ELEMENT;
+		if (depth > 0)
+			super.characters("\n");
+		doIndent();
+		super.emptyElement(uri, localName, qName, atts);
+	}
 
-    /**
-     * Write an end tag.
-     * 
-     * <p>
-     * If the element has contained other elements, the tag will appear indented
-     * on a new line; otherwise, it will appear immediately following whatever
-     * came before.
-     * </p>
-     * 
-     * <p>
-     * The newline and indentation will be passed on down the filter chain
-     * through regular characters events.
-     * </p>
-     * 
-     * @param uri
-     *            The element's Namespace URI.
-     * @param localName
-     *            The element's local name.
-     * @param qName
-     *            The element's qualified (prefixed) name.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the end tag, or if a filter
-     *                further down the chain raises an exception.
-     * @see XMLWriter#endElement(String, String, String)
-     */
-    @Override
-    public void endElement(final String uri, final String localName,
-            final String qName) throws SAXException {
-        depth--;
-        if (state == SEEN_ELEMENT) {
-            super.characters("\n");
-            doIndent();
-        }
-        super.endElement(uri, localName, qName);
-        state = stateStack.pop();
-    }
+	/**
+	 * Write an end tag.
+	 * 
+	 * <p>
+	 * If the element has contained other elements, the tag will appear indented
+	 * on a new line; otherwise, it will appear immediately following whatever
+	 * came before.
+	 * </p>
+	 * 
+	 * <p>
+	 * The newline and indentation will be passed on down the filter chain
+	 * through regular characters events.
+	 * </p>
+	 * 
+	 * @param uri
+	 *            The element's Namespace URI.
+	 * @param localName
+	 *            The element's local name.
+	 * @param qName
+	 *            The element's qualified (prefixed) name.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the end tag, or if a filter
+	 *                further down the chain raises an exception.
+	 * @see XMLWriter#endElement(String, String, String)
+	 */
+	@Override
+	public void endElement(final String uri, final String localName,
+			final String qName) throws SAXException {
+		depth--;
+		if (state == SEEN_ELEMENT) {
+			super.characters("\n");
+			doIndent();
+		}
+		super.endElement(uri, localName, qName);
+		state = stateStack.pop();
+	}
 
-    // //////////////////////////////////////////////////////////////////
-    // Internal state.
-    // //////////////////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////////////////////
+	// Internal state.
+	// //////////////////////////////////////////////////////////////////
 
-    /**
-     * Return the current indent step.
-     * 
-     * <p>
-     * Return the current indent step: each start tag will be indented by this
-     * number of spaces times the number of ancestors that the element has.
-     * </p>
-     * 
-     * @return The number of spaces in each indentation step, or 0 or less for
-     *         no indentation.
-     * @see #setIndentStep
-     */
-    public int getIndentStep() {
-        return indentStep;
-    }
+	/**
+	 * Return the current indent step.
+	 * 
+	 * <p>
+	 * Return the current indent step: each start tag will be indented by this
+	 * number of spaces times the number of ancestors that the element has.
+	 * </p>
+	 * 
+	 * @return The number of spaces in each indentation step, or 0 or less for
+	 *         no indentation.
+	 * @see #setIndentStep
+	 */
+	public int getIndentStep() {
+		return indentStep;
+	}
 
-    /**
-     * Reset the writer so that it can be reused.
-     * 
-     * <p>
-     * This method is especially useful if the writer failed with an exception
-     * the last time through.
-     * </p>
-     * 
-     * @see com.megginson.sax.XMLWriter#reset
-     */
-    @Override
-    public void reset() {
-        depth = 0;
-        state = SEEN_NOTHING;
-        stateStack = new Stack();
-        super.reset();
-    }
+	/**
+	 * Reset the writer so that it can be reused.
+	 * 
+	 * <p>
+	 * This method is especially useful if the writer failed with an exception
+	 * the last time through.
+	 * </p>
+	 * 
+	 * @see com.megginson.sax.XMLWriter#reset
+	 */
+	@Override
+	public void reset() {
+		depth = 0;
+		state = SEEN_NOTHING;
+		stateStack = new Stack();
+		super.reset();
+	}
 
-    /**
-     * Set the current indent step.
-     * 
-     * @param indentStep
-     *            The new indent step (0 or less for no indentation).
-     * @see #getIndentStep
-     */
-    public void setIndentStep(final int indentStep) {
-        this.indentStep = indentStep;
-    }
+	/**
+	 * Set the current indent step.
+	 * 
+	 * @param indentStep
+	 *            The new indent step (0 or less for no indentation).
+	 * @see #getIndentStep
+	 */
+	public void setIndentStep(final int indentStep) {
+		this.indentStep = indentStep;
+	}
 
-    /**
-     * Write a start tag.
-     * 
-     * <p>
-     * Each tag will begin on a new line, and will be indented by the current
-     * indent step times the number of ancestors that the element has.
-     * </p>
-     * 
-     * <p>
-     * The newline and indentation will be passed on down the filter chain
-     * through regular characters events.
-     * </p>
-     * 
-     * @param uri
-     *            The element's Namespace URI.
-     * @param localName
-     *            The element's local name.
-     * @param qName
-     *            The element's qualified (prefixed) name.
-     * @param atts
-     *            The element's attribute list.
-     * @exception org.xml.sax.SAXException
-     *                If there is an error writing the start tag, or if a filter
-     *                further down the chain raises an exception.
-     * @see XMLWriter#startElement(String, String, String, Attributes)
-     */
-    @Override
-    public void startElement(final String uri, final String localName,
-            final String qName, final Attributes atts) throws SAXException {
-        stateStack.push(SEEN_ELEMENT);
-        state = SEEN_NOTHING;
-        if (depth > 0)
-            super.characters("\n");
-        doIndent();
-        super.startElement(uri, localName, qName, atts);
-        depth++;
-    }
+	/**
+	 * Write a start tag.
+	 * 
+	 * <p>
+	 * Each tag will begin on a new line, and will be indented by the current
+	 * indent step times the number of ancestors that the element has.
+	 * </p>
+	 * 
+	 * <p>
+	 * The newline and indentation will be passed on down the filter chain
+	 * through regular characters events.
+	 * </p>
+	 * 
+	 * @param uri
+	 *            The element's Namespace URI.
+	 * @param localName
+	 *            The element's local name.
+	 * @param qName
+	 *            The element's qualified (prefixed) name.
+	 * @param atts
+	 *            The element's attribute list.
+	 * @exception org.xml.sax.SAXException
+	 *                If there is an error writing the start tag, or if a filter
+	 *                further down the chain raises an exception.
+	 * @see XMLWriter#startElement(String, String, String, Attributes)
+	 */
+	@Override
+	public void startElement(final String uri, final String localName,
+			final String qName, final Attributes atts) throws SAXException {
+		stateStack.push(SEEN_ELEMENT);
+		state = SEEN_NOTHING;
+		if (depth > 0)
+			super.characters("\n");
+		doIndent();
+		super.startElement(uri, localName, qName, atts);
+		depth++;
+	}
 
 }
 

@@ -26,33 +26,33 @@ import junit.framework.TestCase;
  */
 public class MathVecTest extends TestCase {
 
-    public void test001() {
-        final int[][] a = { { 1, 2, 3 }, { 4, 5, 6 } };
-        assertEquals(2, a.length);
-        assertEquals(3, a[0].length);
+	public void test001() {
+		final int[][] a = { { 1, 2, 3 }, { 4, 5, 6 } };
+		assertEquals(2, a.length);
+		assertEquals(3, a[0].length);
 
-        assertEquals(1, a[0][0]);
-        assertEquals(4, a[1][0]);
-        assertEquals(2, a[0][1]);
-        assertEquals(5, a[1][1]);
-        assertEquals(3, a[0][2]);
-        assertEquals(6, a[1][2]);
-    }
+		assertEquals(1, a[0][0]);
+		assertEquals(4, a[1][0]);
+		assertEquals(2, a[0][1]);
+		assertEquals(5, a[1][1]);
+		assertEquals(3, a[0][2]);
+		assertEquals(6, a[1][2]);
+	}
 
-    /**
-     * Testdata from Numerische Mathematik, H. R. Schwarz, B. G. Teubner Verlag,
-     * 1998, S.21f.
-     * 
-     * @see MathVec#gauss(double[][], double[], double[])
-     */
-    public void test010_gauss() {
-        final double[][] a = { { 2.1, 2512, -2516 }, { -1.3, 8.8, -7.6 },
-                { 0.9, -6.2, 4.6 } };
-        final double[] b = { -6.5, 5.3, -2.9 };
-        final double[] x = { 0, 0, 0 };
-        MathVec.gauss(a, b, x);
-        assertEquals(1.0, x[2], 1e-4);
-        assertEquals(1.0, x[1], 3e-3);
-        assertEquals(5.0, x[0], 2e-2);
-    }
+	/**
+	 * Testdata from Numerische Mathematik, H. R. Schwarz, B. G. Teubner Verlag,
+	 * 1998, S.21f.
+	 * 
+	 * @see MathVec#gauss(double[][], double[], double[])
+	 */
+	public void test010_gauss() {
+		final double[][] a = { { 2.1, 2512, -2516 }, { -1.3, 8.8, -7.6 },
+				{ 0.9, -6.2, 4.6 } };
+		final double[] b = { -6.5, 5.3, -2.9 };
+		final double[] x = { 0, 0, 0 };
+		MathVec.gauss(a, b, x);
+		assertEquals(1.0, x[2], 1e-4);
+		assertEquals(1.0, x[1], 3e-3);
+		assertEquals(5.0, x[0], 2e-2);
+	}
 }

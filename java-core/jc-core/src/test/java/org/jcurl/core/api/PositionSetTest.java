@@ -33,19 +33,19 @@ import org.jcurl.core.api.RockType.Pos;
  */
 public class PositionSetTest extends TestCase {
 
-    public void testFindRockAtPos() {
-        final RockSet<Pos> a = PositionSet.allHome();
-        a.getRock(1).setLocation(0, 0, 0);
-        assertEquals(1, PositionSet.findRockIndexAtPos(a, new Point2D.Float(0,
-                0)));
-        assertEquals(1, PositionSet.findRockIndexAtPos(a, new Point2D.Float(
-                Unit.f2m(0.4), 0)));
-    }
+	public void testFindRockAtPos() {
+		final RockSet<Pos> a = PositionSet.allHome();
+		a.getRock(1).setLocation(0, 0, 0);
+		assertEquals(1, PositionSet.findRockIndexAtPos(a, new Point2D.Float(0,
+				0)));
+		assertEquals(1, PositionSet.findRockIndexAtPos(a, new Point2D.Float(
+				Unit.f2m(0.4), 0)));
+	}
 
-    public void testGetShotRocks() {
-        final RockSet<Pos> a = PositionSet.allHome();
-        for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
-            a.getRock(i).setLocation(0, i * 0.5, 0);
-        assertEquals(1, PositionSet.getShotRocks(a));
-    }
+	public void testGetShotRocks() {
+		final RockSet<Pos> a = PositionSet.allHome();
+		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+			a.getRock(i).setLocation(0, i * 0.5, 0);
+		assertEquals(1, PositionSet.getShotRocks(a));
+	}
 }

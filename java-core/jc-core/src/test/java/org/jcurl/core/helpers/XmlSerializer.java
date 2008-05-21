@@ -31,45 +31,45 @@ import org.xml.sax.SAXException;
  */
 public class XmlSerializer extends XmlSimpleWriter {
 
-    /**
-     * @param stream
-     * @param encoding
-     * @param indent
-     * @throws UnsupportedEncodingException
-     */
-    public XmlSerializer(final OutputStream stream, final String encoding,
-            final boolean indent) throws UnsupportedEncodingException {
-        super(new OutputStreamWriter(stream, encoding));
-    }
+	/**
+	 * @param stream
+	 * @param encoding
+	 * @param indent
+	 * @throws UnsupportedEncodingException
+	 */
+	public XmlSerializer(final OutputStream stream, final String encoding,
+			final boolean indent) throws UnsupportedEncodingException {
+		super(new OutputStreamWriter(stream, encoding));
+	}
 
-    /**
-     * @param target
-     * @param indent
-     */
-    public XmlSerializer(final Writer target, final boolean indent) {
-        super(target);
-    }
+	/**
+	 * @param target
+	 * @param indent
+	 */
+	public XmlSerializer(final Writer target, final boolean indent) {
+		super(target);
+	}
 
-    /**
-     * Write a bunch of characters (encoded) to the stream.
-     * 
-     * @param ch
-     * @see org.xml.sax.ContentHandler#characters(char[], int, int)
-     * @throws SAXException
-     */
-    public void characters(final char[] ch) throws SAXException {
-        this.characters(ch, 0, ch.length);
-    }
+	/**
+	 * Write a bunch of characters (encoded) to the stream.
+	 * 
+	 * @param ch
+	 * @see org.xml.sax.ContentHandler#characters(char[], int, int)
+	 * @throws SAXException
+	 */
+	public void characters(final char[] ch) throws SAXException {
+		this.characters(ch, 0, ch.length);
+	}
 
-    /**
-     * Write a bunch of characters (encoded) to the stream.
-     * 
-     * @see org.xml.sax.ContentHandler#characters(char[], int, int)
-     * @param ch
-     * @throws SAXException
-     */
-    public void characters(final String ch) throws SAXException {
-        this.characters(ch.toCharArray());
-    }
+	/**
+	 * Write a bunch of characters (encoded) to the stream.
+	 * 
+	 * @see org.xml.sax.ContentHandler#characters(char[], int, int)
+	 * @param ch
+	 * @throws SAXException
+	 */
+	public void characters(final String ch) throws SAXException {
+		this.characters(ch.toCharArray());
+	}
 
 }

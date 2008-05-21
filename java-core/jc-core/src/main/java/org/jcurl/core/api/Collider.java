@@ -24,7 +24,6 @@ import java.util.Map;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.api.RockType.Vel;
 
-
 /**
  * Compute rock collissions.
  * 
@@ -33,26 +32,26 @@ import org.jcurl.core.api.RockType.Vel;
  */
 public interface Collider extends PropModel, Strategy {
 
-    /**
-     * Check for and compute all collissions.
-     * <p>
-     * Does not change <code>pos</code>!
-     * </p>
-     * <p>
-     * Does not fire {@link RockSet#fireStateChanged()}!
-     * </p>
-     * 
-     * @param pos
-     *            the positions (before and after the hit)
-     * @param speed
-     *            (before and after the hit)
-     * @param tr
-     *            Helper reference to avoid internal instanciations.
-     *            <code>null</code> creates a new instance.
-     * @return bitmask of the changed rocks
-     */
-    public abstract int compute(RockSet<Pos> pos, RockSet<Vel> speed,
-            AffineTransform tr);
+	/**
+	 * Check for and compute all collissions.
+	 * <p>
+	 * Does not change <code>pos</code>!
+	 * </p>
+	 * <p>
+	 * Does not fire {@link RockSet#fireStateChanged()}!
+	 * </p>
+	 * 
+	 * @param pos
+	 *            the positions (before and after the hit)
+	 * @param speed
+	 *            (before and after the hit)
+	 * @param tr
+	 *            Helper reference to avoid internal instanciations.
+	 *            <code>null</code> creates a new instance.
+	 * @return bitmask of the changed rocks
+	 */
+	public abstract int compute(RockSet<Pos> pos, RockSet<Vel> speed,
+			AffineTransform tr);
 
-    public void init(Map<CharSequence, Measure> ice);
+	public void init(Map<CharSequence, Measure> ice);
 }

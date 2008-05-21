@@ -30,49 +30,49 @@ import java.util.Iterator;
  */
 public abstract class FilterIterator<E> implements Iterator<E> {
 
-    private final Iterator<E> base;
+	private final Iterator<E> base;
 
-    private E next = null;
+	private E next = null;
 
-    protected FilterIterator(final Iterator<E> base) {
-        this.base = base;
-        doLookAhead();
-    }
+	protected FilterIterator(final Iterator<E> base) {
+		this.base = base;
+		doLookAhead();
+	}
 
-    private void doLookAhead() {
-        while (base.hasNext()) {
-            next = base.next();
-            if (matches(next))
-                return;
-        }
-        next = null;
-    }
+	private void doLookAhead() {
+		while (base.hasNext()) {
+			next = base.next();
+			if (matches(next))
+				return;
+		}
+		next = null;
+	}
 
-    public boolean hasNext() {
-        return next != null || base.hasNext();
-    }
+	public boolean hasNext() {
+		return next != null || base.hasNext();
+	}
 
-    /**
-     * Overload.
-     * 
-     * @param item
-     * @return true: item passes the filter, false: item will be filtered out.
-     */
-    protected abstract boolean matches(final E item);
+	/**
+	 * Overload.
+	 * 
+	 * @param item
+	 * @return true: item passes the filter, false: item will be filtered out.
+	 */
+	protected abstract boolean matches(final E item);
 
-    public E next() {
-        try {
-            return next;
-        } finally {
-            doLookAhead();
-        }
-    }
+	public E next() {
+		try {
+			return next;
+		} finally {
+			doLookAhead();
+		}
+	}
 
-    protected E peek() {
-        return next;
-    }
+	protected E peek() {
+		return next;
+	}
 
-    public void remove() {
-        throw new UnsupportedOperationException("Not supported.");
-    }
+	public void remove() {
+		throw new UnsupportedOperationException("Not supported.");
+	}
 }

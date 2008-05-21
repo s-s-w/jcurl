@@ -27,35 +27,38 @@ import junit.framework.TestCase;
 
 public class HsqldbTest extends TestCase {
 
-    public HsqldbTest() {
-        try {
-            Class.forName("org.hsqldb.jdbcDriver", true, this.getClass().getClassLoader());
-        } catch (final ClassNotFoundException e) {
-            throw new RuntimeException("Unhandled", e);
-        }
-    }
+	public HsqldbTest() {
+		try {
+			Class.forName("org.hsqldb.jdbcDriver", true, this.getClass()
+					.getClassLoader());
+		} catch (final ClassNotFoundException e) {
+			throw new RuntimeException("Unhandled", e);
+		}
+	}
 
-    public void testFile() throws SQLException {
-        final Connection c = DriverManager.getConnection(
-                "jdbc:hsqldb:file:target/jcurl-hsqldb", "sa", "");
-        final PreparedStatement stmt = c.prepareStatement("Create Table SCHEMA_VERSION (id int primary key)");
-        try {
-            stmt.execute();
-        } catch (SQLException e) {
-            ;
-        }
-    }
+	public void testFile() throws SQLException {
+		final Connection c = DriverManager.getConnection(
+				"jdbc:hsqldb:file:target/jcurl-hsqldb", "sa", "");
+		final PreparedStatement stmt = c
+				.prepareStatement("Create Table SCHEMA_VERSION (id int primary key)");
+		try {
+			stmt.execute();
+		} catch (final SQLException e) {
+			;
+		}
+	}
 
-    public void testMem() throws SQLException {
-        final Connection c = DriverManager.getConnection(
-                "jdbc:hsqldb:mem:jcurl", "sa", "");
-        PreparedStatement stmt = c.prepareStatement("Create Table EVENTS (id int primary key)");
-        stmt.execute();
-        stmt = c.prepareStatement("Create Table GAMES (id INT PRIMARY KEY)");
-        stmt.execute();
-        stmt = c.prepareStatement("Create Table ENDS (id int primary key)");
-        stmt.execute();
-        stmt = c.prepareStatement("Create Table ROCKS (id int primary key)");
-        stmt.execute();
-    }
+	public void testMem() throws SQLException {
+		final Connection c = DriverManager.getConnection(
+				"jdbc:hsqldb:mem:jcurl", "sa", "");
+		PreparedStatement stmt = c
+				.prepareStatement("Create Table EVENTS (id int primary key)");
+		stmt.execute();
+		stmt = c.prepareStatement("Create Table GAMES (id INT PRIMARY KEY)");
+		stmt.execute();
+		stmt = c.prepareStatement("Create Table ENDS (id int primary key)");
+		stmt.execute();
+		stmt = c.prepareStatement("Create Table ROCKS (id int primary key)");
+		stmt.execute();
+	}
 }

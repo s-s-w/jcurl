@@ -38,164 +38,164 @@ import org.jcurl.core.impl.CurveManager;
  */
 public class Model extends MutableObject {
 
-    // private static final Log log = JCLoggerFactory.getLogger(Model.class);
+	// private static final Log log = JCLoggerFactory.getLogger(Model.class);
 
-    private static final long serialVersionUID = -8598083673757204804L;
+	private static final long serialVersionUID = -8598083673757204804L;
 
-    private int activeRock;
+	private int activeRock;
 
-    private Measure broomX = null;
+	private Measure broomX = null;
 
-    private Measure interval;
+	private Measure interval;
 
-    private ComputedTrajectorySet trajectory;
+	private ComputedTrajectorySet trajectory;
 
-    public Model() {
-        trajectory = new CurveManager();
-        trajectory.setCollider(new CollissionSimple());
-        trajectory.setCurler(new CurlerNoCurl(23, 0));
-        // setBroomX(new DimVal(0, Dim.METER));
-        // setInterval(new DimVal(2.5, Dim.SECOND));
-        // setDrawCurl(new DimVal(3, Dim.FOOT));
-        // setDrawTime(new DimVal(25, Dim.SECOND));
-    }
+	public Model() {
+		trajectory = new CurveManager();
+		trajectory.setCollider(new CollissionSimple());
+		trajectory.setCurler(new CurlerNoCurl(23, 0));
+		// setBroomX(new DimVal(0, Dim.METER));
+		// setInterval(new DimVal(2.5, Dim.SECOND));
+		// setDrawCurl(new DimVal(3, Dim.FOOT));
+		// setDrawTime(new DimVal(25, Dim.SECOND));
+	}
 
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj)
-            return true;
-        if (getClass() != obj.getClass())
-            return false;
-        final Model other = (Model) obj;
-        if (activeRock != other.activeRock)
-            return false;
-        if (broomX == null) {
-            if (other.broomX != null)
-                return false;
-        } else if (!broomX.equals(other.broomX))
-            return false;
-        if (interval == null) {
-            if (other.interval != null)
-                return false;
-        } else if (!interval.equals(other.interval))
-            return false;
-        if (trajectory == null) {
-            if (other.trajectory != null)
-                return false;
-        } else if (!trajectory.equals(other.trajectory))
-            return false;
-        return true;
-    }
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj)
+			return true;
+		if (getClass() != obj.getClass())
+			return false;
+		final Model other = (Model) obj;
+		if (activeRock != other.activeRock)
+			return false;
+		if (broomX == null) {
+			if (other.broomX != null)
+				return false;
+		} else if (!broomX.equals(other.broomX))
+			return false;
+		if (interval == null) {
+			if (other.interval != null)
+				return false;
+		} else if (!interval.equals(other.interval))
+			return false;
+		if (trajectory == null) {
+			if (other.trajectory != null)
+				return false;
+		} else if (!trajectory.equals(other.trajectory))
+			return false;
+		return true;
+	}
 
-    public int getActiveRock() {
-        return activeRock;
-    }
+	public int getActiveRock() {
+		return activeRock;
+	}
 
-    public Measure getBroomX() {
-        return broomX;
-    }
+	public Measure getBroomX() {
+		return broomX;
+	}
 
-    public Collider getCollider() {
-        return getTrajectory().getCollider();
-    }
+	public Collider getCollider() {
+		return getTrajectory().getCollider();
+	}
 
-    public Curler getCurler() {
-        return getTrajectory().getCurler();
-    }
+	public Curler getCurler() {
+		return getTrajectory().getCurler();
+	}
 
-    public Measure getDrawCurl() {
-        return new Measure(getTrajectory().getCurler().getDrawToTeeCurl(),
-                Unit.METER);
-    }
+	public Measure getDrawCurl() {
+		return new Measure(getTrajectory().getCurler().getDrawToTeeCurl(),
+				Unit.METER);
+	}
 
-    public Measure getDrawTime() {
-        return new Measure(getTrajectory().getCurler().getDrawToTeeTime(),
-                Unit.SECOND);
-    }
+	public Measure getDrawTime() {
+		return new Measure(getTrajectory().getCurler().getDrawToTeeTime(),
+				Unit.SECOND);
+	}
 
-    public RockSet<Pos> getInitialPos() {
-        return getTrajectory().getInitialPos();
-    }
+	public RockSet<Pos> getInitialPos() {
+		return getTrajectory().getInitialPos();
+	}
 
-    public Measure getInterval() {
-        return interval;
-    }
+	public Measure getInterval() {
+		return interval;
+	}
 
-    public ComputedTrajectorySet getTrajectory() {
-        return trajectory;
-    }
+	public ComputedTrajectorySet getTrajectory() {
+		return trajectory;
+	}
 
-    @Override
-    public int hashCode() {
-        final int PRIME = 31;
-        int result = 1;
-        result = PRIME * result + activeRock;
-        result = PRIME * result + (broomX == null ? 0 : broomX.hashCode());
-        result = PRIME * result + (interval == null ? 0 : interval.hashCode());
-        result = PRIME * result
-                + (trajectory == null ? 0 : trajectory.hashCode());
-        return result;
-    }
+	@Override
+	public int hashCode() {
+		final int PRIME = 31;
+		int result = 1;
+		result = PRIME * result + activeRock;
+		result = PRIME * result + (broomX == null ? 0 : broomX.hashCode());
+		result = PRIME * result + (interval == null ? 0 : interval.hashCode());
+		result = PRIME * result
+				+ (trajectory == null ? 0 : trajectory.hashCode());
+		return result;
+	}
 
-    public void setActiveRock(final int activeRock) {
-        propChange
-                .firePropertyChange("activeRock", getActiveRock(), activeRock);
-        this.activeRock = activeRock & 0xF;
-    }
+	public void setActiveRock(final int activeRock) {
+		propChange
+				.firePropertyChange("activeRock", getActiveRock(), activeRock);
+		this.activeRock = activeRock & 0xF;
+	}
 
-    public void setBroomX(final Measure broomX) {
-        if (broomX == null)
-            return;
-        if (this.broomX == broomX)
-            return;
-        propChange.firePropertyChange("broomX", getBroomX(), broomX);
-        this.broomX = broomX;
-    }
+	public void setBroomX(final Measure broomX) {
+		if (broomX == null)
+			return;
+		if (this.broomX == broomX)
+			return;
+		propChange.firePropertyChange("broomX", getBroomX(), broomX);
+		this.broomX = broomX;
+	}
 
-    public void setCollider(final Collider collider) {
-        if (collider == null)
-            return;
-        propChange.firePropertyChange("collider", getCollider(), collider);
-        getTrajectory().setCollider(collider);
-    }
+	public void setCollider(final Collider collider) {
+		if (collider == null)
+			return;
+		propChange.firePropertyChange("collider", getCollider(), collider);
+		getTrajectory().setCollider(collider);
+	}
 
-    public void setCurler(final Curler curler) {
-        if (curler == null)
-            return;
-        propChange.firePropertyChange("curler", getCurler(), curler);
-        getTrajectory().setCurler(curler);
-    }
+	public void setCurler(final Curler curler) {
+		if (curler == null)
+			return;
+		propChange.firePropertyChange("curler", getCurler(), curler);
+		getTrajectory().setCurler(curler);
+	}
 
-    public void setDrawCurl(final Measure drawCurl) {
-        propChange.firePropertyChange("drawCurl", getDrawCurl(), drawCurl);
-        getTrajectory().getCurler().setDrawToTeeCurl(
-                drawCurl.to(Unit.METER).value);
-    }
+	public void setDrawCurl(final Measure drawCurl) {
+		propChange.firePropertyChange("drawCurl", getDrawCurl(), drawCurl);
+		getTrajectory().getCurler().setDrawToTeeCurl(
+				drawCurl.to(Unit.METER).value);
+	}
 
-    public void setDrawTime(final Measure drawTime) {
-        propChange.firePropertyChange("drawTime", getDrawTime(), drawTime);
-        getTrajectory().getCurler().setDrawToTeeTime(
-                drawTime.to(Unit.SECOND).value);
-    }
+	public void setDrawTime(final Measure drawTime) {
+		propChange.firePropertyChange("drawTime", getDrawTime(), drawTime);
+		getTrajectory().getCurler().setDrawToTeeTime(
+				drawTime.to(Unit.SECOND).value);
+	}
 
-    public void setInitialPos(final RockSet<Pos> initialPos) {
-        if (initialPos == null)
-            return;
-        propChange
-                .firePropertyChange("initialPos", getInitialPos(), initialPos);
-        getTrajectory().setInitialPos(initialPos);
-    }
+	public void setInitialPos(final RockSet<Pos> initialPos) {
+		if (initialPos == null)
+			return;
+		propChange
+				.firePropertyChange("initialPos", getInitialPos(), initialPos);
+		getTrajectory().setInitialPos(initialPos);
+	}
 
-    public void setInterval(final Measure interval) {
-        propChange.firePropertyChange("interval", getInterval(), interval);
-        this.interval = interval.to(Unit.SECOND);
-    }
+	public void setInterval(final Measure interval) {
+		propChange.firePropertyChange("interval", getInterval(), interval);
+		this.interval = interval.to(Unit.SECOND);
+	}
 
-    public void setTrajectory(final ComputedTrajectorySet trajectory) {
-        if (trajectory == null)
-            return;
-        propChange
-                .firePropertyChange("trajectory", getTrajectory(), trajectory);
-        this.trajectory = trajectory;
-    }
+	public void setTrajectory(final ComputedTrajectorySet trajectory) {
+		if (trajectory == null)
+			return;
+		propChange
+				.firePropertyChange("trajectory", getTrajectory(), trajectory);
+		this.trajectory = trajectory;
+	}
 }

@@ -25,10 +25,10 @@ package org.jcurl.core.helpers;
  */
 public class NotImplementedYetException extends UnsupportedOperationException {
 
-    private static final long serialVersionUID = 7287004572416933836L;
+	private static final long serialVersionUID = 7287004572416933836L;
 
-    public NotImplementedYetException() {
-        super("Not implemented yet.");
-    }
+	public NotImplementedYetException() {
+		super("Not implemented yet.");
+	}
 
 }

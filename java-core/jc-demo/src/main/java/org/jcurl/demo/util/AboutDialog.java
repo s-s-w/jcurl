@@ -37,38 +37,38 @@ import org.jcurl.core.helpers.Version;
  */
 public class AboutDialog extends JDialog {
 
-    private static final long serialVersionUID = -6876982740130350850L;
+	private static final long serialVersionUID = -6876982740130350850L;
 
-    /**
-     * @param owner
-     * @throws java.awt.HeadlessException
-     */
-    public AboutDialog(final Frame owner) throws HeadlessException {
-        super(owner, "About", true);
-        setResizable(false);
-        final Box b = Box.createVerticalBox();
-        b.add(Box.createGlue());
-        b.add(new JLabel(owner.getClass().getName()));
-        b.add(new JLabel("by M. Rohrmoser"));
-        b.add(Box.createGlue());
-        final Version v = Version.find(owner.getClass());
-        if (v != null) {
-            b.add(new JLabel("Version: " + v.toString()));
-            b.add(new JLabel("Build time: " + v.getTime()));
-            b.add(Box.createGlue());
-        }
-        getContentPane().add(b, "Center");
+	/**
+	 * @param owner
+	 * @throws java.awt.HeadlessException
+	 */
+	public AboutDialog(final Frame owner) throws HeadlessException {
+		super(owner, "About", true);
+		setResizable(false);
+		final Box b = Box.createVerticalBox();
+		b.add(Box.createGlue());
+		b.add(new JLabel(owner.getClass().getName()));
+		b.add(new JLabel("by M. Rohrmoser"));
+		b.add(Box.createGlue());
+		final Version v = Version.find(owner.getClass());
+		if (v != null) {
+			b.add(new JLabel("Version: " + v.toString()));
+			b.add(new JLabel("Build time: " + v.getTime()));
+			b.add(Box.createGlue());
+		}
+		getContentPane().add(b, "Center");
 
-        final JPanel p2 = new JPanel();
-        final JButton ok = new JButton("OK");
-        p2.add(ok);
-        getContentPane().add(p2, "South");
-        ok.addActionListener(new ActionListener() {
-            public void actionPerformed(final ActionEvent evt) {
-                AboutDialog.this.setVisible(false);
-            }
-        });
-        this.setSize(250, 150);
-    }
+		final JPanel p2 = new JPanel();
+		final JButton ok = new JButton("OK");
+		p2.add(ok);
+		getContentPane().add(p2, "South");
+		ok.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent evt) {
+				AboutDialog.this.setVisible(false);
+			}
+		});
+		this.setSize(250, 150);
+	}
 
 }

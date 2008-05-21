@@ -44,128 +44,127 @@ import org.jcurl.core.swing.RockPainter.ColorSet;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:SumDisplayBase.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-abstract class SumDisplayBase extends JComponent implements
-        ChangeListener {
+abstract class SumDisplayBase extends JComponent implements ChangeListener {
 
-    private static final ColorSet colors = new ColorSet();
+	private static final ColorSet colors = new ColorSet();
 
-    private static final Map<Key, Object> hints = new HashMap<Key, Object>();
+	private static final Map<Key, Object> hints = new HashMap<Key, Object>();
 
-    private static final Log log = JCLoggerFactory
-            .getLogger(SumDisplayBase.class);
-    static {
-        // hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION,
-        // RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-        hints.put(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        // hints.put(RenderingHints.KEY_COLOR_RENDERING,
-        // RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-        // hints.put(RenderingHints.KEY_DITHERING,
-        // RenderingHints.VALUE_DITHER_ENABLE);
-        // hints.put(RenderingHints.KEY_FRACTIONALMETRICS,
-        // RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-        // hints.put(RenderingHints.KEY_INTERPOLATION,
-        // RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-        // hints.put(RenderingHints.KEY_RENDERING,
-        // RenderingHints.VALUE_RENDER_QUALITY);
-        // hints.put(RenderingHints.KEY_STROKE_CONTROL,
-        // RenderingHints.VALUE_STROKE_NORMALIZE);
-        // hints.put(RenderingHints.KEY_TEXT_ANTIALIASING,
-        // RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-    }
+	private static final Log log = JCLoggerFactory
+			.getLogger(SumDisplayBase.class);
+	static {
+		// hints.put(RenderingHints.KEY_ALPHA_INTERPOLATION,
+		// RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+		hints.put(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		// hints.put(RenderingHints.KEY_COLOR_RENDERING,
+		// RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+		// hints.put(RenderingHints.KEY_DITHERING,
+		// RenderingHints.VALUE_DITHER_ENABLE);
+		// hints.put(RenderingHints.KEY_FRACTIONALMETRICS,
+		// RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+		// hints.put(RenderingHints.KEY_INTERPOLATION,
+		// RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+		// hints.put(RenderingHints.KEY_RENDERING,
+		// RenderingHints.VALUE_RENDER_QUALITY);
+		// hints.put(RenderingHints.KEY_STROKE_CONTROL,
+		// RenderingHints.VALUE_STROKE_NORMALIZE);
+		// hints.put(RenderingHints.KEY_TEXT_ANTIALIASING,
+		// RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+	}
 
-    public Paint backGround = new Color(0xF0F0FF);
+	public Paint backGround = new Color(0xF0F0FF);
 
-    private RockSet<Pos> model;
+	private RockSet<Pos> model;
 
-    private int recentMask = -1;
+	private int recentMask = -1;
 
-    public SumDisplayBase() {
-        this(null);
-    }
+	public SumDisplayBase() {
+		this(null);
+	}
 
-    public SumDisplayBase(final RockSet<Pos> model) {
-        this.setPos(model);
-    }
+	public SumDisplayBase(final RockSet<Pos> model) {
+		this.setPos(model);
+	}
 
-    protected abstract int computeMask(final RockSet<Pos> rocks);
+	protected abstract int computeMask(final RockSet<Pos> rocks);
 
-    @Override
-    public Dimension getMaximumSize() {
-        return super.getMaximumSize();
-    }
+	@Override
+	public Dimension getMaximumSize() {
+		return super.getMaximumSize();
+	}
 
-    @Override
-    public Dimension getMinimumSize() {
-        final int d = 10;
-        return new Dimension(d, d);
-    }
+	@Override
+	public Dimension getMinimumSize() {
+		final int d = 10;
+		return new Dimension(d, d);
+	}
 
-    @Override
-    public Dimension getPreferredSize() {
-        return getMinimumSize();
-    }
+	@Override
+	public Dimension getPreferredSize() {
+		return getMinimumSize();
+	}
 
-    @Override
-    protected void paintComponent(final Graphics g) {
-        super.paintComponent(g);
-        final Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHints(hints);
-        // background
-        g2.setPaint(backGround);
-        g2.fillRect(0, 0, getWidth(), getHeight());
-        for (int i = RockSet.ROCKS_PER_COLOR - 1; i >= 0; i--) {
-            if (RockSet.isSet(recentMask, i, true))
-                paintRock(g2, i, true);
-            if (RockSet.isSet(recentMask, i, false))
-                paintRock(g2, i, false);
-        }
-    }
+	@Override
+	protected void paintComponent(final Graphics g) {
+		super.paintComponent(g);
+		final Graphics2D g2 = (Graphics2D) g;
+		g2.setRenderingHints(hints);
+		// background
+		g2.setPaint(backGround);
+		g2.fillRect(0, 0, getWidth(), getHeight());
+		for (int i = RockSet.ROCKS_PER_COLOR - 1; i >= 0; i--) {
+			if (RockSet.isSet(recentMask, i, true))
+				paintRock(g2, i, true);
+			if (RockSet.isSet(recentMask, i, false))
+				paintRock(g2, i, false);
+		}
+	}
 
-    protected void paintRock(final Graphics2D g2, final int idx8,
-            final boolean isDark) {
-        final float r = 0.35F * getWidth();
-        // vertical display:
-        final float cx = 0.5F * getWidth();
-        float cy = getHeight() / RockSet.ROCKS_PER_SET;
-        if (isDark)
-            cy *= idx8 + 0.5F;
-        else
-            cy *= RockSet.ROCKS_PER_SET - (idx8 + 0.5F);
-        g2.setPaint(isDark ? colors.dark : colors.light);
-        g2.fillArc((int) (cx - r), (int) (cy - r), (int) (2 * r),
-                (int) (2 * r), 0, 360);
-        g2.setColor(Color.BLACK);
-        g2.drawArc((int) (cx - r), (int) (cy - r), (int) (2 * r),
-                (int) (2 * r), 0, 360);
-    }
+	protected void paintRock(final Graphics2D g2, final int idx8,
+			final boolean isDark) {
+		final float r = 0.35F * getWidth();
+		// vertical display:
+		final float cx = 0.5F * getWidth();
+		float cy = getHeight() / RockSet.ROCKS_PER_SET;
+		if (isDark)
+			cy *= idx8 + 0.5F;
+		else
+			cy *= RockSet.ROCKS_PER_SET - (idx8 + 0.5F);
+		g2.setPaint(isDark ? colors.dark : colors.light);
+		g2.fillArc((int) (cx - r), (int) (cy - r), (int) (2 * r),
+				(int) (2 * r), 0, 360);
+		g2.setColor(Color.BLACK);
+		g2.drawArc((int) (cx - r), (int) (cy - r), (int) (2 * r),
+				(int) (2 * r), 0, 360);
+	}
 
-    public void stateChanged(final ChangeEvent evt) {
-        final Object tmp = evt.getSource();
-        if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass()))
-            this.setPos((RockSet<Pos>) tmp);
-        else
-            log.info(tmp);
-    }
+	public void setPos(final RockSet<Pos> rocks) {
+		if (model != null && model != rocks)
+			model.removeChangeListener(this);
+		rocks.addChangeListener(this);
+		model = rocks;
+		showRocks(computeMask(model));
+	}
 
-    public void setPos(final RockSet<Pos> rocks) {
-        if (model != null && model != rocks)
-            model.removeChangeListener(this);
-        rocks.addChangeListener(this);
-        model = rocks;
-        showRocks(computeMask(model));
-    }
+	public void setPos(final RockSet<Pos> rocks, final int discontinuous) {
+		this.setPos(rocks);
+	}
 
-    public void setPos(final RockSet<Pos> rocks, final int discontinuous) {
-        this.setPos(rocks);
-    }
+	public void showRocks(final int mask) {
+		if (mask == recentMask)
+			return;
+		recentMask = mask;
+		if (log.isDebugEnabled())
+			log.debug("mask " + recentMask);
+		this.repaint();
+	}
 
-    public void showRocks(final int mask) {
-        if (mask == recentMask)
-            return;
-        recentMask = mask;
-        if (log.isDebugEnabled())
-            log.debug("mask " + recentMask);
-        this.repaint();
-    }
+	public void stateChanged(final ChangeEvent evt) {
+		final Object tmp = evt.getSource();
+		if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass()))
+			this.setPos((RockSet<Pos>) tmp);
+		else
+			log.info(tmp);
+	}
 }

@@ -22,43 +22,43 @@ import java.awt.geom.AffineTransform;
 
 public class RockTest extends TestBase {
 
-    static Rock m2r(final AffineTransform m, Rock r) {
-        if (r == null)
-            r = new RockDouble();
-        r.setLocation(m.getTranslateX(), m.getTranslateY(), Math.asin(m
-                .getShearY()));
-        return r;
-    }
+	static Rock m2r(final AffineTransform m, Rock r) {
+		if (r == null)
+			r = new RockDouble();
+		r.setLocation(m.getTranslateX(), m.getTranslateY(), Math.asin(m
+				.getShearY()));
+		return r;
+	}
 
-    static AffineTransform r2m(final Rock r, AffineTransform m) {
-        if (m == null)
-            m = new AffineTransform();
-        else
-            m.setToIdentity();
-        m.translate(r.getX(), r.getY());
-        m.rotate(r.getA());
-        return m;
-    }
+	static AffineTransform r2m(final Rock r, AffineTransform m) {
+		if (m == null)
+			m = new AffineTransform();
+		else
+			m.setToIdentity();
+		m.translate(r.getX(), r.getY());
+		m.rotate(r.getA());
+		return m;
+	}
 
-    private void assertEquals(final double x, final double y, final double z,
-            final Rock was) {
-        assertEquals(x, was.getX());
-        assertEquals(y, was.getY());
-        assertEquals(z, was.getA());
-    }
+	private void assertEquals(final double x, final double y, final double z,
+			final Rock was) {
+		assertEquals(x, was.getX());
+		assertEquals(y, was.getY());
+		assertEquals(z, was.getA());
+	}
 
-    public void testMatrix() {
-        final Rock r = new RockDouble(0, 0, 0);
-        final AffineTransform m = new AffineTransform();
-        r.setLocation(0, 0, 0);
-        r2m(r, m);
-        m2r(m, r);
-        assertEquals(0, 0, 0, r);
+	public void testMatrix() {
+		final Rock r = new RockDouble(0, 0, 0);
+		final AffineTransform m = new AffineTransform();
+		r.setLocation(0, 0, 0);
+		r2m(r, m);
+		m2r(m, r);
+		assertEquals(0, 0, 0, r);
 
-        r.setLocation(1, 2, 1.5);
-        r2m(r, m);
-        m2r(m, r);
-        System.out.println(m);
-        assertEquals(1, 2, 1.5, r);
-    }
+		r.setLocation(1, 2, 1.5);
+		r2m(r, m);
+		m2r(m, r);
+		System.out.println(m);
+		assertEquals(1, 2, 1.5, r);
+	}
 }

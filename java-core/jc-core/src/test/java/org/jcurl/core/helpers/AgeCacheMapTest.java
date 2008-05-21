@@ -26,31 +26,31 @@ import junit.framework.TestCase;
 import org.jcurl.core.helpers.AgeCacheMap.AgeItem;
 
 public class AgeCacheMapTest extends TestCase {
-    public void testExpirer4h() {
-        final AgeCacheMap<Integer, String> m = new AgeCacheMap<Integer, String>(
-                4 * 60 * 60 * 1000L);
-        m.put(1, "1", 1);
-        m.put(2, "2", 2);
-        m.put(3, "3", 2);
-        assertEquals(3, m.size(0));
-        assertEquals(3, m.size(1));
-        assertEquals(3, m.size(2));
-        assertEquals(3, m.size(3));
-        assertEquals(3, m.size(0 + 4 * 60 * 60 * 1000L));
-        assertEquals(2, m.size(1 + 4 * 60 * 60 * 1000L));
-        assertEquals(0, m.size(2 + 4 * 60 * 60 * 1000L));
-        assertEquals(0, m.size(3 + 4 * 60 * 60 * 1000L));
-    }
+	public void testExpirer4h() {
+		final AgeCacheMap<Integer, String> m = new AgeCacheMap<Integer, String>(
+				4 * 60 * 60 * 1000L);
+		m.put(1, "1", 1);
+		m.put(2, "2", 2);
+		m.put(3, "3", 2);
+		assertEquals(3, m.size(0));
+		assertEquals(3, m.size(1));
+		assertEquals(3, m.size(2));
+		assertEquals(3, m.size(3));
+		assertEquals(3, m.size(0 + 4 * 60 * 60 * 1000L));
+		assertEquals(2, m.size(1 + 4 * 60 * 60 * 1000L));
+		assertEquals(0, m.size(2 + 4 * 60 * 60 * 1000L));
+		assertEquals(0, m.size(3 + 4 * 60 * 60 * 1000L));
+	}
 
-    public void testExpirer4hComparator() {
-        final Comparator<? super AgeItem<Integer>> comp = new AgeCacheMap<Integer, String>(
-                new TreeMap<Integer, String>(), 4 * 60 * 60 * 1000L)
-                .comparator();
-        assertEquals(-1, comp.compare(new AgeItem<Integer>(1, 1),
-                new AgeItem<Integer>(1, 2)));
-        assertEquals(1, comp.compare(new AgeItem<Integer>(1, 2),
-                new AgeItem<Integer>(1, 1)));
-        assertEquals(0, comp.compare(new AgeItem<Integer>(1, 1),
-                new AgeItem<Integer>(2, 1)));
-    }
+	public void testExpirer4hComparator() {
+		final Comparator<? super AgeItem<Integer>> comp = new AgeCacheMap<Integer, String>(
+				new TreeMap<Integer, String>(), 4 * 60 * 60 * 1000L)
+				.comparator();
+		assertEquals(-1, comp.compare(new AgeItem<Integer>(1, 1),
+				new AgeItem<Integer>(1, 2)));
+		assertEquals(1, comp.compare(new AgeItem<Integer>(1, 2),
+				new AgeItem<Integer>(1, 1)));
+		assertEquals(0, comp.compare(new AgeItem<Integer>(1, 1),
+				new AgeItem<Integer>(2, 1)));
+	}
 }

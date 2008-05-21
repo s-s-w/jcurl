@@ -28,31 +28,31 @@ import java.io.Serializable;
  */
 public abstract class R1RNFunctionImpl implements R1RNFunction, Serializable {
 
-    private final transient int dim;
+	private final transient int dim;
 
-    protected R1RNFunctionImpl(final int dim) {
-        this.dim = dim;
-    }
+	protected R1RNFunctionImpl(final int dim) {
+		this.dim = dim;
+	}
 
-    public double[] at(final int c, final double t, double[] ret) {
-        if (ret == null)
-            ret = new double[dim];
-        for (int i = dim - 1; i >= 0; i--)
-            ret[i] = this.at(i, c, t);
-        return ret;
-    }
+	public double[] at(final int c, final double t, double[] ret) {
+		if (ret == null)
+			ret = new double[dim];
+		for (int i = dim - 1; i >= 0; i--)
+			ret[i] = this.at(i, c, t);
+		return ret;
+	}
 
-    public float[] at(final int c, final double t, float[] ret) {
-        if (ret == null)
-            ret = new float[dim];
-        for (int i = dim - 1; i >= 0; i--)
-            ret[i] = (float) this.at(i, c, t);
-        return ret;
-    }
+	public float[] at(final int c, final double t, float[] ret) {
+		if (ret == null)
+			ret = new float[dim];
+		for (int i = dim - 1; i >= 0; i--)
+			ret[i] = (float) this.at(i, c, t);
+		return ret;
+	}
 
-    public abstract double at(int dim, int c, double t);
+	public abstract double at(int dim, int c, double t);
 
-    public final int dim() {
-        return dim;
-    }
+	public final int dim() {
+		return dim;
+	}
 }

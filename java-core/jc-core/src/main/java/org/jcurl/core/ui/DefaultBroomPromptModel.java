@@ -34,7 +34,8 @@ import org.jcurl.core.api.RockSet;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:BroomPromptModel.java 780 2008-03-18 11:06:30Z mrohrmoser $
  */
-public class DefaultBroomPromptModel extends MutableObject implements BroomPromptModel {
+public class DefaultBroomPromptModel extends MutableObject implements
+		BroomPromptModel {
 	private static final long serialVersionUID = 4808528753885429987L;
 	private Point2D broom = new Point2D.Float(0, 0);
 	private int idx16 = -1;
@@ -45,6 +46,11 @@ public class DefaultBroomPromptModel extends MutableObject implements BroomPromp
 
 	public DefaultBroomPromptModel() {
 		setSplitTimeMillis(new DefaultBoundedRangeModel(2000, 0, 1000, 5000));
+	}
+
+	public void addChangeListener(final ChangeListener x) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Not implemented yet.");
 	}
 
 	@Override
@@ -105,6 +111,11 @@ public class DefaultBroomPromptModel extends MutableObject implements BroomPromp
 		return result;
 	}
 
+	public void removeChangeListener(final ChangeListener x) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Not implemented yet.");
+	}
+
 	public void setBroom(final Point2D broom) {
 		final Point2D old = this.broom;
 		this.broom = broom;
@@ -114,7 +125,7 @@ public class DefaultBroomPromptModel extends MutableObject implements BroomPromp
 	public void setIdx16(int idx16) {
 		if (idx16 <= -1 || idx16 >= RockSet.ROCKS_PER_SET)
 			idx16 = -1;
-		if(this.idx16 == idx16)
+		if (this.idx16 == idx16)
 			return;
 		final int old = this.idx16;
 		this.idx16 = idx16;
@@ -137,15 +148,5 @@ public class DefaultBroomPromptModel extends MutableObject implements BroomPromp
 		final boolean old = this.valueIsAdjusting;
 		this.valueIsAdjusting = valueIsAdjusting;
 		firePropertyChange("valueIsAdjusting", old, this.valueIsAdjusting);
-	}
-
-	public void addChangeListener(ChangeListener x) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet.");
-	}
-
-	public void removeChangeListener(ChangeListener x) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet.");
 	}
 }

@@ -24,19 +24,19 @@ import javax.swing.undo.UndoableEdit;
 /** http://www.javaworld.com/javaworld/jw-06-1998/jw-06-undoredo.html */
 public interface UndoRedoDocument {
 
-    public abstract boolean addEdit(UndoableEdit edit);
+	public abstract boolean addEdit(UndoableEdit edit);
 
-    public abstract void addUndoableEditListener(UndoableEditListener l);
+	public abstract void addUndoableEditListener(UndoableEditListener l);
 
-    public abstract boolean canRedo();
+	public abstract boolean canRedo();
 
-    public abstract boolean canUndo();
+	public abstract boolean canUndo();
 
-    public abstract Iterable<UndoableEditListener> getUndoableEditListeners();
+	public abstract Iterable<UndoableEditListener> getUndoableEditListeners();
 
-    public abstract void redo();
+	public abstract void redo();
 
-    public abstract void removeUndoableEditListener(UndoableEditListener l);
+	public abstract void removeUndoableEditListener(UndoableEditListener l);
 
-    public abstract void undo();
+	public abstract void undo();
 }

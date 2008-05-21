@@ -23,7 +23,6 @@ import java.awt.geom.RectangularShape;
 
 import org.jcurl.core.api.MutableObject;
 
-
 /**
  * Smart handler for creating wc to dc transformations.
  * 
@@ -34,16 +33,16 @@ import org.jcurl.core.api.MutableObject;
 @Deprecated
 public abstract class Zoomer extends MutableObject {
 
-    /**
-     * Map the zoomer's wc viewport to the given dc viewport.
-     * 
-     * @param dc
-     *            Viewport on Screen
-     * @param mat
-     *            Matrix to add the transformation to, usually call yourself a
-     *            {@link AffineTransform#setToIdentity()}&nbsp;before.
-     * @return the transformation
-     */
-    public abstract AffineTransform computeWctoDcTrafo(
-            final RectangularShape dc, AffineTransform mat);
+	/**
+	 * Map the zoomer's wc viewport to the given dc viewport.
+	 * 
+	 * @param dc
+	 *            Viewport on Screen
+	 * @param mat
+	 *            Matrix to add the transformation to, usually call yourself a
+	 *            {@link AffineTransform#setToIdentity()}&nbsp;before.
+	 * @return the transformation
+	 */
+	public abstract AffineTransform computeWctoDcTrafo(
+			final RectangularShape dc, AffineTransform mat);
 }

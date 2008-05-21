@@ -21,33 +21,33 @@ package org.jcurl.mr.gui;
 import javax.swing.JApplet;
 
 public class MiniApplet extends JApplet {
-    private static final long serialVersionUID = 3824028361032089717L;
+	private static final long serialVersionUID = 3824028361032089717L;
 
-    public MiniApplet() {
-        // FIXME make functional again.
-        // final PositionDisplay p = new PositionDisplay();
-        // getContentPane().add(p);
-        // // p.setPos(PositionSet.allOut());
-        // TacticsApplet.initHammy(p.getPos(), new SpeedSet());
-    }
+	public MiniApplet() {
+	// FIXME make functional again.
+	// final PositionDisplay p = new PositionDisplay();
+	// getContentPane().add(p);
+	// // p.setPos(PositionSet.allOut());
+	// TacticsApplet.initHammy(p.getPos(), new SpeedSet());
+	}
 
-    @Override
-    public void destroy() {
-        super.destroy();
-    }
+	@Override
+	public void destroy() {
+		super.destroy();
+	}
 
-    @Override
-    public void init() {
-        super.init();
-    }
+	@Override
+	public void init() {
+		super.init();
+	}
 
-    @Override
-    public void start() {
-        super.start();
-    }
+	@Override
+	public void start() {
+		super.start();
+	}
 
-    @Override
-    public void stop() {
-        super.stop();
-    }
+	@Override
+	public void stop() {
+		super.stop();
+	}
 }

@@ -44,6 +44,21 @@ public interface Curler extends Factory, Strategy, PropModel {
 	double computeIntervalTime(final CurveRock<Pos> wc);
 
 	/**
+	 * Create rock-coordinate curves for running rocks.
+	 * 
+	 * @param a0
+	 *            Initial handle angle (RC).
+	 * @param v0
+	 *            Initial Speed (RC or WC absolute)
+	 * @param omega0
+	 *            Initial angular handle speed (either WC or RC)
+	 * @param sweepFactor
+	 * @return trajectory (RC)
+	 */
+	CurveRock<Pos> computeRc(double a0, double v0, double omega0,
+			double sweepFactor);
+
+	/**
 	 * Release a rock.
 	 * 
 	 * @param broom
@@ -58,20 +73,6 @@ public interface Curler extends Factory, Strategy, PropModel {
 	 */
 	CurveRock<Pos> computeWc(Point2D broom, double splitTime, double a0,
 			double omega0, double sweepFactor);
-
-	/**
-	 * Create rock-coordinate curves for running rocks.
-	 * 
-	 * @param a0
-	 *            Initial handle angle (RC).
-	 * @param v0
-	 *            Initial Speed (RC or WC absolute)
-	 * @param omega0
-	 *            Initial angular handle speed (either WC or RC)
-	 * @param sweepFactor
-	 * @return trajectory (RC)
-	 */
-	CurveRock<Pos> computeRc(double a0, double v0, double omega0, double sweepFactor);
 
 	double getDrawToTeeCurl();
 

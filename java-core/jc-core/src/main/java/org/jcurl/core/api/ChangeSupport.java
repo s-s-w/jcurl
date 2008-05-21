@@ -5,7 +5,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
-
 /**
  * Inspired by {@link BoundedRangeModel}.
  */
@@ -45,6 +44,7 @@ public class ChangeSupport implements IChangeSupport {
 	/**
 	 * Runs each <code>ChangeListener</code>'s <code>stateChanged</code>
 	 * method.
+	 * 
 	 * @see EventListenerList
 	 */
 	public void fireStateChanged() {

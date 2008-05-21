@@ -28,18 +28,18 @@ import org.jcurl.core.api.RockType.Pos;
  */
 class SumOutDisplay extends SumDisplayBase {
 
-    private static final long serialVersionUID = 2862725525779204760L;
+	private static final long serialVersionUID = 2862725525779204760L;
 
-    public SumOutDisplay() {
-        super();
-    }
+	public SumOutDisplay() {
+		super();
+	}
 
-    public SumOutDisplay(final RockSet<Pos> model) {
-        super(model);
-    }
+	public SumOutDisplay(final RockSet<Pos> model) {
+		super(model);
+	}
 
-    @Override
-    protected int computeMask(final RockSet<Pos> rocks) {
-        return PositionSet.getOutRocks(rocks);
-    }
+	@Override
+	protected int computeMask(final RockSet<Pos> rocks) {
+		return PositionSet.getOutRocks(rocks);
+	}
 }

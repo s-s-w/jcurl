@@ -29,54 +29,54 @@ import org.picocontainer.defaults.DefaultPicoContainer;
 
 public class PicoDemoTest extends TestCase {
 
-    public static class A {
-        public final B b;
+	public static class A {
+		public final B b;
 
-        public A(final B b) {
-            this.b = b;
-        }
-    }
+		public A(final B b) {
+			this.b = b;
+		}
+	}
 
-    public static class B {
-        public final String c;
+	public static class B {
+		public final String c;
 
-        public B(final String c) {
-            this.c = c;
-        }
-    }
+		public B(final String c) {
+			this.c = c;
+		}
+	}
 
-    public void test0() {
-        MutablePicoContainer pico = new DefaultPicoContainer();
-        pico.registerComponentImplementation(A.class);
-        pico.registerComponentImplementation(B.class);
-        pico.registerComponentImplementation(String.class);
-        A a = (A) pico.getComponentInstance(A.class);
-        assertEquals("", a.b.c);
+	public void test0() {
+		MutablePicoContainer pico = new DefaultPicoContainer();
+		pico.registerComponentImplementation(A.class);
+		pico.registerComponentImplementation(B.class);
+		pico.registerComponentImplementation(String.class);
+		A a = (A) pico.getComponentInstance(A.class);
+		assertEquals("", a.b.c);
 
-        pico = new DefaultPicoContainer();
-        pico.registerComponentImplementation(A.class);
-        pico.registerComponentImplementation(B.class);
-        pico.registerComponentInstance("Hello, world!");
-        a = (A) pico.getComponentInstance(A.class);
-        assertEquals("Hello, world!", a.b.c);
-        pico.dispose();
-        assertNotNull(pico.getComponentInstance(A.class));
-    }
+		pico = new DefaultPicoContainer();
+		pico.registerComponentImplementation(A.class);
+		pico.registerComponentImplementation(B.class);
+		pico.registerComponentInstance("Hello, world!");
+		a = (A) pico.getComponentInstance(A.class);
+		assertEquals("Hello, world!", a.b.c);
+		pico.dispose();
+		assertNotNull(pico.getComponentInstance(A.class));
+	}
 
-    public void test1() {
-        final PicoContainer pico;
-        {
-            final MutablePicoContainer paco = new DefaultPicoContainer();
-            pico = paco;
-            paco.registerComponentImplementation(CurlerNoCurl.class);
-            paco.registerComponentImplementation(CurlerDenny.class);
-            paco.unregisterComponent(CurlerNoCurl.class);
-        }
-        assertNull(pico.getComponentInstance(Curler.class));
-        Object o = pico.getComponentInstance(CurlerDenny.class);
-        assertNotNull(o);
-        o = pico.getComponentInstanceOfType(Curler.class);
-        assertNotNull(o);
-        pico.dispose();
-    }
+	public void test1() {
+		final PicoContainer pico;
+		{
+			final MutablePicoContainer paco = new DefaultPicoContainer();
+			pico = paco;
+			paco.registerComponentImplementation(CurlerNoCurl.class);
+			paco.registerComponentImplementation(CurlerDenny.class);
+			paco.unregisterComponent(CurlerNoCurl.class);
+		}
+		assertNull(pico.getComponentInstance(Curler.class));
+		Object o = pico.getComponentInstance(CurlerDenny.class);
+		assertNotNull(o);
+		o = pico.getComponentInstanceOfType(Curler.class);
+		assertNotNull(o);
+		pico.dispose();
+	}
 }

@@ -85,7 +85,8 @@ public class XmlTest extends TestCase {
 			de.readObject();
 			fail();
 		} catch (final Exception e) {
-			assertEquals("java.lang.ArrayIndexOutOfBoundsException", e.getClass().getName());
+			assertEquals("java.lang.ArrayIndexOutOfBoundsException", e
+					.getClass().getName());
 		}
 	}
 }

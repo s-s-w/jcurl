@@ -17,7 +17,7 @@
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.jcurl.demo.tactics;
+package org.jcurl.demo.tactics.old;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -28,7 +28,8 @@ import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.Unit;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.demo.tactics.ActionRegistry.JCAction;
+import org.jcurl.demo.tactics.Zoomable;
+import org.jcurl.demo.tactics.old.ActionRegistry.JCAction;
 
 /**
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>

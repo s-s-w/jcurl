@@ -23,21 +23,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class IONode implements Serializable {
-    private static final long serialVersionUID = -4734020637823903908L;
-    private final Map<CharSequence, CharSequence> annotations;
-	public static final String CreatedByUser = "org.jcurl.core.io.CreatedByUser";
 	public static final String CreatedByProgram = "org.jcurl.core.io.CreatedByProgram";
+	public static final String CreatedByUser = "org.jcurl.core.io.CreatedByUser";
+	private static final long serialVersionUID = -4734020637823903908L;
+	private final Map<CharSequence, CharSequence> annotations;
 
-    public IONode() {
-        this(null);
-    }
+	public IONode() {
+		this(null);
+	}
 
-    public IONode(final Map<CharSequence, CharSequence> annotations) {
-        this.annotations = annotations == null ? new HashMap<CharSequence, CharSequence>()
-                : annotations;
-    }
+	public IONode(final Map<CharSequence, CharSequence> annotations) {
+		this.annotations = annotations == null ? new HashMap<CharSequence, CharSequence>()
+				: annotations;
+	}
 
-    public Map<CharSequence, CharSequence> annotations() {
-        return annotations;
-    }
+	public Map<CharSequence, CharSequence> annotations() {
+		return annotations;
+	}
 }

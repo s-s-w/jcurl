@@ -29,11 +29,11 @@ import junit.framework.TestCase;
  */
 public class CollissionSpinLossTest extends TestCase {
 
-    public static void main(final String[] args) {
-        junit.textui.TestRunner.run(CollissionSpinLossTest.class);
-    }
+	public static void main(final String[] args) {
+		junit.textui.TestRunner.run(CollissionSpinLossTest.class);
+	}
 
-    public void test010() {
+	public void test010() {
 
-    }
+	}
 }

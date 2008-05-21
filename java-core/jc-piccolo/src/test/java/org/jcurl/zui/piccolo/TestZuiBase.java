@@ -30,60 +30,60 @@ import edu.umd.cs.piccolo.util.PPaintContext;
 
 public abstract class TestZuiBase extends TestShowBase {
 
-    private static final Log log = JCLoggerFactory.getLogger(TestZuiBase.class);
+	private static final Log log = JCLoggerFactory.getLogger(TestZuiBase.class);
 
-    private static final long serialVersionUID = -8485372274509187133L;
+	private static final long serialVersionUID = -8485372274509187133L;
 
-    protected final PNode ice;
+	protected final PNode ice;
 
-    protected final PCanvas pico;
+	protected final PCanvas pico;
 
-    public TestZuiBase() {
-        this(800, 600);
-    }
+	public TestZuiBase() {
+		this(800, 600);
+	}
 
-    public TestZuiBase(final int dx, final int dy) {
-        super(dx, dy);
-        if (frame != null) {
-            frame.getContentPane().add(pico = new PCanvas());
-            pico.setBackground(new Color(0xE8E8FF));
-            pico
-                    .setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-            pico
-                    .setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-            final PCamera cam = pico.getCamera();
-            pico.getRoot().getDefaultInputManager().setKeyboardFocus(
-                    new KeyboardZoom(cam));
+	public TestZuiBase(final int dx, final int dy) {
+		super(dx, dy);
+		if (frame != null) {
+			frame.getContentPane().add(pico = new PCanvas());
+			pico.setBackground(new Color(0xE8E8FF));
+			pico
+					.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+			pico
+					.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+			final PCamera cam = pico.getCamera();
+			pico.getRoot().getDefaultInputManager().setKeyboardFocus(
+					new KeyboardZoom(cam));
 
-            pico.getLayer().addChild(
-                    ice = new PIceFactory.Fancy().newInstance());
+			pico.getLayer().addChild(
+					ice = new PIceFactory.Fancy().newInstance());
 
-            frame.setVisible(true);
-            // start with a sensible viewport:
-            cam.animateViewToCenterBounds(KeyboardZoom.HousePlus, true, 1);
-            frame.setVisible(false);
-        } else {
-            pico = null;
-            ice = null;
-        }
-    }
+			frame.setVisible(true);
+			// start with a sensible viewport:
+			cam.animateViewToCenterBounds(KeyboardZoom.HousePlus, true, 1);
+			frame.setVisible(false);
+		} else {
+			pico = null;
+			ice = null;
+		}
+	}
 
-    public int show(final long millis, final TimeRunnable r) {
-        if (frame == null)
-            return -1;
-        frame.setVisible(true);
+	public int show(final long millis, final TimeRunnable r) {
+		if (frame == null)
+			return -1;
+		frame.setVisible(true);
 
-        final long t0 = System.currentTimeMillis();
-        int loop = 0;
-        try {
-            while (System.currentTimeMillis() - t0 < millis) {
-                r.run(1e-3 * (System.currentTimeMillis() - t0), null);
-                loop++;
-            }
-        } catch (final InterruptedException e) {
-            log.warn("Oops", e);
-        }
-        frame.setVisible(false);
-        return loop;
-    }
+		final long t0 = System.currentTimeMillis();
+		int loop = 0;
+		try {
+			while (System.currentTimeMillis() - t0 < millis) {
+				r.run(1e-3 * (System.currentTimeMillis() - t0), null);
+				loop++;
+			}
+		} catch (final InterruptedException e) {
+			log.warn("Oops", e);
+		}
+		frame.setVisible(false);
+		return loop;
+	}
 }

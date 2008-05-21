@@ -23,23 +23,23 @@ import org.jcurl.zui.piccolo.PRockNode.DragHandler;
 
 public class PiccoloBasicTest extends TestZuiBase {
 
-    private static final long serialVersionUID = -8485372274509187133L;
+	private static final long serialVersionUID = -8485372274509187133L;
 
-    public void testThroughPut() throws InterruptedException {
-        if (frame == null)
-            return;
+	public void testThroughPut() throws InterruptedException {
+		if (frame == null)
+			return;
 
-        // add some curling stuff:
-        final PPositionSet initial = new PPositionSet(new PRockFactory.Simple());
-        initial.setModel(PositionSet.allHome());
-        ice.addChild(initial);
-        initial.addInputEventListener(new DragHandler());
-        final PPositionSet end = new PPositionSet(new PRockFactory.Fancy(10));
-        end.setModel(PositionSet.allOut());
-        ice.addChild(end);
+		// add some curling stuff:
+		final PPositionSet initial = new PPositionSet(new PRockFactory.Simple());
+		initial.setModel(PositionSet.allHome());
+		ice.addChild(initial);
+		initial.addInputEventListener(new DragHandler());
+		final PPositionSet end = new PPositionSet(new PRockFactory.Fancy(10));
+		end.setModel(PositionSet.allOut());
+		ice.addChild(end);
 
-        frame.setVisible(true);
-        while (frame.isVisible())
-            Thread.sleep(100);
-    }
+		frame.setVisible(true);
+		while (frame.isVisible())
+			Thread.sleep(100);
+	}
 }

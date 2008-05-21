@@ -31,20 +31,20 @@ import junit.framework.TestCase;
  */
 public class CurveTest extends TestCase {
 
-    public void test010() {
-        final Polynome po = Polynome.getPoly(1.0, 2.0, 3.0, 4.0);
-        assertEquals("", 2.0, po.at(0, 1.0), 1e-9);
-        assertEquals("", 4.0, po.at(0, 1.5), 1e-9);
-        assertEquals("", 7.0, po.at(0, 2.0), 1e-9);
-    }
+	public void test010() {
+		final Polynome po = Polynome.getPoly(1.0, 2.0, 3.0, 4.0);
+		assertEquals("", 2.0, po.at(0, 1.0), 1e-9);
+		assertEquals("", 4.0, po.at(0, 1.5), 1e-9);
+		assertEquals("", 7.0, po.at(0, 2.0), 1e-9);
+	}
 
-    public void test020_CurveParts() {
-        final CurveCombined c = new CurveCombined(1);
-        // c.getC(0, 0, 0.1);
-        c.add(0, Polynome.getPoly(0.0, 2.0, 3.0, 4.0), true);
-        c.at(0, 0, 0.1);
-        c.add(1, Polynome.getPoly(1.0, 2.0, 3.0, 4.0), true);
-        c.at(0, 0, 0.1);
-        c.at(0, 0, 1.1);
-    }
+	public void test020_CurveParts() {
+		final CurveCombined c = new CurveCombined(1);
+		// c.getC(0, 0, 0.1);
+		c.add(0, Polynome.getPoly(0.0, 2.0, 3.0, 4.0), true);
+		c.at(0, 0, 0.1);
+		c.add(1, Polynome.getPoly(1.0, 2.0, 3.0, 4.0), true);
+		c.at(0, 0, 0.1);
+		c.at(0, 0, 1.1);
+	}
 }
