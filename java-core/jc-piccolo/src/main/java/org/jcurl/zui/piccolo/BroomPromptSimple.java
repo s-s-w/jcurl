@@ -23,7 +23,7 @@ import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.ui.DefaultBroomPromptModel;
+import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.UndoRedoDocument;
 import org.jcurl.math.MathVec;
 
@@ -34,7 +34,7 @@ import edu.umd.cs.piccolo.nodes.PPath;
 import edu.umd.cs.piccolo.util.PPaintContext;
 import edu.umd.cs.piccolo.util.PPickPath;
 
-/** Piccolo View + Controller for {@link DefaultBroomPromptModel}s. */
+/** Piccolo View + Controller for {@link BroomPromptModel}s. */
 public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 		ChangeListener {
 	private static final Color dark = Color.RED;
@@ -137,7 +137,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 	}
 
 	private final PNode handle;
-	private DefaultBroomPromptModel model;
+	private BroomPromptModel model;
 	private final PNode pie;
 	private final PPath slider;
 	private final float stickLength;
@@ -331,7 +331,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 		// FIXME getModel().firePropertyChange("splitTimeMillis", r, r);
 	}
 
-	public DefaultBroomPromptModel getModel() {
+	public BroomPromptModel getModel() {
 		return model;
 	}
 
@@ -381,14 +381,16 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 		pie.invalidatePaint();
 	}
 
-	public void setModel(final DefaultBroomPromptModel model) {
+	public void setModel(final BroomPromptModel model) {
+		if (this.model == model)
+			return;
 		if (this.model != null) {
 			this.model.removePropertyChangeListener(this);
 			if (this.model.getSplitTimeMillis() != null)
 				this.model.getSplitTimeMillis().removeChangeListener(this);
 		}
 		this.model = model;
-		setVisible(this.model != null);
+		setVisible(this.model != null && model.getBroom() != null);
 		if (this.model != null) {
 			setBroom(this.model.getBroom());
 			setIdx16(this.model.getIdx16());

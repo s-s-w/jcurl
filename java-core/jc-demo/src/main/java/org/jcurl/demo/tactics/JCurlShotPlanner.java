@@ -68,7 +68,6 @@ import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.TrajectorySet;
 import org.jcurl.core.api.Unit;
-import org.jcurl.core.impl.CurveManager;
 import org.jcurl.core.io.IONode;
 import org.jcurl.core.io.IOTrajectories;
 import org.jcurl.core.io.JCurlSerializer;
@@ -853,14 +852,14 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 				return;
 
 			cm.deregister(tactics.getCurves());
-			final CurveManager cts;
+			final ComputedTrajectorySet cts;
 			if (this.document == null)
 				cts = null;
 			else {
 				final IONode n = new JCurlSerializer().read(this.document);
 				final IOTrajectories it = (IOTrajectories) n;
 				final TrajectorySet ts = it.trajectories().get(0);
-				cts = (CurveManager) ts;
+				cts = (ComputedTrajectorySet) ts;
 			}
 			if (cts != null)
 				cts.setCurrentTime(currentTime);

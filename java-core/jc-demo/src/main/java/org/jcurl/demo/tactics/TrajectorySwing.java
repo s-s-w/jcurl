@@ -30,9 +30,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 
-import org.jcurl.core.impl.CurveManager;
+import org.jcurl.core.api.ComputedTrajectorySet;
 import org.jcurl.core.ui.BroomPromptModel;
-import org.jcurl.core.ui.DefaultBroomPromptModel;
 
 /**
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
@@ -132,17 +131,17 @@ public class TrajectorySwing extends JComponent implements TrajectoryDisplay {
 		throw new UnsupportedOperationException("Not implemented yet.");
 	}
 
-	public CurveManager getCurves() {
+	public ComputedTrajectorySet getCurves() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Not implemented yet.");
 	}
 
-	public void setBroom(final DefaultBroomPromptModel b) {
+	public void setBroom(final BroomPromptModel b) {
 		// TODO Auto-generated method stub
 		// throw new UnsupportedOperationException("Not implemented yet.");
 	}
 
-	public void setCurves(final CurveManager b) {
+	public void setCurves(final ComputedTrajectorySet b) {
 		// TODO Auto-generated method stub
 //		throw new UnsupportedOperationException("Not implemented yet.");
 

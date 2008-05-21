@@ -34,6 +34,7 @@ import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.Unit;
 import org.jcurl.core.log.JCLoggerFactory;
+import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.DefaultBroomPromptModel;
 import org.jcurl.zui.piccolo.BroomPromptSimple;
 import org.jcurl.zui.piccolo.KeyboardZoom;
@@ -107,7 +108,7 @@ public class BroomPromptDemo {
 				animateToBounds(pc.getCamera(), twelveP, 500);
 				final BroomPromptSimple bp;
 				ice.addChild(bp = new BroomPromptSimple());
-				final DefaultBroomPromptModel bpm;
+				final BroomPromptModel bpm;
 				bp.setModel(bpm = new DefaultBroomPromptModel());
 				bpm.addPropertyChangeListener(new PropertyChangeListener() {
 					public void propertyChange(final PropertyChangeEvent evt) {

@@ -19,21 +19,18 @@
 
 package org.jcurl.demo.tactics;
 
-import org.jcurl.core.impl.CurveManager;
-import org.jcurl.core.ui.BroomPromptModel;
-import org.jcurl.core.ui.DefaultBroomPromptModel;
+import org.jcurl.core.api.ComputedTrajectorySet;
+
 
 /**
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 interface TrajectoryDisplay {
-	BroomPromptModel getBroom();
 
-	CurveManager getCurves();
+	ComputedTrajectorySet getCurves();
 
-	void setBroom(DefaultBroomPromptModel b);
 
-	void setCurves(final CurveManager model);
+	void setCurves(final ComputedTrajectorySet model);
 
 }

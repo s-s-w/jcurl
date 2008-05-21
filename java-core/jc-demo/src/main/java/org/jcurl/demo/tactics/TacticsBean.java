@@ -25,7 +25,7 @@ import java.awt.geom.RectangularShape;
 
 import javax.swing.JComponent;
 
-import org.jcurl.core.impl.CurveManager;
+import org.jcurl.core.api.ComputedTrajectorySet;
 
 /**
  * Tactics Panel Bean. Aggregates a graphics display plus swing-widget based
@@ -63,11 +63,11 @@ public class TacticsBean extends JComponent implements Zoomable {
 		tp.setZoom(zoom);
 	}
 
-	public CurveManager getCurves() {
+	public ComputedTrajectorySet getCurves() {
 		return tp.getCurves();
 	}
 
-	public void setCurves(CurveManager curves) {
+	public void setCurves(ComputedTrajectorySet curves) {
 		tp.setCurves(curves);
 	}
 }

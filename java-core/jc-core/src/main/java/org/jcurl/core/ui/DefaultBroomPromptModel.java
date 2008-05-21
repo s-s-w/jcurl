@@ -114,6 +114,8 @@ public class DefaultBroomPromptModel extends MutableObject implements BroomPromp
 	public void setIdx16(int idx16) {
 		if (idx16 <= -1 || idx16 >= RockSet.ROCKS_PER_SET)
 			idx16 = -1;
+		if(this.idx16 == idx16)
+			return;
 		final int old = this.idx16;
 		this.idx16 = idx16;
 		firePropertyChange("idx16", old, this.idx16);

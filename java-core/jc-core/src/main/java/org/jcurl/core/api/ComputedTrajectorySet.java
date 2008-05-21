@@ -30,39 +30,41 @@ import org.jcurl.math.R1RNFunction;
  */
 public interface ComputedTrajectorySet extends TrajectorySet {
 
-    public abstract Collider getCollider();
+	Collider getCollider();
 
-    public abstract CollissionDetector getCollissionDetector();
+	CollissionDetector getCollissionDetector();
 
-    public abstract Curler getCurler();
+	Curler getCurler();
 
-    public abstract RockSet<Pos> getInitialPos();
+	CurveStore getCurveStore();
 
-    public abstract RockSet<Vel> getInitialSpeed();
+	RockSet<Pos> getInitialPos();
 
-    public abstract void setCollider(final Collider collider);
+	RockSet<Vel> getInitialSpeed();
 
-    public abstract void setCollissionDetector(
-            final CollissionDetector collissionDetector);
+	void setCollider(final Collider collider);
 
-    public abstract void setCurler(final Curler curler);
+	void setCollissionDetector(final CollissionDetector collissionDetector);
 
-    /**
-     * Currently the internal reference MUST be final, so this updates via
-     * {@link RockSet#setLocation(RockSet)}. This is the case to simplify
-     * event controllers.
-     * 
-     * @param initialPos
-     */
-    public abstract void setInitialPos(final RockSet<Pos> initialPos);
+	void setCurler(final Curler curler);
 
-    /**
-     * Currently the internal reference MUST be final, so this updates via
-     * {@link RockSet#setLocation(RockSet)}. This is the case to simplify
-     * event controllers.
-     * 
-     * @param initialSpeed
-     */
-    public abstract void setInitialSpeed(final RockSet<Vel> initialSpeed);
+	void setCurveStore(final CurveStore curveStore);
 
+	/**
+	 * Currently the internal reference MUST be final, so this updates via
+	 * {@link RockSet#setLocation(RockSet)}. This is the case to simplify event
+	 * controllers.
+	 * 
+	 * @param initialPos
+	 */
+	void setInitialPos(final RockSet<Pos> initialPos);
+
+	/**
+	 * Currently the internal reference MUST be final, so this updates via
+	 * {@link RockSet#setLocation(RockSet)}. This is the case to simplify event
+	 * controllers.
+	 * 
+	 * @param initialSpeed
+	 */
+	void setInitialSpeed(final RockSet<Vel> initialSpeed);
 }

@@ -33,6 +33,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.api.ComputedTrajectorySet;
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.RockDouble;
@@ -294,11 +295,11 @@ public class MenuFile {
 
 	public static class Model {
 		private File file;
-		private CurveManager tpm;
+		private ComputedTrajectorySet tpm;
 
-		public CurveManager createHammy(final Object context) {
+		public ComputedTrajectorySet createHammy(final Object context) {
 			// This cast just eases code navigation. Remove it later.
-			final CurveManager ret = initHammy(tpm);
+			final ComputedTrajectorySet ret = initHammy(tpm);
 			ret.setCurrentTime(30);
 			setTpm(ret);
 			return ret;
@@ -327,48 +328,48 @@ public class MenuFile {
 
 		public void exportSvg(final Component src, File dst) throws IOException {
 			throw new NotImplementedYetException();
-//			if (false) {
-//				if (!dst.getName().endsWith(".svg"))
-//					dst = new File(dst.getAbsoluteFile() + ".svg");
-//				final Graphics g = Graphics2Svg.createGraphics(src.getWidth(),
-//						src.getHeight(), dst);
-//				try {
-//					src.paintAll(g);
-//				} finally {
-//					g.dispose();
-//				}
-//			} else {
-//				final BufferedImage img = new BufferedImage(src.getWidth(), src
-//						.getHeight(), BufferedImage.TYPE_INT_ARGB);
-//				final Graphics g;
-//				if (false)
-//					g = new Graphics2DWrap(img.createGraphics());
-//				else
-//					g = new Graphics2DWrap(src.getGraphics());
-//				try {
-//					src.paintAll(g);
-//				} finally {
-//					g.dispose();
-//				}
-//				// if (!dst.getName().endsWith(".png"))
-//				// dst = new File(dst.getAbsoluteFile() + ".png");
-//				// ImageIO.write(img, "png", dst);
-//			}
+			// if (false) {
+			// if (!dst.getName().endsWith(".svg"))
+			// dst = new File(dst.getAbsoluteFile() + ".svg");
+			// final Graphics g = Graphics2Svg.createGraphics(src.getWidth(),
+			// src.getHeight(), dst);
+			// try {
+			// src.paintAll(g);
+			// } finally {
+			// g.dispose();
+			// }
+			// } else {
+			// final BufferedImage img = new BufferedImage(src.getWidth(), src
+			// .getHeight(), BufferedImage.TYPE_INT_ARGB);
+			// final Graphics g;
+			// if (false)
+			// g = new Graphics2DWrap(img.createGraphics());
+			// else
+			// g = new Graphics2DWrap(src.getGraphics());
+			// try {
+			// src.paintAll(g);
+			// } finally {
+			// g.dispose();
+			// }
+			// // if (!dst.getName().endsWith(".png"))
+			// // dst = new File(dst.getAbsoluteFile() + ".png");
+			// // ImageIO.write(img, "png", dst);
+			// }
 		}
 
 		public File getFile() {
 			return file;
 		}
 
-		public CurveManager getTpm() {
+		public ComputedTrajectorySet getTpm() {
 			return tpm;
 		}
 
-		CurveManager open(final Object context, final File src)
+		ComputedTrajectorySet open(final Object context, final File src)
 				throws IOException {
 			final IONode n = new JCurlSerializer().read(src);
 			final IOTrajectories it = (IOTrajectories) n;
-			setTpm((CurveManager) it.trajectories().get(0));
+			setTpm((ComputedTrajectorySet) it.trajectories().get(0));
 			setFile(src);
 			tpm.setCurrentTime(30);
 			return tpm;
@@ -387,7 +388,7 @@ public class MenuFile {
 			this.file = file;
 		}
 
-		public void setTpm(final CurveManager tpm) {
+		public void setTpm(final ComputedTrajectorySet tpm) {
 			this.tpm = tpm;
 		}
 	}
@@ -397,7 +398,7 @@ public class MenuFile {
 	private static final Cursor waitc = Cursor
 			.getPredefinedCursor(Cursor.WAIT_CURSOR);
 
-	static CurveManager initHammy(CurveManager te) {
+	static ComputedTrajectorySet initHammy(ComputedTrajectorySet te) {
 		if (te == null)
 			te = new CurveManager();
 		te.setCollider(new CollissionSpin(0.5, 0.0));
