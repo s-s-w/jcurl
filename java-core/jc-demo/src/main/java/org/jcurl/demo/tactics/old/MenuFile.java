@@ -52,7 +52,7 @@ import org.jcurl.core.io.IOTrajectories;
 import org.jcurl.core.io.JCurlSerializer;
 import org.jcurl.core.io.JDKSerializer;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.demo.tactics.TrajectoryPiccolo;
+import org.jcurl.demo.tactics.TrajectoryPiccoloBean;
 import org.jcurl.demo.tactics.old.ActionRegistry.JCAction;
 
 /**
@@ -112,10 +112,10 @@ public class MenuFile {
 		private Model model = new Model();
 		private final Component parent;
 		private final Component shootable;
-		private final TrajectoryPiccolo td;
+		private final TrajectoryPiccoloBean td;
 
 		public Controller(final Component parent, final Component shootable,
-				final TrajectoryPiccolo td) {
+				final TrajectoryPiccoloBean td) {
 			this.parent = parent;
 			this.shootable = shootable;
 			this.td = td;

@@ -30,6 +30,7 @@ import java.awt.geom.Arc2D;
 import org.jcurl.core.api.Factory;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockProps;
+import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.RockType.Pos;
 
 import edu.umd.cs.piccolo.PNode;
@@ -167,6 +168,6 @@ public abstract class PRockFactory implements Factory {
 			Rock<Pos> rock);
 
 	public PRockNode newInstance(final int i16, final Rock<Pos> rock) {
-		return newInstance(i16 / 2, i16 % 2 == 0, rock);
+		return newInstance(RockSet.toIdx8(i16), RockSet.isDark(i16), rock);
 	}
 }

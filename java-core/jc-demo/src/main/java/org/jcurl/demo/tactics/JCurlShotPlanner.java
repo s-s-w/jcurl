@@ -41,8 +41,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -204,14 +202,13 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			return fc;
 		}
 
-		private JFileChooser createFileChooser(final File base,
+		private FileNameExtensionFilter createFileFilter(
 				final String resourceName, final String... extensions) {
 			final ResourceMap appResourceMap = getContext().getResourceMap();
-			final String key = resourceName + "_description";
+			final String key = resourceName + ".description";
 			final String desc = appResourceMap.getString(key);
-			return createFileChooser(base, resourceName,
-					new FileNameExtensionFilter(desc == null ? key : desc,
-							extensions));
+			return new FileNameExtensionFilter(desc == null ? key : desc,
+					extensions);
 		}
 
 		private JMenu createMenu(final String menuName,
@@ -228,6 +225,14 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 					menu.add(menuItem);
 				}
 			return menu;
+		}
+
+		private File ensureSuffix(final File dst,
+				final FileNameExtensionFilter pat) {
+			if (pat.accept(dst))
+				return dst;
+			return new File(dst.getAbsoluteFile() + "."
+					+ pat.getExtensions()[0]);
 		}
 
 		private javax.swing.Action findAction(final String actionName) {
@@ -343,48 +348,22 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	}
 
 	private static final BatikButler batik = new BatikButler();
-
 	private static final double currentTime = 30;
-
 	private static final int FAST = 200;
-
 	private static URL initialScene = null;
-
-	private static final Pattern jcxzPat = Pattern.compile("^.*\\.jc[xz]$");
-
 	private static final Log log = JCLoggerFactory
 			.getLogger(JCurlShotPlanner.class);
-
-	private static final Pattern pngPat = Pattern.compile("^.*\\.png$");
-
 	private static final int SLOW = 333;
-	private static final Pattern svgPat = Pattern.compile("^.*\\.svgz?$");
 	private static URL templateScene = null;
 	private static final Cursor waitc = Cursor
 			.getPredefinedCursor(Cursor.WAIT_CURSOR);
 	private static final ZoomHelper zh = new ZoomHelper();
-
-	/** TODO integrate with {@link FileNameExtensionFilter} */
-	private static File ensureSuffix(File dst, final Pattern pat,
-			final String suffix) {
-		final Matcher m = pat.matcher(dst.getName());
-		if (!m.matches())
-			dst = new File(dst.getAbsoluteFile() + suffix);
-		return dst;
-	}
 
 	public static void main(final String[] args) {
 		// for debugging reasons only:
 		Locale.setDefault(Locale.CANADA);
 		launch(JCurlShotPlanner.class, args);
 	}
-
-	// static void bind(final Object src, final String src_p, final Object dst,
-	// final String dst_p) {
-	// Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, src,
-	// BeanProperty.create(src_p), dst, BeanProperty.create(dst_p))
-	// .bind();
-	// }
 
 	private static void renderPng(final Container src, final File dst)
 			throws IOException {
@@ -400,8 +379,14 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	}
 
 	private JDialog aboutBox = null;
-
 	private final ChangeManager cm = new ChangeManager(this);
+
+	// static void bind(final Object src, final String src_p, final Object dst,
+	// final String dst_p) {
+	// Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, src,
+	// BeanProperty.create(src_p), dst, BeanProperty.create(dst_p))
+	// .bind();
+	// }
 
 	private URL document;
 
@@ -409,9 +394,15 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 	private final GuiUtil gui = new GuiUtil(getContext());
 
+	private FileNameExtensionFilter jcxzPat;
+
 	private boolean modified = false;
 
-	private final TrajectoryPiccolo tactics = new TrajectoryPiccolo();
+	private FileNameExtensionFilter pngPat;
+
+	private FileNameExtensionFilter svgPat;
+
+	private final TrajectoryPiccoloBean tactics = new TrajectoryPiccoloBean();
 
 	private final JLabel url = new JLabel();
 
@@ -469,7 +460,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	}
 
 	private JFileChooser createJcxChooser(final File base, final String name) {
-		return gui.createFileChooser(base, name, "jcz", "jcx");
+		return gui.createFileChooser(base, name, jcxzPat);
 	}
 
 	private JMenuBar createMenuBar() {
@@ -498,11 +489,11 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	};
 
 	private JFileChooser createPngChooser(final File base, final String name) {
-		return gui.createFileChooser(base, name, "png");
+		return gui.createFileChooser(base, name, pngPat);
 	}
 
 	private JFileChooser createSvgChooser(final File base, final String name) {
-		return gui.createFileChooser(base, name, "svgz", "svg");
+		return gui.createFileChooser(base, name, svgPat);
 	};
 
 	private JComponent createToolBar() {
@@ -555,8 +546,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			if (JFileChooser.APPROVE_OPTION != fcPng
 					.showSaveDialog(getMainFrame()))
 				return null;
-			final File dst = ensureSuffix(fcPng.getSelectedFile(), pngPat,
-					".png");
+			final File dst = gui.ensureSuffix(fcPng.getSelectedFile(), pngPat);
 			if (!askOverwrite(dst))
 				continue;
 
@@ -579,8 +569,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			if (JFileChooser.APPROVE_OPTION != fcSvg
 					.showSaveDialog(getMainFrame()))
 				return null;
-			final File dst = ensureSuffix(fcSvg.getSelectedFile(), svgPat,
-					".svgz");
+			final File dst = gui.ensureSuffix(fcSvg.getSelectedFile(), svgPat);
 			if (!askOverwrite(dst))
 				continue;
 
@@ -828,7 +817,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			}
 			if (dst == null)
 				continue;
-			dst = ensureSuffix(dst, jcxzPat, ".jcz");
+			dst = gui.ensureSuffix(dst, jcxzPat);
 			if (forceOverwrite || askOverwrite(dst))
 				try {
 					save(tactics.getCurves(), dst);
@@ -940,6 +929,11 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			// SystemTray tray = SystemTray.getSystemTray();
 		}
 
+		// File Filter
+		jcxzPat = gui.createFileFilter("fileFilterJcxz", "jcz", "jcx");
+		pngPat = gui.createFileFilter("fileFilterPng", "png");
+		svgPat = gui.createFileFilter("fileFilterSvg", "svgz", "svg");
+
 		getMainFrame().setJMenuBar(createMenuBar());
 
 		final JComponent c = new JPanel();
@@ -947,9 +941,11 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		tactics.setPreferredSize(new Dimension(400, 600));
 		c.add(tactics, BorderLayout.CENTER);
 		c.add(url, BorderLayout.NORTH);
-		final TrajectorySwing swing = new TrajectorySwing();
+		final BroomSwingBean swing = new BroomSwingBean();
 		swing.setBroom(tactics.getBroom());
 		{
+			final JPanel b = new JPanel();
+			b.setLayout(new BorderLayout());
 			final JTabbedPane t = new JTabbedPane(SwingConstants.TOP,
 					JTabbedPane.SCROLL_TAB_LAYOUT);
 			t.add("Rock", swing);
@@ -958,8 +954,9 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			t.setMnemonicAt(1, 'I');
 			t.add("Collission", new JLabel("TODO: Collission settings"));
 			t.setMnemonicAt(2, 'C');
-
-			c.add(t, BorderLayout.EAST);
+			b.add(t, BorderLayout.NORTH);
+			b.add(new JLabel("TODO: Bird's eye view"), BorderLayout.CENTER);
+			c.add(b, BorderLayout.EAST);
 		}
 
 		show(c);

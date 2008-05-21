@@ -38,8 +38,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
-import org.jcurl.demo.tactics.TrajectoryPiccolo;
-import org.jcurl.demo.tactics.TrajectorySwing;
+import org.jcurl.demo.tactics.TrajectoryPiccoloBean;
+import org.jcurl.demo.tactics.BroomSwingBean;
 
 /**
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
@@ -96,7 +96,7 @@ public class MainApp extends JFrame {
 		}
 		setTitle("JCurl Shot Planner - www.jcurl.org");
 		final JMenuBar mb = new JMenuBar();
-		final TrajectoryPiccolo tp = new TrajectoryPiccolo();
+		final TrajectoryPiccoloBean tp = new TrajectoryPiccoloBean();
 		tp.setBackground(new Color(0xE8E8FF));
 		final ActionRegistry ah = ActionRegistry.getInstance();
 		{
@@ -146,7 +146,7 @@ public class MainApp extends JFrame {
 
 		final JTabbedPane t = new JTabbedPane(SwingConstants.TOP,
 				JTabbedPane.SCROLL_TAB_LAYOUT);
-		final TrajectorySwing ts = new TrajectorySwing();
+		final BroomSwingBean ts = new BroomSwingBean();
 		t.add("Rock", ts);
 		t.setMnemonicAt(0, 'R');
 		t.add("Ice", new JLabel("TODO: Ice settings"));

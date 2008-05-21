@@ -72,6 +72,10 @@ public class RockSet<R extends RockType> extends ChangeSupport implements
 		return ret;
 	}
 
+	public static final boolean isDark(final int idx16) {
+		return idx16 % 2 == 0;
+	}
+
 	/**
 	 * Check if a bit is set
 	 * 
@@ -124,6 +128,10 @@ public class RockSet<R extends RockType> extends ChangeSupport implements
 	 */
 	public static int toIdx16(final boolean isDark, final int idx8) {
 		return 2 * idx8 + (isDark ? 0 : 1);
+	}
+
+	public static final int toIdx8(final int idx16) {
+		return idx16 / 2;
 	}
 
 	public static RockSet<Vel> zeroSpeed() {
@@ -180,7 +188,7 @@ public class RockSet<R extends RockType> extends ChangeSupport implements
 	}
 
 	public Rock<R> getRock(final int i16) {
-		return i16 % 2 == 0 ? dark[i16 / 2] : light[i16 / 2];
+		return isDark(i16) ? dark[toIdx8(i16)] : light[toIdx8(i16)];
 	}
 
 	@Override

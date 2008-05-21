@@ -85,7 +85,7 @@ public final class IceSize {
 			if (speed.getRock(i).isNotZero()) {
 				final Rock<Pos> r = pos.getRock(i);
 				if (r.getX() > outX || r.getX() < -outX || r.getY() < -outY) {
-					setOut(r, i % 2 == 0, i / 2);
+					setOut(r, RockSet.isDark(i), RockSet.toIdx8(i));
 					speed.getRock(i).setLocation(0, 0, 0);
 					ret |= 1 << i;
 				}
@@ -136,8 +136,6 @@ public final class IceSize {
 	 */
 	public static void setHome(final Rock<Pos> R, final boolean isDark,
 			final int idx) {
-		// R.setLocation((isDark ? -1 : 1) * Dim.f2m(5 + (idx % 2) * 1.2), Dim
-		// .f2m(120 + 1.2 * (idx / 2)), 0);
 		R.setLocation((isDark ? -1 : 1) * Unit.f2m(7.25), Unit
 				.f2m(31 - 1.2 * idx), 0);
 	}

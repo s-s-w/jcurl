@@ -236,7 +236,7 @@ class TrajectoryDisplay extends WCComponent implements ChangeListener {
 			return;
 		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
 			if ((mask >> i & 1) == 1)
-				paintRockWC(g, rocks.getRock(i), i % 2 == 0, i / 2);
+				paintRockWC(g, rocks.getRock(i), RockSet.isDark(i), RockSet.toIdx8(i));
 	}
 
 	/**

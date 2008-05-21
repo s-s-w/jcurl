@@ -37,7 +37,7 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PInputEventListener;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
-public class TrajectoryPiccolo extends JComponent implements Zoomable {
+public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 	class Controller implements PropertyChangeListener, ChangeListener {
 		final PInputEventListener keyZoom;
 		final PInputEventListener rockMove = new DragHandler() {
@@ -115,7 +115,7 @@ public class TrajectoryPiccolo extends JComponent implements Zoomable {
 	}
 
 	private static final Log log = JCLoggerFactory
-			.getLogger(TrajectoryPiccolo.class);
+			.getLogger(TrajectoryPiccoloBean.class);
 
 	private static final long serialVersionUID = -4648771240323713217L;
 
@@ -137,7 +137,7 @@ public class TrajectoryPiccolo extends JComponent implements Zoomable {
 	private final PCurveStore traj;
 	private UndoRedoDocumentBase undo;
 
-	public TrajectoryPiccolo() {
+	public TrajectoryPiccoloBean() {
 		pico = new PCanvas();
 		setVisible(false);
 		setLayout(new BorderLayout());

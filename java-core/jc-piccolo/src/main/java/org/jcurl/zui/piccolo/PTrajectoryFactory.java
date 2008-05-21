@@ -31,6 +31,7 @@ import java.util.Map.Entry;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.Factory;
 import org.jcurl.core.api.RockProps;
+import org.jcurl.core.api.RockSet;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.CurveShape;
 import org.jcurl.math.R1RNFunction;
@@ -173,7 +174,7 @@ public abstract class PTrajectoryFactory implements Factory {
 
 	public PNode newInstance(final int i16,
 			final Iterator<Entry<Double, R1RNFunction>> t, final double tmax) {
-		final PNode r = newInstance(i16 / 2, i16 % 2 == 0, t, tmax);
+		final PNode r = newInstance(RockSet.toIdx8(i16), RockSet.isDark(i16), t, tmax);
 		r.addAttribute(PRockNode.INDEX16, 16);
 		return r;
 	}

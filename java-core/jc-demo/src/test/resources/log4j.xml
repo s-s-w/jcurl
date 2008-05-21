@@ -26,10 +26,10 @@
 	</category>
 	<category name="org.jcurl.core.model.CurveStoreImpl">
 		<level value="DEBUG"/>
-	</category>	
-	<category name="org.jcurl.demo.tactics">
+	</category -->	
+	<category name="org.jcurl.demo.tactics.BroomSwingBean">
 		<level value="DEBUG"/>
-	</category -->
+	</category>
 	<!-- ======================= -->
 	<!-- Setup the Root category -->
 	<!-- ======================= -->

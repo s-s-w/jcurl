@@ -374,10 +374,8 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 	private void setIdx16(final int i) {
 		if (i < 0 || i >= RockSet.ROCKS_PER_SET)
 			pie.setPaint(null);
-		else if (i % 2 == 0)
-			pie.setPaint(dark);
 		else
-			pie.setPaint(light);
+			pie.setPaint(RockSet.isDark(i) ? dark : light);
 		pie.invalidatePaint();
 	}
 

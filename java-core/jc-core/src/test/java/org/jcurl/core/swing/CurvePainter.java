@@ -29,6 +29,7 @@ import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.CurveStore;
+import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.Strategy;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.CurveShape;
@@ -102,9 +103,9 @@ class CurvePainter implements Strategy {
 		int i = 0;
 		for (final Iterable<Entry<Double, R1RNFunction>> name : cs) {
 			if (log.isDebugEnabled())
-				log.debug("i=" + i + " " + (i % 2 == 0 ? "dark" : "light")
-						+ " " + i / 2);
-			g2.setPaint(i++ % 2 == 0 ? dark : light);
+				log.debug("i=" + i + " " + (RockSet.isDark(i) ? "dark" : "light")
+						+ " " + RockSet.toIdx8(i));
+			g2.setPaint(RockSet.isDark(i++) ? dark : light);
 			doPaint(g2, name.iterator(), sections, 1, t1, t2, t3, t4);
 		}
 	}
@@ -204,6 +205,5 @@ class CurvePainter implements Strategy {
 		return CurveShape.aequidistantSections(min, max, sections);
 		// else
 		// return CurveShape.exponentialSections(min, max, sections);
-
 	}
 }
