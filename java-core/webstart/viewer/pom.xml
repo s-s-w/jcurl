@@ -90,7 +90,7 @@
 						</resources>
 						<outputFile>launch.jnlp</outputFile>
 						<mainClass>
-							  org.jcurl.demo.tactics.MainApp
+							  org.jcurl.demo.viewer.MainApp
 						</mainClass>
 					</jnlp>
 					<!-- SIGNING -->

@@ -52,7 +52,6 @@ import org.jcurl.core.io.IOTrajectories;
 import org.jcurl.core.io.JCurlSerializer;
 import org.jcurl.core.io.JDKSerializer;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.demo.tactics.TrajectoryDisplay;
 import org.jcurl.demo.tactics.TrajectoryPiccolo;
 import org.jcurl.demo.tactics.old.ActionRegistry.JCAction;
 
@@ -113,10 +112,10 @@ public class MenuFile {
 		private Model model = new Model();
 		private final Component parent;
 		private final Component shootable;
-		private final TrajectoryDisplay td;
+		private final TrajectoryPiccolo td;
 
 		public Controller(final Component parent, final Component shootable,
-				final TrajectoryDisplay td) {
+				final TrajectoryPiccolo td) {
 			this.parent = parent;
 			this.shootable = shootable;
 			this.td = td;
@@ -165,7 +164,7 @@ public class MenuFile {
 			final Cursor cu = switchCursor(waitc);
 			try {
 				// This cast just eases code navigation. Remove it later.
-				((TrajectoryPiccolo) td).setCurves(null);
+				(td).setCurves(null);
 			} finally {
 				switchCursor(cu);
 			}

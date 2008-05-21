@@ -37,7 +37,7 @@ import org.jcurl.core.ui.BroomPromptModel;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public class TrajectorySwing extends JComponent implements TrajectoryDisplay {
+public class TrajectorySwing extends JComponent {
 	private static final long serialVersionUID = -3512129363499720146L;
 
 	private final JComponent rock, dark, light, in, out, split, dt, x, y, dx,

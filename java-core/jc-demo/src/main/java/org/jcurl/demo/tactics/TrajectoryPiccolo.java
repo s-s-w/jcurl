@@ -36,8 +36,7 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PInputEventListener;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
-public class TrajectoryPiccolo extends JComponent implements Zoomable,
-		TrajectoryDisplay {
+public class TrajectoryPiccolo extends JComponent implements Zoomable {
 	class Controller implements PropertyChangeListener, ChangeListener {
 		final PInputEventListener keyZoom;
 		final PInputEventListener rockMove = new DragHandler() {
