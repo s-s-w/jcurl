@@ -818,13 +818,15 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			if (dst == null)
 				continue;
 			dst = gui.ensureSuffix(dst, jcxzPat);
-			if (forceOverwrite || askOverwrite(dst))
+			if (forceOverwrite || askOverwrite(dst)) {
 				try {
 					save(tactics.getCurves(), dst);
 					return dst;
 				} catch (final Exception e) {
 					showErrorDialog("Couldn't save to '" + dst + "'", e);
 				}
+			} else
+				dst = null;
 		}
 	}
 
