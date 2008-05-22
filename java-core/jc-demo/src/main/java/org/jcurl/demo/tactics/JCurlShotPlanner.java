@@ -165,10 +165,6 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			for (final String field : fields) {
 				final JLabel label = new JLabel();
 				label.setName(field + "Label");
-				final JTextField textField = new JTextField();
-				textField.setName(field + "TextField");
-				textField.setEditable(false);
-				textField.setBorder(null);
 				initGridBagConstraints(c);
 				// c.anchor = GridBagConstraints.BASELINE_TRAILING; 1.6 ONLY
 				c.anchor = GridBagConstraints.EAST;
@@ -177,6 +173,10 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 				c.weightx = 1.0;
 				c.gridwidth = GridBagConstraints.REMAINDER;
 				c.fill = GridBagConstraints.HORIZONTAL;
+				final JTextField textField = new JTextField();
+				textField.setName(field + "TextField");
+				textField.setEditable(false);
+				textField.setBorder(null);
 				panel.add(textField, c);
 			}
 			final JButton closeAboutButton = new JButton();

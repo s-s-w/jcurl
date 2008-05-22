@@ -44,6 +44,8 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 			.getLogger(BroomPromptSimple.class);
 	private static final Cursor MOVE_CURSOR = new Cursor(Cursor.MOVE_CURSOR);
 	private static final double scale0 = 0;
+	/** */
+	private static final int scale50 = 50;
 	private static final long serialVersionUID = 3115716478135484000L;
 	private static final Color slow = Color.BLUE;
 	private static final Cursor UPDN_CURSOR = new Cursor(Cursor.N_RESIZE_CURSOR);
@@ -125,7 +127,10 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 
 			@Override
 			public void paint(final PPaintContext aPaintContext) {
-				if (aPaintContext.getScale() < minScale)
+				if (minScale >= 0) {
+					if (aPaintContext.getScale() < minScale)
+						return;
+				} else if (aPaintContext.getScale() > -minScale)
 					return;
 				super.paint(aPaintContext);
 			}
@@ -199,6 +204,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 		{ // Cross-hair circles and pie
 			final int off = 90;
 			final int pieOff = 180;
+			final int arrowLengthDegrees = 7;
 			// colored pie:
 			pie = node(new Arc2D.Float(-outer, -outer, 2 * outer, 2 * outer,
 					off - pieOff, pieAngle, Arc2D.PIE), null, null, scale0);
@@ -206,24 +212,33 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 			// inner circle:
 			handle.addChild(node(new Arc2D.Float(-inner, -inner, 2 * inner,
 					2 * inner, off, pieOff + pieAngle, Arc2D.OPEN), fine, sp,
-					50));
+					scale50));
 			// outer circle:
 			handle.addChild(node(new Arc2D.Float(-outer, -outer, 2 * outer,
-					2 * outer, off, pieOff + pieAngle - 12, Arc2D.OPEN), fine,
-					sp, scale0));
+					2 * outer, off, pieOff + pieAngle
+							- (14 + arrowLengthDegrees), Arc2D.OPEN), fine, sp,
+					scale50));
+			handle.addChild(node(new Arc2D.Float(-outer, -outer, 2 * outer,
+					2 * outer, off, pieOff + pieAngle, Arc2D.OPEN), fine, sp,
+					-scale50));
 			final double ar = Math.PI * (off + pieAngle) / 180.0;
 			// radius
 			// if (pieAngle % 90 != 0)
 			handle.addChild(node(new Line2D.Double(0, 0, -outer * Math.cos(ar),
 					outer * Math.sin(ar)), bold, sp, scale0));
+
 			// arrow:
 			final float f = outer / 10;
 			final PPath s = node(createArrowHead(f, 3 * f, 0.5f * f), null,
-					null, 50);
+					null, scale50);
 			s.setPaint(sp);
-			s.translate(-outer * Math.cos(ar), outer * Math.sin(ar));
-			s.rotate(Math.PI * (90 - off - pieAngle + 8) / 180.0);
+			final double a = Math.PI * (off + pieAngle - arrowLengthDegrees)
+					/ 180.0;
+			s.translate(-outer * Math.cos(a), outer * Math.sin(a));
+			s.rotate(Math.PI * (90 - (off + pieAngle) + 8 + arrowLengthDegrees)
+					/ 180.0);
 			handle.addChild(s);
+
 			this.addChild(handle);
 		}
 		{ // y-axis:
