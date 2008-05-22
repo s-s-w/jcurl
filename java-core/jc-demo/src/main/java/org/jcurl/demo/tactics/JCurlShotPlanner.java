@@ -66,15 +66,20 @@ import javax.swing.filechooser.FileFilter;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.ComputedTrajectorySet;
 import org.jcurl.core.api.IceSize;
+import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.RockProps;
+import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.TrajectorySet;
 import org.jcurl.core.api.Unit;
+import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.core.helpers.BatikButler;
 import org.jcurl.core.io.IONode;
 import org.jcurl.core.io.IOTrajectories;
 import org.jcurl.core.io.JCurlSerializer;
 import org.jcurl.core.io.JDKSerializer;
 import org.jcurl.core.log.JCLoggerFactory;
+import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.FileNameExtensionFilter;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
@@ -378,8 +383,21 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		ImageIO.write(img, "png", dst);
 	}
 
+	private static void reset(final RockSet<Pos> ipos, final RockSet<Vel> ivel,
+			final BroomPromptModel broom, final boolean outPosition) {
+		RockSet.allZero(ivel);
+		broom.setIdx16(-1);
+		if (outPosition)
+			PositionSet.allOut(ipos);
+		else
+			PositionSet.allHome(ipos);
+		broom.setIdx16(1);
+		broom.setBroom(new Point2D.Double(0, 0));
+		broom.getSplitTimeMillis().setValue(3300);
+
+	}
+
 	private JDialog aboutBox = null;
-	private final ChangeManager cm = new ChangeManager(this);
 
 	// static void bind(final Object src, final String src_p, final Object dst,
 	// final String dst_p) {
@@ -387,6 +405,8 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	// BeanProperty.create(src_p), dst, BeanProperty.create(dst_p))
 	// .bind();
 	// }
+
+	private final ChangeManager cm = new ChangeManager(this);
 
 	private URL document;
 
@@ -401,15 +421,15 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	private FileNameExtensionFilter pngPat;
 
 	private FileNameExtensionFilter svgPat;
-
 	private final BroomSwingBean swing = new BroomSwingBean();
 	private final TrajectoryPiccoloBean tactics = new TrajectoryPiccoloBean();
-	private final JLabel url = new JLabel();
+
+	private final JLabel url = new JLabel();;
 
 	private JCurlShotPlanner() {
 		// tactics.setName("tactics");
 		url.setName("urlLabel");
-	};
+	}
 
 	public boolean askDiscardUnsaved(final javax.swing.Action action) {
 		if (!isModified())
@@ -461,7 +481,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 	private JFileChooser createJcxChooser(final File base, final String name) {
 		return gui.createFileChooser(base, name, jcxzPat);
-	}
+	};
 
 	private JMenuBar createMenuBar() {
 		final JMenuBar menuBar = new JMenuBar();
@@ -473,7 +493,8 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		menuBar.add(gui.createMenu("fileMenu", fileMenuActionNames));
 
 		final String[] editMenuActionNames = { "editUndo", "editRedo", "---",
-				"editProperties", "---", "editPreferences" };
+				"editOut", "editHome", "---", "editProperties", "---",
+				"editPreferences" };
 		menuBar.add(gui.createMenu("editMenu", editMenuActionNames));
 
 		final String[] viewMenuActionNames = { "viewHouse", "view12Foot",
@@ -486,15 +507,15 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		menuBar.add(gui.createMenu("helpMenu", helpMenuActionNames));
 
 		return menuBar;
-	};
+	}
 
 	private JFileChooser createPngChooser(final File base, final String name) {
 		return gui.createFileChooser(base, name, pngPat);
-	}
+	};
 
 	private JFileChooser createSvgChooser(final File base, final String name) {
 		return gui.createFileChooser(base, name, svgPat);
-	};
+	}
 
 	private JComponent createToolBar() {
 		final String[] toolbarActionNames = { "cut", "copy", "paste" };
@@ -507,6 +528,26 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			toolBar.add(button);
 		}
 		return toolBar;
+	}
+
+	/** Edit Menu Action */
+	@Action
+	public void editHome() {
+		final ComputedTrajectorySet cts = tactics.getCurves();
+		if (cts == null)
+			return;
+		reset(cts.getInitialPos(), cts.getInitialSpeed(), tactics.getBroom(),
+				false);
+	}
+
+	/** Edit Menu Action */
+	@Action
+	public void editOut() {
+		final ComputedTrajectorySet cts = tactics.getCurves();
+		if (cts == null)
+			return;
+		reset(cts.getInitialPos(), cts.getInitialSpeed(), tactics.getBroom(),
+				true);
 	}
 
 	/** Edit Menu Action */
@@ -722,16 +763,12 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 		final Class<?> mc = this.getClass();
 		{
-			final String res;
-			if (true) {
-				final ResourceMap r = Application.getInstance().getContext()
-						.getResourceMap();
-				res = "/" + r.getResourcesDir()
-						+ r.getString("Application.defaultDocument");
-			} else
-				res = "/" + mc.getPackage().getName().replace('.', '/')
-						+ "/resources" + "/" + "default.jcz";
-			initialScene = mc.getResource(res);
+			final ResourceMap r = Application.getInstance().getContext()
+					.getResourceMap();
+			initialScene = mc.getResource("/" + r.getResourcesDir()
+					+ r.getString("Application.defaultDocument"));
+			templateScene = mc.getResource("/" + r.getResourcesDir()
+					+ r.getString("Application.templateDocument"));
 		}
 
 		// schedule the document to load in #ready()
