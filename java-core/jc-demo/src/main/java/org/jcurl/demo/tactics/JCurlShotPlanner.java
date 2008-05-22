@@ -402,8 +402,8 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 	private FileNameExtensionFilter svgPat;
 
+	private final BroomSwingBean swing = new BroomSwingBean();
 	private final TrajectoryPiccoloBean tactics = new TrajectoryPiccoloBean();
-
 	private final JLabel url = new JLabel();
 
 	private JCurlShotPlanner() {
@@ -818,14 +818,14 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			if (dst == null)
 				continue;
 			dst = gui.ensureSuffix(dst, jcxzPat);
-			if (forceOverwrite || askOverwrite(dst)) {
+			if (forceOverwrite || askOverwrite(dst))
 				try {
 					save(tactics.getCurves(), dst);
 					return dst;
 				} catch (final Exception e) {
 					showErrorDialog("Couldn't save to '" + dst + "'", e);
 				}
-			} else
+			else
 				dst = null;
 		}
 	}
@@ -860,8 +860,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			if (cts != null)
 				cts.setCurrentTime(currentTime);
 			tactics.setCurves(cts);
-			// TODO just push to the Swing Trajectory Bean
-			// bpm = tp.getBroom();
+			swing.setBroom(tactics.getBroom());
 			cm.register(tactics.getCurves());
 			setModified(false);
 		} finally {
@@ -943,8 +942,6 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		tactics.setPreferredSize(new Dimension(400, 600));
 		c.add(tactics, BorderLayout.CENTER);
 		c.add(url, BorderLayout.NORTH);
-		final BroomSwingBean swing = new BroomSwingBean();
-		swing.setBroom(tactics.getBroom());
 		{
 			final JPanel b = new JPanel();
 			b.setLayout(new BorderLayout());
