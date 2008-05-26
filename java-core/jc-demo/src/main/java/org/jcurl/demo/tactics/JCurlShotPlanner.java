@@ -61,6 +61,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
 import javax.swing.filechooser.FileFilter;
 
 import org.apache.commons.logging.Log;
@@ -80,6 +82,7 @@ import org.jcurl.core.io.JCurlSerializer;
 import org.jcurl.core.io.JDKSerializer;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
+import org.jcurl.core.ui.ChangeManager;
 import org.jcurl.core.ui.FileNameExtensionFilter;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
@@ -98,11 +101,12 @@ import org.jdesktop.application.Task.BlockingScope;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public class JCurlShotPlanner extends SingleFrameApplication {
-	static class ChangeManager implements ChangeListener {
+public class JCurlShotPlanner extends SingleFrameApplication implements
+		UndoableEditListener {
+	private static class ChangeManage implements ChangeListener {
 		private final JCurlShotPlanner host;
 
-		public ChangeManager(final JCurlShotPlanner host) {
+		public ChangeManage(final JCurlShotPlanner host) {
 			this.host = host;
 		}
 
@@ -398,6 +402,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	}
 
 	private JDialog aboutBox = null;
+	private boolean canRedo = false;
 
 	// static void bind(final Object src, final String src_p, final Object dst,
 	// final String dst_p) {
@@ -406,27 +411,26 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	// .bind();
 	// }
 
-	private final ChangeManager cm = new ChangeManager(this);
-
+	private boolean canUndo = false;
+	private final ChangeManager change = new ChangeManager();
+	private final ChangeManage cm = new ChangeManage(this);
 	private URL document;
-
 	private File file;
-
 	private final GuiUtil gui = new GuiUtil(getContext());
-
 	private FileNameExtensionFilter jcxzPat;
-
 	private boolean modified = false;
-
 	private FileNameExtensionFilter pngPat;
-
 	private FileNameExtensionFilter svgPat;
-	private final BroomSwingBean swing = new BroomSwingBean();
+
+	private final BroomSwingBean swing = new BroomSwingBean();;
+
 	private final TrajectoryPiccoloBean tactics = new TrajectoryPiccoloBean();
 
-	private final JLabel url = new JLabel();;
+	private final JLabel url = new JLabel();
 
 	private JCurlShotPlanner() {
+		change.addUndoableEditListener(this);
+		tactics.setChanger(change);
 		// tactics.setName("tactics");
 		url.setName("urlLabel");
 	}
@@ -469,7 +473,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		return JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(
 				getMainFrame(), msg, title, JOptionPane.YES_NO_OPTION,
 				JOptionPane.WARNING_MESSAGE);
-	}
+	};
 
 	@Action
 	public void closeAboutBox() {
@@ -511,7 +515,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 
 	private JFileChooser createPngChooser(final File base, final String name) {
 		return gui.createFileChooser(base, name, pngPat);
-	};
+	}
 
 	private JFileChooser createSvgChooser(final File base, final String name) {
 		return gui.createFileChooser(base, name, svgPat);
@@ -559,12 +563,16 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 	public void editProperties() {}
 
 	/** Edit Menu Action */
-	@Action(enabledProperty = "alwaysFalse")
-	public void editRedo() {}
+	@Action(enabledProperty = "canRedo")
+	public void editRedo() {
+		change.redo();
+	}
 
 	/** Edit Menu Action */
-	@Action(enabledProperty = "alwaysFalse")
-	public void editUndo() {}
+	@Action(enabledProperty = "canUndo")
+	public void editUndo() {
+		change.undo();
+	}
 
 	/** File Menu Action */
 	@Action
@@ -666,7 +674,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 				showErrorDialog("can't open \"" + file + "\"", e);
 			}
 		}
-	}
+	};
 
 	/** File Menu Action */
 	@Action
@@ -720,7 +728,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			}
 			setModified(false);
 		}
-	}
+	};
 
 	/** File Menu Action */
 	@Action
@@ -735,13 +743,13 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			}
 			setModified(false);
 		}
-	};
+	}
 
 	/** File Menu Action */
 	@Action
 	public void fileSaveCopyAs() {
 		log.info(saveHelper(null, getFile(), "saveCopyAsFileChooser", false));
-	};
+	}
 
 	private URL getDocument() {
 		return document;
@@ -799,6 +807,14 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		return false;
 	}
 
+	public boolean isCanRedo() {
+		return canRedo;
+	}
+
+	public boolean isCanUndo() {
+		return canUndo;
+	}
+
 	public boolean isModified() {
 		return modified;
 	}
@@ -838,7 +854,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		} finally {
 			switchCursor(cu);
 		}
-	}
+	};
 
 	private File saveHelper(File dst, final File base, final String name,
 			final boolean forceOverwrite) {
@@ -865,6 +881,20 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			else
 				dst = null;
 		}
+	}
+
+	private void setCanRedo(final boolean canRedo) {
+		final boolean old = this.canRedo;
+		if (old == canRedo)
+			return;
+		firePropertyChange("canRedo", old, this.canRedo = canRedo);
+	}
+
+	private void setCanUndo(final boolean canUndo) {
+		final boolean old = this.canUndo;
+		if (old == canUndo)
+			return;
+		firePropertyChange("canUndo", old, this.canUndo = canUndo);
 	}
 
 	private void setDocument(final URL document) throws IOException {
@@ -917,7 +947,7 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 			file = null;
 		final File old = this.file;
 		this.firePropertyChange("file", old, this.file = file);
-	};
+	}
 
 	public void setModified(final boolean modified) {
 		final boolean old = this.modified;
@@ -1005,6 +1035,11 @@ public class JCurlShotPlanner extends SingleFrameApplication {
 		getMainFrame().setCursor(neo);
 		Thread.yield();
 		return cu;
+	}
+
+	public void undoableEditHappened(final UndoableEditEvent e) {
+		setCanRedo(change.canRedo());
+		setCanUndo(change.canUndo());
 	}
 
 	/** View Menu Action */

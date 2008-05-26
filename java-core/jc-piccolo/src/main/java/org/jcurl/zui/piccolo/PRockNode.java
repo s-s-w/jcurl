@@ -29,7 +29,6 @@ import javax.swing.event.ChangeListener;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.RockType.Pos;
-import org.jcurl.core.ui.Memento;
 import org.jcurl.core.ui.TaskExecutor.ForkableFixed;
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
 
@@ -98,10 +97,6 @@ public class PRockNode extends PComposite implements ChangeListener {
 		 */
 		protected abstract void pushChange(final boolean isDrop, final PRockNode node,
 				final Point2D currentPos, final Point2D startPos);
-
-		protected void view2model(final boolean isDrop, Memento<?> m) {
-			m.run();
-		}
 
 		private void pushChangeInternal(final boolean isDrop,
 				final PInputEvent event) {

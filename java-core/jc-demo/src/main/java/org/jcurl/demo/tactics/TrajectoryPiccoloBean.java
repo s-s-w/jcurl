@@ -10,7 +10,7 @@ import javax.swing.JComponent;
 
 import org.jcurl.core.api.ComputedTrajectorySet;
 import org.jcurl.core.ui.BroomPromptModel;
-import org.jcurl.core.ui.Memento;
+import org.jcurl.core.ui.ChangeManager;
 import org.jcurl.core.ui.PosMemento;
 import org.jcurl.core.ui.TrajectoryBroomPromptWrapper;
 import org.jcurl.zui.piccolo.BroomPromptSimple;
@@ -33,19 +33,28 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 	class Controller {
 		final PInputEventListener keyZoom;
 		final PInputEventListener rockMove = new DragHandler() {
+			private PosMemento start = null;
+
 			@Override
 			protected void pushChange(final boolean isDrop,
 					final PRockNode node, final Point2D currentPos,
 					final Point2D startPos) {
 				// mouse moved
-				view2model(false, new PosMemento(cm.getInitialPos(),
+				view2model(isDrop, new PosMemento(cm.getInitialPos(),
 						(Integer) node.getAttribute(PRockNode.INDEX16),
 						currentPos));
 			}
 
-			@Override
-			protected void view2model(boolean isDrop, Memento<?> m) {
-				mh.add(m, isDrop);
+			private void view2model(final boolean isDrop, final PosMemento m) {
+				if (start == null)
+					start = m;
+				if (changer == null)
+					m.run();
+				else if (isDrop) {
+					changer.undoable(start, m);
+					start = null;
+				} else
+					changer.temporary(m);
 			}
 		};
 
@@ -54,7 +63,6 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 		}
 	}
 
-	private static final MementoHandler mh = new MementoHandler();
 	private static final long serialVersionUID = -4648771240323713217L;
 	private static final int TMAX = 30;
 	private final BroomPromptSimple broom;
@@ -68,6 +76,7 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 	private final PCanvas pico;
 	private transient volatile RectangularShape tmpViewPort = null;
 	private final PCurveStore traj;
+	private ChangeManager changer = null;
 
 	public TrajectoryPiccoloBean() {
 		pico = new PCanvas();
@@ -112,6 +121,10 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 		return cm;
 	}
 
+	public ChangeManager getChanger() {
+		return changer;
+	}
+
 	public RectangularShape getZoom() {
 		if (tmpViewPort == null)
 			return pico.getCamera().getViewBounds();
@@ -153,6 +166,14 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 		current.setVisible(model != null);
 		initial.setVisible(model != null);
 		broom.setVisible(model != null);
+	}
+
+	public void setChanger(final ChangeManager changer) {
+		final ChangeManager old = this.changer;
+		if (old == changer)
+			return;
+		broom.setChanger(this.changer = changer);
+		firePropertyChange("changer", old, this.changer);		
 	}
 
 	public void setZoom(final RectangularShape viewport) {

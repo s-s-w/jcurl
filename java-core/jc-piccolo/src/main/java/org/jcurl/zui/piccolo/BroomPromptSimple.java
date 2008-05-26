@@ -42,6 +42,7 @@ import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
+import org.jcurl.core.ui.ChangeManager;
 import org.jcurl.core.ui.Memento;
 import org.jcurl.core.ui.BroomPromptModel.HandleMemento;
 import org.jcurl.core.ui.BroomPromptModel.XYMemento;
@@ -161,10 +162,17 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 		return s;
 	}
 
+	private ChangeManager changer = null;
+
+	private Memento first = null;
+
 	private final PNode handle;
+	private Memento last = null;
 	private BroomPromptModel model;
 	private final PNode pie;
+
 	private final PPath slider;
+
 	private final float stickLength;
 
 	public BroomPromptSimple() {
@@ -282,8 +290,15 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 				super.mouseClicked(arg0);
 				if (arg0.getClickCount() > 1) {
 					arg0.setHandled(true);
-					view2model(new HandleMemento(getModel(), !getModel()
-							.getOutTurn()));
+					first = new HandleMemento(getModel(), getModel()
+							.getOutTurn());
+					last = new HandleMemento(getModel(), !getModel()
+							.getOutTurn());
+					if (changer == null)
+						view2model(last);
+					else
+						changer.undoable(first, last);
+					first = last = null;
 				}
 			}
 
@@ -315,6 +330,9 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 			@Override
 			public void mouseReleased(final PInputEvent pinputevent) {
 				getModel().setValueIsAdjusting(false);
+				if (first != null && last != null && first != last)
+					changer.undoable(first, last);
+				first = last = null;
 			}
 		});
 		slider.addInputEventListener(new PDragEventHandler() {
@@ -357,6 +375,9 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 				if (r == null)
 					return;
 				r.setValueIsAdjusting(false);
+				if (first != null && last != null && first != last)
+					changer.undoable(first, last);
+				first = last = null;
 			}
 		});
 	}
@@ -369,6 +390,10 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 		slider.invalidateFullBounds();
 		slider.invalidatePaint();
 		// FIXME getModel().firePropertyChange("splitTimeMillis", r, r);
+	}
+
+	public ChangeManager getChanger() {
+		return changer;
 	}
 
 	public BroomPromptModel getModel() {
@@ -404,6 +429,14 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 		MathVec.rotate(t, 0, 1);
 		invalidateFullBounds();
 		invalidatePaint();
+	}
+
+	public void setChanger(final ChangeManager changer) {
+		final ChangeManager old = this.changer;
+		if (old == changer)
+			return;
+		this.changer = changer;
+		// firePropertyChange("changer", old, this.changer);
 	}
 
 	/** adjust Color */
@@ -466,6 +499,13 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 	}
 
 	private void view2model(final Memento<?> m) {
-		m.run();
+		if (first == null)
+			first = m;
+		else
+			last = m;
+		if (changer == null)
+			m.run();
+		else
+			changer.temporary(m);
 	}
 }
