@@ -29,6 +29,7 @@ import javax.swing.event.ChangeListener;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.core.ui.Memento;
 import org.jcurl.core.ui.TaskExecutor.ForkableFixed;
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
 
@@ -52,7 +53,7 @@ public class PRockNode extends PComposite implements ChangeListener {
 	 * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
 	 * @version $Id:PPositionSetDrag.java 795 2008-03-19 13:40:42Z mrohrmoser $
 	 */
-	public static class DragHandler extends PBasicInputEventHandler {
+	public static abstract class DragHandler extends PBasicInputEventHandler {
 
 		private static final Cursor CURSOR = new Cursor(Cursor.HAND_CURSOR);
 		private Point2D previous = null;
@@ -86,7 +87,8 @@ public class PRockNode extends PComposite implements ChangeListener {
 
 		/**
 		 * Typical extension point - by default just update the rock's location.
-		 * 
+		 * <pre>
+		 * node.getRock().p().setLocation(currentPos);</pre>
 		 * @see Rock#p
 		 * @see Point2D#setLocation(Point2D)
 		 * @param isDrop
@@ -94,9 +96,11 @@ public class PRockNode extends PComposite implements ChangeListener {
 		 * @param currentPos
 		 * @param startPos
 		 */
-		protected void pushChange(final boolean isDrop, final PRockNode node,
-				final Point2D currentPos, final Point2D startPos) {
-			node.getRock().p().setLocation(currentPos);
+		protected abstract void pushChange(final boolean isDrop, final PRockNode node,
+				final Point2D currentPos, final Point2D startPos);
+
+		protected void view2model(final boolean isDrop, Memento<?> m) {
+			m.run();
 		}
 
 		private void pushChangeInternal(final boolean isDrop,
@@ -111,6 +115,8 @@ public class PRockNode extends PComposite implements ChangeListener {
 			// any move at all?
 			if (p.distanceSq(previous) < 1e-11)
 				return;
+			//view2model(isDrop, new PosMemento(node.getRock(), (Integer) node
+			//		.getAttribute(PRockNode.INDEX16) - 1, p));
 			pushChange(isDrop, node, p, previous);
 			event.setHandled(true);
 		}

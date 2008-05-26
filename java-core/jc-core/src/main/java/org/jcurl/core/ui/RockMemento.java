@@ -46,6 +46,11 @@ public abstract class RockMemento<R extends RockType> extends
 		this(context, idx16, p.getX(), p.getY());
 	}
 
+	protected RockMemento(final Rock<R> context, final int idx16,
+			final Point2D p) {
+		this(null, idx16, p.getX(), p.getY());
+	}
+
 	@Override
 	public RockSet<R> apply(final RockSet<R> dst) {
 		dst.getRock(idx16).p().setLocation(p.getX(), p.getY());

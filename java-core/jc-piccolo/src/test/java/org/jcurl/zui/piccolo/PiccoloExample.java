@@ -1,26 +1,27 @@
 /*
- * jcurl java curling software framework http://www.jcurl.org
- * Copyright (C) 2005-2008 M. Rohrmoser
+ * jcurl java curling software framework http://www.jcurl.org Copyright (C)
+ * 2005-2008 M. Rohrmoser
  * 
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
- * Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 package org.jcurl.zui.piccolo;
 
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.JFrame;
@@ -98,7 +99,13 @@ public class PiccoloExample {
 		final PPositionSet pos = new PPositionSet(new PRockFactory.Fancy(100));
 		pos.setModel(PositionSet.allOut());
 		ice.addChild(pos);
-		pos.addInputEventListener(new DragHandler());
+		pos.addInputEventListener(new DragHandler() {
+			@Override
+			protected void pushChange(boolean isDrop, PRockNode node,
+					Point2D currentPos, Point2D startPos) {
+				node.getRock().p().setLocation(currentPos);
+			}
+		});
 		// some helpers:
 		// pico.getLayer().addChild(new PPath(house));
 

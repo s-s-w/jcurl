@@ -38,8 +38,14 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 					final PRockNode node, final Point2D currentPos,
 					final Point2D startPos) {
 				// mouse moved
-				view2model(new PosMemento(cm.getInitialPos(), (Integer) node
-						.getAttribute(PRockNode.INDEX16), currentPos));
+				view2model(false, new PosMemento(cm.getInitialPos(),
+						(Integer) node.getAttribute(PRockNode.INDEX16),
+						currentPos));
+			}
+
+			@Override
+			protected void view2model(boolean isDrop, Memento<?> m) {
+				mh.add(m, isDrop);
 			}
 		};
 
@@ -164,9 +170,5 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 					viewport.getWidth(), viewport.getHeight());
 		tmpViewPort = (RectangularShape) r.clone();
 		pico.getCamera().animateViewToCenterBounds(r, true, transitionMillis);
-	}
-
-	private void view2model(final Memento<?> m) {
-		mh.add(m, false);
 	}
 }

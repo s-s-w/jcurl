@@ -18,6 +18,8 @@
  */
 package org.jcurl.zui.piccolo;
 
+import java.awt.geom.Point2D;
+
 import org.jcurl.core.api.PositionSet;
 import org.jcurl.zui.piccolo.PRockNode.DragHandler;
 
@@ -33,7 +35,13 @@ public class PiccoloBasicTest extends TestZuiBase {
 		final PPositionSet initial = new PPositionSet(new PRockFactory.Simple());
 		initial.setModel(PositionSet.allHome());
 		ice.addChild(initial);
-		initial.addInputEventListener(new DragHandler());
+		initial.addInputEventListener(new DragHandler() {
+			@Override
+			protected void pushChange(boolean isDrop, PRockNode node,
+					Point2D currentPos, Point2D startPos) {
+				node.getRock().p().setLocation(currentPos);
+			}
+		});
 		final PPositionSet end = new PPositionSet(new PRockFactory.Fancy(10));
 		end.setModel(PositionSet.allOut());
 		ice.addChild(end);

@@ -36,4 +36,8 @@ public class PosMemento extends RockMemento<Pos> {
 			final Point2D p) {
 		super(context, idx16, p);
 	}
+	public PosMemento(final Rock<Pos> context, final int idx16,
+			final Point2D p) {
+		super(context, idx16, p);
+	}
 }

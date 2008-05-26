@@ -21,6 +21,8 @@ package org.jcurl.demo.tactics;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
@@ -37,7 +39,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -45,49 +46,19 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
+import org.jcurl.core.ui.JSpinnerBoundedRange;
+import org.jcurl.core.ui.Memento;
+import org.jcurl.core.ui.BroomPromptModel.HandleMemento;
+import org.jcurl.core.ui.BroomPromptModel.IndexMemento;
 
 /**
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class BroomSwingBean extends JComponent implements ItemListener,
-		ChangeListener, ActionListener, PropertyChangeListener {
-	private static class SpinnerModelWrapper extends SpinnerNumberModel {
-		/** */
-		private static final long serialVersionUID = 2503438304002446476L;
-		private final BoundedRangeModel wrap;
+		FocusListener, ChangeListener, ActionListener, PropertyChangeListener {
 
-		public SpinnerModelWrapper(final BoundedRangeModel wrap) {
-			this(wrap, 50);
-		}
-
-		public SpinnerModelWrapper(final BoundedRangeModel wrap, final int dt) {
-			super(wrap.getValue(), wrap.getMinimum(), wrap.getMaximum(), dt);
-			this.wrap = wrap;
-		}
-
-		@Override
-		public void addChangeListener(final ChangeListener l) {
-			wrap.addChangeListener(l);
-		}
-
-		@Override
-		public Object getValue() {
-			return wrap.getValue();
-		}
-
-		@Override
-		public void removeChangeListener(final ChangeListener l) {
-			wrap.removeChangeListener(l);
-		}
-
-		@Override
-		public void setValue(final Object value) {
-			wrap.setValue(((Number) value).intValue());
-			super.setValue(wrap.getValue());
-		}
-	}
-
+	private static final boolean brm = true;
 	private static final Log log = JCLoggerFactory
 			.getLogger(BroomSwingBean.class);
 	private static final long serialVersionUID = -3512129363499720146L;
@@ -97,6 +68,7 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 	private final JRadioButton in, out;
 	private final JComboBox rock;
 	private final JSpinner split;
+	private final JSpinnerBoundedRange split2;
 
 	public BroomSwingBean() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -141,7 +113,24 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 			final JPanel tb = new JPanel();
 			tb.setLayout(new BoxLayout(tb, BoxLayout.X_AXIS));
 			tb.setBorder(BorderFactory.createTitledBorder("Split Time"));
-			tb.add(split = new JSpinner());
+
+			if (brm) {
+				split2 = new JSpinnerBoundedRange();
+				split2.addFocusListener(this);
+				split = null;
+			} else {
+				split2 = null;
+				split = new JSpinner();
+				// log.info(split.getEditor().getClass().getName());
+				split.addFocusListener(this);
+				final JSpinner.NumberEditor ed = (JSpinner.NumberEditor) split
+						.getEditor();
+				ed.addFocusListener(this);
+				ed.getTextField().addFocusListener(this);
+			}
+
+			tb.add(split2);
+
 			tb.add(dt = new JComboBox(new Object[] { "1/1000 sec", "1/100 sec",
 					"1/10 sec", "sec" }));
 			tb.add(Box.createHorizontalGlue());
@@ -199,11 +188,21 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 		return -1;
 	}
 
+	public void focusGained(final FocusEvent e) {
+		log.info(e.getSource());
+	}
+
+	public void focusLost(final FocusEvent e) {
+		log.info(e.getSource());
+	}
+
 	public BroomPromptModel getBroom() {
 		return broom;
 	}
 
 	public void itemStateChanged(final ItemEvent e) {
+		if (log.isDebugEnabled())
+			log.debug(e.getSource());
 		if (e.getSource() == rock)
 			updateIndex();
 		else
@@ -211,13 +210,15 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 	}
 
 	public void propertyChange(final PropertyChangeEvent evt) {
+		if (log.isDebugEnabled())
+			log.debug(evt.getSource());
 		if (evt.getSource() == broom) {
 			if ("idx16".equals(evt.getPropertyName()))
-				syncIdxBpm2This();
+				syncM2V(broom == null ? -1 : broom.getIdx16());
 			else if ("outTurn".equals(evt.getPropertyName()))
-				syncHandleBpm2This();
+				syncM2V(broom == null ? null : broom.getOutTurn());
 			else if ("splitTimeMillis".equals(evt.getPropertyName()))
-				syncSplitBpm2This();
+				syncM2V(broom == null ? null : broom.getSplitTimeMillis());
 		} else
 			log.warn("Unprocessed event from " + evt.getSource());
 	}
@@ -229,9 +230,9 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 		if (this.broom != null)
 			this.broom.removePropertyChangeListener(this);
 		this.broom = broom;
-		syncIdxBpm2This();
-		syncHandleBpm2This();
-		syncSplitBpm2This();
+		syncM2V(this.broom == null ? -1 : this.broom.getIdx16());
+		syncM2V(this.broom == null ? null : this.broom.getOutTurn());
+		syncM2V(this.broom == null ? null : this.broom.getSplitTimeMillis());
 		if (this.broom != null)
 			this.broom.addPropertyChangeListener(this);
 	}
@@ -246,7 +247,10 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 		in.setEnabled(enabled);
 		out.setEnabled(enabled);
 
-		split.setEnabled(enabled);
+		if (brm)
+			split2.setEnabled(enabled);
+		else
+			split.setEnabled(enabled);
 
 		enabled = false;
 		dt.setEnabled(enabled);
@@ -265,13 +269,12 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 			log.warn("Unprocessed event from " + e.getSource());
 	}
 
-	private void syncHandleBpm2This() {
+	private void syncM2V(final Boolean handle) {
 		if (log.isDebugEnabled())
-			log
-					.debug("handle="
-							+ (broom == null ? "-" : broom.getOutTurn() ? "out"
-									: "in"));
-		if (broom == null) {
+			log.debug("handle="
+					+ (handle == null ? "-" : handle.booleanValue() ? "out"
+							: "in"));
+		if (handle == null) {
 			in.setEnabled(false);
 			out.setEnabled(false);
 			in.setSelected(false);
@@ -279,17 +282,37 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 		} else {
 			in.setEnabled(true);
 			out.setEnabled(true);
-			if (broom.getOutTurn())
+			if (handle.booleanValue())
 				out.setSelected(true);
 			else
 				in.setSelected(true);
 		}
 	}
 
-	private void syncIdxBpm2This() {
+	private void syncM2V(final BoundedRangeModel s) {
+		if (s != null) {
+			if (brm) {
+				split2.setBRM(s);
+				split2.setEnabled(true);
+			} else {
+				// split.setModel(new
+				// JSpinnerBoundedRange.SpinnerModelWrapper(s));
+				split.setEnabled(true);
+				// add focus event listener
+				// http://forum.java.sun.com/thread.jspa?threadID=409748&forumID=57
+				final JSpinner.DefaultEditor ed = (JSpinner.DefaultEditor) split
+						.getEditor();
+				ed.getTextField().addFocusListener(this);
+			}
+		} else
+			// split.setModel(null);
+			split.setEnabled(false);
+	}
+
+	private void syncM2V(final int idx16) {
 		if (log.isDebugEnabled())
-			log.debug("idx16=" + (broom == null ? -1 : broom.getIdx16()));
-		if (broom == null || broom.getIdx16() < 0) {
+			log.debug("idx16=" + idx16);
+		if (idx16 < 0) {
 			dark.setSelected(false);
 			light.setSelected(false);
 			rock.setSelectedIndex(-1);
@@ -300,21 +323,11 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 			dark.setEnabled(true);
 			light.setEnabled(true);
 			rock.setEnabled(true);
-			if (RockSet.isDark(broom.getIdx16()))
+			if (RockSet.isDark(idx16))
 				dark.setSelected(true);
 			else
 				light.setSelected(true);
-			rock.setSelectedIndex(RockSet.toIdx8(broom.getIdx16()));
-		}
-	}
-
-	private void syncSplitBpm2This() {
-		if (broom != null && broom.getSplitTimeMillis() != null) {
-			split.setModel(new SpinnerModelWrapper(broom.getSplitTimeMillis()));
-			split.setEnabled(true);
-		} else {
-			//split.setModel(null);
-			split.setEnabled(false);
+			rock.setSelectedIndex(RockSet.toIdx8(idx16));
 		}
 	}
 
@@ -322,14 +335,18 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 		if (broom == null)
 			return;
 		if (in.isSelected())
-			broom.setOutTurn(false);
+			view2model(new HandleMemento(broom, false));
 		if (out.isSelected())
-			broom.setOutTurn(true);
+			view2model(new HandleMemento(broom, true));
 	}
 
 	private void updateIndex() {
 		if (broom == null)
 			return;
-		broom.setIdx16(findIndex());
+		view2model(new IndexMemento(broom, findIndex()));
+	}
+
+	private void view2model(final Memento<?> m) {
+		m.run();
 	}
 }
