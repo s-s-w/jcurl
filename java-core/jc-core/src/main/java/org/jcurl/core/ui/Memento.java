@@ -19,20 +19,22 @@
 
 package org.jcurl.core.ui;
 
+import java.util.concurrent.Executor;
+
 /**
- * A single, atomic unit of change usually concerning a data model. May be
- * undoable.
+ * A single, atomic unit of change usually concerning a data model.
  * <p>
- * Implements {@link Runnable} to simplify execution by a different thread if
- * desired.
+ * Implements {@link Runnable} to simplify execution by a different
+ * {@link Thread} or {@link Executor} if desired.
  * </p>
  * 
+ * @see UndoableMemento
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public abstract class Memento<E> implements Runnable {
 
-	private final E context;
+	final E context;
 
 	protected Memento(final E context) {
 		this.context = context;
