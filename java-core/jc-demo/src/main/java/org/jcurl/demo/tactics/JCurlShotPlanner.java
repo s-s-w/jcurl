@@ -921,6 +921,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 				final TrajectorySet ts = it.trajectories().get(0);
 				cts = (ComputedTrajectorySet) ts;
 			}
+			change.discardAllEdits();
 			if (cts != null)
 				cts.setCurrentTime(currentTime);
 			tactics.setCurves(cts);

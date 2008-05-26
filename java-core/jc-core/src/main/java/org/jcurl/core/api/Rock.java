@@ -115,6 +115,14 @@ public abstract class Rock<R extends RockType> implements IChangeSupport,
 		public void setY(final double y) {
 			throw new UnsupportedOperationException("Not supported.");
 		}
+
+		public boolean getValueIsAdjusting() {
+			return false;
+		}
+
+		public void setValueIsAdjusting(boolean valueIsAdjusting) {
+			throw new UnsupportedOperationException("Not supported.");
+		}
 	}
 
 	private class RockPoint extends Point2D {

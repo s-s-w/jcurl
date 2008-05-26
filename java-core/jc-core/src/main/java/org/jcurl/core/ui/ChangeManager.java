@@ -65,6 +65,12 @@ public class ChangeManager {
 		listeners.add(l);
 	}
 
+	public void discardAllEdits() {
+		undoer.discardAllEdits();
+		for (final UndoableEditListener elem : listeners)
+			elem.undoableEditHappened(new UndoableEditEvent(undoer, null));
+	}
+	
 	public boolean canRedo() {
 		return undoer.canRedo();
 	}

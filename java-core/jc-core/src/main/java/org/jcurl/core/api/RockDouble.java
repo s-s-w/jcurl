@@ -26,10 +26,9 @@ import java.io.Serializable;
  */
 public class RockDouble<R extends RockType> extends Rock<R> implements
 		Serializable {
-
 	private static final long serialVersionUID = 2337028316325540776L;
-
 	private volatile double a;
+	private boolean valueIsAdjusting = false;
 	private volatile double x;
 	private volatile double y;
 
@@ -74,6 +73,10 @@ public class RockDouble<R extends RockType> extends Rock<R> implements
 	@Override
 	public double getA() {
 		return a;
+	}
+
+	public boolean getValueIsAdjusting() {
+		return valueIsAdjusting;
 	}
 
 	@Override
@@ -128,6 +131,11 @@ public class RockDouble<R extends RockType> extends Rock<R> implements
 		if (pt.length != 3)
 			throw new IllegalArgumentException();
 		setLocation(pt[0], pt[1], pt[2]);
+	}
+
+	public void setValueIsAdjusting(final boolean valueIsAdjusting) {
+		this.valueIsAdjusting = valueIsAdjusting;
+		fireStateChanged();
 	}
 
 	@Override

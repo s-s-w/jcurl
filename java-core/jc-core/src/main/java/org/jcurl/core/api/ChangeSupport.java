@@ -91,6 +91,10 @@ public class ChangeSupport implements IChangeSupport {
 		return listenerList.getListeners(ChangeListener.class);
 	}
 
+	public boolean getValueIsAdjusting() {
+		return source.getValueIsAdjusting();
+	}
+
 	/**
 	 * Removes a <code>ChangeListener</code>.
 	 * 
@@ -101,6 +105,10 @@ public class ChangeSupport implements IChangeSupport {
 	 */
 	public void removeChangeListener(final ChangeListener l) {
 		listenerList.remove(ChangeListener.class, l);
+	}
+
+	public void setValueIsAdjusting(final boolean valueIsAdjusting) {
+		source.setValueIsAdjusting(valueIsAdjusting);
 	}
 
 }
