@@ -1,5 +1,5 @@
 /*
- * jcurl curling simulation framework http://www.jcurl.org Copyright (C)
+ * jcurl java curling software framework http://www.jcurl.org Copyright (C)
  * 2005-2008 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it under
@@ -32,6 +32,70 @@ import org.jcurl.core.api.IPropertyChangeSupport;
  */
 public interface BroomPromptModel extends IPropertyChangeSupport,
 		IChangeSupport {
+
+	public class HandleMemento extends Memento<BroomPromptModel> {
+		private final boolean outTurn;
+
+		public HandleMemento(final BroomPromptModel context,
+				final boolean outTurn) {
+			super(context);
+			this.outTurn = outTurn;
+		}
+
+		@Override
+		public BroomPromptModel apply(final BroomPromptModel dst) {
+			dst.setOutTurn(outTurn);
+			return dst;
+		}
+	}
+
+	public class IndexMemento extends Memento<BroomPromptModel> {
+		private final int idx16;
+
+		public IndexMemento(final BroomPromptModel context, final int idx16) {
+			super(context);
+			this.idx16 = idx16;
+		}
+
+		@Override
+		public BroomPromptModel apply(final BroomPromptModel dst) {
+			dst.setIdx16(idx16);
+			return dst;
+		}
+	}
+
+	public class SplitMemento extends Memento<BroomPromptModel> {
+		private final int splitTime;
+
+		public SplitMemento(final BroomPromptModel context, final int splitTime) {
+			super(context);
+			this.splitTime = splitTime;
+		}
+
+		@Override
+		public BroomPromptModel apply(final BroomPromptModel dst) {
+			dst.getSplitTimeMillis().setValue(splitTime);
+			return dst;
+		}
+	}
+
+	public class XYMemento extends P2DMemento<BroomPromptModel> {
+		public XYMemento(final BroomPromptModel context, final double x,
+				final double y) {
+			super(context, x, y);
+		}
+
+		public XYMemento(final BroomPromptModel context, final Point2D p) {
+			super(context, p);
+		}
+
+		@Override
+		public BroomPromptModel apply(final BroomPromptModel dst) {
+			// TUNE make this instanciation obsolete!
+			dst.setBroom(new Point2D.Double(p.getX(), p.getY()));
+			return dst;
+		}
+	}
 
 	Point2D getBroom();
 

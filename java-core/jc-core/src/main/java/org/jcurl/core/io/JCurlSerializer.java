@@ -1,5 +1,5 @@
 /*
- * jcurl curling simulation framework http://www.jcurl.org Copyright (C)
+ * jcurl java curling software framework http://www.jcurl.org Copyright (C)
  * 2005-2008 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it under

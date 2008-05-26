@@ -1,3 +1,21 @@
+/*
+ * jcurl java curling software framework http://www.jcurl.org Copyright (C)
+ * 2005-2008 M. Rohrmoser
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
+ */
 package org.jcurl.zui.piccolo;
 
 import java.awt.BasicStroke;
@@ -24,7 +42,9 @@ import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
-import org.jcurl.core.ui.UndoRedoDocument;
+import org.jcurl.core.ui.Memento;
+import org.jcurl.core.ui.BroomPromptModel.HandleMemento;
+import org.jcurl.core.ui.BroomPromptModel.XYMemento;
 import org.jcurl.math.MathVec;
 
 import edu.umd.cs.piccolo.PNode;
@@ -146,7 +166,6 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 	private final PNode pie;
 	private final PPath slider;
 	private final float stickLength;
-	private UndoRedoDocument undo;
 
 	public BroomPromptSimple() {
 		final boolean stickUp = false;
@@ -263,7 +282,8 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 				super.mouseClicked(arg0);
 				if (arg0.getClickCount() > 1) {
 					arg0.setHandled(true);
-					getModel().setOutTurn(!getModel().getOutTurn());
+					view2model(new HandleMemento(getModel(), !getModel()
+							.getOutTurn()));
 				}
 			}
 
@@ -272,8 +292,12 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 			public void mouseDragged(final PInputEvent arg0) {
 				arg0.setHandled(true);
 				getModel().setValueIsAdjusting(true);
-				getModel().setBroom(
-						arg0.getPositionRelativeTo(self.getParent()));
+				if (false)
+					getModel().setBroom(
+							arg0.getPositionRelativeTo(self.getParent()));
+				else
+					view2model(new XYMemento(getModel(), arg0
+							.getPositionRelativeTo(self.getParent())));
 			}
 
 			@Override
@@ -309,7 +333,8 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 				if (r == null)
 					return;
 				r.setValueIsAdjusting(true);
-				r.setValue(ratio2value(p.getY() / stickLength, r));
+				view2model(new BroomPromptModel.SplitMemento(getModel(),
+						ratio2value(p.getY() / stickLength, r)));
 			}
 
 			@Override
@@ -348,10 +373,6 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 
 	public BroomPromptModel getModel() {
 		return model;
-	}
-
-	public UndoRedoDocument getUndo() {
-		return undo;
 	}
 
 	public void propertyChange(final PropertyChangeEvent evt) {
@@ -427,10 +448,6 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 		adjustSlider(s);
 	}
 
-	public void setUndo(final UndoRedoDocument undo) {
-		this.undo = undo;
-	}
-
 	protected Color sliderColor(final BoundedRangeModel r) {
 		return interpolateRGB(slow, fast, (double) (r.getValue() - r
 				.getMaximum())
@@ -446,5 +463,9 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 	private double value2ratio(final BoundedRangeModel r) {
 		return (double) (r.getValue() - r.getMaximum())
 				/ (r.getMinimum() - r.getMaximum());
+	}
+
+	private void view2model(final Memento<?> m) {
+		m.run();
 	}
 }

@@ -5,22 +5,14 @@ import java.awt.Color;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
-import javax.swing.BoundedRangeModel;
 import javax.swing.JComponent;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
-import org.apache.commons.logging.Log;
 import org.jcurl.core.api.ComputedTrajectorySet;
-import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
+import org.jcurl.core.ui.Memento;
+import org.jcurl.core.ui.PosMemento;
 import org.jcurl.core.ui.TrajectoryBroomPromptWrapper;
-import org.jcurl.core.ui.UndoRedoDocumentBase;
-import org.jcurl.core.ui.TaskExecutor.ForkableFixed;
-import org.jcurl.core.ui.TaskExecutor.SwingEDT;
 import org.jcurl.zui.piccolo.BroomPromptSimple;
 import org.jcurl.zui.piccolo.KeyboardZoom;
 import org.jcurl.zui.piccolo.PCurveStore;
@@ -38,95 +30,30 @@ import edu.umd.cs.piccolo.event.PInputEventListener;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
 public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
-	class Controller implements PropertyChangeListener, ChangeListener {
+	class Controller {
 		final PInputEventListener keyZoom;
 		final PInputEventListener rockMove = new DragHandler() {
 			@Override
 			protected void pushChange(final boolean isDrop,
 					final PRockNode node, final Point2D currentPos,
 					final Point2D startPos) {
-				/** A Inner Anonymous Class Comment */
-				new ForkableFixed<SwingEDT>() {
-					/** A Inner Anonymous Method Comment */
-					public void run() {
-						updatePos((Integer) node
-								.getAttribute(PRockNode.INDEX16), currentPos,
-								cm);
-						if (isDrop)
-							// FIXME Add Undo.
-							;
-					}
-				}.fork();
+				// mouse moved
+				view2model(new PosMemento(cm.getInitialPos(), (Integer) node
+						.getAttribute(PRockNode.INDEX16), currentPos));
 			}
 		};
 
 		Controller(final PCamera cam) {
 			keyZoom = new KeyboardZoom(cam);
 		}
-
-		public void propertyChange(final PropertyChangeEvent evt) {
-			// log.info(evt.getSource().getClass().getName() + " "
-			// + evt.getPropertyName());
-			if (evt.getSource() instanceof BroomPromptModel) {
-				final BroomPromptModel bpm = (BroomPromptModel) evt.getSource();
-				new ForkableFixed<SwingEDT>() {
-					/** A Inner Anonymous Method Comment */
-					public void run() {
-						if ("broom".equals(evt.getPropertyName()))
-							updateBroom(bpm.getBroom(), cm, bpm);
-						else if ("outTurn".equals(evt.getPropertyName()))
-							updateTurn(bpm.getOutTurn(), bpm, cm);
-						else if ("idx16".equals(evt.getPropertyName()))
-							updateIndex(bpm.getIdx16(), cm, bpm);
-						else if ("valueIsAdjusting".equals(evt
-								.getPropertyName()))
-							if (bpm.getValueIsAdjusting())
-								log.info("Push broom to Undo/Redo manager");
-							else
-								;
-						else
-							throw new UnsupportedOperationException(evt
-									.getPropertyName());
-					}
-				}.fork();
-			} else
-				throw new UnsupportedOperationException(evt.getSource()
-						.getClass().getName());
-		}
-
-		public void stateChanged(final ChangeEvent evt) {
-			// log.info(evt.getSource().getClass().getName());
-			if (evt.getSource() instanceof BoundedRangeModel) {
-				final BoundedRangeModel brm = (BoundedRangeModel) evt
-						.getSource();
-				new ForkableFixed<SwingEDT>() {
-					/** A Inner Anonymous Method Comment */
-					public void run() {
-						if (brm.getValueIsAdjusting())
-							log.info("Speed change underway");
-						else
-							log.info("Speed change done");
-						updateSplitTimeMillis(cm, broom.getModel(), brm
-								.getValue());
-					}
-				}.fork();
-			}
-		}
 	}
 
-	private static final Log log = JCLoggerFactory
-			.getLogger(TrajectoryPiccoloBean.class);
-
+	private static final MementoHandler mh = new MementoHandler();
 	private static final long serialVersionUID = -4648771240323713217L;
-
 	private static final int TMAX = 30;
-
 	private final BroomPromptSimple broom;
-
 	private ComputedTrajectorySet cm = null;
-
 	private final Controller con;
-
 	private final PPositionSet current;
 	private final PNode ice;
 	private final PPositionSet initial;
@@ -135,7 +62,6 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 	private final PCanvas pico;
 	private transient volatile RectangularShape tmpViewPort = null;
 	private final PCurveStore traj;
-	private UndoRedoDocumentBase undo;
 
 	public TrajectoryPiccoloBean() {
 		pico = new PCanvas();
@@ -180,10 +106,6 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 		return cm;
 	}
 
-	public UndoRedoDocumentBase getUndo() {
-		return undo;
-	}
-
 	public RectangularShape getZoom() {
 		if (tmpViewPort == null)
 			return pico.getCamera().getViewBounds();
@@ -194,18 +116,6 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 	public void setBackground(final Color bg) {
 		pico.setBackground(bg);
 		super.setBackground(bg);
-	}
-
-	private void setBroom(final BroomPromptModel b) {
-		if (broom.getModel() != null) {
-			broom.getModel().removePropertyChangeListener(con);
-			broom.getModel().getSplitTimeMillis().removeChangeListener(con);
-		}
-		broom.setModel(b);
-		if (broom.getModel() != null) {
-			broom.getModel().addPropertyChangeListener(con);
-			broom.getModel().getSplitTimeMillis().addChangeListener(con);
-		}
 	}
 
 	public void setCurves(final ComputedTrajectorySet model) {
@@ -239,10 +149,6 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 		broom.setVisible(model != null);
 	}
 
-	public void setUndo(final UndoRedoDocumentBase undo) {
-		this.undo = undo;
-	}
-
 	public void setZoom(final RectangularShape viewport) {
 		setZoom(viewport, -1);
 	}
@@ -260,34 +166,7 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 		pico.getCamera().animateViewToCenterBounds(r, true, transitionMillis);
 	}
 
-	@Deprecated
-	private void updateBroom(final Point2D newPos,
-			final ComputedTrajectorySet cm, final BroomPromptModel prompt) {
-		prompt.setBroom(newPos);
-	}
-
-	@Deprecated
-	private void updateIndex(final int i16, final ComputedTrajectorySet cm,
-			final BroomPromptModel prompt) {
-		prompt.setIdx16(i16);
-	}
-
-	@Deprecated
-	private void updatePos(final int i16, final Point2D newPos,
-			final ComputedTrajectorySet cm) {
-		cm.getInitialPos().getRock(i16).p().setLocation(newPos);
-		cm.getInitialPos().fireStateChanged();
-	}
-
-	@Deprecated
-	private void updateSplitTimeMillis(final ComputedTrajectorySet cm,
-			final BroomPromptModel prompt, final int newSplit) {
-		prompt.getSplitTimeMillis().setValue(newSplit);
-	}
-
-	@Deprecated
-	private void updateTurn(final boolean outTurn,
-			final BroomPromptModel prompt, final ComputedTrajectorySet cm) {
-		prompt.setOutTurn(outTurn);
+	private void view2model(final Memento<?> m) {
+		mh.add(m, false);
 	}
 }
