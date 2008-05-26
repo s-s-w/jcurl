@@ -36,8 +36,11 @@ import org.jcurl.core.ui.TaskExecutor.SwingEDT;
  * @version $Id$
  */
 public class ChangeManager {
+	private static final Log log = JCLoggerFactory
+			.getLogger(ChangeManager.class);
 	private final Executor executor;
 	private final WeakHashSet<UndoableEditListener> listeners = new WeakHashSet<UndoableEditListener>();
+
 	private final UndoManager undoer = new UndoManager();
 
 	public ChangeManager() {
@@ -62,6 +65,14 @@ public class ChangeManager {
 		listeners.add(l);
 	}
 
+	public boolean canRedo() {
+		return undoer.canRedo();
+	}
+
+	public boolean canUndo() {
+		return undoer.canUndo();
+	}
+
 	public Iterable<UndoableEditListener> getUndoableEditListeners() {
 		return listeners;
 	}
@@ -76,7 +87,6 @@ public class ChangeManager {
 		listeners.remove(l);
 	}
 
-	private static final Log log = JCLoggerFactory.getLogger(ChangeManager.class);
 	public void temporary(final Memento<?> m) {
 		log.debug("");
 		executor.execute(m);
@@ -92,13 +102,5 @@ public class ChangeManager {
 		log.debug("");
 		executor.execute(post);
 		return addEdit(new UndoableMemento<E>(pre, post));
-	}
-
-	public boolean canRedo() {
-		return undoer.canRedo();
-	}
-
-	public boolean canUndo() {
-		return undoer.canUndo();
 	}
 }

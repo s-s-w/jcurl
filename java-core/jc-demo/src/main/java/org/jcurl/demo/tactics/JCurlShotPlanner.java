@@ -103,10 +103,10 @@ import org.jdesktop.application.Task.BlockingScope;
  */
 public class JCurlShotPlanner extends SingleFrameApplication implements
 		UndoableEditListener {
-	private static class ChangeManage implements ChangeListener {
+	private static class ChangeListenerManager implements ChangeListener {
 		private final JCurlShotPlanner host;
 
-		public ChangeManage(final JCurlShotPlanner host) {
+		public ChangeListenerManager(final JCurlShotPlanner host) {
 			this.host = host;
 		}
 
@@ -413,7 +413,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 
 	private boolean canUndo = false;
 	private final ChangeManager change = new ChangeManager();
-	private final ChangeManage cm = new ChangeManage(this);
+	private final ChangeListenerManager cm = new ChangeListenerManager(this);
 	private URL document;
 	private File file;
 	private final GuiUtil gui = new GuiUtil(getContext());
@@ -421,11 +421,8 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 	private boolean modified = false;
 	private FileNameExtensionFilter pngPat;
 	private FileNameExtensionFilter svgPat;
-
-	private final BroomSwingBean swing = new BroomSwingBean();;
-
+	private final BroomSwingBean swing = new BroomSwingBean();
 	private final TrajectoryPiccoloBean tactics = new TrajectoryPiccoloBean();
-
 	private final JLabel url = new JLabel();
 
 	private JCurlShotPlanner() {

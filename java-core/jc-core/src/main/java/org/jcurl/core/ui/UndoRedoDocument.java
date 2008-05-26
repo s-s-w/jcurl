@@ -22,6 +22,7 @@ import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.UndoableEdit;
 
 /** http://www.javaworld.com/javaworld/jw-06-1998/jw-06-undoredo.html */
+@Deprecated
 public interface UndoRedoDocument {
 
 	public abstract boolean addEdit(UndoableEdit edit);

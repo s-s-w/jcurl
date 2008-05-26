@@ -304,8 +304,10 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 						.getEditor();
 				ed.getTextField().addFocusListener(this);
 			}
-		} else
-			// split.setModel(null);
+		} else // split.setModel(null);
+		if (brm)
+			split2.setEnabled(false);
+		else
 			split.setEnabled(false);
 	}
 

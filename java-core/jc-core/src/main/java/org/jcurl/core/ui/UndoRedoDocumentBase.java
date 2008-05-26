@@ -31,6 +31,7 @@ import org.jcurl.core.api.WeakHashSet;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
+@Deprecated
 public class UndoRedoDocumentBase implements UndoRedoDocument {
 
 	private static final WeakHashSet<UndoableEditListener> listeners = new WeakHashSet<UndoableEditListener>();
