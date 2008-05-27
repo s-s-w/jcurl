@@ -121,7 +121,8 @@ public class TrajectoryBroomPromptWrapper extends DefaultBroomPromptModel
 				final long splitTimeMillis, final int idx16,
 				final boolean outTurn, final Curler curl,
 				final RockSet<Pos> dstPos, final RockSet<Vel> dstVel) {
-			log.info("i=" + idx16);
+			if (log.isDebugEnabled())
+				log.debug("i=" + idx16);
 			// set to initial pos
 			final Rock start = new RockDouble(0, IceSize.FAR_HACK_2_TEE,
 					Math.PI);

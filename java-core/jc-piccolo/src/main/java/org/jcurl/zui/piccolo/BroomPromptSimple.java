@@ -43,6 +43,7 @@ import org.jcurl.core.api.RockSet;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.ChangeManager;
+import org.jcurl.core.ui.IceShapes;
 import org.jcurl.core.ui.Memento;
 import org.jcurl.core.ui.BroomPromptModel.HandleMemento;
 import org.jcurl.core.ui.BroomPromptModel.XYMemento;
@@ -58,14 +59,13 @@ import edu.umd.cs.piccolo.util.PPickPath;
 /** Piccolo View + Controller for {@link BroomPromptModel}s. */
 public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 		ChangeListener {
-	private static final Color dark = Color.RED;
+	private static final Color dark = new IceShapes.RockColors().dark;
 	private static final Color fast = Color.RED;
-	private static final Color light = Color.YELLOW;
+	private static final Color light = new IceShapes.RockColors().light;
 	private static final Log log = JCLoggerFactory
 			.getLogger(BroomPromptSimple.class);
 	private static final Cursor MOVE_CURSOR = new Cursor(Cursor.MOVE_CURSOR);
 	private static final double scale0 = 0;
-	/** */
 	private static final int scale50 = 50;
 	private static final long serialVersionUID = 3115716478135484000L;
 	private static final Color slow = Color.BLUE;
@@ -163,9 +163,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 	}
 
 	private ChangeManager changer = null;
-
 	private Memento first = null;
-
 	private final PNode handle;
 	private Memento last = null;
 	private BroomPromptModel model;
@@ -294,10 +292,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 							.getOutTurn());
 					last = new HandleMemento(getModel(), !getModel()
 							.getOutTurn());
-					if (changer == null)
-						view2model(last);
-					else
-						changer.undoable(first, last);
+					ChangeManager.getTrivial(changer).undoable(first, last);
 					first = last = null;
 				}
 			}
@@ -331,7 +326,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 			public void mouseReleased(final PInputEvent pinputevent) {
 				getModel().setValueIsAdjusting(false);
 				if (first != null && last != null && first != last)
-					changer.undoable(first, last);
+					ChangeManager.getTrivial(changer).undoable(first, last);
 				first = last = null;
 			}
 		});
@@ -376,7 +371,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 					return;
 				r.setValueIsAdjusting(false);
 				if (first != null && last != null && first != last)
-					changer.undoable(first, last);
+					ChangeManager.getTrivial(changer).undoable(first, last);
 				first = last = null;
 			}
 		});
@@ -503,9 +498,6 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 			first = m;
 		else
 			last = m;
-		if (changer == null)
-			m.run();
-		else
-			changer.temporary(m);
+		ChangeManager.getTrivial(changer).temporary(m);
 	}
 }

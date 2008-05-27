@@ -37,7 +37,7 @@ import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.core.swing.RockPainter.ColorSet;
+import org.jcurl.core.ui.IceShapes;
 
 /**
  * 
@@ -46,7 +46,7 @@ import org.jcurl.core.swing.RockPainter.ColorSet;
  */
 abstract class SumDisplayBase extends JComponent implements ChangeListener {
 
-	private static final ColorSet colors = new ColorSet();
+	private static final IceShapes.RockColors colors = new IceShapes.RockColors ();
 
 	private static final Map<Key, Object> hints = new HashMap<Key, Object>();
 

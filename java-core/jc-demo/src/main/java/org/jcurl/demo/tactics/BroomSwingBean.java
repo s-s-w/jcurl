@@ -81,6 +81,7 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 			tb
 					.add(rock = new JComboBox(new Object[] { 1, 2, 3, 4, 5, 6,
 							7, 8 }));
+			rock.setPrototypeDisplayValue(8);
 			rock.addItemListener(this);
 			dark = new JRadioButton("dark");
 			dark.addActionListener(this);

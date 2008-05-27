@@ -19,7 +19,6 @@
 package org.jcurl.zui.piccolo;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Paint;
 import java.awt.Stroke;
 import java.io.IOException;
@@ -33,6 +32,7 @@ import org.jcurl.core.api.Factory;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.log.JCLoggerFactory;
+import org.jcurl.core.ui.IceShapes;
 import org.jcurl.math.CurveShape;
 import org.jcurl.math.R1RNFunction;
 
@@ -48,10 +48,11 @@ import edu.umd.cs.piccolo.nodes.PPath;
  */
 public abstract class PTrajectoryFactory implements Factory {
 	public static class Fancy extends PTrajectoryFactory {
-		private static final Paint dark = new Color(255, 153, 153, 150);
 
-		private static final Paint light = new Color(255, 255, 153, 150);
-
+		private static final Paint dark = IceShapes
+				.trace(new IceShapes.RockColors().dark);
+		private static final Paint light = IceShapes
+				.trace(new IceShapes.RockColors().light);
 		private static final Stroke stroke = new BasicStroke(
 				2 * RockProps.DEFAULT.getRadius(), BasicStroke.CAP_ROUND,
 				BasicStroke.JOIN_ROUND, 0);
@@ -101,12 +102,12 @@ public abstract class PTrajectoryFactory implements Factory {
 			if (curr.getKey() >= tmax)
 				return false;
 			doSections(sections, curr.getKey(), tmax);
-			if (flog.isDebugEnabled()) {
+			if (log.isDebugEnabled()) {
 				final StringWriter wri = new StringWriter();
 				wri.write("t=");
 				toString(wri, sections);
 				wri.write(" c=" + curr.getValue());
-				flog.debug(wri.getBuffer());
+				log.debug(wri.getBuffer());
 			}
 			parent.addChild(createNode(isDark, curr.getValue(), sections));
 			return true;
@@ -166,7 +167,7 @@ public abstract class PTrajectoryFactory implements Factory {
 		}
 	}
 
-	private static final Log flog = JCLoggerFactory
+	private static final Log log = JCLoggerFactory
 			.getLogger(PTrajectoryFactory.Fancy.class);
 
 	public abstract PNode newInstance(int i8, boolean isDark,
@@ -174,7 +175,8 @@ public abstract class PTrajectoryFactory implements Factory {
 
 	public PNode newInstance(final int i16,
 			final Iterator<Entry<Double, R1RNFunction>> t, final double tmax) {
-		final PNode r = newInstance(RockSet.toIdx8(i16), RockSet.isDark(i16), t, tmax);
+		final PNode r = newInstance(RockSet.toIdx8(i16), RockSet.isDark(i16),
+				t, tmax);
 		r.addAttribute(PRockNode.INDEX16, 16);
 		return r;
 	}

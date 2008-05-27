@@ -20,18 +20,17 @@ package org.jcurl.zui.piccolo;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Arc2D;
 
 import org.jcurl.core.api.Factory;
 import org.jcurl.core.api.Rock;
-import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.core.ui.IceShapes;
+import org.jcurl.core.ui.IceShapes.RockColors;
 
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.nodes.PPath;
@@ -47,41 +46,8 @@ import edu.umd.cs.piccolo.nodes.PText;
 public abstract class PRockFactory implements Factory {
 
 	public static class Fancy extends PRockFactory {
-		/** Rock colors */
-		protected static class ColorSet {
-			public Color contour = Color.BLACK;
 
-			public Color dark = new Color(0xFF0000);
-
-			public Color granite = new Color(0x565755);
-
-			public Color label = Color.BLACK;
-
-			public Color light = new Color(0xFFFF00);
-		}
-
-		protected static final ColorSet colors = new ColorSet();
-
-		protected static final Font fo;
-
-		protected static final Arc2D.Float inner;
-
-		protected static final Arc2D.Float outer;
-
-		static {
-			final float ro = RockProps.DEFAULT.getRadius();
-			final float ri = 0.7F * ro;
-			outer = new Arc2D.Float(-ro, -ro, 2 * ro, 2 * ro, 0, 360,
-					Arc2D.CHORD);
-			inner = new Arc2D.Float(-ri, -ri, 2 * ri, 2 * ri, 0, 360,
-					Arc2D.CHORD);
-			fo = new Font("SansSerif", Font.BOLD, 1);
-		}
-
-		static Color alpha(final Color base, final int alpha) {
-			return new Color(base.getRed(), base.getGreen(), base.getBlue(),
-					alpha);
-		}
+		protected static final RockColors colors = new RockColors();
 
 		private final int alpha;
 
@@ -93,13 +59,14 @@ public abstract class PRockFactory implements Factory {
 		public PRockNode newInstance(final int i8, final boolean isDark,
 				final Rock<Pos> rock) {
 			final PRockNode r = new PRockNode(i8, isDark, rock);
-			r.addChild(node(outer, alpha(colors.granite, alpha), null, null));
-			r.addChild(node(inner, alpha(isDark ? colors.dark : colors.light,
-					alpha), null, null));
+			r.addChild(node(IceShapes.ROCK_OUTER, IceShapes.alpha(
+					colors.granite, alpha), null, null));
+			r.addChild(node(IceShapes.ROCK_INNER, IceShapes.alpha(
+					isDark ? colors.dark : colors.light, alpha), null, null));
 			{
-				final PText t = new PText(labels[i8]);
-				t.setFont(fo);
-				t.setTextPaint(alpha(colors.label, alpha));
+				final PText t = new PText(IceShapes.ROCK_LABELS[i8]);
+				t.setFont(IceShapes.ROCK_LABEL);
+				t.setTextPaint(IceShapes.alpha(colors.label, alpha));
 				// Make coord-sys left-handed again, as the ice is assumed to be
 				// right-handed:
 				t.setTransform(AffineTransform.getScaleInstance(1, -1));
@@ -128,15 +95,12 @@ public abstract class PRockFactory implements Factory {
 			final PRockNode r = new PRockNode(i8, isDark, rock);
 			// fill to also make the body, not only the edge
 			// pickable:
-			r.addChild(node(outer, isDark ? colors.dark : colors.light, stroke,
-					Color.BLACK));
+			r.addChild(node(IceShapes.ROCK_OUTER, isDark ? colors.dark
+					: colors.light, stroke, Color.BLACK));
 			r.getChild(0).setPickable(true);
 			return r;
 		}
 	}
-
-	protected static final String[] labels = { "1", "2", "3", "4", "5", "6",
-			"7", "8" };
 
 	protected static PNode node(final Shape s, final Paint p, final Stroke str,
 			final Paint sp) {

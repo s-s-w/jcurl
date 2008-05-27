@@ -422,7 +422,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 	private FileNameExtensionFilter pngPat;
 	private FileNameExtensionFilter svgPat;
 	private final BroomSwingBean swing = new BroomSwingBean();
-	private final TrajectoryPiccoloBean tactics = new TrajectoryPiccoloBean();
+	private final TrajectoryBean tactics = new TrajectoryPiccoloBean();
 	private final JLabel url = new JLabel();
 
 	private JCurlShotPlanner() {
@@ -1003,7 +1003,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 		getMainFrame().setJMenuBar(createMenuBar());
 
 		final JComponent c = new JPanel();
-		c.setLayout(new BorderLayout());
+		c.setLayout(new BorderLayout());		
 		tactics.setPreferredSize(new Dimension(400, 600));
 		c.add(tactics, BorderLayout.CENTER);
 		c.add(url, BorderLayout.NORTH);
@@ -1022,9 +1022,8 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 			b.add(new JLabel("TODO: Bird's eye view"), BorderLayout.CENTER);
 			c.add(b, BorderLayout.EAST);
 		}
-
+		
 		show(c);
-
 		viewHouse();
 	}
 

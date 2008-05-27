@@ -32,15 +32,76 @@ import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
 
 /**
+ * 
+ * Relation to {@link SwingWorker}?
+ * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
 public class ChangeManager {
+
 	private static final Log log = JCLoggerFactory
 			.getLogger(ChangeManager.class);
+
+	private static final ChangeManager trivial = new ChangeManager() {
+
+		@Override
+		public void addUndoableEditListener(UndoableEditListener l) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean canRedo() {
+			return false;
+		}
+
+		@Override
+		public boolean canUndo() {
+			return false;
+		}
+
+		@Override
+		public void discardAllEdits() {}
+
+		@Override
+		public Iterable<UndoableEditListener> getUndoableEditListeners() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void redo() {}
+
+		@Override
+		public void removeUndoableEditListener(UndoableEditListener l) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void temporary(Memento<?> m) {
+			m.run();
+		}
+
+		@Override
+		public void undo() {}
+
+		@Override
+		public <E> boolean undoable(Memento<E> pre, Memento<E> post) {
+			post.run();
+			return false;
+		}
+
+	};
+
+	public static final ChangeManager getTrivial() {
+		return trivial;
+	}
+
+	public static final ChangeManager getTrivial(final ChangeManager cm) {
+		return cm == null ? trivial : cm;
+	}
+
 	private final Executor executor;
 	private final WeakHashSet<UndoableEditListener> listeners = new WeakHashSet<UndoableEditListener>();
-
 	private final UndoManager undoer = new UndoManager();
 
 	public ChangeManager() {
@@ -54,7 +115,13 @@ public class ChangeManager {
 		this.executor = executor;
 	}
 
-	public <E> boolean addEdit(final UndoableEdit anEdit) {
+	/**
+	 * 
+	 * @param <E>
+	 * @param anEdit
+	 * @return {@link UndoManager#addEdit(UndoableEdit)}
+	 */
+	private <E> boolean addEdit(final UndoableEdit anEdit) {
 		final boolean ret = undoer.addEdit(anEdit);
 		for (final UndoableEditListener elem : listeners)
 			elem.undoableEditHappened(new UndoableEditEvent(undoer, anEdit));
@@ -65,18 +132,19 @@ public class ChangeManager {
 		listeners.add(l);
 	}
 
-	public void discardAllEdits() {
-		undoer.discardAllEdits();
-		for (final UndoableEditListener elem : listeners)
-			elem.undoableEditHappened(new UndoableEditEvent(undoer, null));
-	}
-	
 	public boolean canRedo() {
 		return undoer.canRedo();
 	}
 
 	public boolean canUndo() {
 		return undoer.canUndo();
+	}
+
+	/** Delegate to {@link UndoManager#discardAllEdits()}. */
+	public void discardAllEdits() {
+		undoer.discardAllEdits();
+		for (final UndoableEditListener elem : listeners)
+			elem.undoableEditHappened(new UndoableEditEvent(undoer, null));
 	}
 
 	public Iterable<UndoableEditListener> getUndoableEditListeners() {
@@ -104,9 +172,21 @@ public class ChangeManager {
 			elem.undoableEditHappened(new UndoableEditEvent(undoer, null));
 	}
 
+	/**
+	 * Create an {@link UndoableMemento} and push to the {@link UndoManager} and
+	 * {@link Executor}.
+	 * 
+	 * @param <E>
+	 * @param pre
+	 *            "undo" state.
+	 * @param post
+	 *            "redo" state.
+	 * @return {@link UndoManager#addEdit(UndoableEdit)}
+	 */
 	public <E> boolean undoable(final Memento<E> pre, final Memento<E> post) {
 		log.debug("");
+		final boolean ret = addEdit(new UndoableMemento<E>(pre, post));
 		executor.execute(post);
-		return addEdit(new UndoableMemento<E>(pre, post));
+		return ret;
 	}
 }

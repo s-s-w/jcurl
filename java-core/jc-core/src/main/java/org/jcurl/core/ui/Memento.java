@@ -34,6 +34,13 @@ import java.util.concurrent.Executor;
  */
 public abstract class Memento<E> implements Runnable {
 
+	// private static final Collection<Integer> stats = new
+	// LinkedList<Integer>();
+
+	private static final void pushStat(final Class<?> c, final long millis) {
+		;// System.out.println(c.getName() + " " + millis);
+	}
+
 	final E context;
 
 	protected Memento(final E context) {
@@ -47,6 +54,11 @@ public abstract class Memento<E> implements Runnable {
 	public abstract E apply(E dst);
 
 	public void run() {
-		apply();
+		final long start = System.currentTimeMillis();
+		try {
+			apply();
+		} finally {
+			pushStat(this.getClass(), System.currentTimeMillis() - start);
+		}
 	}
 }

@@ -6,8 +6,6 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
 
-import javax.swing.JComponent;
-
 import org.jcurl.core.api.ComputedTrajectorySet;
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.ChangeManager;
@@ -29,7 +27,7 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PInputEventListener;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
-public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
+public class TrajectoryPiccoloBean extends TrajectoryBean {
 	class Controller {
 		final PInputEventListener keyZoom;
 		final PInputEventListener rockMove = new DragHandler() {
@@ -40,21 +38,16 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 					final PRockNode node, final Point2D currentPos,
 					final Point2D startPos) {
 				// mouse moved
-				view2model(isDrop, new PosMemento(cm.getInitialPos(),
+				final PosMemento m = new PosMemento(cm.getInitialPos(),
 						(Integer) node.getAttribute(PRockNode.INDEX16),
-						currentPos));
-			}
-
-			private void view2model(final boolean isDrop, final PosMemento m) {
+						currentPos);
 				if (start == null)
 					start = m;
-				if (changer == null)
-					m.run();
-				else if (isDrop) {
-					changer.undoable(start, m);
+				if (isDrop) {
+					ChangeManager.getTrivial(changer).undoable(start, m);
 					start = null;
 				} else
-					changer.temporary(m);
+					ChangeManager.getTrivial(changer).temporary(m);
 			}
 		};
 
@@ -66,6 +59,7 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 	private static final long serialVersionUID = -4648771240323713217L;
 	private static final int TMAX = 30;
 	private final BroomPromptSimple broom;
+	private ChangeManager changer = null;
 	private ComputedTrajectorySet cm = null;
 	private final Controller con;
 	private final PPositionSet current;
@@ -76,7 +70,6 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 	private final PCanvas pico;
 	private transient volatile RectangularShape tmpViewPort = null;
 	private final PCurveStore traj;
-	private ChangeManager changer = null;
 
 	public TrajectoryPiccoloBean() {
 		pico = new PCanvas();
@@ -117,12 +110,12 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 		return broom.getModel();
 	}
 
-	public ComputedTrajectorySet getCurves() {
-		return cm;
-	}
-
 	public ChangeManager getChanger() {
 		return changer;
+	}
+
+	public ComputedTrajectorySet getCurves() {
+		return cm;
 	}
 
 	public RectangularShape getZoom() {
@@ -135,6 +128,14 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 	public void setBackground(final Color bg) {
 		pico.setBackground(bg);
 		super.setBackground(bg);
+	}
+
+	public void setChanger(final ChangeManager changer) {
+		final ChangeManager old = this.changer;
+		if (old == changer)
+			return;
+		broom.setChanger(this.changer = changer);
+		firePropertyChange("changer", old, this.changer);
 	}
 
 	public void setCurves(final ComputedTrajectorySet model) {
@@ -166,14 +167,6 @@ public class TrajectoryPiccoloBean extends JComponent implements Zoomable {
 		current.setVisible(model != null);
 		initial.setVisible(model != null);
 		broom.setVisible(model != null);
-	}
-
-	public void setChanger(final ChangeManager changer) {
-		final ChangeManager old = this.changer;
-		if (old == changer)
-			return;
-		broom.setChanger(this.changer = changer);
-		firePropertyChange("changer", old, this.changer);		
 	}
 
 	public void setZoom(final RectangularShape viewport) {
