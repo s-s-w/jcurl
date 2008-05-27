@@ -80,7 +80,7 @@
 			<groupId>net.java.dev.scenegraph</groupId>
 			<artifactId>scenario</artifactId>
 			<version>0.6</version>
-			<scope>test</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.java.dev.swing-layout</groupId>
