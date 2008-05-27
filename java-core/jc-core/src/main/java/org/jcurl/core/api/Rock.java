@@ -58,7 +58,6 @@ import javax.swing.event.ChangeListener;
  */
 public abstract class Rock<R extends RockType> implements IChangeSupport,
 		Cloneable {
-
 	private static class ImmutableRock<X extends RockType> extends Rock<X> {
 		private final Rock<X> base;
 
@@ -74,6 +73,11 @@ public abstract class Rock<R extends RockType> implements IChangeSupport,
 		@Override
 		public double getA() {
 			return base.getA();
+		}
+
+		@Override
+		public boolean getValueIsAdjusting() {
+			return false;
 		}
 
 		@Override
@@ -107,20 +111,17 @@ public abstract class Rock<R extends RockType> implements IChangeSupport,
 		}
 
 		@Override
+		public void setValueIsAdjusting(final boolean valueIsAdjusting) {
+			throw new UnsupportedOperationException("Not supported.");
+		}
+
+		@Override
 		public void setX(final double x) {
 			throw new UnsupportedOperationException("Not supported.");
 		}
 
 		@Override
 		public void setY(final double y) {
-			throw new UnsupportedOperationException("Not supported.");
-		}
-
-		public boolean getValueIsAdjusting() {
-			return false;
-		}
-
-		public void setValueIsAdjusting(boolean valueIsAdjusting) {
 			throw new UnsupportedOperationException("Not supported.");
 		}
 	}
@@ -150,6 +151,7 @@ public abstract class Rock<R extends RockType> implements IChangeSupport,
 	private transient volatile boolean dirty = true;
 	private transient final Point2D p = new RockPoint();
 	private transient volatile AffineTransform trafo;
+	private transient boolean valueIsAdjusting = false;
 
 	public void addChangeListener(final ChangeListener l) {
 		change.addChangeListener(l);
@@ -185,6 +187,10 @@ public abstract class Rock<R extends RockType> implements IChangeSupport,
 		return change.getChangeListeners();
 	}
 
+	public boolean getValueIsAdjusting() {
+		return valueIsAdjusting;
+	}
+
 	public abstract double getX();
 
 	public abstract double getY();
@@ -213,6 +219,11 @@ public abstract class Rock<R extends RockType> implements IChangeSupport,
 
 	public void setLocation(final Rock<R> r) {
 		this.setLocation(r.getX(), r.getY(), r.getA());
+	}
+
+	public void setValueIsAdjusting(final boolean valueIsAdjusting) {
+		this.valueIsAdjusting = valueIsAdjusting;
+		fireStateChanged();
 	}
 
 	public abstract void setX(double x);
