@@ -1,5 +1,5 @@
 /*
- * jcurl curling simulation framework http://www.jcurl.org Copyright (C)
+ * jcurl java curling software framework http://www.jcurl.org Copyright (C)
  * 2005-2008 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it under
@@ -19,40 +19,27 @@
 
 package org.jcurl.demo.tactics;
 
-import java.awt.geom.RectangularShape;
-
-import javax.swing.JComponent;
-
-import org.jcurl.core.api.ComputedTrajectorySet;
-import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.ChangeManager;
 
 /**
+ * Indicate the existence of a {@link ChangeManager} property.
+ * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class TrajectoryBean extends JComponent implements HasChanger, Zoomable {
+public interface HasChanger {
 
-	private ChangeManager changer;
+	/**
+	 * Must never return <code>null</code> but
+	 * {@link ChangeManager#getTrivial(ChangeManager)} instead.
+	 */
+	ChangeManager getChanger();
 
-	public abstract BroomPromptModel getBroom();
+	/**
+	 * 
+	 * @param changer
+	 *            may be <code>null</code>.
+	 */
+	void setChanger(final ChangeManager changer);
 
-	public ChangeManager getChanger() {
-		return ChangeManager.getTrivial(changer);
-	}
-
-	public abstract ComputedTrajectorySet getCurves();
-
-	public void setChanger(final ChangeManager changer) {
-		final ChangeManager old = this.changer;
-		if (old == changer)
-			return;
-		firePropertyChange("changer", old, this.changer = changer);
-	}
-
-	public abstract void setCurves(ComputedTrajectorySet model);
-
-	public void setZoom(final RectangularShape viewport) {
-		setZoom(viewport, -1);
-	}
 }

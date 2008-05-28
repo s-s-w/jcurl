@@ -43,34 +43,58 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.api.ComputedTrajectorySet;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
+import org.jcurl.core.ui.ChangeManager;
 import org.jcurl.core.ui.JSpinnerBoundedRange;
-import org.jcurl.core.ui.Memento;
+import org.jcurl.core.ui.TrajectoryBroomPromptWrapper;
 import org.jcurl.core.ui.BroomPromptModel.HandleMemento;
 import org.jcurl.core.ui.BroomPromptModel.IndexMemento;
+import org.jcurl.core.ui.BroomPromptModel.SplitMemento;
 
 /**
+ * A Swing-based bean to control a {@link BroomPromptModel}.
+ * TODO x and y!
+ * <p>
+ * As Swing views are usually tightly coupled to the underlying datamodels
+ * (which holds at least for the {@link JSpinner}), I'm not quite sure how to
+ * pipe the changes through
+ * {@link ChangeManager#temporary(org.jcurl.core.ui.Memento)}. So I only use
+ * {@link ChangeManager#undoable(org.jcurl.core.ui.Memento, org.jcurl.core.ui.Memento)}
+ * to feed the undo manager (which results in duplicate updates to the
+ * underlying datamodels).
+ * </p>
+ * <p>
+ * Sp once more the coupling between {@link BroomPromptModel} and
+ * {@link ComputedTrajectorySet} is problematic. See
+ * {@link TrajectoryBroomPromptWrapper}.
+ * </p>
+ * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public class BroomSwingBean extends JComponent implements ItemListener,
-		FocusListener, ChangeListener, ActionListener, PropertyChangeListener {
+public class BroomPromptSwingBean extends JComponent implements HasChanger,
+		ItemListener, FocusListener, ChangeListener, ActionListener,
+		PropertyChangeListener {
 
-	private static final boolean brm = true;
 	private static final Log log = JCLoggerFactory
-			.getLogger(BroomSwingBean.class);
+			.getLogger(BroomPromptSwingBean.class);
 	private static final long serialVersionUID = -3512129363499720146L;
+	private static final boolean UseJSpinnerBoundedRange = true;
 	private BroomPromptModel broom;
+	private ChangeManager changer;
 	private final JRadioButton dark, light;
 	private final JComponent dt, x, y, dx, dy;
+	private SplitMemento first = null;
 	private final JRadioButton in, out;
 	private final JComboBox rock;
 	private final JSpinner split;
+
 	private final JSpinnerBoundedRange split2;
 
-	public BroomSwingBean() {
+	public BroomPromptSwingBean() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		final Box b = Box.createVerticalBox();
@@ -115,7 +139,7 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 			tb.setLayout(new BoxLayout(tb, BoxLayout.X_AXIS));
 			tb.setBorder(BorderFactory.createTitledBorder("Split Time"));
 
-			if (brm) {
+			if (UseJSpinnerBoundedRange) {
 				split2 = new JSpinnerBoundedRange();
 				split2.addFocusListener(this);
 				split = null;
@@ -170,12 +194,15 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 	public void actionPerformed(final ActionEvent e) {
 		if (log.isDebugEnabled())
 			log.debug(e.getSource());
-		if (e.getSource() == dark || e.getSource() == light)
+		if (e.getSource() == dark || e.getSource() == light) {
 			updateIndex();
-		if (e.getSource() == in || e.getSource() == out)
+			return;
+		}
+		if (e.getSource() == in || e.getSource() == out) {
 			updateHandle();
-		else
-			log.warn("Unprocessed event from " + e.getSource());
+			return;
+		}
+		log.warn("Unprocessed event from " + e.getSource());
 	}
 
 	private int findIndex() {
@@ -191,23 +218,44 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 
 	public void focusGained(final FocusEvent e) {
 		log.info(e.getSource());
+		if (e.getSource() == split2) {
+			if (broom == null || broom.getSplitTimeMillis() == null)
+				return;
+			first = new SplitMemento(broom, broom.getSplitTimeMillis()
+					.getValue());
+		} else
+			log.warn("Unprocessed event from " + e.getSource());
 	}
 
 	public void focusLost(final FocusEvent e) {
-		log.info(e.getSource());
+		if (e.getSource() == split2) {
+			if (broom == null || broom.getSplitTimeMillis() == null)
+				return;
+			getChanger().undoable(
+					first,
+					new SplitMemento(broom, broom.getSplitTimeMillis()
+							.getValue()));
+			first = null;
+		} else
+			log.warn("Unprocessed event from " + e.getSource());
 	}
 
 	public BroomPromptModel getBroom() {
 		return broom;
 	}
 
+	public ChangeManager getChanger() {
+		return ChangeManager.getTrivial(changer);
+	}
+
 	public void itemStateChanged(final ItemEvent e) {
 		if (log.isDebugEnabled())
 			log.debug(e.getSource());
-		if (e.getSource() == rock)
+		if (e.getSource() == rock) {
 			updateIndex();
-		else
-			log.warn("Unprocessed event from " + e.getSource());
+			return;
+		}
+		log.warn("Unprocessed event from " + e.getSource());
 	}
 
 	public void propertyChange(final PropertyChangeEvent evt) {
@@ -238,6 +286,13 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 			this.broom.addPropertyChangeListener(this);
 	}
 
+	public void setChanger(final ChangeManager changer) {
+		final ChangeManager old = this.changer;
+		if (old == changer)
+			return;
+		firePropertyChange("changer", old, this.changer = changer);
+	}
+
 	@Override
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);
@@ -248,7 +303,7 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 		in.setEnabled(enabled);
 		out.setEnabled(enabled);
 
-		if (brm)
+		if (UseJSpinnerBoundedRange)
 			split2.setEnabled(enabled);
 		else
 			split.setEnabled(enabled);
@@ -264,10 +319,7 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 	public void stateChanged(final ChangeEvent e) {
 		if (log.isDebugEnabled())
 			log.debug(e.getSource());
-		if (e.getSource() == dark || e.getSource() == light)
-			updateIndex();
-		else
-			log.warn("Unprocessed event from " + e.getSource());
+		log.warn("Unprocessed event from " + e.getSource());
 	}
 
 	private void syncM2V(final Boolean handle) {
@@ -292,7 +344,7 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 
 	private void syncM2V(final BoundedRangeModel s) {
 		if (s != null) {
-			if (brm) {
+			if (UseJSpinnerBoundedRange) {
 				split2.setBRM(s);
 				split2.setEnabled(true);
 			} else {
@@ -306,7 +358,7 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 				ed.getTextField().addFocusListener(this);
 			}
 		} else // split.setModel(null);
-		if (brm)
+		if (UseJSpinnerBoundedRange)
 			split2.setEnabled(false);
 		else
 			split.setEnabled(false);
@@ -337,19 +389,24 @@ public class BroomSwingBean extends JComponent implements ItemListener,
 	private void updateHandle() {
 		if (broom == null)
 			return;
+		final HandleMemento pre = new HandleMemento(broom, broom.getOutTurn());
+		final HandleMemento post;
 		if (in.isSelected())
-			view2model(new HandleMemento(broom, false));
-		if (out.isSelected())
-			view2model(new HandleMemento(broom, true));
+			post = new HandleMemento(broom, false);
+		else if (out.isSelected())
+			post = new HandleMemento(broom, true);
+		else
+			post = null;
+		getChanger().undoable(pre, post);
 	}
 
 	private void updateIndex() {
 		if (broom == null)
 			return;
-		view2model(new IndexMemento(broom, findIndex()));
-	}
-
-	private void view2model(final Memento<?> m) {
-		m.run();
+		if (broom == null)
+			return;
+		final IndexMemento pre = new IndexMemento(broom, broom.getIdx16());
+		final IndexMemento post = new IndexMemento(broom, findIndex());
+		getChanger().undoable(pre, post);
 	}
 }

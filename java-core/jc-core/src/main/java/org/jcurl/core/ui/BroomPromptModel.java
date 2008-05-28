@@ -47,6 +47,33 @@ public interface BroomPromptModel extends IPropertyChangeSupport,
 			dst.setOutTurn(outTurn);
 			return dst;
 		}
+
+		@Override
+		public boolean equals(final Object obj) {
+			if (this == obj)
+				return true;
+			if (!super.equals(obj))
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			final HandleMemento other = (HandleMemento) obj;
+			if (outTurn != other.outTurn)
+				return false;
+			return true;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = super.hashCode();
+			result = prime * result + (outTurn ? 1231 : 1237);
+			return result;
+		}
+
+		@Override
+		public String toString() {
+			return this.getClass().getName() + ": " + outTurn;
+		}
 	}
 
 	public class IndexMemento extends Memento<BroomPromptModel> {
@@ -62,6 +89,33 @@ public interface BroomPromptModel extends IPropertyChangeSupport,
 			dst.setIdx16(idx16);
 			return dst;
 		}
+
+		@Override
+		public boolean equals(final Object obj) {
+			if (this == obj)
+				return true;
+			if (!super.equals(obj))
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			final IndexMemento other = (IndexMemento) obj;
+			if (idx16 != other.idx16)
+				return false;
+			return true;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = super.hashCode();
+			result = prime * result + idx16;
+			return result;
+		}
+
+		@Override
+		public String toString() {
+			return this.getClass().getName() + ": " + idx16;
+		}
 	}
 
 	public class SplitMemento extends Memento<BroomPromptModel> {
@@ -76,6 +130,33 @@ public interface BroomPromptModel extends IPropertyChangeSupport,
 		public BroomPromptModel apply(final BroomPromptModel dst) {
 			dst.getSplitTimeMillis().setValue(splitTime);
 			return dst;
+		}
+
+		@Override
+		public boolean equals(final Object obj) {
+			if (this == obj)
+				return true;
+			if (!super.equals(obj))
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			final SplitMemento other = (SplitMemento) obj;
+			if (splitTime != other.splitTime)
+				return false;
+			return true;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = super.hashCode();
+			result = prime * result + splitTime;
+			return result;
+		}
+
+		@Override
+		public String toString() {
+			return this.getClass().getName() + ": " + splitTime;
 		}
 	}
 

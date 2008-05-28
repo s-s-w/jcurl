@@ -1,1 +1,2 @@
 org.jcurl.core.impl.CurlerNoCurl
+org.jcurl.core.impl.CurlerDenny

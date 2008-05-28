@@ -39,7 +39,7 @@ import javax.swing.SwingConstants;
 
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
 import org.jcurl.demo.tactics.TrajectoryPiccoloBean;
-import org.jcurl.demo.tactics.BroomSwingBean;
+import org.jcurl.demo.tactics.BroomPromptSwingBean;
 
 /**
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
@@ -146,7 +146,7 @@ public class MainApp extends JFrame {
 
 		final JTabbedPane t = new JTabbedPane(SwingConstants.TOP,
 				JTabbedPane.SCROLL_TAB_LAYOUT);
-		final BroomSwingBean ts = new BroomSwingBean();
+		final BroomPromptSwingBean ts = new BroomPromptSwingBean();
 		t.add("Rock", ts);
 		t.setMnemonicAt(0, 'R');
 		t.add("Ice", new JLabel("TODO: Ice settings"));

@@ -25,7 +25,8 @@ import java.util.concurrent.Executor;
  * A single, atomic unit of change usually concerning a data model.
  * <p>
  * Implements {@link Runnable} to simplify execution by a different
- * {@link Thread} or {@link Executor} if desired.
+ * {@link Thread} or {@link Executor} if desired - typically a
+ * {@link ChangeManager}.
  * </p>
  * 
  * @see UndoableMemento
@@ -52,6 +53,26 @@ public abstract class Memento<E> implements Runnable {
 	}
 
 	public abstract E apply(E dst);
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final Memento other = (Memento) obj;
+		return this.context == other.context;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (context == null ? 0 : context.hashCode());
+		return result;
+	}
 
 	public void run() {
 		final long start = System.currentTimeMillis();

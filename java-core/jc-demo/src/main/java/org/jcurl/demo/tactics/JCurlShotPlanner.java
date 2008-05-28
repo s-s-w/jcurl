@@ -402,7 +402,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 	}
 
 	private JDialog aboutBox = null;
-	private boolean canRedo = false;
+	private final BroomPromptSwingBean broomSwing = new BroomPromptSwingBean();
 
 	// static void bind(final Object src, final String src_p, final Object dst,
 	// final String dst_p) {
@@ -411,9 +411,11 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 	// .bind();
 	// }
 
+	private boolean canRedo = false;
 	private boolean canUndo = false;
 	private final ChangeManager change = new ChangeManager();
 	private final ChangeListenerManager cm = new ChangeListenerManager(this);
+	private final CurlerSwingBean curlerSwing = new CurlerSwingBean();
 	private URL document;
 	private File file;
 	private final GuiUtil gui = new GuiUtil(getContext());
@@ -421,13 +423,14 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 	private boolean modified = false;
 	private FileNameExtensionFilter pngPat;
 	private FileNameExtensionFilter svgPat;
-	private final BroomSwingBean swing = new BroomSwingBean();
 	private final TrajectoryBean tactics = new TrajectoryPiccoloBean();
 	private final JLabel url = new JLabel();
 
 	private JCurlShotPlanner() {
 		change.addUndoableEditListener(this);
 		tactics.setChanger(change);
+		broomSwing.setChanger(change);
+		curlerSwing.setChanger(change);
 		// tactics.setName("tactics");
 		url.setName("urlLabel");
 	}
@@ -925,7 +928,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 			if (cts != null)
 				cts.setCurrentTime(currentTime);
 			tactics.setCurves(cts);
-			swing.setBroom(tactics.getBroom());
+			broomSwing.setBroom(tactics.getBroom());
 			cm.register(tactics.getCurves());
 			setModified(false);
 		} finally {
@@ -1003,7 +1006,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 		getMainFrame().setJMenuBar(createMenuBar());
 
 		final JComponent c = new JPanel();
-		c.setLayout(new BorderLayout());		
+		c.setLayout(new BorderLayout());
 		tactics.setPreferredSize(new Dimension(400, 600));
 		c.add(tactics, BorderLayout.CENTER);
 		c.add(url, BorderLayout.NORTH);
@@ -1012,9 +1015,9 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 			b.setLayout(new BorderLayout());
 			final JTabbedPane t = new JTabbedPane(SwingConstants.TOP,
 					JTabbedPane.SCROLL_TAB_LAYOUT);
-			t.add("Rock", swing);
+			t.add("Rock", broomSwing);
 			t.setMnemonicAt(0, 'R');
-			t.add("Ice", new JLabel("TODO: Ice settings"));
+			t.add("Ice", curlerSwing);
 			t.setMnemonicAt(1, 'I');
 			t.add("Collission", new JLabel("TODO: Collission settings"));
 			t.setMnemonicAt(2, 'C');
@@ -1022,7 +1025,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 			b.add(new JLabel("TODO: Bird's eye view"), BorderLayout.CENTER);
 			c.add(b, BorderLayout.EAST);
 		}
-		
+
 		show(c);
 		viewHouse();
 	}

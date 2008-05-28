@@ -157,7 +157,8 @@ public class TrajectoryBroomPromptWrapper extends DefaultBroomPromptModel
 			final Point2D b = dst.getBroom();
 			final Point2D b2 = new Point2D.Double((b.getY() - x.getY())
 					* v.getX() / v.getY(), b.getY());
-			log.info("v=" + v + ", x=" + b2);
+			if (log.isDebugEnabled())
+				log.debug("v=" + v + ", x=" + b2);
 			dst.setBroom(b2);
 
 			// Compute Split Time
@@ -226,7 +227,7 @@ public class TrajectoryBroomPromptWrapper extends DefaultBroomPromptModel
 
 	@Override
 	public void setIdx16(final int idx16) {
-		log.info(idx16);
+		log.debug(idx16);
 		final int old = getIdx16();
 		if (old == idx16)
 			return;

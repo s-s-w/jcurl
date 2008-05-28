@@ -26,8 +26,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.logging.Log;
+import org.jcurl.core.log.JCLoggerFactory;
 
 /**
  * Compatible to <code>sun.misc.Service</code>.
@@ -37,6 +41,7 @@ import java.util.regex.Pattern;
  */
 public class Service {
 
+	private static final Log log = JCLoggerFactory.getLogger(Service.class);
 	private static final String META_INF_SERVICES = "META-INF/services/";
 	private static final Pattern pat = Pattern.compile("\\s*([^# ]+).*");
 	private static final String UTF_8 = "UTF-8";
@@ -47,7 +52,7 @@ public class Service {
 		try {
 			if (cl == null)
 				cl = clz.getClassLoader();
-			final Collection<Class<E>> ret = new ArrayList<Class<E>>();
+			final Collection<Class<E>> ret = new LinkedHashSet<Class<E>>();
 			// scan all
 			for (final Enumeration<URL> e = cl.getResources(META_INF_SERVICES
 					+ clz.getName()); e.hasMoreElements();) {
@@ -61,8 +66,14 @@ public class Service {
 						continue;
 					try {
 						final Class<?> c = Class.forName(m.group(1), true, cl);
-						if (clz.isAssignableFrom(c))
-							ret.add((Class<E>) c);
+						if (clz.isAssignableFrom(c)) {
+							final Class<E> clz_ = (Class<E>) c;
+							if (ret.contains(clz_))
+								log.warn("Duplicate class " + clz_.getName()
+										+ " in " + o.toString());
+							else
+								ret.add(clz_);
+						}
 					} catch (final ClassCastException e1) {
 						// ignore.
 					} catch (final ClassNotFoundException e1) {

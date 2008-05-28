@@ -175,6 +175,10 @@ public class ChangeManager {
 	/**
 	 * Create an {@link UndoableMemento} and push to the {@link UndoManager} and
 	 * {@link Executor}.
+	 * <p>
+	 * Does nothing if either <code>pre</code> or <code>post</code> is
+	 * <code>null</code> or the two are equal.
+	 * </p>
 	 * 
 	 * @param <E>
 	 * @param pre
@@ -184,7 +188,10 @@ public class ChangeManager {
 	 * @return {@link UndoManager#addEdit(UndoableEdit)}
 	 */
 	public <E> boolean undoable(final Memento<E> pre, final Memento<E> post) {
-		log.debug("");
+		if (pre == null || post == null || pre.equals(post))
+			return false;
+		if (log.isDebugEnabled())
+			log.debug(pre + " -> " + post);
 		final boolean ret = addEdit(new UndoableMemento<E>(pre, post));
 		executor.execute(post);
 		return ret;
