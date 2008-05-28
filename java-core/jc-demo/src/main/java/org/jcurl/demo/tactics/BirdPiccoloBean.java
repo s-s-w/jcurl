@@ -30,6 +30,11 @@ import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
 /**
+ * Bird's eye view to {@link TrajectoryPiccoloBean}.
+ * <p>
+ * Uses {@link TrajectoryPiccoloBean#getIceLayer()}.
+ * </p>
+ * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -45,6 +50,8 @@ public class BirdPiccoloBean extends JComponent {
 		add(pc = new PCanvas(), BorderLayout.CENTER);
 		pc.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 		pc.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+		pc.setPanEventHandler(null);
+		pc.setZoomEventHandler(null);
 		// setEnabled(false);
 	}
 
@@ -53,8 +60,14 @@ public class BirdPiccoloBean extends JComponent {
 	}
 
 	@Override
-	protected void paintComponent(final Graphics g) {
+	public void repaint() {
 		pc.getCamera().animateViewToCenterBounds(ZoomHelper.HousePlus, true, 1);
+		super.repaint();
+	}
+
+	@Override
+	protected void paintComponent(final Graphics g) {
+		// endless loop: pc.getCamera().animateViewToCenterBounds(ZoomHelper.HousePlus, true, 1);
 		super.paintComponent(g);
 	}
 
