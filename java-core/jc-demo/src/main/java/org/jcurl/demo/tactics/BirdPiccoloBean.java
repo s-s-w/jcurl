@@ -20,7 +20,6 @@
 package org.jcurl.demo.tactics;
 
 import java.awt.BorderLayout;
-import java.awt.Graphics;
 
 import javax.swing.JComponent;
 
@@ -42,7 +41,6 @@ public class BirdPiccoloBean extends JComponent {
 
 	private static final long serialVersionUID = -408035623675258196L;
 	private TrajectoryPiccoloBean master;
-
 	private PCanvas pc;
 
 	public BirdPiccoloBean() {
@@ -55,20 +53,14 @@ public class BirdPiccoloBean extends JComponent {
 		// setEnabled(false);
 	}
 
+	@Override
+	public void doLayout() {
+		super.doLayout();
+		pc.getCamera().setViewBounds(ZoomHelper.HousePlus);
+	}
+
 	public TrajectoryPiccoloBean getMaster() {
 		return master;
-	}
-
-	@Override
-	public void repaint() {
-		pc.getCamera().animateViewToCenterBounds(ZoomHelper.HousePlus, true, 1);
-		super.repaint();
-	}
-
-	@Override
-	protected void paintComponent(final Graphics g) {
-		// endless loop: pc.getCamera().animateViewToCenterBounds(ZoomHelper.HousePlus, true, 1);
-		super.paintComponent(g);
 	}
 
 	public void setMaster(final TrajectoryBean master) {
