@@ -68,7 +68,7 @@ public class TrajectoryPiccoloBean extends TrajectoryBean {
 	private final int major = 255;
 	private final int minor = 64;
 	private final PCanvas pico;
-	private transient volatile RectangularShape tmpViewPort = null;
+	private transient volatile Rectangle2D tmpViewPort = null;
 	private final PCurveStore traj;
 
 	public TrajectoryPiccoloBean() {
@@ -102,21 +102,30 @@ public class TrajectoryPiccoloBean extends TrajectoryBean {
 		ice.addChild(broom);
 
 		pico.getLayer().addChild(ice);
-		pico.
-		setBackground(super.getBackground());
+		pico.setBackground(super.getBackground());
 		setVisible(true);
 	}
 
-	PLayer getIceLayer() {
-		return pico.getLayer();
+	/** keep the recent viewport visible */
+	@Override
+	public void doLayout() {
+		super.doLayout();
+		if (tmpViewPort != null)
+			pico.getCamera().setViewBounds(tmpViewPort);
 	}
-	
+
+	@Override
 	public BroomPromptModel getBroom() {
 		return broom.getModel();
 	}
 
+	@Override
 	public ComputedTrajectorySet getCurves() {
 		return cm;
+	}
+
+	PLayer getIceLayer() {
+		return pico.getLayer();
 	}
 
 	public RectangularShape getZoom() {
@@ -131,11 +140,13 @@ public class TrajectoryPiccoloBean extends TrajectoryBean {
 		super.setBackground(bg);
 	}
 
+	@Override
 	public void setChanger(final ChangeManager changer) {
 		super.setChanger(changer);
 		broom.setChanger(changer);
 	}
 
+	@Override
 	public void setCurves(final ComputedTrajectorySet model) {
 		// sync curve- and broom data models:
 		if (model == null)
@@ -176,7 +187,7 @@ public class TrajectoryPiccoloBean extends TrajectoryBean {
 		else
 			r = new Rectangle2D.Double(viewport.getX(), viewport.getY(),
 					viewport.getWidth(), viewport.getHeight());
-		tmpViewPort = (RectangularShape) r.clone();
+		tmpViewPort = (Rectangle2D) r.clone();
 		pico.getCamera().animateViewToCenterBounds(r, true, transitionMillis);
 	}
 }
