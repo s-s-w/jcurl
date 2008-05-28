@@ -66,7 +66,6 @@ public class CurlerSwingBean extends JComponent implements HasChanger {
 	}
 
 	private ChangeManager changer;
-
 	private Curler curler;
 
 	public CurlerSwingBean() {

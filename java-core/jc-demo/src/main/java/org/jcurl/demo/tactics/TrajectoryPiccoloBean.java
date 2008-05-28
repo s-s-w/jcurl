@@ -23,6 +23,7 @@ import org.jcurl.zui.piccolo.PRockNode.DragHandler;
 
 import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PCanvas;
+import edu.umd.cs.piccolo.PLayer;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PInputEventListener;
 import edu.umd.cs.piccolo.util.PPaintContext;
@@ -101,10 +102,15 @@ public class TrajectoryPiccoloBean extends TrajectoryBean {
 		ice.addChild(broom);
 
 		pico.getLayer().addChild(ice);
+		pico.
 		setBackground(super.getBackground());
 		setVisible(true);
 	}
 
+	PLayer getIceLayer() {
+		return pico.getLayer();
+	}
+	
 	public BroomPromptModel getBroom() {
 		return broom.getModel();
 	}

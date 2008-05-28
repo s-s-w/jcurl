@@ -217,7 +217,7 @@ public class BroomPromptSwingBean extends JComponent implements HasChanger,
 	}
 
 	public void focusGained(final FocusEvent e) {
-		log.info(e.getSource());
+		log.debug(e.getSource());
 		if (e.getSource() == split2) {
 			if (broom == null || broom.getSplitTimeMillis() == null)
 				return;

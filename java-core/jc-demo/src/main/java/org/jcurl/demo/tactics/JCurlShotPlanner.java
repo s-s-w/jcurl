@@ -449,6 +449,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 	private final ChangeManager change = new ChangeManager();
 	private final ChangeListenerManager cm = new ChangeListenerManager(this);
 	private final CurlerSwingBean curlerSwing = new CurlerSwingBean();
+	private final BirdPiccoloBean birdPiccolo = new BirdPiccoloBean();
 	private URL document;
 	private File file;
 	private final GuiUtil gui = new GuiUtil(getContext());
@@ -464,6 +465,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 		tactics.setChanger(change);
 		broomSwing.setChanger(change);
 		curlerSwing.setChanger(change);
+		birdPiccolo.setMaster(tactics);
 		// tactics.setName("tactics");
 		url.setName("urlLabel");
 	}
@@ -1055,12 +1057,15 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 			t.add("Collission", new JLabel("TODO: Collission settings"));
 			t.setMnemonicAt(2, 'C');
 			b.add(t, BorderLayout.NORTH);
-			b.add(new JLabel("TODO: Bird's eye view"), BorderLayout.CENTER);
+			if (false)
+				b.add(new JLabel("TODO: Bird's eye view"), BorderLayout.CENTER);
+			else
+				b.add(birdPiccolo, BorderLayout.CENTER);
 			c.add(b, BorderLayout.EAST);
 		}
 
 		show(c);
-		viewHouse();
+		view12Foot();
 	}
 
 	private Cursor switchCursor(final Cursor neo) {
