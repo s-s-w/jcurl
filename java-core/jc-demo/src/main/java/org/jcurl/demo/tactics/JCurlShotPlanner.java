@@ -64,6 +64,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.undo.CompoundEdit;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.ComputedTrajectorySet;
@@ -84,6 +85,12 @@ import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.ChangeManager;
 import org.jcurl.core.ui.FileNameExtensionFilter;
+import org.jcurl.core.ui.PosMemento;
+import org.jcurl.core.ui.UndoableMemento;
+import org.jcurl.core.ui.BroomPromptModel.HandleMemento;
+import org.jcurl.core.ui.BroomPromptModel.IndexMemento;
+import org.jcurl.core.ui.BroomPromptModel.SplitMemento;
+import org.jcurl.core.ui.BroomPromptModel.XYMemento;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.ApplicationAction;
@@ -387,8 +394,20 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 		ImageIO.write(img, "png", dst);
 	}
 
-	private static void reset(final RockSet<Pos> ipos, final RockSet<Vel> ivel,
-			final BroomPromptModel broom, final boolean outPosition) {
+	@SuppressWarnings("unchecked")
+	private static CompoundEdit reset(final RockSet<Pos> ipos,
+			final RockSet<Vel> ivel, final BroomPromptModel broom,
+			final boolean outPosition) {
+		// store the initial state:
+		final PosMemento[] pm = new PosMemento[RockSet.ROCKS_PER_SET];
+		for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--)
+			pm[i16] = new PosMemento(ipos, i16, ipos.getRock(i16).p());
+		final IndexMemento bi = new IndexMemento(broom, broom.getIdx16());
+		final HandleMemento bh = new HandleMemento(broom, broom.getOutTurn());
+		final XYMemento bxy = new XYMemento(broom, broom.getBroom());
+		final SplitMemento bs = new SplitMemento(broom, broom
+				.getSplitTimeMillis().getValue());
+		// reset:
 		RockSet.allZero(ivel);
 		broom.setIdx16(-1);
 		if (outPosition)
@@ -398,7 +417,21 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 		broom.setIdx16(1);
 		broom.setBroom(new Point2D.Double(0, 0));
 		broom.getSplitTimeMillis().setValue(3300);
-
+		// create a compound edit
+		final CompoundEdit ce = new CompoundEdit();
+		for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--)
+			ce.addEdit(new UndoableMemento(pm[i16], new PosMemento(ipos, i16,
+					ipos.getRock(i16).p())));
+		ce.addEdit(new UndoableMemento(bi, new IndexMemento(broom, broom
+				.getIdx16())));
+		ce.addEdit(new UndoableMemento(bh, new HandleMemento(broom, broom
+				.getOutTurn())));
+		ce.addEdit(new UndoableMemento(bxy, new XYMemento(broom, broom
+				.getBroom())));
+		ce.addEdit(new UndoableMemento(bs, new SplitMemento(broom, broom
+				.getSplitTimeMillis().getValue())));
+		ce.end();
+		return ce;
 	}
 
 	private JDialog aboutBox = null;
@@ -540,8 +573,8 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 		final ComputedTrajectorySet cts = tactics.getCurves();
 		if (cts == null)
 			return;
-		reset(cts.getInitialPos(), cts.getInitialSpeed(), tactics.getBroom(),
-				false);
+		change.addEdit(reset(cts.getInitialPos(), cts.getInitialSpeed(),
+				tactics.getBroom(), false));
 	}
 
 	/** Edit Menu Action */
@@ -550,8 +583,8 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 		final ComputedTrajectorySet cts = tactics.getCurves();
 		if (cts == null)
 			return;
-		reset(cts.getInitialPos(), cts.getInitialSpeed(), tactics.getBroom(),
-				true);
+		change.addEdit(reset(cts.getInitialPos(), cts.getInitialSpeed(),
+				tactics.getBroom(), true));
 	}
 
 	/** Edit Menu Action */

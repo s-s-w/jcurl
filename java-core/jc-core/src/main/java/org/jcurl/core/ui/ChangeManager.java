@@ -23,6 +23,7 @@ import java.util.concurrent.Executor;
 
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.CompoundEdit;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
 
@@ -115,13 +116,17 @@ public class ChangeManager {
 		this.executor = executor;
 	}
 
+	public boolean addEdit(final CompoundEdit anEdit) {
+		return addEdit((UndoableEdit) anEdit);
+	}
+
 	/**
 	 * 
 	 * @param <E>
 	 * @param anEdit
 	 * @return {@link UndoManager#addEdit(UndoableEdit)}
 	 */
-	private <E> boolean addEdit(final UndoableEdit anEdit) {
+	private boolean addEdit(final UndoableEdit anEdit) {
 		final boolean ret = undoer.addEdit(anEdit);
 		for (final UndoableEditListener elem : listeners)
 			elem.undoableEditHappened(new UndoableEditEvent(undoer, anEdit));
