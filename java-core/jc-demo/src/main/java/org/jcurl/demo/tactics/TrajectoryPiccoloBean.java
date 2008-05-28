@@ -44,10 +44,10 @@ public class TrajectoryPiccoloBean extends TrajectoryBean {
 				if (start == null)
 					start = m;
 				if (isDrop) {
-					ChangeManager.getTrivial(changer).undoable(start, m);
+					getChanger().undoable(start, m);
 					start = null;
 				} else
-					ChangeManager.getTrivial(changer).temporary(m);
+					getChanger().temporary(m);
 			}
 		};
 
@@ -59,7 +59,6 @@ public class TrajectoryPiccoloBean extends TrajectoryBean {
 	private static final long serialVersionUID = -4648771240323713217L;
 	private static final int TMAX = 30;
 	private final BroomPromptSimple broom;
-	private ChangeManager changer = null;
 	private ComputedTrajectorySet cm = null;
 	private final Controller con;
 	private final PPositionSet current;
@@ -110,10 +109,6 @@ public class TrajectoryPiccoloBean extends TrajectoryBean {
 		return broom.getModel();
 	}
 
-	public ChangeManager getChanger() {
-		return changer;
-	}
-
 	public ComputedTrajectorySet getCurves() {
 		return cm;
 	}
@@ -131,11 +126,8 @@ public class TrajectoryPiccoloBean extends TrajectoryBean {
 	}
 
 	public void setChanger(final ChangeManager changer) {
-		final ChangeManager old = this.changer;
-		if (old == changer)
-			return;
-		broom.setChanger(this.changer = changer);
-		firePropertyChange("changer", old, this.changer);
+		super.setChanger(changer);
+		broom.setChanger(changer);
 	}
 
 	public void setCurves(final ComputedTrajectorySet model) {
@@ -167,10 +159,6 @@ public class TrajectoryPiccoloBean extends TrajectoryBean {
 		current.setVisible(model != null);
 		initial.setVisible(model != null);
 		broom.setVisible(model != null);
-	}
-
-	public void setZoom(final RectangularShape viewport) {
-		setZoom(viewport, -1);
 	}
 
 	public void setZoom(final RectangularShape viewport, int transitionMillis) {

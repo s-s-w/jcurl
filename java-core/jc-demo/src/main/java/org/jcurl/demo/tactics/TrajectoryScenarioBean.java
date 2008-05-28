@@ -25,10 +25,10 @@ import java.awt.geom.RectangularShape;
 
 import org.jcurl.core.api.ComputedTrajectorySet;
 import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.ui.BroomPromptModel;
-import org.jcurl.core.ui.ChangeManager;
 
 import com.sun.scenario.scenegraph.JSGPanel;
 import com.sun.scenario.scenegraph.SGGroup;
@@ -76,24 +76,29 @@ public class TrajectoryScenarioBean extends TrajectoryBean {
 
 	private static Affine sync(final RockSet<Pos> src, final int idx16,
 			final Affine dst) {
-		final AffineTransform rt = dst.getAffine();
-		rt.setToIdentity();
-		rt.translate(src.getRock(idx16).getX(), src.getRock(idx16).getY());
-		rt.rotate(src.getRock(idx16).getA());
-		dst.setAffine(rt);
+		final Rock<Pos> r = src.getRock(idx16);
+		{
+			final AffineTransform rt = dst.getAffine();
+			rt.setTransform(r.getAffineTransform());
+			dst.setAffine(rt);
+		}
 		// FIXME use the correct attribute names
 		dst.putAttribute("idx16", idx16);
-		dst.putAttribute("rock", src.getRock(idx16));
+		dst.putAttribute("rock", r);
 		dst.putAttribute("rockset", src);
+		//dst.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		//dst.setMouseBlocker(true);
 		return dst;
 	}
 
-	private final ChangeManager changer = null;
 	private final ComputedTrajectorySet cm = null;
 	private final Affine[] current = new Affine[RockSet.ROCKS_PER_SET];
 	private final Affine[] initial = new Affine[RockSet.ROCKS_PER_SET];
 	private final JSGPanel pico;
+	/** all rocks, trajectories and broomprompt */
+	private final SGGroup rocks = new SGGroup();
 	private transient RectangularShape tmpViewPort = null;
+	private final SGGroup traj = new SGGroup();
 	private final Affine zoom;
 
 	public TrajectoryScenarioBean() {
@@ -104,15 +109,18 @@ public class TrajectoryScenarioBean extends TrajectoryBean {
 
 		final SGGroup root = new SGGroup();
 		root.add(createSceneIce());
+		rocks.setVisible(false);
+		root.add(rocks);
+		rocks.add(traj);
 		final RockSet<Pos> home = PositionSet.allHome();
 		final RockSet<Pos> out = PositionSet.allOut();
 		for (int idx16 = RockSet.ROCKS_PER_SET - 1; idx16 >= 0; idx16--) {
-			root.add(initial[idx16] = createSceneRock(home, idx16, 64));
-			root.add(current[idx16] = createSceneRock(out, idx16, 255));
+			rocks.add(initial[idx16] = createSceneRock(home, idx16, 64));
+			rocks.add(current[idx16] = createSceneRock(out, idx16, 255));
 		}
 
-		final AffineTransform rightHand = new AffineTransform();
-		rightHand.scale(1, -1);
+		final AffineTransform rightHand = AffineTransform.getScaleInstance(1,
+				-1);
 		zoom = SGTransform.createAffine(new AffineTransform(), SGTransform
 				.createAffine(rightHand, root));
 		pico.setScene(zoom);
@@ -122,11 +130,6 @@ public class TrajectoryScenarioBean extends TrajectoryBean {
 	@Override
 	public BroomPromptModel getBroom() {
 		return null;// broom.getModel();
-	}
-
-	@Override
-	public ChangeManager getChanger() {
-		return changer;
 	}
 
 	@Override
@@ -141,13 +144,8 @@ public class TrajectoryScenarioBean extends TrajectoryBean {
 	}
 
 	@Override
-	public void setChanger(final ChangeManager changer) {}
-
-	@Override
-	public void setCurves(final ComputedTrajectorySet model) {}
-
-	public void setZoom(final RectangularShape viewport) {
-		setZoom(viewport, -1);
+	public void setCurves(final ComputedTrajectorySet model) {
+		rocks.setVisible(model != null);
 	}
 
 	public void setZoom(final RectangularShape viewport,

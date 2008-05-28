@@ -32,7 +32,6 @@ import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.ui.IceShapes;
-import org.jcurl.zui.piccolo.PRockNode;
 
 import com.sun.scenario.scenegraph.SGGroup;
 import com.sun.scenario.scenegraph.SGShape;
@@ -129,24 +128,7 @@ public abstract class SGRockFactory implements Factory {
 		return n;
 	}
 
-	protected static boolean sync(final Rock<Pos> src, final PRockNode dst) {
-		// check if it's changed either location or angle:
-		if (src.p().distanceSq(dst.getOffset()) < EPSILON
-				&& Math.abs(src.getA() - dst.getRotation()) < EPSILON)
-			return false;
-		if (true)
-			dst.setTransform(src.getAffineTransform());
-		else {
-			dst.setRotation(src.getA());
-			dst.setOffset(src.getX(), src.getY());
-		}
-		dst.invalidatePaint();
-		// Why is this necessary?
-		dst.repaint();
-		return true;
-	}
-
-	public abstract Affine newInstance(final int i8, final boolean isDark,
+	protected abstract Affine newInstance(final int i8, final boolean isDark,
 			Rock<Pos> rock);
 
 	public Affine newInstance(final int i16, final Rock<Pos> rock) {

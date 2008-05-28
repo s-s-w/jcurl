@@ -96,8 +96,8 @@ public class ChangeManager {
 		return trivial;
 	}
 
-	public static final ChangeManager getTrivial(final ChangeManager cm) {
-		return cm == null ? trivial : cm;
+	public static final ChangeManager getTrivial(final ChangeManager changer) {
+		return changer == null ? trivial : changer;
 	}
 
 	private final Executor executor;
