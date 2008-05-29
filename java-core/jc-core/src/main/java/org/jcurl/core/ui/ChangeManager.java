@@ -166,8 +166,8 @@ public class ChangeManager {
 		listeners.remove(l);
 	}
 
-	public void temporary(final Memento<?> m) {
-		log.debug(m.getClass().getName());
+	public void temporary(final Memento<?> m) {		
+		log.debug(m);
 		executor.execute(m);
 	}
 

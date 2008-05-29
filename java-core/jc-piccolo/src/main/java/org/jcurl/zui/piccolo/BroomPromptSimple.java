@@ -46,6 +46,7 @@ import org.jcurl.core.ui.ChangeManager;
 import org.jcurl.core.ui.IceShapes;
 import org.jcurl.core.ui.Memento;
 import org.jcurl.core.ui.BroomPromptModel.HandleMemento;
+import org.jcurl.core.ui.BroomPromptModel.SplitMemento;
 import org.jcurl.core.ui.BroomPromptModel.XYMemento;
 import org.jcurl.math.MathVec;
 
@@ -168,9 +169,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 	private Memento last = null;
 	private BroomPromptModel model;
 	private final PNode pie;
-
 	private final PPath slider;
-
 	private final float stickLength;
 
 	public BroomPromptSimple() {
@@ -303,7 +302,8 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 				arg0.setHandled(true);
 				getModel().setValueIsAdjusting(true);
 				if (false) {
-					Point2D p = arg0.getPositionRelativeTo(self.getParent());
+					final Point2D p = arg0.getPositionRelativeTo(self
+							.getParent());
 					getModel().setBroom(p);
 				} else
 					view2model(new XYMemento(getModel(), arg0
@@ -320,6 +320,12 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 			public void mouseExited(final PInputEvent arg0) {
 				super.mouseExited(arg0);
 				arg0.popCursor();
+			}
+
+			@Override
+			public void mousePressed(final PInputEvent arg0) {
+				arg0.setHandled(true);
+				first = new XYMemento(getModel(), getModel().getBroom());
 			}
 
 			@Override
@@ -346,8 +352,8 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 				if (r == null)
 					return;
 				r.setValueIsAdjusting(true);
-				view2model(new BroomPromptModel.SplitMemento(getModel(),
-						ratio2value(p.getY() / stickLength, r)));
+				view2model(new SplitMemento(getModel(), ratio2value(p.getY()
+						/ stickLength, r)));
 			}
 
 			@Override
@@ -360,6 +366,13 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 			public void mouseExited(final PInputEvent arg0) {
 				super.mouseExited(arg0);
 				arg0.popCursor();
+			}
+
+			@Override
+			public void mousePressed(final PInputEvent arg0) {
+				arg0.setHandled(true);
+				first = new SplitMemento(getModel(), getModel()
+						.getSplitTimeMillis().getValue());
 			}
 
 			@Override
@@ -493,11 +506,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 				/ (r.getMinimum() - r.getMaximum());
 	}
 
-	private void view2model(final Memento<?> m) {
-		if (first == null)
-			first = m;
-		else
-			last = m;
-		ChangeManager.getTrivial(changer).temporary(m);
+	private void view2model(final Memento<?> m) {		
+		ChangeManager.getTrivial(changer).temporary(last = m);
 	}
 }

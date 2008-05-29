@@ -232,8 +232,10 @@ public class JSpinnerNumberUnit extends JComponent implements ItemListener,
 			// model changes
 			old.removeChangeListener(this);
 		}
+		oldValueBase = Double.NaN;
 		if (model != null) {
 			value.setModel(rescale(base, getUnit(), model));
+			oldValueBase = getValue();
 			// wire up the listener to set valueIsAdjusting
 			getEd().getTextField().addFocusListener(this);
 			// model changes

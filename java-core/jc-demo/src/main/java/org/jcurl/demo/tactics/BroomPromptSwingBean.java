@@ -282,9 +282,13 @@ public class BroomPromptSwingBean extends JComponent implements HasChanger,
 			if ("valueIsAdjusting".equals(evt.getPropertyName()))
 				if (Boolean.TRUE.equals(evt.getNewValue()))
 					firstXY = new XYMemento(broom, broom.getBroom());
-				else if (Boolean.FALSE.equals(evt.getNewValue())) {
-					getChanger().undoable(firstXY,
-							new XYMemento(broom, x.getValue(), y.getValue()));
+				else {
+					if (Boolean.FALSE.equals(evt.getNewValue()))
+						getChanger()
+								.undoable(
+										firstXY,
+										new XYMemento(broom, x.getValue(), y
+												.getValue()));
 					firstXY = null;
 				}
 		} else
