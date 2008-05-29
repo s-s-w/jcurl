@@ -25,6 +25,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.geom.Point2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -35,16 +36,18 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.ComputedTrajectorySet;
+import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.Unit;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.ChangeManager;
@@ -53,10 +56,10 @@ import org.jcurl.core.ui.TrajectoryBroomPromptWrapper;
 import org.jcurl.core.ui.BroomPromptModel.HandleMemento;
 import org.jcurl.core.ui.BroomPromptModel.IndexMemento;
 import org.jcurl.core.ui.BroomPromptModel.SplitMemento;
+import org.jcurl.core.ui.BroomPromptModel.XYMemento;
 
 /**
- * A Swing-based bean to control a {@link BroomPromptModel}.
- * TODO x and y!
+ * A Swing-based bean to control a {@link BroomPromptModel}. TODO x and y!
  * <p>
  * As Swing views are usually tightly coupled to the underlying datamodels
  * (which holds at least for the {@link JSpinner}), I'm not quite sure how to
@@ -86,13 +89,16 @@ public class BroomPromptSwingBean extends JComponent implements HasChanger,
 	private BroomPromptModel broom;
 	private ChangeManager changer;
 	private final JRadioButton dark, light;
-	private final JComponent dt, x, y, dx, dy;
+	private final JComponent dt;
 	private SplitMemento first = null;
+	private transient XYMemento firstXY = null;
 	private final JRadioButton in, out;
 	private final JComboBox rock;
 	private final JSpinner split;
-
 	private final JSpinnerBoundedRange split2;
+	private final JSpinnerNumberUnit x;
+
+	private final JSpinnerNumberUnit y;
 
 	public BroomPromptSwingBean() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -167,26 +173,28 @@ public class BroomPromptSwingBean extends JComponent implements HasChanger,
 			p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 			p.setBorder(BorderFactory.createTitledBorder("Broom Position"));
 			{
-				final Box tb = Box.createHorizontalBox();
-				tb.add(new JLabel("x: "));
-				tb.add(x = new JSpinner());
-				tb.add(dx = new JComboBox(new Object[] { "ft", "in", "m", "cm",
-						"mm" }));
-				p.add(tb);
+				x = new JSpinnerNumberUnit();
+				x.setLabel("x: ");
+				x.setBase(Unit.METER);
+				x.setChoose(Unit.FOOT, Unit.INCH, Unit.CENTIMETER, Unit.METER);
+				x.setModel(new SpinnerNumberModel(0.0, -IceSize.SIDE_2_CENTER,
+						IceSize.SIDE_2_CENTER, 0.1));
+				x.addChangeListener(this);
+				x.addPropertyChangeListener(this);
+				p.add(x);
 			}
 			{
-				final Box tb = Box.createHorizontalBox();
-				tb.add(new JLabel("y: "));
-				tb.add(y = new JSpinner());
-				tb.add(dy = new JComboBox(new Object[] { "ft", "in", "m", "cm",
-						"mm" }));
-				p.add(tb);
+				y = new JSpinnerNumberUnit();
+				y.setLabel("y: ");
+				y.setBase(Unit.METER);
+				y.setChoose(Unit.FOOT, Unit.INCH, Unit.CENTIMETER, Unit.METER);
+				y.setModel(new SpinnerNumberModel(0.0, -IceSize.BACK_2_TEE,
+						IceSize.HOG_2_TEE, 0.1));
+				y.addChangeListener(this);
+				y.addPropertyChangeListener(this);
+				p.add(y);
 			}
 			b.add(p);
-			x.setEnabled(false);
-			y.setEnabled(false);
-			dx.setEnabled(false);
-			dy.setEnabled(false);
 		}
 		this.add(b);
 	}
@@ -268,6 +276,17 @@ public class BroomPromptSwingBean extends JComponent implements HasChanger,
 				syncM2V(broom == null ? null : broom.getOutTurn());
 			else if ("splitTimeMillis".equals(evt.getPropertyName()))
 				syncM2V(broom == null ? null : broom.getSplitTimeMillis());
+			else if ("broom".equals(evt.getPropertyName()))
+				syncM2V(broom == null ? null : broom.getBroom());
+		} else if (evt.getSource() == x || evt.getSource() == y) {
+			if ("valueIsAdjusting".equals(evt.getPropertyName()))
+				if (Boolean.TRUE.equals(evt.getNewValue()))
+					firstXY = new XYMemento(broom, broom.getBroom());
+				else if (Boolean.FALSE.equals(evt.getNewValue())) {
+					getChanger().undoable(firstXY,
+							new XYMemento(broom, x.getValue(), y.getValue()));
+					firstXY = null;
+				}
 		} else
 			log.warn("Unprocessed event from " + evt.getSource());
 	}
@@ -282,6 +301,7 @@ public class BroomPromptSwingBean extends JComponent implements HasChanger,
 		syncM2V(this.broom == null ? -1 : this.broom.getIdx16());
 		syncM2V(this.broom == null ? null : this.broom.getOutTurn());
 		syncM2V(this.broom == null ? null : this.broom.getSplitTimeMillis());
+		syncM2V(this.broom == null ? null : this.broom.getBroom());
 		if (this.broom != null)
 			this.broom.addPropertyChangeListener(this);
 	}
@@ -308,18 +328,28 @@ public class BroomPromptSwingBean extends JComponent implements HasChanger,
 		else
 			split.setEnabled(enabled);
 
-		enabled = false;
-		dt.setEnabled(enabled);
 		x.setEnabled(enabled);
 		y.setEnabled(enabled);
-		dx.setEnabled(enabled);
-		dy.setEnabled(enabled);
+
+		enabled = false;
+		dt.setEnabled(enabled);
 	}
 
 	public void stateChanged(final ChangeEvent e) {
 		if (log.isDebugEnabled())
 			log.debug(e.getSource());
-		log.warn("Unprocessed event from " + e.getSource());
+		if (e.getSource() == x) {
+			final double nx = x.getValue();
+			if (broom.getBroom().getX() != nx)
+				getChanger().temporary(
+						new XYMemento(broom, nx, broom.getBroom().getY()));
+		} else if (e.getSource() == y) {
+			final double ny = y.getValue();
+			if (broom.getBroom().getY() != ny)
+				getChanger().temporary(
+						new XYMemento(broom, broom.getBroom().getX(), ny));
+		} else
+			log.warn("Unprocessed event from " + e.getSource());
 	}
 
 	private void syncM2V(final Boolean handle) {
@@ -384,6 +414,18 @@ public class BroomPromptSwingBean extends JComponent implements HasChanger,
 				light.setSelected(true);
 			rock.setSelectedIndex(RockSet.toIdx8(idx16));
 		}
+	}
+
+	private void syncM2V(final Point2D s) {
+		if (s == null) {
+			x.setValue(0);
+			y.setValue(0);
+		} else {
+			x.setValue(s.getX());
+			y.setValue(s.getY());
+		}
+		x.setEnabled(s != null);
+		y.setEnabled(s != null);
 	}
 
 	private void updateHandle() {

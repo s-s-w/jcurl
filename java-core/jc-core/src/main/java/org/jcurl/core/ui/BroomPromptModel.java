@@ -172,8 +172,7 @@ public interface BroomPromptModel extends IPropertyChangeSupport,
 
 		@Override
 		public BroomPromptModel apply(final BroomPromptModel dst) {
-			// TUNE make this instanciation obsolete!
-			dst.setBroom(new Point2D.Double(p.getX(), p.getY()));
+			dst.setBroom(p);
 			return dst;
 		}
 	}
@@ -188,14 +187,16 @@ public interface BroomPromptModel extends IPropertyChangeSupport,
 
 	boolean getValueIsAdjusting();
 
-	void setBroom(final Point2D broom);
+	//void setBroom(double x, double y);
+
+	void setBroom(Point2D broom);
 
 	void setIdx16(int idx16);
 
-	void setOutTurn(final boolean outTurn);
+	void setOutTurn(boolean outTurn);
 
-	void setSplitTimeMillis(final BoundedRangeModel splitTimeMillis);
+	void setSplitTimeMillis(BoundedRangeModel splitTimeMillis);
 
-	void setValueIsAdjusting(final boolean valueIsAdjusting);
+	void setValueIsAdjusting(boolean valueIsAdjusting);
 
 }

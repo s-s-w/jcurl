@@ -167,7 +167,7 @@ public class ChangeManager {
 	}
 
 	public void temporary(final Memento<?> m) {
-		log.debug("");
+		log.debug(m.getClass().getName());
 		executor.execute(m);
 	}
 

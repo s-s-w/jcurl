@@ -96,11 +96,7 @@ public class Measure implements Serializable {
 	}
 
 	public Measure to(final Unit dst) {
-		if (unit.BaseUnit.intValue() != dst.BaseUnit.intValue())
-			throw new IllegalArgumentException("Units are not convertible ("
-					+ unit.toString() + "->" + dst.toString() + ")");
-		// this -> si -> dst
-		return new Measure(value * unit.Factor / dst.Factor, dst);
+		return new Measure(unit.convert(dst, value), dst);
 	}
 
 	@Override

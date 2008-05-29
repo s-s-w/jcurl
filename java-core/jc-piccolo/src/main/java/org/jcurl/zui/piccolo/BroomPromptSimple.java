@@ -302,10 +302,10 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 			public void mouseDragged(final PInputEvent arg0) {
 				arg0.setHandled(true);
 				getModel().setValueIsAdjusting(true);
-				if (false)
-					getModel().setBroom(
-							arg0.getPositionRelativeTo(self.getParent()));
-				else
+				if (false) {
+					Point2D p = arg0.getPositionRelativeTo(self.getParent());
+					getModel().setBroom(p);
+				} else
 					view2model(new XYMemento(getModel(), arg0
 							.getPositionRelativeTo(self.getParent())));
 			}

@@ -1,20 +1,20 @@
 /*
- * jcurl java curling software framework http://www.jcurl.org
- * Copyright (C) 2005-2008 M. Rohrmoser
+ * jcurl java curling software framework http://www.jcurl.org Copyright (C)
+ * 2005-2008 M. Rohrmoser
  * 
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
- * Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 package org.jcurl.core.api;
 
@@ -38,6 +38,8 @@ public class Unit extends EnumBase {
 
 	private static final Map<String, Unit> _names = new TreeMap<String, Unit>();
 
+	public static final Unit CENTIMETER;
+
 	public static final Unit DEG_PER_SEC;
 
 	public static final Unit DEGREE;
@@ -57,6 +59,8 @@ public class Unit extends EnumBase {
 	public static final Unit METER_PER_SEC;
 
 	public static final Unit MICROSEC;
+
+	public static final Unit MILLIMETER;
 
 	public static final Unit MILLISEC;
 
@@ -91,6 +95,8 @@ public class Unit extends EnumBase {
 		HERTZ = new Unit("Hz", RAD_PER_SEC, 2 * Math.PI);
 		RPM = new Unit("rpm", RAD_PER_SEC, 2 * Math.PI);
 		DEGREE = new Unit("deg", RADIANT, Math.PI / 180);
+		CENTIMETER = new Unit("cm", METER, 0.01);
+		MILLIMETER = new Unit("mm", METER, 0.001);
 		FOOT = new Unit("ft", METER, 0.3048);
 		INCH = new Unit("in", METER, 0.3048 / 12.0);
 		HOUR = new Unit("h", SECOND, 3600);
@@ -146,15 +152,24 @@ public class Unit extends EnumBase {
 		return v.to(RADIANT).value;
 	}
 
+	@Deprecated
 	public final Unit BaseUnit;
 
-	final double Factor;
+	private final double Factor;
 
 	protected Unit(final String txt, final Unit base, final double factor) {
 		super(_idx++, txt);
 		_names.put(txt, this);
 		BaseUnit = base == null ? this : base;
 		Factor = factor;
+	}
+
+	public double convert(final Unit to, final double value) {
+		if (BaseUnit.intValue() != to.BaseUnit.intValue())
+			throw new IllegalArgumentException("Units are not convertible ("
+					+ toString() + "->" + to.toString() + ")");
+		// this -> si -> dst
+		return value * Factor / to.Factor;
 	}
 
 	boolean isAngle() {

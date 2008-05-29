@@ -20,15 +20,26 @@
 package org.jcurl.demo.tactics;
 
 import java.awt.BorderLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.Curler;
+import org.jcurl.core.api.Unit;
 import org.jcurl.core.helpers.Service;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.ChangeManager;
@@ -37,8 +48,8 @@ import org.jcurl.core.ui.ChangeManager;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurlerSwingBean extends JComponent implements HasChanger {
-
+public class CurlerSwingBean extends JComponent implements HasChanger,
+		PropertyChangeListener, ChangeListener, ItemListener {
 	private static class ComboItem {
 		final Class<? extends Curler> c;
 
@@ -66,14 +77,54 @@ public class CurlerSwingBean extends JComponent implements HasChanger {
 	}
 
 	private ChangeManager changer;
+	private final JSpinnerNumberUnit curl;
 	private Curler curler;
+	private final JComboBox curlers;
+	private final JSpinnerNumberUnit time;
 
 	public CurlerSwingBean() {
 		setLayout(new BorderLayout());
-		if (true)
-			add(new JLabel("TODO Ice properties"), BorderLayout.NORTH);
-		else
-			add(new JComboBox(findCurlers(Curler.class)), BorderLayout.NORTH);
+
+		// setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+		final Box b = Box.createVerticalBox();
+		{
+			final JPanel p = new JPanel();
+			p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+			p.setBorder(BorderFactory.createTitledBorder("Curl Model"));
+			p.add(curlers = new JComboBox(findCurlers(Curler.class)));
+			b.add(p);
+		}
+		{
+			final JPanel p = new JPanel();
+			p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+			p.setBorder(BorderFactory.createTitledBorder("Draw-To-Tee"));
+			{
+				time = new JSpinnerNumberUnit();
+				time.setLabel("time: ");
+				time.setBase(Unit.SECOND);
+				time.setChoose(Unit.SECOND);
+				time.setModel(new SpinnerNumberModel(24.0, 17.0, 28.0, 0.1));
+				time.addPropertyChangeListener(this);
+				time.addChangeListener(this);
+				p.add(time);
+			}
+			{
+				curl = new JSpinnerNumberUnit();
+				curl.setLabel("curl: ");
+				curl.setBase(Unit.METER);
+				curl.setChoose(Unit.FOOT, Unit.INCH, Unit.CENTIMETER,
+						Unit.METER);
+				curl.setModel(new SpinnerNumberModel(1.0, 0.0, 3.0, 0.1));
+				curl.addPropertyChangeListener(this);
+				curl.addChangeListener(this);
+				p.add(curl);
+			}
+			b.add(p);
+		}
+		add(b, BorderLayout.NORTH);
+		add(new JPanel(), BorderLayout.CENTER);
+		setEnabled(true);
 	}
 
 	public ChangeManager getChanger() {
@@ -82,6 +133,16 @@ public class CurlerSwingBean extends JComponent implements HasChanger {
 
 	public Curler getCurler() {
 		return curler;
+	}
+
+	public void itemStateChanged(final ItemEvent e) {
+		log.warn("Unconsumed event from " + e.getSource());
+	}
+
+	public void propertyChange(final PropertyChangeEvent evt) {
+		log.warn("Unconsumed event '" + evt.getPropertyName() + "' from "
+				+ evt.getSource().getClass().getName() + ": "
+				+ evt.getOldValue() + " -> " + evt.getNewValue());
 	}
 
 	public void setChanger(final ChangeManager changer) {
@@ -96,5 +157,17 @@ public class CurlerSwingBean extends JComponent implements HasChanger {
 		if (old == curler)
 			return;
 		firePropertyChange("curler", old, this.curler = curler);
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		curlers.setEnabled(enabled);
+		time.setEnabled(enabled);
+		curl.setEnabled(enabled);
+		super.setEnabled(enabled);
+	}
+
+	public void stateChanged(final ChangeEvent e) {
+		log.warn("Unconsumed event from " + e.getSource());
 	}
 }
