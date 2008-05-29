@@ -32,6 +32,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
@@ -67,9 +68,9 @@ public class CurlerSwingBean extends JComponent implements HasChanger,
 			.getLogger(CurlerSwingBean.class);
 	private static final long serialVersionUID = 2303066300268819434L;
 
-	private static ComboItem[] findCurlers(final Class<Curler> src) {
+	private static ComboItem[] findCurlers() {
 		final Collection<ComboItem> tmp = new ArrayList<ComboItem>();
-		for (final Class<Curler> elem : Service.providerClasses(src, null))
+		for (final Class<Curler> elem : Service.providerClasses(Curler.class, null))
 			tmp.add(new ComboItem(elem));
 		final ComboItem[] dat = new ComboItem[tmp.size()];
 		tmp.toArray(dat);
@@ -84,15 +85,12 @@ public class CurlerSwingBean extends JComponent implements HasChanger,
 
 	public CurlerSwingBean() {
 		setLayout(new BorderLayout());
-
-		// setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
 		final Box b = Box.createVerticalBox();
 		{
 			final JPanel p = new JPanel();
 			p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
 			p.setBorder(BorderFactory.createTitledBorder("Curl Model"));
-			p.add(curlers = new JComboBox(findCurlers(Curler.class)));
+			p.add(curlers = new JComboBox(findCurlers()));
 			b.add(p);
 		}
 		{
@@ -102,8 +100,7 @@ public class CurlerSwingBean extends JComponent implements HasChanger,
 			{
 				time = new JSpinnerNumberUnit();
 				time.setLabel("time: ");
-				time.setBase(Unit.SECOND);
-				time.setChoose(Unit.SECOND);
+				time.setBase(Unit.SECOND);				
 				time.setModel(new SpinnerNumberModel(24.0, 17.0, 28.0, 0.1));
 				time.addPropertyChangeListener(this);
 				time.addChangeListener(this);
@@ -123,8 +120,8 @@ public class CurlerSwingBean extends JComponent implements HasChanger,
 			b.add(p);
 		}
 		add(b, BorderLayout.NORTH);
-		add(new JPanel(), BorderLayout.CENTER);
-		setEnabled(true);
+		add(new JLabel("TODO: other settings"), BorderLayout.CENTER);
+		setEnabled(false);
 	}
 
 	public ChangeManager getChanger() {

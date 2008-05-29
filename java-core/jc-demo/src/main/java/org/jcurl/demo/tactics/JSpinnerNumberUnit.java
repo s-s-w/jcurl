@@ -160,18 +160,18 @@ public class JSpinnerNumberUnit extends JComponent implements ItemListener,
 		change.removeChangeListener(l);
 	}
 
-	/** The unit for {@link #getValue()}. */
+	/** The unit for {@link #getValue()}. TODO Check compatibility with choose. */
 	public void setBase(Unit base) {
-		if (base == null)
-			base = Unit.NONE;
 		final Unit old = this.base;
 		if (old == base)
 			return;
+		if (choose == null || choose.length == 0)
+			setChoose(base);
 		firePropertyChange("base", old, this.base = base);
 	}
 
 	/**
-	 * Alternative units.
+	 * Alternative units.TODO Check compatibility with base.
 	 * 
 	 * @param choose
 	 *            An empty list makes the {@link Unit} {@link JComboBox}
