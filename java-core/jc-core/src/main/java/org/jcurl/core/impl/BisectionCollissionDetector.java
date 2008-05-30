@@ -33,12 +33,14 @@ import org.jcurl.math.R1RNFunction;
  * Collission detector based on {@link Distance2DSq} and {@link BisectionSolver}.
  * <p>
  * As the {@link NewtonCollissionDetector} got stuck in an endless loop under
- * certain circumstances (see the "HngrrrrTest JUnit test) let's try bisection.
+ * certain circumstances (see the
+ * <code>CollissionDetectorTest#testHngrrr()</code> JUnit test) let's try
+ * bisection.
  * </p>
  * <p>
  * As crossing curves have a hit-distance 2 times we use a trick and use the
- * sign of the first derivative to flip one half of the distance function
- * upside-down. Now bisection can find the hit.
+ * opposite sign of the first derivative to flip the "separating" half of the
+ * distance function into negative y values. Now bisection can find the hit.
  * </p>
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
@@ -49,11 +51,11 @@ public class BisectionCollissionDetector extends CollissionDetectorBase
 
 	private static final Log log = JCLoggerFactory
 			.getLogger(BisectionCollissionDetector.class);
+	private static final long serialVersionUID = 5332814969180777771L;
 
 	public double compute(final double t0, final double tstop,
 			final R1RNFunction fa, final R1RNFunction fb, final double distSq) {
 		final R1R1Function dist = new Distance2DSq(fa, fb, 0);
-		final double trend = Math.signum(dist.at(1, 0));
 		final R1R1Function f = new R1R1Function() {
 			private static final long serialVersionUID = 7051701140539614770L;
 
@@ -61,7 +63,7 @@ public class BisectionCollissionDetector extends CollissionDetectorBase
 			public double at(final int c, final double x) {
 				if (c != 0)
 					throw new IllegalArgumentException();
-				return dist.at(0, x) * Math.signum(dist.at(1, x)) * trend;
+				return dist.at(0, x) * -Math.signum(dist.at(1, x));
 			}
 		};
 		final double r = BisectionSolver.findRoot(f, CollissionDetector.RR2,
