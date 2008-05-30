@@ -19,6 +19,8 @@
 
 package org.jcurl.core.impl;
 
+import java.io.Serializable;
+
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.CollissionDetector;
 import org.jcurl.core.log.JCLoggerFactory;
@@ -42,7 +44,8 @@ import org.jcurl.math.R1RNFunction;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public class BisectionCollissionDetector extends CollissionDetectorBase {
+public class BisectionCollissionDetector extends CollissionDetectorBase
+		implements Serializable {
 
 	private static final Log log = JCLoggerFactory
 			.getLogger(BisectionCollissionDetector.class);
