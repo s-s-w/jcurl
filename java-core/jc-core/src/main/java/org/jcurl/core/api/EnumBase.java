@@ -55,6 +55,8 @@ public abstract class EnumBase extends Number implements Comparable<EnumBase> {
 		}
 	}
 
+	private static final long serialVersionUID = -5618394067421447401L;
+
 	private static final Map<Class<? extends EnumBase>, Map<Integer, EnumBase>> types = new TreeMap<Class<? extends EnumBase>, Map<Integer, EnumBase>>(
 			new HashCodeComp());
 
@@ -162,7 +164,7 @@ public abstract class EnumBase extends Number implements Comparable<EnumBase> {
 	public long longValue() {
 		return intValue();
 	}
-
+	
 	/**
 	 * Resolve a read in object (de-serialization).
 	 * 
