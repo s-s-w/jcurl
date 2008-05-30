@@ -288,8 +288,9 @@ public class CurveManager extends MutableObject implements ChangeListener,
 		this.collider = collider;
 	}
 
-	public void setCollissionDetector(
-			final CollissionDetector collissionDetector) {
+	public void setCollissionDetector(CollissionDetector collissionDetector) {
+		// FIXME currently use ONLY Bisection.
+		collissionDetector = new BisectionCollissionDetector();
 		dirty = true;
 		propChange.firePropertyChange("collissionDetector",
 				this.collissionDetector, collissionDetector);

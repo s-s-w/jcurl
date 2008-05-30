@@ -19,6 +19,9 @@
 
 package org.jcurl.math;
 
+import org.apache.commons.logging.Log;
+import org.jcurl.core.log.JCLoggerFactory;
+
 /**
  * Bisection rootfinding algorithm.
  * 
@@ -26,11 +29,14 @@ package org.jcurl.math;
  * @version $Id$
  */
 public class BisectionSolver {
+	private static final Log log = JCLoggerFactory
+			.getLogger(BisectionSolver.class);
+
 	/**
 	 * Ported from http://en.wikipedia.org/wiki/Bisection_method
 	 * 
 	 * @param y
-	 *            TODO
+	 *            y value to find x for. 0 finds the root.
 	 */
 	public static double findRoot(final R1R1Function f, final double y,
 			double left, double right) {
@@ -43,6 +49,9 @@ public class BisectionSolver {
 			// Calculate midpoint of domain
 			final double midpoint = (right + left) / 2;
 			midy = f.at(midpoint);
+			if (log.isDebugEnabled())
+				log.debug("f(" + left + ")=" + lefty + " f(" + midpoint + ")="
+						+ midy + " f(" + right + ")=unused");
 			if (Double.isNaN(midy))
 				return Double.NaN;
 			// examine midy

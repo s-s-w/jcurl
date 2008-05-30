@@ -39,8 +39,11 @@
 	<category name="org.jcurl.core.swing.WCComponent">
 		<level value="DEBUG"/>
 	</category>	
-	<category name="org.jcurl.core.io.XppMiniTest">
-		<level value="DEBUG"/>
+	<category name="org.jcurl.math.NewtonSimpleSolver">
+		<level value="INFO"/>
+	</category>	
+	<category name="org.jcurl.math.BisectionSolver">
+		<level value="INFO"/>
 	</category>	
 	
 	<!-- ======================= -->
