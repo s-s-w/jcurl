@@ -51,6 +51,8 @@ public abstract class ColliderBase extends PropModelImpl implements Collider {
 	public static final double MaxDistSq = MathVec.sqr(_Rad + _Rad
 			+ HIT_MAX_DIST);
 
+	private static final long serialVersionUID = -2347150866540703237L;
+
 	protected static double abs(final double a) {
 		return Math.abs(a);
 	}

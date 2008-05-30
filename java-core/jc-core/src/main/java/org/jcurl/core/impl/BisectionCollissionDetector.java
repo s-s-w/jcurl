@@ -67,7 +67,7 @@ public class BisectionCollissionDetector extends CollissionDetectorBase
 			}
 		};
 		final double r = BisectionSolver.findRoot(f, CollissionDetector.RR2,
-				t0, tstop);
+				t0, tstop, 1e-9);
 		if (log.isDebugEnabled())
 			log.debug(dist.at(r) - CollissionDetector.RR2);
 		if (Double.isNaN(r)

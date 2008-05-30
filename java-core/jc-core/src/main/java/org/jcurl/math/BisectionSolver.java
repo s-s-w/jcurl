@@ -23,7 +23,7 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
 
 /**
- * Bisection rootfinding algorithm.
+ * Bisection root-finding algorithm.
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
@@ -33,19 +33,32 @@ public class BisectionSolver {
 			.getLogger(BisectionSolver.class);
 
 	/**
-	 * Ported from http://en.wikipedia.org/wiki/Bisection_method
+	 * Bisection root-finding algorithm. Ported from
+	 * http://en.wikipedia.org/wiki/Bisection_method
 	 * 
+	 * @param f
+	 *            the function to test
 	 * @param y
 	 *            y value to find x for. 0 finds the root.
+	 * @param left
+	 *            lower end of the interval to scan
+	 * @param right
+	 *            upper end of the interval to scan
+	 * @param epsilon
+	 *            iteration stops when
+	 *            <code>Math.abs(right - left) <= epsilon</code>
 	 */
 	public static double findRoot(final R1R1Function f, final double y,
-			double left, double right) {
+			double left, double right, final double epsilon) {
 		double lefty = f.at(left);
 		if (Double.isNaN(lefty))
 			return Double.NaN;
-		final double epsilon_x_2 = 1e-9;
+		// check if left-y an right-y have opposite signs. Use signum to avoid
+		// overflows.
+		if (Math.signum(lefty) * f.at(right) > 0)
+			return Double.NaN;
 		double midy = Double.NaN;
-		while (Math.abs(right - left) > epsilon_x_2) {
+		while (Math.abs(right - left) > epsilon) {
 			// Calculate midpoint of domain
 			final double midpoint = (right + left) / 2;
 			midy = f.at(midpoint);

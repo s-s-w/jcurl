@@ -66,7 +66,7 @@ public abstract class CurlerBase extends PropModelImpl implements Curler {
 				return wc.at(1, 0, s.compute(wc, 0, 60));
 			}
 		};
-		return BisectionSolver.findRoot(f, 0, 2, 6);
+		return BisectionSolver.findRoot(f, 0, 2, 6, 1e-9);
 	}
 
 	public static double computeV0ToTee(final Curler cu) {
@@ -82,7 +82,7 @@ public abstract class CurlerBase extends PropModelImpl implements Curler {
 						- IceSize.FAR_HACK_2_TEE;
 			}
 		};
-		return BisectionSolver.findRoot(f, 0, 1, 7);
+		return BisectionSolver.findRoot(f, 0, 1, 7, 1e-9);
 	}
 
 	public double computeIntervalTime(final CurveRock<Pos> wc) {
