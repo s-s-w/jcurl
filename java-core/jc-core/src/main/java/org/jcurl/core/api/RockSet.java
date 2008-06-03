@@ -80,11 +80,11 @@ public class RockSet<R extends RockType> extends ChangeSupport implements
 	 * Check if a bit is set
 	 * 
 	 * @param mask
-	 * @param index16
+	 * @param i16
 	 * @return if the given rock's bit is set
 	 */
-	public static boolean isSet(final int mask, final int index16) {
-		return 1 == (1 & mask >> index16);
+	public static boolean isSet(final int mask, final int i16) {
+		return 1 == (1 & mask >> i16);
 	}
 
 	/**

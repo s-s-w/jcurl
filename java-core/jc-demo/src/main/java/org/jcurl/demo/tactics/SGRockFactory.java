@@ -27,18 +27,17 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 import org.jcurl.core.api.Factory;
-import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockSet;
-import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.ui.IceShapes;
 
+import com.sun.scenario.scenegraph.SGClip;
 import com.sun.scenario.scenegraph.SGGroup;
+import com.sun.scenario.scenegraph.SGNode;
 import com.sun.scenario.scenegraph.SGShape;
 import com.sun.scenario.scenegraph.SGText;
 import com.sun.scenario.scenegraph.SGTransform;
 import com.sun.scenario.scenegraph.SGAbstractShape.Mode;
-import com.sun.scenario.scenegraph.SGTransform.Affine;
 
 /**
  * Creates a pickable node displaying one rock, assuming a <b>RIGHT HANDED</b>
@@ -52,26 +51,19 @@ public abstract class SGRockFactory implements Factory {
 	public static class Fancy extends SGRockFactory {
 
 		protected static final IceShapes.RockColors colors = new IceShapes.RockColors();
-		private final int alpha;
-
-		public Fancy(final int alpha) {
-			this.alpha = alpha;
-		}
 
 		@Override
-		public Affine newInstance(final int i8, final boolean isDark,
-				final Rock<Pos> rock) {
+		public SGNode newInstance(final int i8, final boolean isDark) {
 			final SGGroup r = new SGGroup();
-			r.add(node(IceShapes.ROCK_OUTER, IceShapes.alpha(colors.granite,
-					alpha), null, null));
-			r.add(node(IceShapes.ROCK_INNER, IceShapes.alpha(
-					isDark ? colors.dark : colors.light, alpha), null, null));
+			r.add(node(IceShapes.ROCK_OUTER, colors.granite, null, null));
+			r.add(node(IceShapes.ROCK_INNER, isDark ? colors.dark
+					: colors.light, null, null));
 			{
 				final SGText t = new SGText();
 				t.setAntialiasingHint(RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 				t.setText(IceShapes.ROCK_LABELS[i8]);
 				t.setFont(IceShapes.ROCK_LABEL);
-				t.setDrawPaint(IceShapes.alpha(colors.label, alpha));
+				t.setDrawPaint(colors.label);
 
 				// Make coord-sys left-handed again, as the ice is assumed to be
 				// right-handed:
@@ -80,13 +72,13 @@ public abstract class SGRockFactory implements Factory {
 				final Rectangle2D tb = t.getBounds();
 				tr.translate(-0.015 * tb.getWidth(), 0.015 * tb.getHeight());
 				tr.scale(1.0 / 5.0, 1.0 / 5.0); // implicit FontSize
-				// t.setPickable(false);
-				r.add(SGTransform.createAffine(tr, t));
+				final SGClip c = new SGClip();
+				c.setAntialiased(true);
+				c.setShape(IceShapes.ROCK_INNER);
+				c.setChild(SGTransform.createAffine(tr, t));
+				r.add(c);
 			}
-			// r.setChildrenPickable(false);
-			// r.setPickable(true);
-			// r.getChild(0).setPickable(true);
-			return SGTransform.createAffine(new AffineTransform(), r);
+			return r;
 		}
 	}
 
@@ -94,12 +86,11 @@ public abstract class SGRockFactory implements Factory {
 		private static final Stroke stroke = new BasicStroke(0.010F);
 
 		public Simple() {
-			super(128);
+			super();
 		}
 
 		@Override
-		public Affine newInstance(final int i8, final boolean isDark,
-				final Rock<Pos> rock) {
+		public SGNode newInstance(final int i8, final boolean isDark) {
 			// final PRockNode r = new PRockNode(i8, isDark, rock);
 			// // fill to also make the body, not only the edge
 			// // pickable:
@@ -128,10 +119,9 @@ public abstract class SGRockFactory implements Factory {
 		return n;
 	}
 
-	protected abstract Affine newInstance(final int i8, final boolean isDark,
-			Rock<Pos> rock);
-
-	public Affine newInstance(final int i16, final Rock<Pos> rock) {
-		return newInstance(RockSet.toIdx8(i16), RockSet.isDark(i16), rock);
+	public SGNode newInstance(final int i16) {
+		return newInstance(RockSet.toIdx8(i16), RockSet.isDark(i16));
 	}
+
+	protected abstract SGNode newInstance(int i8, boolean isDark);
 }

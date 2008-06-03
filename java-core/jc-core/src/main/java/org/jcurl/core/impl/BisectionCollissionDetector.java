@@ -55,15 +55,26 @@ public class BisectionCollissionDetector extends CollissionDetectorBase
 
 	public double compute(final double t0, final double tstop,
 			final R1RNFunction fa, final R1RNFunction fb, final double distSq) {
+		if (false) {
+			// TUNE test only rocks really in motion
+			final double[] tmp = { 0, 0, 0 };
+			fa.at(1, t0, tmp);
+			final boolean fa_still = tmp[0] * tmp[0] + tmp[1] * tmp[1] < 1e-9;
+			fb.at(1, t0, tmp);
+			if (fa_still && tmp[0] * tmp[0] + tmp[1] * tmp[1] < 1e-9)
+				return Double.NaN;
+		}
 		final R1R1Function dist = new Distance2DSq(fa, fb, 0);
 		final R1R1Function f = new R1R1Function() {
 			private static final long serialVersionUID = 7051701140539614770L;
 
 			@Override
 			public double at(final int c, final double x) {
-				if (c != 0)
-					throw new IllegalArgumentException();
-				return dist.at(0, x) * -Math.signum(dist.at(1, x));
+				if (c == 0)
+					return dist.at(0, x) * -Math.signum(dist.at(1, x));
+				if (c == 1)
+					return Math.abs(dist.at(1, x));
+				throw new IllegalArgumentException();
 			}
 		};
 		final double r = BisectionSolver.findRoot(f, CollissionDetector.RR2,

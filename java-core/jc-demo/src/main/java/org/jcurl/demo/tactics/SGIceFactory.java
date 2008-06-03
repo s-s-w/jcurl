@@ -31,6 +31,7 @@ import org.jcurl.core.ui.IceShapes;
 import org.jcurl.core.ui.IceShapes.IceColors;
 
 import com.sun.scenario.scenegraph.SGGroup;
+import com.sun.scenario.scenegraph.SGNode;
 import com.sun.scenario.scenegraph.SGShape;
 import com.sun.scenario.scenegraph.SGAbstractShape.Mode;
 
@@ -48,7 +49,7 @@ public abstract class SGIceFactory implements Factory {
 		private static final IceColors colors = new IceColors();
 
 		@Override
-		public SGGroup newInstance() {
+		public SGNode newInstance() {
 			final SGGroup ice = new SGGroup();
 			ice.add(node(IceShapes.hog2hog, colors.hog2hog, colors.stroke));
 			ice.add(node(IceShapes.hog2tee, colors.hog2tee, colors.stroke));
@@ -93,5 +94,5 @@ public abstract class SGIceFactory implements Factory {
 		return n;
 	}
 
-	public abstract SGGroup newInstance();
+	public abstract SGNode newInstance();
 }

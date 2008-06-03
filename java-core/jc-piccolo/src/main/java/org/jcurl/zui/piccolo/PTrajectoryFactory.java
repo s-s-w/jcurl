@@ -50,9 +50,9 @@ public abstract class PTrajectoryFactory implements Factory {
 	public static class Fancy extends PTrajectoryFactory {
 
 		private static final Paint dark = IceShapes
-				.trace(new IceShapes.RockColors().dark);
+				.trace(new IceShapes.RockColors().dark, 100);
 		private static final Paint light = IceShapes
-				.trace(new IceShapes.RockColors().light);
+				.trace(new IceShapes.RockColors().light, 100);
 		private static final Stroke stroke = new BasicStroke(
 				2 * RockProps.DEFAULT.getRadius(), BasicStroke.CAP_ROUND,
 				BasicStroke.JOIN_ROUND, 0);

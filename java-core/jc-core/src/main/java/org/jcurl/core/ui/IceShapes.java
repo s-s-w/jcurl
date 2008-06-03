@@ -76,15 +76,16 @@ public class IceShapes {
 	public static final Rectangle2D hog2hog;
 	public static final Rectangle2D hog2tee;
 	public static final Line2D nearHog;
-	public static final Line2D tee;
-	public static final Rectangle2D tee2back;
-
+	
 	public static final Arc2D ROCK_INNER;
 	public static final Font ROCK_LABEL;
 	public static final String[] ROCK_LABELS = { "1", "2", "3", "4", "5", "6",
 			"7", "8" };
 	public static final Arc2D ROCK_OUTER;
 	
+	public static final Line2D tee;
+	public static final Rectangle2D tee2back;
+
 	/** Define colors and the shapes to be filled and drawn */
 	static {
 		// ice dimensions
@@ -130,10 +131,10 @@ public class IceShapes {
 		return new Color(base.getRed(), base.getGreen(), base.getBlue(), alpha);
 	}
 
-	public static Color trace(final Color base) {
+	public static Color trace(final Color base, final int alpha) {
 		final float[] hsb = Color.RGBtoHSB(base.getRed(), base.getGreen(), base
 				.getBlue(), null);
 		return alpha(new Color(Color.HSBtoRGB(hsb[0], 0.5F * hsb[1], hsb[2])),
-				100);
+				alpha);
 	}
 }

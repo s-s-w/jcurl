@@ -1,20 +1,20 @@
 /*
- * jcurl java curling software framework http://www.jcurl.org
- * Copyright (C) 2005-2008 M. Rohrmoser
+ * jcurl java curling software framework http://www.jcurl.org Copyright (C)
+ * 2005-2008 M. Rohrmoser
  * 
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
- * Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 package org.jcurl.math;
 
@@ -29,15 +29,14 @@ package org.jcurl.math;
 public class Distance2DSq extends R1R1Function {
 
 	private static final long serialVersionUID = 1239814260738123868L;
-
+	private static final boolean threadSafe = true;
 	private final int c;
-
 	private final R1RNFunction c1;
-
 	private final R1RNFunction c2;
-
 	/** (r1+r2)^2 */
 	private final double r2;
+	private final double[] tmpA;
+	private final double[] tmpB;
 
 	/**
 	 * Distance between two (2-dimensional) spheres moving along curve
@@ -90,6 +89,13 @@ public class Distance2DSq extends R1R1Function {
 		this.c2 = c2;
 		r2 = r12Sqr;
 		this.c = c;
+		if (threadSafe)
+			tmpA = tmpB = null;
+		else {
+			tmpA = new double[3];
+			tmpB = new double[3];
+		}
+
 	}
 
 	/**
@@ -100,13 +106,19 @@ public class Distance2DSq extends R1R1Function {
 	 */
 	@Override
 	public double at(final double t) {
-		// TUNE Thread safety at the cost of 2 instanciations
-		final double[] a = c1.at(c, t, new double[3]);
-		final double[] b = c2.at(c, t, new double[3]);
-		a[0] -= b[0];
-		a[1] -= b[1];
-		a[2] = 0;
-		return MathVec.scal(a, a) - r2;
+		if (false) {
+			// TUNE don't use double[] at all.
+			final double[] a = c1.at(c, t, tmpA);
+			final double[] b = c2.at(c, t, tmpB);
+			a[0] -= b[0];
+			a[1] -= b[1];
+			a[2] = 0;
+			return MathVec.scal(a, a) - r2;
+		} else {
+			final double x = c1.at(0, c, t) - c2.at(0, c, t);
+			final double y = c1.at(1, c, t) - c2.at(1, c, t);
+			return x * x + y * y - r2;
+		}
 	}
 
 	/**
@@ -114,20 +126,15 @@ public class Distance2DSq extends R1R1Function {
 	 * @param t
 	 * @return the value
 	 * @see #at(double)
-	 * @see #valueC1(double)
+	 * @see #atC1(double)
 	 */
 	@Override
 	public double at(final int derivative, final double t) {
 		if (derivative == 0)
 			return at(t);
 		if (derivative == 1)
-			return valueC1(t);
+			return atC1(t);
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String toString() {
-		return this.getClass().getName() + "(" + c1 + ", " + c2 + ")";
 	}
 
 	/**
@@ -141,15 +148,46 @@ public class Distance2DSq extends R1R1Function {
 	 *       quit$
 	 * </pre>
 	 */
-	double valueC1(final double t) {
-		// TUNE Thread safety at the cost of 4 instanciations
-		final double[] a = c1.at(c, t, new double[3]);
-		final double[] b = c2.at(c, t, new double[3]);
-		final double[] da = c1.at(c + 1, t, new double[3]);
-		final double[] db = c2.at(c + 1, t, new double[3]);
+	double atC1(final double t) {
+		// TUNE don't use double[] at all.
 		double ret = 0.0;
-		ret += (a[0] - b[0]) * (da[0] - db[0]);
-		ret += (a[1] - b[1]) * (da[1] - db[1]);
+		if (false) {
+			// TUNE Thread safety at the cost of 4 instanciations
+			final double[] a = c1.at(c, t, new double[3]);
+			final double[] b = c2.at(c, t, new double[3]);
+			final double[] da = c1.at(c + 1, t, new double[3]);
+			final double[] db = c2.at(c + 1, t, new double[3]);
+			ret += (a[0] - b[0]) * (da[0] - db[0]);
+			ret += (a[1] - b[1]) * (da[1] - db[1]);
+		} else if (false) {
+			// TUNE Thread safety at the cost of 2 instanciations
+			final double[] a = c1.at(c, t, tmpA);
+			final double[] b = c2.at(c, t, tmpB);
+			final double a_minus_b_0 = a[0] - b[0];
+			final double a_minus_b_1 = a[1] - b[1];
+			final double[] da = c1.at(c + 1, t, a);
+			final double[] db = c2.at(c + 1, t, b);
+			final double da_minus_db_0 = da[0] - db[0];
+			final double da_minus_db_1 = da[1] - db[1];
+
+			ret += a_minus_b_0 * da_minus_db_0;
+			ret += a_minus_b_1 * da_minus_db_1;
+		} else {
+			final double a_minus_b_0 = c1.at(0, c, t) - c2.at(0, c, t);
+			final double a_minus_b_1 = c1.at(1, c, t) - c2.at(1, c, t);
+			final double da_minus_db_0 = c1.at(0, c + 1, t)
+					- c2.at(0, c + 1, t);
+			final double da_minus_db_1 = c1.at(1, c + 1, t)
+					- c2.at(1, c + 1, t);
+
+			ret += a_minus_b_0 * da_minus_db_0;
+			ret += a_minus_b_1 * da_minus_db_1;
+		}
 		return 2.0 * ret;
+	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getName() + "(" + c1 + ", " + c2 + ")";
 	}
 }
