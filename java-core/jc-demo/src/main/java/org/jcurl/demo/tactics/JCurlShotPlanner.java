@@ -387,6 +387,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 				.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		final Graphics g = img.getGraphics();
 		try {
+			// SwingUtilities.paintComponent(g, src, src.getBounds(), null);
 			src.paintAll(g);
 		} finally {
 			g.dispose();

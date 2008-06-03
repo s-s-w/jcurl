@@ -155,7 +155,7 @@
 					<programs>
 						<program>
 							<mainClass>
-								org.jcurl.demo.tactics.MainApp
+								org.jcurl.demo.tactics.JCurlShotPlanner
 							</mainClass>
 							<name>tactics</name>
 						</program>
