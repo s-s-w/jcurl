@@ -23,10 +23,14 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Paint;
+import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Arc2D;
+import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+
+import javax.swing.BoundedRangeModel;
 
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.RockProps;
@@ -73,17 +77,21 @@ public class IceShapes {
 	public static final Line2D centerRi;
 	public static final Line2D centerRight;
 	public static final Line2D farHog;
+	public static final Color fast = Color.RED;
 	public static final Rectangle2D hog2hog;
 	public static final Rectangle2D hog2tee;
+
 	public static final Line2D nearHog;
-	
 	public static final Arc2D ROCK_INNER;
 	public static final Font ROCK_LABEL;
 	public static final String[] ROCK_LABELS = { "1", "2", "3", "4", "5", "6",
 			"7", "8" };
 	public static final Arc2D ROCK_OUTER;
 	
+	public static final Color slow = Color.BLUE;
+
 	public static final Line2D tee;
+
 	public static final Rectangle2D tee2back;
 
 	/** Define colors and the shapes to be filled and drawn */
@@ -131,10 +139,91 @@ public class IceShapes {
 		return new Color(base.getRed(), base.getGreen(), base.getBlue(), alpha);
 	}
 
+	/**
+	 * Pointing along the positive X-axis, tip ending at 0,0
+	 * 
+	 * @param wingWidth
+	 * @param length
+	 * @param tail
+	 */
+	public static Shape createArrowHead(final float wingWidth,
+			final float length, final float tail) {
+		final GeneralPath gp = new GeneralPath();
+		gp.moveTo(0, 0);
+		gp.lineTo(-length, wingWidth);
+		gp.lineTo(-length + tail, 0);
+		gp.lineTo(-length, -wingWidth);
+		gp.closePath();
+		return gp;
+	}
+
+	/** The slider for the {@link BroomPromptModel} views. */
+	public static Shape createSlider(final float f, final boolean bothSides) {
+		final GeneralPath gp = new GeneralPath();
+		gp.moveTo(0, 0);
+		if (bothSides) {
+			gp.lineTo(-f, f);
+			gp.lineTo(-4 * f, f);
+			gp.lineTo(-4 * f, -f);
+			gp.lineTo(-f, -f);
+		}
+		{
+			gp.lineTo(f, f);
+			gp.lineTo(4 * f, f);
+			gp.lineTo(4 * f, -f);
+			gp.lineTo(f, -f);
+		}
+		gp.closePath();
+		return gp;
+	}
+
+	/** linear interpolation */
+	public static float interpolate(final float a, final float b,
+			final double ratio) {
+		return (float) (a + ratio * (b - a));
+	}
+
+	/** linear interpolation */
+	public static int interpolate(final int a, final int b, final double ratio) {
+		return (int) (a + ratio * (b - a));
+	}
+
+	private static Color interpolateHSB(final Color a, final Color b,
+			final double ratio) {
+		final float[] _a = new float[3];
+		final float[] _b = new float[3];
+		Color.RGBtoHSB(a.getRed(), a.getGreen(), a.getBlue(), _a);
+		Color.RGBtoHSB(b.getRed(), b.getGreen(), b.getBlue(), _b);
+
+		return new Color(Color.HSBtoRGB(interpolate(_a[0], _b[0], ratio),
+				interpolate(_a[1], _b[1], ratio), interpolate(_a[2], _b[2],
+						ratio)));
+	}
+
+	/** Linear, RGB based interpolation between two colors. */
+	public static Color interpolateRGB(final Color a, final Color b,
+			final double ratio) {
+		return new Color(interpolate(a.getRed(), b.getRed(), ratio),
+				interpolate(a.getGreen(), b.getGreen(), ratio), interpolate(a
+						.getBlue(), b.getBlue(), ratio));
+	}
+
+	public static Color sliderColor(final BoundedRangeModel r) {
+		return interpolateRGB(slow, fast, (double) (r.getValue() - r
+				.getMaximum())
+				/ (r.getMinimum() - r.getMaximum()));
+	}
+
+	/** Reduce saturation to 50% of the original color and apply an alpha channel. */
 	public static Color trace(final Color base, final int alpha) {
 		final float[] hsb = Color.RGBtoHSB(base.getRed(), base.getGreen(), base
 				.getBlue(), null);
 		return alpha(new Color(Color.HSBtoRGB(hsb[0], 0.5F * hsb[1], hsb[2])),
 				alpha);
+	}
+
+	public static double value2ratio(final BoundedRangeModel r) {
+		return ((double) r.getMaximum() - r.getValue())
+				/ ((double) r.getMaximum() - r.getMinimum());
 	}
 }

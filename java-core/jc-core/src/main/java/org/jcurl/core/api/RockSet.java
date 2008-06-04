@@ -72,8 +72,8 @@ public class RockSet<R extends RockType> extends ChangeSupport implements
 		return ret;
 	}
 
-	public static final boolean isDark(final int idx16) {
-		return idx16 % 2 == 0;
+	public static final boolean isDark(final int i16) {
+		return i16 % 2 == 0;
 	}
 
 	/**

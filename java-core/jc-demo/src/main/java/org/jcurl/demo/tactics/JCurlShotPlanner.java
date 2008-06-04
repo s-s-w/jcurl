@@ -39,7 +39,10 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EventObject;
+import java.util.List;
 import java.util.Locale;
 
 import javax.imageio.ImageIO;
@@ -458,7 +461,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 	private boolean modified = false;
 	private FileNameExtensionFilter pngPat;
 	private FileNameExtensionFilter svgPat;
-	private final TrajectoryBean tactics = new TrajectoryPiccoloBean();
+	private final TrajectoryBean tactics = new TrajectoryScenarioBean();
 	private final JLabel url = new JLabel();
 
 	private JCurlShotPlanner() {
@@ -543,7 +546,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 				"viewPanEast", "viewPanWest" };
 		menuBar.add(gui.createMenu("viewMenu", viewMenuActionNames));
 
-		final String[] helpMenuActionNames = { "showAboutBox" };
+		final String[] helpMenuActionNames = { "showAboutBox", "helpDumpProperties" };
 		menuBar.add(gui.createMenu("helpMenu", helpMenuActionNames));
 
 		return menuBar;
@@ -991,9 +994,16 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 		firePropertyChange("modified", old, this.modified = modified);
 	}
 
-	/**
-	 * Show the about box dialog.
-	 */
+	@Action()
+	public void helpDumpProperties() {
+		List keys = new ArrayList();
+		keys.addAll(System.getProperties().keySet());
+		Collections.sort(keys);
+		for (Object key : keys)
+			System.out.println(key + "=" + System.getProperty((String) key));
+	}
+
+	/** Show the about box dialog. */
 	@Action(block = BlockingScope.COMPONENT)
 	public void showAboutBox() {
 		if (aboutBox == null)

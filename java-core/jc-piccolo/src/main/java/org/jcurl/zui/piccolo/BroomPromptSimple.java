@@ -26,7 +26,6 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
-import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.beans.PropertyChangeEvent;
@@ -61,7 +60,6 @@ import edu.umd.cs.piccolo.util.PPickPath;
 public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 		ChangeListener {
 	private static final Color dark = new IceShapes.RockColors().dark;
-	private static final Color fast = Color.RED;
 	private static final Color light = new IceShapes.RockColors().light;
 	private static final Log log = JCLoggerFactory
 			.getLogger(BroomPromptSimple.class);
@@ -69,69 +67,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 	private static final double scale0 = 0;
 	private static final int scale50 = 50;
 	private static final long serialVersionUID = 3115716478135484000L;
-	private static final Color slow = Color.BLUE;
 	private static final Cursor UPDN_CURSOR = new Cursor(Cursor.N_RESIZE_CURSOR);
-
-	/**
-	 * Pointing along the positive X-axis, tip ending at 0,0
-	 * 
-	 * @param wingWidth
-	 * @param length
-	 * @param tail
-	 */
-	static Shape createArrowHead(final float wingWidth, final float length,
-			final float tail) {
-		final GeneralPath gp = new GeneralPath();
-		gp.moveTo(0, 0);
-		gp.lineTo(-length, wingWidth);
-		gp.lineTo(-length + tail, 0);
-		gp.lineTo(-length, -wingWidth);
-		gp.closePath();
-		return gp;
-	}
-
-	static Shape createSlider(final float f, final boolean bothSides) {
-		final GeneralPath gp = new GeneralPath();
-		gp.moveTo(0, 0);
-		gp.lineTo(-f, f);
-		gp.lineTo(-4 * f, f);
-		gp.lineTo(-4 * f, -f);
-		gp.lineTo(-f, -f);
-		if (bothSides) {
-			gp.lineTo(f, f);
-			gp.lineTo(4 * f, f);
-			gp.lineTo(4 * f, -f);
-			gp.lineTo(f, -f);
-		}
-		gp.closePath();
-		return gp;
-	}
-
-	static float interpolate(final float a, final float b, final double ratio) {
-		return (float) (a + ratio * (b - a));
-	}
-
-	static int interpolate(final int a, final int b, final double ratio) {
-		return (int) (a + ratio * (b - a));
-	}
-
-	private static Color interpolateHSB(final Color a, final Color b,
-			final double ratio) {
-		final float[] _a = new float[3];
-		final float[] _b = new float[3];
-		Color.RGBtoHSB(a.getRed(), a.getGreen(), a.getBlue(), _a);
-		Color.RGBtoHSB(b.getRed(), b.getGreen(), b.getBlue(), _b);
-
-		return new Color(Color.HSBtoRGB(interpolate(_a[0], _b[0], ratio),
-				interpolate(_a[1], _b[1], ratio), interpolate(_a[2], _b[2],
-						ratio)));
-	}
-
-	static Color interpolateRGB(final Color a, final Color b, final double ratio) {
-		return new Color(interpolate(a.getRed(), b.getRed(), ratio),
-				interpolate(a.getGreen(), b.getGreen(), ratio), interpolate(a
-						.getBlue(), b.getBlue(), ratio));
-	}
 
 	/**
 	 * @param sh
@@ -253,7 +189,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 
 			// arrow:
 			final float f = outer / 10;
-			final PPath s = node(createArrowHead(f, 3 * f, 0.5f * f), null,
+			final PPath s = node(IceShapes.createArrowHead(f, 3 * f, 0.5f * f), null,
 					null, scale50);
 			s.setPaint(sp);
 			final double a = Math.PI * (off + pieAngle - arrowLengthDegrees)
@@ -273,7 +209,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 					scale0));
 		}
 		{ // slider
-			slider = new PPath(createSlider(0.4f * outer, bothSides), fine);
+			slider = new PPath(IceShapes.createSlider(0.4f * outer, bothSides), fine);
 			slider.setStrokePaint(sp);
 			slider.setPickable(true);
 			this.addChild(slider);
@@ -392,9 +328,9 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 
 	private void adjustSlider(final BoundedRangeModel r) {
 		// log.info(r.getValue() + "/" + r.getMaximum());
-		slider.setPaint(sliderColor(r));
+		slider.setPaint(IceShapes.sliderColor(r));
 		slider.getTransformReference(true).setToTranslation(0,
-				stickLength * value2ratio(r));
+				stickLength * IceShapes.value2ratio(r));
 		slider.invalidateFullBounds();
 		slider.invalidatePaint();
 		// FIXME getModel().firePropertyChange("splitTimeMillis", r, r);
@@ -489,24 +425,13 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 		adjustSlider(s);
 	}
 
-	protected Color sliderColor(final BoundedRangeModel r) {
-		return interpolateRGB(slow, fast, (double) (r.getValue() - r
-				.getMaximum())
-				/ (r.getMinimum() - r.getMaximum()));
-	}
-
 	public void stateChanged(final ChangeEvent e) {
 		// log.info(e);
 		if (e.getSource() instanceof BoundedRangeModel)
 			adjustSlider((BoundedRangeModel) e.getSource());
 	}
 
-	private double value2ratio(final BoundedRangeModel r) {
-		return (double) (r.getValue() - r.getMaximum())
-				/ (r.getMinimum() - r.getMaximum());
-	}
-
-	private void view2model(final Memento<?> m) {		
+	private void view2model(final Memento<?> m) {
 		ChangeManager.getTrivial(changer).temporary(last = m);
 	}
 }

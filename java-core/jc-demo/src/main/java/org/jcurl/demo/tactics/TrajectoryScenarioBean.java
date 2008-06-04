@@ -43,6 +43,7 @@ import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.PosMemento;
+import org.jcurl.core.ui.TrajectoryBroomPromptWrapper;
 import org.jcurl.math.R1RNFunction;
 
 import com.sun.scenario.scenegraph.JSGPanel;
@@ -173,6 +174,7 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 		dst.setAffine(src.getAffineTransform());
 	}
 
+	private final SGBroomPrompt bp = new SGBroomPrompt();
 	private final Affine[] current = new Affine[RockSet.ROCKS_PER_SET];
 	private ComputedTrajectorySet curves = null;
 	private final Affine dc2wc;
@@ -182,17 +184,18 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 	private final SGComposite opa_r0 = new SGComposite();
 	private final SGComposite opa_r1 = new SGComposite();;
 	private final SGComposite opa_t0 = new SGComposite();
-	private final SGGroup scene = new SGGroup();
 	private final JSGPanel pico;
 	/** Rock<Pos> -> SGNode lookup */
 	private final Map<Rock<Pos>, Affine> r2n = new IdentityHashMap<Rock<Pos>, Affine>();
+	private final SGGroup scene = new SGGroup();
 	private final transient SGTrajectoryFactory tf = new SGTrajectoryFactory.Fancy();
 	private transient RectangularShape tmpViewPort = null;
 	private final SGGroup traj = new SGGroup();
-
+	private final TrajectoryBroomPromptWrapper tt = new TrajectoryBroomPromptWrapper();
 	private final Affine zoom;
 
 	public TrajectoryScenarioBean() {
+		bp.setModel(tt);
 		pico = new JSGPanel();
 		setVisible(false);
 		setLayout(new BorderLayout());
@@ -220,10 +223,10 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 		opa_r0.setChild(r0);
 		opa_r0.setOpacity(64.0F / 255.0F);
 		opa_r0.setOverlapBehavior(OverlapBehavior.LAYER);
-		
+
 		opa_r1.setChild(r1);
 		opa_r1.setOverlapBehavior(OverlapBehavior.LAYER);
-		
+
 		opa_t0.setChild(traj);
 		opa_t0.setMouseBlocker(true);
 		opa_t0.setOverlapBehavior(OverlapBehavior.LAYER);
@@ -232,8 +235,9 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 		scene.add(opa_t0);
 		scene.add(opa_r0);
 		scene.add(opa_r1);
+		scene.add(bp.getScene());
 		root.add(scene);
-		
+
 		final AffineTransform rightHand = AffineTransform.getScaleInstance(1,
 				-1);
 		zoom = SGTransform.createAffine(new AffineTransform(),
@@ -257,7 +261,7 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 
 	@Override
 	public BroomPromptModel getBroom() {
-		return null;// broom.getModel();
+		return bp.getModel();
 	}
 
 	@Override
@@ -298,6 +302,7 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 				syncM2V(getCurves(), i16, traj, tf);
 			}
 		}
+		tt.init(this.curves);
 		scene.setVisible(this.curves != null);
 	}
 
