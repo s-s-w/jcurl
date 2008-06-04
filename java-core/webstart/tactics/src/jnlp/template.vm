@@ -24,7 +24,7 @@
   </security>
   <resources>
     <j2se href="http://java.sun.com/products/autodl/j2se" version="1.5+"/>
-    <j2se version="1.5+"/>
+    <property name="sun.java2d.opengl" value="true"/>
     $dependencies
     <extension href="http://www.jcurl.org/jws/org/jcurl/demo/3rdparty/0.7-SNAPSHOT/launch.jnlp"/>
     <extension href="http://www.jcurl.org/jws/org/jcurl/demo/batik/1.6/launch.jnlp"/>
