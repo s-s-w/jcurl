@@ -29,6 +29,7 @@ import java.util.regex.Pattern;
 import org.jcurl.core.api.Measure;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
+import org.jcurl.core.impl.BisectionCollissionDetector;
 import org.jcurl.core.impl.CollissionSpin;
 import org.jcurl.core.impl.CurlerNoCurl;
 import org.jcurl.core.impl.CurveManager;
@@ -186,6 +187,8 @@ public class XStreamSerializer implements Engine {
 		xs.alias("NewtonStopDetector", NewtonStopDetector.class);
 		xs.alias("CollissionSpin", CollissionSpin.class);
 		xs.alias("NewtonCollissionDetector", NewtonCollissionDetector.class);
+		xs.alias("BisectionCollissionDetector",
+				BisectionCollissionDetector.class);
 		xs.alias("NoCurlCurler", CurlerNoCurl.class);
 		return xs;
 	}
