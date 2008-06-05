@@ -22,11 +22,9 @@ import java.awt.BasicStroke;
 import java.awt.Paint;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
-import java.util.Iterator;
-import java.util.Map.Entry;
 
-import org.jcurl.core.api.Factory;
 import org.jcurl.core.api.RockProps;
+import org.jcurl.core.ui.GenTrajectoryFactory;
 import org.jcurl.core.ui.IceShapes;
 import org.jcurl.math.CurveShape;
 import org.jcurl.math.Interpolator;
@@ -44,7 +42,7 @@ import com.sun.scenario.scenegraph.SGAbstractShape.Mode;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:PTrajectoryFactory.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
-public abstract class SGTrajectoryFactory implements Factory {
+public abstract class SGTrajectoryFactory extends GenTrajectoryFactory<SGGroup> {
 	public static class Fancy extends SGTrajectoryFactory {
 
 		private static final Paint dark = IceShapes.trace(
@@ -80,61 +78,20 @@ public abstract class SGTrajectoryFactory implements Factory {
 		}
 	}
 
-	/**
-	 * Create a visual path segment and add it to <code>dst</code>.
-	 * 
-	 * @param src
-	 *            input curve
-	 * @param tmin
-	 * @param tmax
-	 * @param isDark
-	 *            rock color
-	 * @param dst
-	 *            scenegraph parent
-	 * @return <code>false</code> if out of scope.
-	 */
-	protected abstract boolean addSegment(R1RNFunction src, double tmin,
-			double tmax, boolean isDark, SGGroup dst);
+	@Override
+	protected SGGroup post(final SGGroup parent) {
+		parent.setVisible(true);
+		return parent;
+	}
 
-	/**
-	 * Replace the children of <code>dst</code> with the curve segments from
-	 * <code>src</code>.
-	 * <p>
-	 * This method does all the management stuff and delegates to
-	 * {@link #addSegment(R1RNFunction, double, double, boolean, SGGroup)} to
-	 * create the visual parts of the path.
-	 * </p>
-	 */
-	public SGGroup refresh(final Iterator<Entry<Double, R1RNFunction>> src,
-			final boolean isDark, final double tmin, final double tmax,
-			SGGroup dst) {
-		if (dst == null)
-			dst = new SGGroup();
-		final boolean vis = dst.isVisible();
-		try {
-			dst.setVisible(false);
-			// remove all children of dst:
-			for (int i = dst.getChildren().size() - 1; i >= 0; i--)
-				dst.remove(i);
-
-			if (!src.hasNext())
-				return dst;
-			Entry<Double, R1RNFunction> curr = src.next();
-			while (src.hasNext()) {
-				final Entry<Double, R1RNFunction> next = src.next();
-				if (!addSegment(curr.getValue(), curr.getKey(), next.getKey(),
-						isDark, dst))
-					break;
-				// step:
-				curr = next;
-			}
-			// don't forget the tail (last segment):
-			addSegment(curr.getValue(), curr.getKey(), tmax, isDark, dst);
-			// TODO is this really necessary?
-			dst.setMouseBlocker(true);
-		} finally {
-			dst.setVisible(vis);
-		}
-		return dst;
+	@Override
+	protected SGGroup pre(SGGroup parent) {
+		if (parent == null)
+			parent = new SGGroup();
+		parent.setVisible(false);
+		// remove all children of dst:
+		for (int i = parent.getChildren().size() - 1; i >= 0; i--)
+			parent.remove(i);
+		return parent;
 	}
 }

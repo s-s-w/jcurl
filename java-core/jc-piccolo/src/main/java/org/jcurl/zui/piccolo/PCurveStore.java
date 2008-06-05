@@ -1,20 +1,20 @@
 /*
- * jcurl java curling software framework http://www.jcurl.org
- * Copyright (C) 2005-2008 M. Rohrmoser
+ * jcurl java curling software framework http://www.jcurl.org Copyright (C)
+ * 2005-2008 M. Rohrmoser
  * 
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
- * Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 package org.jcurl.zui.piccolo;
 
@@ -45,8 +45,11 @@ public class PCurveStore extends PNode implements PropertyChangeListener {
 	public PCurveStore(final PTrajectoryFactory f, final double tmax) {
 		this.tmax = tmax;
 		this.f = f;
-		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
-			addChild(new PNode());
+		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
+			final PNode n = new PNode();
+			n.setPickable(false);
+			addChild(n);
+		}
 		setModel(model);
 	}
 
@@ -80,10 +83,8 @@ public class PCurveStore extends PNode implements PropertyChangeListener {
 	private void sync(final int i16) {
 		if (model == null)
 			return;
-		// FIXME evtl. model als mutex?
-		synchronized (getChild(i16)) {
-			getChild(i16).replaceWith(
-					f.newInstance(i16, model.iterator(i16), tmax));
-		}
+		// TODO evtl. model als mutex?
+		f.refresh(model.iterator(i16), RockSet.isDark(i16), 0, tmax,
+				getChild(i16));
 	}
 }
