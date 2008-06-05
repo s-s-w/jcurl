@@ -251,6 +251,8 @@ public abstract class CurveShape {
 	@Deprecated
 	public static double[] interpolate(final double min, final double max,
 			final double[] sections, final Interpolator ip) {
+		if (min > max)
+			throw new IllegalArgumentException();
 		final int n = sections.length - 1;
 		if (n < 1)
 			throw new IllegalArgumentException();

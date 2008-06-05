@@ -32,29 +32,13 @@ import org.jcurl.core.impl.CurveTransformed;
 public class CurveShapeTest extends TestCase {
 
 	public void testAequidistantSections() {
-		double[] d = new double[0];
+		double[] d = new double[2];
 		CurveShape.linearSections(1, 2, d);
-
-		d = new double[1];
-		CurveShape.linearSections(1, 2, d);
-		assertEquals(1, d[0], 1e-9);
-		CurveShape.linearSections(2, 1, d);
-		assertEquals(1, d[0], 1e-9);
-
-		d = new double[2];
-		CurveShape.linearSections(1, 2, d);
-		assertEquals(1, d[0], 1e-9);
-		assertEquals(2, d[1], 1e-9);
-		CurveShape.linearSections(2, 1, d);
 		assertEquals(1, d[0], 1e-9);
 		assertEquals(2, d[1], 1e-9);
 
 		d = new double[3];
 		CurveShape.linearSections(1, 3, d);
-		assertEquals(1, d[0], 1e-9);
-		assertEquals(2, d[1], 1e-9);
-		assertEquals(3, d[2], 1e-9);
-		CurveShape.linearSections(3, 1, d);
 		assertEquals(1, d[0], 1e-9);
 		assertEquals(2, d[1], 1e-9);
 		assertEquals(3, d[2], 1e-9);
@@ -217,47 +201,6 @@ public class CurveShapeTest extends TestCase {
 		CurveShape.computeControlPoint(pa, va, pb, vb, tmp_a, tmp_b, pc);
 		assertEquals(Double.NaN, pc[0], 1e-9);
 		assertEquals(Double.NaN, pc[1], 1e-9);
-	}
-
-	public void testExponentialSections() {
-		double[] d = new double[0];
-		CurveShape.exponentialSections(1, 2, d);
-
-		d = new double[1];
-		CurveShape.exponentialSections(1, 2, d);
-		assertEquals(1, d[0], 1e-9);
-		CurveShape.exponentialSections(2, 1, d);
-		assertEquals(1, d[0], 1e-9);
-
-		d = new double[2];
-		CurveShape.exponentialSections(1, 2, d);
-		assertEquals(1, d[0], 1e-9);
-		assertEquals(2, d[1], 1e-9);
-		CurveShape.exponentialSections(2, 1, d);
-		assertEquals(1, d[0], 1e-9);
-		assertEquals(2, d[1], 1e-9);
-
-		d = new double[3];
-		CurveShape.exponentialSections(1, 4, d);
-		assertEquals(1, d[0], 1e-9);
-		assertEquals(3, d[1], 1e-9);
-		assertEquals(4, d[2], 1e-9);
-		CurveShape.exponentialSections(4, 1, d);
-		assertEquals(1, d[0], 1e-9);
-		assertEquals(3, d[1], 1e-9);
-		assertEquals(4, d[2], 1e-9);
-
-		d = new double[4];
-		CurveShape.exponentialSections(1, 7, d);
-		assertEquals(1, d[0], 1e-9);
-		assertEquals(4, d[1], 1e-9);
-		assertEquals(6, d[2], 1e-9);
-		assertEquals(7, d[3], 1e-9);
-		CurveShape.exponentialSections(7, 1, d);
-		assertEquals(1, d[0], 1e-9);
-		assertEquals(4, d[1], 1e-9);
-		assertEquals(6, d[2], 1e-9);
-		assertEquals(7, d[3], 1e-9);
 	}
 
 	public void testInterpolate() {
