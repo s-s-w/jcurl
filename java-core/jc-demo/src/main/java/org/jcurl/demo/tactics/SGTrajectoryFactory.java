@@ -21,24 +21,19 @@ package org.jcurl.demo.tactics;
 import java.awt.BasicStroke;
 import java.awt.Paint;
 import java.awt.RenderingHints;
-import java.awt.Shape;
 import java.awt.Stroke;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import org.apache.commons.logging.Log;
 import org.jcurl.core.api.Factory;
 import org.jcurl.core.api.RockProps;
-import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.IceShapes;
 import org.jcurl.math.CurveShape;
+import org.jcurl.math.Interpolator;
+import org.jcurl.math.Interpolators;
 import org.jcurl.math.R1RNFunction;
 
 import com.sun.scenario.scenegraph.SGGroup;
-import com.sun.scenario.scenegraph.SGNode;
 import com.sun.scenario.scenegraph.SGShape;
 import com.sun.scenario.scenegraph.SGAbstractShape.Mode;
 
@@ -54,98 +49,63 @@ public abstract class SGTrajectoryFactory implements Factory {
 
 		private static final Paint dark = IceShapes.trace(
 				new IceShapes.RockColors().dark, 255);
+		/** sampling style along the {@link R1RNFunction} */
+		private static final Interpolator ip = Interpolators
+				.getLinearInstance();
 		private static final Paint light = IceShapes.trace(
 				new IceShapes.RockColors().light, 255);
+		/** start + stop + intermediate */
+		private static final int samples = 25;
 		private static final Stroke stroke = new BasicStroke(
 				2 * RockProps.DEFAULT.getRadius(), BasicStroke.CAP_ROUND,
 				BasicStroke.JOIN_ROUND, 0);
-		private static final int zoom = 1;
-
-		private static Writer toString(final Writer w, final double[] arr) {
-			try {
-				if (arr == null)
-					w.write("null");
-				else {
-					boolean start = true;
-					w.write("[");
-					for (final double element : arr) {
-						if (!start)
-							w.write(" ");
-						w.write(Double.toString(element));
-						start = false;
-					}
-					w.write("]");
-				}
-				return w;
-			} catch (final IOException e) {
-				throw new IllegalStateException("Couldn't write to writer.", e);
-			}
-		}
-
-		private final double[] sections = { 0, 0, 0, 0, 0, 0, 0 };
-		private final double[] t1 = { 0, 0, 0 };
-		private final double[] t2 = { 0, 0, 0 };
-		private final double[] t3 = { 0, 0, 0 };
-		private final double[] t4 = { 0, 0, 0 };
+		private static final float zoom = 1;
 
 		@Override
-		protected boolean addSegment(final Entry<Double, R1RNFunction> src,
+		protected boolean addSegment(final R1RNFunction src, final double tmin,
 				final double tmax, final boolean isDark, final SGGroup dst) {
-			if (src.getKey() >= tmax)
+			// TODO move to #refresh
+			if (tmin >= tmax)
 				return false;
-			doSections(sections, src.getKey(), tmax);
-			if (log.isDebugEnabled()) {
-				final StringWriter wri = new StringWriter();
-				wri.write("t=");
-				toString(wri, sections);
-				wri.write(" c=" + src.getValue());
-				log.debug(wri.getBuffer());
-			}
-			dst.add(createSegment(isDark, src.getValue(), sections));
-			return true;
-		}
-
-		private SGNode createSegment(final boolean isDark,
-				final R1RNFunction curr, final double[] sections) {
-			final Shape s;
-			if (true)
-				s = CurveShape.approximateLinear(curr, sections, zoom, t1);
-			else
-				s = CurveShape.approximateQuadratic(curr, sections, zoom, t1,
-						t2, t3, t4);
+			// create a high-quality scenegraph entity
 			final SGShape c = new SGShape();
-			c.setShape(s);
+			c.setShape(CurveShape.approximateLinear(src, (float) tmin,
+					(float) tmax, samples, zoom, ip));
 			c.setDrawStroke(stroke);
 			c.setDrawPaint(isDark ? dark : light);
 			c.setAntialiasingHint(RenderingHints.VALUE_ANTIALIAS_ON);
 			c.setMode(Mode.STROKE);
-			return c;
-		}
-
-		/**
-		 * Split the given interval into sections.
-		 * 
-		 * @see CurveShape#exponentialSections(double, double, double[])
-		 * @param sections
-		 * @param min
-		 * @param max
-		 * @return sections
-		 */
-		private double[] doSections(final double[] sections, final double min,
-				final double max) {
-			if (true)
-				return CurveShape.aequidistantSections(min, max, sections);
-			return CurveShape.exponentialSections(min, max, sections);
+			dst.add(c);
+			return true;
 		}
 	}
 
-	private static final Log log = JCLoggerFactory
-			.getLogger(SGTrajectoryFactory.Fancy.class);
-
-	protected abstract boolean addSegment(Entry<Double, R1RNFunction> src,
+	/**
+	 * Create a visual path segment and add it to <code>dst</code>.
+	 * 
+	 * @param src
+	 *            input curve
+	 * @param tmin
+	 * @param tmax
+	 * @param isDark
+	 *            rock color
+	 * @param dst
+	 *            scenegraph parent
+	 * @return <code>false</code> if out of scope.
+	 */
+	protected abstract boolean addSegment(R1RNFunction src, double tmin,
 			double tmax, boolean isDark, SGGroup dst);
 
-	public SGGroup refresh(final Iterator<Entry<Double, R1RNFunction>> path,
+	/**
+	 * Replace the children of <code>dst</code> with the curve segments from
+	 * <code>src</code>.
+	 * <p>
+	 * This method does all the management stuff and delegates to
+	 * {@link #addSegment(R1RNFunction, double, double, boolean, SGGroup)} to
+	 * create the visual parts of the path.
+	 * </p>
+	 */
+	public SGGroup refresh(final Iterator<Entry<Double, R1RNFunction>> src,
 			final boolean isDark, final double tmin, final double tmax,
 			SGGroup dst) {
 		if (dst == null)
@@ -153,21 +113,24 @@ public abstract class SGTrajectoryFactory implements Factory {
 		final boolean vis = dst.isVisible();
 		try {
 			dst.setVisible(false);
+			// remove all children of dst:
 			for (int i = dst.getChildren().size() - 1; i >= 0; i--)
 				dst.remove(i);
 
-			if (!path.hasNext())
+			if (!src.hasNext())
 				return dst;
-			Entry<Double, R1RNFunction> curr = path.next();
-			while (path.hasNext()) {
-				final Entry<Double, R1RNFunction> next = path.next();
-				if (!addSegment(curr, next.getKey(), isDark, dst))
+			Entry<Double, R1RNFunction> curr = src.next();
+			while (src.hasNext()) {
+				final Entry<Double, R1RNFunction> next = src.next();
+				if (!addSegment(curr.getValue(), curr.getKey(), next.getKey(),
+						isDark, dst))
 					break;
 				// step:
 				curr = next;
 			}
 			// don't forget the tail (last segment):
-			addSegment(curr, tmax, isDark, dst);
+			addSegment(curr.getValue(), curr.getKey(), tmax, isDark, dst);
+			// TODO is this really necessary?
 			dst.setMouseBlocker(true);
 		} finally {
 			dst.setVisible(vis);

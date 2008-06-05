@@ -140,7 +140,7 @@ public abstract class PTrajectoryFactory implements Factory {
 		private double[] doSections(final double[] sections, final double min,
 				final double max) {
 			if (true)
-				return CurveShape.aequidistantSections(min, max, sections);
+				return CurveShape.linearSections(min, max, sections);
 			return CurveShape.exponentialSections(min, max, sections);
 		}
 

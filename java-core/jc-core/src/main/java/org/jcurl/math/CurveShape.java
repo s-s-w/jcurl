@@ -1,5 +1,6 @@
 /*
- * jcurl java curling software framework http://www.jcurl.orgCopyright (C) 2005-2008 M. Rohrmoser
+ * jcurl java curling software framework http://www.jcurl.orgCopyright (C)
+ * 2005-2008 M. Rohrmoser
  * 
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -35,77 +36,91 @@ public abstract class CurveShape {
 	private static final Log log = JCLoggerFactory.getLogger(CurveShape.class);
 
 	/**
-	 * Split the given interval [min,max] into equidistant sections.
+	 * Turn a {@link R1RNFunction} (of at least 2 dimensions) into a
+	 * {@link Shape} with the given number of samples and straight lines
+	 * {@link GeneralPath#lineTo(float, float)} to interpolate between.
 	 * 
+	 * @param src
+	 *            the (2-dimensional) curve. Higher dimensions are ignored.
 	 * @param min
+	 *            the min input <code>t</code> to
+	 *            {@link R1RNFunction#at(int, int, double)}
 	 * @param max
-	 * @param sections
-	 * @return filled <code>sections</code> array.
+	 *            the max input <code>t</code> to
+	 *            {@link R1RNFunction#at(int, int, double)}
+	 * @param samples
+	 *            the number of samples (start + stop + intermediate) - must be
+	 *            &gt;= 2 (start + stop + intermediate).
+	 * @param zoom
+	 *            graphics zoom factor (typically 1)
+	 * @param ip
+	 *            the {@link Interpolator} to get the intermediate sample
+	 *            <code>t</code> values.
 	 */
-	public static double[] aequidistantSections(double min, double max,
-			final double[] sections) {
-		final int n = sections.length - 1;
-		if (n < 0)
-			return sections;
-		if (min > max) {
-			final double tmp = min;
-			min = max;
-			max = tmp;
+	public static Shape approximateLinear(final R1RNFunction src,
+			final double min, final double max, final int samples,
+			final float zoom, final Interpolator ip) {
+		// setup
+		if (samples < 2)
+			throw new IllegalArgumentException(
+					"Give me at least 2 (start + stop)");
+		final float d = (float) (max - min);
+		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
+				samples + 1); // +1 just to be sure...
+		// start
+		float x = (float) src.at(0, 0, min);
+		float y = (float) src.at(1, 0, min);
+		gp.moveTo(zoom * x, zoom * y);
+
+		// intermediate
+		final int n = samples - 1;
+		for (int i = 1; i < n; i++) {
+			final double t = min + d * ip.interpolate((float) i / n);
+			x = (float) src.at(0, 0, t);
+			y = (float) src.at(1, 0, t);
+			gp.lineTo(zoom * x, zoom * y);
 		}
-		sections[0] = min;
-		if (n < 1)
-			return sections;
-		sections[n] = max;
-		if (n < 2)
-			return sections;
-		final double d = (max - min) / n;
-		for (int i = n - 1; i > 0; i--)
-			sections[i] = min + i * d;
-		return sections;
-	}
 
-	public static Shape approximate(final R1RNFunction c,
-			final double[] sections) {
-		// return approximateLinear(c, sections);
-		return approximateQuadratic(c, sections);
-	}
-
-	public static Shape approximateLinear(final R1RNFunction c,
-			final double[] sections) {
-		return approximateLinear(c, sections, 1, null);
+		// stop
+		x = (float) src.at(0, 0, max);
+		y = (float) src.at(1, 0, max);
+		gp.lineTo(zoom * x, zoom * y);
+		return gp;
 	}
 
 	/**
 	 * Turns the first 2 dimensions of a {@link R1RNFunction} into a drawable
-	 * {@link Shape}.
+	 * {@link Shape} - namely a {@link GeneralPath}.
 	 * 
-	 * @param c
+	 * @param src
+	 *            the cuve to turn into a shape.
 	 * @param sections
+	 *            the samples
 	 * @param zoom
-	 *            factor - typically 1
+	 *            graphics zoom factor - typically 1
 	 * @param tmp
 	 *            save instanciations calling
-	 *            {@link R1RNFunction#at(int, double, double[])}.
-	 * @return the shape.
+	 *            {@link R1RNFunction#at(int, double, double[])}. Should have
+	 *            the same dimension as the input {@link R1RNFunction}. May be
+	 *            <code>null</code>.
+	 * @return the curve segment as a {@link Shape}.
+	 * @deprecated Rather use
+	 *             {@link #approximateLinear(R1RNFunction, double, double, int, float, Interpolator)}
 	 */
-	public static Shape approximateLinear(final R1RNFunction c,
+	@Deprecated
+	public static Shape approximateLinear(final R1RNFunction src,
 			final double[] sections, final float zoom, double[] tmp) {
 		if (tmp == null)
-			tmp = new double[c.dim()];
-		c.at(0, sections[0], tmp);
+			tmp = new double[src.dim()];
+		src.at(0, sections[0], tmp);
 		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
 				sections.length + 1);
 		gp.moveTo((float) (zoom * tmp[0]), (float) (zoom * tmp[1]));
 		for (int i = 1; i < sections.length; i++) {
-			c.at(0, sections[i], tmp);
+			src.at(0, sections[i], tmp);
 			gp.lineTo((float) (zoom * tmp[0]), (float) (zoom * tmp[1]));
 		}
 		return gp;
-	}
-
-	public static Shape approximateQuadratic(final R1RNFunction c,
-			final double[] sections) {
-		return approximateQuadratic(c, sections, 1, null, null, null, null);
 	}
 
 	/**
@@ -130,6 +145,7 @@ public abstract class CurveShape {
 	 *            {@link R1RNFunction#at(int, double, double[])}.
 	 * @return the shape
 	 */
+	@Deprecated
 	public static Shape approximateQuadratic(final R1RNFunction c,
 			final double[] sections, final float zoom, double[] p0,
 			double[] v0, double[] p1, double[] v1) {
@@ -225,32 +241,68 @@ public abstract class CurveShape {
 		return pc;
 	}
 
-	public static double[] exponentialSections(double min, double max,
-			final double[] sections) {
+	@Deprecated
+	public static double[] exponentialSections(final double min,
+			final double max, final double[] sections) {
+		return interpolate(min, max, sections, Interpolators
+				.getExponentialInstance());
+	}
+
+	@Deprecated
+	public static double[] interpolate(final double min, final double max,
+			final double[] sections, final Interpolator ip) {
 		final int n = sections.length - 1;
-		if (n < 0)
-			return sections;
-		if (min > max) {
-			final double tmp = min;
-			min = max;
-			max = tmp;
-		}
-		sections[0] = min;
 		if (n < 1)
-			return sections;
+			throw new IllegalArgumentException();
+		sections[0] = min;
 		sections[n] = max;
-		if (n < 2)
+		final float _min = (float) min;
+		final float _d = (float) (max - min);
+		for (int i = 1; i < n; i++)
+			sections[i] = _min + _d * ip.interpolate((float) i / n);
+		return sections;
+	}
+
+	private static float interpolate(final float min, final float max,
+			final float t, final Interpolator ip) {
+		final float d = max - min;
+		return min + d * ip.interpolate((t - min) / d);
+	}
+
+	/**
+	 * Split the given interval [min,max] into equidistant sections.
+	 * 
+	 * @param min
+	 * @param max
+	 * @param sections
+	 * @return filled <code>sections</code> array.
+	 */
+	@Deprecated
+	public static double[] linearSections(double min, double max,
+			final double[] sections) {
+		if (true)
+			return interpolate(min, max, sections, Interpolators
+					.getLinearInstance());
+		else {
+			final int n = sections.length - 1;
+			if (n < 0)
+				return sections;
+			if (min > max) {
+				final double tmp = min;
+				min = max;
+				max = tmp;
+			}
+			sections[0] = min;
+			if (n < 1)
+				return sections;
+			sections[n] = max;
+			if (n < 2)
+				return sections;
+			final double d = (max - min) / n;
+			for (int i = n - 1; i > 0; i--)
+				sections[i] = min + i * d;
 			return sections;
-		long j = 0;
-		for (int i = n; i > 0; i--)
-			j += i;
-		int k = 0;
-		for (int i = 1; i < n; i++) {
-			k += n - i + 1;
-			log.debug(k + "/" + j);
-			sections[i] = min + (max - min) * k / j;
 		}
-		return null;
 	}
 
 	static String toString(final double[] arr) {

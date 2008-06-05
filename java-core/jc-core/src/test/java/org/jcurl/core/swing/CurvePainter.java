@@ -103,8 +103,9 @@ class CurvePainter implements Strategy {
 		int i = 0;
 		for (final Iterable<Entry<Double, R1RNFunction>> name : cs) {
 			if (log.isDebugEnabled())
-				log.debug("i=" + i + " " + (RockSet.isDark(i) ? "dark" : "light")
-						+ " " + RockSet.toIdx8(i));
+				log.debug("i=" + i + " "
+						+ (RockSet.isDark(i) ? "dark" : "light") + " "
+						+ RockSet.toIdx8(i));
 			g2.setPaint(RockSet.isDark(i++) ? dark : light);
 			doPaint(g2, name.iterator(), sections, 1, t1, t2, t3, t4);
 		}
@@ -201,9 +202,9 @@ class CurvePainter implements Strategy {
 	 */
 	public double[] doSections(final double[] sections, final double min,
 			final double max) {
-		// if (true)
-		return CurveShape.aequidistantSections(min, max, sections);
-		// else
-		// return CurveShape.exponentialSections(min, max, sections);
+		if (false)
+			return CurveShape.linearSections(min, max, sections);
+		else
+			return CurveShape.exponentialSections(min, max, sections);
 	}
 }
