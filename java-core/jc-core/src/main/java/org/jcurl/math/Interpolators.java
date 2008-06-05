@@ -46,11 +46,22 @@ public class Interpolators {
 			return 1.0F - (float) (Math.exp(1.0 - fraction) / Math.exp(1.0));
 		}
 	};
-
 	private static final Interpolator linear = new LinearInterpolator();
 
+	private static final Interpolator quadratic = new LinearInterpolator() {
+		@Override
+		public float interpolate(final float fraction) {
+			if (Float.isNaN(super.interpolate(fraction)))
+				return Float.NaN;
+			if (0.0F == fraction || 1.0F == fraction)
+				return fraction;
+			float t = fraction - 1.0F;
+			return 1.0F - t * t;
+		}
+	};
+
 	/** Getting exponentially denser towards <code>1.0F</code>. */
-	public static Interpolator getExponentialInstance() {
+	private static Interpolator getExponentialInstance() {
 		return exponential;
 	}
 
@@ -63,5 +74,10 @@ public class Interpolators {
 	 */
 	public static Interpolator getLinearInstance() {
 		return linear;
+	}
+
+	/** Getting quadratically denser towards <code>1.0F</code>. */
+	public static Interpolator getQuadraticInstance() {
+		return quadratic;
 	}
 }

@@ -21,6 +21,7 @@ package org.jcurl.core.ui;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import org.jcurl.core.api.CurveStore;
 import org.jcurl.core.api.Factory;
 import org.jcurl.math.R1RNFunction;
 
@@ -46,9 +47,8 @@ public abstract class GenTrajectoryFactory<N> implements Factory {
 	 *            rock color
 	 * @param dst
 	 *            scenegraph parent
-	 * @return <code>false</code> if out of scope.
 	 */
-	protected abstract boolean addSegment(R1RNFunction src, double tmin,
+	protected abstract void addSegment(R1RNFunction src, double tmin,
 			double tmax, boolean isDark, N dst);
 
 	protected abstract N post(N parent);
@@ -63,6 +63,14 @@ public abstract class GenTrajectoryFactory<N> implements Factory {
 	 * {@link #addSegment(R1RNFunction, double, double, boolean, Object)} to
 	 * create the visual parts of the path.
 	 * </p>
+	 * 
+	 * @param src
+	 *            curve to visualize - see {@link CurveStore#iterator(int)}
+	 * @param tmin
+	 * @param tmax
+	 * @param isDark
+	 * @param dst
+	 *            scenegraph parent node to clear and re-populate.
 	 */
 	public N refresh(final Iterator<Entry<Double, R1RNFunction>> src,
 			final boolean isDark, final double tmin, final double tmax, N dst) {
@@ -73,15 +81,26 @@ public abstract class GenTrajectoryFactory<N> implements Factory {
 		Entry<Double, R1RNFunction> curr = src.next();
 		while (src.hasNext()) {
 			final Entry<Double, R1RNFunction> next = src.next();
-			if (!addSegment(curr.getValue(), curr.getKey(), next.getKey(),
-					isDark, dst))
+			if (next.getKey() <= tmin) {
+				curr = next;
+				continue;
+			}
+			if (next.getKey() >= tmax)
 				break;
+
+			double t0 = curr.getKey();
+			if (t0 < tmin)
+				t0 = tmin;
+			addSegment(curr.getValue(), t0, next.getKey(), isDark, dst);
 			// step:
 			curr = next;
 		}
-		
+
 		// don't forget the tail (last segment):
-		addSegment(curr.getValue(), curr.getKey(), tmax, isDark, dst);
+		double t0 = curr.getKey();
+		if (t0 < tmin)
+			t0 = tmin;
+		addSegment(curr.getValue(), t0, tmax, isDark, dst);
 		return post(dst);
 	}
 }

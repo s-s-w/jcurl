@@ -49,22 +49,19 @@ public abstract class SGTrajectoryFactory extends GenTrajectoryFactory<SGGroup> 
 				new IceShapes.RockColors().dark, 255);
 		/** sampling style along the {@link R1RNFunction} */
 		private static final Interpolator ip = Interpolators
-				.getLinearInstance();
+				.getQuadraticInstance();
 		private static final Paint light = IceShapes.trace(
 				new IceShapes.RockColors().light, 255);
 		/** start + stop + intermediate */
-		private static final int samples = 25;
+		private static final int samples = 10;
 		private static final Stroke stroke = new BasicStroke(
 				2 * RockProps.DEFAULT.getRadius(), BasicStroke.CAP_ROUND,
 				BasicStroke.JOIN_ROUND, 0);
 		private static final float zoom = 1;
 
 		@Override
-		protected boolean addSegment(final R1RNFunction src, final double tmin,
+		protected void addSegment(final R1RNFunction src, final double tmin,
 				final double tmax, final boolean isDark, final SGGroup dst) {
-			// TODO move to #refresh
-			if (tmin >= tmax)
-				return false;
 			// create a high-quality scenegraph entity
 			final SGShape c = new SGShape();
 			c.setShape(CurveShape.approximateLinear(src, (float) tmin,
@@ -74,7 +71,6 @@ public abstract class SGTrajectoryFactory extends GenTrajectoryFactory<SGGroup> 
 			c.setAntialiasingHint(RenderingHints.VALUE_ANTIALIAS_ON);
 			c.setMode(Mode.STROKE);
 			dst.add(c);
-			return true;
 		}
 	}
 

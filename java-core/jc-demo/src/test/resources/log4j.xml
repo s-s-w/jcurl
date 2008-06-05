@@ -33,6 +33,9 @@
 	<category name="org.jcurl.demo.tactics.BroomSwingBean">
 		<level value="DEBUG"/>
 	</category>
+	<category name="org.jcurl.demo.tactics.TrajectoryScenarioBean">
+		<level value="DEBUG"/>
+	</category>	
 	<!-- ======================= -->
 	<!-- Setup the Root category -->
 	<!-- ======================= -->

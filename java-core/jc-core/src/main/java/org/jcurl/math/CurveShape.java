@@ -22,6 +22,7 @@ import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.log.JCLoggerFactory;
 
 /**
@@ -86,6 +87,33 @@ public abstract class CurveShape {
 		y = (float) src.at(1, 0, max);
 		gp.lineTo(zoom * x, zoom * y);
 		return gp;
+	}
+	/**
+	 * Turn a {@link R1RNFunction} (of at least 2 dimensions) into a
+	 * {@link Shape} with the given number of samples and straight lines
+	 * {@link GeneralPath#lineTo(float, float)} to interpolate between.
+	 * 
+	 * @param src
+	 *            the (2-dimensional) curve. Higher dimensions are ignored.
+	 * @param min
+	 *            the min input <code>t</code> to
+	 *            {@link R1RNFunction#at(int, int, double)}
+	 * @param max
+	 *            the max input <code>t</code> to
+	 *            {@link R1RNFunction#at(int, int, double)}
+	 * @param samples
+	 *            the number of samples (start + stop + intermediate) - must be
+	 *            &gt;= 2 (start + stop + intermediate).
+	 * @param zoom
+	 *            graphics zoom factor (typically 1)
+	 * @param ip
+	 *            the {@link Interpolator} to get the intermediate sample
+	 *            <code>t</code> values.
+	 */
+	public static Shape approximateQuadratic(final R1RNFunction src,
+			final double min, final double max, final int samples,
+			final float zoom, final Interpolator ip) {
+		throw new NotImplementedYetException();
 	}
 
 	/**
@@ -245,11 +273,11 @@ public abstract class CurveShape {
 	public static double[] exponentialSections(final double min,
 			final double max, final double[] sections) {
 		return interpolate(min, max, sections, Interpolators
-				.getExponentialInstance());
+				.getQuadraticInstance());
 	}
 
 	@Deprecated
-	public static double[] interpolate(final double min, final double max,
+	static double[] interpolate(final double min, final double max,
 			final double[] sections, final Interpolator ip) {
 		if (min > max)
 			throw new IllegalArgumentException();

@@ -160,6 +160,8 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 	private static void syncM2V(
 			final Iterator<Entry<Double, R1RNFunction>> src, final int i16,
 			final SGGroup dst, final SGTrajectoryFactory tf) {
+		if (log.isDebugEnabled())
+			log.debug("path " + i16);
 		tf.refresh(src, RockSet.isDark(i16), 0, 30, dst);
 	}
 
@@ -170,11 +172,13 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 				log.debug(src + " " + dst);
 			return;
 		}
-		// if(log.isDebugEnabled()) log.debug(dst.getAttribute(ATTR_IDX16));
+		if (log.isDebugEnabled())
+			log.debug("rock " + dst.getAttribute(ATTR_IDX16));
 		dst.setAffine(src.getAffineTransform());
 	}
 
 	private final SGBroomPrompt bp = new SGBroomPrompt();
+
 	private final Affine[] current = new Affine[RockSet.ROCKS_PER_SET];
 	private ComputedTrajectorySet curves = null;
 	private final Affine dc2wc;
@@ -182,8 +186,8 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 	private final MoveHandler mouse = new MoveHandler();
 	/** all rocks, trajectories and broomprompt */
 	private final SGComposite opa_r0 = new SGComposite();
-	private final SGComposite opa_r1 = new SGComposite();;
-	private final SGComposite opa_t0 = new SGComposite();
+	private final SGComposite opa_r1 = new SGComposite();
+	private final SGComposite opa_t0 = new SGComposite();;
 	private final JSGPanel pico;
 	/** Rock<Pos> -> SGNode lookup */
 	private final Map<Rock<Pos>, Affine> r2n = new IdentityHashMap<Rock<Pos>, Affine>();
@@ -220,21 +224,27 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 			n.putAttribute(ATTR_TRIGGER_CURVE_UPDATE, true);
 			traj.add(new SGGroup());
 		}
-		opa_r0.setChild(r0);
-		opa_r0.setOpacity(64.0F / 255.0F);
-		opa_r0.setOverlapBehavior(OverlapBehavior.LAYER);
+		if (false) {
+			scene.add(traj);
+			scene.add(r0);
+			scene.add(r1);
+		} else {
+			opa_r0.setChild(r0);
+			opa_r0.setOpacity(64.0F / 255.0F);
+			opa_r0.setOverlapBehavior(OverlapBehavior.LAYER);
 
-		opa_r1.setChild(r1);
-		opa_r1.setOverlapBehavior(OverlapBehavior.LAYER);
+			opa_r1.setChild(r1);
+			opa_r1.setOverlapBehavior(OverlapBehavior.LAYER);
 
-		opa_t0.setChild(traj);
-		opa_t0.setMouseBlocker(true);
-		opa_t0.setOverlapBehavior(OverlapBehavior.LAYER);
-		opa_t0.setOpacity(100.0F / 255.0F);
+			opa_t0.setChild(traj);
+			opa_t0.setMouseBlocker(true);
+			opa_t0.setOverlapBehavior(OverlapBehavior.LAYER);
+			opa_t0.setOpacity(100.0F / 255.0F);
 
-		scene.add(opa_t0);
-		scene.add(opa_r0);
-		scene.add(opa_r1);
+			scene.add(opa_t0);
+			scene.add(opa_r0);
+			scene.add(opa_r1);
+		}
 		scene.add(bp.getScene());
 		root.add(scene);
 
@@ -257,6 +267,16 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 	private Affine createSceneRock(final RockSet<Pos> pos, final int i16,
 			final int opacity) {
 		return syncM2V(pos, i16, createSceneRock(i16, opacity));
+	}
+
+	/** keep the recent viewport visible */
+	@Override
+	public void doLayout() {
+		super.doLayout();
+		if (tmpViewPort != null)
+			zoom
+					.setAffine(map(tmpViewPort, this.getBounds(), zoom
+							.getAffine()));
 	}
 
 	@Override

@@ -154,9 +154,10 @@ public class TrajectoryBroomPromptWrapper extends DefaultBroomPromptModel
 
 			// Compute Broom Location
 			final Point2D x = ipos.getRock(idx16).p();
-			final Point2D b = dst.getBroom();
-			final Point2D b2 = new Point2D.Double((b.getY() - x.getY())
-					* v.getX() / v.getY(), b.getY());
+			final double bY = dst.getBroom() == null ? 0 : dst.getBroom()
+					.getY();
+			final Point2D b2 = new Point2D.Double((bY - x.getY()) * v.getX()
+					/ v.getY(), bY);
 			if (log.isDebugEnabled())
 				log.debug("v=" + v + ", x=" + b2);
 			dst.setBroom(b2);
@@ -173,13 +174,9 @@ public class TrajectoryBroomPromptWrapper extends DefaultBroomPromptModel
 			.getLogger(TrajectoryBroomPromptWrapper.class);
 
 	private Curler curler;
-
 	private CurveStore curveStore;
-
 	private final MediatorWorker med = new MediatorWorker();
-
 	private RockSet<Pos> positions;
-
 	private RockSet<Vel> velocities;
 
 	public void init(final ComputedTrajectorySet cts) {

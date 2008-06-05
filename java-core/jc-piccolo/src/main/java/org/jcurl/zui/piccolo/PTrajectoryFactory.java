@@ -47,28 +47,24 @@ public abstract class PTrajectoryFactory extends GenTrajectoryFactory<PNode> {
 		private static final Paint dark = IceShapes.trace(
 				new IceShapes.RockColors().dark, 100);
 		private static final Interpolator ip = Interpolators
-				.getLinearInstance();
+				.getQuadraticInstance();
 		private static final Paint light = IceShapes.trace(
 				new IceShapes.RockColors().light, 100);
-		private static final int samples = 25;
+		private static final int samples = 10;
 		private static final Stroke stroke = new BasicStroke(
 				2 * RockProps.DEFAULT.getRadius(), BasicStroke.CAP_ROUND,
 				BasicStroke.JOIN_ROUND, 0);
 		private static final float zoom = 1;
 
 		@Override
-		protected boolean addSegment(final R1RNFunction src, final double tmin,
+		protected void addSegment(final R1RNFunction src, final double tmin,
 				final double tmax, final boolean isDark, final PNode dst) {
-			// TODO move to #refresh
-			if (tmin >= tmax)
-				return false;
 			final PPath c;
 			c = new PPath(CurveShape.approximateLinear(src, (float) tmin,
 					(float) tmax, samples, zoom, ip), stroke);
 			c.setPaint(null);
 			c.setStrokePaint(isDark ? dark : light);
 			dst.addChild(c);
-			return true;
 		}
 	}
 
