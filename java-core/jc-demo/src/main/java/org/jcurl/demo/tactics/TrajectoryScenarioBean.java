@@ -45,6 +45,11 @@ import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.ChangeManager;
 import org.jcurl.core.ui.PosMemento;
 import org.jcurl.core.ui.TrajectoryBroomPromptWrapper;
+import org.jcurl.demo.tactics.sg.AnimateAffine;
+import org.jcurl.demo.tactics.sg.BroomPromptScenario;
+import org.jcurl.demo.tactics.sg.SGIceFactory;
+import org.jcurl.demo.tactics.sg.SGRockFactory;
+import org.jcurl.demo.tactics.sg.SGTrajectoryFactory;
 import org.jcurl.math.R1RNFunction;
 
 import com.sun.scenario.scenegraph.JSGPanel;
@@ -103,7 +108,6 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 	}
 
 	private static final String ATTR_IDX16 = "idx16";
-
 	private static final String ATTR_ROCK = "rock";
 	private static final String ATTR_ROCKSET = "rockset";
 	private static final String ATTR_TRIGGER_CURVE_UPDATE = "trigger_curve_update";
@@ -161,7 +165,6 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 	}
 
 	private final BroomPromptScenario bp = new BroomPromptScenario();
-
 	private final Affine[] current = new Affine[RockSet.ROCKS_PER_SET];
 	private ComputedTrajectorySet curves = null;
 	private final Affine dc2wc;
@@ -171,7 +174,7 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 	private final SGComposite opa_r0 = new SGComposite();
 	private final SGComposite opa_r1 = new SGComposite();
 	private final SGComposite opa_t0 = new SGComposite();
-	private final JSGPanel pico;;
+	private final JSGPanel pico;
 	/** Rock<Pos> -> SGNode lookup */
 	private final Map<Rock<Pos>, Affine> r2n = new IdentityHashMap<Rock<Pos>, Affine>();
 	private final SGGroup scene = new SGGroup();
@@ -270,6 +273,10 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 	@Override
 	public ComputedTrajectorySet getCurves() {
 		return curves;
+	}
+
+	Affine getDc2Wc() {
+		return dc2wc;
 	}
 
 	public RectangularShape getZoom() {

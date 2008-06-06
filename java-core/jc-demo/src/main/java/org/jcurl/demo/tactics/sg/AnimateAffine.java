@@ -17,7 +17,7 @@
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.jcurl.demo.tactics;
+package org.jcurl.demo.tactics.sg;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.RectangularShape;
@@ -25,14 +25,14 @@ import java.awt.geom.RectangularShape;
 import com.sun.scenario.animation.Clip;
 import com.sun.scenario.animation.Interpolator;
 import com.sun.scenario.animation.Interpolators;
-import com.sun.scenario.animation.TimingTarget;
+import com.sun.scenario.animation.TimingTargetAdapter;
 import com.sun.scenario.scenegraph.SGTransform.Affine;
 
 /**
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public class AnimateAffine implements TimingTarget {
+public class AnimateAffine extends TimingTargetAdapter {
 	/**
 	 * 
 	 * @param dst
@@ -59,7 +59,7 @@ public class AnimateAffine implements TimingTarget {
 	}
 
 	/** create a transformation that maps wc to dc */
-	static AffineTransform map(final RectangularShape wc,
+	public static AffineTransform map(final RectangularShape wc,
 			final RectangularShape dc, AffineTransform zt) {
 		if (zt == null)
 			zt = new AffineTransform();
@@ -92,10 +92,12 @@ public class AnimateAffine implements TimingTarget {
 		to.getMatrix(b);
 	}
 
+	@Override
 	public void begin() {
 		(tmp = from.getAffine()).getMatrix(a);
 	}
 
+	@Override
 	public void end() {
 		tmp.setTransform(b[0], b[1], b[2], b[3], b[4], b[5]);
 		from.setAffine(tmp);
@@ -108,6 +110,7 @@ public class AnimateAffine implements TimingTarget {
 		return dst;
 	}
 
+	@Override
 	public void timingEvent(final float f, final long l) {
 		interpolate(a, b, ip.interpolate(f), tt);
 		tmp.setTransform(tt[0], tt[1], tt[2], tt[3], tt[4], tt[5]);

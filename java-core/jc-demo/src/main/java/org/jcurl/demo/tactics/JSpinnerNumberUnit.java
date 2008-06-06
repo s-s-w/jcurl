@@ -161,7 +161,7 @@ public class JSpinnerNumberUnit extends JComponent implements ItemListener,
 	}
 
 	/** The unit for {@link #getValue()}. TODO Check compatibility with choose. */
-	public void setBase(Unit base) {
+	public void setBase(final Unit base) {
 		final Unit old = this.base;
 		if (old == base)
 			return;

@@ -17,7 +17,7 @@
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.jcurl.demo.tactics;
+package org.jcurl.demo.tactics.sg;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -49,6 +49,7 @@ import org.jcurl.core.ui.IceShapes;
 import org.jcurl.core.ui.BroomPromptModel.HandleMemento;
 import org.jcurl.core.ui.BroomPromptModel.SplitMemento;
 import org.jcurl.core.ui.BroomPromptModel.XYMemento;
+import org.jcurl.demo.tactics.HasChanger;
 import org.jcurl.math.MathVec;
 
 import com.sun.scenario.scenegraph.SGGroup;
@@ -195,9 +196,7 @@ public class BroomPromptScenario implements PropertyChangeListener,
 	}
 
 	private ChangeManager changer;
-
 	private Affine dc2wc;
-
 	private final Affine handle;
 	private BroomPromptModel model;
 	private final SGShape pie;
@@ -303,7 +302,7 @@ public class BroomPromptScenario implements PropertyChangeListener,
 		return ChangeManager.getTrivial(changer);
 	}
 
-	public Affine getDc2wc() {
+	public Affine getDc2Wc() {
 		return dc2wc;
 	}
 

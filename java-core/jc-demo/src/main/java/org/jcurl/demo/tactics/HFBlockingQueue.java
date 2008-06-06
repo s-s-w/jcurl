@@ -96,8 +96,8 @@ public class HFBlockingQueue<E> extends LinkedBlockingQueue<E> {
 	}
 
 	@Override
-	synchronized public boolean offer(final E o, final long timeout, final TimeUnit unit)
-			throws InterruptedException {
+	synchronized public boolean offer(final E o, final long timeout,
+			final TimeUnit unit) throws InterruptedException {
 		recent.put(o.getClass(), o);
 		return super.offer(o, timeout, unit);
 	}

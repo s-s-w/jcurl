@@ -38,8 +38,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
-import org.jcurl.demo.tactics.TrajectoryPiccoloBean;
 import org.jcurl.demo.tactics.BroomPromptSwingBean;
+import org.jcurl.demo.tactics.TrajectoryPiccoloBean;
 
 /**
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>

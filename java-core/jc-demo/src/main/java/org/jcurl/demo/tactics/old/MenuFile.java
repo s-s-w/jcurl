@@ -164,7 +164,7 @@ public class MenuFile {
 			final Cursor cu = switchCursor(waitc);
 			try {
 				// This cast just eases code navigation. Remove it later.
-				(td).setCurves(null);
+				td.setCurves(null);
 			} finally {
 				switchCursor(cu);
 			}

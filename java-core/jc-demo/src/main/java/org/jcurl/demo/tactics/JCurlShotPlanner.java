@@ -301,7 +301,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 		}
 	}
 
-	static class ZoomHelper {
+	public static class ZoomHelper {
 		/**
 		 * Inter-hog area area plus house area plus 1 rock margin plus "out"
 		 * rock space.
@@ -440,14 +440,6 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 
 	private JDialog aboutBox = null;
 	private final BirdPiccoloBean birdPiccolo = new BirdPiccoloBean();
-
-	// static void bind(final Object src, final String src_p, final Object dst,
-	// final String dst_p) {
-	// Bindings.createAutoBinding(AutoBinding.UpdateStrategy.READ, src,
-	// BeanProperty.create(src_p), dst, BeanProperty.create(dst_p))
-	// .bind();
-	// }
-
 	private final BroomPromptSwingBean broomSwing = new BroomPromptSwingBean();
 	private boolean canRedo = false;
 	private boolean canUndo = false;
@@ -461,7 +453,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 	private boolean modified = false;
 	private FileNameExtensionFilter pngPat;
 	private FileNameExtensionFilter svgPat;
-	private final TrajectoryBean tactics = new TrajectoryScenarioBean();
+	private final TrajectoryBean tactics = new TrajectoryPiccoloBean();
 	private final JLabel url = new JLabel();
 
 	private JCurlShotPlanner() {

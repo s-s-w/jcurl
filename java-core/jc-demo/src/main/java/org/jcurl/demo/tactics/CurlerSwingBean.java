@@ -70,7 +70,8 @@ public class CurlerSwingBean extends JComponent implements HasChanger,
 
 	private static ComboItem[] findCurlers() {
 		final Collection<ComboItem> tmp = new ArrayList<ComboItem>();
-		for (final Class<Curler> elem : Service.providerClasses(Curler.class, null))
+		for (final Class<Curler> elem : Service.providerClasses(Curler.class,
+				null))
 			tmp.add(new ComboItem(elem));
 		final ComboItem[] dat = new ComboItem[tmp.size()];
 		tmp.toArray(dat);
@@ -100,7 +101,7 @@ public class CurlerSwingBean extends JComponent implements HasChanger,
 			{
 				time = new JSpinnerNumberUnit();
 				time.setLabel("time: ");
-				time.setBase(Unit.SECOND);				
+				time.setBase(Unit.SECOND);
 				time.setModel(new SpinnerNumberModel(24.0, 17.0, 28.0, 0.1));
 				time.addPropertyChangeListener(this);
 				time.addChangeListener(this);

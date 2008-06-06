@@ -31,7 +31,8 @@ import org.jcurl.core.ui.ChangeManager;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class TrajectoryBean extends JComponent implements HasChanger, Zoomable {
+public abstract class TrajectoryBean extends JComponent implements HasChanger,
+		Zoomable {
 
 	private ChangeManager changer;
 
