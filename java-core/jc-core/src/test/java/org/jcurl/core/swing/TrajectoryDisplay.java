@@ -297,11 +297,11 @@ class TrajectoryDisplay extends WCComponent implements ChangeListener {
 	 *            bitmask of discontinuous locations
 	 */
 	public void setPos(final TrajectorySet rocks, final int discontinuous) {
-		if (pos != rocks) {
-			if (pos != null)
-				pos.getCurrentPos().removeChangeListener(this);
-			rocks.getCurrentPos().addChangeListener(this);
-		}
+//		if (pos != rocks) {
+//			if (pos != null)
+//				pos.getCurrentPos().removeChangeListener(this);
+//			rocks.getCurrentPos().addChangeListener(this);
+//		}
 		pos = rocks;
 		this.repaint();
 	}

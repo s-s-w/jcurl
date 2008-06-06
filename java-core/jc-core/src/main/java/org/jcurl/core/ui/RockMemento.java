@@ -54,8 +54,6 @@ public abstract class RockMemento<R extends RockType> extends
 	@Override
 	public RockSet<R> apply(final RockSet<R> dst) {
 		dst.getRock(idx16).p().setLocation(p.getX(), p.getY());
-		// FIXME make the following line obsolete:
-		dst.fireStateChanged();
 		return dst;
 	}
 }

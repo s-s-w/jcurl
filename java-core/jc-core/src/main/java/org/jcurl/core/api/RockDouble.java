@@ -113,7 +113,7 @@ public class RockDouble<R extends RockType> extends Rock<R> implements
 
 	@Override
 	public void setLocation(final double x, final double y, final double a) {
-		if (x == this.x && y == this.y && a == this.y)
+		if (x == this.x && y == this.y && a == this.a)
 			return;
 		this.x = x;
 		this.y = y;

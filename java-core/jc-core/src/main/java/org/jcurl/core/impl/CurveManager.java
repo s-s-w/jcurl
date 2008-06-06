@@ -57,47 +57,35 @@ public class CurveManager extends MutableObject implements ChangeListener,
 
 	// compute beyond a realistic amount of time
 	private static final double _30 = 60.0;
-
 	/** Time leap during a hit. */
 	private static final double hitDt = 1e-6;
-
 	private static final Log log = JCLoggerFactory
 			.getLogger(CurveManager.class);
-
 	private static final double NoSweep = 0;
-
 	private static final long serialVersionUID = 7198540442889130378L;
-
 	private static final StopDetector stopper = new NewtonStopDetector();
-
 	private final Map<CharSequence, CharSequence> annotations = new HashMap<CharSequence, CharSequence>();
-
 	private Collider collider = null;
-
 	private CollissionDetector collissionDetector = null;
-
 	private transient final CollissionStore collissionStore = new CollissionStore();
-
 	private Curler curler = null;
-
 	private transient final RockSet<Pos> currentPos = PositionSet.allHome();
-
 	private transient final RockSet<Vel> currentSpeed = RockSet.allZero(null);
-
 	private transient double currentTime = 0;
-
 	private transient CurveStore curveStore = new CurveStoreImpl(stopper,
 			RockSet.ROCKS_PER_SET);
-
-	private transient boolean dirty = true;
-
 	private final RockSet<Pos> initialPos = PositionSet.allHome();
-
 	private final RockSet<Vel> initialSpeed = RockSet.allZero(null);
+	private final transient RockSet<Pos> tmpPos = PositionSet.allHome();
+	private final transient RockSet<Vel> tmpSpeed = RockSet.allZero(null);
 
 	public CurveManager() {
-		initialPos.addChangeListener(this);
-		initialSpeed.addChangeListener(this);
+		// initialPos.addChangeListener(this);
+		// initialSpeed.addChangeListener(this);
+		for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--) {
+			initialPos.getRock(i16).addChangeListener(this);
+			initialSpeed.getRock(i16).addChangeListener(this);
+		}
 	}
 
 	/**
@@ -135,7 +123,6 @@ public class CurveManager extends MutableObject implements ChangeListener,
 	 * @return when is the next hit, which are the rocks involved.
 	 */
 	Tupel doGetNextHit() {
-		doInit();
 		return collissionStore.first();
 	}
 
@@ -144,8 +131,6 @@ public class CurveManager extends MutableObject implements ChangeListener,
 	 * 2 rocks if the dirty flag is set.
 	 */
 	void doInit() {
-		if (!dirty)
-			return;
 		final double t0 = 0.0;
 		// TUNE Parallel
 		// initial curves:
@@ -163,7 +148,6 @@ public class CurveManager extends MutableObject implements ChangeListener,
 				collissionStore.add(collissionDetector.compute(t0, _30,
 						curveStore.getCurve(i16), curveStore.getCurve(j16)),
 						i16, j16);
-		dirty = false;
 	}
 
 	/**
@@ -173,15 +157,16 @@ public class CurveManager extends MutableObject implements ChangeListener,
 	 * @param hitMask
 	 * @return bitmask of rocks with new curves
 	 */
-	int doRecomputeCurvesAndCollissionTimes(final int hitMask, double t0) {
+	int doRecomputeCurvesAndCollissionTimes(final int hitMask, double t0,
+			final RockSet<Pos> cp, final RockSet<Vel> cv) {
 		int computedMask = 0;
 		// first compute the new curves:
 		// TUNE Parallel
 		for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--) {
 			if (!RockSet.isSet(hitMask, i16))
 				continue;
-			curveStore.add(i16, t0, doComputeCurve(i16, t0, currentPos,
-					currentSpeed, NoSweep), _30);
+			curveStore.add(i16, t0, doComputeCurve(i16, t0, cp, cv, NoSweep),
+					_30);
 			computedMask |= 1 << i16;
 		}
 		// then add all combinations of potential collissions
@@ -205,17 +190,20 @@ public class CurveManager extends MutableObject implements ChangeListener,
 	 * Internal. Does not {@link RockSet#fireStateChanged()}!
 	 * 
 	 * @param currentTime
-	 * @param tmp
-	 *            buffer to reduce instanciations. See
-	 *            {@link R1RNFunction#at(int, double, double[])}.
 	 */
-	void doUpdatePosAndSpeed(final double currentTime, final double[] tmp) {
+	void doUpdatePosAndSpeed(final double currentTime, final RockSet<Pos> cp,
+			final RockSet<Vel> cv) {
 		// TUNE Parallel
 		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-			currentPos.getRock(i).setLocation(
-					curveStore.getCurve(i).at(0, currentTime, tmp));
-			currentSpeed.getRock(i).setLocation(
-					curveStore.getCurve(i).at(1, currentTime, tmp));
+			final R1RNFunction c = curveStore.getCurve(i);
+			double x = c.at(0, 0, currentTime);
+			double y = c.at(1, 0, currentTime);
+			double a = c.at(2, 0, currentTime);
+			cp.getRock(i).setLocation(x, y, a);
+			x = c.at(0, 1, currentTime);
+			y = c.at(1, 1, currentTime);
+			a = c.at(2, 1, currentTime);
+			cv.getRock(i).setLocation(x, y, a);
 		}
 	}
 
@@ -282,96 +270,89 @@ public class CurveManager extends MutableObject implements ChangeListener,
 		return m;
 	}
 
-	public void setCollider(final Collider collider) {
-		dirty = true;
-		propChange.firePropertyChange("collider", this.collider, collider);
-		this.collider = collider;
+	public void recompute() {
+		recompute(currentTime, true);
 	}
 
-	public void setCollissionDetector(CollissionDetector collissionDetector) {
-		// FIXME currently use ONLY Bisection.
-		collissionDetector = new BisectionCollissionDetector();
-		dirty = true;
-		propChange.firePropertyChange("collissionDetector",
-				this.collissionDetector, collissionDetector);
-		this.collissionDetector = collissionDetector;
-	}
-
-	public void setCurler(final Curler curler) {
-		dirty = true;
-		propChange.firePropertyChange("curler", this.curler, curler);
-		this.curler = curler;
-	}
-
-	public void setCurrentTime(final double currentTime) {
-		// log.info(Double.toString(currentTime));
-		if (!dirty) {
-			if (this.currentTime == currentTime)
-				return;
-		} else
+	private void recompute(final double currentTime, final boolean complete) {
+		if (complete) {
 			doInit();
-		{
-			// TUNE thread safety at the cost of two instanciations per call:
-			final double[] tmp = { 0, 0, 0 };
 			final AffineTransform m = new AffineTransform();
 			// NaN-safe time range check (are we navigating known ground?):
 			while (currentTime > doGetNextHit().t) {
 				final Tupel nh = doGetNextHit();
 				if (log.isDebugEnabled())
 					log.debug(nh.a + " - " + nh.b + " : " + nh.t);
-				doUpdatePosAndSpeed(nh.t, tmp);
+				doUpdatePosAndSpeed(nh.t, tmpPos, tmpSpeed);
 				// compute collission(s);
-				final int mask = collider.compute(currentPos, currentSpeed, m);
+				final int mask = collider.compute(tmpPos, tmpSpeed, m);
 				if (mask == 0)
 					break;
-				doRecomputeCurvesAndCollissionTimes(mask, nh.t);
+				doRecomputeCurvesAndCollissionTimes(mask, nh.t, tmpPos,
+						tmpSpeed);
 			}
-			doUpdatePosAndSpeed(currentTime, tmp);
 		}
-		{
-			final double ot = this.currentTime;
-			this.currentTime = currentTime;
-			currentPos.fireStateChanged();
-			currentSpeed.fireStateChanged();
-			propChange.firePropertyChange("currentTime", ot, currentTime);
-			propChange.firePropertyChange("currentPos", currentPos, currentPos);
-			propChange.firePropertyChange("currentSpeed", currentSpeed,
-					currentSpeed);
-		}
+		doUpdatePosAndSpeed(currentTime, currentPos, currentSpeed);
+	}
+
+	public void setCollider(final Collider collider) {
+		final Collider old = this.collider;
+		if (old == collider)
+			return;
+		propChange
+				.firePropertyChange("collider", old, this.collider = collider);
+	}
+
+	public void setCollissionDetector(CollissionDetector collissionDetector) {
+		// FIXME currently use ONLY Bisection.
+		collissionDetector = new BisectionCollissionDetector();
+		propChange.firePropertyChange("collissionDetector",
+				this.collissionDetector, collissionDetector);
+		this.collissionDetector = collissionDetector;
+	}
+
+	public void setCurler(final Curler curler) {
+		final Curler old = this.curler;
+		if (old == curler)
+			return;
+		propChange.firePropertyChange("curler", old, this.curler = curler);
+	}
+
+	public void setCurrentTime(final double currentTime) {
+		final double old = this.currentTime;
+		if (old == currentTime)
+			return;
+		this.currentTime = currentTime;
+		if (this.currentTime > old)
+			recompute(currentTime, true);
+		propChange.firePropertyChange("currentTime", old, this.currentTime);
 	}
 
 	public void setCurveStore(final CurveStore curveStore) {
-		dirty = true;
+		this.curveStore = curveStore;
+		recompute(currentTime, true);
 		propChange
 				.firePropertyChange("curveStore", this.curveStore, curveStore);
-		this.curveStore = curveStore;
 	}
 
 	public void setInitialPos(final RockSet<Pos> initialPos) {
-		dirty = true;
-		// propChange
-		// .firePropertyChange("initialPos", this.initialPos, initialPos);
 		this.initialPos.setLocation(initialPos);
 	}
 
 	public void setInitialSpeed(final RockSet<Vel> initialSpeed) {
-		dirty = true;
-		// propChange.firePropertyChange("initialSpeed", this.initialSpeed,
-		// initialSpeed);
-		// this.initialSpeed = initialSpeed;
 		this.initialSpeed.setLocation(initialSpeed);
 	}
 
 	public void stateChanged(final ChangeEvent arg0) {
 		final Object src = arg0 == null ? null : arg0.getSource();
-		if (src == null || src == initialPos || src == initialSpeed) {
-			// force recomputation:
-			dirty = true;
-			try {
-				setCurrentTime(getCurrentTime());
-			} catch (final NullPointerException e) {
-				log.warn("Oops!", e);
-			}
+		if (src == null || src == initialPos || src == initialSpeed)
+			;// recompute(currentTime, true);
+		else if (initialPos.findI16(src) >= 0) {
+			log.debug("Startpos rock change");
+			recompute(currentTime, true);
+		} else if (initialSpeed.findI16(src) >= 0) {
+			log.debug("Startvel rock change");
+			recompute(currentTime, true);
 		} else
 			log.info(arg0);
 	}

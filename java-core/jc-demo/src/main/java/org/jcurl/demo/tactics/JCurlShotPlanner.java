@@ -123,19 +123,19 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 		public void deregister(final ComputedTrajectorySet cts) {
 			if (cts == null)
 				return;
-			cts.getInitialPos().removeChangeListener(this);
-			cts.getInitialSpeed().removeChangeListener(this);
-			cts.getCurrentPos().removeChangeListener(this);
-			cts.getCurrentSpeed().removeChangeListener(this);
+			cts.getInitialPos().removeRockListener(this);
+			cts.getInitialSpeed().removeRockListener(this);
+			// cts.getCurrentPos().removeRockListener(this);
+			// cts.getCurrentSpeed().removeRockListener(this);
 		}
 
 		public void register(final ComputedTrajectorySet cts) {
 			if (cts == null)
 				return;
-			cts.getInitialPos().addChangeListener(this);
-			cts.getInitialSpeed().addChangeListener(this);
-			cts.getCurrentPos().addChangeListener(this);
-			cts.getCurrentSpeed().addChangeListener(this);
+			cts.getInitialPos().addRockListener(this);
+			cts.getInitialSpeed().addRockListener(this);
+			// cts.getCurrentPos().addRockListener(this);
+			// cts.getCurrentSpeed().addRockListener(this);
 		}
 
 		public void stateChanged(final ChangeEvent e) {
@@ -439,7 +439,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 	}
 
 	private JDialog aboutBox = null;
-	private final BroomPromptSwingBean broomSwing = new BroomPromptSwingBean();
+	private final BirdPiccoloBean birdPiccolo = new BirdPiccoloBean();
 
 	// static void bind(final Object src, final String src_p, final Object dst,
 	// final String dst_p) {
@@ -448,12 +448,12 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 	// .bind();
 	// }
 
+	private final BroomPromptSwingBean broomSwing = new BroomPromptSwingBean();
 	private boolean canRedo = false;
 	private boolean canUndo = false;
 	private final ChangeManager change = new ChangeManager();
 	private final ChangeListenerManager cm = new ChangeListenerManager(this);
 	private final CurlerSwingBean curlerSwing = new CurlerSwingBean();
-	private final BirdPiccoloBean birdPiccolo = new BirdPiccoloBean();
 	private URL document;
 	private File file;
 	private final GuiUtil gui = new GuiUtil(getContext());
@@ -461,7 +461,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 	private boolean modified = false;
 	private FileNameExtensionFilter pngPat;
 	private FileNameExtensionFilter svgPat;
-	private final TrajectoryBean tactics = new TrajectoryScenarioBean();
+	private final TrajectoryBean tactics = new TrajectoryPiccoloBean();
 	private final JLabel url = new JLabel();
 
 	private JCurlShotPlanner() {
@@ -546,7 +546,8 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 				"viewPanEast", "viewPanWest" };
 		menuBar.add(gui.createMenu("viewMenu", viewMenuActionNames));
 
-		final String[] helpMenuActionNames = { "showAboutBox", "helpDumpProperties" };
+		final String[] helpMenuActionNames = { "showAboutBox",
+				"helpDumpProperties" };
 		menuBar.add(gui.createMenu("helpMenu", helpMenuActionNames));
 
 		return menuBar;
@@ -798,6 +799,15 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 		return file;
 	}
 
+	@Action()
+	public void helpDumpProperties() {
+		final List keys = new ArrayList();
+		keys.addAll(System.getProperties().keySet());
+		Collections.sort(keys);
+		for (final Object key : keys)
+			System.out.println(key + "=" + System.getProperty((String) key));
+	}
+
 	/**
 	 * Setting the internal field {@link #document} directly (bypassing
 	 * {@link #setDocument(URL)}) is used to deplay the document loading until
@@ -880,7 +890,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 				log.info("Good bye!");
 			}
 		});
-	}
+	};
 
 	private final void save(final TrajectorySet cts, final File dst)
 			throws IOException {
@@ -893,7 +903,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 		} finally {
 			switchCursor(cu);
 		}
-	};
+	}
 
 	private File saveHelper(File dst, final File base, final String name,
 			final boolean forceOverwrite) {
@@ -969,6 +979,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 			tactics.setCurves(cts);
 			broomSwing.setBroom(tactics.getBroom());
 			cm.register(tactics.getCurves());
+
 			setModified(false);
 		} finally {
 			switchCursor(cu);
@@ -991,16 +1002,9 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 
 	public void setModified(final boolean modified) {
 		final boolean old = this.modified;
+		if (old == modified)
+			return;
 		firePropertyChange("modified", old, this.modified = modified);
-	}
-
-	@Action()
-	public void helpDumpProperties() {
-		List keys = new ArrayList();
-		keys.addAll(System.getProperties().keySet());
-		Collections.sort(keys);
-		for (Object key : keys)
-			System.out.println(key + "=" + System.getProperty((String) key));
 	}
 
 	/** Show the about box dialog. */

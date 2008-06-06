@@ -20,9 +20,12 @@ package org.jcurl.core.api;
 
 import java.io.Serializable;
 import java.util.Hashtable;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
+import javax.swing.event.ChangeListener;
 import javax.swing.undo.StateEditable;
 
 import org.jcurl.core.api.RockType.Vel;
@@ -39,8 +42,8 @@ import org.jcurl.math.MathVec;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:RockSet.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public class RockSet<R extends RockType> extends ChangeSupport implements
-		Iterable<Rock<R>>, Cloneable, Serializable, StateEditable {
+public class RockSet<R extends RockType> implements Iterable<Rock<R>>,
+		Cloneable, Serializable, StateEditable {
 
 	public static final int ALL_MASK = 0xFFFF;
 	public static final int DARK_MASK = 0xAAAA;
@@ -139,15 +142,18 @@ public class RockSet<R extends RockType> extends ChangeSupport implements
 	}
 
 	protected final Rock<R>[] dark = new Rock[ROCKS_PER_COLOR];
-
 	protected final Rock<R>[] light = new Rock[ROCKS_PER_COLOR];
+	private final transient Map<Object, Integer> r2i = new IdentityHashMap<Object, Integer>(
+			RockSet.ROCKS_PER_SET);
 
 	public RockSet(final Rock<R> seed) {
 		if (seed != null)
-			for (int i = ROCKS_PER_COLOR - 1; i >= 0; i--) {
-				dark[i] = (Rock<R>) seed.clone();
-				light[i] = (Rock<R>) seed.clone();
+			for (int i8 = ROCKS_PER_COLOR - 1; i8 >= 0; i8--) {
+				dark[i8] = (Rock<R>) seed.clone();
+				light[i8] = (Rock<R>) seed.clone();
 			}
+		for (int i16 = ROCKS_PER_SET - 1; i16 >= 0; i16--)
+			r2i.put(getRock(i16), i16);
 	}
 
 	/**
@@ -159,6 +165,11 @@ public class RockSet<R extends RockType> extends ChangeSupport implements
 	protected RockSet(final RockSet<R> b) {
 		this(b.getRock(0));
 		copy(b, this);
+	}
+
+	public void addRockListener(final ChangeListener l) {
+		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+			getRock(i).addChangeListener(l);
 	}
 
 	@Override
@@ -177,6 +188,18 @@ public class RockSet<R extends RockType> extends ChangeSupport implements
 				return false;
 		}
 		return true;
+	}
+
+	/**
+	 * @return -1 if not found.
+	 */
+	public int findI16(final Object r) {
+		final Integer i16 = r2i.get(r);
+		return i16 == null ? -1 : i16.intValue();
+	}
+
+	void fireStateChanged() {
+		; // do nothing!!
 	}
 
 	public Rock<R> getDark(final int i8) {
@@ -224,6 +247,11 @@ public class RockSet<R extends RockType> extends ChangeSupport implements
 				throw new UnsupportedOperationException();
 			}
 		};
+	}
+
+	public void removeRockListener(final ChangeListener l) {
+		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
+			getRock(i).removeChangeListener(l);
 	}
 
 	public void restoreState(final Hashtable<?, ?> state) {

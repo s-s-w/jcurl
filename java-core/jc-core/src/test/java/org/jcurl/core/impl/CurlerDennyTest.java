@@ -79,7 +79,6 @@ public class CurlerDennyTest extends TestShowBase {
 			@Override
 			public void run(final double t) throws InterruptedException {
 				p.at(0, t, pos.getRock(0));
-				pos.fireStateChanged();
 				Thread.sleep(dt);
 			}
 		});

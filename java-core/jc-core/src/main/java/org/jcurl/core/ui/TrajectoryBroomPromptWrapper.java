@@ -295,6 +295,6 @@ public class TrajectoryBroomPromptWrapper extends DefaultBroomPromptModel
 			return;
 		med.syncBpm2Cts(getBroom(), getSplitTimeMillis().getValue(),
 				getIdx16(), getOutTurn(), curler, positions, velocities);
-		velocities.fireStateChanged();
+		//velocities.fireStateChanged();
 	}
 }

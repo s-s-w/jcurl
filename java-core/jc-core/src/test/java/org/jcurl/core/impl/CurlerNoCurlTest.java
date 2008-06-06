@@ -44,7 +44,6 @@ public class CurlerNoCurlTest extends TestShowBase {
 			@Override
 			public void run(final double t) throws InterruptedException {
 				pos.getRock(0).setLocation(p[0].at(t), p[1].at(t), p[2].at(t));
-				pos.fireStateChanged();
 				Thread.sleep(dt);
 			}
 		});

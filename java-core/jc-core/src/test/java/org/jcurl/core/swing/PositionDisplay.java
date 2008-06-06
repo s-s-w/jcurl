@@ -277,11 +277,11 @@ class PositionDisplay extends WCComponent implements ChangeListener {
 	 *            bitmask of discontinuous locations
 	 */
 	public void setPos(final RockSet<Pos> rocks, final int discontinuous) {
-		if (pos != rocks) {
-			if (pos != null)
-				pos.removeChangeListener(this);
-			rocks.addChangeListener(this);
-		}
+//		if (pos != rocks) {
+//			if (pos != null)
+//				pos.removeChangeListener(this);
+//			rocks.addChangeListener(this);
+//		}
 		pos = rocks;
 		this.repaint();
 	}

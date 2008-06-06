@@ -140,9 +140,9 @@ abstract class SumDisplayBase extends JComponent implements ChangeListener {
 	}
 
 	public void setPos(final RockSet<Pos> rocks) {
-		if (model != null && model != rocks)
-			model.removeChangeListener(this);
-		rocks.addChangeListener(this);
+//		if (model != null && model != rocks)
+//			model.removeChangeListener(this);
+//		rocks.addChangeListener(this);
 		model = rocks;
 		showRocks(computeMask(model));
 	}

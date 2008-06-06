@@ -106,12 +106,7 @@ public class StoredTrajectorySet extends MutableObject implements TrajectorySet 
 		{
 			final double ot = this.currentTime;
 			this.currentTime = currentTime;
-			currentPos.fireStateChanged();
-			currentSpeed.fireStateChanged();
 			propChange.firePropertyChange("currentTime", ot, currentTime);
-			propChange.firePropertyChange("currentPos", currentPos, currentPos);
-			propChange.firePropertyChange("currentSpeed", currentSpeed,
-					currentSpeed);
 		}
 	}
 }

@@ -96,8 +96,6 @@ public class JCurlSerializerTest extends TestCase {
 
 		p.getDark(8 - 1).setLocation(0, IceSize.FAR_HACK_2_TEE, 0);
 		s.getDark(8 - 1).setLocation(0.1785, -4, -100 * Math.PI / 180);
-		p.fireStateChanged();
-		s.fireStateChanged();
 	}
 
 	private final JCurlSerializer io = new JCurlSerializer();

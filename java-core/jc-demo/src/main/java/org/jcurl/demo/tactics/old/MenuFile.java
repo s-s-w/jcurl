@@ -456,7 +456,5 @@ public class MenuFile {
 
 		p.getDark(8 - 1).setLocation(0, IceSize.FAR_HACK_2_TEE, 0);
 		s.getDark(8 - 1).setLocation(0.1785, -4, -100 * Math.PI / 180);
-		p.fireStateChanged();
-		s.fireStateChanged();
 	}
 }
