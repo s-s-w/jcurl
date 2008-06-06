@@ -50,7 +50,7 @@ public abstract class PTrajectoryFactory extends GenTrajectoryFactory<PNode> {
 				.getQuadraticInstance();
 		private static final Paint light = IceShapes.trace(
 				new IceShapes.RockColors().light, 100);
-		private static final int samples = 10;
+		private static final int samples = 20;
 		private static final Stroke stroke = new BasicStroke(
 				2 * RockProps.DEFAULT.getRadius(), BasicStroke.CAP_ROUND,
 				BasicStroke.JOIN_ROUND, 0);
