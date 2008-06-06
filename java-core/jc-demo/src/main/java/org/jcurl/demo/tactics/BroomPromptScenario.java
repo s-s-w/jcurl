@@ -21,11 +21,12 @@ package org.jcurl.demo.tactics;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Paint;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Stroke;
-import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
@@ -45,6 +46,9 @@ import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.ChangeManager;
 import org.jcurl.core.ui.IceShapes;
+import org.jcurl.core.ui.BroomPromptModel.HandleMemento;
+import org.jcurl.core.ui.BroomPromptModel.SplitMemento;
+import org.jcurl.core.ui.BroomPromptModel.XYMemento;
 import org.jcurl.math.MathVec;
 
 import com.sun.scenario.scenegraph.SGGroup;
@@ -53,19 +57,99 @@ import com.sun.scenario.scenegraph.SGShape;
 import com.sun.scenario.scenegraph.SGTransform;
 import com.sun.scenario.scenegraph.SGAbstractShape.Mode;
 import com.sun.scenario.scenegraph.SGTransform.Affine;
+import com.sun.scenario.scenegraph.event.SGMouseAdapter;
 
 /**
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public class SGBroomPrompt implements PropertyChangeListener, ChangeListener {
+public class BroomPromptScenario implements PropertyChangeListener,
+		ChangeListener, HasChanger {
 
-	private class MoveHandler extends MouseAdapter {}
+	private class MoveHandler extends SGMouseAdapter {
+		private XYMemento first = null;
 
-	private class SpeedHandler extends MouseAdapter {}
+		private XYMemento create(final MouseEvent e, final SGNode node) {
+			final Point2D p = dc2wc.globalToLocal(e.getPoint(), tmp);
+			return new XYMemento(model, p);
+		}
+
+		@Override
+		public void mouseClicked(final MouseEvent e, final SGNode node) {
+			if (e.getClickCount() != 2)
+				return;
+			final HandleMemento pre = new HandleMemento(model, model
+					.getOutTurn());
+			final HandleMemento post = new HandleMemento(model, !model
+					.getOutTurn());
+			getChanger().undoable(pre, post);
+		}
+
+		@Override
+		public void mouseDragged(final MouseEvent e, final SGNode node) {
+			if (first == null)
+				first = new XYMemento(model, model.getBroom());
+			getChanger().temporary(create(e, node));
+		}
+
+		@Override
+		public void mouseReleased(final MouseEvent e, final SGNode node) {
+			if (first != null)
+				getChanger().undoable(first, create(e, node));
+			first = null;
+		}
+	}
+
+	private class SpeedHandler extends SGMouseAdapter {
+		private SplitMemento first = null;
+
+		private SplitMemento create(final MouseEvent e, final SGNode node) {
+			final Point2D p = handle.globalToLocal(e.getPoint(), tmp);
+			double f = 1 - p.getY() / stickLength;
+			if (f > 1)
+				f = 1;
+			if (f < 0)
+				f = 0;
+			final BoundedRangeModel brm = model.getSplitTimeMillis();
+			final int v = (int) (brm.getMinimum() + f
+					* (brm.getMaximum() - brm.getMinimum()));
+			return new SplitMemento(model, v);
+		}
+
+		@Override
+		public void mouseClicked(final MouseEvent e, final SGNode node) {
+			if (e.getClickCount() != 2)
+				return;
+			final HandleMemento pre = new HandleMemento(model, model
+					.getOutTurn());
+			final HandleMemento post = new HandleMemento(model, !model
+					.getOutTurn());
+			getChanger().undoable(pre, post);
+		}
+
+		@Override
+		public void mouseDragged(final MouseEvent e, final SGNode node) {
+			if (first == null)
+				first = new SplitMemento(model, model.getSplitTimeMillis()
+						.getValue());
+			// create(e, node);
+			getChanger().temporary(create(e, node));
+		}
+
+		@Override
+		public void mouseReleased(final MouseEvent e, final SGNode node) {
+			if (first != null)
+				getChanger().undoable(first, create(e, node));
+			first = null;
+		}
+	}
 
 	private static final Log log = JCLoggerFactory
-			.getLogger(SGBroomPrompt.class);
+			.getLogger(BroomPromptScenario.class);
+
+	private static final Cursor moveC = Cursor
+			.getPredefinedCursor(Cursor.MOVE_CURSOR);
+
 	private static final double scale0 = 0;
 	private static final int scale50 = 50;
 
@@ -111,6 +195,9 @@ public class SGBroomPrompt implements PropertyChangeListener, ChangeListener {
 	}
 
 	private ChangeManager changer;
+
+	private Affine dc2wc;
+
 	private final Affine handle;
 	private BroomPromptModel model;
 	private final SGShape pie;
@@ -118,8 +205,9 @@ public class SGBroomPrompt implements PropertyChangeListener, ChangeListener {
 	private final SGShape sli;
 	private final Affine slider;
 	private final float stickLength;
+	private final Point2D tmp = new Point2D.Double();
 
-	public SGBroomPrompt() {
+	public BroomPromptScenario() {
 		// create the scene
 		final boolean stickUp = false;
 		final boolean bothSides = true;
@@ -142,6 +230,9 @@ public class SGBroomPrompt implements PropertyChangeListener, ChangeListener {
 			final SGShape bg = node(new Arc2D.Float(-halo, -halo, 2 * halo,
 					2 * halo, 0, 360, Arc2D.OPEN), null, null, scale0);
 			bg.setFillPaint(bgc);
+			bg.addMouseListener(new MoveHandler());
+			bg.setMouseBlocker(true);
+			bg.setCursor(moveC);
 			me.add(bg);
 		}
 		// the cross-hair and stick
@@ -171,8 +262,8 @@ public class SGBroomPrompt implements PropertyChangeListener, ChangeListener {
 
 			// arrow:
 			final float f = outer / 10;
-			final SGShape s = node(IceShapes.createArrowHead(f, 3 * f,
-					0.5f * f), null, null, scale50);
+			final SGShape s = node(IceShapes
+					.createArrowHead(f, 3 * f, 0.5f * f), null, null, scale50);
 			s.setFillPaint(sp);
 			final double a = Math.PI * (off + pieAngle - arrowLengthDegrees)
 					/ 180.0;
@@ -191,8 +282,7 @@ public class SGBroomPrompt implements PropertyChangeListener, ChangeListener {
 		}
 		{ // slider
 			sli = new SGShape();
-			sli.setShape(IceShapes
-					.createSlider(0.4f * outer, bothSides));
+			sli.setShape(IceShapes.createSlider(0.4f * outer, bothSides));
 			// sli.setFillPaint(sp);
 			sli.setDrawStroke(fine);
 			sli.setDrawPaint(sp);
@@ -200,6 +290,9 @@ public class SGBroomPrompt implements PropertyChangeListener, ChangeListener {
 			sli.setAntialiasingHint(RenderingHints.VALUE_ANTIALIAS_ON);
 			me.add(slider = SGTransform
 					.createAffine(new AffineTransform(), sli));
+			slider.setCursor(moveC);
+			slider.addMouseListener(new SpeedHandler());
+			slider.setMouseBlocker(true);
 		}
 		handle = SGTransform.createAffine(new AffineTransform(), me);
 		scene = SGTransform.createAffine(new AffineTransform(), handle);
@@ -207,7 +300,11 @@ public class SGBroomPrompt implements PropertyChangeListener, ChangeListener {
 	}
 
 	public ChangeManager getChanger() {
-		return changer;
+		return ChangeManager.getTrivial(changer);
+	}
+
+	public Affine getDc2wc() {
+		return dc2wc;
 	}
 
 	public BroomPromptModel getModel() {
@@ -248,6 +345,10 @@ public class SGBroomPrompt implements PropertyChangeListener, ChangeListener {
 			return;
 		this.changer = changer;
 		// firePropertyChange("changer", old, this.changer);
+	}
+
+	public void setDc2wc(final Affine dc2wc) {
+		this.dc2wc = dc2wc;
 	}
 
 	public void setModel(final BroomPromptModel model) {

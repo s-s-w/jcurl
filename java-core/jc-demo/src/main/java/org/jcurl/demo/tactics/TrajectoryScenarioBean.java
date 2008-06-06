@@ -42,6 +42,7 @@ import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
+import org.jcurl.core.ui.ChangeManager;
 import org.jcurl.core.ui.PosMemento;
 import org.jcurl.core.ui.TrajectoryBroomPromptWrapper;
 import org.jcurl.math.R1RNFunction;
@@ -102,6 +103,7 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 	}
 
 	private static final String ATTR_IDX16 = "idx16";
+
 	private static final String ATTR_ROCK = "rock";
 	private static final String ATTR_ROCKSET = "rockset";
 	private static final String ATTR_TRIGGER_CURVE_UPDATE = "trigger_curve_update";
@@ -158,7 +160,7 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 		dst.setAffine(src.getAffineTransform());
 	}
 
-	private final SGBroomPrompt bp = new SGBroomPrompt();
+	private final BroomPromptScenario bp = new BroomPromptScenario();
 
 	private final Affine[] current = new Affine[RockSet.ROCKS_PER_SET];
 	private ComputedTrajectorySet curves = null;
@@ -168,8 +170,8 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 	/** all rocks, trajectories and broomprompt */
 	private final SGComposite opa_r0 = new SGComposite();
 	private final SGComposite opa_r1 = new SGComposite();
-	private final SGComposite opa_t0 = new SGComposite();;
-	private final JSGPanel pico;
+	private final SGComposite opa_t0 = new SGComposite();
+	private final JSGPanel pico;;
 	/** Rock<Pos> -> SGNode lookup */
 	private final Map<Rock<Pos>, Affine> r2n = new IdentityHashMap<Rock<Pos>, Affine>();
 	private final SGGroup scene = new SGGroup();
@@ -233,6 +235,7 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 				-1);
 		zoom = SGTransform.createAffine(new AffineTransform(),
 				dc2wc = SGTransform.createAffine(rightHand, root));
+		bp.setDc2wc(dc2wc);
 		pico.setScene(zoom);
 		setVisible(true);
 		scene.setVisible(false);
@@ -283,6 +286,12 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 	}
 
 	@Override
+	public void setChanger(final ChangeManager changer) {
+		super.setChanger(changer);
+		bp.setChanger(changer);
+	}
+
+	@Override
 	public void setCurves(final ComputedTrajectorySet curves) {
 		// rocks.setVisible(model != null);
 		if (this.curves != null) {
@@ -308,8 +317,8 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 
 	public void setZoom(final RectangularShape viewport,
 			final int transitionMillis) {
-		AnimateAffine.animateToCenterBounds(zoom, this
-				.getBounds(), tmpViewPort = viewport, transitionMillis);
+		AnimateAffine.animateToCenterBounds(zoom, this.getBounds(),
+				tmpViewPort = viewport, transitionMillis);
 	}
 
 	public void stateChanged(final ChangeEvent e) {

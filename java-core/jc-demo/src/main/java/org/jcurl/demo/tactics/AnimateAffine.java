@@ -109,7 +109,6 @@ public class AnimateAffine implements TimingTarget {
 	}
 
 	public void timingEvent(final float f, final long l) {
-		System.out.println(f + " " + l);
 		interpolate(a, b, ip.interpolate(f), tt);
 		tmp.setTransform(tt[0], tt[1], tt[2], tt[3], tt[4], tt[5]);
 		from.setAffine(tmp);
