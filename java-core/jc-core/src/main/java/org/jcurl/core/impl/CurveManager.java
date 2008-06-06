@@ -80,12 +80,8 @@ public class CurveManager extends MutableObject implements ChangeListener,
 	private final transient RockSet<Vel> tmpSpeed = RockSet.allZero(null);
 
 	public CurveManager() {
-		// initialPos.addChangeListener(this);
-		// initialSpeed.addChangeListener(this);
-		for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--) {
-			initialPos.getRock(i16).addChangeListener(this);
-			initialSpeed.getRock(i16).addChangeListener(this);
-		}
+		initialPos.addRockListener(this);
+		initialSpeed.addRockListener(this);
 	}
 
 	/**

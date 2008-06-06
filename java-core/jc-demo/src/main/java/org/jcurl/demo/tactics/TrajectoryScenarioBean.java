@@ -129,25 +129,6 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 		return SGTransform.createAffine(new AffineTransform(), rock);
 	}
 
-	/** create a transformation that maps wc to dc */
-	private static AffineTransform map(final RectangularShape wc,
-			final RectangularShape dc, AffineTransform zt) {
-		if (zt == null)
-			zt = new AffineTransform();
-		else
-			zt.setToIdentity();
-		// 3. move to the center of dc
-		zt.translate(dc.getCenterX(), dc.getCenterY());
-		// 2. scale to fit
-		final double sw = dc.getWidth() / wc.getWidth();
-		final double sh = dc.getHeight() / wc.getHeight();
-		final double scale = sw > sh ? sh : sw;
-		zt.scale(scale, scale);
-		// 1. move the center of viewport to (0,0)
-		zt.translate(-wc.getCenterX(), -wc.getCenterY());
-		return zt;
-	}
-
 	/** update one curve's path */
 	private static void syncM2V(final ComputedTrajectorySet src, final int i16,
 			final SGGroup dst, final SGTrajectoryFactory tf) {
@@ -274,9 +255,8 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 	public void doLayout() {
 		super.doLayout();
 		if (tmpViewPort != null)
-			zoom
-					.setAffine(map(tmpViewPort, this.getBounds(), zoom
-							.getAffine()));
+			zoom.setAffine(AnimateAffine.map(tmpViewPort, this.getBounds(),
+					zoom.getAffine()));
 	}
 
 	@Override
@@ -328,9 +308,8 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 
 	public void setZoom(final RectangularShape viewport,
 			final int transitionMillis) {
-		// TODO animate
-		zoom.setAffine(map(tmpViewPort = viewport, this.getBounds(), zoom
-				.getAffine()));
+		AnimateAffine.animateToCenterBounds(zoom, this
+				.getBounds(), tmpViewPort = viewport, transitionMillis);
 	}
 
 	public void stateChanged(final ChangeEvent e) {
