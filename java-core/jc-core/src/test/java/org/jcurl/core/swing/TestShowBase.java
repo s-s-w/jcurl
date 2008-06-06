@@ -88,6 +88,7 @@ public abstract class TestShowBase extends TestBase {
 		try {
 			while (System.currentTimeMillis() - t0 < millis) {
 				r.run(1e-3 * (System.currentTimeMillis() - t0), display);
+				display.repaint();
 				loop++;
 			}
 		} catch (final InterruptedException e) {
