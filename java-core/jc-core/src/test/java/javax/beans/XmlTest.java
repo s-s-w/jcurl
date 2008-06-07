@@ -28,9 +28,9 @@ import java.io.UnsupportedEncodingException;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockType.Pos;
 
 /**
@@ -53,16 +53,12 @@ public class XmlTest extends TestCase {
 							+ " <object class=\"org.jcurl.core.api.RockDouble\"> \n"
 							+ "  <void property=\"a\"> \n"
 							+ "   <double>3.0</double> \n" + "  </void> \n"
-							+ "  <void property=\"x\"> \n"
-							+ "   <double>1.0</double> \n" + "  </void> \n"
-							+ "  <void property=\"y\"> \n"
-							+ "   <double>2.0</double> \n" + "  </void> \n"
-							+ " </object> \n" + "</java> \n", xml);
+							+ " </object> \n" + "</java> \n" + "", xml);
 		}
 		final XMLDecoder de = new XMLDecoder(new ByteArrayInputStream(xml
 				.getBytes("UTF-8")));
 		final Rock<Pos> r = (Rock<Pos>) de.readObject();
-		assertEquals("[1.0, 2.0, 3.0]", r.toString());
+		assertEquals("[0.0, 0.0, 3.0]", r.toString());
 	}
 
 	public void testRockSet() throws IOException {
