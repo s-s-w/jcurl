@@ -29,12 +29,14 @@ import org.jcurl.core.log.JCLoggerFactory;
  * Helper for convenient approximated Java2D drawing of arbitratry curves with
  * at least 2 dimensions.
  * 
+ * @see Shaper
+ * @see Shapable
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class CurveShape {
+public abstract class ShaperUtils {
 
-	private static final Log log = JCLoggerFactory.getLogger(CurveShape.class);
+	private static final Log log = JCLoggerFactory.getLogger(ShaperUtils.class);
 
 	/**
 	 * Turn a {@link R1RNFunction} (of at least 2 dimensions) into a
@@ -88,6 +90,7 @@ public abstract class CurveShape {
 		gp.lineTo(zoom * x, zoom * y);
 		return gp;
 	}
+
 	/**
 	 * Turn a {@link R1RNFunction} (of at least 2 dimensions) into a
 	 * {@link Shape} with the given number of samples and straight lines
@@ -198,7 +201,7 @@ public abstract class CurveShape {
 				log.debug("t=" + sections[i]);
 			c.at(0, sections[i], p1);
 			c.at(1, sections[i], v1);
-			CurveShape.computeControlPoint(p0, v0, p1, v1, tmp_a, tmp_b, pc);
+			ShaperUtils.computeControlPoint(p0, v0, p1, v1, tmp_a, tmp_b, pc);
 			gp.quadTo((float) (zoom * pc[0]), (float) (zoom * pc[1]),
 					(float) (zoom * p1[0]), (float) (zoom * p1[1]));
 			p0[0] = p1[0];

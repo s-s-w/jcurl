@@ -32,7 +32,7 @@ import org.jcurl.core.api.CurveStore;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.Strategy;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.math.CurveShape;
+import org.jcurl.math.ShaperUtils;
 import org.jcurl.math.R1RNFunction;
 
 /**
@@ -185,16 +185,16 @@ class CurvePainter implements Strategy {
 			final double[] sections, final float zoom, final double[] t1,
 			final double[] t2, final double[] t3, final double[] t4) {
 		if (true)
-			g2.draw(CurveShape.approximateLinear(curr, sections, zoom, t1));
+			g2.draw(ShaperUtils.approximateLinear(curr, sections, zoom, t1));
 		else
-			g2.draw(CurveShape.approximateQuadratic(curr, sections, zoom, t1,
+			g2.draw(ShaperUtils.approximateQuadratic(curr, sections, zoom, t1,
 					t2, t3, t4));
 	}
 
 	/**
 	 * Split the given interval into sections.
 	 * 
-	 * @see CurveShape#exponentialSections(double, double, double[])
+	 * @see ShaperUtils#exponentialSections(double, double, double[])
 	 * @param sections
 	 * @param min
 	 * @param max
@@ -203,8 +203,8 @@ class CurvePainter implements Strategy {
 	public double[] doSections(final double[] sections, final double min,
 			final double max) {
 		if (false)
-			return CurveShape.linearSections(min, max, sections);
+			return ShaperUtils.linearSections(min, max, sections);
 		else
-			return CurveShape.exponentialSections(min, max, sections);
+			return ShaperUtils.exponentialSections(min, max, sections);
 	}
 }
