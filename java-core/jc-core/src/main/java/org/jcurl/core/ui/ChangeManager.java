@@ -34,7 +34,7 @@ import org.jcurl.core.ui.TaskExecutor.SwingEDT;
 
 /**
  * 
- * Relation to {@link SwingWorker}?
+ * Relation to <a href="https://swingworker.dev.java.net/">SwingWorker</a>?
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
