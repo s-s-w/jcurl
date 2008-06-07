@@ -70,8 +70,14 @@ public class JCurlShaper extends NaturalShaper {
 		this.zoom = zoom;
 	}
 
+	@Override
 	public Shape toShape(final R1RNFunction f, final double tmin,
 			final double tmax) {
+		{
+			final Shape s = super.toShape(f, tmin, tmax);
+			if (s != null)
+				return s;
+		}
 		if (DROP_STOP) {
 			// treat some special cases:
 			if (f == null || tmin + MIN_LEN >= tmax)

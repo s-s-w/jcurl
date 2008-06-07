@@ -224,33 +224,37 @@ public class CurveCombined<T extends R1RNFunction> extends R1RNFunctionImpl
 					return mid; // done
 			}
 			return -(low + 1); // no such key
-		} else
+		} else {
+			double fromKey = a.get(fromIndex).getKey().doubleValue();
+			double toKey = a.get(toIndex).getKey().doubleValue();
 			for (;;) {
-				if (key == a.get(fromIndex).getKey().doubleValue())
+				if (key == fromKey)
 					return fromIndex;
-				if (key == a.get(toIndex).getKey().doubleValue())
+				if (key == toKey)
 					return toIndex;
-				final int m = (toIndex + fromIndex) / 2;
-				if (key == a.get(m).getKey().doubleValue())
-					return m;
+				final int midIndex = (toIndex + fromIndex) / 2;
+				final double midKey = a.get(midIndex).getKey().doubleValue();
+				if (key == midKey)
+					return midIndex;
 				if (fromIndex + 1 >= toIndex) {
-					if (a.get(fromIndex).getKey().doubleValue() < key
-							&& key < a.get(toIndex).getKey().doubleValue())
+					if (fromKey < key && key < toKey)
 						return -1 - toIndex;
 					return -1;
 				}
-				if (key < a.get(m).getKey().doubleValue()) {
-					toIndex = m;
+				if (key < midKey) {
+					toIndex = midIndex;
+					toKey = midKey;
 					continue;
-				} else if (key > a.get(m).getKey().doubleValue()) {
-					fromIndex = m;
+				} else if (key > midKey) {
+					fromIndex = midIndex;
+					fromKey = midKey;
 					continue;
 				}
 			}
+		}
 	}
 
 	Map<Integer, String> m;
-
 	private final List<Entry<Double, T>> parts = new ArrayList<Entry<Double, T>>();
 
 	public CurveCombined(final int dim) {
@@ -262,7 +266,7 @@ public class CurveCombined<T extends R1RNFunction> extends R1RNFunctionImpl
 		if (fkt.dim() != dim())
 			throw new IllegalArgumentException();
 		if (dropTail) {
-			final int idx = findFktIdx_BS(t0);
+			final int idx = findFunctionIndex(t0);
 			for (int i = parts.size() - 1; i > idx; i--)
 				parts.remove(i);
 		}
@@ -282,37 +286,46 @@ public class CurveCombined<T extends R1RNFunction> extends R1RNFunctionImpl
 	 */
 	@Override
 	public double[] at(final int c, final double t, final double[] ret) {
-		return parts.get(findFktIdx_BS(t)).getValue().at(c, t, ret);
+		return parts.get(findFunctionIndex(t)).getValue().at(c, t, ret);
 	}
 
 	@Override
 	public double at(final int dim, final int c, final double t) {
-		return parts.get(findFktIdx_BS(t)).getValue().at(dim, c, t);
+		return parts.get(findFunctionIndex(t)).getValue().at(dim, c, t);
 	}
 
 	public void clear() {
 		parts.clear();
 	}
 
-	/**
-	 * Binary search. Could be more general operating with {@link Comparable}
-	 * and {@link Object}s.
-	 * 
-	 * @param t
-	 * @return the curve index
-	 */
-	private int findFktIdx_BS(final double t) {
-		if (parts.size() == 0)
+	private int findFunctionIndex(final double t) {
+		int highIdx = parts.size() - 1;
+		if (highIdx < 0)
 			return -1;
-		if (t < parts.get(0).getKey().doubleValue())
-			throw new IllegalArgumentException("t < tmin");
-		// find the correct index
-		final int idx = binarySearch(parts, 0, parts.size() - 1, t);
-		if (idx >= 0)
-			return idx;
-		if (idx == -1)
-			return parts.size() - 1;
-		return -2 - idx;
+		double highKey = parts.get(highIdx).getKey();
+		if (t >= highKey)
+			return highIdx;
+		
+		int lowIdx = 0;
+		double lowKey = parts.get(lowIdx).getKey();
+		if (t < lowKey)
+			return -1;
+
+		while (lowIdx + 1 < highIdx) {
+			final int midIdx = (highIdx + lowIdx) / 2;
+			final double midKey = parts.get(midIdx).getKey();
+
+			if (t >= midKey) {
+				// Throw away left half
+				lowIdx = midIdx;
+				lowKey = midKey;
+			} else {
+				// Throw away right half
+				highIdx = midIdx;
+				highKey = midKey;
+			}
+		}
+		return lowIdx;
 	}
 
 	public T first() {
