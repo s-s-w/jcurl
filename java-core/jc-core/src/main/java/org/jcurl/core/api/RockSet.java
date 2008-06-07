@@ -19,20 +19,16 @@
 package org.jcurl.core.api;
 
 import java.io.Serializable;
-import java.util.Hashtable;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
 import javax.swing.event.ChangeListener;
-import javax.swing.undo.StateEditable;
 
-import org.jcurl.core.api.RockType.Vel;
-import org.jcurl.math.MathVec;
 
 /**
- * A set of 8 light and 8 dark {@link org.jcurl.core.api.Rock}s.
+ * A set of 8 light and 8 dark {@link Rock}s.
  * 
  * <p>
  * Maybe this should be an interface to enable optimized implementations for 2D
@@ -43,7 +39,7 @@ import org.jcurl.math.MathVec;
  * @version $Id:RockSet.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
 public class RockSet<R extends RockType> implements Iterable<Rock<R>>,
-		Cloneable, Serializable, StateEditable {
+		Cloneable, Serializable {
 
 	public static final int ALL_MASK = 0xFFFF;
 	public static final int DARK_MASK = 0xAAAA;
@@ -117,10 +113,6 @@ public class RockSet<R extends RockType> implements Iterable<Rock<R>>,
 		return ret;
 	}
 
-	protected static double sqr(final double a) {
-		return MathVec.sqr(a);
-	}
-
 	/**
 	 * Convert rock color and index per color to index per set.
 	 * 
@@ -137,15 +129,16 @@ public class RockSet<R extends RockType> implements Iterable<Rock<R>>,
 		return idx16 / 2;
 	}
 
-	public static RockSet<Vel> zeroSpeed() {
-		return new RockSet<Vel>(new RockDouble<Vel>());
-	}
-
 	protected final Rock<R>[] dark = new Rock[ROCKS_PER_COLOR];
 	protected final Rock<R>[] light = new Rock[ROCKS_PER_COLOR];
 	private final transient Map<Object, Integer> r2i = new IdentityHashMap<Object, Integer>(
 			RockSet.ROCKS_PER_SET);
 
+	/**
+	 * Create an instance populated with clones of the given <code>seed</code>.
+	 * 
+	 * @param seed
+	 */
 	public RockSet(final Rock<R> seed) {
 		if (seed != null)
 			for (int i8 = ROCKS_PER_COLOR - 1; i8 >= 0; i8--) {
@@ -167,6 +160,11 @@ public class RockSet<R extends RockType> implements Iterable<Rock<R>>,
 		copy(b, this);
 	}
 
+	/**
+	 * Add <code>l</code> to all rocks.
+	 * 
+	 * @see Rock#addChangeListener(ChangeListener)
+	 */
 	public void addRockListener(final ChangeListener l) {
 		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
 			getRock(i).addChangeListener(l);
@@ -191,6 +189,8 @@ public class RockSet<R extends RockType> implements Iterable<Rock<R>>,
 	}
 
 	/**
+	 * Look up a {@link Rock} reference.
+	 * 
 	 * @return -1 if not found.
 	 */
 	public int findI16(final Object r) {
@@ -198,6 +198,7 @@ public class RockSet<R extends RockType> implements Iterable<Rock<R>>,
 		return i16 == null ? -1 : i16.intValue();
 	}
 
+	@Deprecated
 	void fireStateChanged() {
 		; // do nothing!!
 	}
@@ -249,18 +250,14 @@ public class RockSet<R extends RockType> implements Iterable<Rock<R>>,
 		};
 	}
 
+	/**
+	 * Remove <code>l</code> from all rocks.
+	 * 
+	 * @see Rock#removeChangeListener(ChangeListener)
+	 */
 	public void removeRockListener(final ChangeListener l) {
 		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
 			getRock(i).removeChangeListener(l);
-	}
-
-	public void restoreState(final Hashtable<?, ?> state) {
-		final double[] arr = (double[]) state.get(mark);
-		for (byte i16 = ROCKS_PER_SET - 1; i16 >= 0; i16--) {
-			final int o = i16 * 3;
-			getRock(i16).setLocation(arr[o], arr[o + 1], arr[o + 2]);
-		}
-		fireStateChanged();
 	}
 
 	public RockSet<R> setLocation(final RockSet<R> src) {
@@ -268,17 +265,5 @@ public class RockSet<R extends RockType> implements Iterable<Rock<R>>,
 			getRock(i).setLocation(src.getRock(i));
 		fireStateChanged();
 		return this;
-	}
-
-	public void storeState(final Hashtable<Object, Object> state) {
-		final double[] arr = new double[ROCKS_PER_SET * 3];
-		for (byte i16 = ROCKS_PER_SET - 1; i16 >= 0; i16--) {
-			final int o = i16 * 3;
-			final Rock<R> r = getRock(i16);
-			arr[o] = r.getX();
-			arr[o + 1] = r.getY();
-			arr[o + 2] = r.getA();
-		}
-		state.put(mark, arr);
 	}
 }

@@ -26,7 +26,7 @@ import javolution.xml.stream.XMLStreamException;
 import junit.framework.TestCase;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
@@ -131,7 +131,7 @@ public class XmlTest extends TestCase {
 			final XMLObjectWriter wri = new XMLObjectWriter().setBinding(jc);
 			final StringWriter bout = new StringWriter();
 			wri.setOutput(bout);
-			wri.write(PositionSet.allHome());
+			wri.write(RockSetUtils.allHome());
 			wri.close();
 			xml = bout.getBuffer().toString();
 			assertEquals(

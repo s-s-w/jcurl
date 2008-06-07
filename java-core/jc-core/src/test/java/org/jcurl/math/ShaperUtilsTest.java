@@ -29,7 +29,7 @@ import org.jcurl.core.impl.CurveTransformed;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public class CurveShapeTest extends TestCase {
+public class ShaperUtilsTest extends TestCase {
 
 	public void testAequidistantSections() {
 		double[] d = new double[2];

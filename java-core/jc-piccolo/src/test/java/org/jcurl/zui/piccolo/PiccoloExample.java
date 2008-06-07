@@ -28,7 +28,7 @@ import javax.swing.JFrame;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.IceSize;
-import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.zui.piccolo.PRockNode.DragHandler;
@@ -97,7 +97,7 @@ public class PiccoloExample {
 		final PNode ice = new PIceFactory.Fancy().newInstance();
 		pico.getLayer().addChild(ice);
 		final PPositionSet pos = new PPositionSet(new PRockFactory.Fancy(100));
-		pos.setModel(PositionSet.allOut());
+		pos.setModel(RockSetUtils.allOut());
 		ice.addChild(pos);
 		pos.addInputEventListener(new DragHandler() {
 			@Override

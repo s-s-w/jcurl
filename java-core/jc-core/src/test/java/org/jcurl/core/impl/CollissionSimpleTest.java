@@ -23,7 +23,7 @@ import java.awt.geom.Point2D;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.RockSet;
@@ -53,7 +53,7 @@ public class CollissionSimpleTest extends TestCase {
 	final RockSet<Vel> speed;
 
 	public CollissionSimpleTest() {
-		pos = PositionSet.allHome();
+		pos = RockSetUtils.allHome();
 		speed = RockSet.allZero(null);
 		ax = pos.getDark(0);
 		bx = pos.getLight(0);
@@ -81,7 +81,7 @@ public class CollissionSimpleTest extends TestCase {
 
 	@Override
 	public void setUp() {
-		PositionSet.allHome(pos);
+		RockSetUtils.allHome(pos);
 		RockSet.allZero(speed);
 	}
 

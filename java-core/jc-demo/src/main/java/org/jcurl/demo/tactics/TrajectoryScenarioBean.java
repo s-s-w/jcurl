@@ -36,7 +36,7 @@ import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.ComputedTrajectorySet;
-import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.RockType.Pos;
@@ -198,8 +198,8 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 		final SGGroup r0 = new SGGroup();
 		final SGGroup r1 = new SGGroup();
 		// rocks.add(traj);
-		final RockSet<Pos> home = PositionSet.allHome();
-		final RockSet<Pos> out = PositionSet.allOut();
+		final RockSet<Pos> home = RockSetUtils.allHome();
+		final RockSet<Pos> out = RockSetUtils.allOut();
 		for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--) {
 			Affine n = createSceneRock(home, i16, 255);
 			n.setMouseBlocker(true);

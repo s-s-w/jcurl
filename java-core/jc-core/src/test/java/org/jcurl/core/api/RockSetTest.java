@@ -29,7 +29,7 @@ public class RockSetTest extends TestCase {
 	}
 
 	public void testIterators() throws InterruptedException {
-		final RockSet<Pos> p = PositionSet.allHome();
+		final RockSet<Pos> p = RockSetUtils.allHome();
 		final int loops = 500000;
 		long t0 = 0;
 		long v = 0;

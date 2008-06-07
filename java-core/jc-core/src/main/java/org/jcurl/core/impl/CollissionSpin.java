@@ -67,12 +67,8 @@ public class CollissionSpin extends ColliderBase {
 			X = -Math.signum(Veff) * mu * dPabs;
 		final double dVx = X / m;
 		final double dW = -X * R / J;
-		va.setX(va.getX() + dVx);
-		va.setY(va.getY() + dVy);
-		va.setA(va.getA() + dW);
-		vb.setX(vb.getX() - dVx);
-		vb.setY(vb.getY() - dVy);
-		vb.setA(vb.getA() + dW);
+		va.setLocation(va.getX() + dVx, va.getY() + dVy, va.getA() + dW);
+		vb.setLocation(vb.getX() - dVx, vb.getY() - dVy, vb.getA() + dW);
 	}
 
 	void init(final double fritionRockRock, final double loss) {

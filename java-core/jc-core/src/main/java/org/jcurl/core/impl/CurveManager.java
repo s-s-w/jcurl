@@ -35,9 +35,9 @@ import org.jcurl.core.api.Curler;
 import org.jcurl.core.api.CurveRock;
 import org.jcurl.core.api.CurveStore;
 import org.jcurl.core.api.MutableObject;
-import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.StopDetector;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.api.RockType.Vel;
@@ -69,14 +69,14 @@ public class CurveManager extends MutableObject implements ChangeListener,
 	private CollissionDetector collissionDetector = null;
 	private transient final CollissionStore collissionStore = new CollissionStore();
 	private Curler curler = null;
-	private transient final RockSet<Pos> currentPos = PositionSet.allHome();
+	private transient final RockSet<Pos> currentPos = RockSetUtils.allHome();
 	private transient final RockSet<Vel> currentSpeed = RockSet.allZero(null);
 	private transient double currentTime = 0;
 	private transient CurveStore curveStore = new CurveStoreImpl(stopper,
 			RockSet.ROCKS_PER_SET);
-	private final RockSet<Pos> initialPos = PositionSet.allHome();
+	private final RockSet<Pos> initialPos = RockSetUtils.allHome();
 	private final RockSet<Vel> initialSpeed = RockSet.allZero(null);
-	private final transient RockSet<Pos> tmpPos = PositionSet.allHome();
+	private final transient RockSet<Pos> tmpPos = RockSetUtils.allHome();
 	private final transient RockSet<Vel> tmpSpeed = RockSet.allZero(null);
 
 	public CurveManager() {

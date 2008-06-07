@@ -21,6 +21,9 @@ package org.jcurl.core.api;
 import java.io.Serializable;
 
 /**
+ * {@link Rock} implementation backed an <code>double</code>s for internal
+ * storage.
+ * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:RockDouble.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
@@ -118,29 +121,6 @@ public class RockDouble<R extends RockType> extends Rock<R> implements
 		this.x = x;
 		this.y = y;
 		this.a = a;
-		fireStateChanged();
-	}
-
-	@Override
-	public void setLocation(final double[] pt) {
-		if (pt.length != 3)
-			throw new IllegalArgumentException();
-		setLocation(pt[0], pt[1], pt[2]);
-	}
-
-	@Override
-	public void setX(final double x) {
-		if (x == this.x)
-			return;
-		this.x = x;
-		fireStateChanged();
-	}
-
-	@Override
-	public void setY(final double y) {
-		if (y == this.y)
-			return;
-		this.y = y;
 		fireStateChanged();
 	}
 }

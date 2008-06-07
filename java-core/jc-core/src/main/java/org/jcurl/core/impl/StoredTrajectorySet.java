@@ -24,11 +24,12 @@ import java.util.Map;
 
 import org.jcurl.core.api.CurveStore;
 import org.jcurl.core.api.MutableObject;
-import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.TrajectorySet;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.api.RockType.Vel;
+import org.jcurl.math.R1RNFunction;
 
 /**
  * Trajectory wrapping a {@link CurveStore}.
@@ -39,13 +40,10 @@ import org.jcurl.core.api.RockType.Vel;
 public class StoredTrajectorySet extends MutableObject implements TrajectorySet {
 
 	private static final long serialVersionUID = -829911104054850124L;
-
 	private final Map<CharSequence, CharSequence> annotations = new HashMap<CharSequence, CharSequence>();
-
-	private transient final RockSet<Pos> currentPos = PositionSet.allHome();
-
-	private transient final RockSet<Vel> currentSpeed = RockSet.zeroSpeed();
-
+	private transient final RockSet<Pos> currentPos = RockSetUtils.allHome();
+	private transient final RockSet<Vel> currentSpeed = RockSetUtils
+			.zeroSpeed();
 	private transient double currentTime = 0;
 
 	private final CurveStore store;
@@ -58,14 +56,20 @@ public class StoredTrajectorySet extends MutableObject implements TrajectorySet 
 	 * Internal. Does not {@link RockSet#fireStateChanged()}!
 	 * 
 	 * @param currentTime
-	 * @param tmp
 	 */
-	void doUpdatePosAndSpeed(final double currentTime, final double[] tmp) {
+	void doUpdatePosAndSpeed(final double currentTime, final RockSet<Pos> cp,
+			final RockSet<Vel> cv) {
+		// TUNE Parallel
 		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
-			currentPos.getRock(i).setLocation(
-					store.getCurve(i).at(0, currentTime, tmp));
-			currentSpeed.getRock(i).setLocation(
-					store.getCurve(i).at(1, currentTime, tmp));
+			final R1RNFunction c = store.getCurve(i);
+			double x = c.at(0, 0, currentTime);
+			double y = c.at(1, 0, currentTime);
+			double a = c.at(2, 0, currentTime);
+			cp.getRock(i).setLocation(x, y, a);
+			x = c.at(0, 1, currentTime);
+			y = c.at(1, 1, currentTime);
+			a = c.at(2, 1, currentTime);
+			cv.getRock(i).setLocation(x, y, a);
 		}
 	}
 
@@ -100,13 +104,11 @@ public class StoredTrajectorySet extends MutableObject implements TrajectorySet 
 	}
 
 	public void setCurrentTime(final double currentTime) {
-		// TUNE thread safety at the cost of two instanciations per call:
-		final double[] tmp = { 0, 0, 0 };
-		doUpdatePosAndSpeed(currentTime, tmp);
-		{
-			final double ot = this.currentTime;
-			this.currentTime = currentTime;
-			propChange.firePropertyChange("currentTime", ot, currentTime);
-		}
+		final double old = this.currentTime;
+		if (old == currentTime)
+			return;
+		this.currentTime = currentTime;
+		doUpdatePosAndSpeed(currentTime, currentPos, currentSpeed);
+		propChange.firePropertyChange("currentTime", old, this.currentTime);
 	}
 }

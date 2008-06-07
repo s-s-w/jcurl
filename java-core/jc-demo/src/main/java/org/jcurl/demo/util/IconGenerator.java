@@ -25,7 +25,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.ui.Zoomer;
 
@@ -41,7 +41,7 @@ public class IconGenerator {
 	 * @param dst
 	 * @throws IOException
 	 */
-	public static void savePng(final PositionSet loc, final Zoomer zoom,
+	public static void savePng(final RockSetUtils loc, final Zoomer zoom,
 			final File dst) throws IOException {
 		// Create image and graphics.
 		final BufferedImage img = new BufferedImage(1024, 768,

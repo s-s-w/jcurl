@@ -152,9 +152,7 @@ public class Unit extends EnumBase {
 		return v.to(RADIANT).value;
 	}
 
-	@Deprecated
-	public final Unit BaseUnit;
-
+	private final Unit BaseUnit;
 	private final double Factor;
 
 	protected Unit(final String txt, final Unit base, final double factor) {

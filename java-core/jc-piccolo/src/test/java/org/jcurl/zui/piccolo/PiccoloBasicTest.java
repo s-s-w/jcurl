@@ -20,7 +20,7 @@ package org.jcurl.zui.piccolo;
 
 import java.awt.geom.Point2D;
 
-import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.zui.piccolo.PRockNode.DragHandler;
 
 public class PiccoloBasicTest extends TestZuiBase {
@@ -33,7 +33,7 @@ public class PiccoloBasicTest extends TestZuiBase {
 
 		// add some curling stuff:
 		final PPositionSet initial = new PPositionSet(new PRockFactory.Simple());
-		initial.setModel(PositionSet.allHome());
+		initial.setModel(RockSetUtils.allHome());
 		ice.addChild(initial);
 		initial.addInputEventListener(new DragHandler() {
 			@Override
@@ -43,7 +43,7 @@ public class PiccoloBasicTest extends TestZuiBase {
 			}
 		});
 		final PPositionSet end = new PPositionSet(new PRockFactory.Fancy(10));
-		end.setModel(PositionSet.allOut());
+		end.setModel(RockSetUtils.allOut());
 		ice.addChild(end);
 
 		frame.setVisible(true);

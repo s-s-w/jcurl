@@ -37,7 +37,7 @@ import org.jcurl.core.api.EnumBase;
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.Measure;
 import org.jcurl.core.api.MutableObject;
-import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
@@ -68,7 +68,7 @@ public class JDKSerializerTest extends TestCase {
 		te.setCollider(new CollissionSpin(0.5, 0.0));
 		te.setCollissionDetector(new NewtonCollissionDetector());
 		te.setCurler(new CurlerDenny(24, 1));
-		te.setInitialPos(PositionSet.allOut());
+		te.setInitialPos(RockSetUtils.allOut());
 		te.setInitialSpeed(new RockSet<Vel>(new RockDouble<Vel>()));
 		te.getAnnotations().put(AnnoHelper.HammerK, AnnoHelper.HammerVDark);
 		te.getAnnotations().put(AnnoHelper.DarkTeamK, "Scotland");
@@ -83,7 +83,7 @@ public class JDKSerializerTest extends TestCase {
 	}
 
 	static void initHammy(final RockSet<Pos> p, final RockSet<Vel> s) {
-		PositionSet.allOut(p);
+		RockSetUtils.allOut(p);
 		// te.getInitialPos().getLight(1-1).setLocation(
 		p.getLight(2 - 1).setLocation(Unit.f2m(-1.170732), Unit.f2m(15.365854),
 				0);

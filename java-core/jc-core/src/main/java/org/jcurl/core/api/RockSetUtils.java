@@ -21,6 +21,8 @@ package org.jcurl.core.api;
 import java.awt.geom.Point2D;
 
 import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.core.api.RockType.Vel;
+import org.jcurl.math.MathVec;
 
 /**
  * Utils for {@link RockSet}s with location semantics {@link Pos}.
@@ -28,13 +30,13 @@ import org.jcurl.core.api.RockType.Pos;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:PositionSet.java 378 2007-01-24 01:18:35Z mrohrmoser $
  */
-public abstract class PositionSet {
+public abstract class RockSetUtils {
 
-	private static final double MaxScoreDistSq = RockSet.sqr(RockProps.DEFAULT
+	private static final double MaxScoreDistSq = MathVec.sqr(RockProps.DEFAULT
 			.getRadius()
 			+ Unit.f2m(6));
 
-	private static final double RR = RockSet.sqr(RockProps.DEFAULT.getRadius());
+	private static final double RR = MathVec.sqr(RockProps.DEFAULT.getRadius());
 	private static final double RR4 = RR * 4;
 
 	public static RockSet<Pos> allHome() {
@@ -180,5 +182,13 @@ public abstract class PositionSet {
 		return ret;
 	}
 
-	private PositionSet() {}
+	static <T extends RockType> RockSet<T> zero() {
+		return new RockSet<T>(new RockDouble<T>());
+	}
+
+	public static RockSet<Vel> zeroSpeed() {
+		return zero();
+	}
+
+	private RockSetUtils() {}
 }

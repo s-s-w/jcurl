@@ -22,10 +22,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import org.jcurl.core.api.CurveRock;
-import org.jcurl.core.api.PositionSet;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.swing.TestShowBase;
 import org.jcurl.core.ui.FixpointZoomer;
@@ -241,7 +241,7 @@ public class CurveTransformedTest extends TestShowBase {
 	}
 
 	public void testStill() {
-		final RockSet<Pos> p = PositionSet.allOut();
+		final RockSet<Pos> p = RockSetUtils.allOut();
 		final CurveTransformed[] c = new CurveTransformed[6];
 		final AffineTransform[] m = new AffineTransform[c.length];
 		int k = -1;
@@ -269,9 +269,9 @@ public class CurveTransformedTest extends TestShowBase {
 				new Point2D.Double(-1, 1), null);
 		c[k] = new CurveTransformed(CurveStill.newInstance(0, 0, 0), m[k], 0);
 
-		final double[] tmp = { 0, 0, 0 };
 		for (int i = c.length - 1; i >= 0; i--)
-			p.getRock(i).setLocation(c[i].at(0, 0, tmp));
+			p.getRock(i).setLocation(c[i].at(0, 0, 0), c[i].at(1, 0, 0),
+					c[i].at(2, 0, 0));
 		// Check if "sibling" rocks look alike:
 		showPositionDisplay(p, FixpointZoomer.C12, 5000, new TimeRunnable() {
 			@Override

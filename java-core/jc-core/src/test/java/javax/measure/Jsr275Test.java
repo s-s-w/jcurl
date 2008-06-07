@@ -17,7 +17,7 @@ import javax.measure.unit.SI;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.Rock;
 
 /**
@@ -71,7 +71,7 @@ public class Jsr275Test extends TestCase {
 	}
 
 	/**
-	 * This could enable type-safe distinction between {@link PositionSet}/{@link VelocitySet}
+	 * This could enable type-safe distinction between {@link RockSetUtils}/{@link VelocitySet}
 	 * and {@link Rock} with position/velocity semantics.
 	 */
 	public void testRock() {

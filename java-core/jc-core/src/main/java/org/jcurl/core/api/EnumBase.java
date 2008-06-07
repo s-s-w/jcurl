@@ -56,7 +56,6 @@ public abstract class EnumBase extends Number implements Comparable<EnumBase> {
 	}
 
 	private static final long serialVersionUID = -5618394067421447401L;
-
 	private static final Map<Class<? extends EnumBase>, Map<Integer, EnumBase>> types = new TreeMap<Class<? extends EnumBase>, Map<Integer, EnumBase>>(
 			new HashCodeComp());
 
@@ -92,7 +91,6 @@ public abstract class EnumBase extends Number implements Comparable<EnumBase> {
 	}
 
 	private final Integer state;
-
 	private final String text;
 
 	protected EnumBase(final int state, final String text) {
@@ -117,9 +115,6 @@ public abstract class EnumBase extends Number implements Comparable<EnumBase> {
 		return state.compareTo(o.state);
 	}
 
-	/**
-	 * @see java.lang.Number#doubleValue()
-	 */
 	@Override
 	public double doubleValue() {
 		return intValue();
@@ -132,34 +127,21 @@ public abstract class EnumBase extends Number implements Comparable<EnumBase> {
 		return state.equals(((EnumBase) o).state);
 	}
 
-	/**
-	 * @see java.lang.Number#floatValue()
-	 */
 	@Override
 	public float floatValue() {
 		return intValue();
 	}
 
-	/**
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		return state.hashCode();
 	}
 
-	/**
-	 * @see java.lang.Number#intValue()
-	 */
 	@Override
 	public int intValue() {
 		return state.intValue();
 	}
 
-	/**
-	 * @see java.lang.Number#longValue()
-	 */
 	@Override
 	public long longValue() {
 		return intValue();

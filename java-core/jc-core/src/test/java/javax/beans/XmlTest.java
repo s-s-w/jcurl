@@ -28,7 +28,7 @@ import java.io.UnsupportedEncodingException;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockType.Pos;
@@ -70,7 +70,7 @@ public class XmlTest extends TestCase {
 		{
 			final ByteArrayOutputStream bout = new ByteArrayOutputStream();
 			final XMLEncoder ec = new XMLEncoder(bout);
-			ec.writeObject(PositionSet.allHome());
+			ec.writeObject(RockSetUtils.allHome());
 			ec.close();
 			bout.close();
 			xml = new String(bout.toByteArray(), "UTF-8");

@@ -72,7 +72,7 @@ import javax.swing.undo.CompoundEdit;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.ComputedTrajectorySet;
 import org.jcurl.core.api.IceSize;
-import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.TrajectorySet;
@@ -415,9 +415,9 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 		RockSet.allZero(ivel);
 		broom.setIdx16(-1);
 		if (outPosition)
-			PositionSet.allOut(ipos);
+			RockSetUtils.allOut(ipos);
 		else
-			PositionSet.allHome(ipos);
+			RockSetUtils.allHome(ipos);
 		broom.setIdx16(1);
 		broom.setBroom(new Point2D.Double(0, 0));
 		broom.getSplitTimeMillis().setValue(3300);

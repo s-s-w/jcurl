@@ -52,6 +52,8 @@ import javax.swing.event.ChangeListener;
  * function concept</a>.</li>
  * </ul>
  * 
+ * @param <R>
+ *            indicate position, velocity or acceleration semantics.
  * @see org.jcurl.core.api.RockSet
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:Rock.java 378 2007-01-24 01:18:35Z mrohrmoser $
@@ -106,22 +108,7 @@ public abstract class Rock<R extends RockType> implements IChangeSupport,
 		}
 
 		@Override
-		public void setLocation(final double[] l) {
-			throw new UnsupportedOperationException("Not supported.");
-		}
-
-		@Override
 		public void setValueIsAdjusting(final boolean valueIsAdjusting) {
-			throw new UnsupportedOperationException("Not supported.");
-		}
-
-		@Override
-		public void setX(final double x) {
-			throw new UnsupportedOperationException("Not supported.");
-		}
-
-		@Override
-		public void setY(final double y) {
 			throw new UnsupportedOperationException("Not supported.");
 		}
 	}
@@ -165,8 +152,14 @@ public abstract class Rock<R extends RockType> implements IChangeSupport,
 		change.fireStateChanged();
 	}
 
+	/** Angle in radians */
 	public abstract double getA();
 
+	/**
+	 * Location and angle as a transformation wc -&gt; rock coordinates.
+	 * 
+	 * @return reference to the internal (uncloned!) trafo.
+	 */
 	public AffineTransform getAffineTransform() {
 		if (trafo != null && !dirty)
 			return trafo;
@@ -191,8 +184,18 @@ public abstract class Rock<R extends RockType> implements IChangeSupport,
 		return valueIsAdjusting;
 	}
 
+	/**
+	 * WC location x in meters
+	 * 
+	 * @see #p()
+	 */
 	public abstract double getX();
 
+	/**
+	 * WC location y in meters
+	 * 
+	 * @see #p()
+	 */
 	public abstract double getY();
 
 	/**
@@ -202,6 +205,10 @@ public abstract class Rock<R extends RockType> implements IChangeSupport,
 	 */
 	public abstract boolean isNotZero();
 
+	/**
+	 * The current location as {@link Point2D}. This links directly to the
+	 * internal representation, so it's read/write!
+	 */
 	public Point2D p() {
 		return p;
 	}
@@ -210,25 +217,23 @@ public abstract class Rock<R extends RockType> implements IChangeSupport,
 		change.removeChangeListener(l);
 	}
 
+	/** The current angle in radians */
+	@Deprecated
 	public abstract void setA(double a);
 
 	public abstract void setLocation(double x, double y, double a);
-
-	@Deprecated
-	public abstract void setLocation(double[] l);
 
 	public void setLocation(final Rock<R> r) {
 		this.setLocation(r.getX(), r.getY(), r.getA());
 	}
 
 	public void setValueIsAdjusting(final boolean valueIsAdjusting) {
+		boolean old = this.valueIsAdjusting;
+		if (old == valueIsAdjusting)
+			return;
 		this.valueIsAdjusting = valueIsAdjusting;
 		fireStateChanged();
 	}
-
-	public abstract void setX(double x);
-
-	public abstract void setY(double y);
 
 	@Override
 	public String toString() {

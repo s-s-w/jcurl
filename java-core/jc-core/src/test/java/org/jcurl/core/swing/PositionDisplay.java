@@ -31,7 +31,7 @@ import java.util.Map;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.RockType.Pos;
@@ -127,7 +127,7 @@ class PositionDisplay extends WCComponent implements ChangeListener {
 		// setOpaque(true);
 		setRockPainter(new RockPainter());
 		setIcePainter(new IcePainter());
-		this.setPos(PositionSet.allOut());
+		this.setPos(RockSetUtils.allOut());
 		setZoom(FixpointZoomer.HOUSE2HACK);
 	}
 
@@ -208,7 +208,7 @@ class PositionDisplay extends WCComponent implements ChangeListener {
 	 * @param rocks
 	 *            locations
 	 * @param mask
-	 *            bit field which rocks to paint. {@link PositionSet#ALL_MASK}
+	 *            bit field which rocks to paint. {@link RockSetUtils#ALL_MASK}
 	 */
 	protected void paintRocksWC(final Graphics2D g, final RockSet<Pos> rocks,
 			final int mask) {
@@ -304,7 +304,7 @@ class PositionDisplay extends WCComponent implements ChangeListener {
 	 */
 	public void stateChanged(final ChangeEvent evt) {
 		final Object tmp = evt.getSource();
-		if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass()))
+		if (tmp == null || RockSetUtils.class.isAssignableFrom(tmp.getClass()))
 			this.setPos((RockSet<Pos>) tmp);
 	}
 }

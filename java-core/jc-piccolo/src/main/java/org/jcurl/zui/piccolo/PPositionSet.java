@@ -22,7 +22,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.log.JCLoggerFactory;
@@ -30,7 +30,7 @@ import org.jcurl.core.log.JCLoggerFactory;
 import edu.umd.cs.piccolo.PNode;
 
 /**
- * Piccolo {@link PNode} backed with a {@link PositionSet}.
+ * Piccolo {@link PNode} backed with a {@link RockSetUtils}.
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:PPositionSet.java 795 2008-03-19 13:40:42Z mrohrmoser $
@@ -45,7 +45,7 @@ public class PPositionSet extends PNode implements ChangeListener {
 
 	/**
 	 * Create a pickable child node for each rock and set it's attributes
-	 * {@link PRockNode#INDEX16} and {@link PositionSet#getClass()} - yes the
+	 * {@link PRockNode#INDEX16} and {@link RockSetUtils#getClass()} - yes the
 	 * class object is the key.
 	 * 
 	 * @param f

@@ -23,7 +23,7 @@ import java.awt.geom.Point2D;
 
 import org.jcurl.core.api.CurveRock;
 import org.jcurl.core.api.IceSize;
-import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
@@ -48,7 +48,7 @@ public class CurlerDennyTest extends TestShowBase {
 		te.setCollider(new CollissionSpin());
 		te.setCollissionDetector(new NewtonCollissionDetector());
 		te.setCurler(new CurlerDenny(23, 1));
-		te.setInitialPos(PositionSet.allHome());
+		te.setInitialPos(RockSetUtils.allHome());
 		te.getInitialPos().getDark(0).setLocation(0, IceSize.FAR_HOG_2_TEE, 0);
 		te.getInitialPos().getLight(0).setLocation(0, IceSize.BACK_2_TEE,
 				0.25 * Math.PI);
@@ -74,7 +74,7 @@ public class CurlerDennyTest extends TestShowBase {
 
 	private void showTrajectory(final CurveRock<Pos> p, final Zoomer zoom,
 			final int millis, final int dt) {
-		final RockSet<Pos> pos = PositionSet.allOut();
+		final RockSet<Pos> pos = RockSetUtils.allOut();
 		showPositionDisplay(pos, zoom, millis, new TimeRunnable() {
 			@Override
 			public void run(final double t) throws InterruptedException {

@@ -33,7 +33,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.api.PositionSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.log.JCLoggerFactory;
@@ -162,7 +162,7 @@ abstract class SumDisplayBase extends JComponent implements ChangeListener {
 
 	public void stateChanged(final ChangeEvent evt) {
 		final Object tmp = evt.getSource();
-		if (tmp == null || PositionSet.class.isAssignableFrom(tmp.getClass()))
+		if (tmp == null || RockSetUtils.class.isAssignableFrom(tmp.getClass()))
 			this.setPos((RockSet<Pos>) tmp);
 		else
 			log.info(tmp);
