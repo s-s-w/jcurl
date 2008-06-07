@@ -20,17 +20,15 @@
 package org.jcurl.core.ui;
 
 import java.awt.Shape;
-import java.awt.geom.GeneralPath;
-import java.util.Iterator;
-import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.math.ShaperUtils;
 import org.jcurl.math.Interpolator;
 import org.jcurl.math.Interpolators;
+import org.jcurl.math.NaturalShaper;
 import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.Shaper;
+import org.jcurl.math.ShaperUtils;
 
 /**
  * The default jcurl {@link Shaper}.
@@ -38,7 +36,7 @@ import org.jcurl.math.Shaper;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public class JCurlShaper implements Shaper {
+public class JCurlShaper extends NaturalShaper {
 
 	private static final boolean DROP_STOP = true;
 	private static final Interpolator ip = Interpolators.getQuadraticInstance();
@@ -72,18 +70,6 @@ public class JCurlShaper implements Shaper {
 		this.zoom = zoom;
 	}
 
-	/**
-	 * Connect the output from {@link #toShapes(Iterator, double, double)} into
-	 * one.
-	 */
-	public Shape toShape(final Iterator<Entry<Double, R1RNFunction>> f,
-			final double tmin, final double tmax) {
-		final GeneralPath p = new GeneralPath();
-		for (final Iterator<Shape> it = toShapes(f, tmin, tmax); it.hasNext();)
-			p.append(it.next(), true);
-		return p;
-	}
-
 	public Shape toShape(final R1RNFunction f, final double tmin,
 			final double tmax) {
 		if (DROP_STOP) {
@@ -97,16 +83,5 @@ public class JCurlShaper implements Shaper {
 		}
 		return ShaperUtils.approximateLinear(f, (float) tmin, (float) tmax,
 				samples, zoom, ip);
-	}
-
-	/**
-	 * TODO Put the management logic from
-	 * {@link GenTrajectoryFactory#refresh(Iterator, boolean, double, double, Object)}
-	 * here.
-	 */
-	public Iterator<Shape> toShapes(
-			final Iterator<Entry<Double, R1RNFunction>> f, final double tmin,
-			final double tmax) {
-		throw new UnsupportedOperationException();
 	}
 }

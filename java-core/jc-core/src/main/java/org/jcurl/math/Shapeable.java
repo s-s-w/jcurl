@@ -29,7 +29,7 @@ import java.awt.Shape;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface Shapable {
+public interface Shapeable {
 
 	/**
 	 * If not <code>null</code> the resulting shape should be exact - neiter

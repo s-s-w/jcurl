@@ -453,7 +453,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 	private boolean modified = false;
 	private FileNameExtensionFilter pngPat;
 	private FileNameExtensionFilter svgPat;
-	private final TrajectoryBean tactics = new TrajectoryScenarioBean();
+	private final TrajectoryBean tactics = new TrajectoryPiccoloBean();
 	private final JLabel url = new JLabel();
 
 	private JCurlShotPlanner() {

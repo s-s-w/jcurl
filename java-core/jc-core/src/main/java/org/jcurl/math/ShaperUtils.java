@@ -30,7 +30,7 @@ import org.jcurl.core.log.JCLoggerFactory;
  * at least 2 dimensions.
  * 
  * @see Shaper
- * @see Shapable
+ * @see Shapeable
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
@@ -92,34 +92,6 @@ public abstract class ShaperUtils {
 	}
 
 	/**
-	 * Turn a {@link R1RNFunction} (of at least 2 dimensions) into a
-	 * {@link Shape} with the given number of samples and straight lines
-	 * {@link GeneralPath#lineTo(float, float)} to interpolate between.
-	 * 
-	 * @param src
-	 *            the (2-dimensional) curve. Higher dimensions are ignored.
-	 * @param min
-	 *            the min input <code>t</code> to
-	 *            {@link R1RNFunction#at(int, int, double)}
-	 * @param max
-	 *            the max input <code>t</code> to
-	 *            {@link R1RNFunction#at(int, int, double)}
-	 * @param samples
-	 *            the number of samples (start + stop + intermediate) - must be
-	 *            &gt;= 2 (start + stop + intermediate).
-	 * @param zoom
-	 *            graphics zoom factor (typically 1)
-	 * @param ip
-	 *            the {@link Interpolator} to get the intermediate sample
-	 *            <code>t</code> values.
-	 */
-	public static Shape approximateQuadratic(final R1RNFunction src,
-			final double min, final double max, final int samples,
-			final float zoom, final Interpolator ip) {
-		throw new NotImplementedYetException();
-	}
-
-	/**
 	 * Turns the first 2 dimensions of a {@link R1RNFunction} into a drawable
 	 * {@link Shape} - namely a {@link GeneralPath}.
 	 * 
@@ -152,6 +124,34 @@ public abstract class ShaperUtils {
 			gp.lineTo((float) (zoom * tmp[0]), (float) (zoom * tmp[1]));
 		}
 		return gp;
+	}
+
+	/**
+	 * Turn a {@link R1RNFunction} (of at least 2 dimensions) into a
+	 * {@link Shape} with the given number of samples and straight lines
+	 * {@link GeneralPath#lineTo(float, float)} to interpolate between.
+	 * 
+	 * @param src
+	 *            the (2-dimensional) curve. Higher dimensions are ignored.
+	 * @param min
+	 *            the min input <code>t</code> to
+	 *            {@link R1RNFunction#at(int, int, double)}
+	 * @param max
+	 *            the max input <code>t</code> to
+	 *            {@link R1RNFunction#at(int, int, double)}
+	 * @param samples
+	 *            the number of samples (start + stop + intermediate) - must be
+	 *            &gt;= 2 (start + stop + intermediate).
+	 * @param zoom
+	 *            graphics zoom factor (typically 1)
+	 * @param ip
+	 *            the {@link Interpolator} to get the intermediate sample
+	 *            <code>t</code> values.
+	 */
+	public static Shape approximateQuadratic(final R1RNFunction src,
+			final double min, final double max, final int samples,
+			final float zoom, final Interpolator ip) {
+		throw new NotImplementedYetException();
 	}
 
 	/**

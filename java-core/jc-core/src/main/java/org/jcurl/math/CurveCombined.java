@@ -155,7 +155,8 @@ public class CurveCombined<T extends R1RNFunction> extends R1RNFunctionImpl
 	 * @param key
 	 * @param comp
 	 * 
-	 * @see java.util.Arrays#binarySearch(Object[], int, int, Object, java.util.Comparator)
+	 * @see java.util.Arrays#binarySearch(Object[], int, int, Object,
+	 *      java.util.Comparator)
 	 * @return found index
 	 */
 	static <E> int binarySearch(final List<E> a, final int fromIndex,
