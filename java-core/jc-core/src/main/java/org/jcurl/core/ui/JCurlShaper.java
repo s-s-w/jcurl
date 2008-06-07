@@ -47,7 +47,7 @@ public class JCurlShaper extends NaturalShaper {
 
 	/** use 20 samples */
 	public JCurlShaper() {
-		this(20);
+		this(5);
 	}
 
 	private JCurlShaper(final int samples) {
@@ -87,7 +87,12 @@ public class JCurlShaper extends NaturalShaper {
 			if (x * x + y * y <= MIN_LEN * MIN_LEN)
 				return null;
 		}
-		return ShaperUtils.approximateLinear(f, (float) tmin, (float) tmax,
-				samples, zoom, ip);
+		if (false)
+			return ShaperUtils.approximateLinear(f, (float) tmin, (float) tmax,
+					samples, zoom, ip);
+		else
+			return ShaperUtils.approximateQuadratic(f, (float) tmin,
+					(float) tmax, samples, zoom, ip);
+
 	}
 }

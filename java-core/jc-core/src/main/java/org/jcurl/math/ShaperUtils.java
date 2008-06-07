@@ -22,7 +22,6 @@ import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.log.JCLoggerFactory;
 
 /**
@@ -71,58 +70,19 @@ public abstract class ShaperUtils {
 		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
 				samples + 1); // +1 just to be sure...
 		// start
-		float x = (float) src.at(0, 0, min);
-		float y = (float) src.at(1, 0, min);
+		final float x = (float) src.at(0, 0, min);
+		final float y = (float) src.at(1, 0, min);
 		gp.moveTo(zoom * x, zoom * y);
 
 		// intermediate
 		final int n = samples - 1;
 		for (int i = 1; i < n; i++) {
 			final double t = min + d * ip.interpolate((float) i / n);
-			x = (float) src.at(0, 0, t);
-			y = (float) src.at(1, 0, t);
-			gp.lineTo(zoom * x, zoom * y);
+			lineTo(src, t, gp, zoom);
 		}
 
 		// stop
-		x = (float) src.at(0, 0, max);
-		y = (float) src.at(1, 0, max);
-		gp.lineTo(zoom * x, zoom * y);
-		return gp;
-	}
-
-	/**
-	 * Turns the first 2 dimensions of a {@link R1RNFunction} into a drawable
-	 * {@link Shape} - namely a {@link GeneralPath}.
-	 * 
-	 * @param src
-	 *            the cuve to turn into a shape.
-	 * @param sections
-	 *            the samples
-	 * @param zoom
-	 *            graphics zoom factor - typically 1
-	 * @param tmp
-	 *            save instanciations calling
-	 *            {@link R1RNFunction#at(int, double, double[])}. Should have
-	 *            the same dimension as the input {@link R1RNFunction}. May be
-	 *            <code>null</code>.
-	 * @return the curve segment as a {@link Shape}.
-	 * @deprecated Rather use
-	 *             {@link #approximateLinear(R1RNFunction, double, double, int, float, Interpolator)}
-	 */
-	@Deprecated
-	public static Shape approximateLinear(final R1RNFunction src,
-			final double[] sections, final float zoom, double[] tmp) {
-		if (tmp == null)
-			tmp = new double[src.dim()];
-		src.at(0, sections[0], tmp);
-		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
-				sections.length + 1);
-		gp.moveTo((float) (zoom * tmp[0]), (float) (zoom * tmp[1]));
-		for (int i = 1; i < sections.length; i++) {
-			src.at(0, sections[i], tmp);
-			gp.lineTo((float) (zoom * tmp[0]), (float) (zoom * tmp[1]));
-		}
+		lineTo(src, max, gp, zoom);
 		return gp;
 	}
 
@@ -151,149 +111,30 @@ public abstract class ShaperUtils {
 	public static Shape approximateQuadratic(final R1RNFunction src,
 			final double min, final double max, final int samples,
 			final float zoom, final Interpolator ip) {
-		throw new NotImplementedYetException();
-	}
-
-	/**
-	 * Turns the first 2 dimensions of a {@link R1RNFunction} into a drawable
-	 * {@link Shape}.
-	 * 
-	 * @param c
-	 * @param sections
-	 * @param zoom
-	 *            factor - typically 1
-	 * @param p0
-	 *            save instanciations calling
-	 *            {@link R1RNFunction#at(int, double, double[])}.
-	 * @param v0
-	 *            save instanciations calling
-	 *            {@link R1RNFunction#at(int, double, double[])}.
-	 * @param p1
-	 *            save instanciations calling
-	 *            {@link R1RNFunction#at(int, double, double[])}.
-	 * @param v1
-	 *            save instanciations calling
-	 *            {@link R1RNFunction#at(int, double, double[])}.
-	 * @return the shape
-	 */
-	@Deprecated
-	public static Shape approximateQuadratic(final R1RNFunction c,
-			final double[] sections, final float zoom, double[] p0,
-			double[] v0, double[] p1, double[] v1) {
-		if (p0 == null)
-			p0 = new double[c.dim()];
-		if (v0 == null)
-			v0 = new double[c.dim()];
-		if (p1 == null)
-			p1 = new double[c.dim()];
-		if (v1 == null)
-			v1 = new double[c.dim()];
-		c.at(0, sections[0], p0);
-		c.at(1, sections[0], v0);
+		// setup
+		if (samples < 2)
+			throw new IllegalArgumentException(
+					"Give me at least 2 (start + stop)");
+		final float d = (float) (max - min);
 		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
-				sections.length + 1);
-		gp.moveTo((float) (zoom * p0[0]), (float) (zoom * p0[1]));
-		final double tmp_a[][] = { { 0, 0 }, { 0, 0 } };
-		final double tmp_b[] = { 0, 0 };
-		final double pc[] = { 0, 0 };
-		for (int i = 1; i < sections.length; i++) {
-			if (log.isDebugEnabled())
-				log.debug("t=" + sections[i]);
-			c.at(0, sections[i], p1);
-			c.at(1, sections[i], v1);
-			ShaperUtils.computeControlPoint(p0, v0, p1, v1, tmp_a, tmp_b, pc);
-			gp.quadTo((float) (zoom * pc[0]), (float) (zoom * pc[1]),
-					(float) (zoom * p1[0]), (float) (zoom * p1[1]));
-			p0[0] = p1[0];
-			p0[1] = p1[1];
-			v0[0] = v1[0];
-			v0[1] = v1[1];
+				2 * (samples + 1)); // +1 just to be sure...
+		// start
+		final float x = (float) src.at(0, 0, min);
+		final float y = (float) src.at(1, 0, min);
+		gp.moveTo(zoom * x, zoom * y);
+
+		double told = min;
+		// intermediate
+		final int n = samples - 1;
+		for (int i = 1; i < n; i++) {
+			final double t = min + d * ip.interpolate((float) i / n);
+			quadTo(src, told, t, gp, zoom);
+			told = t;
 		}
+
+		// stop
+		quadTo(src, told, max, gp, zoom);
 		return gp;
-	}
-
-	/**
-	 * Compute the control point for a quadratic bezier spline from pa to pb.
-	 * Maxima code:
-	 * 
-	 * <pre>
-	 * NEXTLAYERFACTOR(TRUE)$
-	 * DEBUGMODE(TRUE)$ 
-	 * 
-	 * pa[0] + k * va[0] = pb[0] + l * vb[0];
-	 * pa[1] + k * va[1] = pb[1] + l * vb[1];
-	 * 
-	 * LINSOLVE([%i4, %i5],[k, l]),GLOBALSOLVE:TRUE,BACKSUBST:TRUE$
-	 * 
-	 * SCSIMP(PART(%o6,1,2)); 
-	 * 
-	 * quit$
-	 * </pre>
-	 * 
-	 * @param pa
-	 *            startpoint
-	 * @param va
-	 *            incline in startpoint
-	 * @param pb
-	 *            endpoint
-	 * @param vb
-	 *            incline in endpoint
-	 * @param tmp_matrix
-	 *            2x2 matrix for temporary use
-	 * @param tmp_right
-	 *            2-dimensional vector for temporary use
-	 * @param pc
-	 *            control point coordinates
-	 * @return coordinates of the control point (stored in x)
-	 * @see MathVec#gauss(double[][], double[], double[])
-	 */
-	static double[] computeControlPoint(final double[] pa, final double[] va,
-			final double[] pb, final double[] vb, final double[][] tmp_matrix,
-			final double[] tmp_right, final double[] pc) {
-		if (va[0] == 0.0 && va[1] == 0.0 && vb[0] == 0.0 && vb[1] == 0.0) {
-			pc[0] = 0.5 * (pa[0] + pb[0]);
-			pc[1] = 0.5 * (pa[1] + pb[1]);
-			return pc;
-		}
-		// final double f = pc[0];
-		final double f = (vb[1] * (pa[0] - pb[0]) + vb[0] * (pb[1] - pa[1]))
-				/ (vb[0] * va[1] - va[0] * vb[1]);
-		pc[0] = pa[0] + f * va[0];
-		pc[1] = pa[1] + f * va[1];
-		if (log.isDebugEnabled()) {
-			final StringBuilder b = new StringBuilder();
-			b.append("pa=").append(toString(pa));
-			b.append(" va=").append(toString(va));
-			b.append(" pb=").append(toString(pb));
-			b.append(" vb=").append(toString(vb));
-			b.append(" pc=").append(toString(pc));
-			log.debug(b.toString());
-		}
-		return pc;
-	}
-
-	@Deprecated
-	public static double[] exponentialSections(final double min,
-			final double max, final double[] sections) {
-		return interpolate(min, max, sections, Interpolators
-				.getQuadraticInstance());
-	}
-
-	@Deprecated
-	static double[] interpolate(final double min, final double max,
-			final double[] sections, final Interpolator ip) {
-		if (min > max)
-			throw new IllegalArgumentException();
-		final int n = sections.length - 1;
-		if (n < 1)
-			throw new IllegalArgumentException();
-		sections[0] = min;
-		sections[n] = max;
-		final float _min = (float) min;
-		final float _d = (float) (max - min);
-		for (int i = 1; i < n; i++)
-			sections[i] = _min + _d * ip.interpolate((float) i / n);
-		return sections;
 	}
 
 	private static float interpolate(final float min, final float max,
@@ -302,39 +143,76 @@ public abstract class ShaperUtils {
 		return min + d * ip.interpolate((t - min) / d);
 	}
 
+	private static final void lineTo(final R1RNFunction f, final double t,
+			final GeneralPath gp, final float zoom) {
+		final float x = (float) f.at(0, 0, t);
+		final float y = (float) f.at(1, 0, t);
+		gp.lineTo(zoom * x, zoom * y);
+	}
+
 	/**
-	 * Split the given interval [min,max] into equidistant sections.
+	 * TODO re-use endpoint location and velocity.
 	 * 
-	 * @param min
-	 * @param max
-	 * @param sections
-	 * @return filled <code>sections</code> array.
+	 * Maxima solution:
+	 * 
+	 * <pre>
+	 * x1_0 + k * v1_0 = x3_0 + l * v3_0;
+	 * x1_1 + k * v1_1 = x3_1 + l * v3_1;
+	 * solve([%o1,%o2],[k,l]);
+	 * subst(q, v1_1 * v3_0 - v1_0 * v3_1, %);
+	 * subst(dx_0 + x1_0, x3_0, %);
+	 * subst(dx_1 + x1_1, x3_1, %);
+	 * ratsimp(%);
+	 * </pre>
+	 * 
+	 * @param f
+	 * @param tmin
+	 * @param tmax
+	 * @param gp
+	 * @param zoom
 	 */
-	@Deprecated
-	public static double[] linearSections(double min, double max,
-			final double[] sections) {
+	private static final void quadTo(final R1RNFunction f, final double tmin,
+			final double tmax, final GeneralPath gp, final float zoom) {
+		final double eps = 1e-6;
+
+		// first control point (startpoint). The same as gp.getCurrentPoint()
+		final double x1_0 = f.at(0, 0, tmin);
+		final double x1_1 = f.at(1, 0, tmin);
+		// startpoint velocity
+		double v1_0 = f.at(0, 1, tmin);
+		double v1_1 = f.at(1, 1, tmin);
+		if (v1_0 * v1_0 + v1_1 * v1_1 < eps) {
+			v1_0 = f.at(0, 1, tmin + eps);
+			v1_1 = f.at(1, 1, tmin + eps);
+		}
+
+		// 3rd control point (endpoint).
+		final double x3_0 = f.at(0, 0, tmax);
+		final double x3_1 = f.at(1, 0, tmax);
+		// endpoint velocity
+		double v3_0 = f.at(0, 1, tmax);
+		double v3_1 = f.at(1, 1, tmax);
+		if (v3_0 * v3_0 + v3_1 * v3_1 < eps) {
+			v3_0 = f.at(0, 1, tmax - eps);
+			v3_1 = f.at(1, 1, tmax - eps);
+		}
+
+		// compute the 2nd control point
+		final double dx_0 = x3_0 - x1_0;
+		final double dx_1 = x3_1 - x1_1;
+		final double q = v1_1 * v3_0 - v1_0 * v3_1;
+		final double l = -(dx_0 * v1_1 - dx_1 * v1_0) / q;
+
+		// 2nd control point is
+		final float x2_0 = (float) (x3_0 + l * v3_0);
+		final float x2_1 = (float) (x3_1 + l * v3_1);
+
 		if (true)
-			return interpolate(min, max, sections, Interpolators
-					.getLinearInstance());
+			gp.quadTo(zoom * x2_0, zoom * x2_1, zoom * (float) x3_0, zoom
+					* (float) x3_1);
 		else {
-			final int n = sections.length - 1;
-			if (n < 0)
-				return sections;
-			if (min > max) {
-				final double tmp = min;
-				min = max;
-				max = tmp;
-			}
-			sections[0] = min;
-			if (n < 1)
-				return sections;
-			sections[n] = max;
-			if (n < 2)
-				return sections;
-			final double d = (max - min) / n;
-			for (int i = n - 1; i > 0; i--)
-				sections[i] = min + i * d;
-			return sections;
+			gp.lineTo(zoom * x2_0, zoom * x2_1);
+			gp.lineTo(zoom * (float) x3_0, zoom * (float) x3_1);
 		}
 	}
 

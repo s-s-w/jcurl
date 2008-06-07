@@ -31,8 +31,8 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.api.CurveStore;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.Strategy;
+import org.jcurl.core.helpers.NotImplementedYetException;
 import org.jcurl.core.log.JCLoggerFactory;
-import org.jcurl.math.ShaperUtils;
 import org.jcurl.math.R1RNFunction;
 
 /**
@@ -67,19 +67,12 @@ class CurvePainter implements Strategy {
 	}
 
 	private final Color dark;
-
 	private final Color light;
-
 	private final double[] sections = { 0, 0, 0, 0, 0, 0, 0 };
-
 	private final Stroke stroke;
-
 	private final double[] t1 = { 0, 0, 0 };
-
 	private final double[] t2 = { 0, 0, 0 };
-
 	private final double[] t3 = { 0, 0, 0 };
-
 	private final double[] t4 = { 0, 0, 0 };
 
 	public CurvePainter(final Color dark, final Color light, final Stroke stroke) {
@@ -146,7 +139,7 @@ class CurvePainter implements Strategy {
 		Entry<Double, R1RNFunction> curr = path.next();
 		while (path.hasNext()) {
 			final Entry<Double, R1RNFunction> next = path.next();
-			doSections(sections, curr.getKey(), next.getKey());
+			//doSections(sections, curr.getKey(), next.getKey());
 			if (log.isDebugEnabled()) {
 				final StringWriter wri = new StringWriter();
 				wri.write("t=");
@@ -184,27 +177,6 @@ class CurvePainter implements Strategy {
 	public void doPaint(final Graphics2D g2, final R1RNFunction curr,
 			final double[] sections, final float zoom, final double[] t1,
 			final double[] t2, final double[] t3, final double[] t4) {
-		if (true)
-			g2.draw(ShaperUtils.approximateLinear(curr, sections, zoom, t1));
-		else
-			g2.draw(ShaperUtils.approximateQuadratic(curr, sections, zoom, t1,
-					t2, t3, t4));
-	}
-
-	/**
-	 * Split the given interval into sections.
-	 * 
-	 * @see ShaperUtils#exponentialSections(double, double, double[])
-	 * @param sections
-	 * @param min
-	 * @param max
-	 * @return sections
-	 */
-	public double[] doSections(final double[] sections, final double min,
-			final double max) {
-		if (false)
-			return ShaperUtils.linearSections(min, max, sections);
-		else
-			return ShaperUtils.exponentialSections(min, max, sections);
+		throw new NotImplementedYetException();
 	}
 }
