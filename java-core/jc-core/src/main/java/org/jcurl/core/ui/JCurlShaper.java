@@ -39,7 +39,7 @@ import org.jcurl.math.ShaperUtils;
 public class JCurlShaper extends NaturalShaper {
 
 	private static final boolean DROP_STOP = true;
-	private static final Interpolator ip = Interpolators.getQuadraticInstance();
+	private static final Interpolator ip = Interpolators.getLinearInstance();
 	private static final Log log = JCLoggerFactory.getLogger(JCurlShaper.class);
 	private static final double MIN_LEN = 1e-6;
 	private final int samples;
@@ -87,12 +87,93 @@ public class JCurlShaper extends NaturalShaper {
 			if (x * x + y * y <= MIN_LEN * MIN_LEN)
 				return null;
 		}
-		if (false)
-			return ShaperUtils.approximateLinear(f, (float) tmin, (float) tmax,
-					samples, zoom, ip);
-		else
-			return ShaperUtils.approximateQuadratic(f, (float) tmin,
-					(float) tmax, samples, zoom, ip);
+		return ShaperUtils.approximateQuadratic(f, (float) tmin, (float) tmax,
+				samples, zoom, ip);
+	}
 
+	/**
+	 * Excellent results but currently not robust enough for production use.
+	 * 
+	 * @param f
+	 * @param tmin
+	 * @param tmax
+	 * @param samples
+	 *            5 give already very good results. (Max. diff &lt; 2mm)
+	 * @param ip
+	 *            best use with {@link Interpolators#getLinearInstance()}.
+	 * @see ShaperUtils#approximateCubic(R1RNFunction, double, double, int,
+	 *      float, Interpolator)
+	 */
+	public Shape toShapeCubic(final R1RNFunction f, final double tmin,
+			final double tmax, final int samples, final Interpolator ip) {
+		{
+			final Shape s = super.toShape(f, tmin, tmax);
+			if (s != null)
+				return s;
+		}
+		if (DROP_STOP) {
+			// treat some special cases:
+			if (f == null || tmin + MIN_LEN >= tmax)
+				return null;
+			final double x = f.at(0, 0, tmin) - f.at(0, 0, tmax);
+			final double y = f.at(1, 0, tmin) - f.at(1, 0, tmax);
+			if (x * x + y * y <= MIN_LEN * MIN_LEN)
+				return null;
+		}
+		return ShaperUtils.approximateCubic(f, (float) tmin, (float) tmax,
+				samples, zoom, ip);
+	}
+
+	public Shape toShapeLine(final R1RNFunction f, final double tmin,
+			final double tmax, final int samples) {
+		{
+			final Shape s = super.toShape(f, tmin, tmax);
+			if (s != null)
+				return s;
+		}
+		if (DROP_STOP) {
+			// treat some special cases:
+			if (f == null || tmin + MIN_LEN >= tmax)
+				return null;
+			final double x = f.at(0, 0, tmin) - f.at(0, 0, tmax);
+			final double y = f.at(1, 0, tmin) - f.at(1, 0, tmax);
+			if (x * x + y * y <= MIN_LEN * MIN_LEN)
+				return null;
+		}
+		return ShaperUtils.approximateLinear(f, (float) tmin, (float) tmax,
+				samples, zoom, ip);
+	}
+
+	/**
+	 * Robust and quite accurate drawing.
+	 * 
+	 * @param f
+	 * @param tmin
+	 * @param tmax
+	 * @param samples
+	 *            5 give already very good results. (Max. diff &lt; 5mm)
+	 * @param ip
+	 *            best use with {@link Interpolators#getLinearInstance()}.
+	 * @see ShaperUtils#approximateQuadratic(R1RNFunction, double, double, int,
+	 *      float, Interpolator)
+	 */
+	public Shape toShapeQuad(final R1RNFunction f, final double tmin,
+			final double tmax, final int samples, final Interpolator ip) {
+		{
+			final Shape s = super.toShape(f, tmin, tmax);
+			if (s != null)
+				return s;
+		}
+		if (DROP_STOP) {
+			// treat some special cases:
+			if (f == null || tmin + MIN_LEN >= tmax)
+				return null;
+			final double x = f.at(0, 0, tmin) - f.at(0, 0, tmax);
+			final double y = f.at(1, 0, tmin) - f.at(1, 0, tmax);
+			if (x * x + y * y <= MIN_LEN * MIN_LEN)
+				return null;
+		}
+		return ShaperUtils.approximateQuadratic(f, (float) tmin, (float) tmax,
+				samples, zoom, ip);
 	}
 }

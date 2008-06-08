@@ -21,8 +21,10 @@ package org.jcurl.core.ui;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import org.apache.commons.logging.Log;
 import org.jcurl.core.api.CurveStore;
 import org.jcurl.core.api.Factory;
+import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.math.R1RNFunction;
 
 /**
@@ -35,6 +37,9 @@ import org.jcurl.math.R1RNFunction;
  * @version $Id:PTrajectoryFactory.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
 public abstract class GenTrajectoryFactory<N> implements Factory {
+
+	private static final Log log = JCLoggerFactory
+			.getLogger(GenTrajectoryFactory.class);
 
 	/**
 	 * Create a visual path segment and add it to <code>dst</code>.
@@ -74,6 +79,7 @@ public abstract class GenTrajectoryFactory<N> implements Factory {
 	 */
 	public N refresh(final Iterator<Entry<Double, R1RNFunction>> src,
 			final boolean isDark, final double tmin, final double tmax, N dst) {
+		log.debug("curve");
 		dst = pre(dst);
 
 		if (!src.hasNext())

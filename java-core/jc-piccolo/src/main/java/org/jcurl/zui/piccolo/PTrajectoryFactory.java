@@ -19,14 +19,19 @@
 package org.jcurl.zui.piccolo;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
 
+import org.apache.commons.logging.Log;
 import org.jcurl.core.api.RockProps;
+import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.GenTrajectoryFactory;
 import org.jcurl.core.ui.IceShapes;
 import org.jcurl.core.ui.JCurlShaper;
+import org.jcurl.math.Interpolator;
+import org.jcurl.math.Interpolators;
 import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.Shaper;
 
@@ -41,6 +46,41 @@ import edu.umd.cs.piccolo.nodes.PPath;
  * @version $Id:PTrajectoryFactory.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
 public abstract class PTrajectoryFactory extends GenTrajectoryFactory<PNode> {
+
+	/**
+	 * For testing reasons only: Show 2 thin lines, one for high-sampled lineTo
+	 * and on for low-sampled quadTo/curveTo.
+	 */
+	public static class Compare extends PTrajectoryFactory {
+		private static final Paint bezier = Color.BLACK;
+		private static final Interpolator cip = Interpolators
+				.getLinearInstance();
+		private static final Paint line = Color.GREEN;
+		private static final Stroke lineS = new BasicStroke(0.01F);
+		/** sampling style along the {@link R1RNFunction} */
+		private static final JCurlShaper sh = new JCurlShaper();
+		private static final Stroke stroke = new IceShapes.IceColors().stroke;
+
+		@Override
+		protected void addSegment(final R1RNFunction src, final double tmin,
+				final double tmax, final boolean isDark, final PNode dst) {
+			log.debug("  segment");
+			Shape s = sh.toShapeLine(src, tmin, tmax, 1000);
+			if (s != null) {
+				final PPath c = new PPath(s, lineS);
+				c.setPaint(null);
+				c.setStrokePaint(line);
+				dst.addChild(c);
+			}
+			s = sh.toShapeQuad(src, tmin, tmax, 5, cip);
+			if (s != null) {
+				final PPath c = new PPath(s, stroke);
+				c.setPaint(null);
+				c.setStrokePaint(bezier);
+				dst.addChild(c);
+			}
+		}
+	}
 
 	public static class Fancy extends PTrajectoryFactory {
 
@@ -58,7 +98,7 @@ public abstract class PTrajectoryFactory extends GenTrajectoryFactory<PNode> {
 		protected void addSegment(final R1RNFunction src, final double tmin,
 				final double tmax, final boolean isDark, final PNode dst) {
 			final Shape s = sh.toShape(src, tmin, tmax);
-			if(s == null)
+			if (s == null)
 				return;
 			final PPath c = new PPath(s, stroke);
 			c.setPaint(null);
@@ -66,6 +106,9 @@ public abstract class PTrajectoryFactory extends GenTrajectoryFactory<PNode> {
 			dst.addChild(c);
 		}
 	}
+
+	private static final Log log = JCLoggerFactory
+			.getLogger(PTrajectoryFactory.class);
 
 	@Override
 	protected PNode post(final PNode parent) {
