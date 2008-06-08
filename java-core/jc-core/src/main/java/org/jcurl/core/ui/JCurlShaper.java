@@ -87,7 +87,7 @@ public class JCurlShaper extends NaturalShaper {
 			if (x * x + y * y <= MIN_LEN * MIN_LEN)
 				return null;
 		}
-		return ShaperUtils.approximateQuadratic(f, (float) tmin, (float) tmax,
+		return ShaperUtils.approximateCubic(f, (float) tmin, (float) tmax,
 				samples, zoom, ip);
 	}
 
