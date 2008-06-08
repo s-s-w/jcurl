@@ -49,8 +49,66 @@ import org.jcurl.math.R1RNFunction;
 public class BisectionCollissionDetector extends CollissionDetectorBase
 		implements Serializable {
 
+	/**
+	 * Provide an "unrolled" implementation to save about 1/3rd function calls.
+	 * 
+	 * @see Distance2DSq
+	 */
+	private static class Distance2DSqFlipped extends R1R1Function {
+		private static final long serialVersionUID = 6430453872388677378L;
+
+		private final R1RNFunction c1;
+		private final R1RNFunction c2;
+		private final double r2;
+
+		public Distance2DSqFlipped(final R1RNFunction c1,
+				final R1RNFunction c2, final double sqr) {
+			this.c1 = c1;
+			this.c2 = c2;
+			r2 = sqr;
+		}
+
+		/**
+		 * @see Distance2DSq#at(int, double)
+		 */
+		@Override
+		public double at(final int c, final double t) {
+			if (c == 0 || c == 1) {
+				final double a_minus_b_0 = c1.at(0, c, t) - c2.at(0, c, t);
+				final double a_minus_b_1 = c1.at(1, c, t) - c2.at(1, c, t);
+				final double C0 = a_minus_b_0 * a_minus_b_0 + a_minus_b_1
+						* a_minus_b_1 - r2;
+
+				double C1 = 0.0;
+				final double da_minus_db_0 = c1.at(0, c + 1, t)
+						- c2.at(0, c + 1, t);
+				final double da_minus_db_1 = c1.at(1, c + 1, t)
+						- c2.at(1, c + 1, t);
+
+				C1 += a_minus_b_0 * da_minus_db_0;
+				C1 += a_minus_b_1 * da_minus_db_1;
+				C1 *= 2.0;
+
+				if (c == 0)
+					return C0 * -Math.signum(C1);
+				if (c == 1)
+					return -Math.abs(C1);
+			}
+			throw new IllegalArgumentException();
+		}
+
+		public double unflipped(final double t) {
+			final int c = 0;
+			final double a_minus_b_0 = c1.at(0, c, t) - c2.at(0, c, t);
+			final double a_minus_b_1 = c1.at(1, c, t) - c2.at(1, c, t);
+			return a_minus_b_0 * a_minus_b_0 + a_minus_b_1 * a_minus_b_1 - r2;
+		}
+
+	}
+
 	private static final Log log = JCLoggerFactory
 			.getLogger(BisectionCollissionDetector.class);
+
 	private static final long serialVersionUID = 5332814969180777771L;
 
 	public double compute(final double t0, final double tstop,
@@ -64,26 +122,38 @@ public class BisectionCollissionDetector extends CollissionDetectorBase
 			if (fa_still && tmp[0] * tmp[0] + tmp[1] * tmp[1] < 1e-9)
 				return Double.NaN;
 		}
-		final R1R1Function dist = new Distance2DSq(fa, fb, 0);
-		final R1R1Function f = new R1R1Function() {
-			private static final long serialVersionUID = 7051701140539614770L;
+		if (false) {
+			final R1R1Function dist = new Distance2DSq(fa, fb, 0);
+			final R1R1Function f = new R1R1Function() {
+				private static final long serialVersionUID = 7051701140539614770L;
 
-			@Override
-			public double at(final int c, final double x) {
-				if (c == 0)
-					return dist.at(0, x) * -Math.signum(dist.at(1, x));
-				if (c == 1)
-					return Math.abs(dist.at(1, x));
-				throw new IllegalArgumentException();
-			}
-		};
-		final double r = BisectionSolver.findRoot(f, CollissionDetector.RR2,
-				t0, tstop, 1e-9);
-		if (log.isDebugEnabled())
-			log.debug(dist.at(r) - CollissionDetector.RR2);
-		if (Double.isNaN(r)
-				|| Math.abs(dist.at(r) - CollissionDetector.RR2) > 1e-6)
-			return Double.NaN;
-		return r;
+				@Override
+				public double at(final int c, final double x) {
+					if (c == 0)
+						return dist.at(0, x) * -Math.signum(dist.at(1, x));
+					if (c == 1)
+						return Math.abs(dist.at(1, x));
+					throw new IllegalArgumentException();
+				}
+			};
+			final double r = BisectionSolver.findRoot(f,
+					CollissionDetector.RR2, t0, tstop, 1e-9);
+			if (log.isDebugEnabled())
+				log.debug(dist.at(r) - CollissionDetector.RR2);
+			if (Double.isNaN(r)
+					|| Math.abs(dist.at(r) - CollissionDetector.RR2) > 1e-6)
+				return Double.NaN;
+			return r;
+		} else {
+			final Distance2DSqFlipped f = new Distance2DSqFlipped(fa, fb, 0);
+			final double r = BisectionSolver.findRoot(f,
+					CollissionDetector.RR2, t0, tstop, 1e-9);
+			if (log.isDebugEnabled())
+				log.debug(f.unflipped(r) - CollissionDetector.RR2);
+			if (Double.isNaN(r)
+					|| Math.abs(f.unflipped(r) - CollissionDetector.RR2) > 1e-6)
+				return Double.NaN;
+			return r;
+		}
 	}
 }
