@@ -86,10 +86,38 @@ public abstract class ShaperUtils {
 		return gp;
 	}
 
+	/** Cubic Bezier Curve. Maxima Solution:
+	<pre>
+radsubstflag: true$
+k1_0 = k0_0 + l * v0_0;
+k1_1 = k0_1 + l * v0_1;
+k2_0 = k3_0 - n * v3_0;
+k2_1 = k3_1 - n * v3_1;
+l/n=a/c;
+((k2_0 - k1_0)*(k2_0 - k1_0) + (k2_1 - k1_1)*(k2_1 - k1_1)) / n^2 = b^2 /c^2;
+solve([%o2, %o3, %o4, %o5, %o6, %o7],[k1_0, k1_1, k2_0, k2_1, l, n]);
+factor(%);
+ratsimp(%);
+ratsubst(V0, v0_1^2+v0_0^2, %);
+ratsubst(V3, v3_1^2+v3_0^2, %);
+ratsubst(A, k0_1-k3_1, %);
+ratsubst(B, k0_0-k3_0, %);
+ratsubst(T, 2*a*c*v0_0*v3_0+a^2*v0_1^2+a^2*v0_0^2-b^2, %);
+ratsubst(Q, c^2*V3+a^2*V0+T+2*a*c*v0_1*v3_1-a^2*v0_1^2-a^2*v0_0^2, %);
+ratsubst(W, B^2*T+B^2*(b^2-Q)+c^2*(v3_0^2*B^2-v3_0^2*A^2)-a^2*v0_1^2*B^2+v3_1*(2*c^2*v3_0*A*B
+ +2*a*c*v0_0*A*B)+v0_1*(2*a*c*v3_0*A*B+2*a^2*v0_0*A*B)-2*a*c*v0_0*v3_0*A^2-a^2*v0_0^2*A^2
+ +b^2*A^2, %);
+expand(%);
+factor(%);
+ratsubst(R, c*v3_0*B+a*v0_0*B+c*v3_1*A+a*v0_1*A, %);
+	</pre>
+	*/
+	private static void curveTo() {}
+
 	/**
 	 * Turn a {@link R1RNFunction} (of at least 2 dimensions) into a
-	 * {@link Shape} with the given number of samples and straight lines
-	 * {@link GeneralPath#lineTo(float, float)} to interpolate between.
+	 * {@link Shape} with the given number of samples and quadratic B-splies
+	 * {@link GeneralPath#quadTo(float, float, float, float)} to interpolate between.
 	 * 
 	 * @param src
 	 *            the (2-dimensional) curve. Higher dimensions are ignored.
@@ -156,12 +184,12 @@ public abstract class ShaperUtils {
 	 * Maxima solution:
 	 * 
 	 * <pre>
-	 * x1_0 + k * v1_0 = x3_0 + l * v3_0;
-	 * x1_1 + k * v1_1 = x3_1 + l * v3_1;
+	 * k0_0 + l * v0_0 = k2_0 + m * v2_0;
+	 * k0_1 + l * v0_1 = k2_1 + m * v2_1;
 	 * solve([%o1,%o2],[k,l]);
-	 * subst(q, v1_1 * v3_0 - v1_0 * v3_1, %);
-	 * subst(dx_0 + x1_0, x3_0, %);
-	 * subst(dx_1 + x1_1, x3_1, %);
+	 * subst(q, v0_1 * v2_0 - v0_0 * v2_1, %);
+	 * subst(dx_0 + k0_0, k2_0, %);
+	 * subst(dx_1 + k0_1, k2_1, %);
 	 * ratsimp(%);
 	 * </pre>
 	 * 
@@ -176,43 +204,43 @@ public abstract class ShaperUtils {
 		final double eps = 1e-6;
 
 		// first control point (startpoint). The same as gp.getCurrentPoint()
-		final double x1_0 = f.at(0, 0, tmin);
-		final double x1_1 = f.at(1, 0, tmin);
+		final double k0_0 = f.at(0, 0, tmin);
+		final double k0_1 = f.at(1, 0, tmin);
 		// startpoint velocity
-		double v1_0 = f.at(0, 1, tmin);
-		double v1_1 = f.at(1, 1, tmin);
-		if (v1_0 * v1_0 + v1_1 * v1_1 < eps) {
+		double v0_0 = f.at(0, 1, tmin);
+		double v0_1 = f.at(1, 1, tmin);
+		if (v1_0 * v0_0 + v0_1 * v0_1 < eps) {
 			v1_0 = f.at(0, 1, tmin + eps);
 			v1_1 = f.at(1, 1, tmin + eps);
 		}
 
 		// 3rd control point (endpoint).
-		final double x3_0 = f.at(0, 0, tmax);
-		final double x3_1 = f.at(1, 0, tmax);
+		final double k2_0 = f.at(0, 0, tmax);
+		final double k2_1 = f.at(1, 0, tmax);
 		// endpoint velocity
-		double v3_0 = f.at(0, 1, tmax);
-		double v3_1 = f.at(1, 1, tmax);
-		if (v3_0 * v3_0 + v3_1 * v3_1 < eps) {
+		double v2_0 = f.at(0, 1, tmax);
+		double v2_1 = f.at(1, 1, tmax);
+		if (v3_0 * v2_0 + v2_1 * v2_1 < eps) {
 			v3_0 = f.at(0, 1, tmax - eps);
 			v3_1 = f.at(1, 1, tmax - eps);
 		}
 
 		// compute the 2nd control point
-		final double dx_0 = x3_0 - x1_0;
-		final double dx_1 = x3_1 - x1_1;
-		final double q = v1_1 * v3_0 - v1_0 * v3_1;
-		final double l = -(dx_0 * v1_1 - dx_1 * v1_0) / q;
+		final double dx_0 = k2_0 - k0_0;
+		final double dx_1 = k2_1 - k0_1;
+		final double q = v0_1 * v2_0 - v0_0 * v2_1;
+		final double m = -(dx_0 * v0_1 - dx_1 * v0_0) / q;
 
 		// 2nd control point is
-		final float x2_0 = (float) (x3_0 + l * v3_0);
-		final float x2_1 = (float) (x3_1 + l * v3_1);
+		final float k1_0 = (float) (x3_0 + m * v2_0);
+		final float k1_1 = (float) (x3_1 + m * v2_1);
 
 		if (true)
-			gp.quadTo(zoom * x2_0, zoom * x2_1, zoom * (float) x3_0, zoom
-					* (float) x3_1);
+			gp.quadTo(zoom * k1_0, zoom * k1_1, zoom * (float) k2_0, zoom
+					* (float) k2_1);
 		else {
-			gp.lineTo(zoom * x2_0, zoom * x2_1);
-			gp.lineTo(zoom * (float) x3_0, zoom * (float) x3_1);
+			gp.lineTo(zoom * k1_0, zoom * k1_1);
+			gp.lineTo(zoom * (float) k2_0, zoom * (float) k2_1);
 		}
 	}
 
@@ -233,5 +261,4 @@ public abstract class ShaperUtils {
 		}
 		return w.toString();
 	}
-
 }
