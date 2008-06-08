@@ -45,7 +45,7 @@ public class JCurlShaper extends NaturalShaper {
 	private final int samples;
 	private final float zoom;
 
-	/** use 20 samples */
+	/** use 5 samples */
 	public JCurlShaper() {
 		this(5);
 	}

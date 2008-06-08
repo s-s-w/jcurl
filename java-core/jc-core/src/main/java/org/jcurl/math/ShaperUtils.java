@@ -70,7 +70,7 @@ public abstract class ShaperUtils {
 					"Give me at least 2 (start + stop)");
 		final float d = (float) (max - min);
 		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
-				2 * (samples + 1)); // +1 just to be sure...
+				3 * (samples + 1)); // +1 just to be sure...
 		// start
 		final float x = (float) src.at(0, 0, min);
 		final float y = (float) src.at(1, 0, min);
