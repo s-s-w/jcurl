@@ -35,7 +35,10 @@
 	</category>
 	<category name="org.jcurl.demo.tactics.TrajectoryScenarioBean">
 		<level value="INFO"/>
-	</category>	
+	</category>
+	<category name="org.jcurl.math.ShaperUtils">
+		<level value="INFO"/>
+	</category>
 	<!-- ======================= -->
 	<!-- Setup the Root category -->
 	<!-- ======================= -->

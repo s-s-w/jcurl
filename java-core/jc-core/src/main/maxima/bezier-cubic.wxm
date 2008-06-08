@@ -30,7 +30,7 @@ l/n=a/c;
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-solve([%o2, %o3, %o4, %o5, %o6, %o7],[k1_0, k1_1, k2_0, k2_1, l, n]);
+solve([%th(6), %th(5), %th(4), %th(3), %th(2), %th(1)],[k1_0, k1_1, k2_0, k2_1, l, n]);
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */

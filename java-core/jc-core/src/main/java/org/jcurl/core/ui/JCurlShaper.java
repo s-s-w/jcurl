@@ -92,7 +92,7 @@ public class JCurlShaper extends NaturalShaper {
 	}
 
 	/**
-	 * Excellent results but currently not robust enough for production use.
+	 * Excellent results with few samples.
 	 * 
 	 * @param f
 	 * @param tmin

@@ -72,7 +72,7 @@ public abstract class PTrajectoryFactory extends GenTrajectoryFactory<PNode> {
 				c.setStrokePaint(line);
 				dst.addChild(c);
 			}
-			s = sh.toShapeQuad(src, tmin, tmax, 5, cip);
+			s = sh.toShapeCubic(src, tmin, tmax, 5, cip);
 			if (s != null) {
 				final PPath c = new PPath(s, stroke);
 				c.setPaint(null);

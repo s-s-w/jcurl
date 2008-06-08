@@ -40,8 +40,8 @@ public abstract class ShaperUtils {
 	/**
 	 * Turn a {@link R1RNFunction} (of at least 2 dimensions) into a
 	 * {@link Shape} with the given number of samples and cubic Bezier curves
-	 * {@link GeneralPath#quadTo(float, float, float, float)} to interpolate
-	 * between.
+	 * {@link GeneralPath#curveTo(float, float, float, float, float, float)} to
+	 * interpolate between.
 	 * 
 	 * @param src
 	 *            the (2-dimensional) curve. Higher dimensions are ignored.
@@ -196,6 +196,9 @@ public abstract class ShaperUtils {
 	 * 
 	 * TODO re-use endpoint location and velocity.
 	 * 
+	 * To find the 2 control points without further adaptive calculus, we assume
+	 * the distances k0-k1, k1-k2, k2-k3 have a fixed ratio a:b:c.
+	 * 
 	 * Maxima Solution:
 	 * 
 	 * <pre>
@@ -221,7 +224,6 @@ public abstract class ShaperUtils {
 	 * 	expand(%);
 	 * 	factor(%);
 	 * 	ratsubst(R, c*v3_0*B+a*v0_0*B+c*v3_1*A+a*v0_1*A, %);
-	 * 	
 	 * </pre>
 	 */
 	private static void curveTo(final R1RNFunction f, final double tmin,
@@ -267,9 +269,9 @@ public abstract class ShaperUtils {
 				* v0_0 * v0_0 - b * b;
 		final double Q = c * c * V3 + a * a * V0 + T + 2 * a * c * v0_1 * v3_1
 				- a * a * v0_1 * v0_1 - a * a * v0_0 * v0_0;
-		final double W = B * B * T + B * B * (b * b - Q) + c * c
+		double W = B * B * T + B * B * (b * b - Q) + c * c
 				* (v3_0 * v3_0 * B * B - v3_0 * v3_0 * A * A) - a * a * v0_1
-				* v0_1 * B * B + v3_1 * 2 * c * c * v3_0 * A * B * +2 * a * c
+				* v0_1 * B * B + v3_1 * 2 * c * c * v3_0 * A * B + 2 * a * c
 				* v0_0 * A * B + v0_1
 				* (2 * a * c * v3_0 * A * B + 2 * a * a * v0_0 * A * B) - 2 * a
 				* c * v0_0 * v3_0 * A * A - a * a * v0_0 * v0_0 * A * A + b * b
@@ -278,30 +280,31 @@ public abstract class ShaperUtils {
 				* A;
 
 		if (W < 0) {
-			if (log.isDebugEnabled()) {
-				log.debug("Arithmetic trouble:");
-				log.debug("v0=(" + v0_0 + ", " + v0_1 + ")");
-				log.debug("v3=(" + v3_0 + ", " + v3_1 + ")");
-				log.debug("V0=" + V0);
-				log.debug("V3=" + V3);
-				log.debug("A=" + A);
-				log.debug("B=" + B);
-				log.debug("T=" + T);
-				log.debug("Q=" + Q);
-				log.debug("W=" + W);
-				log.debug("R=" + R);
+			if (log.isWarnEnabled()) {
+				log.warn("Arithmetic trouble:");
+				log.warn("v0=(" + v0_0 + ", " + v0_1 + ")");
+				log.warn("v3=(" + v3_0 + ", " + v3_1 + ")");
+				log.warn("V0=" + V0);
+				log.warn("V3=" + V3);
+				log.warn("A=" + A);
+				log.warn("B=" + B);
+				log.warn("T=" + T);
+				log.warn("Q=" + Q);
+				log.warn("W=" + W);
+				log.warn("R=" + R);
 			}
-			gp.moveTo((float) k3_0, (float) k3_1);
+			gp.moveTo(zoom * (float) k3_0, zoom * (float) k3_1);
 			return;
 		}
-
+		W = Math.sqrt(W);
+		
 		final double l, n;
 		if (true) {
-			l = -a * (Math.sqrt(W) + R) / Q;
-			n = -c * (Math.sqrt(W) + R) / Q;
+			l = -a * (W + R) / Q;
+			n = -c * (W + R) / Q;
 		} else {
-			l = a * (Math.sqrt(W) - R) / Q;
-			n = c * (Math.sqrt(W) - R) / Q;
+			l = a * (W - R) / Q;
+			n = c * (W - R) / Q;
 		}
 		if (Double.isNaN(l) || Double.isNaN(n)) {
 			log.warn("v0=(" + v0_0 + ", " + v0_1 + ")");
@@ -320,11 +323,11 @@ public abstract class ShaperUtils {
 		final float k1_1 = (float) (k0_1 + l * v0_1);
 		final float k2_0 = (float) (k3_0 - n * v3_0);
 		final float k2_1 = (float) (k3_1 - n * v3_1);
-		// TODO zoom
 		if (log.isDebugEnabled())
 			log.debug("(" + k1_0 + ", " + k1_1 + "), (" + k2_0 + ", " + k2_1
 					+ "), (" + (float) k3_0 + ", " + (float) k3_1 + ")");
-		gp.curveTo(k1_0, k1_1, k2_0, k2_1, (float) k3_0, (float) k3_1);
+		gp.curveTo(zoom * k1_0, zoom * k1_1, zoom * k2_0, zoom * k2_1, zoom
+				* (float) k3_0, zoom * (float) k3_1);
 	}
 
 	private static float interpolate(final float min, final float max,
