@@ -1,0 +1,87 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created by wxMaxima version 0.7.3a ] */
+
+/* [wxMaxima: input   start ] */
+radsubstflag: true$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+k1_0 = k0_0 + l * v0_0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+k1_1 = k0_1 + l * v0_1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+k2_0 = k3_0 - n * v3_0;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+k2_1 = k3_1 - n * v3_1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+l/n=a/c;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+((k2_0 - k1_0)*(k2_0 - k1_0) + (k2_1 - k1_1)*(k2_1 - k1_1)) / n^2 = b^2 /c^2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+solve([%o2, %o3, %o4, %o5, %o6, %o7],[k1_0, k1_1, k2_0, k2_1, l, n]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsubst(V0, v0_1^2+v0_0^2, %);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsubst(V3, v3_1^2+v3_0^2, %);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsubst(A, k0_1-k3_1, %);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsubst(B, k0_0-k3_0, %);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsubst(T, 2*a*c*v0_0*v3_0+a^2*v0_1^2+a^2*v0_0^2-b^2, %);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsubst(Q, c^2*V3+a^2*V0+T+2*a*c*v0_1*v3_1-a^2*v0_1^2-a^2*v0_0^2, %);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsubst(W, B^2*T+B^2*(b^2-Q)+c^2*(v3_0^2*B^2-v3_0^2*A^2)-a^2*v0_1^2*B^2+v3_1*(2*c^2*v3_0*A*B
+ +2*a*c*v0_0*A*B)+v0_1*(2*a*c*v3_0*A*B+2*a^2*v0_0*A*B)-2*a*c*v0_0*v3_0*A^2-a^2*v0_0^2*A^2
+ +b^2*A^2, %);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+expand(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+factor(%);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsubst(R, c*v3_0*B+a*v0_0*B+c*v3_1*A+a*v0_1*A, %);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
