@@ -32,7 +32,7 @@ import org.jcurl.math.ShaperUtils;
 
 /**
  * The default jcurl {@link Shaper}. Details see
- * {@link #toShape(java.util.Iterator, double, double)}.
+ * {@link #toShape(R1RNFunction, double, double)}.
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
