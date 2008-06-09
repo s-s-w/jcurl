@@ -20,7 +20,6 @@
 package org.jcurl.demo.tactics;
 
 import java.awt.BorderLayout;
-import java.awt.Cursor;
 import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
@@ -44,7 +43,6 @@ import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.ChangeManager;
 import org.jcurl.core.ui.PosMemento;
-import org.jcurl.core.ui.TrajectoryBroomPromptWrapper;
 import org.jcurl.demo.tactics.sg.AnimateAffine;
 import org.jcurl.demo.tactics.sg.BroomPromptScenario;
 import org.jcurl.demo.tactics.sg.SGIceFactory;
@@ -66,8 +64,8 @@ import com.sun.scenario.scenegraph.event.SGMouseAdapter;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public class TrajectoryScenarioBean extends TrajectoryBean implements
-		ChangeListener {
+public class TrajectoryScenarioBean extends TrajectoryBean<Affine, SGGroup>
+		implements ChangeListener {
 	private class MoveHandler extends SGMouseAdapter {
 		private PosMemento first = null;
 		private final Point2D tmp = new Point2D.Double(0, 0);
@@ -107,15 +105,9 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 		}
 	}
 
-	private static final String ATTR_IDX16 = "idx16";
-	private static final String ATTR_ROCK = "rock";
-	private static final String ATTR_ROCKSET = "rockset";
-	private static final String ATTR_TRIGGER_CURVE_UPDATE = "trigger_curve_update";
 	private static final boolean DoCacheRocks = true;
 	private static final Log log = JCLoggerFactory
 			.getLogger(TrajectoryScenarioBean.class);
-	private static final Cursor moveC = Cursor
-			.getPredefinedCursor(Cursor.MOVE_CURSOR);
 	private static final long serialVersionUID = 6661957210899967106L;
 
 	private static SGNode createSceneIce() {
@@ -137,9 +129,8 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 
 	/** update one curve's path */
 	private static void syncM2V(final ComputedTrajectorySet src, final int i16,
-			final SGGroup dst, final SGTrajectoryFactory tf) {
-		syncM2V(src.getCurveStore().iterator(i16), i16, (SGGroup) dst
-				.getChildren().get(i16), tf);
+			final SGGroup[] dst, final SGTrajectoryFactory tf) {
+		syncM2V(src.getCurveStore().iterator(i16), i16, dst[i16], tf);
 
 	}
 
@@ -166,7 +157,6 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 
 	private final BroomPromptScenario broom = new BroomPromptScenario();
 	private final Affine[] current = new Affine[RockSet.ROCKS_PER_SET];
-	private ComputedTrajectorySet curves = null;
 	private final Affine dc2wc;
 	private final Affine[] initial = new Affine[RockSet.ROCKS_PER_SET];
 	private final MoveHandler mouse = new MoveHandler();
@@ -175,13 +165,11 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 	private final SGComposite opa_r1 = new SGComposite();
 	private final SGComposite opa_t0 = new SGComposite();
 	private final JSGPanel panel;
+	private final SGGroup[] path = new SGGroup[RockSet.ROCKS_PER_SET];
 	/** Rock<Pos> -> SGNode lookup */
 	private final Map<Rock<Pos>, Affine> r2n = new IdentityHashMap<Rock<Pos>, Affine>();
 	private final SGGroup rocks = new SGGroup();
 	private final transient SGTrajectoryFactory tf = new SGTrajectoryFactory.Fancy();
-	private transient RectangularShape tmpViewPort = null;
-	private final SGGroup paths = new SGGroup();
-	private final TrajectoryBroomPromptWrapper tt = new TrajectoryBroomPromptWrapper();
 	private final Affine zoom;
 
 	public TrajectoryScenarioBean() {
@@ -197,6 +185,7 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 		// rocks.setVisible(false);
 		final SGGroup r0 = new SGGroup();
 		final SGGroup r1 = new SGGroup();
+		final SGGroup pa = new SGGroup();
 		// rocks.add(traj);
 		final RockSet<Pos> home = RockSetUtils.allHome();
 		final RockSet<Pos> out = RockSetUtils.allOut();
@@ -204,14 +193,14 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 			Affine n = createSceneRock(home, i16, 255);
 			n.setMouseBlocker(true);
 			n.addMouseListener(mouse);
-			n.setCursor(moveC);
+			n.setCursor(CURSOR);
 			r0.add(initial[i16] = n);
 			r1.add(current[i16] = n = createSceneRock(out, i16, 255));
 			n.putAttribute(ATTR_TRIGGER_CURVE_UPDATE, true);
-			paths.add(new SGGroup());
+			pa.add(path[i16] = new SGGroup());
 		}
 		if (false) {
-			rocks.add(paths);
+			rocks.add(pa);
 			rocks.add(r0);
 			rocks.add(r1);
 		} else {
@@ -222,7 +211,7 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 			opa_r1.setChild(r1);
 			opa_r1.setOverlapBehavior(OverlapBehavior.LAYER);
 
-			opa_t0.setChild(paths);
+			opa_t0.setChild(pa);
 			opa_t0.setMouseBlocker(true);
 			opa_t0.setOverlapBehavior(OverlapBehavior.LAYER);
 			opa_t0.setOpacity(100.0F / 255.0F);
@@ -232,6 +221,7 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 			rocks.add(opa_r1);
 		}
 		rocks.add(broom.getScene());
+		rocks.setVisible(false);
 		world.add(rocks);
 
 		final AffineTransform rightHand = AffineTransform.getScaleInstance(1,
@@ -241,14 +231,6 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 		broom.setDc2wc(dc2wc);
 		panel.setScene(zoom);
 		setVisible(true);
-		rocks.setVisible(false);
-	}
-
-	private void addCL(final RockSet<Pos> s) {
-		if (s == null)
-			return;
-		for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--)
-			s.getRock(i16).addChangeListener(this);
 	}
 
 	private Affine createSceneRock(final RockSet<Pos> pos, final int i16,
@@ -256,40 +238,21 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 		return syncM2V(pos, i16, createSceneRock(i16, opacity));
 	}
 
-	/** keep the recent viewport visible */
-	@Override
-	public void doLayout() {
-		super.doLayout();
-		if (tmpViewPort != null)
-			zoom.setAffine(AnimateAffine.map(tmpViewPort, this.getBounds(),
-					zoom.getAffine()));
-	}
+	/**
+	 * keep the recent viewport visible
+	 * 
+	 * @Override public void doLayout() { super.doLayout(); if (tmpViewPort !=
+	 *           null) zoom.setAffine(AnimateAffine.map(tmpViewPort,
+	 *           this.getBounds(), zoom.getAffine())); }
+	 */
 
 	@Override
 	public BroomPromptModel getBroom() {
 		return broom.getModel();
 	}
 
-	@Override
-	public ComputedTrajectorySet getCurves() {
-		return curves;
-	}
-
 	Affine getDc2Wc() {
 		return dc2wc;
-	}
-
-	public RectangularShape getZoom() {
-		if (tmpViewPort == null)
-			return null;// pico.getCamera().getViewBounds();
-		return tmpViewPort;
-	}
-
-	private void removeCL(final RockSet<Pos> s) {
-		if (s == null)
-			return;
-		for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--)
-			s.getRock(i16).removeChangeListener(this);
 	}
 
 	@Override
@@ -315,7 +278,7 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 			for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--) {
 				syncM2V(ip, i16, initial[i16]);
 				syncM2V(cp, i16, current[i16]);
-				syncM2V(getCurves(), i16, paths, tf);
+				syncM2V(getCurves(), i16, path, tf);
 			}
 		}
 		tt.init(this.curves);
@@ -339,7 +302,7 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 			if (!Boolean.TRUE.equals(n.getAttribute(ATTR_TRIGGER_CURVE_UPDATE)))
 				return;
 			final int i16 = (Integer) n.getAttribute(ATTR_IDX16);
-			syncM2V(getCurves(), i16, paths, tf);
+			syncM2V(getCurves(), i16, path, tf);
 		} else if (log.isDebugEnabled())
 			log.debug("Unconsumed event from " + e.getSource());
 	}

@@ -366,6 +366,8 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 
 	/** adjust position + rotation */
 	private void setBroom(final Point2D b) {
+		if(b == null)
+			return;
 		final AffineTransform t = getTransformReference(true);
 		t.setToIdentity();
 		t.translate(b.getX(), b.getY());

@@ -31,7 +31,7 @@ import org.jcurl.math.R1RNFunction;
  * Create a scenegraph node for a combined curve describing the path of one
  * rock.
  * 
- * <N> scenegraph group node type
+ * @param <N> scenegraph group node type
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:PTrajectoryFactory.java 795 2008-03-19 13:40:42Z mrohrmoser $
