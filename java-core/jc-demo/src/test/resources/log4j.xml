@@ -33,7 +33,7 @@
 	<category name="org.jcurl.demo.tactics.BroomSwingBean">
 		<level value="DEBUG"/>
 	</category>
-	<category name="org.jcurl.demo.tactics.TrajectoryScenarioBean">
+	<category name="org.jcurl.demo.tactics.TrajectoryPiccoloBean">
 		<level value="INFO"/>
 	</category>
 	<category name="org.jcurl.math.ShaperUtils">

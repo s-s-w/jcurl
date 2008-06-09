@@ -37,7 +37,6 @@ import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.DefaultBroomPromptModel;
 import org.jcurl.zui.piccolo.BroomPromptSimple;
-import org.jcurl.zui.piccolo.KeyboardZoom;
 import org.jcurl.zui.piccolo.PIceFactory;
 
 import edu.umd.cs.piccolo.PCamera;
@@ -96,8 +95,8 @@ public class BroomPromptDemo {
 						.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 				pc
 						.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-				pc.getRoot().getDefaultInputManager().setKeyboardFocus(
-						new KeyboardZoom(pc.getCamera()));
+//				pc.getRoot().getDefaultInputManager().setKeyboardFocus(
+//						new KeyboardZoom(pc.getCamera()));
 				pc.setBackground(new Color(0xE8E8FF));
 
 				final PNode ice = new PIceFactory.Fancy().newInstance();

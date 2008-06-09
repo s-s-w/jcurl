@@ -39,7 +39,7 @@ import edu.umd.cs.piccolo.event.PInputEvent;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:KeyboardZoom.java 795 2008-03-19 13:40:42Z mrohrmoser $
  */
-public class KeyboardZoom extends PBasicInputEventHandler {
+class KeyboardZoom extends PBasicInputEventHandler {
 	private static final int _500 = 500;
 
 	/** All from back to back */

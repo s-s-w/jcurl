@@ -56,9 +56,9 @@ public abstract class PRockFactory implements Factory {
 		}
 
 		@Override
-		public PRockNode newInstance(final int i8, final boolean isDark,
+		public PNode newInstance(final int i8, final boolean isDark,
 				final Rock<Pos> rock) {
-			final PRockNode r = new PRockNode(i8, isDark, rock);
+			final PNode r = new PNode();
 			r.addChild(node(IceShapes.ROCK_OUTER, IceShapes.alpha(
 					colors.granite, alpha), null, null));
 			r.addChild(node(IceShapes.ROCK_INNER, IceShapes.alpha(
@@ -75,7 +75,7 @@ public abstract class PRockFactory implements Factory {
 				t.setPickable(false);
 				r.addChild(t);
 			}
-			// r.setChildrenPickable(false);
+			//r.setChildrenPickable(false);
 			// r.setPickable(true);
 			r.getChild(0).setPickable(true);
 			return r;
@@ -90,9 +90,9 @@ public abstract class PRockFactory implements Factory {
 		}
 
 		@Override
-		public PRockNode newInstance(final int i8, final boolean isDark,
+		public PNode newInstance(final int i8, final boolean isDark,
 				final Rock<Pos> rock) {
-			final PRockNode r = new PRockNode(i8, isDark, rock);
+			final PNode r = new PNode();
 			// fill to also make the body, not only the edge
 			// pickable:
 			r.addChild(node(IceShapes.ROCK_OUTER, isDark ? colors.dark
@@ -111,27 +111,10 @@ public abstract class PRockFactory implements Factory {
 		return n;
 	}
 
-	protected static boolean sync(final Rock<Pos> src, final PRockNode dst) {
-		// check if it's changed either location or angle:
-		if (src.p().distanceSq(dst.getOffset()) < PPositionSet.eps
-				&& Math.abs(src.getA() - dst.getRotation()) < PPositionSet.eps)
-			return false;
-		if (true)
-			dst.setTransform(src.getAffineTransform());
-		else {
-			dst.setRotation(src.getA());
-			dst.setOffset(src.getX(), src.getY());
-		}
-		dst.invalidatePaint();
-		// Why is this necessary?
-		dst.repaint();
-		return true;
-	}
-
-	public abstract PRockNode newInstance(final int i8, final boolean isDark,
+	public abstract PNode newInstance(final int i8, final boolean isDark,
 			Rock<Pos> rock);
 
-	public PRockNode newInstance(final int i16, final Rock<Pos> rock) {
+	public PNode newInstance(final int i16, final Rock<Pos> rock) {
 		return newInstance(RockSet.toIdx8(i16), RockSet.isDark(i16), rock);
 	}
 }

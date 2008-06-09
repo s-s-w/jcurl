@@ -1,27 +1,26 @@
 /*
- * jcurl java curling software framework http://www.jcurl.org
- * Copyright (C) 2005-2008 M. Rohrmoser
+ * jcurl java curling software framework http://www.jcurl.org Copyright (C)
+ * 2005-2008 M. Rohrmoser
  * 
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  * 
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
- * Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  * 
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 package org.jcurl.zui.piccolo;
 
 import java.awt.Paint;
 import java.awt.Shape;
 import java.awt.Stroke;
-import java.awt.geom.AffineTransform;
 
 import org.jcurl.core.api.Factory;
 import org.jcurl.core.ui.IceShapes;
@@ -31,8 +30,8 @@ import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.nodes.PPath;
 
 /**
- * Creates a unpickable {@link PNode} displaying a sheet of ice with a <b>RIGHT
- * HANDED</b> coordinate system.
+ * Creates a unpickable {@link PNode} displaying a sheet of ice assuming a
+ * <b>RIGHT HANDED</b> coordinate system.
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:PIceFactory.java 795 2008-03-19 13:40:42Z mrohrmoser $
@@ -43,11 +42,6 @@ public abstract class PIceFactory implements Factory {
 
 		private static final IceColors colors = new IceColors();
 
-		/**
-		 * Do it!
-		 * 
-		 * @return the new PNode
-		 */
 		@Override
 		public PNode newInstance() {
 			final PNode ice = new PNode();
@@ -84,11 +78,7 @@ public abstract class PIceFactory implements Factory {
 							colors.stroke));
 			ice.setChildrenPickable(false);
 			ice.setPickable(false);
-			final PNode r = new PNode();
-			r.addChild(ice);
-			// Make coord-sys right-handed:
-			r.setTransform(AffineTransform.getScaleInstance(1, -1));
-			return r;
+			return ice;
 		}
 	}
 

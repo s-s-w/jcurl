@@ -36,9 +36,9 @@ import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.ComputedTrajectorySet;
-import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
@@ -164,7 +164,7 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 		dst.setAffine(src.getAffineTransform());
 	}
 
-	private final BroomPromptScenario bp = new BroomPromptScenario();
+	private final BroomPromptScenario broom = new BroomPromptScenario();
 	private final Affine[] current = new Affine[RockSet.ROCKS_PER_SET];
 	private ComputedTrajectorySet curves = null;
 	private final Affine dc2wc;
@@ -174,25 +174,25 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 	private final SGComposite opa_r0 = new SGComposite();
 	private final SGComposite opa_r1 = new SGComposite();
 	private final SGComposite opa_t0 = new SGComposite();
-	private final JSGPanel pico;
+	private final JSGPanel panel;
 	/** Rock<Pos> -> SGNode lookup */
 	private final Map<Rock<Pos>, Affine> r2n = new IdentityHashMap<Rock<Pos>, Affine>();
-	private final SGGroup scene = new SGGroup();
+	private final SGGroup rocks = new SGGroup();
 	private final transient SGTrajectoryFactory tf = new SGTrajectoryFactory.Fancy();
 	private transient RectangularShape tmpViewPort = null;
-	private final SGGroup traj = new SGGroup();
+	private final SGGroup paths = new SGGroup();
 	private final TrajectoryBroomPromptWrapper tt = new TrajectoryBroomPromptWrapper();
 	private final Affine zoom;
 
 	public TrajectoryScenarioBean() {
-		bp.setModel(tt);
-		pico = new JSGPanel();
+		broom.setModel(tt);
+		panel = new JSGPanel();
 		setVisible(false);
 		setLayout(new BorderLayout());
-		add(pico, BorderLayout.CENTER);
+		add(panel, BorderLayout.CENTER);
 
-		final SGGroup root = new SGGroup();
-		root.add(createSceneIce());
+		final SGGroup world = new SGGroup();
+		world.add(createSceneIce());
 
 		// rocks.setVisible(false);
 		final SGGroup r0 = new SGGroup();
@@ -208,12 +208,12 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 			r0.add(initial[i16] = n);
 			r1.add(current[i16] = n = createSceneRock(out, i16, 255));
 			n.putAttribute(ATTR_TRIGGER_CURVE_UPDATE, true);
-			traj.add(new SGGroup());
+			paths.add(new SGGroup());
 		}
 		if (false) {
-			scene.add(traj);
-			scene.add(r0);
-			scene.add(r1);
+			rocks.add(paths);
+			rocks.add(r0);
+			rocks.add(r1);
 		} else {
 			opa_r0.setChild(r0);
 			opa_r0.setOpacity(64.0F / 255.0F);
@@ -222,26 +222,26 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 			opa_r1.setChild(r1);
 			opa_r1.setOverlapBehavior(OverlapBehavior.LAYER);
 
-			opa_t0.setChild(traj);
+			opa_t0.setChild(paths);
 			opa_t0.setMouseBlocker(true);
 			opa_t0.setOverlapBehavior(OverlapBehavior.LAYER);
 			opa_t0.setOpacity(100.0F / 255.0F);
 
-			scene.add(opa_t0);
-			scene.add(opa_r0);
-			scene.add(opa_r1);
+			rocks.add(opa_t0);
+			rocks.add(opa_r0);
+			rocks.add(opa_r1);
 		}
-		scene.add(bp.getScene());
-		root.add(scene);
+		rocks.add(broom.getScene());
+		world.add(rocks);
 
 		final AffineTransform rightHand = AffineTransform.getScaleInstance(1,
 				-1);
 		zoom = SGTransform.createAffine(new AffineTransform(),
-				dc2wc = SGTransform.createAffine(rightHand, root));
-		bp.setDc2wc(dc2wc);
-		pico.setScene(zoom);
+				dc2wc = SGTransform.createAffine(rightHand, world));
+		broom.setDc2wc(dc2wc);
+		panel.setScene(zoom);
 		setVisible(true);
-		scene.setVisible(false);
+		rocks.setVisible(false);
 	}
 
 	private void addCL(final RockSet<Pos> s) {
@@ -267,7 +267,7 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 
 	@Override
 	public BroomPromptModel getBroom() {
-		return bp.getModel();
+		return broom.getModel();
 	}
 
 	@Override
@@ -295,7 +295,7 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 	@Override
 	public void setChanger(final ChangeManager changer) {
 		super.setChanger(changer);
-		bp.setChanger(changer);
+		broom.setChanger(changer);
 	}
 
 	@Override
@@ -315,11 +315,11 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 			for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--) {
 				syncM2V(ip, i16, initial[i16]);
 				syncM2V(cp, i16, current[i16]);
-				syncM2V(getCurves(), i16, traj, tf);
+				syncM2V(getCurves(), i16, paths, tf);
 			}
 		}
 		tt.init(this.curves);
-		scene.setVisible(this.curves != null);
+		rocks.setVisible(this.curves != null);
 	}
 
 	public void setZoom(final RectangularShape viewport,
@@ -339,7 +339,7 @@ public class TrajectoryScenarioBean extends TrajectoryBean implements
 			if (!Boolean.TRUE.equals(n.getAttribute(ATTR_TRIGGER_CURVE_UPDATE)))
 				return;
 			final int i16 = (Integer) n.getAttribute(ATTR_IDX16);
-			syncM2V(getCurves(), i16, traj, tf);
+			syncM2V(getCurves(), i16, paths, tf);
 		} else if (log.isDebugEnabled())
 			log.debug("Unconsumed event from " + e.getSource());
 	}

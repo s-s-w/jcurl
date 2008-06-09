@@ -2,108 +2,225 @@ package org.jcurl.demo.tactics;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RectangularShape;
+import java.util.IdentityHashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import org.apache.commons.logging.Log;
 import org.jcurl.core.api.ComputedTrajectorySet;
+import org.jcurl.core.api.Rock;
+import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockSetUtils;
+import org.jcurl.core.api.RockType.Pos;
+import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.BroomPromptModel;
 import org.jcurl.core.ui.ChangeManager;
 import org.jcurl.core.ui.PosMemento;
 import org.jcurl.core.ui.TrajectoryBroomPromptWrapper;
+import org.jcurl.math.R1RNFunction;
 import org.jcurl.zui.piccolo.BroomPromptSimple;
-import org.jcurl.zui.piccolo.KeyboardZoom;
-import org.jcurl.zui.piccolo.PCurveStore;
 import org.jcurl.zui.piccolo.PIceFactory;
-import org.jcurl.zui.piccolo.PPositionSet;
 import org.jcurl.zui.piccolo.PRockFactory;
-import org.jcurl.zui.piccolo.PRockNode;
 import org.jcurl.zui.piccolo.PTrajectoryFactory;
-import org.jcurl.zui.piccolo.PRockNode.DragHandler;
 
-import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PLayer;
 import edu.umd.cs.piccolo.PNode;
-import edu.umd.cs.piccolo.event.PInputEventListener;
+import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
+import edu.umd.cs.piccolo.event.PInputEvent;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
-public class TrajectoryPiccoloBean extends TrajectoryBean {
-	class Controller {
-		final PInputEventListener keyZoom;
-		final PInputEventListener rockMove = new DragHandler() {
-			private PosMemento start = null;
+public class TrajectoryPiccoloBean extends TrajectoryBean implements
+		ChangeListener {
 
-			@Override
-			protected void pushChange(final boolean isDrop,
-					final PRockNode node, final Point2D currentPos,
-					final Point2D startPos) {
-				// mouse moved
-				final PosMemento m = new PosMemento(cm.getInitialPos(),
-						(Integer) node.getAttribute(PRockNode.INDEX16),
-						currentPos);
-				if (start == null)
-					start = m;
-				if (isDrop) {
-					getChanger().undoable(start, m);
-					start = null;
-				} else
-					getChanger().temporary(m);
+	private class MoveHandler extends PBasicInputEventHandler {
+		private PosMemento first = null;
+
+		private PNode climb(PNode node) {
+			for (;;) {
+				if (node.getPickable() && node.getAttribute(ATTR_IDX16) != null)
+					return node;
+				node = node.getParent();
+				if (node == null)
+					return null;
 			}
-		};
+		}
 
-		Controller(final PCamera cam) {
-			keyZoom = new KeyboardZoom(cam);
+		@SuppressWarnings("unchecked")
+		private PosMemento create(final PInputEvent e, final PNode node) {
+			final RockSet<Pos> rs = (RockSet<Pos>) node
+					.getAttribute(ATTR_ROCKSET);
+			final Point2D p = world.globalToLocal(e.getPosition());
+			if (log.isDebugEnabled())
+				log.debug(p);
+			return new PosMemento(rs, (Integer) node.getAttribute(ATTR_IDX16),
+					p);
+		}
+
+		@Override
+		public void mouseDragged(final PInputEvent e) {
+			final PNode node = climb(e.getPickedNode());
+			if (log.isDebugEnabled())
+				log.debug(node.getAttribute(ATTR_IDX16));
+			getChanger().temporary(create(e, node));
+			e.setHandled(true);
+		}
+
+		@Override
+		public void mouseEntered(final PInputEvent arg0) {
+			super.mouseEntered(arg0);
+			arg0.pushCursor(CURSOR);
+		}
+
+		@Override
+		public void mouseExited(final PInputEvent arg0) {
+			super.mouseExited(arg0);
+			arg0.popCursor();
+		}
+
+		@Override
+		public void mousePressed(final PInputEvent e) {
+			final PNode node = climb(e.getPickedNode());
+			if (log.isDebugEnabled())
+				log.debug(node.getAttribute(ATTR_IDX16));
+			final int i16 = (Integer) node.getAttribute(ATTR_IDX16);
+			final RockSet<Pos> ipos = getCurves().getInitialPos();
+			first = new PosMemento(ipos, i16, ipos.getRock(i16).p());
+			e.setHandled(true);
+		}
+
+		@Override
+		public void mouseReleased(final PInputEvent e) {
+			final PNode node = climb(e.getPickedNode());
+			if (log.isDebugEnabled())
+				log.debug(node.getAttribute(ATTR_IDX16));
+			getChanger().undoable(first, create(e, node));
+			e.setHandled(true);
 		}
 	}
 
+	private static final String ATTR_IDX16 = "idx16";
+	private static final String ATTR_ROCK = "rock";
+	private static final String ATTR_ROCKSET = "rockset";
+	private static final String ATTR_TRIGGER_CURVE_UPDATE = "trigger_curve_update";
+	private static final Cursor CURSOR = new Cursor(Cursor.HAND_CURSOR);
+	private static final Log log = JCLoggerFactory
+			.getLogger(TrajectoryPiccoloBean.class);
 	private static final long serialVersionUID = -4648771240323713217L;
-	private static final int TMAX = 30;
-	private final BroomPromptSimple broom;
-	private ComputedTrajectorySet cm = null;
-	private final Controller con;
-	private final PPositionSet current;
-	private final PNode ice;
-	private final PPositionSet initial;
+
+	/** update one curve's path */
+	private static void syncM2V(final ComputedTrajectorySet src, final int i16,
+			final PNode dst, final PTrajectoryFactory tf) {
+		syncM2V(src.getCurveStore().iterator(i16), i16, dst.getChild(i16), tf);
+	}
+
+	/** update one curves' path */
+	private static void syncM2V(
+			final Iterator<Entry<Double, R1RNFunction>> src, final int i16,
+			final PNode dst, final PTrajectoryFactory tf) {
+		if (log.isDebugEnabled())
+			log.debug("path " + i16);
+		tf.refresh(src, RockSet.isDark(i16), 0, 30, dst);
+	}
+
+	/** update one rock */
+	private static void syncM2V(final Rock<Pos> src, final PNode dst) {
+		if (src == null || dst == null) {
+			if (log.isDebugEnabled())
+				log.debug(src + " " + dst);
+			return;
+		}
+		if (log.isDebugEnabled())
+			log.debug("rock " + dst.getAttribute(ATTR_IDX16));
+		dst.setTransform(src.getAffineTransform());
+	}
+
+	private final BroomPromptSimple broom = new BroomPromptSimple();
+	private final PNode[] current = new PNode[RockSet.ROCKS_PER_SET];
+	private ComputedTrajectorySet curves = null;
+	private final PNode[] initial = new PNode[RockSet.ROCKS_PER_SET];
 	private final int major = 255;
 	private final int minor = 64;
-	private final PCanvas pico;
+	private final MoveHandler mouse = new MoveHandler();
+	private final PCanvas panel;
+	private final PNode paths;
+	/** Rock<Pos> -> SGNode lookup */
+	private final Map<Rock<Pos>, PNode> r2n = new IdentityHashMap<Rock<Pos>, PNode>();
+	private final PNode rocks;
+	private final PTrajectoryFactory tf = new PTrajectoryFactory.Fancy();
 	private transient volatile Rectangle2D tmpViewPort = null;
-	private final PCurveStore traj;
+	private final TrajectoryBroomPromptWrapper tt = new TrajectoryBroomPromptWrapper();
+	private final PNode world;
 
 	public TrajectoryPiccoloBean() {
-		pico = new PCanvas();
+		broom.setModel(tt);
+		panel = new PCanvas();
 		setVisible(false);
 		setLayout(new BorderLayout());
-		add(pico, BorderLayout.CENTER);
-		pico.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-		pico.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+		add(panel, BorderLayout.CENTER);
+		panel.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+		panel.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 
-		con = new Controller(pico.getCamera());
-		pico.addInputEventListener(con.keyZoom);
+		// con = new Controller(panel.getCamera());
 
-		// create the scene
-		ice = new PIceFactory.Fancy().newInstance();
-		traj = new PCurveStore(new PTrajectoryFactory.Fancy(), TMAX);
-		initial = new PPositionSet(new PRockFactory.Fancy(minor));
-		initial.addInputEventListener(con.rockMove);
-		current = new PPositionSet(new PRockFactory.Fancy(major));
-		broom = new BroomPromptSimple();
-		broom.setModel(new TrajectoryBroomPromptWrapper());
+		// create the WC coordinate system
+		world = new PNode();
+		world.setTransform(AffineTransform.getScaleInstance(1, -1));
+		// add the ice
+		world.addChild(new PIceFactory.Fancy().newInstance());
+		// add initial, current rock and paths
+		final PNode init = new PNode();
+		final PNode curr = new PNode();
+		paths = new PNode();
+		rocks = new PNode();
+		final RockSet<Pos> home = RockSetUtils.allHome();
+		final RockSet<Pos> out = RockSetUtils.allOut();
+		final PRockFactory iniRf = new PRockFactory.Fancy(minor);
+		final PRockFactory curRf = new PRockFactory.Fancy(major);
+		for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--) {
+			// initial (read/write) rocks 
+			PNode n;
+			init.addChild(n = initial[i16] = iniRf.newInstance(i16, home
+					.getRock(i16)));
+			n.setPickable(true);
+			n.addInputEventListener(mouse);
 
-		traj.setVisible(false);
-		current.setVisible(false);
-		initial.setVisible(false);
-		broom.setVisible(false);
+			// current (read-only) rocks 
+			curr.addChild(n = current[i16] = curRf.newInstance(i16, out
+					.getRock(i16)));
+			n.addAttribute(ATTR_TRIGGER_CURVE_UPDATE, true);
+			n.setChildrenPickable(false);
 
-		ice.addChild(traj);
-		ice.addChild(current);
-		ice.addChild(initial);
-		ice.addChild(broom);
+			// trajectories (read-only) 
+			paths.addChild(new PNode());
+		}
+		rocks.addChild(paths);
+		rocks.addChild(init);
+		rocks.addChild(curr);
+		rocks.addChild(broom);
+		rocks.setVisible(false);
 
-		pico.getLayer().addChild(ice);
-		pico.setBackground(super.getBackground());
+		world.addChild(rocks);
+
+		panel.getLayer().addChild(world);
+		panel.setBackground(super.getBackground());
 		setVisible(true);
+	}
+
+	private void addCL(final RockSet<Pos> s) {
+		if (s == null)
+			return;
+		for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--)
+			s.getRock(i16).addChangeListener(this);
 	}
 
 	/** keep the recent viewport visible */
@@ -111,7 +228,7 @@ public class TrajectoryPiccoloBean extends TrajectoryBean {
 	public void doLayout() {
 		super.doLayout();
 		if (tmpViewPort != null)
-			pico.getCamera().setViewBounds(tmpViewPort);
+			panel.getCamera().setViewBounds(tmpViewPort);
 	}
 
 	@Override
@@ -121,22 +238,29 @@ public class TrajectoryPiccoloBean extends TrajectoryBean {
 
 	@Override
 	public ComputedTrajectorySet getCurves() {
-		return cm;
+		return curves;
 	}
 
 	PLayer getIceLayer() {
-		return pico.getLayer();
+		return panel.getLayer();
 	}
 
 	public RectangularShape getZoom() {
 		if (tmpViewPort == null)
-			return pico.getCamera().getViewBounds();
+			return panel.getCamera().getViewBounds();
 		return tmpViewPort;
+	}
+
+	private void removeCL(final RockSet<Pos> s) {
+		if (s == null)
+			return;
+		for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--)
+			s.getRock(i16).removeChangeListener(this);
 	}
 
 	@Override
 	public void setBackground(final Color bg) {
-		pico.setBackground(bg);
+		panel.setBackground(bg);
 		super.setBackground(bg);
 	}
 
@@ -147,35 +271,27 @@ public class TrajectoryPiccoloBean extends TrajectoryBean {
 	}
 
 	@Override
-	public void setCurves(final ComputedTrajectorySet model) {
-		// sync curve- and broom data models:
-		if (model == null)
-			broom.setModel(null);
-		else {
-			final TrajectoryBroomPromptWrapper bpm;
-			if (broom.getModel() == null
-					|| !(broom.getModel() instanceof TrajectoryBroomPromptWrapper))
-				bpm = new TrajectoryBroomPromptWrapper();
-			else
-				bpm = (TrajectoryBroomPromptWrapper) broom.getModel();
-			bpm.init(model);
-			broom.setModel(bpm);
+	public void setCurves(final ComputedTrajectorySet curves) {
+		// rocks.setVisible(model != null);
+		if (this.curves != null) {
+			removeCL(this.curves.getInitialPos());
+			removeCL(this.curves.getCurrentPos());
 		}
-
-		cm = model;
-		if (model == null) {
-			traj.setModel(null);
-			current.setModel(null);
-			initial.setModel(null);
-		} else {
-			traj.setModel(model.getCurveStore());
-			current.setModel(model.getCurrentPos());
-			initial.setModel(model.getInitialPos());
+		this.curves = curves;
+		r2n.clear();
+		if (this.curves != null) {
+			final RockSet<Pos> ip = this.curves.getInitialPos();
+			final RockSet<Pos> cp = this.curves.getCurrentPos();
+			addCL(ip);
+			addCL(cp);
+			for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--) {
+				syncM2V(ip, i16, initial[i16]);
+				syncM2V(cp, i16, current[i16]);
+				syncM2V(getCurves(), i16, paths, tf);
+			}
 		}
-		traj.setVisible(model != null);
-		current.setVisible(model != null);
-		initial.setVisible(model != null);
-		broom.setVisible(model != null);
+		tt.init(this.curves);
+		rocks.setVisible(this.curves != null);
 	}
 
 	public void setZoom(final RectangularShape viewport, int transitionMillis) {
@@ -188,6 +304,40 @@ public class TrajectoryPiccoloBean extends TrajectoryBean {
 			r = new Rectangle2D.Double(viewport.getX(), viewport.getY(),
 					viewport.getWidth(), viewport.getHeight());
 		tmpViewPort = (Rectangle2D) r.clone();
-		pico.getCamera().animateViewToCenterBounds(r, true, transitionMillis);
+		panel.getCamera().animateViewToCenterBounds(r, true, transitionMillis);
+	}
+
+	public void stateChanged(final ChangeEvent e) {
+		if (e.getSource() instanceof Rock) {
+			// update the rock position, be it initial or current
+			final Rock<Pos> r = (Rock<Pos>) e.getSource();
+			final PNode n = r2n.get(r);
+			syncM2V(r, n);
+
+			// update the trajectory path, current only.
+			if (!Boolean.TRUE.equals(n.getAttribute(ATTR_TRIGGER_CURVE_UPDATE)))
+				return;
+			final int i16 = (Integer) n.getAttribute(ATTR_IDX16);
+			syncM2V(getCurves(), i16, paths, tf);
+		} else if (log.isDebugEnabled())
+			log.debug("Unconsumed event from " + e.getSource());
+	}
+
+	/**
+	 * rather an "init" than sync. Don't use with high frequency.
+	 * 
+	 * @param src
+	 * @param i16
+	 * @param dst
+	 * @return
+	 */
+	private PNode syncM2V(final RockSet<Pos> src, final int i16, final PNode dst) {
+		final Rock<Pos> r = src.getRock(i16);
+		syncM2V(r, dst);
+		dst.addAttribute(ATTR_ROCKSET, src);
+		dst.addAttribute(ATTR_ROCK, r);
+		dst.addAttribute(ATTR_IDX16, i16);
+		r2n.put(r, dst);
+		return dst;
 	}
 }
