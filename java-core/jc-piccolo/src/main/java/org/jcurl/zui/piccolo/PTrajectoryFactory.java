@@ -34,6 +34,7 @@ import org.jcurl.math.Interpolator;
 import org.jcurl.math.Interpolators;
 import org.jcurl.math.R1RNFunction;
 import org.jcurl.math.Shaper;
+import org.jcurl.math.ShaperUtils;
 
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.nodes.PPath;
@@ -56,23 +57,31 @@ public abstract class PTrajectoryFactory extends GenTrajectoryFactory<PNode> {
 		private static final Interpolator cip = Interpolators
 				.getLinearInstance();
 		private static final Paint line = Color.GREEN;
+		/** very fine line sampling */
+		private static final JCurlShaper liner = new JCurlShaper() {
+			@Override
+			protected Shape doRender(R1RNFunction f, double tmin, double tmax,
+					int samples, float zoom, Interpolator ip) {
+				return ShaperUtils.approximateLinear(f, tmin, tmax, 1000,
+						zoom, cip);
+			}
+		};
 		private static final Stroke lineS = new BasicStroke(0.01F);
-		/** sampling style along the {@link R1RNFunction} */
 		private static final JCurlShaper sh = new JCurlShaper();
-		private static final Stroke stroke = new IceShapes.IceColors().stroke;
+		private static final Stroke stroke = new BasicStroke(0.005F);
 
 		@Override
 		protected void addSegment(final R1RNFunction src, final double tmin,
 				final double tmax, final boolean isDark, final PNode dst) {
 			log.debug("  segment");
-			Shape s = sh.toShapeLine(src, tmin, tmax, 1000);
+			Shape s = liner.toShape(src, tmin, tmax);
 			if (s != null) {
 				final PPath c = new PPath(s, lineS);
 				c.setPaint(null);
 				c.setStrokePaint(line);
 				dst.addChild(c);
 			}
-			s = sh.toShapeCubic(src, tmin, tmax, 5, cip);
+			s = sh.toShape(src, tmin, tmax);
 			if (s != null) {
 				final PPath c = new PPath(s, stroke);
 				c.setPaint(null);
@@ -124,5 +133,4 @@ public abstract class PTrajectoryFactory extends GenTrajectoryFactory<PNode> {
 		parent.removeAllChildren();
 		return parent;
 	}
-
 }

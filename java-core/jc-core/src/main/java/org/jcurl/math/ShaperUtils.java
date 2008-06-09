@@ -39,9 +39,9 @@ public abstract class ShaperUtils {
 
 	/**
 	 * Turn a {@link R1RNFunction} (of at least 2 dimensions) into a
-	 * {@link Shape} with the given number of samples and cubic Bezier curves
+	 * {@link Shape} with the given number of cubic Bezier curves
 	 * {@link GeneralPath#curveTo(float, float, float, float, float, float)} to
-	 * interpolate between.
+	 * interpolate.
 	 * 
 	 * @param src
 	 *            the (2-dimensional) curve. Higher dimensions are ignored.
@@ -51,9 +51,8 @@ public abstract class ShaperUtils {
 	 * @param max
 	 *            the max input <code>t</code> to
 	 *            {@link R1RNFunction#at(int, int, double)}
-	 * @param samples
-	 *            the number of samples (start + stop + intermediate) - must be
-	 *            &gt;= 2 (start + stop + intermediate).
+	 * @param curves
+	 *            the number of curves - must be &gt;= 1.
 	 * @param zoom
 	 *            graphics zoom factor (typically 1)
 	 * @param ip
@@ -62,15 +61,15 @@ public abstract class ShaperUtils {
 	 * @see #curveTo(R1RNFunction, double, double, GeneralPath, float)
 	 */
 	public static Shape approximateCubic(final R1RNFunction src,
-			final double min, final double max, final int samples,
+			final double min, final double max, final int curves,
 			final float zoom, final Interpolator ip) {
 		// setup
-		if (samples < 2)
+		if (curves < 1)
 			throw new IllegalArgumentException(
-					"Give me at least 2 (start + stop)");
+					"Give me at least 1 (connect start + stop)");
 		final float d = (float) (max - min);
 		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
-				3 * (samples + 1)); // +1 just to be sure...
+				3 * curves + 1); // +1 just to be sure...
 		// start
 		final float x = (float) src.at(0, 0, min);
 		final float y = (float) src.at(1, 0, min);
@@ -78,7 +77,7 @@ public abstract class ShaperUtils {
 
 		double told = min;
 		// intermediate
-		final int n = samples - 1;
+		final int n = curves;
 		for (int i = 1; i < n; i++) {
 			final double t = min + d * ip.interpolate((float) i / n);
 			curveTo(src, told, t, gp, zoom);
@@ -92,8 +91,8 @@ public abstract class ShaperUtils {
 
 	/**
 	 * Turn a {@link R1RNFunction} (of at least 2 dimensions) into a
-	 * {@link Shape} with the given number of samples and straight lines
-	 * {@link GeneralPath#lineTo(float, float)} to interpolate between.
+	 * {@link Shape} with the given number of straight lines
+	 * {@link GeneralPath#lineTo(float, float)} to interpolate.
 	 * 
 	 * @param src
 	 *            the (2-dimensional) curve. Higher dimensions are ignored.
@@ -103,9 +102,8 @@ public abstract class ShaperUtils {
 	 * @param max
 	 *            the max input <code>t</code> to
 	 *            {@link R1RNFunction#at(int, int, double)}
-	 * @param samples
-	 *            the number of samples (start + stop + intermediate) - must be
-	 *            &gt;= 2 (start + stop + intermediate).
+	 * @param curves
+	 *            the number of line segments - must be &gt;= 1.
 	 * @param zoom
 	 *            graphics zoom factor (typically 1)
 	 * @param ip
@@ -113,22 +111,22 @@ public abstract class ShaperUtils {
 	 *            <code>t</code> values.
 	 */
 	public static Shape approximateLinear(final R1RNFunction src,
-			final double min, final double max, final int samples,
+			final double min, final double max, final int curves,
 			final float zoom, final Interpolator ip) {
 		// setup
-		if (samples < 2)
+		if (curves < 1)
 			throw new IllegalArgumentException(
-					"Give me at least 2 (start + stop)");
+					"Give me at least 1 (connect start + stop)");
 		final float d = (float) (max - min);
 		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
-				samples + 1); // +1 just to be sure...
+				curves + 1); // +1 just to be sure...
 		// start
 		final float x = (float) src.at(0, 0, min);
 		final float y = (float) src.at(1, 0, min);
 		gp.moveTo(zoom * x, zoom * y);
 
 		// intermediate
-		final int n = samples - 1;
+		final int n = curves;
 		for (int i = 1; i < n; i++) {
 			final double t = min + d * ip.interpolate((float) i / n);
 			lineTo(src, t, gp, zoom);
@@ -141,9 +139,8 @@ public abstract class ShaperUtils {
 
 	/**
 	 * Turn a {@link R1RNFunction} (of at least 2 dimensions) into a
-	 * {@link Shape} with the given number of samples and quadratic Bezier
-	 * curves {@link GeneralPath#quadTo(float, float, float, float)} to
-	 * interpolate between.
+	 * {@link Shape} with the given number of quadratic Bezier curves
+	 * {@link GeneralPath#quadTo(float, float, float, float)} to interpolate.
 	 * 
 	 * @param src
 	 *            the (2-dimensional) curve. Higher dimensions are ignored.
@@ -153,9 +150,8 @@ public abstract class ShaperUtils {
 	 * @param max
 	 *            the max input <code>t</code> to
 	 *            {@link R1RNFunction#at(int, int, double)}
-	 * @param samples
-	 *            the number of samples (start + stop + intermediate) - must be
-	 *            &gt;= 2 (start + stop + intermediate).
+	 * @param curves
+	 *            the number of line segments - must be &gt;= 1.
 	 * @param zoom
 	 *            graphics zoom factor (typically 1)
 	 * @param ip
@@ -163,15 +159,15 @@ public abstract class ShaperUtils {
 	 *            <code>t</code> values.
 	 */
 	public static Shape approximateQuadratic(final R1RNFunction src,
-			final double min, final double max, final int samples,
+			final double min, final double max, final int curves,
 			final float zoom, final Interpolator ip) {
 		// setup
-		if (samples < 2)
+		if (curves < 1)
 			throw new IllegalArgumentException(
-					"Give me at least 2 (start + stop)");
+					"Give me at least 1 (connect start + stop)");
 		final float d = (float) (max - min);
 		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
-				2 * (samples + 1)); // +1 just to be sure...
+				2 * curves + 1); // +1 just to be sure...
 		// start
 		final float x = (float) src.at(0, 0, min);
 		final float y = (float) src.at(1, 0, min);
@@ -179,7 +175,7 @@ public abstract class ShaperUtils {
 
 		double told = min;
 		// intermediate
-		final int n = samples - 1;
+		final int n = curves;
 		for (int i = 1; i < n; i++) {
 			final double t = min + d * ip.interpolate((float) i / n);
 			quadTo(src, told, t, gp, zoom);
@@ -209,7 +205,7 @@ public abstract class ShaperUtils {
 	 * 	k2_1 = k3_1 - n * v3_1;
 	 * 	l/n=a/c;
 	 * 	((k2_0 - k1_0)*(k2_0 - k1_0) + (k2_1 - k1_1)*(k2_1 - k1_1)) / (n*n) = b*b / (c*c);
-	 * 	solve([%o2, %o3, %o4, %o5, %o6, %o7],[k1_0, k1_1, k2_0, k2_1, l, n]);
+	 * 	solve([%th(6), %th(5), %th(4), %th(3), %th(2), %th(1)],[k1_0, k1_1, k2_0, k2_1, l, n]);
 	 * 	factor(%);
 	 * 	ratsimp(%);
 	 * 	ratsubst(V0, v0_1&circ;2+v0_0&circ;2, %);
@@ -276,9 +272,6 @@ public abstract class ShaperUtils {
 				* (2 * a * c * v3_0 * A * B + 2 * a * a * v0_0 * A * B) - 2 * a
 				* c * v0_0 * v3_0 * A * A - a * a * v0_0 * v0_0 * A * A + b * b
 				* A * A;
-		final double R = c * v3_0 * B + a * v0_0 * B + c * v3_1 * A + a * v0_1
-				* A;
-
 		if (W < 0) {
 			if (log.isWarnEnabled()) {
 				log.warn("Arithmetic trouble:");
@@ -291,20 +284,23 @@ public abstract class ShaperUtils {
 				log.warn("T=" + T);
 				log.warn("Q=" + Q);
 				log.warn("W=" + W);
-				log.warn("R=" + R);
 			}
 			gp.moveTo(zoom * (float) k3_0, zoom * (float) k3_1);
 			return;
 		}
 		W = Math.sqrt(W);
-		
+		final double R = c * v3_0 * B + a * v0_0 * B + c * v3_1 * A + a * v0_1
+				* A;
+
 		final double l, n;
 		if (true) {
-			l = -a * (W + R) / Q;
-			n = -c * (W + R) / Q;
+			final double F = (W + R) / Q;
+			l = -a * F;
+			n = -c * F;
 		} else {
-			l = a * (W - R) / Q;
-			n = c * (W - R) / Q;
+			final double F = (W - R) / Q;
+			l = a * F;
+			n = c * F;
 		}
 		if (Double.isNaN(l) || Double.isNaN(n)) {
 			log.warn("v0=(" + v0_0 + ", " + v0_1 + ")");
