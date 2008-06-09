@@ -154,17 +154,16 @@ public class TrajectoryPiccoloBean extends TrajectoryBean<PNode, PNode> {
 	private final PNode world;
 
 	public TrajectoryPiccoloBean() {
+		setVisible(false);
 		broom.setModel(tt);
 		panel = new PCanvas();
-		setVisible(false);
-		setLayout(new BorderLayout());
-		add(panel, BorderLayout.CENTER);
 		panel.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 		panel.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
+		setLayout(new BorderLayout());
+		add(panel, BorderLayout.CENTER);
 
-		// create the (right-handed) WC coordinate system
+		// create the WC coordinate system
 		world = new PNode();
-		world.setTransform(AffineTransform.getScaleInstance(1, -1));
 		// add the ice
 		world.addChild(new PIceFactory.Fancy().newInstance());
 		// add initial, current rock and paths
@@ -179,14 +178,12 @@ public class TrajectoryPiccoloBean extends TrajectoryBean<PNode, PNode> {
 		for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--) {
 			// initial (read/write) rocks
 			PNode n;
-			init.addChild(n = initial[i16] = iniRf.newInstance(i16, home
-					.getRock(i16)));
+			init.addChild(n = initial[i16] = iniRf.newInstance(i16));
 			n.setPickable(true);
 			n.addInputEventListener(mouse);
 
 			// current (read-only) rocks
-			curr.addChild(n = current[i16] = curRf.newInstance(i16, out
-					.getRock(i16)));
+			curr.addChild(n = current[i16] = curRf.newInstance(i16));
 			n.addAttribute(ATTR_TRIGGER_CURVE_UPDATE, true);
 			n.setChildrenPickable(false);
 
@@ -198,8 +195,10 @@ public class TrajectoryPiccoloBean extends TrajectoryBean<PNode, PNode> {
 		rocks.addChild(curr);
 		rocks.addChild(broom);
 		rocks.setVisible(false);
-
 		world.addChild(rocks);
+
+		// make world right-handed:
+		world.setTransform(AffineTransform.getScaleInstance(1, -1));
 
 		panel.getLayer().addChild(world);
 		panel.setBackground(super.getBackground());

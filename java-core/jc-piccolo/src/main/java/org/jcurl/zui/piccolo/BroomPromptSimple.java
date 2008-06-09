@@ -189,8 +189,8 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 
 			// arrow:
 			final float f = outer / 10;
-			final PPath s = node(IceShapes.createArrowHead(f, 3 * f, 0.5f * f), null,
-					null, scale50);
+			final PPath s = node(IceShapes.createArrowHead(f, 3 * f, 0.5f * f),
+					null, null, scale50);
 			s.setPaint(sp);
 			final double a = Math.PI * (off + pieAngle - arrowLengthDegrees)
 					/ 180.0;
@@ -209,7 +209,8 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 					scale0));
 		}
 		{ // slider
-			slider = new PPath(IceShapes.createSlider(0.4f * outer, bothSides), fine);
+			slider = new PPath(IceShapes.createSlider(0.4f * outer, bothSides),
+					fine);
 			slider.setStrokePaint(sp);
 			slider.setPickable(true);
 			this.addChild(slider);
@@ -366,7 +367,7 @@ public class BroomPromptSimple extends PNode implements PropertyChangeListener,
 
 	/** adjust position + rotation */
 	private void setBroom(final Point2D b) {
-		if(b == null)
+		if (b == null)
 			return;
 		final AffineTransform t = getTransformReference(true);
 		t.setToIdentity();

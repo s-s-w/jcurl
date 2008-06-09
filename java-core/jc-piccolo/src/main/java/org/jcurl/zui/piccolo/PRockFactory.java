@@ -26,9 +26,7 @@ import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 
 import org.jcurl.core.api.Factory;
-import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockSet;
-import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.ui.IceShapes;
 import org.jcurl.core.ui.IceShapes.RockColors;
 
@@ -56,8 +54,7 @@ public abstract class PRockFactory implements Factory {
 		}
 
 		@Override
-		public PNode newInstance(final int i8, final boolean isDark,
-				final Rock<Pos> rock) {
+		public PNode newInstance(final int i8, final boolean isDark) {
 			final PNode r = new PNode();
 			r.addChild(node(IceShapes.ROCK_OUTER, IceShapes.alpha(
 					colors.granite, alpha), null, null));
@@ -75,7 +72,7 @@ public abstract class PRockFactory implements Factory {
 				t.setPickable(false);
 				r.addChild(t);
 			}
-			//r.setChildrenPickable(false);
+			// r.setChildrenPickable(false);
 			// r.setPickable(true);
 			r.getChild(0).setPickable(true);
 			return r;
@@ -90,8 +87,7 @@ public abstract class PRockFactory implements Factory {
 		}
 
 		@Override
-		public PNode newInstance(final int i8, final boolean isDark,
-				final Rock<Pos> rock) {
+		public PNode newInstance(final int i8, final boolean isDark) {
 			final PNode r = new PNode();
 			// fill to also make the body, not only the edge
 			// pickable:
@@ -111,10 +107,9 @@ public abstract class PRockFactory implements Factory {
 		return n;
 	}
 
-	public abstract PNode newInstance(final int i8, final boolean isDark,
-			Rock<Pos> rock);
-
-	public PNode newInstance(final int i16, final Rock<Pos> rock) {
-		return newInstance(RockSet.toIdx8(i16), RockSet.isDark(i16), rock);
+	public PNode newInstance(final int i16) {
+		return newInstance(RockSet.toIdx8(i16), RockSet.isDark(i16));
 	}
+
+	public abstract PNode newInstance(final int i8, final boolean isDark);
 }

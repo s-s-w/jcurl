@@ -110,11 +110,6 @@ public class TrajectoryScenarioBean extends TrajectoryBean<Affine, SGGroup>
 			.getLogger(TrajectoryScenarioBean.class);
 	private static final long serialVersionUID = 6661957210899967106L;
 
-	private static SGNode createSceneIce() {
-		// never cache the background.
-		return new SGIceFactory.Fancy().newInstance();
-	}
-
 	private static Affine createSceneRock(final int i16, final int opacity) {
 		SGNode rock = new SGRockFactory.Fancy().newInstance(i16);
 		if (DoCacheRocks) {
@@ -173,14 +168,14 @@ public class TrajectoryScenarioBean extends TrajectoryBean<Affine, SGGroup>
 	private final Affine zoom;
 
 	public TrajectoryScenarioBean() {
+		setVisible(false);
 		broom.setModel(tt);
 		panel = new JSGPanel();
-		setVisible(false);
 		setLayout(new BorderLayout());
 		add(panel, BorderLayout.CENTER);
 
 		final SGGroup world = new SGGroup();
-		world.add(createSceneIce());
+		world.add(new SGIceFactory.Fancy().newInstance());
 
 		// rocks.setVisible(false);
 		final SGGroup r0 = new SGGroup();
@@ -224,6 +219,7 @@ public class TrajectoryScenarioBean extends TrajectoryBean<Affine, SGGroup>
 		rocks.setVisible(false);
 		world.add(rocks);
 
+		// make world right-handed:
 		final AffineTransform rightHand = AffineTransform.getScaleInstance(1,
 				-1);
 		zoom = SGTransform.createAffine(new AffineTransform(),

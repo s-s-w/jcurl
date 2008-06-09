@@ -62,8 +62,8 @@ public abstract class PTrajectoryFactory extends GenTrajectoryFactory<PNode> {
 			@Override
 			protected Shape doRender(R1RNFunction f, double tmin, double tmax,
 					int samples, float zoom, Interpolator ip) {
-				return ShaperUtils.approximateLinear(f, tmin, tmax, 1000,
-						zoom, cip);
+				return ShaperUtils.approximateLinear(f, tmin, tmax, 1000, zoom,
+						cip);
 			}
 		};
 		private static final Stroke lineS = new BasicStroke(0.01F);
