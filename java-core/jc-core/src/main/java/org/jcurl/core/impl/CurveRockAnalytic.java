@@ -53,8 +53,8 @@ public class CurveRockAnalytic<T extends RockType> extends CurveRock<T> {
 	}
 
 	@Override
-	public double at(final int dim, final int c, final double t) {
-		return curve.at(dim, c, t);
+	public double at(final double t, final int c, final int dim) {
+		return curve.at(t, c, dim);
 	}
 
 	public R1RNFunction getCurve() {

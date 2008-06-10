@@ -69,21 +69,21 @@ public class BisectionCollissionDetector extends CollissionDetectorBase
 		}
 
 		/**
-		 * @see Distance2DSq#at(int, double)
+		 * @see Distance2DSq#at(double, int)
 		 */
 		@Override
-		public double at(final int c, final double t) {
+		public double at(final double t, final int c) {
 			if (c == 0 || c == 1) {
-				final double a_minus_b_0 = c1.at(0, c, t) - c2.at(0, c, t);
-				final double a_minus_b_1 = c1.at(1, c, t) - c2.at(1, c, t);
+				final double a_minus_b_0 = c1.at(t, c, 0) - c2.at(t, c, 0);
+				final double a_minus_b_1 = c1.at(t, c, 1) - c2.at(t, c, 1);
 				final double C0 = a_minus_b_0 * a_minus_b_0 + a_minus_b_1
 						* a_minus_b_1 - r2;
 
 				double C1 = 0.0;
-				final double da_minus_db_0 = c1.at(0, c + 1, t)
-						- c2.at(0, c + 1, t);
-				final double da_minus_db_1 = c1.at(1, c + 1, t)
-						- c2.at(1, c + 1, t);
+				final double da_minus_db_0 = c1.at(t, c + 1, 0)
+						- c2.at(t, c + 1, 0);
+				final double da_minus_db_1 = c1.at(t, c + 1, 1)
+						- c2.at(t, c + 1, 1);
 
 				C1 += a_minus_b_0 * da_minus_db_0;
 				C1 += a_minus_b_1 * da_minus_db_1;
@@ -99,8 +99,8 @@ public class BisectionCollissionDetector extends CollissionDetectorBase
 
 		public double unflipped(final double t) {
 			final int c = 0;
-			final double a_minus_b_0 = c1.at(0, c, t) - c2.at(0, c, t);
-			final double a_minus_b_1 = c1.at(1, c, t) - c2.at(1, c, t);
+			final double a_minus_b_0 = c1.at(t, c, 0) - c2.at(t, c, 0);
+			final double a_minus_b_1 = c1.at(t, c, 1) - c2.at(t, c, 1);
 			return a_minus_b_0 * a_minus_b_0 + a_minus_b_1 * a_minus_b_1 - r2;
 		}
 
@@ -116,9 +116,9 @@ public class BisectionCollissionDetector extends CollissionDetectorBase
 		if (false) {
 			// TUNE test only rocks really in motion
 			final double[] tmp = { 0, 0, 0 };
-			fa.at(1, t0, tmp);
+			fa.at(t0, 1, tmp);
 			final boolean fa_still = tmp[0] * tmp[0] + tmp[1] * tmp[1] < 1e-9;
-			fb.at(1, t0, tmp);
+			fb.at(t0, 1, tmp);
 			if (fa_still && tmp[0] * tmp[0] + tmp[1] * tmp[1] < 1e-9)
 				return Double.NaN;
 		}
@@ -128,11 +128,11 @@ public class BisectionCollissionDetector extends CollissionDetectorBase
 				private static final long serialVersionUID = 7051701140539614770L;
 
 				@Override
-				public double at(final int c, final double x) {
+				public double at(final double x, final int c) {
 					if (c == 0)
-						return dist.at(0, x) * -Math.signum(dist.at(1, x));
+						return dist.at(x, 0) * -Math.signum(dist.at(x, 1));
 					if (c == 1)
-						return Math.abs(dist.at(1, x));
+						return Math.abs(dist.at(x, 1));
 					throw new IllegalArgumentException();
 				}
 			};

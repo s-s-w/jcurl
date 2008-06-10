@@ -56,12 +56,12 @@ public class NewtonSimpleSolver {
 		int i = 0;
 		for (double x = x0;;) {
 			if (log.isDebugEnabled())
-				log.debug("x=" + x + " y" + c + "=" + f.at(dim, c, x) + " y"
-						+ (c + 1) + "=" + f.at(dim, c + 1, x));
-			double dx = f.at(dim, c + 1, x);
+				log.debug("x=" + x + " y" + c + "=" + f.at(x, c, dim) + " y"
+						+ (c + 1) + "=" + f.at(x, c + 1, dim));
+			double dx = f.at(x, c + 1, dim);
 			if (dx == 0)
-				return Math.abs(f.at(dim, c, x) - y) < eps ? x : Double.NaN;
-			dx = (f.at(dim, c, x) - y) / dx;
+				return Math.abs(f.at(x, c, dim) - y) < eps ? x : Double.NaN;
+			dx = (f.at(x, c, dim) - y) / dx;
 			x -= dx;
 			if (!MathVec.isInside(x, x0, xstop, true))
 				return Double.NaN;

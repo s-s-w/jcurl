@@ -40,8 +40,8 @@ public class CurveFkt extends R1RNFunctionImpl {
 	}
 
 	@Override
-	public double at(final int dim, final int c, final double t) {
-		return fkt[dim].at(0, c, t);
+	public double at(final double t, final int c, final int dim) {
+		return fkt[dim].at(t, c, 0);
 	}
 
 	@Override

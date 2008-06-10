@@ -22,11 +22,12 @@ import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.core.impl.CurlerDenny;
 import org.jcurl.core.log.JCLoggerFactory;
 
 /**
- * Helper for convenient approximated Java2D drawing of arbitratry curves with
- * at least 2 dimensions.
+ * Helper for convenient approximated Java2D drawing of arbitratry
+ * {@link R1RNFunction}s with at least 2 dimensions.
  * 
  * @see Shaper
  * @see Shapeable
@@ -38,29 +39,34 @@ public abstract class ShaperUtils {
 	private static final Log log = JCLoggerFactory.getLogger(ShaperUtils.class);
 
 	/**
-	 * Turn a {@link R1RNFunction} (of at least 2 dimensions) into a
-	 * {@link Shape} with the given number of cubic Bezier curves
-	 * {@link GeneralPath#curveTo(float, float, float, float, float, float)} to
-	 * interpolate.
+	 * Interpolate using <a
+	 * href="http://en.wikipedia.org/wiki/B%C3%A9zier_curve">Cubic Bezier Curves</a>.
+	 * <p>
+	 * Computes the required intermediate <code>t</code> samples and delegates
+	 * to {@link #curveTo(R1RNFunction, double, double, GeneralPath, float)} to
+	 * compute the interpolating curve segments.
+	 * </p>
 	 * 
 	 * @param src
-	 *            the (2-dimensional) curve. Higher dimensions are ignored.
+	 *            the (at least 2-dimensional) curve. Higher dimensions are
+	 *            ignored.
 	 * @param min
 	 *            the min input <code>t</code> to
-	 *            {@link R1RNFunction#at(int, int, double)}
+	 *            {@link R1RNFunction#at(double, int, int)}
 	 * @param max
 	 *            the max input <code>t</code> to
-	 *            {@link R1RNFunction#at(int, int, double)}
+	 *            {@link R1RNFunction#at(double, int, int)}
 	 * @param curves
-	 *            the number of curves - must be &gt;= 1.
+	 *            the number of interpolating cubic bezier curves - must be
+	 *            &gt;= 1.
 	 * @param zoom
 	 *            graphics zoom factor (typically 1)
 	 * @param ip
-	 *            the {@link Interpolator} to get the intermediate sample
-	 *            <code>t</code> values.
+	 *            the {@link Interpolator} to get the intermediate
+	 *            <code>t</code> sample values.
 	 * @see #curveTo(R1RNFunction, double, double, GeneralPath, float)
 	 */
-	public static Shape approximateCubic(final R1RNFunction src,
+	public static Shape interpolateCubic(final R1RNFunction src,
 			final double min, final double max, final int curves,
 			final float zoom, final Interpolator ip) {
 		// setup
@@ -71,8 +77,8 @@ public abstract class ShaperUtils {
 		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
 				3 * curves + 1); // +1 just to be sure...
 		// start
-		final float x = (float) src.at(0, 0, min);
-		final float y = (float) src.at(1, 0, min);
+		final float x = (float) src.at(min, 0, 0);
+		final float y = (float) src.at(min, 0, 1);
 		gp.moveTo(zoom * x, zoom * y);
 
 		double told = min;
@@ -90,18 +96,24 @@ public abstract class ShaperUtils {
 	}
 
 	/**
-	 * Turn a {@link R1RNFunction} (of at least 2 dimensions) into a
-	 * {@link Shape} with the given number of straight lines
-	 * {@link GeneralPath#lineTo(float, float)} to interpolate.
+	 * Interpolate using <a
+	 * href="http://en.wikipedia.org/wiki/B%C3%A9zier_curve">Linear Bezier
+	 * Curves</a>.
+	 * <p>
+	 * Computes the required intermediate <code>t</code> samples and delegates
+	 * to {@link #lineTo(R1RNFunction, double, GeneralPath, float)} to compute
+	 * the interpolating curve segments.
+	 * </p>
 	 * 
 	 * @param src
-	 *            the (2-dimensional) curve. Higher dimensions are ignored.
+	 *            the (at least 2-dimensional) curve. Higher dimensions are
+	 *            ignored.
 	 * @param min
 	 *            the min input <code>t</code> to
-	 *            {@link R1RNFunction#at(int, int, double)}
+	 *            {@link R1RNFunction#at(double, int, int)}
 	 * @param max
 	 *            the max input <code>t</code> to
-	 *            {@link R1RNFunction#at(int, int, double)}
+	 *            {@link R1RNFunction#at(double, int, int)}
 	 * @param curves
 	 *            the number of line segments - must be &gt;= 1.
 	 * @param zoom
@@ -109,8 +121,9 @@ public abstract class ShaperUtils {
 	 * @param ip
 	 *            the {@link Interpolator} to get the intermediate sample
 	 *            <code>t</code> values.
+	 * @see #lineTo(R1RNFunction, double, GeneralPath, float)
 	 */
-	public static Shape approximateLinear(final R1RNFunction src,
+	public static Shape interpolateLinear(final R1RNFunction src,
 			final double min, final double max, final int curves,
 			final float zoom, final Interpolator ip) {
 		// setup
@@ -121,8 +134,8 @@ public abstract class ShaperUtils {
 		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
 				curves + 1); // +1 just to be sure...
 		// start
-		final float x = (float) src.at(0, 0, min);
-		final float y = (float) src.at(1, 0, min);
+		final float x = (float) src.at(min, 0, 0);
+		final float y = (float) src.at(min, 0, 1);
 		gp.moveTo(zoom * x, zoom * y);
 
 		// intermediate
@@ -138,18 +151,23 @@ public abstract class ShaperUtils {
 	}
 
 	/**
-	 * Turn a {@link R1RNFunction} (of at least 2 dimensions) into a
-	 * {@link Shape} with the given number of quadratic Bezier curves
-	 * {@link GeneralPath#quadTo(float, float, float, float)} to interpolate.
+	 * Interpolate using <a
+	 * href="http://en.wikipedia.org/wiki/B%C3%A9zier_curve">Quadratic Bezier
+	 * Curves</a>.
+	 * <p>
+	 * Computes the required intermediate <code>t</code> samples and delegates
+	 * to {@link #quadTo(R1RNFunction, double, double, GeneralPath, float)} to
+	 * compute the interpolating curve segments.
+	 * </p>
 	 * 
 	 * @param src
 	 *            the (2-dimensional) curve. Higher dimensions are ignored.
 	 * @param min
 	 *            the min input <code>t</code> to
-	 *            {@link R1RNFunction#at(int, int, double)}
+	 *            {@link R1RNFunction#at(double, int, int)}
 	 * @param max
 	 *            the max input <code>t</code> to
-	 *            {@link R1RNFunction#at(int, int, double)}
+	 *            {@link R1RNFunction#at(double, int, int)}
 	 * @param curves
 	 *            the number of line segments - must be &gt;= 1.
 	 * @param zoom
@@ -157,8 +175,9 @@ public abstract class ShaperUtils {
 	 * @param ip
 	 *            the {@link Interpolator} to get the intermediate sample
 	 *            <code>t</code> values.
+	 * @see #quadTo(R1RNFunction, double, double, GeneralPath, float)
 	 */
-	public static Shape approximateQuadratic(final R1RNFunction src,
+	public static Shape interpolateQuadratic(final R1RNFunction src,
 			final double min, final double max, final int curves,
 			final float zoom, final Interpolator ip) {
 		// setup
@@ -169,8 +188,8 @@ public abstract class ShaperUtils {
 		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
 				2 * curves + 1); // +1 just to be sure...
 		// start
-		final float x = (float) src.at(0, 0, min);
-		final float y = (float) src.at(1, 0, min);
+		final float x = (float) src.at(min, 0, 0);
+		final float y = (float) src.at(min, 0, 1);
 		gp.moveTo(zoom * x, zoom * y);
 
 		double told = min;
@@ -188,14 +207,41 @@ public abstract class ShaperUtils {
 	}
 
 	/**
-	 * Cubic Bezier Curve.
+	 * Compute the control points and add one <a
+	 * href="http://en.wikipedia.org/wiki/B%C3%A9zier_curve">Cubic Bezier Curve</a>
+	 * to a {@link GeneralPath}. Does <b>no</b> initial
+	 * {@link GeneralPath#moveTo(float, float)}.
 	 * 
-	 * TODO re-use endpoint location and velocity.
-	 * 
-	 * To find the 2 control points without further adaptive calculus, we assume
-	 * the distances k0-k1, k1-k2, k2-k3 have a fixed ratio a:b:c.
-	 * 
-	 * Maxima Solution:
+	 * <h3>Approximation algorithm</h3>
+	 * <p>
+	 * This ansatz uses no adaptive optimisation but the nature of curves as
+	 * they're typical to curling:
+	 * <ul>
+	 * <li>continuous within [tmin:tmax] - at least C0, C1</li>
+	 * <li>smoothly increasing curvature</li>
+	 * <li>not meandering</li>
+	 * </ul>
+	 * So we use
+	 * <ul>
+	 * <li>the start- and endpoint of each interval als control points k0 and
+	 * k3</li>
+	 * <li>the directions (normalised velocities) in the control points k0 and
+	 * k3</li>
+	 * <li>a ratio 3:2:1 of the distances |k0-k1| : |k1-k2| : |k2-k3|</li>
+	 * </ul>
+	 * <p>
+	 * This causes quite a computation - without iteration/recursion though, but
+	 * 1 square root and many double multiplications - but this is well worth
+	 * while as we can reduce the curve segments to draw significantly. One
+	 * cubic bezier curve per seven meters curve length gives an error &lt; 2 mm
+	 * (using {@link CurlerDenny} with 24s draw-to-tee and 1m curl)!
+	 * </p>
+	 * <p>
+	 * TODO maybe re-use endpoint location and velocity. This can cause pain at
+	 * C1 discontinuous t's (collissions).
+	 * </p>
+	 * <h3><a href="http://en.wikipedia.org/wiki/Maxima_(software)">Maxima</a>
+	 * Solution</h3>
 	 * 
 	 * <pre>
 	 * 	radsubstflag: true$
@@ -222,33 +268,33 @@ public abstract class ShaperUtils {
 	 * 	ratsubst(R, c*v3_0*B+a*v0_0*B+c*v3_1*A+a*v0_1*A, %);
 	 * </pre>
 	 */
-	private static void curveTo(final R1RNFunction f, final double tmin,
+	static void curveTo(final R1RNFunction f, final double tmin,
 			final double tmax, final GeneralPath gp, final float zoom) {
 		final double eps = 1e-6;
 
 		// first control point (startpoint). The same as gp.getCurrentPoint()
-		final double k0_0 = f.at(0, 0, tmin);
-		final double k0_1 = f.at(1, 0, tmin);
+		final double k0_0 = f.at(tmin, 0, 0);
+		final double k0_1 = f.at(tmin, 0, 1);
 		// normalized startpoint velocity
-		double v0_0 = f.at(0, 1, tmin);
-		double v0_1 = f.at(1, 1, tmin);
+		double v0_0 = f.at(tmin, 1, 0);
+		double v0_1 = f.at(tmin, 1, 1);
 		if (v0_0 * v0_0 + v0_1 * v0_1 < eps) {
-			v0_0 = f.at(0, 1, tmin + eps);
-			v0_1 = f.at(1, 1, tmin + eps);
+			v0_0 = f.at(tmin + eps, 1, 0);
+			v0_1 = f.at(tmin + eps, 1, 1);
 		}
 		double v = Math.sqrt(v0_0 * v0_0 + v0_1 * v0_1);
 		v0_0 /= v;
 		v0_1 /= v;
 
 		// 4th control point (endpoint).
-		final double k3_0 = f.at(0, 0, tmax);
-		final double k3_1 = f.at(1, 0, tmax);
+		final double k3_0 = f.at(tmax, 0, 0);
+		final double k3_1 = f.at(tmax, 0, 1);
 		// normalized endpoint velocity
-		double v3_0 = f.at(0, 1, tmax);
-		double v3_1 = f.at(1, 1, tmax);
+		double v3_0 = f.at(tmax, 1, 0);
+		double v3_1 = f.at(tmax, 1, 1);
 		if (v3_0 * v3_0 + v3_1 * v3_1 < eps) {
-			v3_0 = f.at(0, 1, tmax - eps);
-			v3_1 = f.at(1, 1, tmax - eps);
+			v3_0 = f.at(tmax - eps, 1, 0);
+			v3_1 = f.at(tmax - eps, 1, 1);
 		}
 		v = Math.sqrt(v3_0 * v3_0 + v3_1 * v3_1);
 		v3_0 /= v;
@@ -332,58 +378,83 @@ public abstract class ShaperUtils {
 		return min + d * ip.interpolate((t - min) / d);
 	}
 
-	private static final void lineTo(final R1RNFunction f, final double t,
+	/**
+	 * Add one <a href="http://en.wikipedia.org/wiki/B%C3%A9zier_curve">Linear
+	 * Bezier Curve</a> to a {@link GeneralPath}. Does <b>no</b> initial
+	 * {@link GeneralPath#moveTo(float, float)}.
+	 * 
+	 * <h3>Approximation algorithm</h3>
+	 * <p>
+	 * Just connect start- and endpoint.
+	 * <p>
+	 * TODO maybe re-use endpoint location and velocity. This can cause pain at
+	 * C1 discontinuous t's (collissions).
+	 * </p>
+	 */
+	static final void lineTo(final R1RNFunction f, final double tmax,
 			final GeneralPath gp, final float zoom) {
-		final float x = (float) f.at(0, 0, t);
-		final float y = (float) f.at(1, 0, t);
+		final float x = (float) f.at(tmax, 0, 0);
+		final float y = (float) f.at(tmax, 0, 1);
 		gp.lineTo(zoom * x, zoom * y);
 	}
 
 	/**
-	 * TODO re-use endpoint location and velocity.
+	 * Compute the control point and add one <a
+	 * href="http://en.wikipedia.org/wiki/B%C3%A9zier_curve">Quadratic Bezier
+	 * Curve</a> to a {@link GeneralPath}. Does <b>no</b> initial
+	 * {@link GeneralPath#moveTo(float, float)}.
 	 * 
-	 * Maxima solution:
+	 * <h3>Approximation algorithm</h3>
+	 * <p>
+	 * This ansatz uses no adaptive optimisation but only
+	 * <ul>
+	 * <li>the start- and endpoint of each interval als control points k0 and
+	 * k2</li>
+	 * <li>the directions (normalised velocities) in the control points k0 and
+	 * k2. The intersection is used as k1.</li>
+	 * </ul>
+	 * <p>
+	 * TODO maybe re-use endpoint location and velocity. This can cause pain at
+	 * C1 discontinuous t's (collissions).
+	 * </p>
+	 * <h3><a href="http://en.wikipedia.org/wiki/Maxima_(software)">Maxima</a>
+	 * Solution</h3>
 	 * 
 	 * <pre>
+	 * radsubstflag: true$
 	 * k0_0 + l * v0_0 = k2_0 + m * v2_0;
 	 * k0_1 + l * v0_1 = k2_1 + m * v2_1;
-	 * solve([%o1,%o2],[k,l]);
+	 * solve([%th(2),%th(1)],[l,m]);
 	 * subst(q, v0_1 * v2_0 - v0_0 * v2_1, %);
 	 * subst(dx_0 + k0_0, k2_0, %);
 	 * subst(dx_1 + k0_1, k2_1, %);
 	 * ratsimp(%);
 	 * </pre>
-	 * 
-	 * @param f
-	 * @param tmin
-	 * @param tmax
-	 * @param gp
-	 * @param zoom
 	 */
-	private static final void quadTo(final R1RNFunction f, final double tmin,
+	static final void quadTo(final R1RNFunction f, final double tmin,
 			final double tmax, final GeneralPath gp, final float zoom) {
 		final double eps = 1e-6;
 
 		// first control point (startpoint). The same as gp.getCurrentPoint()
-		final double k0_0 = f.at(0, 0, tmin);
-		final double k0_1 = f.at(1, 0, tmin);
+		final double k0_0 = f.at(tmin, 0, 0);
+		final double k0_1 = f.at(tmin, 0, 1);
 		// startpoint velocity
-		double v0_0 = f.at(0, 1, tmin);
-		double v0_1 = f.at(1, 1, tmin);
+		double v0_0 = f.at(tmin, 1, 0);
+		double v0_1 = f.at(tmin, 1, 1);
 		if (v0_0 * v0_0 + v0_1 * v0_1 < eps) {
-			v0_0 = f.at(0, 1, tmin + eps);
-			v0_1 = f.at(1, 1, tmin + eps);
+			v0_0 = f.at(tmin + eps, 1, 0);
+			v0_1 = f.at(tmin + eps, 1, 1);
 		}
 
 		// 3rd control point (endpoint).
-		final double k2_0 = f.at(0, 0, tmax);
-		final double k2_1 = f.at(1, 0, tmax);
+		final double k2_0 = f.at(tmax, 0, 0);
+		final double k2_1 = f.at(tmax, 0, 1);
 		// endpoint velocity
-		double v2_0 = f.at(0, 1, tmax);
-		double v2_1 = f.at(1, 1, tmax);
+		double v2_0 = f.at(tmax, 1, 0);
+		double v2_1 = f.at(tmax, 1, 1);
 		if (v2_0 * v2_0 + v2_1 * v2_1 < eps) {
-			v2_0 = f.at(0, 1, tmax - eps);
-			v2_1 = f.at(1, 1, tmax - eps);
+			v2_0 = f.at(tmax - eps, 1, 0);
+			v2_1 = f.at(tmax - eps, 1, 1);
 		}
 
 		// compute the 2nd control point

@@ -60,7 +60,7 @@ public class CurveStill<T extends RockType> extends CurveRock<T> {
 	}
 
 	@Override
-	public double at(final int dim, final int c, final double t) {
+	public double at(final double t, final int c, final int dim) {
 		if (c > 0)
 			return 0;
 		switch (dim) {

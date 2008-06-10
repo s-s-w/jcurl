@@ -35,10 +35,10 @@ public abstract class CurveRock<T extends RockType> extends R1RNFunctionImpl {
 		super(3);
 	}
 
-	public Rock<T> at(final int c, final double t, Rock<T> ret) {
+	public Rock<T> at(final double t, final int c, Rock<T> ret) {
 		if (ret == null)
 			ret = new RockDouble<T>();
-		ret.setLocation(at(0, c, t), at(1, c, t), at(2, c, t));
+		ret.setLocation(at(t, c, 0), at(t, c, 1), at(t, c, 2));
 		return ret;
 	}
 }

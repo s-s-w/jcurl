@@ -29,43 +29,42 @@ public interface R1RNFunction {
 	/**
 	 * Compute the c'th derivative of all dimensions at <code>t</code>.
 	 * 
-	 * Default implementation via iteration over {@link #at(int, int, double)}.
-	 * 
-	 * @param c
-	 *            derivative (0=location, 1:speed, ...)
+	 * Default implementation via iteration over {@link #at(double, int, int)}.
 	 * @param t
 	 *            t-value (input)
+	 * @param c
+	 *            derivative (0=location, 1:speed, ...)
 	 * @param ret
 	 *            return value container
+	 * 
 	 * @return the c'th derivative at <code>t</code>
 	 */
-	public abstract double[] at(final int c, final double t, double[] ret);
+	public abstract double[] at(final double t, final int c, double[] ret);
 
 	/**
 	 * Compute the c'th derivative of all dimensions at <code>t</code>.
-	 * 
-	 * @param c
-	 *            derivative (0=location, 1:speed, ...)
 	 * @param t
 	 *            t-value (input)
+	 * @param c
+	 *            derivative (0=location, 1:speed, ...)
 	 * @param ret
 	 *            return value container
+	 * 
 	 * @return the c'th derivative at <code>t</code>
 	 */
-	public abstract float[] at(final int c, final double t, float[] ret);
+	public abstract float[] at(final double t, final int c, float[] ret);
 
 	/**
 	 * Compute the c'th derivative of the given dimension at <code>t</code>.
-	 * 
-	 * @param dim
-	 *            dimension (0,1,2,...)
-	 * @param c
-	 *            derivative (0=location, 1:speed, ...)
 	 * @param t
 	 *            t-value
+	 * @param c
+	 *            derivative (0=location, 1:speed, ...)
+	 * @param dim
+	 *            dimension (0,1,2,...)
 	 * @return the c'th derivative at <code>t</code>
 	 */
-	public abstract double at(int dim, int c, double t);
+	public abstract double at(double t, int c, int dim);
 
 	public abstract int dim();
 

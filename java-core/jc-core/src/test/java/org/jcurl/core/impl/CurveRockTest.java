@@ -40,8 +40,8 @@ public class CurveRockTest extends TestCase {
 			for (double t = -10; t <= 10; t += 0.1) {
 				for (int dim = 0; dim < 3; dim++)
 					assertEquals("c=" + c + " dim=" + dim + " t=" + t, a.at(
-							dim, c, t), b.at(dim, c, t), 1e-9);
-				assertEquals(a.at(0, t, ra).toString(), b.at(0, t, rb)
+							t, c, dim), b.at(t, c, dim), 1e-9);
+				assertEquals(a.at(t, 0, ra).toString(), b.at(t, 0, rb)
 						.toString());
 			}
 	}

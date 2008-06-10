@@ -116,16 +116,16 @@ class CurvePainter implements Strategy {
 	 *            TODO Remove factor - typically 1.
 	 * @param t1
 	 *            save instanciations calling
-	 *            {@link R1RNFunction#at(int, double, double[])}.
+	 *            {@link R1RNFunction#at(double, int, double[])}.
 	 * @param t2
 	 *            save instanciations calling
-	 *            {@link R1RNFunction#at(int, double, double[])}.
+	 *            {@link R1RNFunction#at(double, int, double[])}.
 	 * @param t3
 	 *            save instanciations calling
-	 *            {@link R1RNFunction#at(int, double, double[])}.
+	 *            {@link R1RNFunction#at(double, int, double[])}.
 	 * @param t4
 	 *            save instanciations calling
-	 *            {@link R1RNFunction#at(int, double, double[])}.
+	 *            {@link R1RNFunction#at(double, int, double[])}.
 	 * @see #doSections(double[], double, double)
 	 * @see #doPaint(Graphics2D, R1RNFunction, double[], float, double[],
 	 *      double[], double[], double[])
@@ -163,16 +163,16 @@ class CurvePainter implements Strategy {
 	 *            TODO Remove factor - typically 1.
 	 * @param t1
 	 *            save instanciations calling
-	 *            {@link R1RNFunction#at(int, double, double[])}.
+	 *            {@link R1RNFunction#at(double, int, double[])}.
 	 * @param t2
 	 *            save instanciations calling
-	 *            {@link R1RNFunction#at(int, double, double[])}.
+	 *            {@link R1RNFunction#at(double, int, double[])}.
 	 * @param t3
 	 *            save instanciations calling
-	 *            {@link R1RNFunction#at(int, double, double[])}.
+	 *            {@link R1RNFunction#at(double, int, double[])}.
 	 * @param t4
 	 *            save instanciations calling
-	 *            {@link R1RNFunction#at(int, double, double[])}.
+	 *            {@link R1RNFunction#at(double, int, double[])}.
 	 */
 	public void doPaint(final Graphics2D g2, final R1RNFunction curr,
 			final double[] sections, final float zoom, final double[] t1,

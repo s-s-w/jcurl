@@ -60,10 +60,10 @@ public abstract class CurlerBase extends PropModelImpl implements Curler {
 			private static final long serialVersionUID = 5450796623114903424L;
 
 			@Override
-			public double at(int c, double splitTime) {
+			public double at(double splitTime, int c) {
 				final CurveRock<Pos> wc = cu.computeWc(teeWc, splitTime, 0, 1,
 						0);
-				return wc.at(1, 0, s.compute(wc, 0, 60));
+				return wc.at(s.compute(wc, 0, 60), 0, 1);
 			}
 		};
 		return BisectionSolver.findRoot(f, 0, 2, 6, 1e-9);
@@ -76,9 +76,9 @@ public abstract class CurlerBase extends PropModelImpl implements Curler {
 			private static final long serialVersionUID = -4702648935820079700L;
 
 			@Override
-			public double at(int c, double v0) {
+			public double at(double v0, int c) {
 				final CurveRock<Pos> rc = cu.computeRc(0, v0, 1, 0);
-				return rc.at(1, 0, s.compute(rc, 0, 60))
+				return rc.at(s.compute(rc, 0, 60), 0, 1)
 						- IceSize.FAR_HACK_2_TEE;
 			}
 		};

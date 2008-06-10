@@ -40,36 +40,36 @@ public class CSplineInterpolatorTest extends TestCase {
 		ip.add(7, 1);
 		ip.add(8, 0);
 		assertEquals("", 0.0, ip.at(0, 0), 1e-6);
-		assertEquals("", 0.774484, ip.at(0, 0.5), 1e-6);
-		assertEquals("", 1.0, ip.at(0, 1), 1e-6);
-		assertEquals("", 0.426546, ip.at(0, 1.5), 1e-6);
-		assertEquals("", 0.0, ip.at(0, 2), 1e-6);
-		assertEquals("", 0.519329, ip.at(0, 2.5), 1e-6);
-		assertEquals("", 1.0, ip.at(0, 3), 1e-6);
-		assertEquals("", 0.496134, ip.at(0, 3.5), 1e-6);
-		assertEquals("", 0.0, ip.at(0, 4), 1e-6);
-		assertEquals("", 0.496134, ip.at(0, 4.5), 1e-6);
-		assertEquals("", 1.0, ip.at(0, 5), 1e-6);
-		assertEquals("", 0.519329, ip.at(0, 5.5), 1e-6);
-		assertEquals("", 0.0, ip.at(0, 6), 1e-6);
-		assertEquals("", 0.426546, ip.at(0, 6.5), 1e-6);
-		assertEquals("", 1.0, ip.at(0, 7), 1e-6);
-		assertEquals("", 0.774484, ip.at(0, 7.5), 1e-6);
-		assertEquals("", 0.0, ip.at(0, 8), 1e-6);
+		assertEquals("", 0.774484, ip.at(0.5, 0), 1e-6);
+		assertEquals("", 1.0, ip.at(1, 0), 1e-6);
+		assertEquals("", 0.426546, ip.at(1.5, 0), 1e-6);
+		assertEquals("", 0.0, ip.at(2, 0), 1e-6);
+		assertEquals("", 0.519329, ip.at(2.5, 0), 1e-6);
+		assertEquals("", 1.0, ip.at(3, 0), 1e-6);
+		assertEquals("", 0.496134, ip.at(3.5, 0), 1e-6);
+		assertEquals("", 0.0, ip.at(4, 0), 1e-6);
+		assertEquals("", 0.496134, ip.at(4.5, 0), 1e-6);
+		assertEquals("", 1.0, ip.at(5, 0), 1e-6);
+		assertEquals("", 0.519329, ip.at(5.5, 0), 1e-6);
+		assertEquals("", 0.0, ip.at(6, 0), 1e-6);
+		assertEquals("", 0.426546, ip.at(6.5, 0), 1e-6);
+		assertEquals("", 1.0, ip.at(7, 0), 1e-6);
+		assertEquals("", 0.774484, ip.at(7.5, 0), 1e-6);
+		assertEquals("", 0.0, ip.at(8, 0), 1e-6);
 		try {
-			ip.at(0, -0.1);
+			ip.at(-0.1, 0);
 			fail("Too small");
 		} catch (final ArrayIndexOutOfBoundsException e) {
 			;
 		}
 		try {
-			ip.at(0, 8.1);
+			ip.at(8.1, 0);
 			fail("Too large");
 		} catch (final ArrayIndexOutOfBoundsException e) {
 			;
 		}
 		for (int i = 1000000; i >= 0; i--)
-			ip.at(0, 2);
+			ip.at(2, 0);
 	}
 
 	public void testBinarySearch() {

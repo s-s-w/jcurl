@@ -58,7 +58,7 @@ public class JCurlShaper extends NaturalShaper {
 	/**
 	 * Sample the input interval into <code>N</code> segments and use
 	 * {@link Interpolators#getQuadraticInstance()} and
-	 * {@link ShaperUtils#approximateLinear(R1RNFunction, double, double, int, float, Interpolator)}
+	 * {@link ShaperUtils#interpolateLinear(R1RNFunction, double, double, int, float, Interpolator)}
 	 * to get the resulting shape.
 	 * 
 	 * @param meters_per_shape
@@ -73,23 +73,28 @@ public class JCurlShaper extends NaturalShaper {
 
 	/**
 	 * Extension point to change curve rendering. Default curve rendering is
-	 * {@link ShaperUtils#approximateCubic(R1RNFunction, double, double, int, float, Interpolator)}.
+	 * {@link ShaperUtils#interpolateCubic(R1RNFunction, double, double, int, float, Interpolator)}.
 	 */
 	protected Shape doRender(final R1RNFunction f, final double tmin,
 			final double tmax, final int segments, final float zoom,
 			final Interpolator ip) {
 		if (log.isDebugEnabled())
 			log.debug("segments: " + segments);
-		return ShaperUtils.approximateCubic(f, (float) tmin, (float) tmax,
+		return ShaperUtils.interpolateCubic(f, (float) tmin, (float) tmax,
 				segments, zoom, ip);
 	}
 
 	/**
 	 * Does an "adaptive sampling for the poor": (distance start-stop) /
-	 * meters_per_shape. But no less than 1 and no more than 7 curves.
-	 * 
+	 * meters_per_shape. But no less than 1 and no more than 7 curves. Delegates
+	 * to
+	 * {@link #doRender(R1RNFunction, double, double, int, float, Interpolator)}.
+	 * <p>
 	 * If the time distance or start-stop distance is next to zero no shape is
 	 * created at all.
+	 * </p>
+	 * 
+	 * @see #doRender(R1RNFunction, double, double, int, float, Interpolator)
 	 */
 	@Override
 	public Shape toShape(final R1RNFunction f, final double tmin,
@@ -101,8 +106,8 @@ public class JCurlShaper extends NaturalShaper {
 		}
 		final double len_sq;
 		{
-			final double x = f.at(0, 0, tmin) - f.at(0, 0, tmax);
-			final double y = f.at(1, 0, tmin) - f.at(1, 0, tmax);
+			final double x = f.at(tmin, 0, 0) - f.at(tmax, 0, 0);
+			final double y = f.at(tmin, 0, 1) - f.at(tmax, 0, 1);
 			len_sq = x * x + y * y;
 		}
 		if (DROP_STOP) {

@@ -231,8 +231,8 @@ public class CurveTransformedTest extends TestShowBase {
 		final double[] tp = { 0, 0, 0 };
 		for (int c = 0; c < 3; c++)
 			for (int t = 0; t < 100; t++) {
-				ct.at(c, t, tc);
-				pt.at(c, t, tp);
+				ct.at(t, c, tc);
+				pt.at(t, c, tp);
 				for (int i = 0; i < 2; i++)
 					// Test only 2 dimensions:
 					assertEquals("i=" + i + " c=" + c + " t=" + t, tc[i],
@@ -270,8 +270,8 @@ public class CurveTransformedTest extends TestShowBase {
 		c[k] = new CurveTransformed(CurveStill.newInstance(0, 0, 0), m[k], 0);
 
 		for (int i = c.length - 1; i >= 0; i--)
-			p.getRock(i).setLocation(c[i].at(0, 0, 0), c[i].at(1, 0, 0),
-					c[i].at(2, 0, 0));
+			p.getRock(i).setLocation(c[i].at(0, 0, 0), c[i].at(0, 0, 1),
+					c[i].at(0, 0, 2));
 		// Check if "sibling" rocks look alike:
 		showPositionDisplay(p, FixpointZoomer.C12, 5000, new TimeRunnable() {
 			@Override
@@ -301,7 +301,7 @@ public class CurveTransformedTest extends TestShowBase {
 			private static final long serialVersionUID = 5104903233015705634L;
 
 			@Override
-			public double at(int component, int derivative, double t) {
+			public double at(double t, int derivative, int component) {
 				switch (component) {
 				case 0:
 					return t * 2.0;
@@ -316,11 +316,11 @@ public class CurveTransformedTest extends TestShowBase {
 		}, at, 0);
 		ret = cw.at(0, 0, ret);
 		assertEquals(0, 0, 0, ret, 1e-9);
-		ret = cw.at(0, 0.5, ret);
+		ret = cw.at(0.5, 0, ret);
 		assertEquals(0.75, 0.9375, 0.25, ret, 1e-9);
-		ret = cw.at(0, 1.0, ret);
+		ret = cw.at(1.0, 0, ret);
 		assertEquals(1.5, 1.875, 0.5, ret, 1e-9);
-		ret = cw.at(0, 1.5, ret);
+		ret = cw.at(1.5, 0, ret);
 		assertEquals(2.25, 2.8125, 0.75, ret, 1e-9);
 	}
 }

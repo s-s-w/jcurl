@@ -62,7 +62,7 @@ public class FunctionTest extends TestCase {
 		}
 
 		@Override
-		public Rock<T> at(final int c, final double t, final Rock<T> ret) {
+		public Rock<T> at(final double t, final int c, final Rock<T> ret) {
 			final Float64 tt = Float64.valueOf(t);
 			final Rock<T> r;
 			switch (c) {
@@ -91,8 +91,8 @@ public class FunctionTest extends TestCase {
 		}
 
 		@Override
-		public double at(final int dim, final int c, final double t) {
-			final Rock<T> r = at(c, t, (Rock<T>) null);
+		public double at(final double t, final int c, final int dim) {
+			final Rock<T> r = at(t, c, (Rock<T>) null);
 			switch (dim) {
 			case 0:
 				return r.getX();
@@ -276,14 +276,14 @@ public class FunctionTest extends TestCase {
 				new RockFunction<Float64, Pos>(x, x, x));
 
 		assertEquals("[[1.0]t, [1.0]t, [1.0]t]", f.toString());
-		final Rock<Pos> r = f.at(0, 2, (Rock<Pos>) null);
+		final Rock<Pos> r = f.at(2, 0, (Rock<Pos>) null);
 		assertEquals("[2.0, 2.0, 2.0]", r.toString());
 
 		final int loops = 100000;
 		{
 			final long start = System.currentTimeMillis();
 			for (int i = loops - 1; i >= 0; i--)
-				f.at(0, 2, (Rock<Pos>) null);
+				f.at(2, 0, (Rock<Pos>) null);
 			final long stop = System.currentTimeMillis() - start;
 			System.out.println(loops + " loops took " + stop
 					+ " millis (wrapped 3D jscience function evaluation)");

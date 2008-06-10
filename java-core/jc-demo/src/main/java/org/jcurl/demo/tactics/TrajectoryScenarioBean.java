@@ -241,7 +241,6 @@ public class TrajectoryScenarioBean extends TrajectoryBean<Affine, SGGroup>
 	 *           null) zoom.setAffine(AnimateAffine.map(tmpViewPort,
 	 *           this.getBounds(), zoom.getAffine())); }
 	 */
-
 	@Override
 	public BroomPromptModel getBroom() {
 		return broom.getModel();

@@ -96,7 +96,7 @@ public class Distance2DSq extends R1R1Function {
 	 * @see #atC1(double)
 	 */
 	@Override
-	public double at(final int c, final double t) {
+	public double at(final double t, final int c) {
 		if (c == 0)
 			return atC0(t);
 		if (c == 1)
@@ -111,8 +111,8 @@ public class Distance2DSq extends R1R1Function {
 	 * @return the value
 	 */
 	protected double atC0(final double t) {
-		final double a_minus_b_0 = c1.at(0, c, t) - c2.at(0, c, t);
-		final double a_minus_b_1 = c1.at(1, c, t) - c2.at(1, c, t);
+		final double a_minus_b_0 = c1.at(t, c, 0) - c2.at(t, c, 0);
+		final double a_minus_b_1 = c1.at(t, c, 1) - c2.at(t, c, 1);
 		return a_minus_b_0 * a_minus_b_0 + a_minus_b_1 * a_minus_b_1 - r2;
 	}
 
@@ -129,10 +129,10 @@ public class Distance2DSq extends R1R1Function {
 	 */
 	protected double atC1(final double t) {
 		double ret = 0.0;
-		final double a_minus_b_0 = c1.at(0, c, t) - c2.at(0, c, t);
-		final double a_minus_b_1 = c1.at(1, c, t) - c2.at(1, c, t);
-		final double da_minus_db_0 = c1.at(0, c + 1, t) - c2.at(0, c + 1, t);
-		final double da_minus_db_1 = c1.at(1, c + 1, t) - c2.at(1, c + 1, t);
+		final double a_minus_b_0 = c1.at(t, c, 0) - c2.at(t, c, 0);
+		final double a_minus_b_1 = c1.at(t, c, 1) - c2.at(t, c, 1);
+		final double da_minus_db_0 = c1.at(t, c + 1, 0) - c2.at(t, c + 1, 0);
+		final double da_minus_db_1 = c1.at(t, c + 1, 1) - c2.at(t, c + 1, 1);
 
 		ret += a_minus_b_0 * da_minus_db_0;
 		ret += a_minus_b_1 * da_minus_db_1;

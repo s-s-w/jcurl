@@ -102,23 +102,23 @@ public class Polynome extends R1R1Function {
 	 * @param p
 	 *            polynome coefficients
 	 * @return <code>p(x)</code>
-	 * @see #poly(int, double, double[])
+	 * @see #poly(double, int, double[])
 	 */
 	public static double poly(final double x, final double[] p) {
-		return poly(0, x, p);
+		return poly(x, 0, p);
 	}
 
 	/**
 	 * Compute the c-th derivative of the polynome p at x.
-	 * 
+	 * @param x
 	 * @param c
 	 *            derivative
-	 * @param x
 	 * @param p
 	 *            polynome coefficients
+	 * 
 	 * @return <code>d/dx^c p(x)</code>
 	 */
-	public static double poly(final int c, final double x, final double[] p) {
+	public static double poly(final double x, final int c, final double[] p) {
 		double ret = 0;
 		for (int i = p.length - 1; i >= c; i--) {
 			ret *= x;
@@ -147,14 +147,14 @@ public class Polynome extends R1R1Function {
 	}
 
 	/**
-	 * @param c
 	 * @param x
+	 * @param c
 	 * @return the value
-	 * @see #poly(int, double, double[])
+	 * @see #poly(double, int, double[])
 	 */
 	@Override
-	public double at(final int c, final double x) {
-		return poly(c, x, params);
+	public double at(final double x, final int c) {
+		return poly(x, c, params);
 	}
 
 	@Override

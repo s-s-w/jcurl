@@ -34,23 +34,23 @@ public abstract class R1RNFunctionImpl implements R1RNFunction, Serializable {
 		this.dim = dim;
 	}
 
-	public double[] at(final int c, final double t, double[] ret) {
+	public double[] at(final double t, final int c, double[] ret) {
 		if (ret == null)
 			ret = new double[dim];
 		for (int i = dim - 1; i >= 0; i--)
-			ret[i] = this.at(i, c, t);
+			ret[i] = this.at(t, c, i);
 		return ret;
 	}
 
-	public float[] at(final int c, final double t, float[] ret) {
+	public float[] at(final double t, final int c, float[] ret) {
 		if (ret == null)
 			ret = new float[dim];
 		for (int i = dim - 1; i >= 0; i--)
-			ret[i] = (float) this.at(i, c, t);
+			ret[i] = (float) this.at(t, c, i);
 		return ret;
 	}
 
-	public abstract double at(int dim, int c, double t);
+	public abstract double at(double t, int c, int dim);
 
 	public final int dim() {
 		return dim;

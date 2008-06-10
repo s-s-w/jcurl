@@ -116,9 +116,9 @@ public class CurveTransformed<T extends RockType> extends CurveRock<T> {
 	}
 
 	@Override
-	public double[] at(final int derivative, double t, double[] ret) {
+	public double[] at(double t, final int derivative, double[] ret) {
 		t -= t0;
-		ret = base.at(derivative, t, ret);
+		ret = base.at(t, derivative, ret);
 		final double x;
 		final double y;
 		final double a;
@@ -138,12 +138,12 @@ public class CurveTransformed<T extends RockType> extends CurveRock<T> {
 	}
 
 	@Override
-	public Rock<T> at(final int derivative, double t, Rock<T> ret) {
+	public Rock<T> at(double t, final int derivative, Rock<T> ret) {
 		t -= t0;
 		if (ret == null)
 			ret = new RockDouble<T>();
-		ret.setLocation(base.at(0, derivative, t), base.at(1, derivative, t),
-				base.at(2, derivative, t));
+		ret.setLocation(base.at(t, derivative, 0), base.at(t, derivative, 1),
+				base.at(t, derivative, 2));
 		if (derivative < 1) {
 			final double x = trafo[0] * ret.getX() + trafo[2] * ret.getY()
 					+ trafo[4];
@@ -160,11 +160,11 @@ public class CurveTransformed<T extends RockType> extends CurveRock<T> {
 	}
 
 	@Override
-	public double at(final int component, final int derivative, final double t) {
+	public double at(final double t, final int derivative, final int component) {
 		if (false)
 			throw new UnsupportedOperationException("Not supported.");
 		final double[] tmp = { 0, 0, 0 };
-		at(derivative, t, tmp);
+		at(t, derivative, tmp);
 		return tmp[component];
 	}
 

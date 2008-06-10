@@ -38,43 +38,42 @@ public abstract class R1R1Function extends R1RNFunctionImpl {
 	 * @param x
 	 *            x-value
 	 * @return the value at <code>x</code>
-	 * @see R1R1Function#at(int, double)
+	 * @see R1R1Function#at(double, int)
 	 */
 	public double at(final double x) {
-		return at(0, x);
+		return at(x, 0);
 	}
 
 	/**
 	 * Compute the c'th derivative at <code>x</code>.
-	 * 
-	 * @param c
-	 *            derivative (0=location, 1:speed, ...)
 	 * @param x
 	 *            x-value
+	 * @param c
+	 *            derivative (0=location, 1:speed, ...)
+	 * 
 	 * @return the c'th derivative at <code>x</code>
-	 * @see R1R1Function#at(int, int, double)
+	 * @see R1R1Function#at(double, int, int)
 	 */
-	public abstract double at(int c, double x);
+	public abstract double at(double x, int c);
 
 	/**
 	 * Compute the c'th derivative at <code>x</code>.
-	 * 
-	 * @param dim
-	 *            must be 0
 	 * @param c
 	 *            derivative (0=location, 1:speed, ...)
+	 * @param dim
+	 *            must be 0
 	 * @param x
 	 *            x-value
 	 * @return the c'th derivative at <code>x</code>
-	 * @see R1R1Function#at(int, double)
+	 * @see R1R1Function#at(double, int)
 	 * @throws IllegalArgumentException
 	 *             if <code>dim != 0</code>
 	 */
 	@Override
-	public double at(final int dim, final int c, final double x) {
+	public double at(final double x, final int c, final int dim) {
 		if (dim != 0)
 			throw new IllegalArgumentException("Dimension must be 0");
-		return this.at(c, x);
+		return this.at(x, c);
 	}
 
 }

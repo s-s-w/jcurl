@@ -271,23 +271,23 @@ public class CurveCombined<T extends R1RNFunction> extends R1RNFunctionImpl
 
 	/**
 	 * Get the n-th derivative of all dimensions.
-	 * 
+	 * @param t
 	 * @param c
 	 *            derivative
-	 * @param t
 	 * @param ret
 	 *            <code>null</code> creates a new instance
+	 * 
 	 * @return the value
-	 * @see R1RNFunctionImpl#at(int, double, double[])
+	 * @see R1RNFunctionImpl#at(double, int, double[])
 	 */
 	@Override
-	public double[] at(final int c, final double t, final double[] ret) {
-		return parts.get(findFunctionIndex(t)).getValue().at(c, t, ret);
+	public double[] at(final double t, final int c, final double[] ret) {
+		return parts.get(findFunctionIndex(t)).getValue().at(t, c, ret);
 	}
 
 	@Override
-	public double at(final int dim, final int c, final double t) {
-		return parts.get(findFunctionIndex(t)).getValue().at(dim, c, t);
+	public double at(final double t, final int c, final int dim) {
+		return parts.get(findFunctionIndex(t)).getValue().at(t, c, dim);
 	}
 
 	public void clear() {

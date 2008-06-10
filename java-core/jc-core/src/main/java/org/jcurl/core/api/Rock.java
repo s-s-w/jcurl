@@ -34,7 +34,7 @@ import javax.swing.event.ChangeListener;
  * </p>
  * <p>
  * As the function and curve classes take the order of the desired derivative as
- * an input parameter to {@link CurveRock#at(int, double, Rock)} there's a
+ * an input parameter to {@link CurveRock#at(double, int, Rock)} there's a
  * pardigm shift necessary to use jscience-like typing.
  * </p>
  * <p>

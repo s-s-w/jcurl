@@ -54,12 +54,12 @@ public class FunctionBridgeTest extends TestCase {
 
 			@Override
 			public double at(final double x) {
-				return root.at(diff, x);
+				return root.at(x, diff);
 			}
 
 			@Override
-			public double at(final int derivative, final double x) {
-				return root.at(diff + derivative, x);
+			public double at(final double x, final int derivative) {
+				return root.at(x, diff + derivative);
 			}
 
 			public UnivariateRealFunction derivative() {
@@ -69,7 +69,7 @@ public class FunctionBridgeTest extends TestCase {
 			public double value(final double x)
 					throws FunctionEvaluationException {
 				try {
-					return root.at(diff, x);
+					return root.at(x, diff);
 				} catch (final RuntimeException e) {
 					final FunctionEvaluationException fe = new FunctionEvaluationException(
 							x, e);
@@ -102,7 +102,7 @@ public class FunctionBridgeTest extends TestCase {
 			}
 
 			@Override
-			public double at(final int derivative, final double x) {
+			public double at(final double x, final int derivative) {
 				if (derivative < 0)
 					// TODO throw new DifferentiationException();
 					throw new RuntimeException();
@@ -113,7 +113,7 @@ public class FunctionBridgeTest extends TestCase {
 				if (deriv == null)
 					// TODO throw new DifferentiationException();
 					throw new RuntimeException();
-				return deriv.at(derivative - 1, x);
+				return deriv.at(x, derivative - 1);
 			}
 
 			public UnivariateRealFunction derivative() {
@@ -153,7 +153,7 @@ public class FunctionBridgeTest extends TestCase {
 			assertEquals(b1.at(x), b1.value(x), 1e-9);
 			assertEquals(b0.at(x), b1.at(x), 1e-9);
 			for (int i = 0; i < 100; i++)
-				assertEquals(b0.at(i, x), b1.at(i, x), 1e-9);
+				assertEquals(b0.at(x, i), b1.at(x, i), 1e-9);
 		}
 	}
 }

@@ -35,7 +35,7 @@ public class R1RNFunctionTest extends TestCase {
 			private static final long serialVersionUID = -2622077818516775396L;
 
 			@Override
-			public double at(int c, double x) {
+			public double at(double x, int c) {
 				return x * x;
 			}
 		};

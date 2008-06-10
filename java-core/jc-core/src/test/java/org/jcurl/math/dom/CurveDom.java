@@ -95,7 +95,7 @@ public class CurveDom extends R1RNFunctionImpl {
 	}
 
 	@Override
-	public double at(final int dim, final int c, final double t) {
+	public double at(final double t, final int c, final int dim) {
 		if (c == 0) {
 			this.t.v = t;
 			de.reset();

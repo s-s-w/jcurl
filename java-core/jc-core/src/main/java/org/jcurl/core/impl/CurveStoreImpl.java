@@ -80,7 +80,7 @@ public class CurveStoreImpl extends MutableObject implements Serializable,
 			if (stop > 0 && !Double.isNaN(stop)) {
 				// TUNE save one instanciation?
 				final double[] tmp = { 0, 0, 0 };
-				curve[i].add(stop, CurveStill.newInstance(f.at(0, stop, tmp)),
+				curve[i].add(stop, CurveStill.newInstance(f.at(stop, 0, tmp)),
 						true);
 				if (log.isDebugEnabled())
 					log.debug(i + "  t=" + t + " Still");

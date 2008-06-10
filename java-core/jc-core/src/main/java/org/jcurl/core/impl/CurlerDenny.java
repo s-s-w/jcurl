@@ -127,7 +127,7 @@ public class CurlerDenny extends CoulombCurler {
 			private static final long serialVersionUID = -4138559036279095873L;
 
 			@Override
-			public double at(int c, double t) {
+			public double at(double t, int c) {
 				final double cc = Math.pow(1 - g * mu * t / v0, 1 / eps);
 				switch (c) {
 				case 0:

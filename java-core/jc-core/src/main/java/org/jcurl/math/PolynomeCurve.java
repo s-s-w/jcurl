@@ -112,8 +112,8 @@ public class PolynomeCurve extends R1RNFunctionImpl {
 	}
 
 	@Override
-	public double at(final int dim, final int c, final double t) {
-		return Polynome.poly(c, t, params[dim]);
+	public double at(final double t, final int c, final int dim) {
+		return Polynome.poly(t, c, params[dim]);
 	}
 
 	@Override

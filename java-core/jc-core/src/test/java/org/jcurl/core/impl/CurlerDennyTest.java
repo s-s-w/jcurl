@@ -78,7 +78,7 @@ public class CurlerDennyTest extends TestShowBase {
 		showPositionDisplay(pos, zoom, millis, new TimeRunnable() {
 			@Override
 			public void run(final double t) throws InterruptedException {
-				p.at(0, t, pos.getRock(0));
+				p.at(t, 0, pos.getRock(0));
 				Thread.sleep(dt);
 			}
 		});
@@ -110,7 +110,7 @@ public class CurlerDennyTest extends TestShowBase {
 		final CurveTransformed<Pos> wc = new CurveTransformed<Pos>(rc, cu
 				.hackRc2Wc(null, broom), 0);
 		assertEquals(0, wc.at(0, 1, 0));
-		assertEquals(-v0, wc.at(1, 1, 0));
+		assertEquals(-v0, wc.at(0, 1, 1));
 		assertEquals("1.5000001333164878", "" + cu.computeIntervalTime(wc));
 
 		back = NewtonSimpleSolver.computeNewtonValue(wc, 1, 0,
@@ -128,14 +128,14 @@ public class CurlerDennyTest extends TestShowBase {
 		final CurlerDenny cd = new CurlerDenny(24, 0);
 
 		final CurveRock<Pos> cnc = cs.computeRc(0, 2.3, 1, 0);
-		assertEquals(0.0, cnc.at(1, 0, 0));
-		assertEquals("20.513399696350092", "" + cnc.at(1, 0, 12));
-		assertEquals("26.853598785400386", "" + cnc.at(1, 0, 24));
+		assertEquals(0.0, cnc.at(0, 0, 1));
+		assertEquals("20.513399696350092", "" + cnc.at(12, 0, 1));
+		assertEquals("26.853598785400386", "" + cnc.at(24, 0, 1));
 
 		final CurveRock<Pos> cdc = cd.computeRc(0, 2.3, 1, 0);
-		assertEquals(0.0, cdc.at(1, 0, 0));
-		assertEquals("20.513399696350092", "" + cdc.at(1, 0, 12));
-		assertEquals("26.853598785400386", "" + cdc.at(1, 0, 24));
+		assertEquals(0.0, cdc.at(0, 0, 1));
+		assertEquals("20.513399696350092", "" + cdc.at(12, 0, 1));
+		assertEquals("26.853598785400386", "" + cdc.at(24, 0, 1));
 	}
 
 	public void testComputeRcPoly() {
@@ -154,7 +154,7 @@ public class CurlerDennyTest extends TestShowBase {
 				new Point2D.Float(0, 0)), Math.PI / 2, 0);
 		final Rock<Pos> ret = new RockDouble<Pos>();
 		try {
-			p.at(3, 0, ret);
+			p.at(0, 3, ret);
 			fail("expected Exception");
 		} catch (final IllegalArgumentException e) {
 			;
@@ -163,38 +163,38 @@ public class CurlerDennyTest extends TestShowBase {
 		assertEquals(0, ret.getX());
 		assertEquals(0, ret.getY());
 		assertEquals(0, ret.getA());
-		p.at(1, 0, ret);
+		p.at(0, 1, ret);
 		assertEquals(0, ret.getX());
 		if (false) {
 			assertEquals(2.480575119409491, ret.getY());
 			assertEquals(1.5707963267948966, ret.getA());
-			p.at(2, 0, ret);
+			p.at(0, 2, ret);
 			assertEquals(0, ret.getX());
 			assertEquals(-0.09842499759462145, ret.getY());
 			assertEquals(-0.15565385905987525, ret.getA());
 
-			p.at(0, 10, ret);
+			p.at(10, 0, ret);
 			assertEquals(-0.21342947331342377, ret.getX());
 			assertEquals(19.88450131436384, ret.getY());
 			assertEquals(9.387172187683756, ret.getA());
-			p.at(1, 10, ret);
+			p.at(10, 1, ret);
 			assertEquals(-0.05498659662365676, ret.getX());
 			assertEquals(1.4963251434632767, ret.getY());
 			assertEquals(0.4445043723378003, ret.getA());
-			p.at(2, 10, ret);
+			p.at(10, 2, ret);
 			assertEquals(-0.007380421176583205, ret.getX());
 			assertEquals(-0.09842499759462145, ret.getY());
 			assertEquals(-0.07302010654804114, ret.getA());
 
-			p.at(0, 20, ret);
+			p.at(20, 0, ret);
 			assertEquals(-0.9840561568777606, ret.getX());
 			assertEquals(29.926502869265533, ret.getY());
 			assertEquals(11.273942229300644, ret.getA());
-			p.at(1, 20, ret);
+			p.at(20, 1, ret);
 			assertEquals(-0.07527046056870113, ret.getX());
 			assertEquals(0.5120751675170623, ret.getY());
 			assertEquals(0.03053930825433586, ret.getA());
-			p.at(2, 20, ret);
+			p.at(20, 2, ret);
 			assertEquals(0.00694054653572247, ret.getX());
 			assertEquals(-0.09842499759462145, ret.getY());
 			assertEquals(-0.014659456820910044, ret.getA());
@@ -210,8 +210,8 @@ public class CurlerDennyTest extends TestShowBase {
 		final CurveRock<Pos> wc = c.computeWc(tee, split, Math.PI, 1, 0);
 		// are the curves aequivalent?
 		for (int t = 0; t < 20; t += 1)
-			assertEquals("t=" + t, rc.at(1, 0, t), (IceSize.FAR_HACK_2_TEE - wc
-					.at(1, 0, t)), 1e-9);
+			assertEquals("t=" + t, rc.at(t, 0, 1), (IceSize.FAR_HACK_2_TEE - wc
+					.at(t, 0, 1)), 1e-9);
 	}
 
 	public void testDrawToTeeRC() {
@@ -223,16 +223,16 @@ public class CurlerDennyTest extends TestShowBase {
 		final CurveRock<Pos> rc = c.computeRc(0, v0, 1, 0);
 		// start speed
 		assertEquals(0.0, rc.at(0, 1, 0), 1e-6);
-		assertEquals(v0, rc.at(1, 1, 0), 1e-6);
+		assertEquals(v0, rc.at(0, 1, 1), 1e-6);
 		// start location
 		assertEquals(0.0, rc.at(0, 0, 0), 1e-6);
-		assertEquals(0.0, rc.at(1, 0, 0), 1e-6);
+		assertEquals(0.0, rc.at(0, 0, 1), 1e-6);
 		// stop speed
-		assertEquals(0.0, rc.at(0, 1, tTee), 1e-6);
-		assertEquals(0.0, rc.at(1, 1, tTee), 1e-6);
+		assertEquals(0.0, rc.at(tTee, 1, 0), 1e-6);
+		assertEquals(0.0, rc.at(tTee, 1, 1), 1e-6);
 		// stop location
-		assertEquals(-1.0, rc.at(0, 0, tTee), 1e-6);
-		assertEquals(IceSize.FAR_HACK_2_TEE, rc.at(1, 0, tTee), 1e-6);
+		assertEquals(-1.0, rc.at(tTee, 0, 0), 1e-6);
+		assertEquals(IceSize.FAR_HACK_2_TEE, rc.at(tTee, 0, 1), 1e-6);
 	}
 
 	public void testDrawToTeeWC() {
@@ -245,31 +245,31 @@ public class CurlerDennyTest extends TestShowBase {
 		final CurveRock<Pos> wc = c.computeWc(tee, tSplit, 0, 1, 0);
 		// start speed
 		assertEquals(0.0, wc.at(0, 1, 0), 1e-6);
-		assertEquals(-2.7495427, wc.at(1, 1, 0), 1e-6);
+		assertEquals(-2.7495427, wc.at(0, 1, 1), 1e-6);
 		// start location
 		assertEquals(0.0, wc.at(0, 0, 0), 1e-6);
-		assertEquals(IceSize.FAR_HACK_2_TEE, wc.at(1, 0, 0), 1e-6);
+		assertEquals(IceSize.FAR_HACK_2_TEE, wc.at(0, 0, 1), 1e-6);
 		// stop speed
-		assertEquals(0.0, wc.at(0, 1, tTee), 1e-6);
-		assertEquals(0.0, wc.at(1, 1, tTee), 1e-6);
+		assertEquals(0.0, wc.at(tTee, 1, 0), 1e-6);
+		assertEquals(0.0, wc.at(tTee, 1, 1), 1e-6);
 		// stop location
-		assertEquals(1.0, wc.at(0, 0, tTee), 1e-6);
-		assertEquals(0.0, wc.at(1, 0, tTee), 1e-6);
+		assertEquals(1.0, wc.at(tTee, 0, 0), 1e-6);
+		assertEquals(0.0, wc.at(tTee, 0, 1), 1e-6);
 		{
 			final CurveTransformed<Pos> ct = (CurveTransformed<Pos>) wc;
 			final R1RNFunction rc = ct.getBase();
 			// start speed
 			assertEquals(0.0, rc.at(0, 1, 0), 1e-6);
-			assertEquals(2.7495427, rc.at(1, 1, 0), 1e-6);
+			assertEquals(2.7495427, rc.at(0, 1, 1), 1e-6);
 			// start location
 			assertEquals(0.0, rc.at(0, 0, 0), 1e-6);
-			assertEquals(0.0, rc.at(1, 0, 0), 1e-6);
+			assertEquals(0.0, rc.at(0, 0, 1), 1e-6);
 			// stop speed
-			assertEquals(0.0, rc.at(0, 1, tTee), 1e-6);
-			assertEquals(0.0, rc.at(1, 1, tTee), 1e-6);
+			assertEquals(0.0, rc.at(tTee, 1, 0), 1e-6);
+			assertEquals(0.0, rc.at(tTee, 1, 1), 1e-6);
 			// stop location
-			assertEquals(-1.0, rc.at(0, 0, tTee), 1e-6);
-			assertEquals(IceSize.FAR_HACK_2_TEE, rc.at(1, 0, tTee), 1e-6);
+			assertEquals(-1.0, rc.at(tTee, 0, 0), 1e-6);
+			assertEquals(IceSize.FAR_HACK_2_TEE, rc.at(tTee, 0, 1), 1e-6);
 		}
 	}
 
@@ -319,7 +319,7 @@ public class CurlerDennyTest extends TestShowBase {
 		final double v0 = c.computeHackSpeed(split, tee);
 		assertEquals(2.453599211554087, v0);
 		// check hack speed
-		final Rock<Pos> r = c.computeWc(tee, split, Math.PI, 1, 0).at(1, 0,
+		final Rock<Pos> r = c.computeWc(tee, split, Math.PI, 1, 0).at(0, 1,
 				new RockDouble<Pos>());
 		assertEquals(v0, r.p().distance(0, 0), 1e-6);
 	}

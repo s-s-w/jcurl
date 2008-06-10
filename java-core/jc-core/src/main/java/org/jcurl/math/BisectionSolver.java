@@ -50,18 +50,18 @@ public class BisectionSolver {
 	 */
 	public static double findRoot(final R1R1Function f, final double y,
 			double left, double right, final double epsilon) {
-		double lefty = f.at(0, left);
+		double lefty = f.at(left, 0);
 		if (Double.isNaN(lefty))
 			return Double.NaN;
 		// check if left-y an right-y have opposite signs. Use signum to avoid
 		// overflows.
-		if (Math.signum(lefty) * f.at(0, right) > 0)
+		if (Math.signum(lefty) * f.at(right, 0) > 0)
 			return Double.NaN;
 		double midy = Double.NaN;
 		while (Math.abs(right - left) > epsilon) {
 			// Calculate midpoint of domain
 			final double midpoint = (right + left) / 2;
-			midy = f.at(0, midpoint);
+			midy = f.at(midpoint, 0);
 			if (log.isDebugEnabled())
 				log.debug("f(" + left + ")=" + lefty + " f(" + midpoint + ")="
 						+ midy + " f(" + right + ")=unused");

@@ -62,13 +62,13 @@ public class StoredTrajectorySet extends MutableObject implements TrajectorySet 
 		// TUNE Parallel
 		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
 			final R1RNFunction c = store.getCurve(i);
-			double x = c.at(0, 0, currentTime);
-			double y = c.at(1, 0, currentTime);
-			double a = c.at(2, 0, currentTime);
+			double x = c.at(currentTime, 0, 0);
+			double y = c.at(currentTime, 0, 1);
+			double a = c.at(currentTime, 0, 2);
 			cp.getRock(i).setLocation(x, y, a);
-			x = c.at(0, 1, currentTime);
-			y = c.at(1, 1, currentTime);
-			a = c.at(2, 1, currentTime);
+			x = c.at(currentTime, 1, 0);
+			y = c.at(currentTime, 1, 1);
+			a = c.at(currentTime, 1, 2);
 			cv.getRock(i).setLocation(x, y, a);
 		}
 	}

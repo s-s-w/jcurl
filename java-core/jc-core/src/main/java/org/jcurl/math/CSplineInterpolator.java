@@ -146,16 +146,16 @@ public class CSplineInterpolator extends R1R1Function {
 
 	/**
 	 * Convenience wrapper.
-	 * 
-	 * @see #at(int, int, double)
-	 * @param C
-	 *            n'th derivative (0=value,1=incline,2=acceleration)
 	 * @param x
 	 *            location
+	 * @param C
+	 *            n'th derivative (0=value,1=incline,2=acceleration)
+	 * 
+	 * @see #at(double, int, int)
 	 * @return value ot the n'th derivative
 	 */
 	@Override
-	public double at(final int C, double x) {
+	public double at(double x, final int C) {
 		final int idx = findSplineIndex(x);
 		final double[] spline = splines[idx];
 		x -= this.x[idx];
