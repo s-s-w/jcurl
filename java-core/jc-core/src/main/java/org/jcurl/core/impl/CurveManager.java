@@ -48,6 +48,11 @@ import org.jcurl.math.R1RNFunction;
 
 /**
  * Bring it all together and trigger computation.
+ * <p>
+ * Registers itself as listener to
+ * {@link RockSet#addRockListener(ChangeListener)} for both - initial rock
+ * locations and velocities to trigger recomputation.
+ * </p>
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CurveManager.java 682 2007-08-12 21:25:04Z mrohrmoser $
@@ -65,19 +70,24 @@ public class CurveManager extends MutableObject implements ChangeListener,
 	private static final long serialVersionUID = 7198540442889130378L;
 	private static final StopDetector stopper = new NewtonStopDetector();
 	private final Map<CharSequence, CharSequence> annotations = new HashMap<CharSequence, CharSequence>();
+	/** Trajectory (Rock) Bitmask or -1 for "currently not suspended". */
+	private transient int collected = 0;
 	private Collider collider = null;
 	private CollissionDetector collissionDetector = null;
 	private transient final CollissionStore collissionStore = new CollissionStore();
 	private Curler curler = null;
 	private transient final RockSet<Pos> currentPos = RockSetUtils.allHome();
-	private transient final RockSet<Vel> currentSpeed = RockSet.allZero(null);
 	private transient double currentTime = 0;
+	private transient final RockSet<Vel> currentVel = RockSet.allZero(null);
 	private transient CurveStore curveStore = new CurveStoreImpl(stopper,
 			RockSet.ROCKS_PER_SET);
 	private final RockSet<Pos> initialPos = RockSetUtils.allHome();
 	private final RockSet<Vel> initialSpeed = RockSet.allZero(null);
+	// don't fire change events on intermediate updates. Use another variable.
 	private final transient RockSet<Pos> tmpPos = RockSetUtils.allHome();
-	private final transient RockSet<Vel> tmpSpeed = RockSet.allZero(null);
+
+	// don't fire change events on intermediate updates. Use another variable.
+	private final transient RockSet<Vel> tmpVel = RockSet.allZero(null);
 
 	public CurveManager() {
 		initialPos.addRockListener(this);
@@ -123,30 +133,6 @@ public class CurveManager extends MutableObject implements ChangeListener,
 	}
 
 	/**
-	 * Internal. Compute initial curves and the first hit of each combination of
-	 * 2 rocks if the dirty flag is set.
-	 */
-	void doInit() {
-		final double t0 = 0.0;
-		// TUNE Parallel
-		// initial curves:
-		for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--) {
-			curveStore.reset(i16);
-			curveStore.add(i16, t0, doComputeCurve(i16, t0, initialPos,
-					initialSpeed, NoSweep), _30);
-		}
-		// initial collission detection:
-		collissionStore.clear();
-		// TUNE Parallel
-		for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--)
-			for (int j16 = i16 - 1; j16 >= 0; j16--)
-				// log.info("collissionDetect " + i + ", " + j);
-				collissionStore.add(collissionDetector.compute(t0, _30,
-						curveStore.getCurve(i16), curveStore.getCurve(j16)),
-						i16, j16);
-	}
-
-	/**
 	 * Internal. Typically after a hit: Recompute the new curves and upcoming
 	 * collission candidates.
 	 * 
@@ -187,7 +173,7 @@ public class CurveManager extends MutableObject implements ChangeListener,
 	 * 
 	 * @param currentTime
 	 */
-	void doUpdatePosAndSpeed(final double currentTime, final RockSet<Pos> cp,
+	void doUpdatePosAndVel(final double currentTime, final RockSet<Pos> cp,
 			final RockSet<Vel> cv) {
 		// TUNE Parallel
 		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--) {
@@ -228,12 +214,12 @@ public class CurveManager extends MutableObject implements ChangeListener,
 		return currentPos;
 	}
 
-	public RockSet<Vel> getCurrentSpeed() {
-		return currentSpeed;
-	}
-
 	public double getCurrentTime() {
 		return currentTime;
+	}
+
+	public RockSet<Vel> getCurrentVel() {
+		return currentVel;
 	}
 
 	public CurveStore getCurveStore() {
@@ -244,7 +230,7 @@ public class CurveManager extends MutableObject implements ChangeListener,
 		return initialPos;
 	}
 
-	public RockSet<Vel> getInitialSpeed() {
+	public RockSet<Vel> getInitialVel() {
 		return initialSpeed;
 	}
 
@@ -261,34 +247,88 @@ public class CurveManager extends MutableObject implements ChangeListener,
 		m.setCollissionDetector(getCollissionDetector());
 		m.setCurveStore(new CurveStoreImpl(stopper, RockSet.ROCKS_PER_SET));
 		m.setInitialPos(getInitialPos());
-		m.setInitialSpeed(getInitialSpeed());
+		m.setInitialVel(getInitialVel());
 		// m.setCurrentTime(this.getCurrentTime());
 		return m;
 	}
 
-	public void recompute() {
+	private void recompute() {
 		recompute(currentTime, true);
 	}
 
 	private void recompute(final double currentTime, final boolean complete) {
+		if(collected >= 0)
+			return;
 		if (complete) {
-			doInit();
+			{
+				final double t0 = 0.0;
+				// TUNE Parallel
+				// initial curves:
+				for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--) {
+					curveStore.reset(i16);
+					curveStore.add(i16, t0, doComputeCurve(i16, t0, initialPos,
+							initialSpeed, NoSweep), _30);
+				}
+				// initial collission detection:
+				collissionStore.clear();
+				// TUNE Parallel
+				for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--)
+					for (int j16 = i16 - 1; j16 >= 0; j16--)
+						// log.info("collissionDetect " + i + ", " + j);
+						collissionStore.add(collissionDetector.compute(t0, _30,
+								curveStore.getCurve(i16), curveStore
+										.getCurve(j16)), i16, j16);
+			}
 			final AffineTransform m = new AffineTransform();
 			// NaN-safe time range check (are we navigating known ground?):
 			while (currentTime > doGetNextHit().t) {
 				final Tupel nh = doGetNextHit();
 				if (log.isDebugEnabled())
 					log.debug(nh.a + " - " + nh.b + " : " + nh.t);
-				doUpdatePosAndSpeed(nh.t, tmpPos, tmpSpeed);
+				doUpdatePosAndVel(nh.t, tmpPos, tmpVel);
 				// compute collission(s);
-				final int mask = collider.compute(tmpPos, tmpSpeed, m);
+				final int mask = collider.compute(tmpPos, tmpVel, m);
 				if (mask == 0)
 					break;
-				doRecomputeCurvesAndCollissionTimes(mask, nh.t, tmpPos,
-						tmpSpeed);
+				doRecomputeCurvesAndCollissionTimes(mask, nh.t, tmpPos, tmpVel);
 			}
 		}
-		doUpdatePosAndSpeed(currentTime, currentPos, currentSpeed);
+		doUpdatePosAndVel(currentTime, currentPos, currentVel);
+	}
+
+	/** Do NOT update currentXY */
+	private void recomputeCurve(final int i16) {
+		if (i16 < 0)
+			return;
+		// TODO find the first collission with this (old) curve involved.
+
+		// TODO find the first collission with this (new) curve involved.
+
+		// TODO if none -> return
+
+		// TODO clear the collissionstore until the earlier of the two
+
+	}
+
+	/** Do NOT update currentXY */
+	private void recomputeCurves(final int bitmask) {
+		if (bitmask <= 0)
+			return;
+		for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--) {
+			if (!RockSet.isSet(bitmask, i16))
+				continue;
+			recomputeCurve(i16);
+		}
+		doUpdatePosAndVel(currentTime, currentPos, currentVel);
+	}
+
+	/** process collected recompute-requests and listen again. */
+	public void resume() {
+		final int old = collected;
+		collected = -1;
+		if (old <= 0)
+			return;
+		recompute(currentTime, true);
 	}
 
 	public void setCollider(final Collider collider) {
@@ -335,8 +375,8 @@ public class CurveManager extends MutableObject implements ChangeListener,
 		this.initialPos.setLocation(initialPos);
 	}
 
-	public void setInitialSpeed(final RockSet<Vel> initialSpeed) {
-		this.initialSpeed.setLocation(initialSpeed);
+	public void setInitialVel(final RockSet<Vel> initialVel) {
+		initialSpeed.setLocation(initialVel);
 	}
 
 	public void stateChanged(final ChangeEvent arg0) {
@@ -345,11 +385,26 @@ public class CurveManager extends MutableObject implements ChangeListener,
 			;// recompute(currentTime, true);
 		else if (initialPos.findI16(src) >= 0) {
 			log.debug("Startpos rock change");
-			recompute(currentTime, true);
+			if (collected >= 0)
+				collected |= 1 << initialPos.findI16(src);
+			else
+				recompute(currentTime, true);
 		} else if (initialSpeed.findI16(src) >= 0) {
 			log.debug("Startvel rock change");
-			recompute(currentTime, true);
+			if (collected >= 0)
+				collected |= 1 << initialSpeed.findI16(src);
+			else
+				recompute(currentTime, true);
 		} else
 			log.info(arg0);
+	}
+
+	/**
+	 * Don't immediately recompute, but collect requested recomputations until
+	 * {@link #resume()}
+	 */
+	public void suspend() {
+		if (collected < 0)
+			collected = 0;
 	}
 }

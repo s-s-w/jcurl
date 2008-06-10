@@ -53,12 +53,12 @@ public class CurlerDennyTest extends TestShowBase {
 		te.getInitialPos().getLight(0).setLocation(0, IceSize.BACK_2_TEE,
 				0.25 * Math.PI);
 		RockSet<Vel> tmp = null;
-		te.setInitialSpeed(tmp = RockSet.allZero(null));
+		te.setInitialVel(tmp = RockSet.allZero(null));
 		if (false)
-			te.getInitialSpeed().getDark(0).setLocation(-0.096,
+			te.getInitialVel().getDark(0).setLocation(-0.096,
 					-te.getCurler().computeHackSpeed(3.124, tee), Math.PI / 2);
 		else
-			te.getInitialSpeed().getDark(0).setLocation(0, -2.455, Math.PI / 2);
+			te.getInitialVel().getDark(0).setLocation(0, -2.455, Math.PI / 2);
 
 		// with Display:
 		showPositionDisplay(te.getCurrentPos(), FixpointZoomer.HOUSE, 10000,

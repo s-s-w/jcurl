@@ -407,7 +407,7 @@ public class MenuFile {
 		te.setCollissionDetector(new NewtonCollissionDetector());
 		te.setCurler(new CurlerDenny(24, 1));
 		te.setInitialPos(RockSetUtils.allOut());
-		te.setInitialSpeed(new RockSet<Vel>(new RockDouble<Vel>()));
+		te.setInitialVel(new RockSet<Vel>(new RockDouble<Vel>()));
 		te.getAnnotations().put(AnnoHelper.HammerK, AnnoHelper.HammerVDark);
 		te.getAnnotations().put(AnnoHelper.DarkTeamK, "Scotland");
 		te.getAnnotations().put(AnnoHelper.LightTeamK, "Canada");
@@ -416,7 +416,7 @@ public class MenuFile {
 				"World Curling Championships");
 		te.getAnnotations().put(AnnoHelper.DateK, "1992");
 		te.getAnnotations().put(AnnoHelper.LocationK, "Garmisch");
-		initHammy(te.getInitialPos(), te.getInitialSpeed());
+		initHammy(te.getInitialPos(), te.getInitialVel());
 		return te;
 	}
 

@@ -173,53 +173,75 @@ public class TrajectoryBroomPromptWrapper extends DefaultBroomPromptModel
 	private static final Log log = JCLoggerFactory
 			.getLogger(TrajectoryBroomPromptWrapper.class);
 
-	private Curler curler;
-	private CurveStore curveStore;
+	private ComputedTrajectorySet cts = null;
+	private Curler curler = null;
+	private CurveStore curveStore = null;
 	private final MediatorWorker med = new MediatorWorker();
-	private RockSet<Pos> positions;
-	private RockSet<Vel> velocities;
+	private RockSet<Pos> positions = null;
+	private RockSet<Vel> velocities = null;
+
+	private void cts_resume() {
+		if (cts != null)
+			cts.resume();
+	}
+
+	private void cts_suspend() {
+		if (cts != null)
+			cts.suspend();
+	}
 
 	public void init(final ComputedTrajectorySet cts) {
+		this.cts = cts;
 		if (cts == null)
 			init(null, null, null, null);
 		else
-			init(cts.getInitialPos(), cts.getInitialSpeed(), cts.getCurler(),
-					cts.getCurveStore());
+			init(cts.getInitialPos(), cts.getInitialVel(), cts.getCurler(), cts
+					.getCurveStore());
 	}
 
 	private void init(final RockSet<Pos> positions,
 			final RockSet<Vel> velocities, final Curler curler,
 			final CurveStore curveStore) {
-		this.curveStore = curveStore;
-		this.curler = curler;
+		cts_suspend();
+		try {
+			this.curveStore = curveStore;
+			this.curler = curler;
 
-		final int idx16;
-		if (this.velocities != velocities)
-			idx16 = med.findRunning(velocities, getIdx16(), true);
-		else
-			idx16 = getIdx16();
-		// put rock idx16 into start position
-		if (this.positions != positions)
-			med.swap(positions, getIdx16(), idx16);
-		med.startPos(positions, idx16);
+			final int idx16;
+			if (this.velocities != velocities)
+				idx16 = med.findRunning(velocities, getIdx16(), true);
+			else
+				idx16 = getIdx16();
+			// put rock idx16 into start position
+			if (this.positions != positions)
+				med.swap(positions, getIdx16(), idx16);
+			med.startPos(positions, idx16);
 
-		this.positions = positions;
-		this.velocities = velocities;
+			this.positions = positions;
+			this.velocities = velocities;
 
-		super.setIdx16(idx16);
-		if (this.curveStore == null || this.curler == null
-				|| this.positions == null || this.velocities == null) {
-			setBroom(null);
-			return;
+			super.setIdx16(idx16);
+			if (this.curveStore == null || this.curler == null
+					|| this.positions == null || this.velocities == null) {
+				setBroom(null);
+				return;
+			}
+			updateBroom(true);
+		} finally {
+			cts_resume();
 		}
-		updateBroom(true);
 	}
 
 	@Override
 	public void setBroom(final Point2D broom) {
-		// do the update no matter if the reference changed at all.
-		super.setBroom(broom);
-		updateVelocities();
+		try {
+			cts_suspend();
+			// do the update no matter if the reference changed at all.
+			super.setBroom(broom);
+			updateVelocities();
+		} finally {
+			cts_resume();
+		}
 	}
 
 	@Override
@@ -228,30 +250,45 @@ public class TrajectoryBroomPromptWrapper extends DefaultBroomPromptModel
 		final int old = getIdx16();
 		if (old == idx16)
 			return;
-		super.setIdx16(idx16);
-		med.swap(positions, old, getIdx16());
-		med.swap(velocities, old, getIdx16());
-		updateVelocities();
+		try {
+			cts_suspend();
+			super.setIdx16(idx16);
+			med.swap(positions, old, getIdx16());
+			med.swap(velocities, old, getIdx16());
+			updateVelocities();
+		} finally {
+			cts_resume();
+		}
 	}
 
 	@Override
 	public void setOutTurn(final boolean outTurn) {
 		if (getOutTurn() == outTurn)
 			return;
-		super.setOutTurn(outTurn);
-		updateVelocities();
+		try {
+			cts_suspend();
+			super.setOutTurn(outTurn);
+			updateVelocities();
+		} finally {
+			cts_resume();
+		}
 	}
 
 	@Override
 	public void setSplitTimeMillis(final BoundedRangeModel splitTimeMillis) {
 		if (getSplitTimeMillis() == splitTimeMillis)
 			return;
-		if (getSplitTimeMillis() != null)
-			getSplitTimeMillis().removeChangeListener(this);
-		super.setSplitTimeMillis(splitTimeMillis);
-		if (getSplitTimeMillis() != null)
-			getSplitTimeMillis().addChangeListener(this);
-		updateVelocities();
+		try {
+			cts_suspend();
+			if (getSplitTimeMillis() != null)
+				getSplitTimeMillis().removeChangeListener(this);
+			super.setSplitTimeMillis(splitTimeMillis);
+			if (getSplitTimeMillis() != null)
+				getSplitTimeMillis().addChangeListener(this);
+			updateVelocities();
+		} finally {
+			cts_resume();
+		}
 	}
 
 	@Override
@@ -268,17 +305,22 @@ public class TrajectoryBroomPromptWrapper extends DefaultBroomPromptModel
 
 	@SuppressWarnings("unchecked")
 	private void updateBroom(final boolean isInit) {
-		// syncCts2Bpm calls back setOutTurn which leads to a buggy cyclic
-		// computation. To prevent this we use a (dirty) trick:
-		final RockSet<Vel> ivel = velocities;
+		cts_suspend();
 		try {
-			if (isInit)
-				velocities = null;
-			med.syncCts2Bpm(getIdx16(), positions, ivel, curler,
-					(CurveCombined<CurveRock<Pos>>) curveStore
-							.getCurve(getIdx16()), this);
+			// syncCts2Bpm calls back setOutTurn which leads to a buggy cyclic
+			// computation. To prevent this we use a (dirty) trick:
+			final RockSet<Vel> ivel = velocities;
+			try {
+				if (isInit)
+					velocities = null;
+				med.syncCts2Bpm(getIdx16(), positions, ivel, curler,
+						(CurveCombined<CurveRock<Pos>>) curveStore
+								.getCurve(getIdx16()), this);
+			} finally {
+				velocities = ivel;
+			}
 		} finally {
-			velocities = ivel;
+			cts_resume();
 		}
 	}
 

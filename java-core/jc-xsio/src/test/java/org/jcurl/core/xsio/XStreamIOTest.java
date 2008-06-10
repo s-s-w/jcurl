@@ -57,7 +57,7 @@ public class XStreamIOTest extends TestBase {
 		te.setCollissionDetector(new NewtonCollissionDetector());
 		te.setCurler(new CurlerNoCurl(24, 0));
 		te.setInitialPos(RockSetUtils.allOut());
-		te.setInitialSpeed(new RockSet<Vel>(new RockDouble<Vel>()));
+		te.setInitialVel(new RockSet<Vel>(new RockDouble<Vel>()));
 		te.getAnnotations().put(AnnoHelper.HammerK, AnnoHelper.HammerVDark);
 		te.getAnnotations().put(AnnoHelper.DarkTeamK, "Scotland");
 		te.getAnnotations().put(AnnoHelper.LightTeamK, "Canada");
@@ -66,7 +66,7 @@ public class XStreamIOTest extends TestBase {
 				"World Curling Championships");
 		te.getAnnotations().put(AnnoHelper.DateK, "1992");
 		te.getAnnotations().put(AnnoHelper.LocationK, "Garmisch");
-		initHammy(te.getInitialPos(), te.getInitialSpeed());
+		initHammy(te.getInitialPos(), te.getInitialVel());
 		return te;
 	}
 
@@ -235,8 +235,8 @@ public class XStreamIOTest extends TestBase {
 		te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
 		te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
 				0.25 * Math.PI);
-		te.setInitialSpeed(new RockSet<Vel>(new RockDouble<Vel>()));
-		te.getInitialSpeed().getDark(0).setLocation(0,
+		te.setInitialVel(new RockSet<Vel>(new RockDouble<Vel>()));
+		te.getInitialVel().getDark(0).setLocation(0,
 				-te.getCurler().computeHackSpeed(5, tee), Math.PI / 2);
 		te.setCurrentTime(20);
 
@@ -578,8 +578,8 @@ public class XStreamIOTest extends TestBase {
 		te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
 		te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
 				0.25 * Math.PI);
-		te.setInitialSpeed(new RockSet<Vel>(new RockDouble<Vel>()));
-		te.getInitialSpeed().getDark(0).setLocation(0,
+		te.setInitialVel(new RockSet<Vel>(new RockDouble<Vel>()));
+		te.getInitialVel().getDark(0).setLocation(0,
 				-te.getCurler().computeHackSpeed(5, tee), Math.PI / 2);
 
 		final XStream xs = new XStream();
@@ -668,10 +668,10 @@ public class XStreamIOTest extends TestBase {
 		assertNotNull(o.getCollider());
 		assertNotNull(o.getCollissionDetector());
 		assertNotNull(o.getCurrentPos());
-		assertNotNull(o.getCurrentSpeed());
+		assertNotNull(o.getCurrentVel());
 		assertNotNull(o.getCurveStore());
 		assertNotNull(o.getInitialPos());
-		assertNotNull(o.getInitialSpeed());
+		assertNotNull(o.getInitialVel());
 		assertNotNull(o.getCurler());
 	}
 
@@ -684,8 +684,8 @@ public class XStreamIOTest extends TestBase {
 		te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
 		te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
 				0.25 * Math.PI);
-		te.setInitialSpeed(new RockSet<Vel>(new RockDouble<Vel>()));
-		te.getInitialSpeed().getDark(0).setLocation(0,
+		te.setInitialVel(new RockSet<Vel>(new RockDouble<Vel>()));
+		te.getInitialVel().getDark(0).setLocation(0,
 				-te.getCurler().computeHackSpeed(5, tee), Math.PI / 2);
 		te.setCurrentTime(20);
 
@@ -975,8 +975,8 @@ public class XStreamIOTest extends TestBase {
 		te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
 		te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
 				0.25 * Math.PI);
-		te.setInitialSpeed(new RockSet<Vel>(new RockDouble<Vel>()));
-		te.getInitialSpeed().getDark(0).setLocation(0,
+		te.setInitialVel(new RockSet<Vel>(new RockDouble<Vel>()));
+		te.getInitialVel().getDark(0).setLocation(0,
 				-te.getCurler().computeHackSpeed(5, tee), Math.PI / 2);
 
 		final XStreamSerializer xs = new XStreamSerializer();
@@ -1068,10 +1068,10 @@ public class XStreamIOTest extends TestBase {
 		assertNotNull(o.getCollider());
 		assertNotNull(o.getCollissionDetector());
 		assertNotNull(o.getCurrentPos());
-		assertNotNull(o.getCurrentSpeed());
+		assertNotNull(o.getCurrentVel());
 		assertNotNull(o.getCurveStore());
 		assertNotNull(o.getInitialPos());
-		assertNotNull(o.getInitialSpeed());
+		assertNotNull(o.getInitialVel());
 		assertNotNull(o.getCurler());
 	}
 }

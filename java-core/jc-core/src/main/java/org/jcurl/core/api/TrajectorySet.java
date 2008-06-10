@@ -36,7 +36,7 @@ public interface TrajectorySet {
 
 	public abstract RockSet<Pos> getCurrentPos();
 
-	public abstract RockSet<Vel> getCurrentSpeed();
+	public abstract RockSet<Vel> getCurrentVel();
 
 	public abstract double getCurrentTime();
 

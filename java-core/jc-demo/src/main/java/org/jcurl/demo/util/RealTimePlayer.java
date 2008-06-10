@@ -74,7 +74,7 @@ public class RealTimePlayer implements Runnable {
 				tNow = t0Last + dt * timeScale * 1e-3;
 				// get the position
 				src.setCurrentTime(tNow);
-				if (0 == RockSet.nonZero(src.getCurrentSpeed())) {
+				if (0 == RockSet.nonZero(src.getCurrentVel())) {
 					t0Last = t0Start;
 					break;
 				}

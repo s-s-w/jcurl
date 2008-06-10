@@ -18,6 +18,12 @@
 				value="%-5p %m%n"/ -->
 		</layout>
 	</appender>
+	<category name="org.jcurl.core.impl.CurveManager">
+		<level value="INFO"/>
+	</category>
+	<category name="org.jcurl.core.ui.RockMemento">
+		<level value="INFO"/>
+	</category>
 	<!-- category name="org.jcurl.core.impl.CollissionStore">
 		<level value="DEBUG"/>
 	</category>
@@ -27,11 +33,8 @@
 	<category name="org.jcurl.core.model.CurveStoreImpl">
 		<level value="DEBUG"/>
 	</category -->
-	<category name="org.jcurl.core.ui.ChangeManager">
-		<level value="INFO"/>
-	</category>
 	<category name="org.jcurl.demo.tactics.BroomSwingBean">
-		<level value="DEBUG"/>
+		<level value="INFO"/>
 	</category>
 	<category name="org.jcurl.demo.tactics.TrajectoryPiccoloBean">
 		<level value="INFO"/>

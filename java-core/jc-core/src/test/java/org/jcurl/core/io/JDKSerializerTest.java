@@ -69,7 +69,7 @@ public class JDKSerializerTest extends TestCase {
 		te.setCollissionDetector(new NewtonCollissionDetector());
 		te.setCurler(new CurlerDenny(24, 1));
 		te.setInitialPos(RockSetUtils.allOut());
-		te.setInitialSpeed(new RockSet<Vel>(new RockDouble<Vel>()));
+		te.setInitialVel(new RockSet<Vel>(new RockDouble<Vel>()));
 		te.getAnnotations().put(AnnoHelper.HammerK, AnnoHelper.HammerVDark);
 		te.getAnnotations().put(AnnoHelper.DarkTeamK, "Scotland");
 		te.getAnnotations().put(AnnoHelper.LightTeamK, "Canada");
@@ -78,7 +78,7 @@ public class JDKSerializerTest extends TestCase {
 				"World Curling Championships");
 		te.getAnnotations().put(AnnoHelper.DateK, "1992");
 		te.getAnnotations().put(AnnoHelper.LocationK, "Garmisch");
-		initHammy(te.getInitialPos(), te.getInitialSpeed());
+		initHammy(te.getInitialPos(), te.getInitialVel());
 		return te;
 	}
 
@@ -148,10 +148,10 @@ public class JDKSerializerTest extends TestCase {
 		assertNotNull(c.getCollissionDetector());
 		assertNotNull(c.getCurler());
 		assertNotNull(c.getCurrentPos());
-		assertNotNull(c.getCurrentSpeed());
+		assertNotNull(c.getCurrentVel());
 		assertNotNull(c.getCurveStore());
 		assertNotNull(c.getInitialPos());
-		assertNotNull(c.getInitialSpeed());
+		assertNotNull(c.getInitialVel());
 		// assertEquals(0, c.getPropertyChangeListeners().length);
 	}
 

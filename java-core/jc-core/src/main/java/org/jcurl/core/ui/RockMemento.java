@@ -21,9 +21,11 @@ package org.jcurl.core.ui;
 
 import java.awt.geom.Point2D;
 
+import org.apache.commons.logging.Log;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockSet;
 import org.jcurl.core.api.RockType;
+import org.jcurl.core.log.JCLoggerFactory;
 
 /**
  * Change of a {@link Rock}.
@@ -33,6 +35,8 @@ import org.jcurl.core.api.RockType;
  */
 public abstract class RockMemento<R extends RockType> extends
 		P2DMemento<RockSet<R>> {
+	private static final Log log = JCLoggerFactory.getLogger(RockMemento.class);
+
 	private final int idx16;
 
 	protected RockMemento(final Rock<R> context, final int idx16,
@@ -53,6 +57,8 @@ public abstract class RockMemento<R extends RockType> extends
 
 	@Override
 	public RockSet<R> apply(final RockSet<R> dst) {
+		if (log.isDebugEnabled())
+			log.debug(idx16 + " " + p);
 		dst.getRock(idx16).p().setLocation(p.getX(), p.getY());
 		return dst;
 	}

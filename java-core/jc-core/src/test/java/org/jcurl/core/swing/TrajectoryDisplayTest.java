@@ -52,7 +52,7 @@ public class TrajectoryDisplayTest extends TestShowBase {
 		te.setCollissionDetector(new NewtonCollissionDetector());
 		te.setCurler(new CurlerDenny(24, 1));
 		te.setInitialPos(RockSetUtils.allOut());
-		te.setInitialSpeed(RockSetUtils.zeroSpeed());
+		te.setInitialVel(RockSetUtils.zeroSpeed());
 		te.getAnnotations().put(AnnoHelper.HammerK, AnnoHelper.HammerVDark);
 		te.getAnnotations().put(AnnoHelper.DarkTeamK, "Scotland");
 		te.getAnnotations().put(AnnoHelper.LightTeamK, "Canada");
@@ -61,7 +61,7 @@ public class TrajectoryDisplayTest extends TestShowBase {
 				"World Curling Championships");
 		te.getAnnotations().put(AnnoHelper.DateK, "1992");
 		te.getAnnotations().put(AnnoHelper.LocationK, "Garmisch");
-		initHammy(te.getInitialPos(), te.getInitialSpeed());
+		initHammy(te.getInitialPos(), te.getInitialVel());
 		return te;
 	}
 
@@ -194,14 +194,14 @@ public class TrajectoryDisplayTest extends TestShowBase {
 					0);
 			ti.getInitialPos().getLight(0).setLocation(0, IceSize.BACK_2_TEE,
 					0.25 * Math.PI);
-			ti.setInitialSpeed(RockSetUtils.zeroSpeed());
+			ti.setInitialVel(RockSetUtils.zeroSpeed());
 			if (false)
-				ti.getInitialSpeed().getDark(0).setLocation(
+				ti.getInitialVel().getDark(0).setLocation(
 						-0.095,
 						-ti.getCurler().computeHackSpeed(3.124,
 								new Point2D.Double(0, 0)), Math.PI / 2);
 			else
-				ti.getInitialSpeed().getDark(0).setLocation(0, -2.455,
+				ti.getInitialVel().getDark(0).setLocation(0, -2.455,
 						Math.PI / 2);
 			te = ti;
 		}

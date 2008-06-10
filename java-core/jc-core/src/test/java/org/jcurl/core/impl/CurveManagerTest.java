@@ -51,7 +51,7 @@ public class CurveManagerTest extends TestShowBase {
 		te.setCollissionDetector(new NewtonCollissionDetector());
 		te.setCurler(new CurlerNoCurl(24, 0));
 		te.setInitialPos(RockSetUtils.allOut());
-		te.setInitialSpeed(RockSetUtils.zeroSpeed());
+		te.setInitialVel(RockSetUtils.zeroSpeed());
 		te.getAnnotations().put(AnnoHelper.HammerK, AnnoHelper.HammerVDark);
 		te.getAnnotations().put(AnnoHelper.DarkTeamK, "Scotland");
 		te.getAnnotations().put(AnnoHelper.LightTeamK, "Canada");
@@ -60,7 +60,7 @@ public class CurveManagerTest extends TestShowBase {
 				"World Curling Championships");
 		te.getAnnotations().put(AnnoHelper.DateK, "1992");
 		te.getAnnotations().put(AnnoHelper.LocationK, "Garmisch");
-		initHammy(te.getInitialPos(), te.getInitialSpeed());
+		initHammy(te.getInitialPos(), te.getInitialVel());
 		return te;
 	}
 
@@ -106,8 +106,8 @@ public class CurveManagerTest extends TestShowBase {
 		te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
 		te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
 				0.25 * Math.PI);
-		te.setInitialSpeed(RockSetUtils.zeroSpeed());
-		te.getInitialSpeed().getDark(0).setLocation(0,
+		te.setInitialVel(RockSetUtils.zeroSpeed());
+		te.getInitialVel().getDark(0).setLocation(0,
 				-te.getCurler().computeHackSpeed(5, tee), Math.PI / 2);
 		return te;
 	}
@@ -122,8 +122,8 @@ public class CurveManagerTest extends TestShowBase {
 		te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
 		te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
 				0.25 * Math.PI);
-		te.setInitialSpeed(RockSetUtils.zeroSpeed());
-		te.getInitialSpeed().getDark(0).setLocation(0,
+		te.setInitialVel(RockSetUtils.zeroSpeed());
+		te.getInitialVel().getDark(0).setLocation(0,
 				-te.getCurler().computeHackSpeed(5, tee), Math.PI / 2);
 		return te;
 	}
@@ -145,8 +145,8 @@ public class CurveManagerTest extends TestShowBase {
 		te.getInitialPos().getDark(0).setLocation(0, IceSize.HOG_2_TEE, 0);
 		te.getInitialPos().getLight(0).setLocation(0.1, IceSize.BACK_2_TEE,
 				0.25 * Math.PI);
-		te.setInitialSpeed(new RockSet<Vel>(new RockDouble<Vel>()));
-		te.getInitialSpeed().getDark(0).setLocation(0,
+		te.setInitialVel(new RockSet<Vel>(new RockDouble<Vel>()));
+		te.getInitialVel().getDark(0).setLocation(0,
 				-te.getCurler().computeHackSpeed(5, tee), Math.PI / 2);
 		te.setCurrentTime(0);
 
@@ -206,8 +206,8 @@ public class CurveManagerTest extends TestShowBase {
 		te.setInitialPos(RockSetUtils.allHome());
 		te.getInitialPos().getDark(0)
 				.setLocation(0, IceSize.HOG_2_TEE, Math.PI);
-		te.setInitialSpeed(RockSetUtils.zeroSpeed());
-		te.getInitialSpeed().getDark(0).setLocation(0,
+		te.setInitialVel(RockSetUtils.zeroSpeed());
+		te.getInitialVel().getDark(0).setLocation(0,
 				-te.getCurler().computeHackSpeed(9, tee), Math.PI / 2);
 
 		assertEquals(Double.NaN, te.doGetNextHit().t);

@@ -86,7 +86,7 @@ public class StoredTrajectorySet extends MutableObject implements TrajectorySet 
 		return currentPos;
 	}
 
-	public RockSet<Vel> getCurrentSpeed() {
+	public RockSet<Vel> getCurrentVel() {
 		return currentSpeed;
 	}
 
