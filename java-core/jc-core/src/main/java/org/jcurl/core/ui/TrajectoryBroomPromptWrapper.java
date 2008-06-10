@@ -182,12 +182,12 @@ public class TrajectoryBroomPromptWrapper extends DefaultBroomPromptModel
 
 	private void cts_resume() {
 		if (cts != null)
-			cts.resume();
+			cts.setSuspended(false);
 	}
 
 	private void cts_suspend() {
 		if (cts != null)
-			cts.suspend();
+			cts.setSuspended(true);
 	}
 
 	public void init(final ComputedTrajectorySet cts) {

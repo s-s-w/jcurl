@@ -18,8 +18,6 @@
  */
 package org.jcurl.core.api;
 
-import javax.swing.event.ChangeEvent;
-
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.math.R1RNFunction;
@@ -34,10 +32,12 @@ public interface ComputedTrajectorySet extends TrajectorySet {
 
 	Collider getCollider();
 
+	/** expect this property to be transient */
 	CollissionDetector getCollissionDetector();
 
 	Curler getCurler();
 
+	/** expect this property to be transient */
 	CurveStore getCurveStore();
 
 	RockSet<Pos> getInitialPos();
@@ -45,12 +45,11 @@ public interface ComputedTrajectorySet extends TrajectorySet {
 	RockSet<Vel> getInitialVel();
 
 	/**
-	 * process collected recompute-requests and listen again.
-	 * <p>
-	 * This should be the initial state after object creation (ctor)!
-	 * </p>
+	 * expect this property to be transient
+	 * 
+	 * @see #setSuspended(boolean)
 	 */
-	void resume();
+	public boolean getSuspended();
 
 	void setCollider(final Collider collider);
 
@@ -79,8 +78,14 @@ public interface ComputedTrajectorySet extends TrajectorySet {
 	void setInitialVel(final RockSet<Vel> initialVel);
 
 	/**
-	 * Don't immediately recompute on following {@link ChangeEvent}s, but
-	 * collect triggered recomputations until {@link #resume()}.
+	 * @param suspend
+	 *            <ul>
+	 *            <li><code>true</code>: don't immediately recompute, but
+	 *            collect requested recomputations until set <code>false</code>
+	 *            again</li>
+	 *            <li><code>false</code>: process collected
+	 *            recompute-requests and listen again.</li>
+	 *            </ul>
 	 */
-	void suspend();
+	void setSuspended(boolean suspend);
 }

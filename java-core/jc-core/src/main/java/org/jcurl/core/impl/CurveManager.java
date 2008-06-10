@@ -53,6 +53,9 @@ import org.jcurl.math.R1RNFunction;
  * {@link RockSet#addRockListener(ChangeListener)} for both - initial rock
  * locations and velocities to trigger recomputation.
  * </p>
+ * <p>
+ * TODO re-work the whole computation/update strategy.
+ * </p>
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CurveManager.java 682 2007-08-12 21:25:04Z mrohrmoser $
@@ -73,7 +76,7 @@ public class CurveManager extends MutableObject implements ChangeListener,
 	/** Trajectory (Rock) Bitmask or -1 for "currently not suspended". */
 	private transient int collected = -1;
 	private Collider collider = null;
-	private CollissionDetector collissionDetector = null;
+	private transient CollissionDetector collissionDetector = new BisectionCollissionDetector();
 	private transient final CollissionStore collissionStore = new CollissionStore();
 	private Curler curler = null;
 	private transient final RockSet<Pos> currentPos = RockSetUtils.allHome();
@@ -85,7 +88,6 @@ public class CurveManager extends MutableObject implements ChangeListener,
 	private final RockSet<Vel> initialSpeed = RockSet.allZero(null);
 	// don't fire change events on intermediate updates. Use another variable.
 	private final transient RockSet<Pos> tmpPos = RockSetUtils.allHome();
-
 	// don't fire change events on intermediate updates. Use another variable.
 	private final transient RockSet<Vel> tmpVel = RockSet.allZero(null);
 
@@ -241,25 +243,21 @@ public class CurveManager extends MutableObject implements ChangeListener,
 
 	protected Object readResolve() throws ObjectStreamException {
 		final CurveManager m = new CurveManager();
-		m.suspend();
+		m.setSuspended(true);
 		m.annotations.putAll(annotations);
 		m.setCollider(getCollider());
 		m.setCurler(getCurler());
-		m.setCollissionDetector(getCollissionDetector());
+		// m.setCollissionDetector(getCollissionDetector());
 		m.setCurveStore(new CurveStoreImpl(stopper, RockSet.ROCKS_PER_SET));
 		m.setInitialPos(getInitialPos());
 		m.setInitialVel(getInitialVel());
 		// m.setCurrentTime(this.getCurrentTime());
-		m.resume();
+		m.setSuspended(false);
 		return m;
 	}
 
-	private void recompute() {
-		recompute(currentTime, true);
-	}
-
 	private void recompute(final double currentTime, final boolean complete) {
-		if(collected >= 0)
+		if (getSuspended())
 			return;
 		if (complete) {
 			{
@@ -324,13 +322,21 @@ public class CurveManager extends MutableObject implements ChangeListener,
 		doUpdatePosAndVel(currentTime, currentPos, currentVel);
 	}
 
-	/** process collected recompute-requests and listen again. */
-	public void resume() {
+	public void setSuspended(boolean suspend) {
 		final int old = collected;
-		collected = -1;
-		if (old <= 0)
-			return;
-		recompute(currentTime, true);
+		if (suspend) {
+			if (collected < 0)
+				collected = 0;
+		} else {
+			collected = -1;
+			if (old <= 0)
+				return;
+			recompute(currentTime, true);
+		}
+	}
+
+	public boolean getSuspended() {
+		return collected >= 0;
 	}
 
 	public void setCollider(final Collider collider) {
@@ -343,10 +349,12 @@ public class CurveManager extends MutableObject implements ChangeListener,
 
 	public void setCollissionDetector(CollissionDetector collissionDetector) {
 		// FIXME currently use ONLY Bisection.
-		collissionDetector = new BisectionCollissionDetector();
-		propChange.firePropertyChange("collissionDetector",
-				this.collissionDetector, collissionDetector);
-		this.collissionDetector = collissionDetector;
+		// collissionDetector = new BisectionCollissionDetector();
+		CollissionDetector old = this.collissionDetector;
+		if (old == collissionDetector)
+			return;
+		propChange.firePropertyChange("collissionDetector", old,
+				this.collissionDetector = collissionDetector);
 	}
 
 	public void setCurler(final Curler curler) {
@@ -381,32 +389,24 @@ public class CurveManager extends MutableObject implements ChangeListener,
 		initialSpeed.setLocation(initialVel);
 	}
 
+	/** One of the initial rocks changed either pos or vel */
 	public void stateChanged(final ChangeEvent arg0) {
 		final Object src = arg0 == null ? null : arg0.getSource();
 		if (src == null || src == initialPos || src == initialSpeed)
 			;// recompute(currentTime, true);
 		else if (initialPos.findI16(src) >= 0) {
 			log.debug("Startpos rock change");
-			if (collected >= 0)
+			if (getSuspended())
 				collected |= 1 << initialPos.findI16(src);
 			else
 				recompute(currentTime, true);
 		} else if (initialSpeed.findI16(src) >= 0) {
 			log.debug("Startvel rock change");
-			if (collected >= 0)
+			if (getSuspended())
 				collected |= 1 << initialSpeed.findI16(src);
 			else
 				recompute(currentTime, true);
 		} else
 			log.info(arg0);
-	}
-
-	/**
-	 * Don't immediately recompute, but collect requested recomputations until
-	 * {@link #resume()}
-	 */
-	public void suspend() {
-		if (collected < 0)
-			collected = 0;
 	}
 }
