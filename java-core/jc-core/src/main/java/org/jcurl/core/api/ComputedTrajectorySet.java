@@ -44,7 +44,12 @@ public interface ComputedTrajectorySet extends TrajectorySet {
 
 	RockSet<Vel> getInitialVel();
 
-	/** process collected recompute-requests and listen again. */
+	/**
+	 * process collected recompute-requests and listen again.
+	 * <p>
+	 * This should be the initial state after object creation (ctor)!
+	 * </p>
+	 */
 	void resume();
 
 	void setCollider(final Collider collider);
@@ -76,9 +81,6 @@ public interface ComputedTrajectorySet extends TrajectorySet {
 	/**
 	 * Don't immediately recompute on following {@link ChangeEvent}s, but
 	 * collect triggered recomputations until {@link #resume()}.
-	 * <p>
-	 * This should be the initial state after object creation (ctor)!
-	 * </p>
 	 */
 	void suspend();
 }

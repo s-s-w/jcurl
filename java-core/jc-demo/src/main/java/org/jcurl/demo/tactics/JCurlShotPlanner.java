@@ -973,7 +973,6 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 				final IOTrajectories it = (IOTrajectories) n;
 				final TrajectorySet ts = it.trajectories().get(0);
 				cts = (ComputedTrajectorySet) ts;
-				cts.resume();
 			}
 			change.discardAllEdits();
 			if (cts != null)

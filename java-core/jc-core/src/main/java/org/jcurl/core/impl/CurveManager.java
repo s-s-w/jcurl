@@ -71,7 +71,7 @@ public class CurveManager extends MutableObject implements ChangeListener,
 	private static final StopDetector stopper = new NewtonStopDetector();
 	private final Map<CharSequence, CharSequence> annotations = new HashMap<CharSequence, CharSequence>();
 	/** Trajectory (Rock) Bitmask or -1 for "currently not suspended". */
-	private transient int collected = 0;
+	private transient int collected = -1;
 	private Collider collider = null;
 	private CollissionDetector collissionDetector = null;
 	private transient final CollissionStore collissionStore = new CollissionStore();
@@ -241,6 +241,7 @@ public class CurveManager extends MutableObject implements ChangeListener,
 
 	protected Object readResolve() throws ObjectStreamException {
 		final CurveManager m = new CurveManager();
+		m.suspend();
 		m.annotations.putAll(annotations);
 		m.setCollider(getCollider());
 		m.setCurler(getCurler());
@@ -249,6 +250,7 @@ public class CurveManager extends MutableObject implements ChangeListener,
 		m.setInitialPos(getInitialPos());
 		m.setInitialVel(getInitialVel());
 		// m.setCurrentTime(this.getCurrentTime());
+		m.resume();
 		return m;
 	}
 
