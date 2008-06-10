@@ -41,7 +41,8 @@ public interface Shaper extends Strategy, Factory {
 	 *            lower interval end
 	 * @param tmax
 	 *            upper interval end
-	 * @return the resulting shape, usually a {@link java.awt.geom.GeneralPath}.
+	 * @return the resulting shape, usually a {@link java.awt.geom.GeneralPath}
+	 *         or <code>null</code> if no sensible curve exists.
 	 */
 	Shape toShape(R1RNFunction f, double tmin, double tmax);
 }

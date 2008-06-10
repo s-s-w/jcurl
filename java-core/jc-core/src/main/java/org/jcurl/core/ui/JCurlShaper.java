@@ -43,7 +43,7 @@ public class JCurlShaper extends NaturalShaper {
 	private static final Interpolator ip = Interpolators.getLinearInstance();
 	private static final Log log = JCLoggerFactory.getLogger(JCurlShaper.class);
 	private static final double MIN_LEN = 1e-6;
-	private final double meters_per_shape;
+	private final double meters_per_curve;
 	private final float zoom;
 
 	/** By default: 7 meters per curve segment */
@@ -51,8 +51,8 @@ public class JCurlShaper extends NaturalShaper {
 		this(7);
 	}
 
-	protected JCurlShaper(final double meters_per_shape) {
-		this(meters_per_shape, 1.0F);
+	protected JCurlShaper(final double meters_per_curve) {
+		this(meters_per_curve, 1.0F);
 	}
 
 	/**
@@ -61,13 +61,13 @@ public class JCurlShaper extends NaturalShaper {
 	 * {@link ShaperUtils#interpolateLinear(R1RNFunction, double, double, int, float, Interpolator)}
 	 * to get the resulting shape.
 	 * 
-	 * @param meters_per_shape
+	 * @param meters_per_curve
 	 *            must be &gt; 0
 	 * @param zoom
 	 *            an optional graphics zoom factor - usually 1.0F
 	 */
-	private JCurlShaper(final double meters_per_shape, final float zoom) {
-		this.meters_per_shape = meters_per_shape;
+	private JCurlShaper(final double meters_per_curve, final float zoom) {
+		this.meters_per_curve = meters_per_curve;
 		this.zoom = zoom;
 	}
 
@@ -117,7 +117,7 @@ public class JCurlShaper extends NaturalShaper {
 			if (len_sq <= MIN_LEN * MIN_LEN)
 				return null;
 		}
-		int segments = (int) (Math.sqrt(len_sq) / meters_per_shape);
+		int segments = (int) (Math.sqrt(len_sq) / meters_per_curve);
 		if (segments < 1)
 			segments = 1;
 		if (segments > 7)
