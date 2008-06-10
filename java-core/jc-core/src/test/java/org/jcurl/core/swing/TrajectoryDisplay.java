@@ -34,10 +34,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.jcurl.core.api.ComputedTrajectorySet;
-import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.TrajectorySet;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.ui.FixpointZoomer;
@@ -236,7 +236,8 @@ class TrajectoryDisplay extends WCComponent implements ChangeListener {
 			return;
 		for (int i = RockSet.ROCKS_PER_SET - 1; i >= 0; i--)
 			if ((mask >> i & 1) == 1)
-				paintRockWC(g, rocks.getRock(i), RockSet.isDark(i), RockSet.toIdx8(i));
+				paintRockWC(g, rocks.getRock(i), RockSet.isDark(i), RockSet
+						.toIdx8(i));
 	}
 
 	/**
@@ -297,11 +298,11 @@ class TrajectoryDisplay extends WCComponent implements ChangeListener {
 	 *            bitmask of discontinuous locations
 	 */
 	public void setPos(final TrajectorySet rocks, final int discontinuous) {
-//		if (pos != rocks) {
-//			if (pos != null)
-//				pos.getCurrentPos().removeChangeListener(this);
-//			rocks.getCurrentPos().addChangeListener(this);
-//		}
+		// if (pos != rocks) {
+		// if (pos != null)
+		// pos.getCurrentPos().removeChangeListener(this);
+		// rocks.getCurrentPos().addChangeListener(this);
+		// }
 		pos = rocks;
 		this.repaint();
 	}

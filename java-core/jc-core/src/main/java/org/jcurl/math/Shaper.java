@@ -21,9 +21,6 @@ package org.jcurl.math;
 
 import java.awt.Shape;
 
-import org.jcurl.core.api.Factory;
-import org.jcurl.core.api.Strategy;
-
 /**
  * Turn a {@link R1RNFunction} into a {@link Shape}.
  * 
@@ -31,7 +28,7 @@ import org.jcurl.core.api.Strategy;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public interface Shaper extends Strategy, Factory {
+public interface Shaper {
 	/**
 	 * Convert a given interval of a {@link R1RNFunction} info a {@link Shape}.
 	 * 

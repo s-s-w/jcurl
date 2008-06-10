@@ -139,7 +139,7 @@ class CurvePainter implements Strategy {
 		Entry<Double, R1RNFunction> curr = path.next();
 		while (path.hasNext()) {
 			final Entry<Double, R1RNFunction> next = path.next();
-			//doSections(sections, curr.getKey(), next.getKey());
+			// doSections(sections, curr.getKey(), next.getKey());
 			if (log.isDebugEnabled()) {
 				final StringWriter wri = new StringWriter();
 				wri.write("t=");

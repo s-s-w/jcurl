@@ -87,7 +87,7 @@ public class IceShapes {
 	public static final String[] ROCK_LABELS = { "1", "2", "3", "4", "5", "6",
 			"7", "8" };
 	public static final Arc2D ROCK_OUTER;
-	
+
 	public static final Color slow = Color.BLUE;
 
 	public static final Line2D tee;
@@ -214,7 +214,10 @@ public class IceShapes {
 				/ (r.getMinimum() - r.getMaximum()));
 	}
 
-	/** Reduce saturation to 50% of the original color and apply an alpha channel. */
+	/**
+	 * Reduce saturation to 50% of the original color and apply an alpha
+	 * channel.
+	 */
 	public static Color trace(final Color base, final int alpha) {
 		final float[] hsb = Color.RGBtoHSB(base.getRed(), base.getGreen(), base
 				.getBlue(), null);

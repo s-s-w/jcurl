@@ -19,8 +19,6 @@
 
 package org.jcurl.core.ui;
 
-import org.jcurl.core.ui.FileNameExtensionFilter;
-
 import junit.framework.TestCase;
 
 /**

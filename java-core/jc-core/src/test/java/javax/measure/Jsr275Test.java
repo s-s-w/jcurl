@@ -17,8 +17,8 @@ import javax.measure.unit.SI;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.Rock;
+import org.jcurl.core.api.RockSetUtils;
 
 /**
  * Demo for a possible use of <a

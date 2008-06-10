@@ -393,82 +393,98 @@ public class Graphics2DWrap extends Graphics2D {
 		return dst.getClipBounds(r);
 	}
 
+	@Override
 	public Rectangle getClipRect() {
 		log.info("wrapped");
 		return dst.getClipRect();
 	}
 
+	@Override
 	public Color getColor() {
 		log.info("wrapped");
 		return dst.getColor();
 	}
 
+	@Override
 	public Composite getComposite() {
 		log.info("wrapped");
 		return dst.getComposite();
 	}
 
+	@Override
 	public GraphicsConfiguration getDeviceConfiguration() {
 		log.info("wrapped");
 		return dst.getDeviceConfiguration();
 	}
 
+	@Override
 	public Font getFont() {
 		log.info("wrapped");
 		return dst.getFont();
 	}
 
+	@Override
 	public FontMetrics getFontMetrics() {
 		log.info("wrapped");
 		return dst.getFontMetrics();
 	}
 
+	@Override
 	public FontMetrics getFontMetrics(final Font f) {
 		log.info("wrapped");
 		return dst.getFontMetrics(f);
 	}
 
+	@Override
 	public FontRenderContext getFontRenderContext() {
 		log.info("wrapped");
 		return dst.getFontRenderContext();
 	}
 
+	@Override
 	public Paint getPaint() {
 		log.info("wrapped");
 		return dst.getPaint();
 	}
 
+	@Override
 	public Object getRenderingHint(final Key hintKey) {
 		log.info("wrapped");
 		return dst.getRenderingHint(hintKey);
 	}
 
+	@Override
 	public RenderingHints getRenderingHints() {
 		log.info("wrapped");
 		return dst.getRenderingHints();
 	}
 
+	@Override
 	public Stroke getStroke() {
 		log.info("wrapped");
 		return dst.getStroke();
 	}
 
+	@Override
 	public AffineTransform getTransform() {
 		log.info("wrapped");
 		return dst.getTransform();
 	}
 
+	@Override
 	public int hashCode() {
 		log.info("wrapped");
 		return dst.hashCode();
 	}
 
+	@Override
 	public boolean hit(final Rectangle rect, final Shape s,
 			final boolean onStroke) {
 		log.info("wrapped");
 		return dst.hit(rect, s, onStroke);
 	}
 
+	@Override
 	public boolean hitClip(final int x, final int y, final int width,
 			final int height) {
 		log.info("wrapped");

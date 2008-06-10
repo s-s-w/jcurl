@@ -46,9 +46,9 @@ import org.jcurl.core.helpers.PropModelHelper;
  */
 public abstract class CoulombCurler extends CurlerBase {
 
-	private static final long serialVersionUID = 4753259656811782206L;
-
 	protected static final double g = Physics.g;
+
+	private static final long serialVersionUID = 4753259656811782206L;
 
 	protected transient double mu;
 

@@ -138,6 +138,15 @@ public class CurveTransformed<T extends RockType> extends CurveRock<T> {
 	}
 
 	@Override
+	public double at(final double t, final int derivative, final int component) {
+		if (false)
+			throw new UnsupportedOperationException("Not supported.");
+		final double[] tmp = { 0, 0, 0 };
+		at(t, derivative, tmp);
+		return tmp[component];
+	}
+
+	@Override
 	public Rock<T> at(double t, final int derivative, Rock<T> ret) {
 		t -= t0;
 		if (ret == null)
@@ -157,15 +166,6 @@ public class CurveTransformed<T extends RockType> extends CurveRock<T> {
 			ret.setLocation(x, y, ret.getA());
 		}
 		return ret;
-	}
-
-	@Override
-	public double at(final double t, final int derivative, final int component) {
-		if (false)
-			throw new UnsupportedOperationException("Not supported.");
-		final double[] tmp = { 0, 0, 0 };
-		at(t, derivative, tmp);
-		return tmp[component];
 	}
 
 	/** Clone the untransformed base curve for testing purposes */

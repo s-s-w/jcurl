@@ -32,11 +32,11 @@ import org.jcurl.core.api.RockType.Pos;
  * @version $Id$
  */
 public class PosMemento extends RockMemento<Pos> {
-	public PosMemento(final RockSet<Pos> context, final int idx16,
-			final Point2D p) {
+	public PosMemento(final Rock<Pos> context, final int idx16, final Point2D p) {
 		super(context, idx16, p);
 	}
-	public PosMemento(final Rock<Pos> context, final int idx16,
+
+	public PosMemento(final RockSet<Pos> context, final int idx16,
 			final Point2D p) {
 		super(context, idx16, p);
 	}

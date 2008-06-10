@@ -23,10 +23,10 @@ import java.awt.geom.Point2D;
 
 import junit.framework.TestCase;
 
-import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockProps;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.math.MathVec;

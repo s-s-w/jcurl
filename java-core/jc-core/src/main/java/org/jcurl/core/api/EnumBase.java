@@ -146,7 +146,7 @@ public abstract class EnumBase extends Number implements Comparable<EnumBase> {
 	public long longValue() {
 		return intValue();
 	}
-	
+
 	/**
 	 * Resolve a read in object (de-serialization).
 	 * 

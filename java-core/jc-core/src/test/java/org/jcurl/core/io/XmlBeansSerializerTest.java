@@ -70,7 +70,7 @@ public class XmlBeansSerializerTest extends TestCase {
 						+ " <object class=\"org.jcurl.core.io.IOTrajectories\"/> \n"
 						+ "</java> \n" + "", new String(bout.toByteArray(),
 						"UTF-8"));
-		
+
 		final IONode d = io.read(new ByteArrayInputStream(bout.toByteArray()));
 		l = (IOTrajectories) d;
 		assertEquals(0, l.trajectories().size());

@@ -271,6 +271,7 @@ public class CurveCombined<T extends R1RNFunction> extends R1RNFunctionImpl
 
 	/**
 	 * Get the n-th derivative of all dimensions.
+	 * 
 	 * @param t
 	 * @param c
 	 *            derivative
@@ -301,7 +302,7 @@ public class CurveCombined<T extends R1RNFunction> extends R1RNFunctionImpl
 		double highKey = parts.get(highIdx).getKey();
 		if (t >= highKey)
 			return highIdx;
-		
+
 		int lowIdx = 0;
 		double lowKey = parts.get(lowIdx).getKey();
 		if (t < lowKey)

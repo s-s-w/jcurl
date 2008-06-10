@@ -187,7 +187,7 @@ public interface BroomPromptModel extends IPropertyChangeSupport,
 
 	boolean getValueIsAdjusting();
 
-	//void setBroom(double x, double y);
+	// void setBroom(double x, double y);
 
 	void setBroom(Point2D broom);
 

@@ -166,7 +166,7 @@ public class ChangeManager {
 		listeners.remove(l);
 	}
 
-	public void temporary(final Memento<?> m) {		
+	public void temporary(final Memento<?> m) {
 		log.debug(m);
 		executor.execute(m);
 	}

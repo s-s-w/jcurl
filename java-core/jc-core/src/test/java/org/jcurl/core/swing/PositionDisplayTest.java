@@ -22,8 +22,8 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.ui.FixpointZoomer;
 

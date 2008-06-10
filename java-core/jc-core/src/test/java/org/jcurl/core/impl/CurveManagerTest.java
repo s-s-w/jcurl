@@ -25,9 +25,9 @@ import java.util.Map.Entry;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.api.ComputedTrajectorySet;
 import org.jcurl.core.api.IceSize;
-import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.Unit;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.api.RockType.Vel;
@@ -150,8 +150,8 @@ public class CurveManagerTest extends TestShowBase {
 				-te.getCurler().computeHackSpeed(5, tee), Math.PI / 2);
 		te.setCurrentTime(0);
 
-//		assertTrue(Double.isNaN(te.doGetNextHit().t));
-//		assertFalse((1 > te.doGetNextHit().t));
+		// assertTrue(Double.isNaN(te.doGetNextHit().t));
+		// assertFalse((1 > te.doGetNextHit().t));
 
 		// Raw throughput:
 		long t0 = System.currentTimeMillis();

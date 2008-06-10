@@ -26,9 +26,9 @@ import junit.framework.TestCase;
 
 import org.jcurl.core.api.ComputedTrajectorySet;
 import org.jcurl.core.api.IceSize;
-import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.Unit;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.api.RockType.Vel;

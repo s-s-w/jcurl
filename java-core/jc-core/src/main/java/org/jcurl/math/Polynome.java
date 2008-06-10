@@ -110,6 +110,7 @@ public class Polynome extends R1R1Function {
 
 	/**
 	 * Compute the c-th derivative of the polynome p at x.
+	 * 
 	 * @param x
 	 * @param c
 	 *            derivative

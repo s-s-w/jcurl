@@ -39,8 +39,8 @@ public class CurveRockTest extends TestCase {
 		for (int c = 0; c < 3; c++)
 			for (double t = -10; t <= 10; t += 0.1) {
 				for (int dim = 0; dim < 3; dim++)
-					assertEquals("c=" + c + " dim=" + dim + " t=" + t, a.at(
-							t, c, dim), b.at(t, c, dim), 1e-9);
+					assertEquals("c=" + c + " dim=" + dim + " t=" + t, a.at(t,
+							c, dim), b.at(t, c, dim), 1e-9);
 				assertEquals(a.at(t, 0, ra).toString(), b.at(t, 0, rb)
 						.toString());
 			}

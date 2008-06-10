@@ -134,7 +134,7 @@ public class DefaultBroomPromptModel extends MutableObject implements
 
 	public void setOutTurn(final boolean outTurn) {
 		final boolean old = this.outTurn;
-		if(old == outTurn)
+		if (old == outTurn)
 			return;
 		this.outTurn = outTurn;
 		firePropertyChange("outTurn", old, this.outTurn);
@@ -142,7 +142,7 @@ public class DefaultBroomPromptModel extends MutableObject implements
 
 	public void setSplitTimeMillis(final BoundedRangeModel splitTimeMillis) {
 		final BoundedRangeModel old = this.splitTimeMillis;
-		if(old == splitTimeMillis)
+		if (old == splitTimeMillis)
 			return;
 		this.splitTimeMillis = splitTimeMillis;
 		firePropertyChange("splitTimeMillis", old, this.splitTimeMillis);
@@ -150,7 +150,7 @@ public class DefaultBroomPromptModel extends MutableObject implements
 
 	public void setValueIsAdjusting(final boolean valueIsAdjusting) {
 		final boolean old = this.valueIsAdjusting;
-		if(old == valueIsAdjusting)
+		if (old == valueIsAdjusting)
 			return;
 		this.valueIsAdjusting = valueIsAdjusting;
 		firePropertyChange("valueIsAdjusting", old, this.valueIsAdjusting);

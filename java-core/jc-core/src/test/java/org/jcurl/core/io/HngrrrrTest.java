@@ -41,27 +41,6 @@ import org.jcurl.math.R1RNFunction;
  */
 public class HngrrrrTest extends TestCase {
 
-	public void testRead() throws IOException {
-		final URL u = JCurlSerializerTest.class
-				.getResource("/setup/hngrrrr.jcz");
-		assertNotNull(u);
-		// try {
-		new JCurlSerializer().read(u);
-		// } catch (final IllegalStateException is) {
-		// assertEquals(
-		// "Maxsteps overflow. dx=-4.087481512540596 x=25.324877688797812
-		// f=org.jcurl.math.Distance2DSq([x>=0.0 f(x)=[-0.998789369167724,
-		// -0.04919142239801594, 0.04919142239801594, -0.998789369167724, 0.0,
-		// 38.40480041503906] [p(x) = 0.0*x**0 + 0.0*x**1 + 0.0*x**2 +
-		// 1.9673717768986312E-4*x**3 + -4.926076166542786E-6*x**4, p(x) =
-		// 0.0*x**0 + 2.948166586727712*x**1 + -0.04921250210867988*x**2, ],
-		// x>=29.953431143708045 f(x)=[0.8517897065718871, -5.760619285641198,
-		// -5.233506662186717]], [x>=0.0 f(x)=[-0.7620000243186951,
-		// -2.4384000301361084, 0.0]])",
-		// is.getMessage());
-		// }
-	}
-
 	public void testPassByDistanceNewtonTrouble() {
 		final CurveCombined<R1RNFunction> fa;
 		final CurveCombined<R1RNFunction> fb;
@@ -99,7 +78,7 @@ public class HngrrrrTest extends TestCase {
 			try {
 				nc.compute(0, 60, fa, fb);
 				fail("failure expected");
-			} catch (IllegalStateException e) {
+			} catch (final IllegalStateException e) {
 				assertEquals(
 						"Maxsteps overflow. dx=-4.087481512540596 x=25.324877688797812 f=org.jcurl.math.Distance2DSq([x>=0.0 f(x)=[-0.998789369167724, -0.04919142239801594, 0.04919142239801594, -0.998789369167724, 0.0, 38.40480041503906] [p(x) = 0.0*x**0 + 0.0*x**1 + 0.0*x**2 + 1.9673717768986312E-4*x**3 + -4.926076166542786E-6*x**4, p(x) = 0.0*x**0 + 2.948166586727712*x**1 + -0.04921250210867988*x**2, p(x) = 0.0*x**0], x>=29.953431143708045 f(x)=[0.8517897065718871, -5.760619285641198, -5.233506662186717]], [x>=0.0 f(x)=[-0.7620000243186951, -2.4384000301361084, 0.0]])",
 						e.getMessage());
@@ -110,5 +89,26 @@ public class HngrrrrTest extends TestCase {
 			final BisectionCollissionDetector nc = new BisectionCollissionDetector();
 			assertEquals(Double.NaN, nc.compute(0, 30, fa, fb));
 		}
+	}
+
+	public void testRead() throws IOException {
+		final URL u = JCurlSerializerTest.class
+				.getResource("/setup/hngrrrr.jcz");
+		assertNotNull(u);
+		// try {
+		new JCurlSerializer().read(u);
+		// } catch (final IllegalStateException is) {
+		// assertEquals(
+		// "Maxsteps overflow. dx=-4.087481512540596 x=25.324877688797812
+		// f=org.jcurl.math.Distance2DSq([x>=0.0 f(x)=[-0.998789369167724,
+		// -0.04919142239801594, 0.04919142239801594, -0.998789369167724, 0.0,
+		// 38.40480041503906] [p(x) = 0.0*x**0 + 0.0*x**1 + 0.0*x**2 +
+		// 1.9673717768986312E-4*x**3 + -4.926076166542786E-6*x**4, p(x) =
+		// 0.0*x**0 + 2.948166586727712*x**1 + -0.04921250210867988*x**2, ],
+		// x>=29.953431143708045 f(x)=[0.8517897065718871, -5.760619285641198,
+		// -5.233506662186717]], [x>=0.0 f(x)=[-0.7620000243186951,
+		// -2.4384000301361084, 0.0]])",
+		// is.getMessage());
+		// }
 	}
 }

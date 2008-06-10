@@ -32,7 +32,7 @@ import org.jcurl.core.ui.IceShapes;
  */
 class IcePainter implements Strategy {
 	static final IceShapes.IceColors colors = new IceShapes.IceColors();
-	
+
 	public void paintIceWC(final Graphics2D g) {
 		g.setStroke(colors.stroke);
 		// filled stuff

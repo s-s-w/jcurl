@@ -23,10 +23,10 @@ import java.awt.geom.Point2D;
 
 import org.jcurl.core.api.CurveRock;
 import org.jcurl.core.api.IceSize;
-import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.api.RockType.Vel;
 import org.jcurl.core.swing.TestShowBase;

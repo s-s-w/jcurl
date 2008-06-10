@@ -228,7 +228,7 @@ public abstract class Rock<R extends RockType> implements IChangeSupport,
 	}
 
 	public void setValueIsAdjusting(final boolean valueIsAdjusting) {
-		boolean old = this.valueIsAdjusting;
+		final boolean old = this.valueIsAdjusting;
 		if (old == valueIsAdjusting)
 			return;
 		this.valueIsAdjusting = valueIsAdjusting;

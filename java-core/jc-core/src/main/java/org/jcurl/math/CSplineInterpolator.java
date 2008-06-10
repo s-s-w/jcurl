@@ -146,6 +146,7 @@ public class CSplineInterpolator extends R1R1Function {
 
 	/**
 	 * Convenience wrapper.
+	 * 
 	 * @param x
 	 *            location
 	 * @param C

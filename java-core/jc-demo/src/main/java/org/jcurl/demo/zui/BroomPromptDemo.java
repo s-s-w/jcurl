@@ -95,8 +95,8 @@ public class BroomPromptDemo {
 						.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 				pc
 						.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
-//				pc.getRoot().getDefaultInputManager().setKeyboardFocus(
-//						new KeyboardZoom(pc.getCamera()));
+				// pc.getRoot().getDefaultInputManager().setKeyboardFocus(
+				// new KeyboardZoom(pc.getCamera()));
 				pc.setBackground(new Color(0xE8E8FF));
 
 				final PNode ice = new PIceFactory.Fancy().newInstance();

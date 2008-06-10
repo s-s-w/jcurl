@@ -26,7 +26,6 @@ import java.util.NoSuchElementException;
 
 import javax.swing.event.ChangeListener;
 
-
 /**
  * A set of 8 light and 8 dark {@link Rock}s.
  * 

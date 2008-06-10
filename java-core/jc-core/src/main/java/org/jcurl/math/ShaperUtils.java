@@ -39,174 +39,6 @@ public abstract class ShaperUtils {
 	private static final Log log = JCLoggerFactory.getLogger(ShaperUtils.class);
 
 	/**
-	 * Interpolate using <a
-	 * href="http://en.wikipedia.org/wiki/B%C3%A9zier_curve">Cubic Bezier Curves</a>.
-	 * <p>
-	 * Computes the required intermediate <code>t</code> samples and delegates
-	 * to {@link #curveTo(R1RNFunction, double, double, GeneralPath, float)} to
-	 * compute the interpolating curve segments.
-	 * </p>
-	 * 
-	 * @param src
-	 *            the (at least 2-dimensional) curve. Higher dimensions are
-	 *            ignored.
-	 * @param min
-	 *            the min input <code>t</code> to
-	 *            {@link R1RNFunction#at(double, int, int)}
-	 * @param max
-	 *            the max input <code>t</code> to
-	 *            {@link R1RNFunction#at(double, int, int)}
-	 * @param curves
-	 *            the number of interpolating cubic bezier curves - must be
-	 *            &gt;= 1.
-	 * @param zoom
-	 *            graphics zoom factor (typically 1)
-	 * @param ip
-	 *            the {@link Interpolator} to get the intermediate
-	 *            <code>t</code> sample values.
-	 * @see #curveTo(R1RNFunction, double, double, GeneralPath, float)
-	 */
-	public static Shape interpolateCubic(final R1RNFunction src,
-			final double min, final double max, final int curves,
-			final float zoom, final Interpolator ip) {
-		// setup
-		if (curves < 1)
-			throw new IllegalArgumentException(
-					"Give me at least 1 (connect start + stop)");
-		final float d = (float) (max - min);
-		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
-				3 * curves + 1); // +1 just to be sure...
-		// start
-		final float x = (float) src.at(min, 0, 0);
-		final float y = (float) src.at(min, 0, 1);
-		gp.moveTo(zoom * x, zoom * y);
-
-		double told = min;
-		// intermediate
-		final int n = curves;
-		for (int i = 1; i < n; i++) {
-			final double t = min + d * ip.interpolate((float) i / n);
-			curveTo(src, told, t, gp, zoom);
-			told = t;
-		}
-
-		// stop
-		curveTo(src, told, max, gp, zoom);
-		return gp;
-	}
-
-	/**
-	 * Interpolate using <a
-	 * href="http://en.wikipedia.org/wiki/B%C3%A9zier_curve">Linear Bezier
-	 * Curves</a>.
-	 * <p>
-	 * Computes the required intermediate <code>t</code> samples and delegates
-	 * to {@link #lineTo(R1RNFunction, double, GeneralPath, float)} to compute
-	 * the interpolating curve segments.
-	 * </p>
-	 * 
-	 * @param src
-	 *            the (at least 2-dimensional) curve. Higher dimensions are
-	 *            ignored.
-	 * @param min
-	 *            the min input <code>t</code> to
-	 *            {@link R1RNFunction#at(double, int, int)}
-	 * @param max
-	 *            the max input <code>t</code> to
-	 *            {@link R1RNFunction#at(double, int, int)}
-	 * @param curves
-	 *            the number of line segments - must be &gt;= 1.
-	 * @param zoom
-	 *            graphics zoom factor (typically 1)
-	 * @param ip
-	 *            the {@link Interpolator} to get the intermediate sample
-	 *            <code>t</code> values.
-	 * @see #lineTo(R1RNFunction, double, GeneralPath, float)
-	 */
-	public static Shape interpolateLinear(final R1RNFunction src,
-			final double min, final double max, final int curves,
-			final float zoom, final Interpolator ip) {
-		// setup
-		if (curves < 1)
-			throw new IllegalArgumentException(
-					"Give me at least 1 (connect start + stop)");
-		final float d = (float) (max - min);
-		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
-				curves + 1); // +1 just to be sure...
-		// start
-		final float x = (float) src.at(min, 0, 0);
-		final float y = (float) src.at(min, 0, 1);
-		gp.moveTo(zoom * x, zoom * y);
-
-		// intermediate
-		final int n = curves;
-		for (int i = 1; i < n; i++) {
-			final double t = min + d * ip.interpolate((float) i / n);
-			lineTo(src, t, gp, zoom);
-		}
-
-		// stop
-		lineTo(src, max, gp, zoom);
-		return gp;
-	}
-
-	/**
-	 * Interpolate using <a
-	 * href="http://en.wikipedia.org/wiki/B%C3%A9zier_curve">Quadratic Bezier
-	 * Curves</a>.
-	 * <p>
-	 * Computes the required intermediate <code>t</code> samples and delegates
-	 * to {@link #quadTo(R1RNFunction, double, double, GeneralPath, float)} to
-	 * compute the interpolating curve segments.
-	 * </p>
-	 * 
-	 * @param src
-	 *            the (2-dimensional) curve. Higher dimensions are ignored.
-	 * @param min
-	 *            the min input <code>t</code> to
-	 *            {@link R1RNFunction#at(double, int, int)}
-	 * @param max
-	 *            the max input <code>t</code> to
-	 *            {@link R1RNFunction#at(double, int, int)}
-	 * @param curves
-	 *            the number of line segments - must be &gt;= 1.
-	 * @param zoom
-	 *            graphics zoom factor (typically 1)
-	 * @param ip
-	 *            the {@link Interpolator} to get the intermediate sample
-	 *            <code>t</code> values.
-	 * @see #quadTo(R1RNFunction, double, double, GeneralPath, float)
-	 */
-	public static Shape interpolateQuadratic(final R1RNFunction src,
-			final double min, final double max, final int curves,
-			final float zoom, final Interpolator ip) {
-		// setup
-		if (curves < 1)
-			throw new IllegalArgumentException(
-					"Give me at least 1 (connect start + stop)");
-		final float d = (float) (max - min);
-		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
-				2 * curves + 1); // +1 just to be sure...
-		// start
-		final float x = (float) src.at(min, 0, 0);
-		final float y = (float) src.at(min, 0, 1);
-		gp.moveTo(zoom * x, zoom * y);
-
-		double told = min;
-		// intermediate
-		final int n = curves;
-		for (int i = 1; i < n; i++) {
-			final double t = min + d * ip.interpolate((float) i / n);
-			quadTo(src, told, t, gp, zoom);
-			told = t;
-		}
-
-		// stop
-		quadTo(src, told, max, gp, zoom);
-		return gp;
-	}
-
-	/**
 	 * Compute the control points and add one <a
 	 * href="http://en.wikipedia.org/wiki/B%C3%A9zier_curve">Cubic Bezier Curve</a>
 	 * to a {@link GeneralPath}. Does <b>no</b> initial
@@ -376,6 +208,174 @@ public abstract class ShaperUtils {
 			final float t, final Interpolator ip) {
 		final float d = max - min;
 		return min + d * ip.interpolate((t - min) / d);
+	}
+
+	/**
+	 * Interpolate using <a
+	 * href="http://en.wikipedia.org/wiki/B%C3%A9zier_curve">Cubic Bezier Curves</a>.
+	 * <p>
+	 * Computes the required intermediate <code>t</code> samples and delegates
+	 * to {@link #curveTo(R1RNFunction, double, double, GeneralPath, float)} to
+	 * compute the interpolating curve segments.
+	 * </p>
+	 * 
+	 * @param src
+	 *            the (at least 2-dimensional) curve. Higher dimensions are
+	 *            ignored.
+	 * @param min
+	 *            the min input <code>t</code> to
+	 *            {@link R1RNFunction#at(double, int, int)}
+	 * @param max
+	 *            the max input <code>t</code> to
+	 *            {@link R1RNFunction#at(double, int, int)}
+	 * @param curves
+	 *            the number of interpolating cubic bezier curves - must be
+	 *            &gt;= 1.
+	 * @param zoom
+	 *            graphics zoom factor (typically 1)
+	 * @param ip
+	 *            the {@link Interpolator} to get the intermediate
+	 *            <code>t</code> sample values.
+	 * @see #curveTo(R1RNFunction, double, double, GeneralPath, float)
+	 */
+	public static Shape interpolateCubic(final R1RNFunction src,
+			final double min, final double max, final int curves,
+			final float zoom, final Interpolator ip) {
+		// setup
+		if (curves < 1)
+			throw new IllegalArgumentException(
+					"Give me at least 1 (connect start + stop)");
+		final float d = (float) (max - min);
+		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
+				3 * curves + 1); // +1 just to be sure...
+		// start
+		final float x = (float) src.at(min, 0, 0);
+		final float y = (float) src.at(min, 0, 1);
+		gp.moveTo(zoom * x, zoom * y);
+
+		double told = min;
+		// intermediate
+		final int n = curves;
+		for (int i = 1; i < n; i++) {
+			final double t = min + d * ip.interpolate((float) i / n);
+			curveTo(src, told, t, gp, zoom);
+			told = t;
+		}
+
+		// stop
+		curveTo(src, told, max, gp, zoom);
+		return gp;
+	}
+
+	/**
+	 * Interpolate using <a
+	 * href="http://en.wikipedia.org/wiki/B%C3%A9zier_curve">Linear Bezier
+	 * Curves</a>.
+	 * <p>
+	 * Computes the required intermediate <code>t</code> samples and delegates
+	 * to {@link #lineTo(R1RNFunction, double, GeneralPath, float)} to compute
+	 * the interpolating curve segments.
+	 * </p>
+	 * 
+	 * @param src
+	 *            the (at least 2-dimensional) curve. Higher dimensions are
+	 *            ignored.
+	 * @param min
+	 *            the min input <code>t</code> to
+	 *            {@link R1RNFunction#at(double, int, int)}
+	 * @param max
+	 *            the max input <code>t</code> to
+	 *            {@link R1RNFunction#at(double, int, int)}
+	 * @param curves
+	 *            the number of line segments - must be &gt;= 1.
+	 * @param zoom
+	 *            graphics zoom factor (typically 1)
+	 * @param ip
+	 *            the {@link Interpolator} to get the intermediate sample
+	 *            <code>t</code> values.
+	 * @see #lineTo(R1RNFunction, double, GeneralPath, float)
+	 */
+	public static Shape interpolateLinear(final R1RNFunction src,
+			final double min, final double max, final int curves,
+			final float zoom, final Interpolator ip) {
+		// setup
+		if (curves < 1)
+			throw new IllegalArgumentException(
+					"Give me at least 1 (connect start + stop)");
+		final float d = (float) (max - min);
+		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
+				curves + 1); // +1 just to be sure...
+		// start
+		final float x = (float) src.at(min, 0, 0);
+		final float y = (float) src.at(min, 0, 1);
+		gp.moveTo(zoom * x, zoom * y);
+
+		// intermediate
+		final int n = curves;
+		for (int i = 1; i < n; i++) {
+			final double t = min + d * ip.interpolate((float) i / n);
+			lineTo(src, t, gp, zoom);
+		}
+
+		// stop
+		lineTo(src, max, gp, zoom);
+		return gp;
+	}
+
+	/**
+	 * Interpolate using <a
+	 * href="http://en.wikipedia.org/wiki/B%C3%A9zier_curve">Quadratic Bezier
+	 * Curves</a>.
+	 * <p>
+	 * Computes the required intermediate <code>t</code> samples and delegates
+	 * to {@link #quadTo(R1RNFunction, double, double, GeneralPath, float)} to
+	 * compute the interpolating curve segments.
+	 * </p>
+	 * 
+	 * @param src
+	 *            the (2-dimensional) curve. Higher dimensions are ignored.
+	 * @param min
+	 *            the min input <code>t</code> to
+	 *            {@link R1RNFunction#at(double, int, int)}
+	 * @param max
+	 *            the max input <code>t</code> to
+	 *            {@link R1RNFunction#at(double, int, int)}
+	 * @param curves
+	 *            the number of line segments - must be &gt;= 1.
+	 * @param zoom
+	 *            graphics zoom factor (typically 1)
+	 * @param ip
+	 *            the {@link Interpolator} to get the intermediate sample
+	 *            <code>t</code> values.
+	 * @see #quadTo(R1RNFunction, double, double, GeneralPath, float)
+	 */
+	public static Shape interpolateQuadratic(final R1RNFunction src,
+			final double min, final double max, final int curves,
+			final float zoom, final Interpolator ip) {
+		// setup
+		if (curves < 1)
+			throw new IllegalArgumentException(
+					"Give me at least 1 (connect start + stop)");
+		final float d = (float) (max - min);
+		final GeneralPath gp = new GeneralPath(GeneralPath.WIND_NON_ZERO,
+				2 * curves + 1); // +1 just to be sure...
+		// start
+		final float x = (float) src.at(min, 0, 0);
+		final float y = (float) src.at(min, 0, 1);
+		gp.moveTo(zoom * x, zoom * y);
+
+		double told = min;
+		// intermediate
+		final int n = curves;
+		for (int i = 1; i < n; i++) {
+			final double t = min + d * ip.interpolate((float) i / n);
+			quadTo(src, told, t, gp, zoom);
+			told = t;
+		}
+
+		// stop
+		quadTo(src, told, max, gp, zoom);
+		return gp;
 	}
 
 	/**

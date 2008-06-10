@@ -18,9 +18,9 @@
  */
 package org.jcurl.demo.util;
 
-import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.TrajectorySet;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.api.RockType.Vel;

@@ -61,24 +61,7 @@ public abstract class P2DMemento<E> extends Memento<E> {
 	}
 
 	@Override
-	public String toString() {
-		return this.getClass().getName() + ": " + x + ", " + y;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		long temp;
-		temp = Double.doubleToLongBits(x);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(y);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
@@ -91,5 +74,22 @@ public abstract class P2DMemento<E> extends Memento<E> {
 		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		long temp;
+		temp = Double.doubleToLongBits(x);
+		result = prime * result + (int) (temp ^ temp >>> 32);
+		temp = Double.doubleToLongBits(y);
+		result = prime * result + (int) (temp ^ temp >>> 32);
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getName() + ": " + x + ", " + y;
 	}
 }

@@ -26,10 +26,10 @@ import javolution.xml.stream.XMLStreamException;
 import junit.framework.TestCase;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.Rock;
 import org.jcurl.core.api.RockDouble;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.log.JCLoggerFactory;
 
 /**

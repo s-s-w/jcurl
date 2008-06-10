@@ -35,6 +35,11 @@ public abstract class RockMemento<R extends RockType> extends
 		P2DMemento<RockSet<R>> {
 	private final int idx16;
 
+	protected RockMemento(final Rock<R> context, final int idx16,
+			final Point2D p) {
+		this(null, idx16, p.getX(), p.getY());
+	}
+
 	protected RockMemento(final RockSet<R> context, final int idx16,
 			final double x, final double y) {
 		super(context, x, y);
@@ -44,11 +49,6 @@ public abstract class RockMemento<R extends RockType> extends
 	protected RockMemento(final RockSet<R> context, final int idx16,
 			final Point2D p) {
 		this(context, idx16, p.getX(), p.getY());
-	}
-
-	protected RockMemento(final Rock<R> context, final int idx16,
-			final Point2D p) {
-		this(null, idx16, p.getX(), p.getY());
 	}
 
 	@Override

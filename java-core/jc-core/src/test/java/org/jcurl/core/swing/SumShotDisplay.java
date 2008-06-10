@@ -18,8 +18,8 @@
  */
 package org.jcurl.core.swing;
 
-import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockType.Pos;
 
 /**

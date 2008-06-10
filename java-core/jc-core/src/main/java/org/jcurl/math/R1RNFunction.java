@@ -30,6 +30,7 @@ public interface R1RNFunction {
 	 * Compute the c'th derivative of all dimensions at <code>t</code>.
 	 * 
 	 * Default implementation via iteration over {@link #at(double, int, int)}.
+	 * 
 	 * @param t
 	 *            t-value (input)
 	 * @param c
@@ -43,6 +44,7 @@ public interface R1RNFunction {
 
 	/**
 	 * Compute the c'th derivative of all dimensions at <code>t</code>.
+	 * 
 	 * @param t
 	 *            t-value (input)
 	 * @param c
@@ -56,6 +58,7 @@ public interface R1RNFunction {
 
 	/**
 	 * Compute the c'th derivative of the given dimension at <code>t</code>.
+	 * 
 	 * @param t
 	 *            t-value
 	 * @param c

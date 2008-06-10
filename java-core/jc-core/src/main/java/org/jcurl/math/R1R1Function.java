@@ -46,6 +46,7 @@ public abstract class R1R1Function extends R1RNFunctionImpl {
 
 	/**
 	 * Compute the c'th derivative at <code>x</code>.
+	 * 
 	 * @param x
 	 *            x-value
 	 * @param c
@@ -58,6 +59,7 @@ public abstract class R1R1Function extends R1RNFunctionImpl {
 
 	/**
 	 * Compute the c'th derivative at <code>x</code>.
+	 * 
 	 * @param c
 	 *            derivative (0=location, 1:speed, ...)
 	 * @param dim

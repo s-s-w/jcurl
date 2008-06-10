@@ -33,8 +33,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
-import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockSet;
+import org.jcurl.core.api.RockSetUtils;
 import org.jcurl.core.api.RockType.Pos;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.IceShapes;
@@ -46,7 +46,7 @@ import org.jcurl.core.ui.IceShapes;
  */
 abstract class SumDisplayBase extends JComponent implements ChangeListener {
 
-	private static final IceShapes.RockColors colors = new IceShapes.RockColors ();
+	private static final IceShapes.RockColors colors = new IceShapes.RockColors();
 
 	private static final Map<Key, Object> hints = new HashMap<Key, Object>();
 
@@ -140,9 +140,9 @@ abstract class SumDisplayBase extends JComponent implements ChangeListener {
 	}
 
 	public void setPos(final RockSet<Pos> rocks) {
-//		if (model != null && model != rocks)
-//			model.removeChangeListener(this);
-//		rocks.addChangeListener(this);
+		// if (model != null && model != rocks)
+		// model.removeChangeListener(this);
+		// rocks.addChangeListener(this);
 		model = rocks;
 		showRocks(computeMask(model));
 	}

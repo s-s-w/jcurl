@@ -62,6 +62,20 @@ public class FunctionTest extends TestCase {
 		}
 
 		@Override
+		public double at(final double t, final int c, final int dim) {
+			final Rock<T> r = at(t, c, (Rock<T>) null);
+			switch (dim) {
+			case 0:
+				return r.getX();
+			case 1:
+				return r.getY();
+			case 2:
+				return r.getA();
+			}
+			throw new IllegalArgumentException();
+		}
+
+		@Override
 		public Rock<T> at(final double t, final int c, final Rock<T> ret) {
 			final Float64 tt = Float64.valueOf(t);
 			final Rock<T> r;
@@ -88,20 +102,6 @@ public class FunctionTest extends TestCase {
 				return r;
 			ret.setLocation(r);
 			return ret;
-		}
-
-		@Override
-		public double at(final double t, final int c, final int dim) {
-			final Rock<T> r = at(t, c, (Rock<T>) null);
-			switch (dim) {
-			case 0:
-				return r.getX();
-			case 1:
-				return r.getY();
-			case 2:
-				return r.getA();
-			}
-			throw new IllegalArgumentException();
 		}
 
 		@Override
