@@ -33,11 +33,6 @@ import org.jcurl.math.CurveCombined;
 import org.jcurl.math.R1RNFunction;
 
 /**
- * Manage rock trajectory segments for a complete set of rocks over time.
- * <p>
- * Supports smart stop detection.
- * </p>
- * 
  * @see CurveCombined
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CurveStoreImpl.java 682 2007-08-12 21:25:04Z mrohrmoser $
@@ -87,6 +82,16 @@ public class CurveStoreImpl extends MutableObject implements Serializable,
 			}
 		}
 		fireIndexedPropertyChange("curve", i, null, curve[i]);
+	}
+
+	/**
+	 * Clear everything from t on.
+	 * 
+	 * @see CurveCombined#dropTail(double)
+	 */
+	public void dropTail(final double t) {
+		for (int i = curve.length - 1; i >= 0; i--)
+			curve[i].dropTail(t);
 	}
 
 	@Override

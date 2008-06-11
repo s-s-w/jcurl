@@ -36,9 +36,7 @@ class CollissionStore {
 
 	public static class Tupel {
 		public final byte a;
-
 		public final byte b;
-
 		public double t;
 
 		public Tupel(final double t, int a, int b) {
@@ -94,6 +92,7 @@ class CollissionStore {
 		}
 	}
 
+	/** Sort order: t, a, b */
 	public static class TupelComp implements Comparator<Tupel> {
 
 		public int compare(final Tupel arg0, final Tupel arg1) {
@@ -116,10 +115,8 @@ class CollissionStore {
 	}
 
 	private static final Comparator<Tupel> comp = new TupelComp();
-
 	private static final Log log = JCLoggerFactory
 			.getLogger(CollissionStore.class);
-
 	final LinkedList<Tupel> m = new LinkedList<Tupel>();
 
 	/**
@@ -130,7 +127,7 @@ class CollissionStore {
 	 * @param b16
 	 *            0-15
 	 */
-	synchronized public void add(final double t, final int a16, final int b16) {
+	public void add(final double t, final int a16, final int b16) {
 		final Tupel o = new Tupel(t, a16, b16);
 		if (log.isDebugEnabled())
 			log.debug("collission " + o);
@@ -139,41 +136,56 @@ class CollissionStore {
 		Collections.sort(m, comp);
 	}
 
-	synchronized public void clear() {
+	public void clear() {
 		m.clear();
 	}
 
-	synchronized public Tupel first() {
-		return m.getFirst();
+	public void dropTail(final double t) {
+		while (m.getLast().t >= t)
+			m.removeLast();
 	}
 
 	/**
-	 * Set the time of the next collission between rock index <code>a</code>
-	 * and <code>b</code>.
 	 * 
-	 * @param t
-	 *            may be {@link Double#NaN} (will be sorted last).
 	 * @param a
-	 *            0-15
 	 * @param b
-	 *            0-15
+	 * @param tmin {@link Double#NaN} finds the first.
 	 */
-	synchronized public void replace(final double t, int a, int b) {
+	public Tupel findFirst(int a, int b, final double tmin) {
 		if (a < b) {
 			final int tmp = a;
 			a = b;
 			b = tmp;
 		}
-		for (final Object element : m) {
-			final Tupel f = (Tupel) element;
-			if (f.a == a && f.b == b) {
-				f.t = t;
-				if (log.isDebugEnabled())
-					log.debug("collission " + f);
-				Collections.sort(m, comp);
-				return;
-			}
-		}
-		throw new IllegalStateException("Not found.");
+		for (final Tupel f : m)
+			if (f.a == a && f.b == b && !(f.t < tmin))
+				return f;
+		return null;
+	}
+
+	public Tupel first() {
+		return m.getFirst();
+	}
+
+	/**
+	 * Change the time of the first collission between rock index <code>a</code>
+	 * and <code>b</code>.
+	 * 
+	 * @param a
+	 *            0-15
+	 * @param b
+	 *            0-15
+	 * @param t
+	 *            may be {@link Double#NaN} (will be sorted last).
+	 */
+	public void replace(final int a, final int b, final double t) {
+		final Tupel f = findFirst(a, b, Double.NaN);
+		if (f == null)
+			throw new IllegalStateException("Not found.");
+		f.t = t;
+		if (log.isDebugEnabled())
+			log.debug("collission " + f);
+		Collections.sort(m, comp);
+		return;
 	}
 }

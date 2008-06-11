@@ -413,6 +413,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 		final XYMemento bxy = new XYMemento(broom, broom.getBroom());
 		final SplitMemento bs = new SplitMemento(broom, broom
 				.getSplitTimeMillis().getValue());
+		final boolean preS = cts.getSuspended();
 		cts.setSuspended(true);
 		try {
 			// reset:
@@ -426,11 +427,11 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 			broom.setBroom(new Point2D.Double(0, 0));
 			broom.getSplitTimeMillis().setValue(3300);
 		} finally {
-			cts.setSuspended(false);
+			cts.setSuspended(preS);
 		}
 		// create a compound edit
 		final CompoundEdit ce = new CompoundEdit();
-		ce.addEdit(new UndoableMemento(new SuspendMemento(cts, false),
+		ce.addEdit(new UndoableMemento(new SuspendMemento(cts, preS),
 				new SuspendMemento(cts, true)));
 		for (int i16 = RockSet.ROCKS_PER_SET - 1; i16 >= 0; i16--)
 			ce.addEdit(new UndoableMemento(pm[i16], new PosMemento(ipos, i16,
@@ -444,7 +445,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 		ce.addEdit(new UndoableMemento(bs, new SplitMemento(broom, broom
 				.getSplitTimeMillis().getValue())));
 		ce.addEdit(new UndoableMemento(new SuspendMemento(cts, true),
-				new SuspendMemento(cts, false)));
+				new SuspendMemento(cts, preS)));
 		ce.end();
 		return ce;
 	}

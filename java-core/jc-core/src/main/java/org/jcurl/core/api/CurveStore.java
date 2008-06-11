@@ -31,6 +31,9 @@ import org.jcurl.math.R1RNFunction;
  * {@link #add(int, double, R1RNFunction, double)} - typically using a
  * {@link StopDetector}.
  * </p>
+ * <p>
+ * Does no collission detection.
+ * </p>
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id:CurveStore.java 682 2007-08-12 21:25:04Z mrohrmoser $

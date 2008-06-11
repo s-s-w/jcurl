@@ -53,11 +53,11 @@ public class CollissionStoreTest extends TestCase {
 		assertEquals(2, s.first().a);
 		// assertEquals(6, ((Tupel) s.m.lastKey()).a);
 
-		s.replace(Double.NaN, 1, 2);
+		s.replace(1, 2, Double.NaN);
 		assertEquals(3, s.m.size());
 		assertEquals(4, s.first().a);
 
-		s.replace(Double.NaN, 3, 4);
+		s.replace(3, 4, Double.NaN);
 		assertEquals(3, s.m.size());
 		assertEquals("", Double.NaN, s.first().t, 1e-9);
 	}

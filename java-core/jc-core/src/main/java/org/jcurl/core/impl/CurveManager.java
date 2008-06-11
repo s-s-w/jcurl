@@ -162,9 +162,9 @@ public class CurveManager extends MutableObject implements ChangeListener,
 			for (int j16 = RockSet.ROCKS_PER_SET - 1; j16 >= 0; j16--) {
 				if (i16 == j16 || i16 > j16 && RockSet.isSet(computedMask, j16))
 					continue;
-				collissionStore.replace(collissionDetector.compute(t0, _30,
-						curveStore.getCurve(i16), curveStore.getCurve(j16)),
-						i16, j16);
+				collissionStore.replace(i16,
+						j16, collissionDetector.compute(t0, _30,
+								curveStore.getCurve(i16), curveStore.getCurve(j16)));
 			}
 		}
 		return computedMask;
@@ -261,6 +261,7 @@ public class CurveManager extends MutableObject implements ChangeListener,
 			return;
 		if (complete) {
 			{
+				// initial
 				final double t0 = 0.0;
 				// TUNE Parallel
 				// initial curves:
@@ -300,13 +301,13 @@ public class CurveManager extends MutableObject implements ChangeListener,
 	private void recomputeCurve(final int i16) {
 		if (i16 < 0)
 			return;
-		// TODO find the first collission with this (old) curve involved.
+		// TODO find the first collission with this (old) curve involved from the collissionstore.
 
 		// TODO find the first collission with this (new) curve involved.
 
 		// TODO if none -> return
 
-		// TODO clear the collissionstore until the earlier of the two
+		// TODO clear the collissionstore/curvestore until the earlier of the two
 
 	}
 

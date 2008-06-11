@@ -42,6 +42,7 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.api.Curler;
 import org.jcurl.core.api.Unit;
 import org.jcurl.core.helpers.Service;
+import org.jcurl.core.impl.CurlerDenny;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.ChangeManager;
 
@@ -70,9 +71,12 @@ public class CurlerSwingBean extends JComponent implements HasChanger,
 
 	private static ComboItem[] findCurlers() {
 		final Collection<ComboItem> tmp = new ArrayList<ComboItem>();
-		for (final Class<Curler> elem : Service.providerClasses(Curler.class,
-				null))
-			tmp.add(new ComboItem(elem));
+		if (false)
+			for (final Class<Curler> elem : Service.providerClasses(
+					Curler.class, null))
+				tmp.add(new ComboItem(elem));
+		else
+			tmp.add(new ComboItem(CurlerDenny.class));
 		final ComboItem[] dat = new ComboItem[tmp.size()];
 		tmp.toArray(dat);
 		return dat;

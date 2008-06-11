@@ -295,6 +295,28 @@ public class CurveCombined<T extends R1RNFunction> extends R1RNFunctionImpl
 		parts.clear();
 	}
 
+	/**
+	 * Drop all segments with t0 &gt;= t.
+	 * 
+	 * @param t
+	 * @return <code>false</code> nothing dropped.
+	 */
+	public boolean dropTail(final double t) {
+		if(Double.isNaN(t))
+			return false;
+		final int n = parts.size() - 1;
+		if (n < 0)
+			return false;
+		int j = findFunctionIndex(t);
+		if (parts.get(j).getKey() == t)
+			j += 1;
+		if (n < j)
+			return false;
+		for (int i = n; i >= j; i--)
+			parts.remove(i);
+		return true;
+	}
+
 	private int findFunctionIndex(final double t) {
 		int highIdx = parts.size() - 1;
 		if (highIdx < 0)
@@ -326,6 +348,8 @@ public class CurveCombined<T extends R1RNFunction> extends R1RNFunctionImpl
 	}
 
 	public T first() {
+		if (parts.size() <= 0)
+			return null;
 		return parts.get(0).getValue();
 	}
 
