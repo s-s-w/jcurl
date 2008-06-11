@@ -54,7 +54,8 @@ import org.jcurl.math.R1RNFunction;
  * locations and velocities to trigger recomputation.
  * </p>
  * <p>
- * TODO re-work the whole computation/update strategy.
+ * TODO re-work the whole computation/update strategy to reduce the number of
+ * curves recomputed for free rocks' moves.
  * </p>
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
@@ -162,9 +163,9 @@ public class CurveManager extends MutableObject implements ChangeListener,
 			for (int j16 = RockSet.ROCKS_PER_SET - 1; j16 >= 0; j16--) {
 				if (i16 == j16 || i16 > j16 && RockSet.isSet(computedMask, j16))
 					continue;
-				collissionStore.replace(i16,
-						j16, collissionDetector.compute(t0, _30,
-								curveStore.getCurve(i16), curveStore.getCurve(j16)));
+				collissionStore.replace(i16, j16, collissionDetector.compute(
+						t0, _30, curveStore.getCurve(i16), curveStore
+								.getCurve(j16)));
 			}
 		}
 		return computedMask;
@@ -236,6 +237,10 @@ public class CurveManager extends MutableObject implements ChangeListener,
 		return initialSpeed;
 	}
 
+	public boolean getSuspended() {
+		return collected >= 0;
+	}
+
 	@Override
 	public int hashCode() {
 		return 0;
@@ -247,8 +252,6 @@ public class CurveManager extends MutableObject implements ChangeListener,
 		m.annotations.putAll(annotations);
 		m.setCollider(getCollider());
 		m.setCurler(getCurler());
-		// m.setCollissionDetector(getCollissionDetector());
-		m.setCurveStore(new CurveStoreImpl(stopper, RockSet.ROCKS_PER_SET));
 		m.setInitialPos(getInitialPos());
 		m.setInitialVel(getInitialVel());
 		// m.setCurrentTime(this.getCurrentTime());
@@ -301,13 +304,15 @@ public class CurveManager extends MutableObject implements ChangeListener,
 	private void recomputeCurve(final int i16) {
 		if (i16 < 0)
 			return;
-		// TODO find the first collission with this (old) curve involved from the collissionstore.
+		// TODO find the first collission with this (old) curve involved from
+		// the collissionstore.
 
 		// TODO find the first collission with this (new) curve involved.
 
 		// TODO if none -> return
 
-		// TODO clear the collissionstore/curvestore until the earlier of the two
+		// TODO clear the collissionstore/curvestore until the earlier of the
+		// two
 
 	}
 
@@ -323,23 +328,6 @@ public class CurveManager extends MutableObject implements ChangeListener,
 		doUpdatePosAndVel(currentTime, currentPos, currentVel);
 	}
 
-	public void setSuspended(boolean suspend) {
-		final int old = collected;
-		if (suspend) {
-			if (collected < 0)
-				collected = 0;
-		} else {
-			collected = -1;
-			if (old <= 0)
-				return;
-			recompute(currentTime, true);
-		}
-	}
-
-	public boolean getSuspended() {
-		return collected >= 0;
-	}
-
 	public void setCollider(final Collider collider) {
 		final Collider old = this.collider;
 		if (old == collider)
@@ -348,10 +336,11 @@ public class CurveManager extends MutableObject implements ChangeListener,
 				.firePropertyChange("collider", old, this.collider = collider);
 	}
 
-	public void setCollissionDetector(CollissionDetector collissionDetector) {
+	public void setCollissionDetector(
+			final CollissionDetector collissionDetector) {
 		// FIXME currently use ONLY Bisection.
 		// collissionDetector = new BisectionCollissionDetector();
-		CollissionDetector old = this.collissionDetector;
+		final CollissionDetector old = this.collissionDetector;
 		if (old == collissionDetector)
 			return;
 		propChange.firePropertyChange("collissionDetector", old,
@@ -388,6 +377,19 @@ public class CurveManager extends MutableObject implements ChangeListener,
 
 	public void setInitialVel(final RockSet<Vel> initialVel) {
 		initialSpeed.setLocation(initialVel);
+	}
+
+	public void setSuspended(final boolean suspend) {
+		final int old = collected;
+		if (suspend) {
+			if (collected < 0)
+				collected = 0;
+		} else {
+			collected = -1;
+			if (old <= 0)
+				return;
+			recompute(currentTime, true);
+		}
 	}
 
 	/** One of the initial rocks changed either pos or vel */
