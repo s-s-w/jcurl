@@ -27,6 +27,8 @@ import org.jcurl.core.api.ComputedTrajectorySet;
  */
 public class SuspendMemento extends Memento<ComputedTrajectorySet> {
 
+	/** */
+	private static final long serialVersionUID = -4168117544962338554L;
 	private final boolean suspend;
 
 	public SuspendMemento(final ComputedTrajectorySet context,

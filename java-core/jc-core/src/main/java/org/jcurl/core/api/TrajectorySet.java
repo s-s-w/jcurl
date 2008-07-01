@@ -36,9 +36,9 @@ public interface TrajectorySet {
 
 	public abstract RockSet<Pos> getCurrentPos();
 
-	public abstract RockSet<Vel> getCurrentVel();
-
 	public abstract double getCurrentTime();
+
+	public abstract RockSet<Vel> getCurrentVel();
 
 	public abstract void setCurrentTime(final double currentTime);
 

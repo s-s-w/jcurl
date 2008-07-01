@@ -19,6 +19,7 @@
 
 package org.jcurl.core.ui;
 
+import java.io.Serializable;
 import java.util.concurrent.Executor;
 
 /**
@@ -33,7 +34,8 @@ import java.util.concurrent.Executor;
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class Memento<E> implements Runnable {
+public abstract class Memento<E> implements Runnable, Serializable {
+	private static final long serialVersionUID = 1L;
 
 	// private static final Collection<Integer> stats = new
 	// LinkedList<Integer>();

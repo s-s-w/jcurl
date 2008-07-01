@@ -32,6 +32,9 @@ import org.jcurl.core.api.RockType.Pos;
  * @version $Id$
  */
 public class PosMemento extends RockMemento<Pos> {
+
+	private static final long serialVersionUID = -4765663817093493740L;
+
 	public PosMemento(final Rock<Pos> context, final int idx16, final Point2D p) {
 		super(context, idx16, p);
 	}

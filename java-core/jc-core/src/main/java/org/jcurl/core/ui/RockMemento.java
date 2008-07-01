@@ -36,7 +36,7 @@ import org.jcurl.core.log.JCLoggerFactory;
 public abstract class RockMemento<R extends RockType> extends
 		P2DMemento<RockSet<R>> {
 	private static final Log log = JCLoggerFactory.getLogger(RockMemento.class);
-
+	private static final long serialVersionUID = 1L;
 	private final int idx16;
 
 	protected RockMemento(final Rock<R> context, final int idx16,

@@ -149,7 +149,8 @@ class CollissionStore {
 	 * 
 	 * @param a
 	 * @param b
-	 * @param tmin {@link Double#NaN} finds the first.
+	 * @param tmin
+	 *            {@link Double#NaN} finds the first.
 	 */
 	public Tupel findFirst(int a, int b, final double tmin) {
 		if (a < b) {

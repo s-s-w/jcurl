@@ -28,6 +28,7 @@ import java.awt.geom.Point2D;
  * @version $Id$
  */
 public abstract class P2DMemento<E> extends Memento<E> {
+	private static final long serialVersionUID = 1L;
 	/** Read-only access. */
 	protected final Point2D p = new Point2D() {
 

@@ -34,6 +34,8 @@ public interface BroomPromptModel extends IPropertyChangeSupport,
 		IChangeSupport {
 
 	public class HandleMemento extends Memento<BroomPromptModel> {
+		/** */
+		private static final long serialVersionUID = -7088747347638322630L;
 		private final boolean outTurn;
 
 		public HandleMemento(final BroomPromptModel context,
@@ -77,6 +79,8 @@ public interface BroomPromptModel extends IPropertyChangeSupport,
 	}
 
 	public class IndexMemento extends Memento<BroomPromptModel> {
+		/** */
+		private static final long serialVersionUID = 81628225944888649L;
 		private final int idx16;
 
 		public IndexMemento(final BroomPromptModel context, final int idx16) {
@@ -119,6 +123,8 @@ public interface BroomPromptModel extends IPropertyChangeSupport,
 	}
 
 	public class SplitMemento extends Memento<BroomPromptModel> {
+		/** */
+		private static final long serialVersionUID = -5214990384986192483L;
 		private final int splitTime;
 
 		public SplitMemento(final BroomPromptModel context, final int splitTime) {
@@ -161,6 +167,9 @@ public interface BroomPromptModel extends IPropertyChangeSupport,
 	}
 
 	public class XYMemento extends P2DMemento<BroomPromptModel> {
+		/** */
+		private static final long serialVersionUID = -2063635998295163568L;
+
 		public XYMemento(final BroomPromptModel context, final double x,
 				final double y) {
 			super(context, x, y);

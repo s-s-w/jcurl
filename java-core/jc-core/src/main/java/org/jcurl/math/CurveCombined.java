@@ -302,7 +302,7 @@ public class CurveCombined<T extends R1RNFunction> extends R1RNFunctionImpl
 	 * @return <code>false</code> nothing dropped.
 	 */
 	public boolean dropTail(final double t) {
-		if(Double.isNaN(t))
+		if (Double.isNaN(t))
 			return false;
 		final int n = parts.size() - 1;
 		if (n < 0)
