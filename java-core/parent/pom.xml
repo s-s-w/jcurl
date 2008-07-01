@@ -184,6 +184,7 @@
 							http://commons.apache.org/math/apidocs
 						</link>
 						<link>http://geosoft.no/graphics/G/docs/</link>
+						<link>http://www.igniterealtime.org/builds/smack/docs/latest/javadoc/</link>
 					</links>
 					<tags>
 						<tag>
@@ -228,6 +229,7 @@
 						http://www.picocontainer.org/versions/1.0/apidocs/
 						-link http://commons.apache.org/math/apidocs
 						-link http://geosoft.no/graphics/G/docs/
+						-link http://www.igniterealtime.org/builds/smack/docs/latest/javadoc/
 					</additionalparam>
 				</configuration>
 			</plugin>

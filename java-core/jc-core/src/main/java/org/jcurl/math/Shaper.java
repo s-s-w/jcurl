@@ -30,10 +30,10 @@ import java.awt.Shape;
  */
 public interface Shaper {
 	/**
-	 * Convert a given interval of a {@link R1RNFunction} info a {@link Shape}.
+	 * Convert a given interval of a {@link R1RNFunction} into a {@link Shape}.
 	 * 
 	 * @param f
-	 *            the input curve
+	 *            the input curve - usually the first 2 dimensions are used.
 	 * @param tmin
 	 *            lower interval end
 	 * @param tmax
