@@ -33,8 +33,14 @@ import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
 
 /**
- * 
+ * Manage how changes are pushed to the data model.
+ * <p>
+ * Here (or rather in a subclass) is also the point to handle remote (jabber/xmpp)
+ * connected data models.
+ * </p>
+ * <p>
  * Relation to <a href="https://swingworker.dev.java.net/">SwingWorker</a>?
+ * </p>
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$

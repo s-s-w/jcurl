@@ -19,6 +19,8 @@
 
 package org.jcurl.smack;
 
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,11 +40,13 @@ import org.jivesoftware.smack.packet.PacketExtension;
  */
 public class SmackTest extends TestCase {
 
-	static class XmppAddress {
+	static class XmppAddress implements CharSequence {
 		private static final Pattern p = Pattern
 				.compile("([^@]+)@([^/]+)(?:/(.*))?");
 
 		public static final XmppAddress parse(final CharSequence str) {
+			if (str instanceof XmppAddress)
+				return (XmppAddress) str;
 			final Matcher m = p.matcher(str);
 			if (!m.matches())
 				return null;
@@ -60,6 +64,7 @@ public class SmackTest extends TestCase {
 		private final String account;
 		private final String host;
 		private final String resource;
+		private final transient String str;
 
 		public XmppAddress(final String account, final String host) {
 			this(account, host, null);
@@ -71,6 +76,11 @@ public class SmackTest extends TestCase {
 			this.host = host;
 			this.resource = resource == null || resource.length() <= 0 ? null
 					: resource;
+			str = toString(this.account, this.host, this.resource);
+		}
+
+		public char charAt(final int index) {
+			return str.charAt(index);
 		}
 
 		public String getAccount() {
@@ -85,9 +95,17 @@ public class SmackTest extends TestCase {
 			return resource;
 		}
 
+		public int length() {
+			return str.length();
+		}
+
+		public CharSequence subSequence(final int start, final int end) {
+			return str.subSequence(start, end);
+		}
+
 		@Override
 		public String toString() {
-			return toString(account, host, resource);
+			return str;
 		}
 
 		public String toString(final String resource) {
@@ -95,28 +113,51 @@ public class SmackTest extends TestCase {
 		}
 	}
 
+	private static String dst_pwd = null;
+	private static XmppAddress dst_uid = null;
+	private static String src_pwd = null;
+	private static XmppAddress src_uid = null;
+	static {
+		// find the properties
+		try {
+			final Properties p = new Properties();
+			final String r = "/" + SmackTest.class.getName().replace('.', '/')
+					+ ".properties";
+			final InputStream i = SmackTest.class.getResourceAsStream(r);
+			if (i == null) {
+				System.err.println("Add a file '." + r
+						+ "' to the classpath containing the properties:");
+				System.err
+						.println("\tsrc_uid = foo@foo.org # a jabber account name");
+				System.err
+						.println("\tsrc_pwd = .. # a jabber account password");
+				System.err
+						.println("\tdst_uid = foo@foo.org # a jabber account name");
+				System.err
+						.println("\tdst_pwd = .. # a jabber account password");
+			}
+			p.load(i);
+			dst_uid = XmppAddress.parse(p.getProperty("dst_uid"));
+			dst_pwd = p.getProperty("dst_pwd");
+			src_uid = XmppAddress.parse(p.getProperty("src_uid"));
+			src_pwd = p.getProperty("src_pwd");
+		} catch (final Exception e) {}
+	}
+
 	static XMPPConnection login(final XmppAddress uid, final String pwd,
 			final String resource) throws XMPPException {
 		final XMPPConnection conn = new XMPPConnection(uid.getHost());
 		conn.connect();
-		conn.login(uid.getAccount(), pwd, resource);
+		conn.login(uid.getAccount(), pwd, resource, true);
 		return conn;
 	}
 
-	private final String dst_pwd = null;
-	private final XmppAddress dst_uid = XmppAddress
-			.parse("mrohrmoser@jabber.org/A");
-
-	private final String src_pwd = null;
-	private final XmppAddress src_uid = XmppAddress
-			.parse("mrohrmoser@gmx.de/B");
-
 	public void testConnection() throws XMPPException, InterruptedException {
-		final String resource = "JCurl-Tactics";
-		final String namespace = "http://www.jcurl.org/xmpp/xep/tactics/2008";
+		final String resource = "JCurlShotPlanner";
+		final String namespace = "http://www.jcurl.org/xmpp/xep/shotplanner/2008";
 		final String subnode = "payload";
 
-		if (dst_pwd == null || src_pwd == null)
+		if (src_pwd == null || dst_pwd == null)
 			return;
 
 		final XMPPConnection dst = login(dst_uid, dst_pwd, resource);
@@ -125,24 +166,33 @@ public class SmackTest extends TestCase {
 				arg0.addMessageListener(new MessageListener() {
 					public void processMessage(final Chat chat,
 							final Message message) {
-						System.out.println("Received message: "
-								+ message.toXML());
 						final PacketExtension pe = message
 								.getExtension(namespace);
-						if (pe == null)
+						if (pe == null) {
+							System.out.println(message.getFrom() + " -> "
+									+ message.getTo() + ": "
+									+ message.getBody());
 							return;
-						System.out.println(pe.getElementName() + " "
-								+ pe.toXML() + " " + pe.toString());
+						}
 						final Pattern p = Pattern.compile(".+<" + subnode
-								+ ">(.*)</" + subnode + ">.+");
+								+ ">([0-9]+)</" + subnode + ">.+");
 						final Matcher m = p.matcher(pe.toXML());
-						if (!m.matches()) {
+						if (!("timetest".equals(pe.getElementName()) && m
+								.matches())) {
+							System.out.println(message.getFrom() + " -> "
+									+ message.getTo() + ": " + pe.toXML());
 							System.out.println("no match");
 							return;
 						}
-						System.out.println("dt = "
-								+ (System.currentTimeMillis() - Long
-										.parseLong(m.group(1))) + " millis");
+						try {
+							chat
+									.sendMessage("roundtrip time: "
+											+ (System.currentTimeMillis() - Long
+													.parseLong(m.group(1)))
+											+ " millis");
+						} catch (final XMPPException e) {
+							throw new RuntimeException("Unhandled", e);
+						}
 					}
 				});
 			}
@@ -154,17 +204,15 @@ public class SmackTest extends TestCase {
 					dst_uid.toString(resource), new MessageListener() {
 
 						public void processMessage(Chat chat, Message message) {
-							System.out.println("Received message: "
-									+ message.toXML());
-							message.getExtension(namespace);
+							System.out.println(message.getFrom() + " -> "
+									+ message.getTo() + ": "
+									+ message.getBody());
 						}
 					});
-			chat.sendMessage("Howdy!");
-
 			final Message jcm = new Message();
 			jcm.addExtension(new PacketExtension() {
 				public String getElementName() {
-					return "jcurl";
+					return "timetest";
 				}
 
 				public String getNamespace() {
