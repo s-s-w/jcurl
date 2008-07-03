@@ -58,6 +58,11 @@
 			<artifactId>swingworker</artifactId>
 			<version>1.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jivesoftware</groupId>
+			<artifactId>smack</artifactId>
+			<version>3.0.4</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.jcurl.core</groupId>
@@ -134,12 +139,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.4</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jivesoftware</groupId>
-			<artifactId>smack</artifactId>
-			<version>3.0.4</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

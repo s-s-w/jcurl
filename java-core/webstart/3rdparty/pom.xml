@@ -130,12 +130,17 @@
 			<artifactId>piccolo</artifactId>
 			<version>1.2</version>
 		</dependency>
-		<!-- could be used as extension from http://download.java.net/javadesktop/scenario/releases/0.6/Scenario-0.6.jnlp -->
+		<dependency>
+			<groupId>org.jivesoftware</groupId>
+			<artifactId>smack</artifactId>
+			<version>3.0.4</version>
+		</dependency>
+		<!-- could be used as extension from http://download.java.net/javadesktop/scenario/releases/0.6/Scenario-0.6.jnlp 
 		<dependency>
 			<groupId>net.java.dev.scenegraph</groupId>
 			<artifactId>scenario</artifactId>
 			<version>0.6</version>
-		</dependency>
+		</dependency -->
 		<dependency>
 			<groupId>net.java.dev</groupId>
 			<artifactId>appframework</artifactId>
@@ -151,11 +156,11 @@
 			<artifactId>beansbinding</artifactId>
 			<version>1.2.1</version>
 		</dependency>
-		<dependency>
+		<!-- dependency>
 			<groupId>org.jscience</groupId>
 			<artifactId>jscience</artifactId>
 			<version>4.3.1</version>
-		</dependency>
+		</dependency -->
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>

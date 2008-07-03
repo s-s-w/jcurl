@@ -54,9 +54,7 @@
 								commons-logging:commons-logging
 							</exclude>
 							<exclude>edu.umd.cs.hcil:piccolo</exclude>
-							<exclude>
-								net.java.dev.scenegraph:scenario
-							</exclude>
+							<exclude>org.jivesoftware:smack</exclude>
 							<exclude>net.java.dev:appframework</exclude>
 							<exclude>net.java.dev:swingworker</exclude>
 							<exclude>net.java.dev:beansbinding</exclude>
@@ -65,6 +63,9 @@
 								com.thoughtworks.xstream:xstream
 							</exclude>
 							<exclude>hsqldb:hsqldb</exclude>
+							<exclude>
+								net.java.dev.scenegraph:scenario
+							</exclude>
 							<!-- exclude>
 								avalon-framework:avalon-framework
 								</exclude>
