@@ -20,7 +20,11 @@
 package org.jcurl.demo.smack;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Vector;
 import java.util.WeakHashMap;
@@ -31,13 +35,21 @@ import javax.swing.JList;
 
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
+import org.jivesoftware.smack.Chat;
+import org.jivesoftware.smack.ChatManagerListener;
 import org.jivesoftware.smack.Roster;
 import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.RosterListener;
+import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.packet.Presence;
 
 /**
- * A simple {@link JList}-based roster list.
+ * A simple {@link JList}-based roster list. New {@link Chat}s are created on
+ * double-clicking the target address.
+ * <p>
+ * Register a {@link ChatManagerListener} with
+ * {@link XMPPConnection#getChatManager()} to get notice of them.
+ * </p>
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
@@ -47,6 +59,7 @@ public class RosterSimpleSwingBean extends JComponent implements RosterListener 
 	private static final Log log = JCLoggerFactory
 			.getLogger(RosterSimpleSwingBean.class);
 	private static final long serialVersionUID = 8787616993298867816L;
+	private XMPPConnection conn;
 	private final Vector<String> data = new Vector<String>();
 	private final JList l;
 	private Roster roster;
@@ -56,6 +69,21 @@ public class RosterSimpleSwingBean extends JComponent implements RosterListener 
 	public RosterSimpleSwingBean() {
 		setLayout(new BorderLayout());
 		l = new JList(data);
+		// see
+		// http://java.sun.com/products/jfc/tsc/tech_topics/jlist_1/jlist.html:
+		final MouseListener mouseListener = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					final int index = l.locationToIndex(e.getPoint());
+					final Object o = l.getModel().getElementAt(index);
+					if (o != null && getConn() != null)
+						getConn().getChatManager().createChat(
+								s2a.get(o).toString(), null);
+				}
+			}
+		};
+		l.addMouseListener(mouseListener);
 		add(l, BorderLayout.CENTER);
 	}
 
@@ -71,8 +99,8 @@ public class RosterSimpleSwingBean extends JComponent implements RosterListener 
 		log.warn("ignored");
 	}
 
-	public Roster getRoster() {
-		return roster;
+	public XMPPConnection getConn() {
+		return conn;
 	}
 
 	public Pattern getStar() {
@@ -99,15 +127,17 @@ public class RosterSimpleSwingBean extends JComponent implements RosterListener 
 			s2a.remove(a);
 		}
 		// update visible list
+		Collections.sort(data);
 		l.setListData(data);
 	}
 
-	public void setRoster(final Roster roster) {
-		if (this.roster != null)
-			this.roster.removeRosterListener(this);
-		this.roster = roster;
-		if (this.roster != null)
-			this.roster.addRosterListener(this);
+	public void setConn(final XMPPConnection conn) {
+		if (roster != null)
+			roster.removeRosterListener(this);
+		this.conn = conn;
+		roster = conn.getRoster();
+		if (roster != null)
+			roster.addRosterListener(this);
 		updateList();
 	}
 
