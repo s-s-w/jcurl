@@ -39,7 +39,7 @@ public class SmackChangeManagerTest extends TestCase {
 	private static final Log log = JCLoggerFactory
 			.getLogger(SmackChangeManagerTest.class);
 
-	private static final String s = "<memento xmlns=\'http://www.jcurl.org/xep/tactics/2008\'><base64gz id=\'TODO id\'>H4sIAAAAAAAAAFvzloG1uIhBJr8oXS8rubQoRy85vyhVrzRTLyC/2Dc1NzWvJH/vnW9M7KZnRJgYGCqKGGQxlQblJ2dD1TJAACMTA6MnA2tmSoWhWQV2441cMLQwuTAwVgBxJVCLJKYWDPUMFQUOUJ4DBwMMMAIAndlXWtQAAAA=</base64gz></memento>";
+	private static final String s = "<temporary xmlns=\'http://www.jcurl.org/xep/org.jcurl.demo.smack.SmackChangeManager\'><base64gz id=\'TODO id\'>H4sIAAAAAAAAAFvzloG1uIhBJr8oXS8rubQoRy85vyhVrzRTLyC/2Dc1NzWvJH/vnW9M7KZnRJgYGCqKGGQxlQblJ2dD1TJAACMTA6MnA2tmSoWhWQV2441cMLQwuTAwVgBxJVCLJKYWDPUMFQUOUJ4DBwMMMAIAndlXWtQAAAA=</base64gz></temporary>";
 
 	public void testFromXmlToXmlSymmetry() {
 		// warm up once:
