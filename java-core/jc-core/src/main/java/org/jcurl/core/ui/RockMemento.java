@@ -37,7 +37,7 @@ public abstract class RockMemento<R extends RockType> extends
 		P2DMemento<RockSet<R>> {
 	private static final Log log = JCLoggerFactory.getLogger(RockMemento.class);
 	private static final long serialVersionUID = 1L;
-	private final int idx16;
+	protected final int idx16;
 
 	protected RockMemento(final Rock<R> context, final int idx16,
 			final Point2D p) {
@@ -58,8 +58,8 @@ public abstract class RockMemento<R extends RockType> extends
 	@Override
 	public RockSet<R> apply(final RockSet<R> dst) {
 		if (log.isDebugEnabled())
-			log.debug(idx16 + " " + p);
-		dst.getRock(idx16).p().setLocation(p.getX(), p.getY());
+			log.debug(idx16 + " " + p());
+		dst.getRock(idx16).p().setLocation(p().getX(), p().getY());
 		return dst;
 	}
 }

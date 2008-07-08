@@ -29,25 +29,7 @@ import java.awt.geom.Point2D;
  */
 public abstract class P2DMemento<E> extends Memento<E> {
 	private static final long serialVersionUID = 1L;
-	/** Read-only access. */
-	protected final Point2D p = new Point2D() {
-
-		@Override
-		public double getX() {
-			return x;
-		}
-
-		@Override
-		public double getY() {
-			return y;
-		}
-
-		@Override
-		public void setLocation(double x, double y) {
-			throw new UnsupportedOperationException();
-		}
-
-	};
+	private transient Point2D p = null;
 	protected final double x;
 	protected final double y;
 
@@ -87,6 +69,29 @@ public abstract class P2DMemento<E> extends Memento<E> {
 		temp = Double.doubleToLongBits(y);
 		result = prime * result + (int) (temp ^ temp >>> 32);
 		return result;
+	}
+
+	/** Read-only access. */
+	protected Point2D p() {
+		if (p == null)
+			p = new Point2D() {
+
+				@Override
+				public double getX() {
+					return x;
+				}
+
+				@Override
+				public double getY() {
+					return y;
+				}
+
+				@Override
+				public void setLocation(final double x, final double y) {
+					throw new UnsupportedOperationException();
+				}
+			};
+		return p;
 	}
 
 	@Override

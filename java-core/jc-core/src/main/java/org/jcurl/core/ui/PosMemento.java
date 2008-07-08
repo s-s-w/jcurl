@@ -39,8 +39,18 @@ public class PosMemento extends RockMemento<Pos> {
 		super(context, idx16, p);
 	}
 
+	private PosMemento(final RockSet<Pos> context, final int idx16,
+			final double x, final double y) {
+		super(context, idx16, x, y);
+	}
+
 	public PosMemento(final RockSet<Pos> context, final int idx16,
 			final Point2D p) {
 		super(context, idx16, p);
+	}
+
+	@Override
+	protected Object clone() {
+		return new PosMemento(getContext(), idx16, x, y);
 	}
 }

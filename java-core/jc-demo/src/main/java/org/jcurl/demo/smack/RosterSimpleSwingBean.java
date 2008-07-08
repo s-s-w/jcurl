@@ -36,6 +36,7 @@ import javax.swing.JList;
 import org.apache.commons.logging.Log;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jivesoftware.smack.Chat;
+import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ChatManagerListener;
 import org.jivesoftware.smack.Roster;
 import org.jivesoftware.smack.RosterEntry;
@@ -59,7 +60,7 @@ public class RosterSimpleSwingBean extends JComponent implements RosterListener 
 	private static final Log log = JCLoggerFactory
 			.getLogger(RosterSimpleSwingBean.class);
 	private static final long serialVersionUID = 8787616993298867816L;
-	private XMPPConnection conn;
+	private ChatManager chatManager;
 	private final Vector<String> data = new Vector<String>();
 	private final JList l;
 	private Roster roster;
@@ -77,9 +78,9 @@ public class RosterSimpleSwingBean extends JComponent implements RosterListener 
 				if (e.getClickCount() == 2) {
 					final int index = l.locationToIndex(e.getPoint());
 					final Object o = l.getModel().getElementAt(index);
-					if (o != null && getConn() != null)
-						getConn().getChatManager().createChat(
-								s2a.get(o).toString(), null);
+					if (o != null && getChatManager() != null)
+						getChatManager()
+								.createChat(s2a.get(o).toString(), null);
 				}
 			}
 		};
@@ -99,8 +100,12 @@ public class RosterSimpleSwingBean extends JComponent implements RosterListener 
 		log.warn("ignored");
 	}
 
-	public XMPPConnection getConn() {
-		return conn;
+	public ChatManager getChatManager() {
+		return chatManager;
+	}
+
+	public Roster getRoster() {
+		return roster;
 	}
 
 	public Pattern getStar() {
@@ -131,13 +136,27 @@ public class RosterSimpleSwingBean extends JComponent implements RosterListener 
 		l.setListData(data);
 	}
 
+	public void setChatManager(final ChatManager chatManager) {
+		this.chatManager = chatManager;
+	}
+
 	public void setConn(final XMPPConnection conn) {
-		if (roster != null)
-			roster.removeRosterListener(this);
-		this.conn = conn;
-		roster = conn.getRoster();
-		if (roster != null)
-			roster.addRosterListener(this);
+		setChatManager(conn.getChatManager());
+		setRoster(conn.getRoster());
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		l.setEnabled(enabled);
+		super.setEnabled(enabled);
+	}
+
+	public void setRoster(final Roster roster) {
+		if (this.roster != null)
+			this.roster.removeRosterListener(this);
+		this.roster = roster;
+		if (this.roster != null)
+			this.roster.addRosterListener(this);
 		updateList();
 	}
 

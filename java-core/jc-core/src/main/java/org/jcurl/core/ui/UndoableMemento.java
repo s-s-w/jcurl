@@ -38,7 +38,7 @@ public class UndoableMemento<E> extends AbstractUndoableEdit {
 	private final Memento<E> pre;
 
 	public UndoableMemento(final Memento<E> pre, final Memento<E> post) {
-		if (pre.context != post.context)
+		if (pre.getContext() != post.getContext())
 			throw new IllegalArgumentException();
 		this.pre = pre;
 		this.post = post;

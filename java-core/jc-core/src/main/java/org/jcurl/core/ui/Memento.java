@@ -29,22 +29,36 @@ import java.util.concurrent.Executor;
  * {@link Thread} or {@link Executor} if desired - typically a
  * {@link ChangeManager}.
  * </p>
+ * <h3>Caution!</h3>
+ * <p>
+ * The {@link #setContext(Object)} exists <b>only</b> to be able to
+ * (re-)connect deserialised mementos to an existing data model i.e. implant a
+ * context (immediately after deserialisation). This is the only case when it's
+ * legitime to call {@link #setContext(Object)} if and only if the existing
+ * internal context is <code>null</code>. And that's also the reason why the
+ * {@link #context} field is transient, while all other fields of derived
+ * mememto classes <b>must be</b> immutable as well as non-transient.
+ * </p>
+ * <p>
+ * Maybe a clone method with the new context as a parameter would do as well in
+ * a secure, encapsulated manner at the cost of one object instanciation.
+ * </p>
  * 
  * @see UndoableMemento
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */
-public abstract class Memento<E> implements Runnable, Serializable {
+public abstract class Memento<E> implements Runnable, Serializable, Cloneable {
 	private static final long serialVersionUID = 1L;
-
-	// private static final Collection<Integer> stats = new
-	// LinkedList<Integer>();
 
 	private static final void pushStat(final Class<?> c, final long millis) {
 		;// System.out.println(c.getName() + " " + millis);
 	}
 
-	final E context;
+	// private static final Collection<Integer> stats = new
+	// LinkedList<Integer>();
+
+	private transient E context;
 
 	protected Memento(final E context) {
 		this.context = context;
@@ -57,6 +71,15 @@ public abstract class Memento<E> implements Runnable, Serializable {
 	public abstract E apply(E dst);
 
 	@Override
+	protected abstract Object clone();
+
+	public Memento<E> clone(final E context) {
+		final Memento<E> r = (Memento<E>) this.clone();
+		r.context = context;
+		return r;
+	}
+
+	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
@@ -66,6 +89,10 @@ public abstract class Memento<E> implements Runnable, Serializable {
 			return false;
 		final Memento other = (Memento) obj;
 		return this.context == other.context;
+	}
+
+	public E getContext() {
+		return context;
 	}
 
 	@Override
@@ -83,5 +110,17 @@ public abstract class Memento<E> implements Runnable, Serializable {
 		} finally {
 			pushStat(this.getClass(), System.currentTimeMillis() - start);
 		}
+	}
+
+	/**
+	 * 
+	 * @param context
+	 * @throws IllegalStateException
+	 *             the internal {@link #context} wasn't <code>null</code>
+	 */
+	public void setContext(final E context) throws IllegalStateException {
+		if (this.context != null)
+			throw new IllegalStateException("Context already set.");
+		this.context = context;
 	}
 }
