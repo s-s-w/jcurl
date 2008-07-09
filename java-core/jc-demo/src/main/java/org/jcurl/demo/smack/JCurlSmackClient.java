@@ -55,6 +55,7 @@ import org.apache.commons.logging.Log;
 import org.jcurl.core.api.MutableObject;
 import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.FileNameExtensionFilter;
+import org.jcurl.demo.tactics.JCurlShotPlanner;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ApplicationContext;
 import org.jdesktop.application.ResourceMap;
@@ -65,7 +66,17 @@ import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 
 /**
- * A very simple Jabber/Xmpp client.
+ * A very simple Jabber/Xmpp client. This a merely an experiment to gain
+ * experience.
+ * <p>
+ * The goal is to add collaborative editing to and instant messaging e.g.
+ * {@link JCurlShotPlanner}. <a
+ * href="http://en.wikipedia.org/wiki/J.C.R._Licklider">J. C. R. Licklider</a>
+ * suggested this <b>1968</a> in his paper <a
+ * href="http://gatekeeper.dec.com/pub/DEC/SRC/publications/taylor/licklider-taylor.pdf">The
+ * Computer as a Communication Device</a>. So much about the "fast-lived IT
+ * business.
+ * </p>
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$

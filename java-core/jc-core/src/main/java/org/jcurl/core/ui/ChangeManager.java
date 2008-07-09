@@ -33,15 +33,17 @@ import org.jcurl.core.log.JCLoggerFactory;
 import org.jcurl.core.ui.TaskExecutor.SwingEDT;
 
 /**
- * Manage how changes are pushed to the data model.
+ * Manage how changes are pushed to the data model and feed a
+ * {@link UndoManager}.
  * <p>
- * Here (or rather in a subclass) is also the point to handle remote (jabber/xmpp)
- * connected data models.
+ * Here (or rather in a subclass) is also the point to handle remote
+ * (jabber/xmpp) connected data models.
  * </p>
  * <p>
  * Relation to <a href="https://swingworker.dev.java.net/">SwingWorker</a>?
  * </p>
  * 
+ * @see UndoManager
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
  */

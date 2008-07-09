@@ -70,6 +70,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.undo.CompoundEdit;
 
 import org.apache.commons.logging.Log;
+import org.jcurl.batik.BatikWrapper;
 import org.jcurl.core.api.ComputedTrajectorySet;
 import org.jcurl.core.api.IceSize;
 import org.jcurl.core.api.RockProps;
@@ -628,7 +629,13 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 		}
 	}
 
-	/** File Menu Action */
+	/**
+	 * Render the current view into a <a
+	 * href="http://en.wikipedia.org/wiki/Portable_Network_Graphics">PNG</a>
+	 * image (File Menu Action).
+	 * 
+	 * @see ImageIO#write(java.awt.image.RenderedImage, String, File)
+	 */
 	@Action(block = BlockingScope.ACTION)
 	public Task<Void, Void> fileExportPng() {
 		final JFileChooser fcPng = createPngChooser(getFile(),
@@ -651,7 +658,13 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 		}
 	}
 
-	/** File Menu Action */
+	/**
+	 * Render the current view into a <a
+	 * href="http://en.wikipedia.org/wiki/Svg">PNG</a>
+	 * image (File Menu Action).
+	 * 
+	 * @see BatikWrapper#renderSvg(Container, java.io.OutputStream)
+	 */
 	@Action(enabledProperty = "renderSvgAvailable", block = BlockingScope.ACTION)
 	public Task<Void, Void> fileExportSvg() {
 		final JFileChooser fcSvg = createSvgChooser(getFile(),
