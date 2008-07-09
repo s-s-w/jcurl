@@ -660,7 +660,7 @@ public class JCurlShotPlanner extends SingleFrameApplication implements
 
 	/**
 	 * Render the current view into a <a
-	 * href="http://en.wikipedia.org/wiki/Svg">PNG</a>
+	 * href="http://en.wikipedia.org/wiki/Svg">SVG</a>
 	 * image (File Menu Action).
 	 * 
 	 * @see BatikWrapper#renderSvg(Container, java.io.OutputStream)
