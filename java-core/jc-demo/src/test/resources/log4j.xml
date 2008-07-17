@@ -18,9 +18,9 @@
 				value="%-5p %m%n"/ -->
 		</layout>
 	</appender>
-	<category name="org.jcurl.core.impl.CurveManager">
+	<!-- category name="org.jcurl.core.impl.CurveManager">
 		<level value="DEBUG"/>
-	</category>
+	</category -->
 	<category name="org.jcurl.core.ui.RockMemento">
 		<level value="INFO"/>
 	</category>

@@ -30,6 +30,7 @@
   </resource>
   <resources os="Windows"> 
     <property name="sun.java2d.opengl" value="false"/>
+    <!-- http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6343853 -->
     <property name="sun.java2d.noddraw" value="true" />
   </resource>
   <resources>

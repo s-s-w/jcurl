@@ -130,7 +130,8 @@ public class TrajectoryPiccoloBean extends TrajectoryBean<PNode, PNode> {
 	}
 
 	/** update one rock */
-	private static void syncM2V(final Rock<Pos> src, final PNode dst) {
+	private static void syncM2V(final Rock<Pos> src, final PNode dst,
+			final long dt) {
 		if (src == null || dst == null) {
 			if (log.isDebugEnabled())
 				log.debug(src + " " + dst);
@@ -138,9 +139,13 @@ public class TrajectoryPiccoloBean extends TrajectoryBean<PNode, PNode> {
 		}
 		if (log.isDebugEnabled())
 			log.debug("rock " + dst.getAttribute(ATTR_IDX16));
-		dst.setTransform(src.getAffineTransform());
+		if (dt >= 0)
+			dst.animateToTransform(src.getAffineTransform(), dt);
+		else
+			dst.setTransform(src.getAffineTransform());
 	}
 
+	private final long AnimationMillis = 150;
 	private final BroomPromptSimple broom = new BroomPromptSimple();
 	private final PNode[] current = new PNode[RockSet.ROCKS_PER_SET];
 	private final PNode[] initial = new PNode[RockSet.ROCKS_PER_SET];
@@ -151,6 +156,7 @@ public class TrajectoryPiccoloBean extends TrajectoryBean<PNode, PNode> {
 	private final Map<Rock<Pos>, PNode> r2n = new IdentityHashMap<Rock<Pos>, PNode>();
 	private final PNode rocks;
 	private final PTrajectoryFactory tf = new PTrajectoryFactory.Fancy();
+
 	private final PNode world;
 
 	public TrajectoryPiccoloBean() {
@@ -276,7 +282,7 @@ public class TrajectoryPiccoloBean extends TrajectoryBean<PNode, PNode> {
 			// update the rock position, be it initial or current
 			final Rock<Pos> r = (Rock<Pos>) e.getSource();
 			final PNode n = r2n.get(r);
-			syncM2V(r, n);
+			syncM2V(r, n, AnimationMillis);
 
 			// update the trajectory path, current only.
 			if (!Boolean.TRUE.equals(n.getAttribute(ATTR_TRIGGER_CURVE_UPDATE)))
@@ -297,7 +303,7 @@ public class TrajectoryPiccoloBean extends TrajectoryBean<PNode, PNode> {
 	 */
 	private PNode syncM2V(final RockSet<Pos> src, final int i16, final PNode dst) {
 		final Rock<Pos> r = src.getRock(i16);
-		syncM2V(r, dst);
+		syncM2V(r, dst, 0);
 		dst.addAttribute(ATTR_ROCKSET, src);
 		dst.addAttribute(ATTR_ROCK, r);
 		dst.addAttribute(ATTR_IDX16, i16);
