@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Id: viewerdemo.jnlp 213 2005-12-30 17:42:01Z mrohrmoser $ -->
+<!-- 
+  $Id: viewerdemo.jnlp 213 2005-12-30 17:42:01Z mrohrmoser $ 
+  http://java.sun.com/j2se/1.5.0/docs/guide/javaws/developersguide/syntax.html
+-->
 <jnlp
   spec="1.0+"
   codebase="http://www.jcurl.org/jws/org/jcurl/demo/tactics/0.7-SNAPSHOT"
@@ -22,9 +25,15 @@
   <security>
     <all-permissions/>
   </security>
+  <resources> 
+    <property name="sun.java2d.opengl" value="true"/>
+  </resource>
+  <resources os="Windows"> 
+    <property name="sun.java2d.opengl" value="false"/>
+    <property name="sun.java2d.noddraw" value="true" />
+  </resource>
   <resources>
     <j2se href="http://java.sun.com/products/autodl/j2se" version="1.5+"/>
-    <property name="sun.java2d.opengl" value="true"/>
     $dependencies
     <extension href="http://www.jcurl.org/jws/org/jcurl/demo/3rdparty/0.7-SNAPSHOT/launch.jnlp"/>
     <extension href="http://www.jcurl.org/jws/org/jcurl/demo/batik/1.6/launch.jnlp"/>
