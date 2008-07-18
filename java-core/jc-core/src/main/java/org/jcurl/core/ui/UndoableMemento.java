@@ -19,6 +19,8 @@
 
 package org.jcurl.core.ui;
 
+import java.util.UUID;
+
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
@@ -26,7 +28,7 @@ import javax.swing.undo.UndoableEdit;
 
 /**
  * Combine two {@link Memento}s with identical context to one
- * {@link UndoableEdit}.
+ * {@link UndoableEdit}. Optionally labelled with an author name.
  * 
  * @author <a href="mailto:m@jcurl.org">M. Rohrmoser </a>
  * @version $Id$
@@ -34,14 +36,38 @@ import javax.swing.undo.UndoableEdit;
 public class UndoableMemento<E> extends AbstractUndoableEdit {
 
 	private static final long serialVersionUID = -5182398471355882831L;
+	private final CharSequence author;
 	private final Memento<E> post;
 	private final Memento<E> pre;
+	private final UUID uuid;
 
 	public UndoableMemento(final Memento<E> pre, final Memento<E> post) {
+		this(pre, post, null);
+	}
+
+	/**
+	 * 
+	 * @param pre
+	 * @param post
+	 * @param author
+	 *            typically a user name. May be <code>null</code>
+	 */
+	public UndoableMemento(final Memento<E> pre, final Memento<E> post,
+			final CharSequence author) {
 		if (pre.getContext() != post.getContext())
 			throw new IllegalArgumentException();
 		this.pre = pre;
 		this.post = post;
+		this.author = author;
+		this.uuid = UUID.randomUUID();
+	}
+
+	public CharSequence getAuthor() {
+		return author;
+	}
+
+	public UUID getUuid() {
+		return uuid;
 	}
 
 	@Override

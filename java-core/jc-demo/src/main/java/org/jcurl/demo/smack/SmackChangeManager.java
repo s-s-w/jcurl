@@ -188,7 +188,7 @@ public class SmackChangeManager extends ChangeManager implements
 			this.chat.addMessageListener(msg);
 	}
 
-	private Message convert(final Memento<?> pre, final Memento<?> post) {
+	private Message convert(final UndoableMemento<?> pre) {
 		// TODO
 		throw new UnsupportedOperationException();
 	}
@@ -234,18 +234,21 @@ public class SmackChangeManager extends ChangeManager implements
 
 	/**
 	 * Push local gui-generated Mementos to the local data model and publish
-	 * them
+	 * them.
+	 * 
 	 */
 	@Override
-	public <E> boolean undoable(final Memento<E> pre, final Memento<E> post) {
-		if (!super.undoable(pre, post))
-			return false;
+	public <E> UndoableMemento<E> undoable(final Memento<E> pre,
+			final Memento<E> post) {
+		final UndoableMemento<E> m = super.undoable(pre, post);
+		if (m == null)
+			return m;
 		if (chat != null)
 			try {
-				chat.sendMessage(convert(pre, post));
+				chat.sendMessage(convert(m));
 			} catch (final XMPPException e) {
 				throw new RuntimeException("Unhandled", e);
 			}
-		return true;
+		return m;
 	}
 }

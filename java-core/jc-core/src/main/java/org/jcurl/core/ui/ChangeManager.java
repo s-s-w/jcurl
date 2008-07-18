@@ -94,11 +94,10 @@ public class ChangeManager {
 		public void undo() {}
 
 		@Override
-		public <E> boolean undoable(Memento<E> pre, Memento<E> post) {
+		public <E> UndoableMemento<E> undoable(Memento<E> pre, Memento<E> post) {
 			post.run();
-			return false;
+			return null;
 		}
-
 	};
 
 	public static final ChangeManager getTrivial() {
@@ -200,13 +199,15 @@ public class ChangeManager {
 	 *            "redo" state.
 	 * @return {@link UndoManager#addEdit(UndoableEdit)}
 	 */
-	public <E> boolean undoable(final Memento<E> pre, final Memento<E> post) {
+	public <E> UndoableMemento<E> undoable(final Memento<E> pre,
+			final Memento<E> post) {
 		if (pre == null || post == null || pre.equals(post))
-			return false;
+			return null;
 		if (log.isDebugEnabled())
 			log.debug(pre + " -> " + post);
-		final boolean ret = addEdit(new UndoableMemento<E>(pre, post));
+		final UndoableMemento<E> m = new UndoableMemento<E>(pre, post);
+		final boolean ret = addEdit(m);
 		executor.execute(post);
-		return ret;
+		return ret ? m : null;
 	}
 }
