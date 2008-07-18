@@ -145,7 +145,7 @@ public class TrajectoryPiccoloBean extends TrajectoryBean<PNode, PNode> {
 			dst.setTransform(src.getAffineTransform());
 	}
 
-	private final long AnimationMillis = 150;
+	private final long AnimationMillis = 0;
 	private final BroomPromptSimple broom = new BroomPromptSimple();
 	private final PNode[] current = new PNode[RockSet.ROCKS_PER_SET];
 	private final PNode[] initial = new PNode[RockSet.ROCKS_PER_SET];
