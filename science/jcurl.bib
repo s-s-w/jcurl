@@ -1,6 +1,33 @@
 % This file was created with JabRef 2.3.1.
 % Encoding: ASCII
 
+@ARTICLE{Archer1984,
+  author = {Archer, James E. Jr. and Richard Conway and Fred B. Schneider},
+  title = {User Recovery and Reversal in Interactive Systems},
+  journal = {ACM Trans. Program. Lang. Syst.},
+  year = {1984},
+  volume = {6},
+  pages = {1--19},
+  number = {1},
+  abstract = {This paper is organized as follows. Section 2 presents a model for
+	interactive systems that allows recovery to be defined precisely
+	and user and system respon- sibilities to be delineated. Section
+	3 enumerates various useful restrictions on the types of recovery
+	a user can request. Section 4 describes several implementation techniques
+	for supporting recovery. An application of a general recovery facility
+	that provides support for reverse execution of programs is the subject
+	of Section 5....},
+  address = {New York, NY, USA},
+  citeseerurl = {http://citeseer.ist.psu.edu/archer84user.html},
+  doi = {10.1145/357233.357234},
+  issn = {0164-0925},
+  keywords = {HCI undo},
+  owner = {m},
+  publisher = {ACM},
+  timestamp = {2008.07.20},
+  url = {http://citeseer.ist.psu.edu/archer84user.html}
+}
+
 @BOOK{Arnheim1978,
   title = {Kunst und Sehen--Eine Psychologie des sch{\"o}pferischen Auges, ins
 	Deutsche {\"U}bertragen von Hans Hermann},
@@ -57,7 +84,17 @@
   url = {http://citeseer.ist.psu.edu/berlage94selective.html}
 }
 
-@ARTICLE{Berlage1993,
+@INPROCEEDINGS{Berlage1993,
+  author = {Thomas Berlage and Andreas Genau},
+  title = {A Framework for Shared Applications with a Replicated Architecture},
+  booktitle = {{ACM} Symposium on User Interface Software and Technology},
+  year = {1993},
+  pages = {249-257},
+  keywords = {HCI undo},
+  url = {http://citeseer.ist.psu.edu/berlage93framework.html}
+}
+
+@ARTICLE{Berlage1993a,
   author = {Berlage, T. and Genau, A.},
   title = {From Undo to Multi-User Applications},
   journal = {Vienna Conference VCHCI},
@@ -73,7 +110,7 @@
 	using a selective redo mechanism. Synchronous cooperation is supported
 	by replicating the document state and exchanging command objects.
 	Optimistic concurrency control can be applied because conflicting
-	actions can later be undone automatically. 1},
+	actions can later be undone automatically.},
   keywords = {HCI undo},
   publisher = {Springer},
   url = {http://citeseer.ist.psu.edu/berlage93from.html}
@@ -187,6 +224,31 @@
   keywords = {curling}
 }
 
+@ARTICLE{Dewan1995,
+  author = {Prasun Dewan and Rajiv Choudhary},
+  title = {Coupling the User Interfaces of a Multiuser Program},
+  journal = {ACM Transactions on Computer-Human Interaction},
+  year = {1995},
+  volume = {2},
+  pages = {1--39},
+  number = {1},
+  month = {March},
+  abstract = {objects define underlying data while view objects define how these
+	data are viewed and manipulated by users. An abstract object is shared
+	among a group of users by creating a view object for each of these
+	users and defining constraints that keep the abstract object consistent
+	with its view objects. Views of an abstract object are shared by
+	making the associated view objects copies of a special sharing object.
+	The access rights to the views of a sharing object are shared by
+	making guards that...},
+  address = {New York, NY, USA},
+  keywords = {HCI undo},
+  owner = {m},
+  publisher = {ACM Press},
+  timestamp = {2008.07.20},
+  url = {http://citeseer.ist.psu.edu/dewan95coupling.html}
+}
+
 @INPROCEEDINGS{Edwards2000,
   author = {W. Keith Edwards and Takeo Igarashi and Anthony LaMarca and Elizabeth
 	D. Mynatt},
@@ -218,16 +280,50 @@
 	creative pursuits. In this paper we use data from three case studies,
 	and draw upon Schn's theory of reflection-in-action to illustrate
 	specific deficiencies in...},
-  keywords = {HCI undo},
+  keywords = {HCI},
   url = {http://citeseer.ist.psu.edu/564700.html}
 }
 
+@ARTICLE{Ellis1989,
+  author = {C. A. Ellis and S. J. Gibbs},
+  title = {Concurrency control in groupware systems},
+  journal = {SIGMOD Rec.},
+  year = {1989},
+  volume = {18},
+  pages = {399--407},
+  number = {2},
+  address = {New York, NY, USA},
+  doi = {10.1145/66926.66963},
+  issn = {0163-5808},
+  keywords = {HCI undo},
+  owner = {m},
+  publisher = {ACM},
+  timestamp = {2008.07.20}
+}
+
+@ARTICLE{Ellis1991,
+  author = {Clarence A. Ellis and Simon J. Gibbs and Gail Rein},
+  title = {Groupware: some issues and experiences},
+  journal = {Commun. ACM},
+  year = {1991},
+  volume = {34},
+  pages = {39--58},
+  number = {1},
+  address = {New York, NY, USA},
+  doi = {10.1145/99977.99987},
+  issn = {0001-0782},
+  keywords = {HCI undo},
+  owner = {m},
+  publisher = {ACM},
+  timestamp = {2008.07.20}
+}
+
 @BOOK{Feynman1989,
-  title = {Mechanics, Radiation and Heat},
+  title = {Electromagnetism and Matter},
   publisher = {Addison Wesley},
   year = {1989},
   author = {Feynman, Richard and {Robert B.} Leighton and {Matthew L.} Sands},
-  volume = {I},
+  volume = {II},
   series = {Lectures on Physics},
   address = {Reading, Massachusetts},
   edition = {Commemorative issue},
@@ -237,11 +333,11 @@
 }
 
 @BOOK{Feynman1989a,
-  title = {Electromagnetism and Matter},
+  title = {Mechanics, Radiation and Heat},
   publisher = {Addison Wesley},
   year = {1989},
   author = {Feynman, Richard and {Robert B.} Leighton and {Matthew L.} Sands},
-  volume = {II},
+  volume = {I},
   series = {Lectures on Physics},
   address = {Reading, Massachusetts},
   edition = {Commemorative issue},
@@ -420,6 +516,190 @@
   keywords = {language c}
 }
 
+@INPROCEEDINGS{Kurlander1991,
+  author = {David Kurlander and Steven Feiner},
+  title = {Editable graphical histories: the video},
+  booktitle = {CHI '91: Proceedings of the SIGCHI conference on Human factors in
+	computing systems},
+  year = {1991},
+  pages = {451--452},
+  address = {New York, NY, USA},
+  publisher = {ACM},
+  abstract = {Graphical interfaces typically provide their users with little idea
+	of a session's history, except insofar as it is reflected in the
+	current state of the sytem. If undo and redo commands are provided,
+	they are often the only way to review the actions performed, cycling
+	through them in sequence. We allow the user to review and modify
+	the actions performed with a graphical interface. We have designed
+	a testbed system that creates a series of automatically generated
+	panels that depict in chronological order the important events in
+	the history of a users session with Chimera, a graphical editor.
+	Our system heuristically determines the contents of each panel and
+	the actions that it illustrates. The user can scroll through the
+	sequence of panels, reviewing actions at different levels of detail,
+	and selectively undoing, modifying, and redoing previous actions.},
+  comment = {http://kurlander.net/DJ/Pubs/CHI91_DK.PDF},
+  doi = {10.1145/108844.108998},
+  isbn = {0-89791-383-3},
+  journal = {Proceedings of the SIGCHI conference on Human factors in computing
+	systems: Reaching through technology},
+  keywords = {HCI undo},
+  location = {New Orleans, Louisiana, United States},
+  owner = {m},
+  timestamp = {2008.07.20},
+  url = {http://kurlander.net/DJ/Videos/EditableGraphicalHistoriesVideo.shtml}
+}
+
+@INPROCEEDINGS{Kurlander1988,
+  author = {Kurlander, D. and Feiner, S.},
+  title = {Editable graphical histories},
+  year = {1988},
+  pages = {127--134},
+  abstract = {Graphical interfaces typically provide their users with little idea
+	of a session's history, except insofar as it is reflected in the
+	current state of the sytem. If undo and redo commands are provided,
+	they are often the only way to review the actions performed, cycling
+	through them in sequence. We allow the user to review and modify
+	the actions performed with a graphical interface. We have designed
+	a testbed system that creates a series of automatically generated
+	panels that depict in chronological order the important events in
+	the history of a users session with Chimera, a graphical editor.
+	Our system heuristically determines the contents of each panel and
+	the actions that it illustrates. The user can scroll through the
+	sequence of panels, reviewing actions at different levels of detail,
+	and selectively undoing, modifying, and redoing previous actions.},
+  journal = {Visual Languages, 1988., IEEE Workshop on},
+  keywords = {HCI undo},
+  owner = {m},
+  timestamp = {2008.07.20},
+  url = {http://kurlander.net/DJ/Pubs/VL88.pdf}
+}
+
+@ARTICLE{Lamport1978,
+  author = {Lamport, L.},
+  title = {The Implementation of Reliable Distributed Multiprocess Systems},
+  journal = {Computer Networks},
+  year = {1978},
+  volume = {2},
+  pages = {95--114},
+  number = {2},
+  owner = {m},
+  timestamp = {2008.07.20},
+  url = {http://research.microsoft.com/users/lamport/pubs/implementation.pdf}
+}
+
+@INPROCEEDINGS{Lamport1978a,
+  author = {Leslie Lamport},
+  title = {Time, clocks, and the ordering of events in a distributed system},
+  year = {1978},
+  volume = {21},
+  number = {7},
+  pages = {558--565},
+  address = {New York, NY, USA},
+  publisher = {ACM},
+  abstract = {The concept of one event happening before another in a distributed
+	system is examined, and is shown to define a partial ordering of
+	the events. A distributed algorithm is given for synchronizing a
+	system of logical clocks which can be used to totally order the events.
+	The use of the total ordering is illustrated with a method for solving
+	synchronization problems. The algorithm is then specialized for synchronizing
+	physical clocks, and a bound is derived on how far out of synchrony
+	the clocks can become.},
+  doi = {10.1145/359545.359563},
+  issn = {0001-0782},
+  journal = {Commun. ACM},
+  keywords = {HCI undo},
+  owner = {m},
+  timestamp = {2008.07.20},
+  url = {http://research.microsoft.com/users/lamport/pubs/time-clocks.pdf}
+}
+
+@INPROCEEDINGS{Lamport1984,
+  author = {Leslie Lamport and P. M. Melliar-Smith},
+  title = {Byzantine clock synchronization},
+  booktitle = {PODC '84: Proceedings of the third annual ACM symposium on Principles
+	of distributed computing},
+  year = {1984},
+  pages = {68--74},
+  address = {New York, NY, USA},
+  publisher = {ACM},
+  doi = {10.1145/800222.806737},
+  isbn = {0-89791-143-1},
+  location = {Vancouver, British Columbia, Canada},
+  owner = {m},
+  timestamp = {2008.07.20}
+}
+
+@ARTICLE{Landay1999,
+  author = {J. A. Landay and R. C. Davis},
+  title = {Making sharing pervasive: ubiquitous computing for shared note taking},
+  journal = {IBM Systems Journal},
+  year = {1999},
+  volume = {38},
+  pages = {531--550},
+  number = {4},
+  abstract = {As a variety of low-cost note-taking devices becomes pervasive, shared
+	notes can help work groups better communicate ideas and information.
+	To explore this idea further, we carried out three related case studies
+	of how members of a large research group shared meeting notes. The
+	group found value in combining personal notes and presentation slides
+	with a single, unifying document, such as regular meeting minutes.
+	The minutes provided structure when there were too many sources of
+	notes. We used this insight in our design of NotePals, a note-sharing
+	system with a lightweight process, an interface, and hardware that
+	distinguish it from previous systems. We have developed note-taking
+	applications that run on inexpensive personal digital assistants
+	and other ink-based capture devices, such as the paper-based CrossPadTM.
+	Experience with using NotePals has shown that shared notes can add
+	value to meeting, conference, and class records.},
+  address = {Riverton, NJ, USA},
+  issn = {0018-8670},
+  keywords = {HCI},
+  owner = {m},
+  publisher = {IBM Corp.},
+  timestamp = {2008.07.20},
+  url = {https://www.research.ibm.com/journal/sj/384/landay.html}
+}
+
+@ARTICLE{Landay2001,
+  author = {James A. Landay and Brad A. Myers},
+  title = {Sketching Interfaces: Toward More Human Interface Design},
+  journal = {Computer},
+  year = {2001},
+  volume = {34},
+  pages = {56--64},
+  number = {3},
+  abstract = {Today people expect computers to perform not only obvious computational
+	tasks but also to assist in people-oriented tasks. This shift is
+	causing user-interface (UI) researchers to explore methods that bend
+	computers to people's way of interacting by supporting ambiguity,
+	creativity, and informal communication that combines many of the
+	benefits of paper-based sketching with the merits of current electronic
+	tools.Researchers at the University of California, Berkeley and Carnegie
+	Mellon University have designed, implemented, and evaluated an informal
+	sketching tool, SILK (Sketching Interfaces Like Krazy). During the
+	early phases of UI design, designers need the freedom to sketch design
+	ideas quickly, the ability to test designs by interacting with them,
+	and the flexibility to fill in design details as they make choices.
+	Besides refining design details as graphic artists deliberate, SILK
+	supports story-boards-sketches that illustrate how design elements
+	behave, how a dialog box appears when the user activates a button.
+	Designers can present story-boards to colleagues, customers, or end
+	users to show how an interface will behave.A usability evaluation
+	of the implemented SILK system demonstrated that it is an effective
+	tool for early creative design and for communicating design ideas
+	effectively to engineers.},
+  address = {Los Alamitos, CA, USA},
+  comment = {http://doi.ieeecomputersociety.org/10.1109/2.910894},
+  doi = {10.1109/2.910894},
+  issn = {0018-9162},
+  keywords = {HCI},
+  owner = {m},
+  publisher = {IEEE Computer Society Press},
+  timestamp = {2008.07.20},
+  url = {http://citeseer.ist.psu.edu/landay01sketching.html}
+}
+
 @BOOK{Lehmann1985,
   title = {Kinetik},
   publisher = {Vieweg},
@@ -430,6 +710,24 @@
   keywords = {physics},
   owner = {m},
   timestamp = {2008.07.20}
+}
+
+@INPROCEEDINGS{Mattern1989,
+  author = {Friedemann Mattern},
+  title = {Virtual Time and Global States of Distributed Systems},
+  booktitle = {Parallel and Distributed Algorithms: proceedings of the International
+	Workshop on Parallel and Distributed Algorithms},
+  year = {1989},
+  abstract = {A distributed system can be characterized by the fact that the global
+	state is distributed and that a common time base does not exist.
+	However, the notion of time is an important concept in every day
+	life of our decentralized "real world" and helps to solve problems
+	like getting a consistent population census or determining the potential
+	causality between events. We argue that a linearly ordered structure
+	of time is not (always) adequate for distributed systems and propose
+	a generalized...},
+  keywords = {HCI undo},
+  url = {http://citeseer.ist.psu.edu/mattern89virtual.html}
 }
 
 @BOOK{Meyberg2001,
@@ -449,6 +747,45 @@
   publisher = {Springer-Lehrbuch. Springer Verlag, Berlin, Heidelberg, New York}
 }
 
+@ARTICLE{Morgan1985,
+  author = {Morgan, C.},
+  title = {Global and logical time in distributed systems},
+  journal = {Information Processing Letters},
+  year = {1985},
+  volume = {20},
+  pages = {189--194},
+  number = {4},
+  owner = {m},
+  timestamp = {2008.07.20}
+}
+
+@INPROCEEDINGS{Munson1996,
+  author = {Jonathan P. Munson and Prasun Dewan},
+  title = {A concurrency control framework for collaborative systems},
+  booktitle = {CSCW '96: Proceedings of the 1996 ACM conference on Computer supported
+	cooperative work},
+  year = {1996},
+  pages = {278--287},
+  address = {New York, NY, USA},
+  publisher = {ACM},
+  abstract = {We have developed a new framework for supporting concurrency control
+	in collaborative applications. It supports multiple degrees of consistency
+	and allows users to choose concurrency control policies based on
+	the objects they are manipulating, the tasks they are performing,
+	and the coupling and merge policies they are using. Concurrency control
+	policies are embodied in hierarchical, constructor-based lock compatibility
+	tables. Entries in these tables may be specified explicitly or derived
+	automatically from coupling and merge policies. In this paper, we
+	motivate and describe the framework, identify several useful concurrency
+	control policies it can support, evaluate its flexibility, and give
+	conclusions and directions for future work.},
+  doi = {10.1145/240080.240302},
+  isbn = {0-89791-765-0},
+  keywords = {HCI undo},
+  location = {Boston, Massachusetts, United States},
+  url = {http://citeseer.ist.psu.edu/munson96concurrency.html}
+}
+
 @MISC{Myers2005,
   author = {B. Myers and D. Weitzman and A. Ko and D. Chau},
   title = {Answering Why and Why Not Questions in User Interfaces},
@@ -465,6 +802,61 @@
 	Why and Why Not Questions in User Interfaces, ACM Conference on Human
 	Factors in Computing Systems, (2005), to appear.},
   url = {http://citeseer.ist.psu.edu/myers06answering.html}
+}
+
+@ARTICLE{Neiger1986,
+  author = {Gilbert A. Neiger and Sam Toueg},
+  title = {Substituting for Real Time and Common Knowledge in Distributed Systems},
+  year = {1986},
+  abstract = {We study time and knowledge in synchronous and asynchronous reliable
+	distributed systems. For both types of systems, we describe clocks
+	that can be used as if they were perfectly synchronized real-time
+	clocks in the solution of a large class of problems that we formally
+	characterize. For this same class of problems, we also propose a
+	broadcast primitive that can be used as if it achieves common knowledge.
+	Our clocks and broadcast primitive are tools that considerably simplify
+	the task of designing and proving correct distributed algorithms:
+	the designer can assume that processors have access to real-time
+	clocks and the ability to achieve common knowledge. The latter can
+	be used to implement the abstraction of shared memory.},
+  address = {Ithaca, NY, USA},
+  owner = {m},
+  publisher = {Cornell University},
+  source = {http://www.ncstrl.org:8900/ncstrl/servlet/search?formname=detail\&id=oai%3Ancstrlh%3Acornellcs%3ACORNELLCS%3ATR86-790},
+  timestamp = {2008.07.20},
+  url = {http://techreports.library.cornell.edu:8081/Dienst/UI/1.0/Display/cul.cs/TR86-790}
+}
+
+@INPROCEEDINGS{Patterson1990,
+  author = {John F. Patterson and Ralph D. Hill and Steven L. Rohall and Scott
+	W. Meeks},
+  title = {Rendezvous: an architecture for synchronous multi-user applications},
+  booktitle = {CSCW '90: Proceedings of the 1990 ACM conference on Computer-supported
+	cooperative work},
+  year = {1990},
+  pages = {317--328},
+  address = {New York, NY, USA},
+  publisher = {ACM},
+  abstract = {Rendezvous is an architecture for creating synchronous multi-user
+	applications. It consists of two parts: a run-time architecture for
+	managing the multi-user session and a start-up architecture for managing
+	the network connectivity. The run-time architecture is based on a
+	User Interface Management System called MEL, which is a language
+	extension to Common Lisp providing support for graphics operations,
+	object-oriented programming, and constraints. Constraints are used
+	to manage three dimensions of sharing: sharing of underlying information,
+	sharing of views, and sharing of access. The start-up architecture
+	decouples invoking and joining an application so that not all users
+	need be known when the application is started. At present, the run-time
+	architecture is completed and running test applications. As a first
+	test of the complete Rendezvous architecture, we will implement a
+	multi-user card game by the end of the summer.},
+  doi = {10.1145/99332.99364},
+  isbn = {0-89791-402-3},
+  keywords = {HCI undo},
+  location = {Los Angeles, California, United States},
+  owner = {m},
+  timestamp = {2008.07.20}
 }
 
 @ARTICLE{Prakash1994,
@@ -527,7 +919,7 @@
   keywords = {curling}
 }
 
-@ARTICLE{Shegelski1999,
+@ARTICLE{Shegelski1999a,
   author = {Shegelski, M.R.A. and Niebergall, R.},
   title = {The motion of rapidly rotating curling rocks.},
   journal = {Australian Journal of Physics},
@@ -586,7 +978,7 @@
   publisher = {NRC Research Press}
 }
 
-@ARTICLE{Shegelski1999a,
+@ARTICLE{Shegelski1999,
   author = {Shegelski, M.R.A. and Reid, M.},
   title = {Comment on: Curling rock dynamics-The motion of a curling rock: inertial
 	vs. noninertial reference frames},
@@ -690,6 +1082,68 @@
   url = {http://citeseer.ist.psu.edu/spenke93from.html}
 }
 
+@INPROCEEDINGS{Srikanth1985,
+  author = {T. K. Srikanth and S. Toueg},
+  title = {Optimal clock synchronization},
+  booktitle = {PODC '85: Proceedings of the fourth annual ACM symposium on Principles
+	of distributed computing},
+  year = {1985},
+  pages = {71--86},
+  address = {New York, NY, USA},
+  publisher = {ACM},
+  abstract = {We present a simple, efficient, and unified solution to the problems
+	of synchronizing, initializing, and integrating clocks for systems
+	with different types of failures: crash, omission, and arbitrary
+	failures with and without message authentication. This is the ft
+	known solution that achieves optimal accuracy -- the accuracy of
+	synchronized clocks (with respect to real time) is as good as that
+	specified for the underlying hardware clocks. The solution is also
+	optimal with respect to the number ...},
+  doi = {10.1145/323596.323603},
+  isbn = {0-89791-168-7},
+  location = {Minaki, Ontario, Canada},
+  owner = {m},
+  timestamp = {2008.07.20},
+  url = {http://citeseer.ist.psu.edu/srikanth03optimal.html}
+}
+
+@INPROCEEDINGS{Stefik1987,
+  author = {M. Stefik and D. G. Bobrow and G. Foster and S. Lanning and D. Tatar},
+  title = {WYSIWIS revised: early experiences with multiuser interfaces},
+  year = {1987},
+  volume = {5},
+  number = {2},
+  pages = {147--167},
+  address = {New York, NY, USA},
+  publisher = {ACM},
+  abstract = {WYSIWIS (What You See Is What I See) is a foundational abstraction
+	for multiuser interfaces that expresses many of the characteristics
+	of a chalkboard in face-to-face meetings. In its strictest interpretation,
+	it means that everyone can also see the same written information
+	and also see where anyone else is pointing. In our attempts to build
+	software support for collaboration in meetings, we have discovered
+	that WYSIWIS is crucial, yet too inflexible when strictly enforced.
+	This paper is about the design issues and choices that arose in our
+	first generation of meeting tools based on WYSIWIS. Several examples
+	of multiuser interfaces that start from this abstraction are presented.
+	These tools illustrate that there are inherent conflicts between
+	the needs of a group and the needs of individuals, since user interfaces
+	compete for the same display space and meeting time. To help minimize
+	the effect of these conflicts, constraints were relaxed along four
+	key dimensions of WYSIWIS: display space, time of display, subgroup
+	population, and congruence of view. Meeting tools must be designed
+	to support the changing needs of information sharing during process
+	transitions, as subgroups are formed and dissolved, as individuals
+	shift their focus of activity, and as the group shifts from multiple
+	parallel activities to a single focused activity and back again.},
+  doi = {10.1145/27636.28056},
+  issn = {1046-8188},
+  journal = {ACM Trans. Inf. Syst.},
+  keywords = {HCI undo},
+  owner = {m},
+  timestamp = {2008.07.20}
+}
+
 @BOOK{Stroustrup1991,
   title = {The C++ programming language},
   publisher = {Addison-Wesley Pub. Co., Reading, Mass.; Tokyo},
@@ -731,14 +1185,110 @@
   url = {http://citeseer.ist.psu.edu/sun02consistency.html}
 }
 
+@INPROCEEDINGS{Sun1996,
+  author = {Chengzheng Sun and Yun Yang and Yanchun Zhang and David Chen},
+  title = {Distributed Concurrency Control in Real-time Cooperative Editing
+	Systems},
+  booktitle = {Asian Computing Science Conference},
+  year = {1996},
+  pages = {84-95},
+  abstract = {Efficient distributed concurrency control is one of the most significant
+	challenges in building real-time cooperative editing systems. In
+	this paper, we focus on the definition and verification of an integrated
+	set of distributed concurrency control schemes based on a novel consistency
+	model for solving three inconsistency problems: divergence, causality-violation,
+	and intention-violation in real-time cooperative editing systems.
+	Keywords: concurrency control, consistency models,...},
+  keywords = {HCI undo},
+  url = {http://citeseer.ist.psu.edu/sun96distributed.html}
+}
+
 @MASTERSTHESIS{Sutor1988,
   author = {Sutor, Uli},
   title = {Curling},
   school = {Physik Department der TU-M{\"}unchen},
   year = {1988},
   type = {Diplomarbeit},
-  keywords = {curling},
+  keywords = {curling physics},
   owner = {m},
+  timestamp = {2008.07.20}
+}
+
+@ARTICLE{Terry2002,
+  author = {Michael Terry and Elizabeth D. Mynatt},
+  title = {Recognizing creative needs in user interface design},
+  journal = {Proceedings of the 4th conference on Creativity \& cognition},
+  year = {2002},
+  pages = {38--44},
+  abstract = {The creative process requires experimentation, the exploration of
+	variations, and the continual evaluation of one's progress. While
+	these processes are frequently non-linear and iterative, modern user
+	interfaces do not explicitly support these practices, and instead
+	impose a linear progression through tasks that is a poor fit for
+	creative pursuits. In this paper we use data from three case studies,
+	and draw upon Sch$#246;n's theory of reflection-in-action to illustrate
+	specific deficiencies in current user interfaces when used in creative
+	endeavors. We then develop a set of guidelines for user interface
+	design and demonstrate their application in three designs intended
+	to support tasks in the domain of image manipulation.},
+  address = {New York, NY, USA},
+  booktitle = {C\&C '02: Proceedings of the 4th conference on Creativity \& cognition},
+  doi = {doi.acm.org/10.1145/581710.581718},
+  isbn = {1-58113-465-7},
+  keywords = {HCI},
+  location = {Loughborough, UK},
+  owner = {m},
+  publisher = {ACM},
+  timestamp = {2008.07.20},
+  url = {http://citeseer.ist.psu.edu/564700.html}
+}
+
+@BOOK{Thimbleby1990,
+  title = {User interface design},
+  publisher = {ACM Press New York, NY, USA},
+  year = {1990},
+  author = {Thimbleby, H.},
+  keywords = {HCI},
+  owner = {m},
+  timestamp = {2008.07.20}
+}
+
+@ARTICLE{Vitter1984,
+  author = {Vitter, J.S.},
+  title = {US\&R: A New Framework for Redoing},
+  journal = {IEEE Software},
+  year = {1984},
+  volume = {1},
+  pages = {39--52},
+  number = {4},
+  keywords = {HCI undo},
+  owner = {m},
+  timestamp = {2008.07.20}
+}
+
+@ARTICLE{Wong1992,
+  author = {Wong, Y.Y.},
+  title = {Rough and ready prototypes: lessons from graphic design},
+  journal = {Conference on Human Factors in Computing Systems},
+  year = {1992},
+  pages = {83--84},
+  keywords = {HCI},
+  owner = {m},
+  publisher = {ACM Press New York, NY, USA},
+  timestamp = {2008.07.21}
+}
+
+@ARTICLE{Yang1988,
+  author = {Yang, Y.},
+  title = {Undo support models},
+  journal = {International Journal of Man-Machine Studies},
+  year = {1988},
+  volume = {28},
+  pages = {457--481},
+  number = {5},
+  keywords = {HCI undo},
+  owner = {m},
+  publisher = {Academic Press Ltd. London, UK, UK},
   timestamp = {2008.07.20}
 }
 
