@@ -5,14 +5,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edu.umd.cs.hcil</groupId>
 	<artifactId>piccolo</artifactId>
-	<version>1.2</version>
+	<version>1.2.1</version>
 	<name>Piccolo</name>
 	<description>
 		A revolutionary way to create robust, full-featured graphical
 		applications in Java and C#, with striking visual effects such
 		as zooming, animation and multiple representations.
 	</description>
-	<url>http://www.cs.umd.edu/hcil/jazz/index.shtml</url>
+	<url>http://code.google.com/p/piccolo2d/</url>
 	<licenses>
 		<license>
 			<name>BSD PUBLIC LICENSE</name>
@@ -20,15 +20,9 @@
 			<distribution>manual</distribution>
 		</license>
 	</licenses>
-	<organization>
-		<name>
-			Human Computer Interaction Lab, University of Maryland
-		</name>
-		<url>http://www.cs.umd.edu/hcil/</url>
-	</organization>
 	<scm>
 		<connection>
-			scm:svn:https://svn.cs.umd.edu/repos/piccolo/piccolo.java/trunk
+			scm:svn:http://piccolo2d.googlecode.com/svn/piccolo2d.java/trunk
 		</connection>
 	</scm>
 	<dependencies>
