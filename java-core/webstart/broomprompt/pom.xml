@@ -51,7 +51,7 @@
 							<exclude>
 								commons-logging:commons-logging
 							</exclude>
-							<exclude>edu.umd.cs.hcil:piccolo</exclude>
+							<exclude>org.piccolo2d:piccolo2d-core</exclude>
 							<exclude>
 								net.java.dev.scenegraph:scenario
 							</exclude>

@@ -53,7 +53,7 @@
 							<exclude>
 								commons-logging:commons-logging
 							</exclude>
-							<exclude>edu.umd.cs.hcil:piccolo</exclude>
+							<exclude>org.piccolo2d:piccolo2d-core</exclude>
 							<exclude>org.jivesoftware:smack</exclude>
 							<exclude>net.java.dev:appframework</exclude>
 							<exclude>net.java.dev:swingworker</exclude>
