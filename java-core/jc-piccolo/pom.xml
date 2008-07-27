@@ -30,9 +30,9 @@
 			<version>${version}</version>
 		</dependency>
 		<dependency>
-			<groupId>edu.umd.cs.hcil</groupId>
-			<artifactId>piccolo</artifactId>
-			<version>1.2</version>
+			<groupId>org.piccolo2d</groupId>
+			<artifactId>piccolo2d-core</artifactId>
+			<version>1.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
