@@ -15,7 +15,7 @@
 		<artifactId>parent</artifactId>
 		<groupId>org.jcurl.core</groupId>
 		<version>0.7-SNAPSHOT</version>
-		<relativePath>../../parent/pom.xml</relativePath>
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
 	<groupId>org.jcurl.demo</groupId>
 	<artifactId>tactics</artifactId>
@@ -127,7 +127,7 @@
 		<dependency>
 			<groupId>org.jcurl.core</groupId>
 			<artifactId>jc-demo</artifactId>
-			<version>${version}</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 	<repositories>

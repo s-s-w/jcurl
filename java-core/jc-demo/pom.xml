@@ -6,7 +6,7 @@
 		<artifactId>parent</artifactId>
 		<groupId>org.jcurl.core</groupId>
 		<version>0.7-SNAPSHOT</version>
-		<relativePath>../parent/pom.xml</relativePath>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>jc-demo</artifactId>
@@ -41,27 +41,24 @@
 		<dependency>
 			<groupId>org.jcurl.core</groupId>
 			<artifactId>jc-piccolo</artifactId>
-			<version>${version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<!-- dependency>
 			<groupId>org.jcurl.core</groupId>
 			<artifactId>jc-xsio</artifactId>
-			<version>${version}</version>
+			<version>${project.version}</version>
 			</dependency -->
 		<dependency>
 			<groupId>net.java.dev</groupId>
 			<artifactId>appframework</artifactId>
-			<version>1.03</version>
 		</dependency>
 		<dependency>
 			<groupId>net.java.dev</groupId>
 			<artifactId>swingworker</artifactId>
-			<version>1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jivesoftware</groupId>
 			<artifactId>smack</artifactId>
-			<version>3.0.4</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>
@@ -83,25 +80,16 @@
 		<dependency>
 			<groupId>net.java.dev</groupId>
 			<artifactId>beansbinding</artifactId>
-			<version>1.2.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.java.dev.scenegraph</groupId>
 			<artifactId>scenario</artifactId>
-			<version>0.6</version>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.java.dev.swing-layout</groupId>
 			<artifactId>swing-layout</artifactId>
 			<version>1.0.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.14</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -131,19 +119,12 @@
 		<dependency>
 			<groupId>hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
-			<version>1.8.0.7</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
 			<version>10.2.2.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.4</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

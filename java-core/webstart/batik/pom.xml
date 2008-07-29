@@ -15,11 +15,11 @@
 		<artifactId>parent</artifactId>
 		<groupId>org.jcurl.core</groupId>
 		<version>0.7-SNAPSHOT</version>
-		<relativePath>../../parent/pom.xml</relativePath>
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
 	<groupId>org.jcurl.demo</groupId>
 	<artifactId>batik</artifactId>
-	<version>1.6</version>
+	<version>${batik.version}</version>
 	<packaging>pom</packaging>
 	<name>JCurl 3rd party Batik SVG libs</name>
 	<scm>
@@ -105,7 +105,7 @@
 		<dependency>
 			<groupId>org.jcurl.core</groupId>
 			<artifactId>batikbridge</artifactId>
-			<version>${pom.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 	<repositories>

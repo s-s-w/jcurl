@@ -7,7 +7,7 @@
 		<artifactId>parent</artifactId>
 		<groupId>org.jcurl.core</groupId>
 		<version>0.7-SNAPSHOT</version>
-		<relativePath>../parent/pom.xml</relativePath>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>jc-piccolo</artifactId>
 	<name>JCurl ZUI using piccolo</name>
@@ -27,18 +27,11 @@
 		<dependency>
 			<groupId>org.jcurl.core</groupId>
 			<artifactId>jc-core</artifactId>
-			<version>${version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.piccolo2d</groupId>
 			<artifactId>piccolo2d-core</artifactId>
-			<version>1.2.1</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.4</version>
-			<scope>test</scope>
 		</dependency>
 		<!-- dependency>
 			<groupId>edu.umd.cs.hcil</groupId>
