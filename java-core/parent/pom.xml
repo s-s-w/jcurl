@@ -16,7 +16,7 @@
 		<httpbase>http://jcurl.berlios.de/m2</httpbase>
 		<httpsitebase>${httpbase}/site</httpsitebase>
 		<!-- ftpbase>ftp://jcurl.org</ftpbase>
-		<ftpsitebase>${ftpbase}/site</ftpsitebase -->
+			<ftpsitebase>${ftpbase}/site</ftpsitebase -->
 		<scpbase>
 			scp://shell.berlios.de/home/groups/jcurl/htdocs/m2
 		</scpbase>
@@ -94,205 +94,209 @@
 		<name>jcurl.org</name>
 		<url>http://www.jcurl.org</url>
 	</organization>
-  <build>
-    <pluginManagement>
-      <!-- extensions>
-			<extension>
+	<build>
+		<pluginManagement>
+			<!-- extensions>
+				<extension>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-ftp</artifactId>
-			</extension>
-		</extensions -->
-      <plugins>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <configuration>
-            <verbose>true</verbose>
-            <fork>true</fork>
-            <encoding>utf-8</encoding>
-            <optimize>false</optimize>
-            <debug>true</debug>
-            <compilerVersion>1.5</compilerVersion>
-            <source>1.5</source>
-            <target>1.5</target>
-          </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>maven-scm-plugin</artifactId>
-          <configuration>
-            <connectionType>developerConnection</connectionType>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>cobertura-maven-plugin</artifactId>
-          <executions>
-            <execution>
-              <goals>
-                <goal>clean</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.piccolo2d</groupId>
-        <artifactId>piccolo2d-core</artifactId>
-        <version>1.2.1</version>
-      </dependency>
-      <dependency>
-        <groupId>org.jivesoftware</groupId>
-        <artifactId>smack</artifactId>
-        <version>3.0.4</version>
-      </dependency>
-      <!-- could be used as extension from http://download.java.net/javadesktop/scenario/releases/0.6/Scenario-0.6.jnlp -->
-      <dependency>
-        <groupId>net.java.dev.scenegraph</groupId>
-        <artifactId>scenario</artifactId>
-        <version>0.6</version>
-      </dependency>
-      <dependency>
-        <groupId>net.java.dev</groupId>
-        <artifactId>appframework</artifactId>
-        <version>1.03</version>
-      </dependency>
-      <dependency>
-        <groupId>net.java.dev</groupId>
-        <artifactId>swingworker</artifactId>
-        <version>1.1</version>
-      </dependency>
-      <dependency>
-        <groupId>net.java.dev</groupId>
-        <artifactId>beansbinding</artifactId>
-        <version>1.2.1</version>
-      </dependency>
-      <!-- dependency>
-			<groupId>org.jscience</groupId>
-			<artifactId>jscience</artifactId>
-			<version>4.3.1</version>
-		</dependency -->
-      <dependency>
-        <groupId>com.thoughtworks.xstream</groupId>
-        <artifactId>xstream</artifactId>
-        <version>1.2.2</version>
-      </dependency>
-      <dependency>
-        <groupId>hsqldb</groupId>
-        <artifactId>hsqldb</artifactId>
-        <version>1.8.0.7</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-  <dependencies>
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <version>1.1</version>
-      <exclusions>
-        <exclusion>
-          <artifactId>avalon-framework</artifactId>
-          <groupId>avalon-framework</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>servlet-api</artifactId>
-          <groupId>javax.servlet</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>logkit</artifactId>
-          <groupId>logkit</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>log4j</artifactId>
-          <groupId>log4j</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.4</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.14</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  <reporting>
-    <plugins>
-      <plugin>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration>
-          <source>1.5</source>
-          <verbose>false</verbose>
-          <show>package</show>
-          <links>
-            <link>
+				</extension>
+				</extensions -->
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<verbose>true</verbose>
+						<fork>true</fork>
+						<encoding>utf-8</encoding>
+						<optimize>false</optimize>
+						<debug>true</debug>
+						<compilerVersion>1.5</compilerVersion>
+						<source>1.5</source>
+						<target>1.5</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-scm-plugin</artifactId>
+					<configuration>
+						<connectionType>
+							developerConnection
+						</connectionType>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>cobertura-maven-plugin</artifactId>
+					<executions>
+						<execution>
+							<goals>
+								<goal>clean</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.piccolo2d</groupId>
+				<artifactId>piccolo2d-core</artifactId>
+				<version>1.2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jivesoftware</groupId>
+				<artifactId>smack</artifactId>
+				<version>3.0.4</version>
+			</dependency>
+			<!-- could be used as extension from http://download.java.net/javadesktop/scenario/releases/0.6/Scenario-0.6.jnlp -->
+			<dependency>
+				<groupId>net.java.dev.scenegraph</groupId>
+				<artifactId>scenario</artifactId>
+				<version>0.6</version>
+			</dependency>
+			<dependency>
+				<groupId>net.java.dev</groupId>
+				<artifactId>appframework</artifactId>
+				<version>1.03</version>
+			</dependency>
+			<dependency>
+				<groupId>net.java.dev</groupId>
+				<artifactId>swingworker</artifactId>
+				<version>1.1</version>
+			</dependency>
+			<dependency>
+				<groupId>net.java.dev</groupId>
+				<artifactId>beansbinding</artifactId>
+				<version>1.2.1</version>
+			</dependency>
+			<!-- dependency>
+				<groupId>org.jscience</groupId>
+				<artifactId>jscience</artifactId>
+				<version>4.3.1</version>
+				</dependency -->
+			<dependency>
+				<groupId>com.thoughtworks.xstream</groupId>
+				<artifactId>xstream</artifactId>
+				<version>1.2.2</version>
+			</dependency>
+			<dependency>
+				<groupId>hsqldb</groupId>
+				<artifactId>hsqldb</artifactId>
+				<version>1.8.0.7</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>avalon-framework</artifactId>
+					<groupId>avalon-framework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>servlet-api</artifactId>
+					<groupId>javax.servlet</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>logkit</artifactId>
+					<groupId>logkit</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<reporting>
+		<plugins>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<verbose>false</verbose>
+					<show>package</show>
+					<links>
+						<link>
 							${httpsitebase}/jc-core/${pom.version}/apidocs/
 						</link>
-            <link>
+						<link>
 							${httpsitebase}/jc-piccolo/${pom.version}/apidocs/
 						</link>
-            <link>
+						<link>
 							${httpsitebase}/jc-xsio/${pom.version}/apidocs/
 						</link>
-            <link>
+						<link>
 							http://java.sun.com/j2se/1.5.0/docs/api/
 						</link>
-            <link>
+						<link>
 							http://jakarta.apache.org/commons/logging/commons-logging-1.1/apidocs/
 						</link>
-            <link>http://javolution.org/api/</link>
-            <link>http://jscience.org/api</link>
-            <link>
+						<link>http://javolution.org/api/</link>
+						<link>http://jscience.org/api</link>
+						<link>
 							http://xstream.codehaus.org/javadoc/
 						</link>
-            <link>
+						<link>
 							http://www.cs.umd.edu/hcil/jazz/learn/piccolo/doc-1.2/api/
 						</link>
-            <link>
+						<link>
 							http://download.java.net/javadesktop/scenario/releases/0.6/javadoc/
 						</link>
-            <link>
+						<link>
 							https://appframework.dev.java.net/nonav/javadoc/AppFramework-1.03/
 						</link>
-            <link>
+						<link>
 							https://swingworker.dev.java.net/nonav/javadoc/
 						</link>
-            <link>
+						<link>
 							http://download.java.net/media/java3d/javadoc/1.5.0-latest
 						</link>
-            <link>
+						<link>
 							http://www.picocontainer.org/versions/1.0/apidocs/
 						</link>
-            <link>
+						<link>
 							http://commons.apache.org/math/apidocs
 						</link>
-            <link>http://geosoft.no/graphics/G/docs/</link>
-            <link>http://www.igniterealtime.org/builds/smack/docs/latest/javadoc/</link>
-          </links>
-          <tags>
-            <tag>
-              <name>todo</name>
-              <placement>a</placement>
-              <head>To Do:</head>
-            </tag>
-          </tags>
-          <doclet>
+						<link>http://geosoft.no/graphics/G/docs/</link>
+						<link>
+							http://www.igniterealtime.org/builds/smack/docs/latest/javadoc/
+						</link>
+					</links>
+					<tags>
+						<tag>
+							<name>todo</name>
+							<placement>a</placement>
+							<head>To Do:</head>
+						</tag>
+					</tags>
+					<doclet>
 						gr.spinellis.umlgraph.doclet.UmlGraphDoc
 					</doclet>
-          <docletArtifact>
-            <groupId>gr.spinellis</groupId>
-            <artifactId>UmlGraph</artifactId>
-            <version>4.6</version>
-          </docletArtifact>
-          <!-- http://www.spinellis.gr/sw/umlgraph/doc/cd-opt.html -->
-          <additionalparam>
+					<docletArtifact>
+						<groupId>gr.spinellis</groupId>
+						<artifactId>UmlGraph</artifactId>
+						<version>4.6</version>
+					</docletArtifact>
+					<!-- http://www.spinellis.gr/sw/umlgraph/doc/cd-opt.html -->
+					<additionalparam>
 						-inferrel -inferdep -quiet -hide java.*
 						-collpackages java.util.* -qualify
 						-postfixpackage -nodefontsize 9
@@ -310,63 +314,66 @@
 						http://jscience.org/api -link
 						http://xstream.codehaus.org/javadoc/ -link
 						http://www.cs.umd.edu/hcil/jazz/learn/piccolo/doc-1.2/api/
-						-link http://download.java.net/javadesktop/scenario/releases/0.6/javadoc/
-						-link http://appframework.dev.java.net/nonav/javadoc/AppFramework-1.03/
-						-link http://swingworker.dev.java.net/nonav/javadoc/
+						-link
+						http://download.java.net/javadesktop/scenario/releases/0.6/javadoc/
+						-link
+						http://appframework.dev.java.net/nonav/javadoc/AppFramework-1.03/
+						-link
+						http://swingworker.dev.java.net/nonav/javadoc/
 						-link
 						http://download.java.net/media/java3d/javadoc/1.5.0-latest
 						-link
 						http://www.picocontainer.org/versions/1.0/apidocs/
 						-link http://commons.apache.org/math/apidocs
-						-link http://geosoft.no/graphics/G/docs/
-						-link http://www.igniterealtime.org/builds/smack/docs/latest/javadoc/
+						-link http://geosoft.no/graphics/G/docs/ -link
+						http://www.igniterealtime.org/builds/smack/docs/latest/javadoc/
 					</additionalparam>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-surefire-report-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <artifactId>maven-changelog-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <artifactId>maven-jxr-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>taglist-maven-plugin</artifactId>
-        <configuration>
-          <tags>
-            <tag>TUNE</tag>
-            <tag>TODO</tag>
-            <tag>FIXME</tag>
-            <tag>@tune</tag>
-            <tag>@todo</tag>
-            <tag>@deprecated</tag>
-          </tags>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-changelog-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-jxr-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>taglist-maven-plugin</artifactId>
+				<configuration>
+					<tags>
+						<tag>TUNE</tag>
+						<tag>TODO</tag>
+						<tag>FIXME</tag>
+						<tag>@tune</tag>
+						<tag>@todo</tag>
+						<tag>@deprecated</tag>
+					</tags>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>
 					maven-project-info-reports-plugin
 				</artifactId>
-      </plugin>
-      <plugin>
-        <artifactId>maven-pmd-plugin</artifactId>
-        <configuration>
-          <targetJdk>1.5</targetJdk>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>jdepend-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
-        <version>1.1.1</version>
-        <configuration>
-          <!--      <xmlOutput>true|false</xmlOutput>
+			</plugin>
+			<plugin>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<configuration>
+					<targetJdk>1.5</targetJdk>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jdepend-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>1.1.1</version>
+				<configuration>
+					<!--      <xmlOutput>true|false</xmlOutput>
 						<xmlOutputDirectory>directory location of xml findbugs report</xmlOutputDirectory>
 						<threshold>High|Normal|Low|Exp|Ignore</threshold>
 						<effort>Min|Default|Max</effort>
@@ -379,14 +386,14 @@
 						<debug>true|false</debug>
 						<relaxed>true|false</relaxed>
 					-->
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </reporting>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</reporting>
 	<repositories>
 		<repository>
 			<id>jcurl-repository</id>
