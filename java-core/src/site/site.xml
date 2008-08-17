@@ -17,16 +17,16 @@
   </bannerRight>
   <body>
     <menu name="JCurl">
-      <!-- %2e because http://jira.codehaus.org/browse/MSITE-159 -->
-      <item name="Home" href="http://www%2ejcurl.org/"/>
-      <item name="Demo Applications" href="http://www%2ejcurl.org/wiki/Applications"/>
-      <item name="Todos" href="http://www%2ejcurl.org/wiki/Todos" />
+      <!-- The escaping workaround seems to be obsolete: %2e, %63 and %69 because http://jira.codehaus.org/browse/MSITE-159 -->
+      <item name="Home" href="http://www.jcurl.org/"/>
+      <item name="Demo Applications" href="http://www.jcurl.org/wiki/Applications"/>
+      <item name="Todos" href="http://www.jcurl.org/wiki/Todos" />
       <!-- item name="Scientific Resources" href="../../java-core/${project.version}/science/index.html"/>
       <item name="Links" href="../../java-core/${project.version}/links.html"/>
       <item name="Todos" href="../../java-core/${project.version}/todos.html" / -->
     </menu>
     <menu name="Community">
-      <item name="Wiki" href="http://www%2ejcurl.org/wiki/"/>
+      <item name="Wiki" href="http://www.jcurl.org/wiki"/>
       <!-- item name="Forum" href="http://developer.berlios.de/forum/?group_id=3203"/ -->      
       <!-- item name="Mailing Lists" href="mail-lists.html"/ -->
     </menu>
