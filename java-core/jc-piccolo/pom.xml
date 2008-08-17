@@ -7,7 +7,7 @@
 		<artifactId>parent</artifactId>
 		<groupId>org.jcurl.core</groupId>
 		<version>0.7-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
+		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>jc-piccolo</artifactId>
 	<name>JCurl ZUI using piccolo</name>
