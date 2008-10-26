@@ -29,11 +29,14 @@ import org.jcurl.zui.piccolo.PIceFactory;
 import org.jcurl.zui.piccolo.PRockFactory;
 import org.jcurl.zui.piccolo.PTrajectoryFactory;
 
+import edu.umd.cs.piccolo.PCamera;
 import edu.umd.cs.piccolo.PCanvas;
 import edu.umd.cs.piccolo.PLayer;
 import edu.umd.cs.piccolo.PNode;
 import edu.umd.cs.piccolo.event.PBasicInputEventHandler;
 import edu.umd.cs.piccolo.event.PInputEvent;
+import edu.umd.cs.piccolo.event.PInputEventListener;
+import edu.umd.cs.piccolo.util.PAffineTransform;
 import edu.umd.cs.piccolo.util.PPaintContext;
 
 public class TrajectoryPiccoloBean extends TrajectoryBean<PNode, PNode> {
@@ -113,6 +116,8 @@ public class TrajectoryPiccoloBean extends TrajectoryBean<PNode, PNode> {
 	private static final int major = 255;
 	private static final int minor = 64;
 	private static final long serialVersionUID = -4648771240323713217L;
+	private static final int WHEEL_DT = 0;
+	private static final double WHEEL_SCALE = 0.10;
 
 	/** update one curve's path */
 	private static void syncM2V(final ComputedTrajectorySet src, final int i16,
@@ -149,20 +154,40 @@ public class TrajectoryPiccoloBean extends TrajectoryBean<PNode, PNode> {
 	private final BroomPromptSimple broom = new BroomPromptSimple();
 	private final PNode[] current = new PNode[RockSet.ROCKS_PER_SET];
 	private final PNode[] initial = new PNode[RockSet.ROCKS_PER_SET];
-	private final MoveHandler mouse = new MoveHandler();
+	private final PInputEventListener mouse = new MoveHandler();
 	private final PCanvas panel;
 	private final PNode[] path = new PNode[RockSet.ROCKS_PER_SET];
-	/** Rock<Pos> -> SGNode lookup */
+	/** Rock<Pos> -> PNode lookup */
 	private final Map<Rock<Pos>, PNode> r2n = new IdentityHashMap<Rock<Pos>, PNode>();
 	private final PNode rocks;
 	private final PTrajectoryFactory tf = new PTrajectoryFactory.Fancy();
-
 	private final PNode world;
 
 	public TrajectoryPiccoloBean() {
 		setVisible(false);
 		broom.setModel(tt);
 		panel = new PCanvas();
+		panel.addInputEventListener(new PInputEventListener() {
+			public void processEvent(final PInputEvent evt, final int i) {
+				if (evt.isMouseWheelEvent()) {
+					// http://groups.google.com/group/piccolo2d-users/browse_thread/thread/8bb79024a41a3ae3?hl=en#
+					final int c = evt.getWheelRotation();
+					final double s = Math.pow(
+							1D - WHEEL_SCALE * Math.signum(c), Math.abs(c));
+					final Point2D p = evt.getPosition();
+					final PCamera cam = evt.getCamera();
+					if (WHEEL_DT <= 0)
+						cam.scaleViewAboutPoint(s, p.getX(), p.getY());
+					else {
+						final PAffineTransform t = cam.getViewTransform();
+						t.scaleAboutPoint(s, p.getX(), p.getY());
+						cam.animateViewToTransform(t, WHEEL_DT);
+					}
+					tmpViewPort = cam.getViewBounds();
+				}
+			}
+		});
+
 		panel.setAnimatingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 		panel.setInteractingRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING);
 		setLayout(new BorderLayout());
