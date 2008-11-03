@@ -3,6 +3,7 @@
 
 mvnScp=scp://shell.berlios.de/home/groups/jcurl/htdocs/m2/repo
 piccoloBase=$HOME/work/piccolo2d/piccolo-1.2.1
+piccoloBase=.
 packaging=jar
 
 function mvnup {
@@ -22,14 +23,14 @@ function mvndeploy {
         -Durl=$mvnScp
 }
 
-srcFile=$piccoloBase/build/piccolo.jar
+srcFile=$piccoloBase/piccolo2d-core-1.2.1.jar
 pomFile=piccolo.pom.xml
 mvndeploy
 
-srcFile=$piccoloBase/build/piccolox.jar
+srcFile=$piccoloBase/piccolo2d-extras-1.2.1.jar
 pomFile=piccolox.pom.xml
 mvndeploy
 
-srcFile=$piccoloBase/build/examples.jar
+srcFile=$piccoloBase/piccolo2d-examples-1.2.1.jar
 pomFile=examples.pom.xml
 mvndeploy
