@@ -42,6 +42,9 @@
 						<exclude>
 							org/jcurl/core/swing/BatikDemoTest.java
 						</exclude>
+						<exclude>
+							org/jscience/mathematics/function/FunctionTest.java
+						</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
