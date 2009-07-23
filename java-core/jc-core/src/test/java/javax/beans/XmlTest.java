@@ -49,7 +49,7 @@ public class XmlTest extends TestCase {
 			xml = new String(bout.toByteArray(), "UTF-8");
 			assertEquals(
 					"<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
-							+ "<java version=\"1.5.0_16\" class=\"java.beans.XMLDecoder\"> \n"
+							+ "<java version=\"1.5.0_19\" class=\"java.beans.XMLDecoder\"> \n"
 							+ " <object class=\"org.jcurl.core.api.RockDouble\"> \n"
 							+ "  <void property=\"a\"> \n"
 							+ "   <double>3.0</double> \n" + "  </void> \n"
@@ -72,7 +72,7 @@ public class XmlTest extends TestCase {
 			xml = new String(bout.toByteArray(), "UTF-8");
 			assertEquals(
 					"<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
-							+ "<java version=\"1.5.0_16\" class=\"java.beans.XMLDecoder\"> \n"
+							+ "<java version=\"1.5.0_19\" class=\"java.beans.XMLDecoder\"> \n"
 							+ "</java> \n", xml);
 		}
 		final XMLDecoder de = new XMLDecoder(new ByteArrayInputStream(xml

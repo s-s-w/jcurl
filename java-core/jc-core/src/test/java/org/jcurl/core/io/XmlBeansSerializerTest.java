@@ -44,7 +44,7 @@ public class XmlBeansSerializerTest extends TestCase {
 		assertEquals(
 				"<!-- org.jcurl.core.io.XmlBeansSerializer -->\n"
 						+ "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
-						+ "<java version=\"1.5.0_16\" class=\"java.beans.XMLDecoder\"> \n"
+						+ "<java version=\"1.5.0_19\" class=\"java.beans.XMLDecoder\"> \n"
 						+ " <object class=\"org.jcurl.core.io.IOGroup\"/> \n"
 						+ "</java> \n" + "", new String(bout.toByteArray(),
 						"UTF-8"));
@@ -66,7 +66,7 @@ public class XmlBeansSerializerTest extends TestCase {
 		assertEquals(
 				"<!-- org.jcurl.core.io.XmlBeansSerializer -->\n"
 						+ "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
-						+ "<java version=\"1.5.0_16\" class=\"java.beans.XMLDecoder\"> \n"
+						+ "<java version=\"1.5.0_19\" class=\"java.beans.XMLDecoder\"> \n"
 						+ " <object class=\"org.jcurl.core.io.IOTrajectories\"/> \n"
 						+ "</java> \n" + "", new String(bout.toByteArray(),
 						"UTF-8"));
