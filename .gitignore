@@ -1,0 +1,6 @@
+*.aux
+*.log
+mills.lof
+mills.dvi
+science/mills/fig*.pdf
+science/mills/size.pdf

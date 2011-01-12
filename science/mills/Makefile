@@ -2,11 +2,11 @@
 
 mills.pdf: mills.tex
 	make -C images
-	cp images/*.eps .
-	latex mills
-	latex mills
-	latex mills
-	dvipdfm mills
+	cp images/*.pdf .
+	pdflatex mills
+	pdflatex mills
+	pdflatex mills
+#	dvipdfm mills
 
 .PHONY: clean
 clean:
