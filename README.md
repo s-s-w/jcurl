@@ -6,4 +6,4 @@ to give an idea of the scope.
 The project moved here from Berlios and a self-hosted MediaWiki recently, that's why
 most of the [wiki pages](https://github.com/mro/jcurl/wiki/_pages) look a bit quirky.
 
-[[https://github.com/mro/jcurl/wiki/ScreenshotTactics.png|frame|alt=Tactics Planner]]
+![Tactics Planner](/mro/jcurl/wiki/ScreenshotTactics.png "Tactics Planner")
