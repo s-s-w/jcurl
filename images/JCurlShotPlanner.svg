@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="-7 -23 16.022562 29.525837"
+   width="228.89374"
+   height="457.17426"
+   id="svg3483"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="JCurlShotPlanner.svg">
+  <title
+     id="title3655">JCurlShotPlanner</title>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1633"
+     inkscape:window-height="1005"
+     id="namedview3634"
+     showgrid="false"
+     inkscape:zoom="1.7564419"
+     inkscape:cx="10.543632"
+     inkscape:cy="205.81381"
+     inkscape:window-x="47"
+     inkscape:window-y="1"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer5"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata3489">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>JCurlShotPlanner</dc:title>
+        <dc:date>2016-04-22</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>http://mro.name/~me</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:language>en</dc:language>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>Curling</rdf:li>
+            <rdf:li>Sheet</rdf:li>
+            <rdf:li>Ice</rdf:li>
+            <rdf:li>Sport</rdf:li>
+            <rdf:li>Winter</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:source>https://lager.mro.name/curling/</dc:source>
+        <dc:source>https://links.mro.name/?XKa6VA</dc:source>
+        <dc:source>https://github.com/mro/jcurl/tree/master/java-core/webstart/tactics/src/jnlp/resources/images</dc:source>
+        <dc:source>https://raw.githubusercontent.com/wiki/mro/jcurl/ScreenshotTactics.png</dc:source>
+        <dc:relation>https://raw.githubusercontent.com/wiki/mro/jcurl/ScreenshotTactics.png</dc:relation>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs3491">
+    <g
+       id="rock">
+      <circle
+         cx="0"
+         cy="0"
+         r="0.47746"
+         id="circle3494"
+         style="fill:#808080" />
+      <circle
+         cx="0"
+         cy="0"
+         r="0.32499999"
+         id="circle3496" />
+    </g>
+    <g
+       id="rock_light_1"
+       class="rock light rock1 lead"
+       style="fill:#ffff00">
+      <use
+         xlink:href="#rock"
+         id="use3499"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <text
+         transform="matrix(0.04,0,0,-0.04,0,-0.2)"
+         id="text3501"
+         style="font-weight:bold;font-family:sans-serif;text-anchor:middle;fill:#000000">1</text>
+    </g>
+    <g
+       id="rock_light_2"
+       class="rock light rock2 lead"
+       style="fill:#ffff00">
+      <use
+         xlink:href="#rock"
+         id="use3504"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <text
+         transform="matrix(0.04,0,0,-0.04,0,-0.2)"
+         id="text3506"
+         style="font-weight:bold;font-family:sans-serif;text-anchor:middle;fill:#000000">2</text>
+    </g>
+    <g
+       id="rock_light_3"
+       class="rock light rock3 second"
+       style="fill:#ffff00">
+      <use
+         xlink:href="#rock"
+         id="use3509"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <text
+         transform="matrix(0.04,0,0,-0.04,0,-0.2)"
+         id="text3511"
+         style="font-weight:bold;font-family:sans-serif;text-anchor:middle;fill:#000000">3</text>
+    </g>
+    <g
+       id="rock_light_4"
+       class="rock light rock4 second"
+       style="fill:#ffff00">
+      <use
+         xlink:href="#rock"
+         id="use3514"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <text
+         transform="matrix(0.04,0,0,-0.04,0,-0.2)"
+         id="text3516"
+         style="font-weight:bold;font-family:sans-serif;text-anchor:middle;fill:#000000">4</text>
+    </g>
+    <g
+       id="rock_light_5"
+       class="rock light rock5 second"
+       style="fill:#ffff00">
+      <use
+         xlink:href="#rock"
+         id="use3519"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <text
+         transform="matrix(0.04,0,0,-0.04,0,-0.2)"
+         id="text3521"
+         style="font-weight:bold;font-family:sans-serif;text-anchor:middle;fill:#000000">5</text>
+    </g>
+    <g
+       id="rock_light_6"
+       class="rock light rock6 second"
+       style="fill:#ffff00">
+      <use
+         xlink:href="#rock"
+         id="use3524"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <text
+         transform="matrix(0.04,0,0,-0.04,0,-0.2)"
+         id="text3526"
+         style="font-weight:bold;font-family:sans-serif;text-anchor:middle;fill:#000000">6</text>
+    </g>
+    <g
+       id="rock_light_7"
+       class="rock light rock7 second"
+       style="fill:#ffff00">
+      <use
+         xlink:href="#rock"
+         id="use3529"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <text
+         transform="matrix(0.04,0,0,-0.04,0,-0.2)"
+         id="text3531"
+         style="font-weight:bold;font-family:sans-serif;text-anchor:middle;fill:#000000">7</text>
+    </g>
+    <g
+       id="rock_light_8"
+       class="rock light rock8 skip"
+       style="fill:#ffff00">
+      <use
+         xlink:href="#rock"
+         id="use3534"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <text
+         transform="matrix(0.04,0,0,-0.04,0,-0.2)"
+         id="text3536"
+         style="font-weight:bold;font-family:sans-serif;text-anchor:middle;fill:#000000">8</text>
+    </g>
+    <g
+       id="rock_dark_1"
+       class="rock light rock1 lead"
+       style="fill:#ff0000">
+      <use
+         xlink:href="#rock"
+         id="use3539"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <text
+         transform="matrix(0.04,0,0,-0.04,0,-0.2)"
+         id="text3541"
+         style="font-weight:bold;font-family:sans-serif;text-anchor:middle;fill:#000000">1</text>
+    </g>
+    <g
+       id="rock_dark_2"
+       class="rock light rock2 lead"
+       style="fill:#ff0000">
+      <use
+         xlink:href="#rock"
+         id="use3544"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <text
+         transform="matrix(0.04,0,0,-0.04,0,-0.2)"
+         id="text3546"
+         style="font-weight:bold;font-family:sans-serif;text-anchor:middle;fill:#000000">2</text>
+    </g>
+    <g
+       id="rock_dark_3"
+       class="rock light rock3 second"
+       style="fill:#ff0000">
+      <use
+         xlink:href="#rock"
+         id="use3549"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <text
+         transform="matrix(0.04,0,0,-0.04,0,-0.2)"
+         id="text3551"
+         style="font-weight:bold;font-family:sans-serif;text-anchor:middle;fill:#000000">3</text>
+    </g>
+    <g
+       id="rock_dark_4"
+       class="rock light rock4 second"
+       style="fill:#ff0000">
+      <use
+         xlink:href="#rock"
+         id="use3554"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <text
+         transform="matrix(0.04,0,0,-0.04,0,-0.2)"
+         id="text3556"
+         style="font-weight:bold;font-family:sans-serif;text-anchor:middle;fill:#000000">4</text>
+    </g>
+    <g
+       id="rock_dark_5"
+       class="rock light rock5 second"
+       style="fill:#ff0000">
+      <use
+         xlink:href="#rock"
+         id="use3559"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <text
+         transform="matrix(0.04,0,0,-0.04,0,-0.2)"
+         id="text3561"
+         style="font-weight:bold;font-family:sans-serif;text-anchor:middle;fill:#000000">5</text>
+    </g>
+    <g
+       id="rock_dark_6"
+       class="rock light rock6 second"
+       style="fill:#ff0000">
+      <use
+         xlink:href="#rock"
+         id="use3564"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <text
+         transform="matrix(0.04,0,0,-0.04,0,-0.2)"
+         id="text3566"
+         style="font-weight:bold;font-family:sans-serif;text-anchor:middle;fill:#000000">6</text>
+    </g>
+    <g
+       id="rock_dark_7"
+       class="rock light rock7 second"
+       style="fill:#ff0000">
+      <use
+         xlink:href="#rock"
+         id="use3569"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <text
+         transform="matrix(0.04,0,0,-0.04,0,-0.2)"
+         id="text3571"
+         style="font-weight:bold;font-family:sans-serif;text-anchor:middle;fill:#000000">7</text>
+    </g>
+    <g
+       id="rock_dark_8"
+       class="rock light rock8 skip"
+       style="fill:#ff0000">
+      <use
+         xlink:href="#rock"
+         id="use3574"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <text
+         transform="matrix(0.04,0,0,-0.04,0,-0.2)"
+         id="text3576"
+         style="font-weight:bold;font-family:sans-serif;text-anchor:middle;fill:#000000">8</text>
+    </g>
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="ice"
+     style="display:none"
+     sodipodi:insensitive="true"
+     transform="translate(1.0497952,0.80618605)" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="all"
+     style="display:none"
+     sodipodi:insensitive="true"
+     transform="translate(1.0497952,0.80618605)">
+    <rect
+       style="fill:#ffffff;stroke:none"
+       id="rect3585"
+       height="140"
+       width="14"
+       y="-13"
+       x="-7"
+       title="Ice"
+       transform="scale(1,-1)" />
+    <rect
+       style="fill:#e8e8ff;stroke:none"
+       height="21"
+       width="14"
+       y="0"
+       x="-7"
+       id="FreeGuardZone"
+       title="Free Guard Zone"
+       transform="scale(0.99999999,-0.99999999)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="house"
+     style="display:inline;opacity:1"
+     transform="translate(1.0497952,0.80618605)"
+     sodipodi:insensitive="true">
+    <rect
+       style="opacity:1;fill:#f2f1fc;fill-opacity:1;stroke:none;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4718"
+       width="16.022562"
+       height="32.002197"
+       x="-8.0497952"
+       y="-25.106186"
+       ry="0.070534632" />
+    <rect
+       transform="scale(0.99999999,-0.99999999)"
+       id="rect5520"
+       x="-7"
+       y="-6"
+       width="14"
+       height="34.235367"
+       rx="9.9999997e-06"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.04" />
+    <line
+       id="line5523"
+       x1="-1.9599999"
+       y1="2.920001"
+       x2="-1.9599999"
+       y2="-130.08"
+       style="display:inline;fill:none;stroke:#000000;stroke-width:0.04" />
+    <line
+       style="display:inline;fill:none;stroke:#000000;stroke-width:0.04"
+       y2="-130.5"
+       x2="1.9599999"
+       y1="2.5000007"
+       x1="1.9599999"
+       id="line5525" />
+    <circle
+       style="opacity:1;fill:#ff1f1f;stroke:none"
+       r="6"
+       cy="0"
+       cx="0"
+       id="_12Foot"
+       title="12-Foot"
+       transform="scale(0.99999999,-0.99999999)" />
+    <circle
+       style="fill:#ffffff;stroke:none"
+       r="4"
+       cy="0"
+       cx="0"
+       id="_8Foot"
+       title="8-Foot"
+       transform="scale(0.99999999,-0.99999999)" />
+    <circle
+       style="opacity:1;fill:#3031ff;stroke:none"
+       r="2"
+       cy="0"
+       cx="0"
+       id="_4Foot"
+       title="4-Foot"
+       transform="scale(0.99999999,-0.99999999)" />
+    <circle
+       style="fill:#ffffff;stroke:none"
+       r="0.5"
+       cy="0"
+       cx="0"
+       id="_1Foot"
+       title="Button"
+       transform="scale(0.99999999,-0.99999999)" />
+    <rect
+       style="display:inline;fill:none;stroke:#000000;stroke-width:0.04"
+       rx="9.9999997e-06"
+       height="27"
+       width="14"
+       y="-6"
+       x="-7"
+       id="House"
+       transform="scale(0.99999999,-0.99999999)" />
+    <line
+       style="display:inline;fill:none;stroke:#000000;stroke-width:0.04"
+       y2="-127"
+       x2="0"
+       y1="6"
+       x1="0"
+       id="CenterLine" />
+    <line
+       style="display:inline;fill:none;stroke:#000000;stroke-width:0.04"
+       y2="0"
+       x2="7"
+       y1="0"
+       x1="-7"
+       id="TeeLine" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="bitmap"
+     style="display:none"
+     sodipodi:insensitive="true"
+     transform="translate(1.0497952,0.80618605)">
+    <image
+       y="-25.008062"
+       x="-8.0191603"
+       id="image4528"
+       xlink:href="data:image/png;base64,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 f8wSkgAAAABJRU5ErkJggg== "
+       preserveAspectRatio="none"
+       height="31.959837"
+       width="16.023506" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer7"
+     inkscape:label="lines"
+     style="display:none"
+     transform="translate(1.0497952,0.80618605)"
+     sodipodi:insensitive="true" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer6"
+     inkscape:label="rocks"
+     style="display:inline"
+     sodipodi:insensitive="true"
+     transform="translate(1.0497952,0.80618605)">
+    <use
+       height="100%"
+       width="100%"
+       id="use3602"
+       xlink:href="#rock_light_1"
+       y="23"
+       x="-6"
+       class="waiting"
+       transform="matrix(0.99999999,0,0,-0.99999999,0.13075965,30.510585)" />
+    <use
+       height="100%"
+       width="100%"
+       id="use3604"
+       xlink:href="#rock_light_2"
+       y="22"
+       x="-6"
+       class="waiting"
+       transform="matrix(0.99999999,0,0,-0.99999999,0.0871731,30.510585)" />
+    <use
+       height="100%"
+       width="100%"
+       id="use3606"
+       xlink:href="#rock_light_3"
+       y="23"
+       x="-5"
+       class="waiting"
+       transform="matrix(0.99999999,0,0,-0.99999999,5.8841843,8.6519303)" />
+    <use
+       height="100%"
+       width="100%"
+       id="use3608"
+       xlink:href="#rock_light_4"
+       y="22"
+       x="-5"
+       class="waiting"
+       transform="matrix(0.99999999,0,0,-0.99999999,2.3536737,8.7826899)" />
+    <use
+       height="100%"
+       width="100%"
+       id="use3610"
+       xlink:href="#rock_light_5"
+       y="23"
+       x="-4"
+       class="waiting"
+       transform="matrix(0.99999999,0,0,-0.99999999,8.5244694,23.410696)" />
+    <use
+       height="100%"
+       width="100%"
+       id="use3612"
+       xlink:href="#rock_light_6"
+       y="22"
+       x="-4"
+       class="waiting"
+       transform="matrix(0.99999999,0,0,-0.99999999,4.7373061,25.934545)" />
+    <use
+       height="100%"
+       width="100%"
+       id="use3614"
+       xlink:href="#rock_light_7"
+       y="23"
+       x="-3"
+       class="waiting"
+       transform="matrix(0.99999999,0,0,-0.99999999,0.21761197,27.390259)" />
+    <use
+       height="100%"
+       width="100%"
+       id="use3616"
+       xlink:href="#rock_light_8"
+       y="22"
+       x="-3"
+       class="waiting"
+       transform="matrix(0.99999999,0,0,-0.99999999,6.8933324,0.95554057)" />
+    <use
+       height="100%"
+       width="100%"
+       id="use3618"
+       xlink:href="#rock_dark_1"
+       y="7"
+       x="1"
+       class="active"
+       transform="matrix(0.99999999,0,0,-0.99999999,4.8513403,15.179356)" />
+    <use
+       height="100%"
+       width="100%"
+       id="use3620"
+       xlink:href="#rock_dark_2"
+       y="22"
+       x="6"
+       class="waiting"
+       transform="matrix(0.99999999,0,0,-0.99999999,-7.1856373,6.5691941)" />
+    <use
+       height="100%"
+       width="100%"
+       id="use3622"
+       xlink:href="#rock_dark_3"
+       y="23"
+       x="5"
+       class="waiting"
+       transform="matrix(0.99999999,0,0,-0.99999999,-4.7177926,14.172405)" />
+    <use
+       height="100%"
+       width="100%"
+       id="use3624"
+       xlink:href="#rock_dark_4"
+       y="22"
+       x="5"
+       class="waiting"
+       transform="matrix(0.99999999,0,0,-0.99999999,-2.8187245,9.9549716)" />
+    <use
+       height="100%"
+       width="100%"
+       id="use3626"
+       xlink:href="#rock_dark_5"
+       y="23"
+       x="4"
+       class="waiting"
+       transform="matrix(0.99999999,0,0,-0.99999999,-2.5485465,17.253763)" />
+    <use
+       height="100%"
+       width="100%"
+       id="use3628"
+       xlink:href="#rock_dark_6"
+       y="22"
+       x="4"
+       class="waiting"
+       transform="matrix(0.99999999,0,0,-0.99999999,-2.53825,24.743707)" />
+    <use
+       height="100%"
+       width="100%"
+       id="use3630"
+       xlink:href="#rock_dark_7"
+       y="23"
+       x="3"
+       class="waiting"
+       transform="matrix(0.99999999,0,0,-0.99999999,-3.469688,28.519058)" />
+    <use
+       height="100%"
+       width="100%"
+       id="use3632"
+       xlink:href="#rock_dark_8"
+       y="22"
+       x="3"
+       class="waiting"
+       transform="matrix(0.99999999,0,0,-0.99999999,-4.7643882,23.573318)" />
+  </g>
+</svg>
